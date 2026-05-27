@@ -82,16 +82,26 @@ sources:
     last_pulled: null
     next_expected: "2026-12-01"
     targets:
-      - target_id: india-report-volume-1
-        description: NFHS-5 India Report Volume I (national + state crosstabs)
-        url: null
-        target_path: sources/nfhs-5/reports/india-report-volume-1.pdf
-        status: pending-url-discovery
-      - target_id: india-report-volume-2
-        description: NFHS-5 India Report Volume II (additional indicators by religion)
-        url: null
-        target_path: sources/nfhs-5/reports/india-report-volume-2.pdf
-        status: pending-url-discovery
+      - target_id: india-report-fr375
+        description: NFHS-5 India Report (FR375 - main report with religion crosstabs)
+        url: https://dhsprogram.com/pubs/pdf/FR375/FR375.pdf
+        target_path: sources/nfhs-5/reports/india-report-fr375.pdf
+        status: verified
+      - target_id: india-national-factsheet
+        description: NFHS-5 India National Factsheet
+        url: https://dhsprogram.com/pubs/pdf/OF43/India_National_Fact_Sheet.pdf
+        target_path: sources/nfhs-5/reports/india-national-factsheet.pdf
+        status: verified
+      - target_id: compendium-phase-1
+        description: NFHS-5 Compendium of Factsheets Phase-I (22 states/UTs)
+        url: https://dhsprogram.com/pubs/pdf/OF43/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf
+        target_path: sources/nfhs-5/reports/compendium-phase-1.pdf
+        status: verified
+      - target_id: compendium-phase-2
+        description: NFHS-5 Compendium of Factsheets Phase-II (remaining states/UTs)
+        url: https://dhsprogram.com/pubs/pdf/OF43/NFHS-5_India_and_State_Factsheet_Compendium_Phase-II.pdf
+        target_path: sources/nfhs-5/reports/compendium-phase-2.pdf
+        status: verified
 
   - id: plfs
     name: Periodic Labour Force Survey

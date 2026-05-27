@@ -1,0 +1,11 @@
+{
+  "source_id": "nfhs-5",
+  "target_id": "compendium-phase-1",
+  "url": "https://dhsprogram.com/pubs/pdf/OF43/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf",
+  "pulled_at": "2026-05-27T21:07:11.818381+00:00",
+  "status_code": 200,
+  "content_type": "application/pdf",
+  "content_length": 7313561,
+  "sha256": "5bcc2a37b13ffc0203d736803f72aece88b4beb0bc168d1f069e110178ab2bd7",
+  "pull_script_version": "0.1.0"
+}

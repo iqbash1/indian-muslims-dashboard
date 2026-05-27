@@ -1,0 +1,11 @@
+{
+  "source_id": "nfhs-5",
+  "target_id": "india-national-factsheet",
+  "url": "https://dhsprogram.com/pubs/pdf/OF43/India_National_Fact_Sheet.pdf",
+  "pulled_at": "2026-05-27T21:07:06.100160+00:00",
+  "status_code": 200,
+  "content_type": "application/pdf",
+  "content_length": 920595,
+  "sha256": "6feb023a7638d4a1ed48f3cc4edb5f7e967bbfb019ee9ce21ccdcfaa296b75d7",
+  "pull_script_version": "0.1.0"
+}

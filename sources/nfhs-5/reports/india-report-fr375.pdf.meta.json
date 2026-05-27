@@ -1,0 +1,11 @@
+{
+  "source_id": "nfhs-5",
+  "target_id": "india-report-fr375",
+  "url": "https://dhsprogram.com/pubs/pdf/FR375/FR375.pdf",
+  "pulled_at": "2026-05-27T21:07:01.413547+00:00",
+  "status_code": 200,
+  "content_type": "application/pdf",
+  "content_length": 10920570,
+  "sha256": "ce1fa5e3c93e5f0019583688e0431c9ec1c2c028b624a4dd76f07c5f5e81128a",
+  "pull_script_version": "0.1.0"
+}
