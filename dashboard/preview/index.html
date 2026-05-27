@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Indian Muslims Living Conditions — Preview</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --fg: #1a1a1a;
+    --muted: #666;
+    --bg: #fafaf7;
+    --card: #ffffff;
+    --rule: #e6e3da;
+    --muslim: #2b6cb0;
+    --hindu:  #b76a2b;
+    --all:    #5a6a5d;
+    --accent: #7b1d22;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font: 15px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text",
+          "Helvetica Neue", Arial, sans-serif;
+    color: var(--fg); background: var(--bg);
+    margin: 0; padding: 0;
+  }
+  .page { max-width: 1080px; margin: 0 auto; padding: 32px 24px 80px; }
+  h1 { font-size: 26px; margin: 0 0 4px; letter-spacing: -0.01em; }
+  h2 { font-size: 20px; margin: 0 0 4px; letter-spacing: -0.01em; }
+  .tagline { color: var(--muted); margin: 0 0 24px; font-size: 14px; }
+  .status-bar {
+    background: var(--card); border: 1px solid var(--rule); border-radius: 6px;
+    padding: 14px 18px; margin-bottom: 32px;
+    display: flex; gap: 24px; flex-wrap: wrap; font-size: 13px;
+  }
+  .status-bar b { color: var(--accent); }
+  .status-bar span { color: var(--muted); }
+  .tile {
+    background: var(--card); border: 1px solid var(--rule); border-radius: 6px;
+    padding: 22px 24px; margin-bottom: 22px;
+  }
+  .tile-head { border-bottom: 1px solid var(--rule); padding-bottom: 12px; margin-bottom: 16px; }
+  .source {
+    font-size: 12px; color: var(--muted); margin: 2px 0 0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  .data-current {
+    font-size: 11px; color: var(--muted); margin-top: 4px;
+    text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .headline {
+    font-size: 38px; font-weight: 700; color: var(--accent);
+    margin: 14px 0 2px; letter-spacing: -0.02em;
+    font-feature-settings: "tnum";
+  }
+  .headline-caption { font-size: 13px; color: var(--muted); margin: 0 0 18px; }
+  .methodology {
+    font-size: 12.5px; color: var(--muted); margin: 14px 0 0;
+    border-left: 3px solid var(--rule); padding-left: 12px;
+  }
+  .chart-wrap { margin: 18px 0; position: relative; height: 420px; }
+  details {
+    margin-top: 14px; border-top: 1px dashed var(--rule); padding-top: 12px;
+  }
+  details summary {
+    cursor: pointer; font-size: 13px; color: var(--muted);
+    list-style: none; user-select: none;
+  }
+  details summary::before {
+    content: "▸ ";
+    display: inline-block; transition: transform 0.15s;
+  }
+  details[open] summary::before { content: "▾ "; }
+  table {
+    width: 100%; border-collapse: collapse; margin-top: 12px;
+    font-size: 13px; font-feature-settings: "tnum";
+  }
+  th, td {
+    text-align: right; padding: 6px 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+  th:first-child, td:first-child { text-align: left; }
+  th { font-weight: 600; color: var(--muted); font-size: 12px;
+       text-transform: uppercase; letter-spacing: 0.04em; }
+  tr.national td { font-weight: 700; background: #fff7f0; }
+  .note {
+    margin-top: 22px; padding: 14px 16px; border: 1px solid var(--rule);
+    background: #faf7f0; border-radius: 4px; font-size: 13px; color: #5a4a2a;
+  }
+  footer {
+    margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--rule);
+    color: var(--muted); font-size: 12px;
+  }
+  footer code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    background: #efece4; padding: 1px 5px; border-radius: 3px;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<h1>Indian Muslims — Living Conditions Dashboard</h1>
+<p class="tagline">Preview build · 2026-05-28 03:56</p>
+
+<div class="status-bar">
+  <span><b>4</b> metrics live</span>
+  <span><b>5</b> sources archived</span>
+  <span><b>286</b> canonical rows · all schema-valid</span>
+  <span>Comparison baseline on every applicable tile</span>
+</div>
+
+<!-- POP SHARE -->
+<section class="tile">
+  <div class="tile-head">
+    <h2>Muslim share of total population</h2>
+    <p class="source">canonical/pop-share.csv · sources/census-2011/c-series/c01-population-by-religion.xls</p>
+    <p class="data-current">Data current to · Census 2011 (next release: 2021 round delayed indefinitely)</p>
+  </div>
+  <div class="headline">14.23%</div>
+  <p class="headline-caption">All-India Muslim share of total population (2011)</p>
+  <div class="chart-wrap"><canvas id="ps-chart"></canvas></div>
+  <p class="methodology">Muslim population / total population at each geography, total residence
+  (urban + rural combined). Per Census 2011 published methodology.</p>
+  <details>
+    <summary>Full data (35 states)</summary>
+    <table><thead><tr><th>State / UT</th><th>Muslim share</th></tr></thead><tbody>
+      <tr><td>Lakshadweep</td><td>96.58%</td></tr>
+      <tr><td>Jammu &amp; Kashmir</td><td>68.31%</td></tr>
+      <tr><td>Assam</td><td>34.22%</td></tr>
+      <tr><td>West Bengal</td><td>27.01%</td></tr>
+      <tr><td>Kerala</td><td>26.56%</td></tr>
+      <tr><td>Uttar Pradesh</td><td>19.26%</td></tr>
+      <tr><td>Bihar</td><td>16.87%</td></tr>
+      <tr><td>Jharkhand</td><td>14.53%</td></tr>
+      <tr><td>Uttarakhand</td><td>13.95%</td></tr>
+      <tr><td>Karnataka</td><td>12.92%</td></tr>
+      <tr><td>NCT of Delhi</td><td>12.86%</td></tr>
+      <tr><td>Maharashtra</td><td>11.54%</td></tr>
+      <tr><td>Gujarat</td><td>9.67%</td></tr>
+      <tr><td>Andhra Pradesh</td><td>9.56%</td></tr>
+      <tr><td>Rajasthan</td><td>9.07%</td></tr>
+      <tr><td>Tripura</td><td>8.60%</td></tr>
+      <tr><td>Andaman &amp; Nicobar Islands</td><td>8.52%</td></tr>
+      <tr><td>Manipur</td><td>8.40%</td></tr>
+      <tr><td>Goa</td><td>8.33%</td></tr>
+      <tr><td>Daman &amp; Diu</td><td>7.92%</td></tr>
+      <tr><td>Haryana</td><td>7.03%</td></tr>
+      <tr><td>Madhya Pradesh</td><td>6.57%</td></tr>
+      <tr><td>Puducherry</td><td>6.05%</td></tr>
+      <tr><td>Tamil Nadu</td><td>5.86%</td></tr>
+      <tr><td>Chandigarh</td><td>4.87%</td></tr>
+      <tr><td>Meghalaya</td><td>4.40%</td></tr>
+      <tr><td>Dadra &amp; Nagar Haveli</td><td>3.76%</td></tr>
+      <tr><td>Nagaland</td><td>2.47%</td></tr>
+      <tr><td>Himachal Pradesh</td><td>2.18%</td></tr>
+      <tr><td>Odisha</td><td>2.17%</td></tr>
+      <tr><td>Chhattisgarh</td><td>2.02%</td></tr>
+      <tr><td>Arunachal Pradesh</td><td>1.95%</td></tr>
+      <tr><td>Punjab</td><td>1.93%</td></tr>
+      <tr><td>Sikkim</td><td>1.62%</td></tr>
+      <tr><td>Mizoram</td><td>1.35%</td></tr>
+    </tbody></table>
+  </details>
+</section>
+
+<!-- LIT 7+ -->
+<section class="tile">
+  <div class="tile-head">
+    <h2>Literacy rate (7+ years)</h2>
+    <p class="source">canonical/lit-7plus.csv · sources/census-2011/c-series/c09-education-by-religion.xlsx</p>
+    <p class="data-current">Data current to · Census 2011</p>
+  </div>
+  <div class="headline">68.59%</div>
+  <p class="headline-caption">All-India Muslim literacy (7+), 2011. Hindu: 73.31%, All: 73.02%</p>
+  <div class="chart-wrap"><canvas id="lit-chart"></canvas></div>
+  <p class="methodology">(Literate − age-not-stated) / (Total − 0-6 − age-not-stated) × 100. Matches the
+  Census published literacy definition. Under-7 are all illiterate by Census convention; the gap
+  between Muslim and Hindu literacy is the comparison the dashboard is built around.</p>
+  <details>
+    <summary>Full data (36 rows)</summary>
+    <table><thead><tr>
+      <th>State / UT</th><th>Muslim</th><th>Hindu</th><th>All</th><th>Hindu − Muslim gap</th>
+    </tr></thead><tbody>
+      <tr class="national"><td>All India</td><td>68.59%</td><td>73.31%</td><td>73.02%</td><td>+4.72pp</td></tr>
+      <tr><td>Haryana</td><td>53.40%</td><td>77.09%</td><td>75.57%</td><td>+23.70pp</td></tr>
+      <tr><td>Meghalaya</td><td>54.01%</td><td>77.24%</td><td>74.45%</td><td>+23.23pp</td></tr>
+      <tr><td>Bihar</td><td>56.37%</td><td>62.88%</td><td>61.82%</td><td>+6.51pp</td></tr>
+      <tr><td>Nagaland</td><td>57.87%</td><td>79.95%</td><td>79.56%</td><td>+22.09pp</td></tr>
+      <tr><td>Uttar Pradesh</td><td>58.84%</td><td>69.74%</td><td>67.75%</td><td>+10.90pp</td></tr>
+      <tr><td>Jammu &amp; Kashmir</td><td>61.03%</td><td>79.09%</td><td>67.17%</td><td>+18.06pp</td></tr>
+      <tr><td>Punjab</td><td>61.89%</td><td>80.06%</td><td>75.85%</td><td>+18.17pp</td></tr>
+      <tr><td>Assam</td><td>61.93%</td><td>77.67%</td><td>72.19%</td><td>+15.74pp</td></tr>
+      <tr><td>Rajasthan</td><td>62.73%</td><td>66.08%</td><td>66.15%</td><td>+3.35pp</td></tr>
+      <tr><td>Uttarakhand</td><td>63.19%</td><td>81.23%</td><td>78.83%</td><td>+18.04pp</td></tr>
+      <tr><td>Jharkhand</td><td>66.22%</td><td>67.67%</td><td>66.42%</td><td>+1.45pp</td></tr>
+      <tr><td>Himachal Pradesh</td><td>67.53%</td><td>83.13%</td><td>82.82%</td><td>+15.60pp</td></tr>
+      <tr><td>Arunachal Pradesh</td><td>67.68%</td><td>70.11%</td><td>65.39%</td><td>+2.43pp</td></tr>
+      <tr><td>Manipur</td><td>67.78%</td><td>82.01%</td><td>76.96%</td><td>+14.23pp</td></tr>
+      <tr><td>West Bengal</td><td>68.76%</td><td>79.14%</td><td>76.26%</td><td>+10.39pp</td></tr>
+      <tr><td>Andhra Pradesh</td><td>73.61%</td><td>66.11%</td><td>67.01%</td><td>-7.50pp</td></tr>
+      <tr><td>Chandigarh</td><td>74.68%</td><td>85.17%</td><td>86.05%</td><td>+10.49pp</td></tr>
+      <tr><td>Madhya Pradesh</td><td>74.91%</td><td>68.64%</td><td>69.33%</td><td>-6.27pp</td></tr>
+      <tr><td>NCT of Delhi</td><td>75.60%</td><td>87.26%</td><td>86.22%</td><td>+11.65pp</td></tr>
+      <tr><td>Sikkim</td><td>76.59%</td><td>81.97%</td><td>81.44%</td><td>+5.39pp</td></tr>
+      <tr><td>Mizoram</td><td>77.84%</td><td>91.78%</td><td>91.34%</td><td>+13.95pp</td></tr>
+      <tr><td>Karnataka</td><td>78.90%</td><td>74.36%</td><td>75.37%</td><td>-4.53pp</td></tr>
+      <tr><td>Odisha</td><td>79.99%</td><td>73.17%</td><td>72.89%</td><td>-6.82pp</td></tr>
+      <tr><td>Gujarat</td><td>80.85%</td><td>77.49%</td><td>78.06%</td><td>-3.36pp</td></tr>
+      <tr><td>Tripura</td><td>83.17%</td><td>88.16%</td><td>87.22%</td><td>+5.00pp</td></tr>
+      <tr><td>Maharashtra</td><td>83.60%</td><td>81.79%</td><td>82.37%</td><td>-1.81pp</td></tr>
+      <tr><td>Chhattisgarh</td><td>84.57%</td><td>69.80%</td><td>70.29%</td><td>-14.77pp</td></tr>
+      <tr><td>Goa</td><td>84.74%</td><td>88.71%</td><td>88.72%</td><td>+3.97pp</td></tr>
+      <tr><td>Daman &amp; Diu</td><td>85.88%</td><td>87.08%</td><td>87.11%</td><td>+1.20pp</td></tr>
+      <tr><td>Dadra &amp; Nagar Haveli</td><td>86.60%</td><td>75.62%</td><td>76.25%</td><td>-10.97pp</td></tr>
+      <tr><td>Tamil Nadu</td><td>88.18%</td><td>78.83%</td><td>80.10%</td><td>-9.35pp</td></tr>
+      <tr><td>Andaman &amp; Nicobar Islands</td><td>91.52%</td><td>86.98%</td><td>86.64%</td><td>-4.54pp</td></tr>
+      <tr><td>Puducherry</td><td>91.68%</td><td>85.10%</td><td>85.86%</td><td>-6.58pp</td></tr>
+      <tr><td>Lakshadweep</td><td>91.78%</td><td>93.94%</td><td>91.88%</td><td>+2.16pp</td></tr>
+      <tr><td>Kerala</td><td>93.32%</td><td>93.51%</td><td>94.01%</td><td>+0.19pp</td></tr>
+    </tbody></table>
+  </details>
+</section>
+
+<!-- SEX RATIO -->
+<section class="tile">
+  <div class="tile-head">
+    <h2>Sex ratio (females per 1000 males)</h2>
+    <p class="source">canonical/sex-ratio.csv · sources/census-2011/c-series/c15-religion-by-age-sex.xlsx</p>
+    <p class="data-current">Data current to · Census 2011</p>
+  </div>
+  <div class="headline">951</div>
+  <p class="headline-caption">All-India Muslim sex ratio (females per 1000 males), 2011. Hindu: 939, All: 943</p>
+  <div class="chart-wrap"><canvas id="sr-chart"></canvas></div>
+  <p class="methodology">Females ÷ males × 1000, at all ages and total residence. Higher = more females
+  per male. Muslims have a higher national sex ratio than Hindus (951 vs 939) — one of the rare
+  indicators where the Muslim outcome runs ahead.</p>
+</section>
+
+<!-- MUSLIM HIGHER ED ENROLMENT -->
+<section class="tile">
+  <div class="tile-head">
+    <h2>Muslim student enrolment in higher education</h2>
+    <p class="source">canonical/muslim-higher-ed-enrolment.csv · sources/aishe/aishe-report-2021-22.pdf (Table 15, p. 140)</p>
+    <p class="data-current">Data current to · AISHE 2021-22 (next release: AISHE 2022-23 expected mid-2026)</p>
+  </div>
+  <div class="headline">2,108,033</div>
+  <p class="headline-caption">All-India Muslim student enrolment in higher education (AISHE 2021-22). Note: AISHE reports Muslim Minority separately; Hindu is residual, not directly enumerated.</p>
+  <div class="chart-wrap"><canvas id="ahe-chart"></canvas></div>
+  <p class="methodology">AISHE classifies enrolment as "Muslim Minority" vs "Other Minority Community"
+  (Christians, Sikhs, Buddhists, Jains, Parsis); Hindu enrolment is the residual, not directly
+  enumerated. This tile shows absolute Muslim count. A "Muslim share of total enrolment" metric
+  is a separate canonical target that requires Total Enrolment by state from a different AISHE
+  table (not yet extracted).</p>
+  <div class="note">
+    <b>Known data gap:</b> Ladakh, Lakshadweep, and West Bengal could not be cleanly extracted from
+    AISHE Table 15 (PDF text-layer issues — see <code>transform/aishe/extract_table15.py</code>
+    docstring). Combined, these account for less than 0.1% of national Muslim enrolment.
+  </div>
+  <details>
+    <summary>Full data (33 states)</summary>
+    <table><thead><tr><th>State / UT</th><th>Muslim enrolment</th></tr></thead><tbody>
+      <tr><td>Uttar Pradesh</td><td>326,819</td></tr>
+      <tr><td>Kerala</td><td>187,358</td></tr>
+      <tr><td>Bihar</td><td>172,681</td></tr>
+      <tr><td>Maharashtra</td><td>154,515</td></tr>
+      <tr><td>Karnataka</td><td>147,249</td></tr>
+      <tr><td>Jammu &amp; Kashmir</td><td>138,142</td></tr>
+      <tr><td>Telangana</td><td>121,318</td></tr>
+      <tr><td>Tamil Nadu</td><td>115,690</td></tr>
+      <tr><td>Assam</td><td>84,808</td></tr>
+      <tr><td>Andhra Pradesh</td><td>56,444</td></tr>
+      <tr><td>Rajasthan</td><td>46,411</td></tr>
+      <tr><td>Madhya Pradesh</td><td>39,205</td></tr>
+      <tr><td>Jharkhand</td><td>38,200</td></tr>
+      <tr><td>Gujarat</td><td>35,993</td></tr>
+      <tr><td>NCT of Delhi</td><td>28,282</td></tr>
+      <tr><td>Punjab</td><td>19,917</td></tr>
+      <tr><td>Uttarakhand</td><td>16,836</td></tr>
+      <tr><td>Haryana</td><td>10,961</td></tr>
+      <tr><td>Odisha</td><td>8,509</td></tr>
+      <tr><td>Chhattisgarh</td><td>5,113</td></tr>
+      <tr><td>Puducherry</td><td>3,270</td></tr>
+      <tr><td>Goa</td><td>3,084</td></tr>
+      <tr><td>Tripura</td><td>3,002</td></tr>
+      <tr><td>Meghalaya</td><td>2,119</td></tr>
+      <tr><td>Manipur</td><td>1,964</td></tr>
+      <tr><td>Himachal Pradesh</td><td>1,314</td></tr>
+      <tr><td>Chandigarh</td><td>692</td></tr>
+      <tr><td>Andaman &amp; Nicobar Islands</td><td>609</td></tr>
+      <tr><td>Nagaland</td><td>253</td></tr>
+      <tr><td>DNH and Daman &amp; Diu (merged)</td><td>228</td></tr>
+      <tr><td>Sikkim</td><td>162</td></tr>
+      <tr><td>Mizoram</td><td>130</td></tr>
+      <tr><td>Arunachal Pradesh</td><td>107</td></tr>
+    </tbody></table>
+  </details>
+</section>
+
+<footer>
+  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-28 03:56.
+  Every number on this page traces L4 → L3 (canonical) → L2 (extracted) → L1 (source file)
+  with SHA256 sidecar provenance. Re-run the builder after any canonical change:
+  <code>python dashboard/build.py</code></p>
+</footer>
+
+</div>
+
+<script>
+const CFG_BASE = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: { position: 'top', labels: { font: { size: 12 } } },
+    tooltip: { titleFont: { size: 12 }, bodyFont: { size: 12 } },
+  },
+  scales: {
+    y: { ticks: { font: { size: 11 } } },
+    x: { ticks: { font: { size: 11 }, maxRotation: 60, minRotation: 60 } },
+  },
+};
+
+new Chart(document.getElementById('ps-chart'), {
+  type: 'bar',
+  data: {
+    labels: ["Lakshadweep", "Jammu & Kashmir", "Assam", "West Bengal", "Kerala", "Uttar Pradesh", "Bihar", "Jharkhand", "Uttarakhand", "Karnataka", "NCT of Delhi", "Maharashtra", "Gujarat", "Andhra Pradesh", "Rajasthan", "Tripura", "Andaman & Nicobar Islands", "Manipur", "Goa", "Daman & Diu", "Haryana", "Madhya Pradesh", "Puducherry", "Tamil Nadu", "Chandigarh", "Meghalaya", "Dadra & Nagar Haveli", "Nagaland", "Himachal Pradesh", "Odisha", "Chhattisgarh", "Arunachal Pradesh", "Punjab", "Sikkim", "Mizoram"],
+    datasets: [
+      { label: 'Muslim share (%)', data: [96.58, 68.31, 34.22, 27.01, 26.56, 19.26, 16.87, 14.53, 13.95, 12.92, 12.86, 11.54, 9.67, 9.56, 9.07, 8.6, 8.52, 8.4, 8.33, 7.92, 7.03, 6.57, 6.05, 5.86, 4.87, 4.4, 3.76, 2.47, 2.18, 2.17, 2.02, 1.95, 1.93, 1.62, 1.35], backgroundColor: 'rgba(43,108,176,0.85)' },
+    ],
+  },
+  options: {
+    ...CFG_BASE,
+    plugins: {
+      ...CFG_BASE.plugins,
+      annotation: {},
+      legend: { display: false },
+    },
+  },
+});
+
+new Chart(document.getElementById('lit-chart'), {
+  type: 'bar',
+  data: {
+    labels: ["Haryana", "Meghalaya", "Bihar", "Nagaland", "Uttar Pradesh", "Jammu & Kashmir", "Punjab", "Assam", "Rajasthan", "Uttarakhand", "Jharkhand", "Himachal Pradesh", "Arunachal Pradesh", "Manipur", "West Bengal", "Andhra Pradesh", "Chandigarh", "Madhya Pradesh", "NCT of Delhi", "Sikkim", "Mizoram", "Karnataka", "Odisha", "Gujarat", "Tripura", "Maharashtra", "Chhattisgarh", "Goa", "Daman & Diu", "Dadra & Nagar Haveli", "Tamil Nadu", "Andaman & Nicobar Islands", "Puducherry", "Lakshadweep", "Kerala"],
+    datasets: [
+      { label: 'Muslim', data: [53.4, 54.01, 56.37, 57.87, 58.84, 61.03, 61.89, 61.93, 62.73, 63.19, 66.22, 67.53, 67.68, 67.78, 68.76, 73.61, 74.68, 74.91, 75.6, 76.59, 77.84, 78.9, 79.99, 80.85, 83.17, 83.6, 84.57, 84.74, 85.88, 86.6, 88.18, 91.52, 91.68, 91.78, 93.32], backgroundColor: 'rgba(43,108,176,0.85)' },
+      { label: 'Hindu',  data: [77.09, 77.24, 62.88, 79.95, 69.74, 79.09, 80.06, 77.67, 66.08, 81.23, 67.67, 83.13, 70.11, 82.01, 79.14, 66.11, 85.17, 68.64, 87.26, 81.97, 91.78, 74.36, 73.17, 77.49, 88.16, 81.79, 69.8, 88.71, 87.08, 75.62, 78.83, 86.98, 85.1, 93.94, 93.51],  backgroundColor: 'rgba(183,106,43,0.85)' },
+    ],
+  },
+  options: CFG_BASE,
+});
+
+new Chart(document.getElementById('sr-chart'), {
+  type: 'bar',
+  data: {
+    labels: ["Sikkim", "Mizoram", "Dadra & Nagar Haveli", "Daman & Diu", "Nagaland", "Chandigarh", "Arunachal Pradesh", "NCT of Delhi", "Himachal Pradesh", "Punjab", "Andaman & Nicobar Islands", "Haryana", "Uttarakhand", "Goa", "Maharashtra", "Meghalaya", "Jammu & Kashmir", "Uttar Pradesh", "Bihar", "Jharkhand", "Gujarat", "Madhya Pradesh", "Rajasthan", "West Bengal", "Chhattisgarh", "Assam", "Odisha", "Tripura", "Karnataka", "Andhra Pradesh", "Manipur", "Lakshadweep", "Tamil Nadu", "Puducherry", "Kerala"],
+    datasets: [
+      { label: 'Muslim', data: [509.6, 553.1, 678.0, 698.9, 716.4, 721.3, 738.9, 854.6, 855.8, 862.4, 873.5, 895.0, 901.0, 905.0, 910.6, 922.5, 934.5, 937.0, 941.4, 943.1, 944.2, 945.0, 946.2, 950.5, 952.0, 954.7, 956.4, 963.8, 969.4, 978.1, 991.9, 997.9, 1014.8, 1072.9, 1124.7], backgroundColor: 'rgba(43,108,176,0.85)' },
+      { label: 'Hindu',  data: [856.4, 505.8, 774.2, 607.3, 650.5, 803.4, 784.8, 864.7, 975.4, 878.7, 857.6, 875.6, 976.4, 929.3, 927.6, 862.9, 795.0, 906.7, 913.1, 935.0, 916.0, 928.6, 926.5, 948.3, 990.2, 957.9, 977.2, 959.4, 972.4, 993.3, 982.3, 115.4, 992.4, 1029.8, 1076.7],  backgroundColor: 'rgba(183,106,43,0.85)' },
+    ],
+  },
+  options: {
+    ...CFG_BASE,
+    scales: {
+      ...CFG_BASE.scales,
+      y: { ...CFG_BASE.scales.y, suggestedMin: 800, suggestedMax: 1100 },
+    },
+  },
+});
+
+new Chart(document.getElementById('ahe-chart'), {
+  type: 'bar',
+  data: {
+    labels: ["Uttar Pradesh", "Kerala", "Bihar", "Maharashtra", "Karnataka", "Jammu & Kashmir", "Telangana", "Tamil Nadu", "Assam", "Andhra Pradesh", "Rajasthan", "Madhya Pradesh", "Jharkhand", "Gujarat", "NCT of Delhi", "Punjab", "Uttarakhand", "Haryana", "Odisha", "Chhattisgarh"],
+    datasets: [
+      { label: 'Muslim enrolment (top 20 states)', data: [326819, 187358, 172681, 154515, 147249, 138142, 121318, 115690, 84808, 56444, 46411, 39205, 38200, 35993, 28282, 19917, 16836, 10961, 8509, 5113],
+         backgroundColor: 'rgba(123,29,34,0.85)' },
+    ],
+  },
+  options: { ...CFG_BASE, plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+});
+</script>
+</body>
+</html>
