@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Source entry",
+  "type": "object",
+  "required": ["id", "name", "publisher", "cadence", "access", "archive_dir", "runbook"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+    "name": {"type": "string"},
+    "publisher": {"type": "string"},
+    "home_url": {"type": ["string", "null"]},
+    "cadence": {"type": "string"},
+    "cadence_notes": {"type": ["string", "null"]},
+    "access": {
+      "type": "object",
+      "required": ["method"],
+      "properties": {
+        "method": {"enum": ["web-download", "web-scrape", "web-search", "manual-rti-filing", "mixed", "api"]},
+        "auth_required": {"type": "boolean"},
+        "auth_notes": {"type": ["string", "null"]}
+      }
+    },
+    "formats": {"type": "array", "items": {"type": "string"}},
+    "religion_disaggregated": {"type": ["boolean", "string"]},
+    "religion_disaggregated_notes": {"type": ["string", "null"]},
+    "geography_levels": {"type": "array", "items": {"type": "string"}},
+    "coverage": {"type": "array", "items": {"type": "string"}},
+    "known_issues": {"type": "array", "items": {"type": "string"}},
+    "archive_dir": {"type": "string"},
+    "runbook": {"type": "string"},
+    "last_pulled": {"type": ["string", "null"]},
+    "next_expected": {"type": ["string", "null"]},
+    "targets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["target_id", "description", "target_path", "status"],
+        "properties": {
+          "target_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+          "description": {"type": "string"},
+          "url": {"type": ["string", "null"]},
+          "target_path": {"type": "string"},
+          "status": {"enum": ["pending-url-discovery", "verified", "archived", "deprecated"]}
+        }
+      }
+    }
+  }
+}

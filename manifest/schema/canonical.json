@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Canonical metric observation (L3 row)",
+  "type": "object",
+  "required": ["metric_id", "geography_level", "geography_code", "year", "religion", "value", "source_id", "source_document", "extraction_run"],
+  "properties": {
+    "metric_id": {"type": "string"},
+    "geography_level": {"enum": ["national", "state", "district", "sub-district"]},
+    "geography_code": {"type": "string"},
+    "year": {"type": "integer"},
+    "religion": {"enum": ["muslim", "hindu", "sc", "st", "christian", "sikh", "buddhist", "jain", "other", "not_stated", "all"]},
+    "value": {"type": "number"},
+    "denominator": {"type": ["string", "null"]},
+    "sample_size": {"type": ["integer", "null"]},
+    "ci_lower": {"type": ["number", "null"]},
+    "ci_upper": {"type": ["number", "null"]},
+    "source_id": {"type": "string"},
+    "source_document": {"type": "string"},
+    "extraction_run": {"type": "string"},
+    "methodology_note": {"type": ["string", "null"]},
+    "break_flag": {"type": ["boolean", "string"]}
+  }
+}

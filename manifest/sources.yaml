@@ -1,0 +1,373 @@
+schema_version: 1
+
+# Every external data source feeding the dashboard is registered here.
+# Pull scripts read this file. Edit here, not in scripts.
+# Schema: manifest/schema/source-entry.json
+
+sources:
+
+  - id: census-india-2011
+    name: Census of India 2011
+    publisher: Office of the Registrar General & Census Commissioner, MoHA
+    home_url: https://censusindia.gov.in/
+    cadence: 10-year
+    cadence_notes: |
+      2021 round indefinitely delayed as of 2026-05. Monitor for release.
+    access:
+      method: web-download
+      auth_required: false
+    formats: [xlsx, pdf]
+    religion_disaggregated: true
+    geography_levels: [national, state, district, sub-district, town, village]
+    coverage:
+      - population
+      - literacy
+      - educational_attainment
+      - work_participation
+      - housing
+      - household_amenities
+    known_issues:
+      - "C-series tables thin for small religions at sub-district level"
+      - "censusindia.gov.in URLs have changed across redesigns; verify before pull"
+    archive_dir: sources/census-2011/
+    runbook: docs/runbooks/census-india-2011.md
+    last_pulled: null
+    next_expected: null
+    targets:
+      - target_id: c01-population-by-religion
+        description: C-1 Population by Religious Community (India MDDS — all geography levels)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11361/download/14474/DDW00C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/c01-population-by-religion.xls
+        status: verified
+      - target_id: c09-education-by-religion
+        description: C-9 Educational Level by Religious Community and Sex (population age 7+)
+        url: https://censusindia.gov.in/nada/index.php/catalog/2493/download/5570/DDW-0000C-09.xlsx
+        target_path: sources/census-2011/c-series/c09-education-by-religion.xlsx
+        status: verified
+      - target_id: c15-religion-by-age-sex
+        description: C-15 Religious Community by Age Group and Sex (national + state + district + city)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11400/download/14513/DDW-0000C-15.XLSX
+        target_path: sources/census-2011/c-series/c15-religion-by-age-sex.xlsx
+        status: verified
+
+  - id: nfhs-5
+    name: National Family Health Survey 5 (2019-21)
+    publisher: International Institute for Population Sciences (IIPS), MoHFW
+    home_url: https://rchiips.org/nfhs/
+    cadence: ~5-year
+    cadence_notes: |
+      NFHS-6 fieldwork underway as of 2026. Expected preliminary release 2026-27.
+    access:
+      method: web-download
+      auth_required: false
+      auth_notes: |
+        National + state report PDFs are open. Unit-level recodes require
+        free registration with the DHS Program (dhsprogram.com).
+    formats: [pdf, dta, sav]
+    religion_disaggregated: true
+    geography_levels: [national, state, district]
+    coverage:
+      - child_mortality
+      - child_nutrition
+      - maternal_health
+      - women_anemia
+      - household_amenities
+      - bank_account_ownership
+      - educational_attainment
+    known_issues:
+      - "District-level religion crosstabs not all published; some require unit-level computation"
+      - "NFHS-6 will revise definitions for several indicators; methodology break expected"
+    archive_dir: sources/nfhs-5/
+    runbook: docs/runbooks/nfhs-5.md
+    last_pulled: null
+    next_expected: "2026-12-01"
+    targets:
+      - target_id: india-report-volume-1
+        description: NFHS-5 India Report Volume I (national + state crosstabs)
+        url: null
+        target_path: sources/nfhs-5/reports/india-report-volume-1.pdf
+        status: pending-url-discovery
+      - target_id: india-report-volume-2
+        description: NFHS-5 India Report Volume II (additional indicators by religion)
+        url: null
+        target_path: sources/nfhs-5/reports/india-report-volume-2.pdf
+        status: pending-url-discovery
+
+  - id: plfs
+    name: Periodic Labour Force Survey
+    publisher: National Statistical Office (NSO), MoSPI
+    home_url: https://www.mospi.gov.in/
+    cadence: annual + quarterly-urban
+    cadence_notes: |
+      Annual report typically released Jun-Jul of the year following the
+      survey period (Jul-Jun). Quarterly urban bulletins more frequent.
+    access:
+      method: web-download
+      auth_required: false
+    formats: [pdf, csv]
+    religion_disaggregated: true
+    geography_levels: [national, state]
+    coverage:
+      - labour_force_participation
+      - worker_population_ratio
+      - unemployment_rate
+      - status_of_employment
+      - industry_distribution
+      - literacy_15plus
+    known_issues:
+      - "Religion in schedule but not always tabulated in main report; unit-level computation often needed"
+      - "Sub-state Muslim subsamples thin; CIs widen quickly"
+    archive_dir: sources/plfs/
+    runbook: docs/runbooks/plfs.md
+    last_pulled: null
+    next_expected: "2026-07-01"
+    targets:
+      - target_id: annual-report-2023-24
+        description: PLFS Annual Report Jul 2023 - Jun 2024
+        url: null
+        target_path: sources/plfs/annual/plfs-annual-report-2023-24.pdf
+        status: pending-url-discovery
+
+  - id: hces-2022-23
+    name: Household Consumption Expenditure Survey 2022-23
+    publisher: National Statistical Office (NSO), MoSPI
+    home_url: https://www.mospi.gov.in/
+    cadence: ~5-year planned
+    cadence_notes: |
+      First major round since 2011-12. 2023-24 round already in field.
+    access:
+      method: web-download
+      auth_required: false
+    formats: [pdf, csv]
+    religion_disaggregated: true
+    geography_levels: [national, state]
+    coverage:
+      - monthly_per_capita_consumption_expenditure
+      - food_share
+      - poverty_proxies
+    known_issues:
+      - "Methodology revised from 2011-12 (questionnaire redesign); not directly comparable"
+      - "Religion crosstabs in factsheet; full crosstabs require unit-level"
+    archive_dir: sources/hces-2022-23/
+    runbook: docs/runbooks/hces-2022-23.md
+    last_pulled: null
+    next_expected: null
+    targets:
+      - target_id: factsheet
+        description: HCES 2022-23 Factsheet (national + state MPCE)
+        url: null
+        target_path: sources/hces-2022-23/factsheet.pdf
+        status: pending-url-discovery
+
+  - id: aishe
+    name: All India Survey on Higher Education
+    publisher: Department of Higher Education, MoE
+    home_url: https://aishe.gov.in/
+    cadence: annual
+    cadence_notes: |
+      Reference year typically 18 months prior to publication.
+    access:
+      method: web-download
+      auth_required: false
+    formats: [pdf, xlsx]
+    religion_disaggregated: true
+    geography_levels: [national, state]
+    coverage:
+      - gross_enrollment_ratio_higher_ed
+      - enrollment_by_level
+      - enrollment_by_discipline
+    known_issues:
+      - "Portal reorganized 2022; old report URLs broken"
+      - "Smaller religious groups sometimes grouped as 'others'"
+    archive_dir: sources/aishe/
+    runbook: docs/runbooks/aishe.md
+    last_pulled: null
+    next_expected: "2026-06-01"
+    targets:
+      - target_id: report-2021-22
+        description: AISHE 2021-22 Final Report
+        url: null
+        target_path: sources/aishe/aishe-report-2021-22.pdf
+        status: pending-url-discovery
+
+  - id: ncrb-prison
+    name: NCRB Prison Statistics India
+    publisher: National Crime Records Bureau, MoHA
+    home_url: https://ncrb.gov.in/
+    cadence: annual (~2y lag)
+    access:
+      method: web-download
+      auth_required: false
+    formats: [pdf]
+    religion_disaggregated: true
+    geography_levels: [national, state]
+    coverage:
+      - prison_population_by_religion
+      - undertrial_population_by_religion
+      - convict_population_by_religion
+    known_issues:
+      - "Some state-year cells suppressed where unreliable"
+    archive_dir: sources/ncrb-prison/
+    runbook: docs/runbooks/ncrb-prison.md
+    last_pulled: null
+    next_expected: "2026-11-01"
+    targets: []
+
+  - id: ncrb-crime
+    name: NCRB Crime in India
+    publisher: National Crime Records Bureau, MoHA
+    home_url: https://ncrb.gov.in/
+    cadence: annual (~2y lag)
+    access:
+      method: web-download
+      auth_required: false
+    formats: [pdf]
+    religion_disaggregated: partial
+    geography_levels: [national, state]
+    coverage:
+      - communal_riot_incidents
+    known_issues:
+      - "Several states no longer record communal as a category"
+      - "Religion of victim/perpetrator rarely published"
+    archive_dir: sources/ncrb-crime/
+    runbook: docs/runbooks/ncrb-crime.md
+    last_pulled: null
+    next_expected: "2026-11-01"
+    targets: []
+
+  - id: rbi-minority-lending
+    name: RBI Priority Sector Lending - Minority Concentration
+    publisher: Reserve Bank of India
+    home_url: https://www.rbi.org.in/
+    cadence: annual
+    access:
+      method: web-download
+      auth_required: false
+    formats: [pdf, xlsx]
+    religion_disaggregated: false
+    religion_disaggregated_notes: |
+      Reports at "minority community" level (Muslims + 5 other notified
+      minorities), not Muslim-specific. Note this on every dashboard tile.
+    geography_levels: [national, state, district]
+    coverage:
+      - minority_concentration_districts
+      - priority_sector_lending_share
+    archive_dir: sources/rbi/
+    runbook: docs/runbooks/rbi-minority-lending.md
+    last_pulled: null
+    next_expected: null
+    targets: []
+
+  - id: niti-mpi
+    name: NITI Aayog National Multidimensional Poverty Index
+    publisher: NITI Aayog
+    home_url: https://www.niti.gov.in/
+    cadence: irregular (2021, 2023 to date)
+    access:
+      method: web-download
+      auth_required: false
+    formats: [pdf]
+    religion_disaggregated: true
+    geography_levels: [national, state, district]
+    coverage:
+      - mpi_headcount_ratio
+      - mpi_intensity
+      - mpi_value
+    known_issues:
+      - "Composite indicator; component weighting documented on metric page"
+    archive_dir: sources/niti-mpi/
+    runbook: docs/runbooks/niti-mpi.md
+    last_pulled: null
+    next_expected: null
+    targets: []
+
+  - id: prs-eci-affidavits
+    name: PRS Legislative Research - Candidate Affidavit Analyses
+    publisher: PRS Legislative Research (analysing ECI affidavit data)
+    home_url: https://prsindia.org/
+    cadence: per election
+    access:
+      method: web-download
+      auth_required: false
+    formats: [pdf, xlsx]
+    religion_disaggregated: true
+    religion_disaggregated_notes: |
+      PRS classification methodology disputed in some cases.
+      Document methodology and allow re-classification download.
+    geography_levels: [national, state]
+    coverage:
+      - mp_religion_share
+      - mla_religion_share
+    archive_dir: sources/prs-eci/
+    runbook: docs/runbooks/prs-eci.md
+    last_pulled: null
+    next_expected: null
+    targets: []
+
+  - id: mha-parliament-answers
+    name: MHA Parliament Q&A (Sansad portal)
+    publisher: Lok Sabha / Rajya Sabha Secretariat
+    home_url: https://sansad.in/
+    cadence: ad-hoc (per session)
+    access:
+      method: web-search
+      auth_required: false
+    formats: [pdf]
+    religion_disaggregated: varies
+    geography_levels: [national, state]
+    coverage:
+      - communal_incidents_reported
+      - hate_crime_data_government_acknowledged
+    known_issues:
+      - "Data only appears when questions are asked and answered; coverage uneven"
+    archive_dir: sources/mha-parliament/
+    runbook: docs/runbooks/mha-parliament.md
+    last_pulled: null
+    next_expected: null
+    targets: []
+
+  - id: civic-incident-databases
+    name: Civic-tech incident databases (Documentation of the Oppressed, India Hate Lab, Hindutva Watch)
+    publisher: Multiple civic-tech / research initiatives
+    home_url: null
+    cadence: continuous
+    access:
+      method: mixed
+      auth_required: false
+    formats: [json, csv, web]
+    religion_disaggregated: incident-level
+    geography_levels: [national, state, district]
+    coverage:
+      - communal_incidents_civic_recorded
+      - hate_crime_incidents
+    known_issues:
+      - "Methodology varies by source"
+      - "Always shown as separate dashboard tile; never aggregated with govt sources"
+    archive_dir: sources/civic-databases/
+    runbook: docs/runbooks/civic-databases.md
+    last_pulled: null
+    next_expected: null
+    targets: []
+
+  - id: rti-public-sector-employment
+    name: RTI filings - Central government & PSU employment by religion
+    publisher: Various (one per RTI request)
+    home_url: null
+    cadence: on-demand (target annual cycle)
+    access:
+      method: manual-rti-filing
+      auth_required: false
+    formats: [pdf]
+    religion_disaggregated: true
+    geography_levels: [organization]
+    coverage:
+      - civil_services_intake_share
+      - psu_employment_share
+    known_issues:
+      - "Response rate and quality vary by department"
+      - "Manual entry from response letters into structured form"
+    archive_dir: sources/rti/
+    runbook: docs/runbooks/rti-public-sector.md
+    last_pulled: null
+    next_expected: null
+    targets: []

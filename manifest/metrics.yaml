@@ -1,0 +1,394 @@
+schema_version: 1
+
+# Every metric on the dashboard must be defined here.
+# Schema: manifest/schema/metric-entry.json
+
+clusters:
+  - id: demographics
+    name: Demographics & geographic concentration
+  - id: education
+    name: Education
+  - id: employment
+    name: Employment & livelihoods
+  - id: income
+    name: Income, consumption, poverty
+  - id: health
+    name: Health & child wellbeing
+  - id: housing
+    name: Housing & basic amenities
+  - id: finance
+    name: Financial inclusion
+  - id: representation
+    name: Political representation
+  - id: justice
+    name: Justice & safety
+  - id: civic
+    name: Civic & public-sector access
+
+metrics:
+
+  # ----- Demographics (Phase 1) -----
+  - id: pop-share
+    name: Muslim share of total population
+    cluster: demographics
+    unit: percent
+    higher_is_better: null
+    definition: |
+      Muslim population as a share of total population at the given
+      geography level.
+    sources: {primary: census-india-2011}
+    geography_levels: [national, state, district]
+    religions: [muslim]
+    comparison_baselines: []
+    phase: 1
+    status: defined
+
+  - id: urban-share
+    name: Urban share of population
+    cluster: demographics
+    unit: percent
+    higher_is_better: null
+    sources: {primary: census-india-2011}
+    geography_levels: [national, state]
+    religions: [muslim, hindu, all]
+    comparison_baselines: [hindu, all]
+    phase: 1
+    status: stub
+
+  - id: sex-ratio
+    name: Sex ratio (females per 1000 males)
+    cluster: demographics
+    unit: females_per_1000_males
+    higher_is_better: null
+    sources: {primary: census-india-2011}
+    geography_levels: [national, state, district]
+    religions: [muslim, hindu, sc, st, all]
+    comparison_baselines: [hindu, all]
+    phase: 1
+    status: stub
+
+  - id: district-concentration-top100
+    name: Share of Muslim population in top-100 concentration districts
+    cluster: demographics
+    unit: percent
+    higher_is_better: null
+    sources: {primary: census-india-2011}
+    geography_levels: [national]
+    religions: [muslim]
+    comparison_baselines: []
+    phase: 1
+    status: stub
+
+  # ----- Education (Phase 1) -----
+  - id: lit-7plus
+    name: Literacy rate (7+ years)
+    cluster: education
+    unit: percent
+    higher_is_better: true
+    definition: |
+      Share of population aged 7 and above who can both read and write
+      with understanding in any language.
+    sources:
+      primary: census-india-2011
+      cross_check: [plfs]
+    geography_levels: [national, state, district]
+    religions: [muslim, hindu, sc, st, all]
+    methodology_notes: |
+      Census defines literacy as ability to read and write with understanding
+      in any language. PLFS uses a similar but not identical definition;
+      document divergence on tile.
+    break_notes: |
+      Census vs PLFS series use slightly different definitions; do not connect
+      them on the same line chart.
+    comparison_baselines: [hindu, sc, all]
+    phase: 1
+    status: defined
+
+  - id: mean-yrs-schooling
+    name: Mean years of schooling (25+)
+    cluster: education
+    unit: years
+    higher_is_better: true
+    sources: {primary: nfhs-5}
+    geography_levels: [national, state]
+    religions: [muslim, hindu, sc, st, all]
+    comparison_baselines: [hindu, sc, all]
+    phase: 1
+    status: stub
+
+  - id: ger-higher-ed
+    name: Gross Enrollment Ratio in higher education (18-23)
+    cluster: education
+    unit: percent
+    higher_is_better: true
+    sources:
+      primary: aishe
+      cross_check: [plfs]
+    geography_levels: [national, state]
+    religions: [muslim, hindu, sc, st, all]
+    comparison_baselines: [hindu, sc, all]
+    phase: 1
+    status: stub
+
+  # ----- Employment (Phase 1) -----
+  - id: lfpr-15plus
+    name: Labour Force Participation Rate (15+)
+    cluster: employment
+    unit: percent
+    higher_is_better: true
+    sources: {primary: plfs}
+    geography_levels: [national, state]
+    religions: [muslim, hindu, sc, st, all]
+    comparison_baselines: [hindu, all]
+    phase: 1
+    status: stub
+
+  - id: wpr-15plus
+    name: Worker Population Ratio (15+)
+    cluster: employment
+    unit: percent
+    higher_is_better: true
+    sources: {primary: plfs}
+    geography_levels: [national, state]
+    religions: [muslim, hindu, sc, st, all]
+    comparison_baselines: [hindu, all]
+    phase: 1
+    status: stub
+
+  - id: salaried-share
+    name: Share of workers in regular salaried employment
+    cluster: employment
+    unit: percent
+    higher_is_better: true
+    sources: {primary: plfs}
+    geography_levels: [national, state]
+    religions: [muslim, hindu, sc, st, all]
+    comparison_baselines: [hindu, all]
+    phase: 1
+    status: stub
+
+  # ----- Income / consumption / poverty (Phase 1) -----
+  - id: mpce
+    name: Monthly Per Capita Consumption Expenditure
+    cluster: income
+    unit: inr_per_month
+    higher_is_better: true
+    sources: {primary: hces-2022-23}
+    geography_levels: [national, state]
+    religions: [muslim, hindu, sc, st, all]
+    comparison_baselines: [hindu, all]
+    phase: 1
+    status: stub
+
+  - id: mpi-headcount
+    name: Multidimensional Poverty Index headcount ratio
+    cluster: income
+    unit: percent
+    higher_is_better: false
+    sources: {primary: niti-mpi}
+    geography_levels: [national, state, district]
+    religions: [muslim, hindu, sc, st, all]
+    comparison_baselines: [hindu, all]
+    phase: 1
+    status: stub
+
+  # ----- Health (Phase 1) -----
+  - id: imr
+    name: Infant Mortality Rate
+    cluster: health
+    unit: per_1000_live_births
+    higher_is_better: false
+    sources: {primary: nfhs-5}
+    geography_levels: [national, state]
+    religions: [muslim, hindu, sc, st, all]
+    comparison_baselines: [hindu, all]
+    phase: 1
+    status: stub
+
+  - id: stunting-u5
+    name: Stunting prevalence in children under 5
+    cluster: health
+    unit: percent
+    higher_is_better: false
+    sources: {primary: nfhs-5}
+    geography_levels: [national, state]
+    religions: [muslim, hindu, sc, st, all]
+    comparison_baselines: [hindu, all]
+    phase: 1
+    status: stub
+
+  - id: inst-delivery
+    name: Institutional delivery rate
+    cluster: health
+    unit: percent
+    higher_is_better: true
+    sources: {primary: nfhs-5}
+    geography_levels: [national, state]
+    religions: [muslim, hindu, sc, st, all]
+    comparison_baselines: [hindu, all]
+    phase: 1
+    status: stub
+
+  - id: women-anemia
+    name: Anemia in women aged 15-49
+    cluster: health
+    unit: percent
+    higher_is_better: false
+    sources: {primary: nfhs-5}
+    geography_levels: [national, state]
+    religions: [muslim, hindu, sc, st, all]
+    comparison_baselines: [hindu, all]
+    phase: 1
+    status: stub
+
+  # ----- Housing & amenities (Phase 1) -----
+  - id: pucca-housing
+    name: Pucca house share
+    cluster: housing
+    unit: percent
+    higher_is_better: true
+    sources:
+      primary: nfhs-5
+      cross_check: [census-india-2011]
+    geography_levels: [national, state]
+    religions: [muslim, hindu, sc, st, all]
+    comparison_baselines: [hindu, all]
+    phase: 1
+    status: stub
+
+  - id: improved-sanitation
+    name: Improved sanitation access
+    cluster: housing
+    unit: percent
+    higher_is_better: true
+    sources: {primary: nfhs-5}
+    geography_levels: [national, state]
+    religions: [muslim, hindu, sc, st, all]
+    comparison_baselines: [hindu, all]
+    phase: 1
+    status: stub
+
+  - id: clean-cooking-fuel
+    name: Clean cooking fuel access
+    cluster: housing
+    unit: percent
+    higher_is_better: true
+    sources: {primary: nfhs-5}
+    geography_levels: [national, state]
+    religions: [muslim, hindu, sc, st, all]
+    comparison_baselines: [hindu, all]
+    phase: 1
+    status: stub
+
+  # ----- Financial inclusion (Phase 1) -----
+  - id: bank-account
+    name: Adult bank account ownership
+    cluster: finance
+    unit: percent
+    higher_is_better: true
+    sources: {primary: nfhs-5}
+    geography_levels: [national, state]
+    religions: [muslim, hindu, sc, st, all]
+    comparison_baselines: [hindu, all]
+    phase: 1
+    status: stub
+
+  # ----- Representation (Phase 2) -----
+  - id: ls-share
+    name: Muslim share of Lok Sabha members
+    cluster: representation
+    unit: percent
+    higher_is_better: null
+    sources: {primary: prs-eci-affidavits}
+    geography_levels: [national]
+    religions: [muslim]
+    comparison_baselines: []
+    phase: 2
+    status: stub
+
+  - id: mla-share
+    name: Muslim share of state legislative assembly members
+    cluster: representation
+    unit: percent
+    higher_is_better: null
+    sources: {primary: prs-eci-affidavits}
+    geography_levels: [state]
+    religions: [muslim]
+    comparison_baselines: []
+    phase: 2
+    status: stub
+
+  # ----- Justice (Phase 2) -----
+  - id: prison-share
+    name: Muslim share of prison population
+    cluster: justice
+    unit: percent
+    higher_is_better: null
+    sources: {primary: ncrb-prison}
+    geography_levels: [national, state]
+    religions: [muslim]
+    comparison_baselines: [all]
+    phase: 2
+    status: stub
+
+  - id: undertrial-share
+    name: Muslim share of undertrial prisoners
+    cluster: justice
+    unit: percent
+    higher_is_better: null
+    sources: {primary: ncrb-prison}
+    geography_levels: [national, state]
+    religions: [muslim]
+    comparison_baselines: [all]
+    phase: 2
+    status: stub
+
+  # ----- Civic / safety (Phase 2) -----
+  - id: communal-incidents-govt
+    name: Communal incidents (government-acknowledged)
+    cluster: civic
+    unit: count
+    higher_is_better: false
+    sources: {primary: mha-parliament-answers}
+    geography_levels: [national, state]
+    religions: []
+    comparison_baselines: []
+    phase: 2
+    status: stub
+
+  - id: communal-incidents-civic
+    name: Communal / hate incidents (civic-recorded)
+    cluster: civic
+    unit: count
+    higher_is_better: false
+    sources: {primary: civic-incident-databases}
+    geography_levels: [national, state, district]
+    religions: []
+    comparison_baselines: []
+    phase: 2
+    status: stub
+
+  - id: civil-services-share
+    name: Muslim share of central civil services intake
+    cluster: civic
+    unit: percent
+    higher_is_better: null
+    sources: {primary: rti-public-sector-employment}
+    geography_levels: [national]
+    religions: [muslim]
+    comparison_baselines: [all]
+    phase: 2
+    status: stub
+
+  # ----- Finance (Phase 2) -----
+  - id: minority-psl-share
+    name: Minority share of priority sector lending (aggregate minority)
+    cluster: finance
+    unit: percent
+    higher_is_better: true
+    sources: {primary: rbi-minority-lending}
+    geography_levels: [national, state, district]
+    religions: []
+    comparison_baselines: []
+    phase: 2
+    status: stub

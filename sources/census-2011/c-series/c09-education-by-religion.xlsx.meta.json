@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c09-education-by-religion",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/2493/download/5570/DDW-0000C-09.xlsx",
+  "pulled_at": "2026-05-27T17:47:08.237019+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 4066590,
+  "sha256": "48a5ba102279f6c1ec7ef88902f9e884c9da472a951da04f89b86511da6e7750",
+  "pull_script_version": "0.1.0"
+}

@@ -1,0 +1,4 @@
+PyYAML>=6.0
+requests>=2.31
+jsonschema>=4.20
+truststore>=0.9

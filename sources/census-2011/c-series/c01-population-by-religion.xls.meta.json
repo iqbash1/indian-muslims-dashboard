@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-population-by-religion",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11361/download/14474/DDW00C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-27T17:46:53.307985+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 52736,
+  "sha256": "c3fee2bb235f4ef511d9aaeceaf5f8026b48908f813c6d1cc06413a6c8a0d9cd",
+  "pull_script_version": "0.1.0"
+}

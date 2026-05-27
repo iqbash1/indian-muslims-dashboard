@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c15-religion-by-age-sex",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11400/download/14513/DDW-0000C-15.XLSX",
+  "pulled_at": "2026-05-27T17:47:15.094570+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 423733,
+  "sha256": "ad1d2aa830ee68419fe969bdda47518c8ee9bbd58c8a81bfcd66b9ff63f40f43",
+  "pull_script_version": "0.1.0"
+}

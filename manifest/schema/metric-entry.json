@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Metric entry",
+  "type": "object",
+  "required": ["id", "name", "cluster", "unit", "sources", "geography_levels", "religions", "comparison_baselines", "phase", "status"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+    "name": {"type": "string"},
+    "cluster": {"enum": ["demographics", "education", "employment", "income", "health", "housing", "finance", "representation", "justice", "civic"]},
+    "unit": {"type": "string"},
+    "definition": {"type": "string"},
+    "higher_is_better": {"type": ["boolean", "null"]},
+    "sources": {
+      "type": "object",
+      "required": ["primary"],
+      "properties": {
+        "primary": {"type": "string"},
+        "cross_check": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "geography_levels": {"type": "array", "items": {"enum": ["national", "state", "district", "sub-district"]}},
+    "religions": {"type": "array", "items": {"enum": ["muslim", "hindu", "sc", "st", "christian", "sikh", "buddhist", "jain", "other", "not_stated", "all"]}},
+    "methodology_notes": {"type": "string"},
+    "break_notes": {"type": ["string", "null"]},
+    "comparison_baselines": {"type": "array", "items": {"type": "string"}},
+    "phase": {"enum": [1, 2]},
+    "status": {"enum": ["stub", "defined", "data-loaded", "live"]}
+  }
+}
