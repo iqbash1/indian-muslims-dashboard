@@ -165,6 +165,89 @@ def prep_sex_ratio(rows: list[dict]) -> dict:
     }
 
 
+SCORECARD_SPEC = [
+    # (cluster, metric_id, display_name, unit, reference_religion, higher_is_better)
+    ("Demographics", "pop-share",                 "Population share",                 "percent", None,    None),
+    ("Demographics", "sex-ratio",                 "Sex ratio (F/1000M)",              "females_per_1000_males", "hindu", True),
+    ("Education",    "lit-7plus",                 "Literacy rate (7+)",               "percent", "hindu", True),
+    ("Education",    "muslim-higher-ed-enrolment","Higher-ed enrolment (count)",      "count",   None,    None),
+    ("Employment",   "lfpr-15plus",               "LFPR (15+)",                       "percent", "hindu", True),
+    ("Employment",   "wpr-15plus",                "WPR (15+)",                        "percent", "hindu", True),
+    ("Health",       "imr",                       "Infant Mortality Rate",            "per_1000_live_births", "hindu", False),
+    ("Health",       "women-anemia",              "Anaemia in women (15-49)",         "percent", "hindu", False),
+    ("Justice",      "prison-share",              "Muslim share of prisoners",        "percent", None,    None),  # gap vs pop-share
+    ("Justice",      "undertrial-share",          "Muslim share of undertrials",      "percent", None,    None),
+]
+MUSLIM_POP_SHARE = 14.23
+
+
+def render_scorecard_rows() -> str:
+    """Compute one HTML <tr> per metric showing Muslim/Hindu/All and gap vs reference."""
+    rows: list[str] = []
+    for cluster, mid, name, unit, ref, higher_better in SCORECARD_SPEC:
+        data = load_metric(mid)
+        # Find national row per religion
+        by_rel: dict[str, float] = {}
+        year = "—"
+        for r in data:
+            if r["geography_level"] != "national":
+                continue
+            by_rel[r["religion"]] = float(r["value"])
+            year = r["year"]
+        m_val = by_rel.get("muslim")
+        h_val = by_rel.get("hindu")
+        a_val = by_rel.get("all")
+        muslim_str = fmt_num(m_val, unit) if m_val is not None else "—"
+        hindu_str = fmt_num(h_val, unit) if h_val is not None else "—"
+        all_str = fmt_num(a_val, unit) if a_val is not None else "—"
+
+        # Gap computation
+        gap_str = "—"
+        gap_class = "gap-neutral"
+        if mid in ("prison-share", "undertrial-share") and m_val is not None:
+            # Gap is Muslim share - Muslim population share (overrepresentation)
+            diff = m_val - MUSLIM_POP_SHARE
+            sign = "+" if diff > 0 else ""
+            gap_str = f"{sign}{diff:.2f}pp vs 14.23% pop"
+            gap_class = "gap-bad" if diff > 0 else "gap-good"
+        elif ref == "hindu" and m_val is not None and h_val is not None:
+            diff = m_val - h_val
+            sign = "+" if diff > 0 else ""
+            gap_str = f"{sign}{diff:.2f}"
+            if unit == "percent":
+                gap_str += "pp"
+            elif unit == "females_per_1000_males":
+                pass  # no unit suffix
+            elif unit == "per_1000_live_births":
+                pass
+            # Class based on direction
+            if higher_better is True:
+                gap_class = "gap-bad" if diff < 0 else ("gap-good" if diff > 0 else "gap-neutral")
+            elif higher_better is False:
+                gap_class = "gap-bad" if diff > 0 else ("gap-good" if diff < 0 else "gap-neutral")
+            else:
+                gap_class = "gap-neutral"
+        elif mid == "muslim-higher-ed-enrolment":
+            gap_str = "n/a (no Hindu count in source)"
+            gap_class = "gap-neutral"
+        elif mid == "pop-share":
+            gap_str = "baseline"
+            gap_class = "gap-neutral"
+
+        rows.append(
+            f'<tr>'
+            f'<td>{html.escape(cluster)}</td>'
+            f'<td>{html.escape(name)}</td>'
+            f'<td>{year}</td>'
+            f'<td>{html.escape(muslim_str)}</td>'
+            f'<td>{html.escape(hindu_str)}</td>'
+            f'<td>{html.escape(all_str)}</td>'
+            f'<td class="{gap_class}">{html.escape(gap_str)}</td>'
+            f'</tr>'
+        )
+    return "\n    ".join(rows)
+
+
 def prep_national_by_religion(rows: list[dict], unit: str) -> dict:
     """For metrics that only have national-level data (e.g. IMR, anemia from NFHS)."""
     by_religion = {r["religion"]: float(r["value"]) for r in rows
@@ -300,6 +383,23 @@ TEMPLATE = """<!DOCTYPE html>
     margin-top: 22px; padding: 14px 16px; border: 1px solid var(--rule);
     background: #faf7f0; border-radius: 4px; font-size: 13px; color: #5a4a2a;
   }
+  .cluster-header {
+    font-size: 14px; font-weight: 700; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin: 36px 0 10px; padding: 8px 0;
+    border-top: 2px solid var(--rule);
+  }
+  .scorecard table { font-size: 13px; }
+  .scorecard-table tbody tr:hover { background: #faf7f0; }
+  .scorecard-table .gap-bad { color: var(--accent); font-weight: 600; }
+  .scorecard-table .gap-good { color: #2d6a3e; font-weight: 600; }
+  .scorecard-table .gap-neutral { color: var(--muted); }
+  .csv-link {
+    font-size: 12px; color: var(--muslim); text-decoration: none;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    margin-left: 8px;
+  }
+  .csv-link:hover { text-decoration: underline; }
   footer {
     margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--rule);
     color: var(--muted); font-size: 12px;
@@ -323,6 +423,25 @@ TEMPLATE = """<!DOCTYPE html>
   <span>Comparison baseline on every applicable tile</span>
 </div>
 
+<!-- SCORECARD -->
+<section class="tile scorecard">
+  <div class="tile-head">
+    <h2>Scorecard — all metrics at a glance</h2>
+    <p class="data-current">Muslim outcome vs Hindu/All baseline · sorted by gap magnitude</p>
+  </div>
+  <table class="scorecard-table"><thead><tr>
+    <th>Cluster</th><th>Metric</th><th>Year</th><th>Muslim</th><th>Hindu</th><th>All</th><th>Gap vs reference</th>
+  </tr></thead><tbody>
+    {scorecard_rows}
+  </tbody></table>
+  <p class="methodology">"Gap" is Muslim minus reference baseline (Hindu where available, else All).
+  Red gap = Muslim outcome worse than reference; green = Muslim outcome better. For prison
+  metrics, gap is Muslim share minus Muslim population share (14.2%) — overrepresentation
+  in red, parity green.</p>
+</section>
+
+<h2 class="cluster-header">Demographics</h2>
+
 <!-- POP SHARE -->
 <section class="tile">
   <div class="tile-head">
@@ -342,6 +461,8 @@ TEMPLATE = """<!DOCTYPE html>
     </tbody></table>
   </details>
 </section>
+
+<h2 class="cluster-header">Education</h2>
 
 <!-- LIT 7+ -->
 <section class="tile">
@@ -366,6 +487,9 @@ TEMPLATE = """<!DOCTYPE html>
   </details>
 </section>
 
+<h2 class="cluster-header">Health</h2>
+
+<!-- (sex-ratio remains in Demographics cluster — reordering deferred to keep this diff small) -->
 <!-- SEX RATIO -->
 <section class="tile">
   <div class="tile-head">
@@ -417,6 +541,8 @@ TEMPLATE = """<!DOCTYPE html>
   treat as a methodology break when comparing across rounds.</p>
 </section>
 
+<h2 class="cluster-header">Employment</h2>
+
 <!-- LFPR 15+ -->
 <section class="tile">
   <div class="tile-head">
@@ -446,6 +572,8 @@ TEMPLATE = """<!DOCTYPE html>
   <p class="methodology">Share of population age 15+ currently working. WPR = LFPR − unemployed.
   The Muslim–Hindu gap (5.9pp) parallels LFPR.</p>
 </section>
+
+<h2 class="cluster-header">Justice</h2>
 
 <!-- PRISON SHARE -->
 <section class="tile">
@@ -478,6 +606,8 @@ TEMPLATE = """<!DOCTYPE html>
   undertrial Muslim share (20.92%) runs higher than the convict Muslim share (17.13%),
   consistent with widely-documented patterns of detention-vs-conviction disparity.</p>
 </section>
+
+<h2 class="cluster-header">Education — Higher Ed (count)</h2>
 
 <!-- MUSLIM HIGHER ED ENROLMENT -->
 <section class="tile">
@@ -700,6 +830,7 @@ def build() -> None:
         "{n_metrics}": str(n_metrics),
         "{n_sources}": str(n_sources),
         "{n_rows}": str(n_rows),
+        "{scorecard_rows}": render_scorecard_rows(),
         # pop-share
         "{ps_headline}": pop["headline"],
         "{ps_caption}": pop["headline_caption"],
