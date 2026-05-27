@@ -49,6 +49,11 @@ sources:
         url: https://censusindia.gov.in/nada/index.php/catalog/11400/download/14513/DDW-0000C-15.XLSX
         target_path: sources/census-2011/c-series/c15-religion-by-age-sex.xlsx
         status: verified
+      - target_id: c01-uttar-pradesh-state-mdds
+        description: C-1 Population by Religious Community — Uttar Pradesh (state-level + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11394/download/14507/DDW09C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-09-uttar-pradesh.xls
+        status: verified
 
   - id: nfhs-5
     name: National Family Health Survey 5 (2019-21)
@@ -241,7 +246,12 @@ sources:
     runbook: docs/runbooks/ncrb-prison.md
     last_pulled: null
     next_expected: "2026-11-01"
-    targets: []
+    targets:
+      - target_id: psi-2022
+        description: Prison Statistics India 2022 (as on 2023-12-01)
+        url: https://www.ncrb.gov.in/uploads/nationalcrimerecordsbureau/custom/psiyearwise2022/1701613297PSI2022ason01122023.pdf
+        target_path: sources/ncrb-prison/psi-2022.pdf
+        status: verified
 
   - id: ncrb-crime
     name: NCRB Crime in India

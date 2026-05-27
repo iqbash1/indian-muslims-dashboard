@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-uttar-pradesh-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11394/download/14507/DDW09C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-27T23:06:05.391138+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 666112,
+  "sha256": "13a1c3dceeafdccf603489c35108e3161f9f5c485b237eea73489e575a3a70b3",
+  "pull_script_version": "0.1.0"
+}

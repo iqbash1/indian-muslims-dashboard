@@ -1,11 +1,15 @@
 """
 L2 -> L3 for the `pop-share` metric (Muslim share of total population).
 
-Reads:  extracted/census-2011/c01-population-by-religion.csv
+Reads:  extracted/census-2011/c01-population-by-religion*.csv
+        - c01-population-by-religion.csv          (all-India MDDS: states only)
+        - c01-population-by-religion-<state>.csv  (state MDDS: state + districts)
 Writes: canonical/pop-share.csv
 
 Filters L2 to (residence=total, sex=persons), computes muslim/all * 100
-per geography, emits one row per geography for religion=muslim.
+per geography, emits one row per geography for religion=muslim. Dedupes
+rows by (level, code) when the same geography appears in multiple files
+(e.g. UP state row in both all-India and UP state-MDDS files).
 """
 
 from __future__ import annotations
@@ -15,9 +19,10 @@ import datetime as dt
 import pathlib
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[2]
-L2_PATH = REPO_ROOT / "extracted" / "census-2011" / "c01-population-by-religion.csv"
+L2_DIR = REPO_ROOT / "extracted" / "census-2011"
+L2_GLOB = "c01-population-by-religion*.csv"
 OUTPUT_PATH = REPO_ROOT / "canonical" / "pop-share.csv"
-CANONICALIZER_VERSION = "1.0.0"
+CANONICALIZER_VERSION = "1.1.0"
 
 
 def geography(state_code: str, distt_code: str) -> tuple[str, str]:
@@ -32,15 +37,23 @@ def canonicalize() -> None:
     geo_religion_persons: dict[tuple[str, str, str], int] = {}
     geo_all_persons: dict[tuple[str, str], int] = {}
 
-    with L2_PATH.open() as f:
-        for row in csv.DictReader(f):
-            if row["residence"] != "total" or row["sex"] != "persons":
-                continue
-            level, code = geography(row["state_code"], row["distt_code"])
-            value = int(row["value"])
-            geo_religion_persons[(level, code, row["religion"])] = value
-            if row["religion"] == "all":
-                geo_all_persons[(level, code)] = value
+    l2_files = sorted(L2_DIR.glob(L2_GLOB))
+    if not l2_files:
+        raise SystemExit(f"no L2 files match {L2_DIR / L2_GLOB}")
+
+    for l2_path in l2_files:
+        with l2_path.open() as f:
+            for row in csv.DictReader(f):
+                if row["residence"] != "total" or row["sex"] != "persons":
+                    continue
+                level, code = geography(row["state_code"], row["distt_code"])
+                value = int(row["value"])
+                key = (level, code, row["religion"])
+                # Dedupe: same (level, code, religion) from multiple files
+                # should agree; later files overwrite (but values should match).
+                geo_religion_persons[key] = value
+                if row["religion"] == "all":
+                    geo_all_persons[(level, code)] = value
 
     extraction_run = (
         f"canonicalize-pop-share-v{CANONICALIZER_VERSION}-"
@@ -65,11 +78,16 @@ def canonicalize() -> None:
             if not all_persons:
                 continue
             share = round(persons / all_persons * 100, 4)
+            # Source document depends on geography level
+            if level == "district":
+                source_doc = "sources/census-2011/c-series/state-mdds/c01-<state>.xls"
+            else:
+                source_doc = "sources/census-2011/c-series/c01-population-by-religion.xls"
             w.writerow([
                 "pop-share", level, code, 2011, "muslim",
                 share, "all_persons_at_geography_total_residence", "", "", "",
                 "census-india-2011",
-                "sources/census-2011/c-series/c01-population-by-religion.xls",
+                source_doc,
                 extraction_run,
                 "Muslim share of total population (all residences combined).",
                 "false",
