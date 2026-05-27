@@ -447,6 +447,38 @@ TEMPLATE = """<!DOCTYPE html>
   The Muslim–Hindu gap (5.9pp) parallels LFPR.</p>
 </section>
 
+<!-- PRISON SHARE -->
+<section class="tile">
+  <div class="tile-head">
+    <h2>Muslim share of prison population</h2>
+    <p class="source">canonical/prison-share.csv · sources/ncrb-prison/psi-2022.pdf (Tables 2.10C–2.13C, pp. 103, 107, 111, 115)</p>
+    <p class="data-current">Data current to · NCRB Prison Statistics India 2022 (as on 2023-12-01)</p>
+  </div>
+  <div class="headline">{ps2_headline}</div>
+  <p class="headline-caption">{ps2_caption}</p>
+  <div class="chart-wrap" style="height:280px"><canvas id="ps2-chart"></canvas></div>
+  <p class="methodology">Combined convicts + undertrials + detenues + other prisoners. Muslims
+  are 14.2% of population (per Census 2011) but <b>20.17% of prisoners</b> whose religion was
+  reported — a 6pp overrepresentation. Detenues (preventive-detention prisoners) skew much
+  higher: 40.5% Muslim, driven heavily by J&K. Caveat: Maharashtra did not report religion
+  for ~33k undertrials/detenues — share is computed over religion-reported subset only.</p>
+</section>
+
+<!-- UNDERTRIAL SHARE -->
+<section class="tile">
+  <div class="tile-head">
+    <h2>Muslim share of undertrial prisoners</h2>
+    <p class="source">canonical/undertrial-share.csv · sources/ncrb-prison/psi-2022.pdf (Table 2.11C, p. 107)</p>
+    <p class="data-current">Data current to · NCRB PSI 2022</p>
+  </div>
+  <div class="headline">{us_headline}</div>
+  <p class="headline-caption">{us_caption}</p>
+  <div class="chart-wrap" style="height:280px"><canvas id="us-chart"></canvas></div>
+  <p class="methodology">Undertrials are prisoners awaiting trial — not convicted. The
+  undertrial Muslim share (20.92%) runs higher than the convict Muslim share (17.13%),
+  consistent with widely-documented patterns of detention-vs-conviction disparity.</p>
+</section>
+
 <!-- MUSLIM HIGHER ED ENROLMENT -->
 <section class="tile">
   <div class="tile-head">
@@ -594,6 +626,28 @@ new Chart(document.getElementById('wpr-chart'), {
     plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
 });
 
+new Chart(document.getElementById('ps2-chart'), {
+  type: 'bar',
+  data: {
+    labels: {ps2_chart_labels},
+    datasets: [{ label: 'Prison share (%)', data: {ps2_chart_values},
+      backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)'] }],
+  },
+  options: { ...CFG_BASE, indexAxis: 'y',
+    plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+});
+
+new Chart(document.getElementById('us-chart'), {
+  type: 'bar',
+  data: {
+    labels: {us_chart_labels},
+    datasets: [{ label: 'Undertrial share (%)', data: {us_chart_values},
+      backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)'] }],
+  },
+  options: { ...CFG_BASE, indexAxis: 'y',
+    plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+});
+
 new Chart(document.getElementById('ahe-chart'), {
   type: 'bar',
   data: {
@@ -628,14 +682,17 @@ def build() -> None:
     wa = prep_national_by_religion(load_metric("women-anemia"), "percent")
     lfpr = prep_national_by_religion(load_metric("lfpr-15plus"), "percent")
     wpr = prep_national_by_religion(load_metric("wpr-15plus"), "percent")
+    ps2 = prep_national_by_religion(load_metric("prison-share"), "percent")
+    us = prep_national_by_religion(load_metric("undertrial-share"), "percent")
     ahe = prep_muslim_higher_ed(load_metric("muslim-higher-ed-enrolment"))
 
-    n_sources = 5
-    n_metrics = 8
+    n_sources = 6  # Census + NFHS-5 + PLFS + AISHE + HCES + NCRB
+    n_metrics = 10
     n_rows = (len(load_metric("pop-share")) + len(load_metric("lit-7plus"))
               + len(load_metric("sex-ratio")) + len(load_metric("imr"))
               + len(load_metric("women-anemia")) + len(load_metric("lfpr-15plus"))
-              + len(load_metric("wpr-15plus"))
+              + len(load_metric("wpr-15plus")) + len(load_metric("prison-share"))
+              + len(load_metric("undertrial-share"))
               + len(load_metric("muslim-higher-ed-enrolment")))
 
     substitutions = {
@@ -685,6 +742,16 @@ def build() -> None:
         "{wpr_caption}": wpr["headline_caption"],
         "{wpr_chart_labels}": json.dumps(wpr["chart_labels"]),
         "{wpr_chart_values}": json.dumps(wpr["chart_values"]),
+        # prison share
+        "{ps2_headline}": ps2["headline"],
+        "{ps2_caption}": ps2["headline_caption"],
+        "{ps2_chart_labels}": json.dumps(ps2["chart_labels"]),
+        "{ps2_chart_values}": json.dumps(ps2["chart_values"]),
+        # undertrial share
+        "{us_headline}": us["headline"],
+        "{us_caption}": us["headline_caption"],
+        "{us_chart_labels}": json.dumps(us["chart_labels"]),
+        "{us_chart_values}": json.dumps(us["chart_values"]),
         # muslim higher ed
         "{ahe_headline}": ahe["headline"],
         "{ahe_caption}": ahe["headline_caption"],

@@ -378,24 +378,40 @@ metrics:
     cluster: justice
     unit: percent
     higher_is_better: null
+    definition: |
+      Muslim share of total prison population (convicts + undertrials +
+      detenues + other prisoners), among prisoners whose religion was
+      reported. Compare against Muslim share of total population (~14.2%).
     sources: {primary: ncrb-prison}
-    geography_levels: [national, state]
-    religions: [muslim]
-    comparison_baselines: [all]
+    geography_levels: [national]
+    religions: [muslim, hindu]
+    methodology_notes: |
+      NCRB PSI 2022 Tables 2.10C-2.13C. Maharashtra did not report religion
+      breakdown for undertrials/detenues, so the religion-reported denominator
+      excludes ~33k Maharashtra prisoners. Shares are computed over religion-
+      reported prisoners only.
+    comparison_baselines: []
     phase: 2
-    status: stub
+    status: defined
 
   - id: undertrial-share
     name: Muslim share of undertrial prisoners
     cluster: justice
     unit: percent
     higher_is_better: null
+    definition: |
+      Muslim share of undertrial prisoner population — those awaiting trial,
+      not yet convicted. Compare against Muslim share of total population
+      (~14.2%) and Muslim share of convicts (~17.1%).
     sources: {primary: ncrb-prison}
-    geography_levels: [national, state]
-    religions: [muslim]
-    comparison_baselines: [all]
+    geography_levels: [national]
+    religions: [muslim, hindu]
+    methodology_notes: |
+      NCRB PSI 2022 Table 2.11C. Maharashtra did not report religion breakdown
+      for ~33k undertrials; share is computed over religion-reported subset only.
+    comparison_baselines: []
     phase: 2
-    status: stub
+    status: defined
 
   # ----- Civic / safety (Phase 2) -----
   - id: communal-incidents-govt

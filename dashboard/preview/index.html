@@ -101,12 +101,12 @@
 <div class="page">
 
 <h1>Indian Muslims — Living Conditions Dashboard</h1>
-<p class="tagline">Preview build · 2026-05-28 04:24</p>
+<p class="tagline">Preview build · 2026-05-28 04:34</p>
 
 <div class="status-bar">
-  <span><b>8</b> metrics live</span>
-  <span><b>5</b> sources archived</span>
-  <span><b>298</b> canonical rows · all schema-valid</span>
+  <span><b>10</b> metrics live</span>
+  <span><b>6</b> sources archived</span>
+  <span><b>302</b> canonical rows · all schema-valid</span>
   <span>Comparison baseline on every applicable tile</span>
 </div>
 
@@ -303,6 +303,38 @@
   The Muslim–Hindu gap (5.9pp) parallels LFPR.</p>
 </section>
 
+<!-- PRISON SHARE -->
+<section class="tile">
+  <div class="tile-head">
+    <h2>Muslim share of prison population</h2>
+    <p class="source">canonical/prison-share.csv · sources/ncrb-prison/psi-2022.pdf (Tables 2.10C–2.13C, pp. 103, 107, 111, 115)</p>
+    <p class="data-current">Data current to · NCRB Prison Statistics India 2022 (as on 2023-12-01)</p>
+  </div>
+  <div class="headline">20.17%</div>
+  <p class="headline-caption">All-India Muslim, NFHS-5. Hindu: 71.19%</p>
+  <div class="chart-wrap" style="height:280px"><canvas id="ps2-chart"></canvas></div>
+  <p class="methodology">Combined convicts + undertrials + detenues + other prisoners. Muslims
+  are 14.2% of population (per Census 2011) but <b>20.17% of prisoners</b> whose religion was
+  reported — a 6pp overrepresentation. Detenues (preventive-detention prisoners) skew much
+  higher: 40.5% Muslim, driven heavily by J&K. Caveat: Maharashtra did not report religion
+  for ~33k undertrials/detenues — share is computed over religion-reported subset only.</p>
+</section>
+
+<!-- UNDERTRIAL SHARE -->
+<section class="tile">
+  <div class="tile-head">
+    <h2>Muslim share of undertrial prisoners</h2>
+    <p class="source">canonical/undertrial-share.csv · sources/ncrb-prison/psi-2022.pdf (Table 2.11C, p. 107)</p>
+    <p class="data-current">Data current to · NCRB PSI 2022</p>
+  </div>
+  <div class="headline">20.92%</div>
+  <p class="headline-caption">All-India Muslim, NFHS-5. Hindu: 70.59%</p>
+  <div class="chart-wrap" style="height:280px"><canvas id="us-chart"></canvas></div>
+  <p class="methodology">Undertrials are prisoners awaiting trial — not convicted. The
+  undertrial Muslim share (20.92%) runs higher than the convict Muslim share (17.13%),
+  consistent with widely-documented patterns of detention-vs-conviction disparity.</p>
+</section>
+
 <!-- MUSLIM HIGHER ED ENROLMENT -->
 <section class="tile">
   <div class="tile-head">
@@ -364,7 +396,7 @@
 </section>
 
 <footer>
-  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-28 04:24.
+  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-28 04:34.
   Every number on this page traces L4 → L3 (canonical) → L2 (extracted) → L1 (source file)
   with SHA256 sidecar provenance. Re-run the builder after any canonical change:
   <code>python dashboard/build.py</code></p>
@@ -477,6 +509,28 @@ new Chart(document.getElementById('wpr-chart'), {
     labels: ["Muslim", "Hindu", "All"],
     datasets: [{ label: 'WPR 15+ (%)', data: [53.2, 59.1, 58.2],
       backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] }],
+  },
+  options: { ...CFG_BASE, indexAxis: 'y',
+    plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+});
+
+new Chart(document.getElementById('ps2-chart'), {
+  type: 'bar',
+  data: {
+    labels: ["Muslim", "Hindu"],
+    datasets: [{ label: 'Prison share (%)', data: [20.17, 71.19],
+      backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)'] }],
+  },
+  options: { ...CFG_BASE, indexAxis: 'y',
+    plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+});
+
+new Chart(document.getElementById('us-chart'), {
+  type: 'bar',
+  data: {
+    labels: ["Muslim", "Hindu"],
+    datasets: [{ label: 'Undertrial share (%)', data: [20.92, 70.59],
+      backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)'] }],
   },
   options: { ...CFG_BASE, indexAxis: 'y',
     plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
