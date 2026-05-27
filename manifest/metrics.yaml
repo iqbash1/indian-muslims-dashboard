@@ -267,12 +267,21 @@ metrics:
     cluster: health
     unit: percent
     higher_is_better: false
+    definition: |
+      Percentage of women age 15-49 with any anaemia, defined as haemoglobin
+      <12.0 g/dl (non-pregnant) or <11.0 g/dl (pregnant), altitude-adjusted.
     sources: {primary: nfhs-5}
-    geography_levels: [national, state]
-    religions: [muslim, hindu, sc, st, all]
+    geography_levels: [national]
+    religions: [muslim, hindu, all]
+    methodology_notes: |
+      NFHS-5 Table 10.23.1 reports total-residence women's anaemia by religion
+      directly. Year=2020 represents the midpoint of NFHS-5 fieldwork.
+      Note: NFHS revised anaemia cut-offs between NFHS-4 (Hb <12.0 g/dl) and
+      NFHS-5 (same cut-off, but capillary blood vs venous — affects comparability
+      across rounds). Treat as methodology break for NFHS-4 -> NFHS-5 trends.
     comparison_baselines: [hindu, all]
     phase: 1
-    status: stub
+    status: defined
 
   # ----- Housing & amenities (Phase 1) -----
   - id: pucca-housing

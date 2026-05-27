@@ -400,6 +400,23 @@ TEMPLATE = """<!DOCTYPE html>
   indicators.</p>
 </section>
 
+<!-- WOMEN ANAEMIA -->
+<section class="tile">
+  <div class="tile-head">
+    <h2>Anaemia in women (age 15–49)</h2>
+    <p class="source">canonical/women-anemia.csv · sources/nfhs-5/reports/india-report-fr375.pdf (Table 10.23.1, p. 468)</p>
+    <p class="data-current">Data current to · NFHS-5 (2019-21)</p>
+  </div>
+  <div class="headline">{wa_headline}</div>
+  <p class="headline-caption">{wa_caption}</p>
+  <div class="chart-wrap" style="height:280px"><canvas id="wa-chart"></canvas></div>
+  <p class="methodology">Any anaemia (haemoglobin &lt;12.0 g/dl non-pregnant, &lt;11.0 g/dl pregnant),
+  altitude-adjusted. Total residence, national. Muslim women's anaemia (55.6%) is slightly
+  below Hindu (57.4%) — the same Muslim-paradox direction as IMR, though both rates are high
+  in absolute terms. Methodology note: NFHS-5 uses capillary blood (vs venous in NFHS-4) —
+  treat as a methodology break when comparing across rounds.</p>
+</section>
+
 <!-- MUSLIM HIGHER ED ENROLMENT -->
 <section class="tile">
   <div class="tile-head">
@@ -512,6 +529,19 @@ new Chart(document.getElementById('imr-chart'), {
     plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
 });
 
+new Chart(document.getElementById('wa-chart'), {
+  type: 'bar',
+  data: {
+    labels: {wa_chart_labels},
+    datasets: [
+      { label: 'Any anaemia (%)', data: {wa_chart_values},
+        backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] },
+    ],
+  },
+  options: { ...CFG_BASE, indexAxis: 'y',
+    plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+});
+
 new Chart(document.getElementById('ahe-chart'), {
   type: 'bar',
   data: {
@@ -543,12 +573,14 @@ def build() -> None:
     lit = prep_lit_7plus(load_metric("lit-7plus"))
     sr = prep_sex_ratio(load_metric("sex-ratio"))
     imr = prep_national_by_religion(load_metric("imr"), "per_1000_live_births")
+    wa = prep_national_by_religion(load_metric("women-anemia"), "percent")
     ahe = prep_muslim_higher_ed(load_metric("muslim-higher-ed-enrolment"))
 
     n_sources = 5  # Census + NFHS-5 + PLFS + AISHE + (HCES pending)
-    n_metrics = 5
+    n_metrics = 6
     n_rows = (len(load_metric("pop-share")) + len(load_metric("lit-7plus"))
               + len(load_metric("sex-ratio")) + len(load_metric("imr"))
+              + len(load_metric("women-anemia"))
               + len(load_metric("muslim-higher-ed-enrolment")))
 
     substitutions = {
@@ -583,6 +615,11 @@ def build() -> None:
         "{imr_caption}": imr["headline_caption"],
         "{imr_chart_labels}": json.dumps(imr["chart_labels"]),
         "{imr_chart_values}": json.dumps(imr["chart_values"]),
+        # women anaemia
+        "{wa_headline}": wa["headline"],
+        "{wa_caption}": wa["headline_caption"],
+        "{wa_chart_labels}": json.dumps(wa["chart_labels"]),
+        "{wa_chart_values}": json.dumps(wa["chart_values"]),
         # muslim higher ed
         "{ahe_headline}": ahe["headline"],
         "{ahe_caption}": ahe["headline_caption"],
