@@ -46,6 +46,17 @@ For each target:
 | compendium-phase-1 | sources/nfhs-5/reports/compendium-phase-1.pdf | 5bcc2a37b13f | 2026-05-27 |
 | compendium-phase-2 | sources/nfhs-5/reports/compendium-phase-2.pdf | 3e8ee12bb4a5 | 2026-05-27 |
 
+## Wayback mirror status
+
+| target_id | wayback status | notes |
+|---|---|---|
+| india-report-fr375 | failed (Cloudflare 523, retried 2x) | 10.9 MB exceeds Wayback's tolerance for origin response time; rely on local archive |
+| india-national-factsheet | mirrored | |
+| compendium-phase-1 | mirrored | |
+| compendium-phase-2 | mirrored | |
+
+**Pattern across the project:** Wayback's `/save/` endpoint consistently fails with Cloudflare 520/523 on files larger than ~5 MB (also seen on Census C-9 and C-15). Local SHA256-sidecared L1 archive is the authoritative copy; Wayback is supplementary. A future iteration could add archive.today as a fallback for large files.
+
 ## Where religion crosstabs actually live
 
 - **India Report (FR375)** — Chapter 2 (Background characteristics) + Appendix tables. Key tables for religion crosstabs include: Table 2.3 (Population by religion), Table 2.x for educational attainment, fertility, anemia, etc. by religion. **This is the primary religion-disaggregated source.**

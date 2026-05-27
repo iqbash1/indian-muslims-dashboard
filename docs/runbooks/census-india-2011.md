@@ -56,6 +56,7 @@ For each verified URL:
 
 - censusindia.gov.in serves a cert chain that Python's bundled CAs reject (works fine in curl/browser). Fix: `truststore` package delegates to the system trust store. Added to `requirements.txt` and patched into `ingest/pull.py`. This is the macOS-corporate-proxy case; on other machines the original cert path will work and truststore is harmless.
 - File extensions vary: C-1 is `.XLS` (legacy), C-9 and C-15 are `.XLSX`. Sidecar `content_type` is `application/octet-stream` (server doesn't differentiate); the file's actual format will need detection in the extractor.
+- Wayback mirror status (2026-05-27): C-1 mirrored; C-9 and C-15 failed with Cloudflare 520/523. Wayback's `/save/` endpoint consistently fails on files >~5 MB across the project. Local L1 archive with SHA256 sidecar is the authoritative copy.
 
 ## Known issues
 
