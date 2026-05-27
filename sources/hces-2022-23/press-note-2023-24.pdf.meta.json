@@ -1,0 +1,11 @@
+{
+  "source_id": "hces-2022-23",
+  "target_id": "press-note-2023-24",
+  "url": "https://mospi.gov.in/sites/default/files/press_release/HCES_Report202324_Press_Note_30012025.pdf",
+  "pulled_at": "2026-05-27T22:56:10.008106+00:00",
+  "status_code": 200,
+  "content_type": "application/pdf",
+  "content_length": 274658,
+  "sha256": "34e7e8bf64c8e78094dc338064f3c68e848021209f4bee8bc9849b329d3d74ca",
+  "pull_script_version": "0.1.0"
+}

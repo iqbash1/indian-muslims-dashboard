@@ -1,0 +1,11 @@
+{
+  "source_id": "hces-2022-23",
+  "target_id": "factsheet-2022-23",
+  "url": "https://www.mospi.gov.in/sites/default/files/publication_reports/Factsheet_HCES_2022-23.pdf",
+  "pulled_at": "2026-05-27T22:56:04.966782+00:00",
+  "status_code": 200,
+  "content_type": "application/pdf",
+  "content_length": 5911399,
+  "sha256": "2993c572f87f8b58c9c4ddc075431b2d2f2593aef00914f136d11ac434e3e9fc",
+  "pull_script_version": "0.1.0"
+}

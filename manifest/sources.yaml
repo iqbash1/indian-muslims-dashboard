@@ -168,11 +168,21 @@ sources:
     last_pulled: null
     next_expected: null
     targets:
-      - target_id: factsheet
+      - target_id: factsheet-2022-23
         description: HCES 2022-23 Factsheet (national + state MPCE)
-        url: null
-        target_path: sources/hces-2022-23/factsheet.pdf
-        status: pending-url-discovery
+        url: https://www.mospi.gov.in/sites/default/files/publication_reports/Factsheet_HCES_2022-23.pdf
+        target_path: sources/hces-2022-23/factsheet-2022-23.pdf
+        status: verified
+      - target_id: press-note-2023-24
+        description: HCES 2023-24 Press Note (newer round, for time-series)
+        url: https://mospi.gov.in/sites/default/files/press_release/HCES_Report202324_Press_Note_30012025.pdf
+        target_path: sources/hces-2022-23/press-note-2023-24.pdf
+        status: verified
+      - target_id: report-591-full
+        description: HCES 2022-23 Full Report (Report 591) — has religion crosstabs
+        url: https://www.mospi.gov.in/sites/default/files/publication_reports/Report_591_HCES_2022-23New.pdf
+        target_path: sources/hces-2022-23/report-591-full.pdf
+        status: verified
 
   - id: aishe
     name: All India Survey on Higher Education
