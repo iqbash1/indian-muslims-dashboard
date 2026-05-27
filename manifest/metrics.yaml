@@ -158,24 +158,36 @@ metrics:
     cluster: employment
     unit: percent
     higher_is_better: true
+    definition: |
+      Share of population age 15+ who are in the labour force (either
+      working or actively seeking work). Usual status (principal + subsidiary).
     sources: {primary: plfs}
-    geography_levels: [national, state]
-    religions: [muslim, hindu, sc, st, all]
+    geography_levels: [national]
+    religions: [muslim, hindu, all]
+    methodology_notes: |
+      PLFS 2023-24 Table 48 (pages 396-400). Total residence, person-level.
+      Reference period: Jul 2023 - Jun 2024 (year=2023 in canonical row
+      represents the start of this period).
     comparison_baselines: [hindu, all]
     phase: 1
-    status: stub
+    status: defined
 
   - id: wpr-15plus
     name: Worker Population Ratio (15+)
     cluster: employment
     unit: percent
     higher_is_better: true
+    definition: |
+      Share of population age 15+ who are currently working. Usual status
+      (principal + subsidiary). WPR = LFPR - Unemployed.
     sources: {primary: plfs}
-    geography_levels: [national, state]
-    religions: [muslim, hindu, sc, st, all]
+    geography_levels: [national]
+    religions: [muslim, hindu, all]
+    methodology_notes: |
+      PLFS 2023-24 Table 48 (pages 396-400). Total residence, person-level.
     comparison_baselines: [hindu, all]
     phase: 1
-    status: stub
+    status: defined
 
   - id: salaried-share
     name: Share of workers in regular salaried employment

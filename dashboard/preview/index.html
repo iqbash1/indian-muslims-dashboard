@@ -101,12 +101,12 @@
 <div class="page">
 
 <h1>Indian Muslims — Living Conditions Dashboard</h1>
-<p class="tagline">Preview build · 2026-05-28 04:19</p>
+<p class="tagline">Preview build · 2026-05-28 04:24</p>
 
 <div class="status-bar">
-  <span><b>6</b> metrics live</span>
+  <span><b>8</b> metrics live</span>
   <span><b>5</b> sources archived</span>
-  <span><b>292</b> canonical rows · all schema-valid</span>
+  <span><b>298</b> canonical rows · all schema-valid</span>
   <span>Comparison baseline on every applicable tile</span>
 </div>
 
@@ -273,6 +273,36 @@
   treat as a methodology break when comparing across rounds.</p>
 </section>
 
+<!-- LFPR 15+ -->
+<section class="tile">
+  <div class="tile-head">
+    <h2>Labour Force Participation Rate (15+)</h2>
+    <p class="source">canonical/lfpr-15plus.csv · sources/plfs/annual/plfs-annual-report-2023-24.pdf (Table 48, pp. 396–400)</p>
+    <p class="data-current">Data current to · PLFS 2023-24 (Jul 2023 – Jun 2024)</p>
+  </div>
+  <div class="headline">55.00%</div>
+  <p class="headline-caption">All-India Muslim, NFHS-5. Hindu: 60.90%, All: 60.10%</p>
+  <div class="chart-wrap" style="height:280px"><canvas id="lfpr-chart"></canvas></div>
+  <p class="methodology">Share of population age 15+ either working or actively seeking work
+  (usual status, principal + subsidiary). The 5.9pp Muslim–Hindu gap is driven heavily by
+  Muslim women's lower LFPR (30.2% vs Hindu women 43.3% per the source); Muslim men's LFPR
+  (80.6%) actually exceeds Hindu men's (78.6%).</p>
+</section>
+
+<!-- WPR 15+ -->
+<section class="tile">
+  <div class="tile-head">
+    <h2>Worker Population Ratio (15+)</h2>
+    <p class="source">canonical/wpr-15plus.csv · sources/plfs/annual/plfs-annual-report-2023-24.pdf (Table 48, pp. 396–400)</p>
+    <p class="data-current">Data current to · PLFS 2023-24</p>
+  </div>
+  <div class="headline">53.20%</div>
+  <p class="headline-caption">All-India Muslim, NFHS-5. Hindu: 59.10%, All: 58.20%</p>
+  <div class="chart-wrap" style="height:280px"><canvas id="wpr-chart"></canvas></div>
+  <p class="methodology">Share of population age 15+ currently working. WPR = LFPR − unemployed.
+  The Muslim–Hindu gap (5.9pp) parallels LFPR.</p>
+</section>
+
 <!-- MUSLIM HIGHER ED ENROLMENT -->
 <section class="tile">
   <div class="tile-head">
@@ -334,7 +364,7 @@
 </section>
 
 <footer>
-  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-28 04:19.
+  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-28 04:24.
   Every number on this page traces L4 → L3 (canonical) → L2 (extracted) → L1 (source file)
   with SHA256 sidecar provenance. Re-run the builder after any canonical change:
   <code>python dashboard/build.py</code></p>
@@ -425,6 +455,28 @@ new Chart(document.getElementById('wa-chart'), {
       { label: 'Any anaemia (%)', data: [55.6, 57.4, 57.0],
         backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] },
     ],
+  },
+  options: { ...CFG_BASE, indexAxis: 'y',
+    plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+});
+
+new Chart(document.getElementById('lfpr-chart'), {
+  type: 'bar',
+  data: {
+    labels: ["Muslim", "Hindu", "All"],
+    datasets: [{ label: 'LFPR 15+ (%)', data: [55.0, 60.9, 60.1],
+      backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] }],
+  },
+  options: { ...CFG_BASE, indexAxis: 'y',
+    plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+});
+
+new Chart(document.getElementById('wpr-chart'), {
+  type: 'bar',
+  data: {
+    labels: ["Muslim", "Hindu", "All"],
+    datasets: [{ label: 'WPR 15+ (%)', data: [53.2, 59.1, 58.2],
+      backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] }],
   },
   options: { ...CFG_BASE, indexAxis: 'y',
     plugins: { ...CFG_BASE.plugins, legend: { display: false } } },

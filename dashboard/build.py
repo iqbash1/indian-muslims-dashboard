@@ -417,6 +417,36 @@ TEMPLATE = """<!DOCTYPE html>
   treat as a methodology break when comparing across rounds.</p>
 </section>
 
+<!-- LFPR 15+ -->
+<section class="tile">
+  <div class="tile-head">
+    <h2>Labour Force Participation Rate (15+)</h2>
+    <p class="source">canonical/lfpr-15plus.csv · sources/plfs/annual/plfs-annual-report-2023-24.pdf (Table 48, pp. 396–400)</p>
+    <p class="data-current">Data current to · PLFS 2023-24 (Jul 2023 – Jun 2024)</p>
+  </div>
+  <div class="headline">{lfpr_headline}</div>
+  <p class="headline-caption">{lfpr_caption}</p>
+  <div class="chart-wrap" style="height:280px"><canvas id="lfpr-chart"></canvas></div>
+  <p class="methodology">Share of population age 15+ either working or actively seeking work
+  (usual status, principal + subsidiary). The 5.9pp Muslim–Hindu gap is driven heavily by
+  Muslim women's lower LFPR (30.2% vs Hindu women 43.3% per the source); Muslim men's LFPR
+  (80.6%) actually exceeds Hindu men's (78.6%).</p>
+</section>
+
+<!-- WPR 15+ -->
+<section class="tile">
+  <div class="tile-head">
+    <h2>Worker Population Ratio (15+)</h2>
+    <p class="source">canonical/wpr-15plus.csv · sources/plfs/annual/plfs-annual-report-2023-24.pdf (Table 48, pp. 396–400)</p>
+    <p class="data-current">Data current to · PLFS 2023-24</p>
+  </div>
+  <div class="headline">{wpr_headline}</div>
+  <p class="headline-caption">{wpr_caption}</p>
+  <div class="chart-wrap" style="height:280px"><canvas id="wpr-chart"></canvas></div>
+  <p class="methodology">Share of population age 15+ currently working. WPR = LFPR − unemployed.
+  The Muslim–Hindu gap (5.9pp) parallels LFPR.</p>
+</section>
+
 <!-- MUSLIM HIGHER ED ENROLMENT -->
 <section class="tile">
   <div class="tile-head">
@@ -542,6 +572,28 @@ new Chart(document.getElementById('wa-chart'), {
     plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
 });
 
+new Chart(document.getElementById('lfpr-chart'), {
+  type: 'bar',
+  data: {
+    labels: {lfpr_chart_labels},
+    datasets: [{ label: 'LFPR 15+ (%)', data: {lfpr_chart_values},
+      backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] }],
+  },
+  options: { ...CFG_BASE, indexAxis: 'y',
+    plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+});
+
+new Chart(document.getElementById('wpr-chart'), {
+  type: 'bar',
+  data: {
+    labels: {wpr_chart_labels},
+    datasets: [{ label: 'WPR 15+ (%)', data: {wpr_chart_values},
+      backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] }],
+  },
+  options: { ...CFG_BASE, indexAxis: 'y',
+    plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+});
+
 new Chart(document.getElementById('ahe-chart'), {
   type: 'bar',
   data: {
@@ -574,13 +626,16 @@ def build() -> None:
     sr = prep_sex_ratio(load_metric("sex-ratio"))
     imr = prep_national_by_religion(load_metric("imr"), "per_1000_live_births")
     wa = prep_national_by_religion(load_metric("women-anemia"), "percent")
+    lfpr = prep_national_by_religion(load_metric("lfpr-15plus"), "percent")
+    wpr = prep_national_by_religion(load_metric("wpr-15plus"), "percent")
     ahe = prep_muslim_higher_ed(load_metric("muslim-higher-ed-enrolment"))
 
-    n_sources = 5  # Census + NFHS-5 + PLFS + AISHE + (HCES pending)
-    n_metrics = 6
+    n_sources = 5
+    n_metrics = 8
     n_rows = (len(load_metric("pop-share")) + len(load_metric("lit-7plus"))
               + len(load_metric("sex-ratio")) + len(load_metric("imr"))
-              + len(load_metric("women-anemia"))
+              + len(load_metric("women-anemia")) + len(load_metric("lfpr-15plus"))
+              + len(load_metric("wpr-15plus"))
               + len(load_metric("muslim-higher-ed-enrolment")))
 
     substitutions = {
@@ -620,6 +675,16 @@ def build() -> None:
         "{wa_caption}": wa["headline_caption"],
         "{wa_chart_labels}": json.dumps(wa["chart_labels"]),
         "{wa_chart_values}": json.dumps(wa["chart_values"]),
+        # lfpr 15+
+        "{lfpr_headline}": lfpr["headline"],
+        "{lfpr_caption}": lfpr["headline_caption"],
+        "{lfpr_chart_labels}": json.dumps(lfpr["chart_labels"]),
+        "{lfpr_chart_values}": json.dumps(lfpr["chart_values"]),
+        # wpr 15+
+        "{wpr_headline}": wpr["headline"],
+        "{wpr_caption}": wpr["headline_caption"],
+        "{wpr_chart_labels}": json.dumps(wpr["chart_labels"]),
+        "{wpr_chart_values}": json.dumps(wpr["chart_values"]),
         # muslim higher ed
         "{ahe_headline}": ahe["headline"],
         "{ahe_caption}": ahe["headline_caption"],
