@@ -1,0 +1,11 @@
+{
+  "source_id": "plfs",
+  "target_id": "press-note-2023-24",
+  "url": "https://mospi.gov.in/sites/default/files/press_release/Press_note_AR_PLFS_2023_24_22092024.pdf",
+  "pulled_at": "2026-05-27T21:53:37.820736+00:00",
+  "status_code": 200,
+  "content_type": "application/pdf",
+  "content_length": 446076,
+  "sha256": "969e90c48acef4c80885e1ae245f088ffdcc39511fcbd8cb1892f57587fb9ca1",
+  "pull_script_version": "0.1.0"
+}

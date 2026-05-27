@@ -133,10 +133,15 @@ sources:
     next_expected: "2026-07-01"
     targets:
       - target_id: annual-report-2023-24
-        description: PLFS Annual Report Jul 2023 - Jun 2024
-        url: null
+        description: PLFS Annual Report Jul 2023 - Jun 2024 (main report)
+        url: https://mospi.gov.in/sites/default/files/publication_reports/AnnualReport_PLFS2023-24L2.pdf
         target_path: sources/plfs/annual/plfs-annual-report-2023-24.pdf
-        status: pending-url-discovery
+        status: verified
+      - target_id: press-note-2023-24
+        description: PLFS Annual Report Jul 2023 - Jun 2024 - Press Note (summary)
+        url: https://mospi.gov.in/sites/default/files/press_release/Press_note_AR_PLFS_2023_24_22092024.pdf
+        target_path: sources/plfs/annual/plfs-press-note-2023-24.pdf
+        status: verified
 
   - id: hces-2022-23
     name: Household Consumption Expenditure Survey 2022-23
@@ -196,9 +201,14 @@ sources:
     targets:
       - target_id: report-2021-22
         description: AISHE 2021-22 Final Report
-        url: null
+        url: https://cdnbbsr.s3waas.gov.in/s392049debbe566ca5782a3045cf300a3c/uploads/2025/06/2025060466438560.pdf
         target_path: sources/aishe/aishe-report-2021-22.pdf
-        status: pending-url-discovery
+        status: verified
+      - target_id: report-2020-21
+        description: AISHE 2020-21 Final Report (for trend / time-series)
+        url: https://cdnbbsr.s3waas.gov.in/s392049debbe566ca5782a3045cf300a3c/uploads/2025/06/202506041612700081.pdf
+        target_path: sources/aishe/aishe-report-2020-21.pdf
+        status: verified
 
   - id: ncrb-prison
     name: NCRB Prison Statistics India

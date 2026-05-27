@@ -1,0 +1,11 @@
+{
+  "source_id": "plfs",
+  "target_id": "annual-report-2023-24",
+  "url": "https://mospi.gov.in/sites/default/files/publication_reports/AnnualReport_PLFS2023-24L2.pdf",
+  "pulled_at": "2026-05-27T21:53:31.873591+00:00",
+  "status_code": 200,
+  "content_type": "application/pdf",
+  "content_length": 26917638,
+  "sha256": "ab4ead2cee181a13c7ab40f164d2dceb46419cfb58f30f8baa58e35f79d33d39",
+  "pull_script_version": "0.1.0"
+}

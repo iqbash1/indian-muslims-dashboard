@@ -1,0 +1,11 @@
+{
+  "source_id": "aishe",
+  "target_id": "report-2021-22",
+  "url": "https://cdnbbsr.s3waas.gov.in/s392049debbe566ca5782a3045cf300a3c/uploads/2025/06/2025060466438560.pdf",
+  "pulled_at": "2026-05-27T21:53:41.163071+00:00",
+  "status_code": 200,
+  "content_type": "application/pdf",
+  "content_length": 9766276,
+  "sha256": "c4400273cb2d574c793390a900528c825b036667cb0977bbdb8c40f0276d5f15",
+  "pull_script_version": "0.1.0"
+}
