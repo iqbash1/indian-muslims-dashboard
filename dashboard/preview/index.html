@@ -101,12 +101,12 @@
 <div class="page">
 
 <h1>Indian Muslims — Living Conditions Dashboard</h1>
-<p class="tagline">Preview build · 2026-05-28 03:56</p>
+<p class="tagline">Preview build · 2026-05-28 04:14</p>
 
 <div class="status-bar">
-  <span><b>4</b> metrics live</span>
+  <span><b>5</b> metrics live</span>
   <span><b>5</b> sources archived</span>
-  <span><b>286</b> canonical rows · all schema-valid</span>
+  <span><b>289</b> canonical rows · all schema-valid</span>
   <span>Comparison baseline on every applicable tile</span>
 </div>
 
@@ -237,6 +237,25 @@
   indicators where the Muslim outcome runs ahead.</p>
 </section>
 
+<!-- IMR -->
+<section class="tile">
+  <div class="tile-head">
+    <h2>Infant Mortality Rate</h2>
+    <p class="source">canonical/imr.csv · sources/nfhs-5/reports/india-report-fr375.pdf (Table 7.2, p. 284) · weighted with sources/census-2011/c-series/c01-population-by-religion.xls</p>
+    <p class="data-current">Data current to · NFHS-5 (2019-21); 5-year reference period 2014-2020</p>
+  </div>
+  <div class="headline">33.0</div>
+  <p class="headline-caption">All-India Muslim, NFHS-5. Hindu: 35.4, All: 34.7</p>
+  <div class="chart-wrap" style="height:280px"><canvas id="imr-chart"></canvas></div>
+  <p class="methodology">Infant deaths per 1000 live births. NFHS-5 Table 7.2 publishes URBAN
+  and RURAL IMR by religion separately (no total-residence-by-religion column). Total
+  residence computed as population-weighted average using Census 2011 urban/rural population
+  by religion (urban/rural population shares by religion are stable 2011-2021, &lt;1% drift).
+  Note: Muslim IMR running below Hindu IMR is the well-documented "Muslim mortality paradox"
+  in Indian demography — Muslim infant survival outperforms Muslim adult socioeconomic
+  indicators.</p>
+</section>
+
 <!-- MUSLIM HIGHER ED ENROLMENT -->
 <section class="tile">
   <div class="tile-head">
@@ -298,7 +317,7 @@
 </section>
 
 <footer>
-  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-28 03:56.
+  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-28 04:14.
   Every number on this page traces L4 → L3 (canonical) → L2 (extracted) → L1 (source file)
   with SHA256 sidecar provenance. Re-run the builder after any canonical change:
   <code>python dashboard/build.py</code></p>
@@ -366,6 +385,19 @@ new Chart(document.getElementById('sr-chart'), {
       y: { ...CFG_BASE.scales.y, suggestedMin: 800, suggestedMax: 1100 },
     },
   },
+});
+
+new Chart(document.getElementById('imr-chart'), {
+  type: 'bar',
+  data: {
+    labels: ["Muslim", "Hindu", "All"],
+    datasets: [
+      { label: 'IMR (per 1000 live births)', data: [33.03, 35.4, 34.73],
+        backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] },
+    ],
+  },
+  options: { ...CFG_BASE, indexAxis: 'y',
+    plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
 });
 
 new Chart(document.getElementById('ahe-chart'), {

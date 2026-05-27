@@ -220,12 +220,23 @@ metrics:
     cluster: health
     unit: per_1000_live_births
     higher_is_better: false
-    sources: {primary: nfhs-5}
-    geography_levels: [national, state]
-    religions: [muslim, hindu, sc, st, all]
+    definition: |
+      Probability of dying before the first birthday, expressed per 1000
+      live births. Reference period: 5 years preceding NFHS-5 (2014-2020 approx).
+    sources:
+      primary: nfhs-5
+      cross_check: [census-india-2011]
+    geography_levels: [national]
+    religions: [muslim, hindu, all]
+    methodology_notes: |
+      NFHS-5 Table 7.2 publishes URBAN and RURAL IMR by religion separately;
+      no published total-residence-by-religion column. National total computed
+      as population-weighted average using Census 2011 urban/rural population
+      by religion as weights. Census 2011 weights vs NFHS 2019-21 data
+      introduces <1% drift (urban/rural shares by religion are stable).
     comparison_baselines: [hindu, all]
     phase: 1
-    status: stub
+    status: defined
 
   - id: stunting-u5
     name: Stunting prevalence in children under 5

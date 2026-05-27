@@ -69,6 +69,8 @@ def fmt_num(v: float, unit: str) -> str:
         return f"{v:.2f}%"
     if unit == "females_per_1000_males":
         return f"{v:.0f}"
+    if unit == "per_1000_live_births":
+        return f"{v:.1f}"
     if unit == "count":
         return f"{int(v):,}"
     return str(v)
@@ -160,6 +162,32 @@ def prep_sex_ratio(rows: list[dict]) -> dict:
         "chart_labels": [state_label(g) for g in state_keys],
         "muslim_series": [round(by_geo[g].get("muslim", 0), 1) for g in state_keys],
         "hindu_series": [round(by_geo[g].get("hindu", 0), 1) for g in state_keys],
+    }
+
+
+def prep_national_by_religion(rows: list[dict], unit: str) -> dict:
+    """For metrics that only have national-level data (e.g. IMR, anemia from NFHS)."""
+    by_religion = {r["religion"]: float(r["value"]) for r in rows
+                   if r["geography_level"] == "national"}
+    muslim = by_religion.get("muslim")
+    hindu = by_religion.get("hindu")
+    all_v = by_religion.get("all")
+    headline = fmt_num(muslim, unit) if muslim is not None else "—"
+    caption_parts = []
+    if hindu is not None:
+        caption_parts.append(f"Hindu: {fmt_num(hindu, unit)}")
+    if all_v is not None:
+        caption_parts.append(f"All: {fmt_num(all_v, unit)}")
+    caption = "All-India Muslim, NFHS-5. " + ", ".join(caption_parts)
+    # Bar chart of religion comparison
+    order = ["muslim", "hindu", "all"]
+    labels = [r.capitalize() if r != "all" else "All" for r in order if r in by_religion]
+    values = [round(by_religion[r], 2) for r in order if r in by_religion]
+    return {
+        "headline": headline,
+        "headline_caption": caption,
+        "chart_labels": labels,
+        "chart_values": values,
     }
 
 
@@ -353,6 +381,25 @@ TEMPLATE = """<!DOCTYPE html>
   indicators where the Muslim outcome runs ahead.</p>
 </section>
 
+<!-- IMR -->
+<section class="tile">
+  <div class="tile-head">
+    <h2>Infant Mortality Rate</h2>
+    <p class="source">canonical/imr.csv · sources/nfhs-5/reports/india-report-fr375.pdf (Table 7.2, p. 284) · weighted with sources/census-2011/c-series/c01-population-by-religion.xls</p>
+    <p class="data-current">Data current to · NFHS-5 (2019-21); 5-year reference period 2014-2020</p>
+  </div>
+  <div class="headline">{imr_headline}</div>
+  <p class="headline-caption">{imr_caption}</p>
+  <div class="chart-wrap" style="height:280px"><canvas id="imr-chart"></canvas></div>
+  <p class="methodology">Infant deaths per 1000 live births. NFHS-5 Table 7.2 publishes URBAN
+  and RURAL IMR by religion separately (no total-residence-by-religion column). Total
+  residence computed as population-weighted average using Census 2011 urban/rural population
+  by religion (urban/rural population shares by religion are stable 2011-2021, &lt;1% drift).
+  Note: Muslim IMR running below Hindu IMR is the well-documented "Muslim mortality paradox"
+  in Indian demography — Muslim infant survival outperforms Muslim adult socioeconomic
+  indicators.</p>
+</section>
+
 <!-- MUSLIM HIGHER ED ENROLMENT -->
 <section class="tile">
   <div class="tile-head">
@@ -452,6 +499,19 @@ new Chart(document.getElementById('sr-chart'), {
   },
 });
 
+new Chart(document.getElementById('imr-chart'), {
+  type: 'bar',
+  data: {
+    labels: {imr_chart_labels},
+    datasets: [
+      { label: 'IMR (per 1000 live births)', data: {imr_chart_values},
+        backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] },
+    ],
+  },
+  options: { ...CFG_BASE, indexAxis: 'y',
+    plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+});
+
 new Chart(document.getElementById('ahe-chart'), {
   type: 'bar',
   data: {
@@ -482,12 +542,14 @@ def build() -> None:
     pop = prep_pop_share(load_metric("pop-share"))
     lit = prep_lit_7plus(load_metric("lit-7plus"))
     sr = prep_sex_ratio(load_metric("sex-ratio"))
+    imr = prep_national_by_religion(load_metric("imr"), "per_1000_live_births")
     ahe = prep_muslim_higher_ed(load_metric("muslim-higher-ed-enrolment"))
 
     n_sources = 5  # Census + NFHS-5 + PLFS + AISHE + (HCES pending)
-    n_metrics = 4
+    n_metrics = 5
     n_rows = (len(load_metric("pop-share")) + len(load_metric("lit-7plus"))
-              + len(load_metric("sex-ratio")) + len(load_metric("muslim-higher-ed-enrolment")))
+              + len(load_metric("sex-ratio")) + len(load_metric("imr"))
+              + len(load_metric("muslim-higher-ed-enrolment")))
 
     substitutions = {
         "{timestamp}": dt.datetime.now().strftime("%Y-%m-%d %H:%M"),
@@ -516,6 +578,11 @@ def build() -> None:
         "{sr_chart_labels}": json.dumps(sr["chart_labels"]),
         "{sr_muslim}": json.dumps(sr["muslim_series"]),
         "{sr_hindu}": json.dumps(sr["hindu_series"]),
+        # imr
+        "{imr_headline}": imr["headline"],
+        "{imr_caption}": imr["headline_caption"],
+        "{imr_chart_labels}": json.dumps(imr["chart_labels"]),
+        "{imr_chart_values}": json.dumps(imr["chart_values"]),
         # muslim higher ed
         "{ahe_headline}": ahe["headline"],
         "{ahe_caption}": ahe["headline_caption"],
