@@ -174,6 +174,7 @@ SCORECARD_SPEC = [
     ("Employment",   "lfpr-15plus",               "LFPR (15+)",                       "percent", "hindu", True),
     ("Employment",   "wpr-15plus",                "WPR (15+)",                        "percent", "hindu", True),
     ("Health",       "imr",                       "Infant Mortality Rate",            "per_1000_live_births", "hindu", False),
+    ("Health",       "inst-delivery",             "Institutional delivery rate",      "percent", "hindu", True),
     ("Health",       "women-anemia",              "Anaemia in women (15-49)",         "percent", "hindu", False),
     ("Justice",      "prison-share",              "Muslim share of prisoners",        "percent", None,    None),  # gap vs pop-share
     ("Justice",      "undertrial-share",          "Muslim share of undertrials",      "percent", None,    None),
@@ -524,6 +525,23 @@ TEMPLATE = """<!DOCTYPE html>
   indicators.</p>
 </section>
 
+<!-- INSTITUTIONAL DELIVERY -->
+<section class="tile">
+  <div class="tile-head">
+    <h2>Institutional delivery rate</h2>
+    <p class="source">canonical/inst-delivery.csv · sources/nfhs-5/reports/india-report-fr375.pdf (Table 8.13, p. 324)</p>
+    <p class="data-current">Data current to · NFHS-5 (2019-21)</p>
+  </div>
+  <div class="headline">{id_headline}</div>
+  <p class="headline-caption">{id_caption}</p>
+  <div class="chart-wrap" style="height:280px"><canvas id="id-chart"></canvas></div>
+  <p class="methodology">Percentage of live births (5 years preceding NFHS-5) that took place in a
+  health facility. Muslim institutional delivery (84.3%) runs 5.2pp below Hindu (89.5%) — unlike
+  IMR and anaemia (where the Muslim outcome runs ahead), this is the expected direction.
+  Suggests the maternal-care system reaches Muslim women less effectively even where infant
+  outcomes are paradoxically better.</p>
+</section>
+
 <!-- WOMEN ANAEMIA -->
 <section class="tile">
   <div class="tile-head">
@@ -721,6 +739,17 @@ new Chart(document.getElementById('imr-chart'), {
     plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
 });
 
+new Chart(document.getElementById('id-chart'), {
+  type: 'bar',
+  data: {
+    labels: {id_chart_labels},
+    datasets: [{ label: 'Institutional delivery (%)', data: {id_chart_values},
+      backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] }],
+  },
+  options: { ...CFG_BASE, indexAxis: 'y',
+    plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+});
+
 new Chart(document.getElementById('wa-chart'), {
   type: 'bar',
   data: {
@@ -809,6 +838,7 @@ def build() -> None:
     lit = prep_lit_7plus(load_metric("lit-7plus"))
     sr = prep_sex_ratio(load_metric("sex-ratio"))
     imr = prep_national_by_religion(load_metric("imr"), "per_1000_live_births")
+    id_ = prep_national_by_religion(load_metric("inst-delivery"), "percent")
     wa = prep_national_by_religion(load_metric("women-anemia"), "percent")
     lfpr = prep_national_by_religion(load_metric("lfpr-15plus"), "percent")
     wpr = prep_national_by_religion(load_metric("wpr-15plus"), "percent")
@@ -816,13 +846,13 @@ def build() -> None:
     us = prep_national_by_religion(load_metric("undertrial-share"), "percent")
     ahe = prep_muslim_higher_ed(load_metric("muslim-higher-ed-enrolment"))
 
-    n_sources = 6  # Census + NFHS-5 + PLFS + AISHE + HCES + NCRB
-    n_metrics = 10
+    n_sources = 6
+    n_metrics = 11
     n_rows = (len(load_metric("pop-share")) + len(load_metric("lit-7plus"))
               + len(load_metric("sex-ratio")) + len(load_metric("imr"))
-              + len(load_metric("women-anemia")) + len(load_metric("lfpr-15plus"))
-              + len(load_metric("wpr-15plus")) + len(load_metric("prison-share"))
-              + len(load_metric("undertrial-share"))
+              + len(load_metric("inst-delivery")) + len(load_metric("women-anemia"))
+              + len(load_metric("lfpr-15plus")) + len(load_metric("wpr-15plus"))
+              + len(load_metric("prison-share")) + len(load_metric("undertrial-share"))
               + len(load_metric("muslim-higher-ed-enrolment")))
 
     substitutions = {
@@ -858,6 +888,11 @@ def build() -> None:
         "{imr_caption}": imr["headline_caption"],
         "{imr_chart_labels}": json.dumps(imr["chart_labels"]),
         "{imr_chart_values}": json.dumps(imr["chart_values"]),
+        # institutional delivery
+        "{id_headline}": id_["headline"],
+        "{id_caption}": id_["headline_caption"],
+        "{id_chart_labels}": json.dumps(id_["chart_labels"]),
+        "{id_chart_values}": json.dumps(id_["chart_values"]),
         # women anaemia
         "{wa_headline}": wa["headline"],
         "{wa_caption}": wa["headline_caption"],

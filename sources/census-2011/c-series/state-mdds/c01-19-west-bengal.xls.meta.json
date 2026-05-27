@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-west-bengal-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11396/download/14509/DDW19C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-27T23:40:16.232304+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 663552,
+  "sha256": "723b9edf6254c86adac24e5ccd99efb74e044eac5ff31683910f05357ee179c9",
+  "pull_script_version": "0.1.0"
+}

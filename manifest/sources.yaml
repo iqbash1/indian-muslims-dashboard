@@ -54,6 +54,21 @@ sources:
         url: https://censusindia.gov.in/nada/index.php/catalog/11394/download/14507/DDW09C-01%20MDDS.XLS
         target_path: sources/census-2011/c-series/state-mdds/c01-09-uttar-pradesh.xls
         status: verified
+      - target_id: c01-bihar-state-mdds
+        description: C-1 Population by Religious Community — Bihar (state-level + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11366/download/14479/DDW10C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-10-bihar.xls
+        status: verified
+      - target_id: c01-west-bengal-state-mdds
+        description: C-1 Population by Religious Community — West Bengal (state-level + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11396/download/14509/DDW19C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-19-west-bengal.xls
+        status: verified
+      - target_id: c01-jammu-kashmir-state-mdds
+        description: C-1 Population by Religious Community — Jammu & Kashmir (state-level + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11376/download/14489/DDW01C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-01-jammu-kashmir.xls
+        status: verified
 
   - id: nfhs-5
     name: National Family Health Survey 5 (2019-21)

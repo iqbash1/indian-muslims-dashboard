@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-jammu-kashmir-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11376/download/14489/DDW01C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-27T23:40:20.629805+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 157184,
+  "sha256": "c9f393c89b32b9be71c4adb206bca5e03cbd7b3f6906ab1b1945add907d3cacd",
+  "pull_script_version": "0.1.0"
+}

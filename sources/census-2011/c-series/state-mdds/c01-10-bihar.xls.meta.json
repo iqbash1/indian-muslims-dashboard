@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-bihar-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11366/download/14479/DDW10C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-27T23:40:09.057385+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 609792,
+  "sha256": "b00824a5382302263b8af81e4ed4d7165b92ac2782aaebce4760e6883527b737",
+  "pull_script_version": "0.1.0"
+}

@@ -267,12 +267,20 @@ metrics:
     cluster: health
     unit: percent
     higher_is_better: true
+    definition: |
+      Percentage of live births in the 5 years preceding NFHS-5 that took
+      place in a health facility (public or private), among women age 15-49.
     sources: {primary: nfhs-5}
-    geography_levels: [national, state]
-    religions: [muslim, hindu, sc, st, all]
+    geography_levels: [national]
+    religions: [muslim, hindu, all]
+    methodology_notes: |
+      NFHS-5 Table 8.13 (page 324). The "all" value is computed as a
+      sample-size-weighted average of the 7 religion rates (published
+      Total row was hard to extract cleanly from the dual-column PDF
+      layout). Matches NFHS-5 published 88.6% within rounding.
     comparison_baselines: [hindu, all]
     phase: 1
-    status: stub
+    status: defined
 
   - id: women-anemia
     name: Anemia in women aged 15-49

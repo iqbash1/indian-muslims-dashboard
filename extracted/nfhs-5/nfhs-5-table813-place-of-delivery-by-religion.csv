@@ -1,0 +1,8 @@
+source_id,source_document,source_sha256_prefix,extraction_run,table,page,religion,metric,value,n_live_births
+nfhs-5,sources/nfhs-5/reports/india-report-fr375.pdf,ce1fa5e3c93e5f00,nfhs-table813-extract-v1.0.0-20260527T233800Z,8.13,324,hindu,institutional_delivery,89.5,183338
+nfhs-5,sources/nfhs-5/reports/india-report-fr375.pdf,ce1fa5e3c93e5f00,nfhs-table813-extract-v1.0.0-20260527T233800Z,8.13,324,muslim,institutional_delivery,84.3,37495
+nfhs-5,sources/nfhs-5/reports/india-report-fr375.pdf,ce1fa5e3c93e5f00,nfhs-table813-extract-v1.0.0-20260527T233800Z,8.13,324,christian,institutional_delivery,83.3,4784
+nfhs-5,sources/nfhs-5/reports/india-report-fr375.pdf,ce1fa5e3c93e5f00,nfhs-table813-extract-v1.0.0-20260527T233800Z,8.13,324,sikh,institutional_delivery,96.1,2890
+nfhs-5,sources/nfhs-5/reports/india-report-fr375.pdf,ce1fa5e3c93e5f00,nfhs-table813-extract-v1.0.0-20260527T233800Z,8.13,324,buddhist,institutional_delivery,93.8,1098
+nfhs-5,sources/nfhs-5/reports/india-report-fr375.pdf,ce1fa5e3c93e5f00,nfhs-table813-extract-v1.0.0-20260527T233800Z,8.13,324,jain,institutional_delivery,99.7,329
+nfhs-5,sources/nfhs-5/reports/india-report-fr375.pdf,ce1fa5e3c93e5f00,nfhs-table813-extract-v1.0.0-20260527T233800Z,8.13,324,other,institutional_delivery,73.4,937
