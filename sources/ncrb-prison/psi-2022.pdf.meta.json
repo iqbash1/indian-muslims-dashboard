@@ -1,0 +1,11 @@
+{
+  "source_id": "ncrb-prison",
+  "target_id": "psi-2022",
+  "url": "https://www.ncrb.gov.in/uploads/nationalcrimerecordsbureau/custom/psiyearwise2022/1701613297PSI2022ason01122023.pdf",
+  "pulled_at": "2026-05-27T23:01:08.707443+00:00",
+  "status_code": 200,
+  "content_type": "application/pdf",
+  "content_length": 25747066,
+  "sha256": "304b92eb2bf16eae1b0df200827264c51d910dc2313894018df92f0181f545d4",
+  "pull_script_version": "0.1.0"
+}
