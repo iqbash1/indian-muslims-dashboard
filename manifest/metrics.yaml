@@ -72,12 +72,22 @@ metrics:
     cluster: demographics
     unit: percent
     higher_is_better: null
+    definition: |
+      Share of national Muslim population that lives in the top 100 districts
+      ranked by absolute Muslim population. High values = geographically
+      concentrated; low values = dispersed.
     sources: {primary: census-india-2011}
     geography_levels: [national]
     religions: [muslim]
+    methodology_notes: |
+      Computed by sorting all ~640 Indian districts by absolute Muslim
+      population (per Census 2011 state MDDS C-1 files), taking the top 100,
+      summing their Muslim residents, and dividing by national Muslim total.
+      Denominator field on canonical row records exact numerator (top-100 sum)
+      and denominator (national Muslim count).
     comparison_baselines: []
     phase: 1
-    status: stub
+    status: defined
 
   # ----- Education (Phase 1) -----
   - id: lit-7plus

@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-sikkim-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11391/download/14504/DDW11C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-28T00:35:43.363599+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 34816,
+  "sha256": "1a64732af97202de0137d3067e8b82fbedca6f8521baec9954b0e81dd1924b54",
+  "pull_script_version": "0.1.0"
+}

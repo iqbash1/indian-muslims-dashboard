@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-jharkhand-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11377/download/14490/DDW20C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-28T00:34:37.327114+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 354304,
+  "sha256": "ce85844d687a03b9ccf05f628c264e68d03fc328990771a1d413627b6ecc4911",
+  "pull_script_version": "0.1.0"
+}

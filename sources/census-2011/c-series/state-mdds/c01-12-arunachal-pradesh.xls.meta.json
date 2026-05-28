@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-arunachal-pradesh-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11364/download/14477/DDW12C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-28T00:33:47.263455+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 216064,
+  "sha256": "0c7a94c307658a8470177bafa479314b47d83e8ae6a78e0fb72432b3317b0408",
+  "pull_script_version": "0.1.0"
+}

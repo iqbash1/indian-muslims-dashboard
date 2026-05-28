@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-himachal-pradesh-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11375/download/14488/DDW02C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-28T00:34:32.028957+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 157184,
+  "sha256": "84d6d01b41dce584256d0e13e61264531d1593b05512f39f813b91d691094a33",
+  "pull_script_version": "0.1.0"
+}

@@ -69,6 +69,161 @@ sources:
         url: https://censusindia.gov.in/nada/index.php/catalog/11376/download/14489/DDW01C-01%20MDDS.XLS
         target_path: sources/census-2011/c-series/state-mdds/c01-01-jammu-kashmir.xls
         status: verified
+      - target_id: c01-andaman-nicobar-islands-state-mdds
+        description: C-1 Population by Religious Community — A & N Islands (state + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11362/download/14475/DDW35C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-35-andaman-nicobar-islands.xls
+        status: verified
+      - target_id: c01-andhra-pradesh-state-mdds
+        description: C-1 Population by Religious Community — Andhra Pradesh (state + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11363/download/14476/DDW28C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-28-andhra-pradesh.xls
+        status: verified
+      - target_id: c01-arunachal-pradesh-state-mdds
+        description: C-1 Population by Religious Community — Arunachal Pradesh (state + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11364/download/14477/DDW12C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-12-arunachal-pradesh.xls
+        status: verified
+      - target_id: c01-assam-state-mdds
+        description: C-1 Population by Religious Community — Assam (state + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11365/download/14478/DDW18C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-18-assam.xls
+        status: verified
+      - target_id: c01-chandigarh-state-mdds
+        description: C-1 Population by Religious Community — Chandigarh (state + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11367/download/14480/DDW04C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-04-chandigarh.xls
+        status: verified
+      - target_id: c01-chhattisgarh-state-mdds
+        description: C-1 Population by Religious Community — Chhattisgarh (state + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11368/download/14481/DDW22C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-22-chhattisgarh.xls
+        status: verified
+      - target_id: c01-dadra-nagar-haveli-state-mdds
+        description: C-1 Population by Religious Community — Dadra & Nagar Haveli (state + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11369/download/14482/DDW26C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-26-dadra-nagar-haveli.xls
+        status: verified
+      - target_id: c01-daman-diu-state-mdds
+        description: C-1 Population by Religious Community — Daman & Diu (state + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11370/download/14483/DDW25C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-25-daman-diu.xls
+        status: verified
+      - target_id: c01-delhi-state-mdds
+        description: C-1 Population by Religious Community — NCT of Delhi (state + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11371/download/14484/DDW07C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-07-delhi.xls
+        status: verified
+      - target_id: c01-goa-state-mdds
+        description: C-1 Population by Religious Community — Goa (state + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11372/download/14485/DDW30C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-30-goa.xls
+        status: verified
+      - target_id: c01-gujarat-state-mdds
+        description: C-1 Population by Religious Community — Gujarat (state + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11373/download/14486/DDW24C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-24-gujarat.xls
+        status: verified
+      - target_id: c01-haryana-state-mdds
+        description: C-1 Population by Religious Community — Haryana (state + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11374/download/14487/DDW06C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-06-haryana.xls
+        status: verified
+      - target_id: c01-himachal-pradesh-state-mdds
+        description: C-1 Population by Religious Community — Himachal Pradesh (state + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11375/download/14488/DDW02C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-02-himachal-pradesh.xls
+        status: verified
+      - target_id: c01-jharkhand-state-mdds
+        description: C-1 Population by Religious Community — Jharkhand (state + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11377/download/14490/DDW20C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-20-jharkhand.xls
+        status: verified
+      - target_id: c01-karnataka-state-mdds
+        description: C-1 Population by Religious Community — Karnataka (state + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11378/download/14491/DDW29C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-29-karnataka.xls
+        status: verified
+      - target_id: c01-kerala-state-mdds
+        description: C-1 Population by Religious Community — Kerala (state + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11379/download/14492/DDW32C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-32-kerala.xls
+        status: verified
+      - target_id: c01-lakshadweep-state-mdds
+        description: C-1 Population by Religious Community — Lakshadweep (state + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11380/download/14493/DDW31C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-31-lakshadweep.xls
+        status: verified
+      - target_id: c01-madhya-pradesh-state-mdds
+        description: C-1 Population by Religious Community — Madhya Pradesh (state + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11381/download/14494/DDW23C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-23-madhya-pradesh.xls
+        status: verified
+      - target_id: c01-maharashtra-state-mdds
+        description: C-1 Population by Religious Community — Maharashtra (state + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11382/download/14495/DDW27C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-27-maharashtra.xls
+        status: verified
+      - target_id: c01-manipur-state-mdds
+        description: C-1 Population by Religious Community — Manipur (state + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11383/download/14496/DDW14C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-14-manipur.xls
+        status: verified
+      - target_id: c01-meghalaya-state-mdds
+        description: C-1 Population by Religious Community — Meghalaya (state + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11384/download/14497/DDW17C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-17-meghalaya.xls
+        status: verified
+      - target_id: c01-mizoram-state-mdds
+        description: C-1 Population by Religious Community — Mizoram (state + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11385/download/14498/DDW15C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-15-mizoram.xls
+        status: verified
+      - target_id: c01-nagaland-state-mdds
+        description: C-1 Population by Religious Community — Nagaland (state + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11386/download/14499/DDW13C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-13-nagaland.xls
+        status: verified
+      - target_id: c01-odisha-state-mdds
+        description: C-1 Population by Religious Community — Odisha (state + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11387/download/14500/DDW21C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-21-odisha.xls
+        status: verified
+      - target_id: c01-puducherry-state-mdds
+        description: C-1 Population by Religious Community — Puducherry (state + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11388/download/14501/DDW34C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-34-puducherry.xls
+        status: verified
+      - target_id: c01-punjab-state-mdds
+        description: C-1 Population by Religious Community — Punjab (state + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11389/download/14502/DDW03C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-03-punjab.xls
+        status: verified
+      - target_id: c01-rajasthan-state-mdds
+        description: C-1 Population by Religious Community — Rajasthan (state + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11390/download/14503/DDW08C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-08-rajasthan.xls
+        status: verified
+      - target_id: c01-sikkim-state-mdds
+        description: C-1 Population by Religious Community — Sikkim (state + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11391/download/14504/DDW11C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-11-sikkim.xls
+        status: verified
+      - target_id: c01-tamil-nadu-state-mdds
+        description: C-1 Population by Religious Community — Tamil Nadu (state + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11392/download/14505/DDW33C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-33-tamil-nadu.xls
+        status: verified
+      - target_id: c01-tripura-state-mdds
+        description: C-1 Population by Religious Community — Tripura (state + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11393/download/14506/DDW16C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-16-tripura.xls
+        status: verified
+      - target_id: c01-uttarakhand-state-mdds
+        description: C-1 Population by Religious Community — Uttarakhand (state + districts)
+        url: https://censusindia.gov.in/nada/index.php/catalog/11395/download/14508/DDW05C-01%20MDDS.XLS
+        target_path: sources/census-2011/c-series/state-mdds/c01-05-uttarakhand.xls
+        status: verified
 
   - id: nfhs-5
     name: National Family Health Survey 5 (2019-21)

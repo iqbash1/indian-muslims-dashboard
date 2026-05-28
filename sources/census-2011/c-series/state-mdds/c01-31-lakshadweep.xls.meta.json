@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-lakshadweep-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11380/download/14493/DDW31C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-28T00:34:51.253744+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 32256,
+  "sha256": "094c23d03e0507683ca8ac7e0757dfcee382d2f7a557a7a17b532d50da609951",
+  "pull_script_version": "0.1.0"
+}

@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-rajasthan-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11390/download/14503/DDW08C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-28T00:35:39.478955+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 373248,
+  "sha256": "f6b20056f1b200e3958774382d68a0cc84291d33681fd3ef15dc19c6fc8431c1",
+  "pull_script_version": "0.1.0"
+}

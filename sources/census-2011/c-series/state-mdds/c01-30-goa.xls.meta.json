@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-goa-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11372/download/14485/DDW30C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-28T00:34:16.812308+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 54784,
+  "sha256": "ebf0790fb3f6576a8b9c0e0d7e3c2f701a94ca37631fc5d3d327fc6467aff34a",
+  "pull_script_version": "0.1.0"
+}

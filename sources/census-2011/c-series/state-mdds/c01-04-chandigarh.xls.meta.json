@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-chandigarh-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11367/download/14480/DDW04C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-28T00:33:55.734181+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 23552,
+  "sha256": "7a92369d139aad484bd0235105fce537f8a5def7df037735eec18792f5ac1c43",
+  "pull_script_version": "0.1.0"
+}

@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-karnataka-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11378/download/14491/DDW29C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-28T00:34:42.758720+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 326656,
+  "sha256": "c0f40e1ede9d35e5e52357b759c58b6b2424223c202d97baabbeedfe05ad8e0a",
+  "pull_script_version": "0.1.0"
+}

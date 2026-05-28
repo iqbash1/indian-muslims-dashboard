@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-andhra-pradesh-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11363/download/14476/DDW28C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-28T00:33:41.362047+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 1221632,
+  "sha256": "48a09e1e1dce2ab35fe2bf8ae36499c8ff03beaa4d0a910fe9282ee071cd237c",
+  "pull_script_version": "0.1.0"
+}

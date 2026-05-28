@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-maharashtra-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11382/download/14495/DDW27C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-28T00:35:03.175704+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 553472,
+  "sha256": "bce626419f500bd7e1525b74e2da64285e4a5c021b65cee7492b1ba6b62bb9bd",
+  "pull_script_version": "0.1.0"
+}

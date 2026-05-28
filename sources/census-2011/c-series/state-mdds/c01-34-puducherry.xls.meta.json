@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-puducherry-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11388/download/14501/DDW34C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-28T00:35:29.718190+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 34816,
+  "sha256": "988de29f40428b5fb8deb273d637c37c05b8ab5be2d266d944871c6531bade39",
+  "pull_script_version": "0.1.0"
+}

@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-haryana-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11374/download/14487/DDW06C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-28T00:34:27.526184+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 157184,
+  "sha256": "caf5d28a6b06687420cbb99f511fe294a2e1e9f73a2c811b1965c1ba264f767d",
+  "pull_script_version": "0.1.0"
+}

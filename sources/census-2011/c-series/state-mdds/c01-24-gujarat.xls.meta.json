@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-gujarat-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11373/download/14486/DDW24C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-28T00:34:22.349525+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 365056,
+  "sha256": "1aec4398df786adb5076b25e128cbcd2af2a94437c332f242ad829aae2deddee",
+  "pull_script_version": "0.1.0"
+}

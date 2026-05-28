@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-delhi-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11371/download/14484/DDW07C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-28T00:34:12.664100+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 101376,
+  "sha256": "5407e0630fa8a003363835b675d90e001f4e51a4d534d1d9c540a1880edc4ba8",
+  "pull_script_version": "0.1.0"
+}

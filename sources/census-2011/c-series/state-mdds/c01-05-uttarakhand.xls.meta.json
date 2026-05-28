@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-uttarakhand-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11395/download/14508/DDW05C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-28T00:35:57.289997+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 142336,
+  "sha256": "97c71565c4e9c2d5ae9ebf0aa89333ceec7a2bc3b39aab4bf93fdef00b4cdcc0",
+  "pull_script_version": "0.1.0"
+}

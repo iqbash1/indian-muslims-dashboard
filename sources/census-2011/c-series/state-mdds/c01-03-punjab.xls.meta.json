@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-punjab-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11389/download/14502/DDW03C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-28T00:35:34.142496+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 181760,
+  "sha256": "a816056bc9e70168b358302d3c7dfedc0a3eb1170aed39a76d1e1ec05e37ec1f",
+  "pull_script_version": "0.1.0"
+}

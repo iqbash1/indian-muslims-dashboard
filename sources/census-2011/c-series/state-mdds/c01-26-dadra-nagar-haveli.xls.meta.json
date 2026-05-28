@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-dadra-nagar-haveli-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11369/download/14482/DDW26C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-28T00:34:04.266934+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 24064,
+  "sha256": "b9172c163de726447fd95bb30f8ea74c30f936ead990facbf19da4950fccb891",
+  "pull_script_version": "0.1.0"
+}

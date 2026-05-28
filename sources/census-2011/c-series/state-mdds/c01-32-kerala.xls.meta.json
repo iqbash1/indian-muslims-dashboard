@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-kerala-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11379/download/14492/DDW32C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-28T00:34:47.359364+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 262656,
+  "sha256": "d155653175c6f462ad9f89fa88552e36919424c41a61c56ab1ca7e829d38dead",
+  "pull_script_version": "0.1.0"
+}

@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-tamil-nadu-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11392/download/14505/DDW33C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-28T00:35:48.900452+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 606208,
+  "sha256": "5766414c82e96d26f3c15d87e468742d7cb68a9fdfab5f9d5a41e5d1525dd7f2",
+  "pull_script_version": "0.1.0"
+}

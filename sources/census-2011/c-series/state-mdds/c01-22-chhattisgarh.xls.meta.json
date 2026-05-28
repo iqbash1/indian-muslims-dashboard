@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-chhattisgarh-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11368/download/14481/DDW22C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-28T00:34:00.283241+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 238592,
+  "sha256": "96193fc25b6bc5cd63eb2fb2e9b06cefb1d45214ee86aa5098995b85621f3bb7",
+  "pull_script_version": "0.1.0"
+}

@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-meghalaya-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11384/download/14497/DDW17C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-28T00:35:11.278400+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 69632,
+  "sha256": "b73b61e358e3ad7191c17510adfd4d36477f974c80b815c90dda4fb63a0789e7",
+  "pull_script_version": "0.1.0"
+}

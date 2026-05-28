@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-andaman-nicobar-islands-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11362/download/14475/DDW35C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-28T00:33:32.319096+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 32768,
+  "sha256": "4b94e106e8114eb9ddadf96c6a0e0c0260a3175d85c34600775f8ae4b9bbde6c",
+  "pull_script_version": "0.1.0"
+}

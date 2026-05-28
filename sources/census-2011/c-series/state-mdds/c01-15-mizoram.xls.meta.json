@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-mizoram-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11385/download/14498/DDW15C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-28T00:35:15.220355+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 60928,
+  "sha256": "82ef5ce563af00178a62ceff82e99758fe2bde1dae146cc1e598b05f80cd60a7",
+  "pull_script_version": "0.1.0"
+}

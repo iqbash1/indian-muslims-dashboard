@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-odisha-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11387/download/14500/DDW21C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-28T00:35:25.484187+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 559104,
+  "sha256": "3cfc1100df768aa8de46ecb865a8e5a0516c27d5a60a07219f73afe3b028429d",
+  "pull_script_version": "0.1.0"
+}

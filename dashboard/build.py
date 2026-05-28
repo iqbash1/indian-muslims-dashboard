@@ -199,6 +199,7 @@ SCORECARD_SPEC = [
     # (cluster, metric_id, display_name, unit, reference_religion, higher_is_better)
     ("Demographics", "pop-share",                 "Population share",                 "percent", None,    None),
     ("Demographics", "sex-ratio",                 "Sex ratio (F/1000M)",              "females_per_1000_males", "hindu", True),
+    ("Demographics", "district-concentration-top100", "Top-100 district concentration", "percent", None,    None),
     ("Education",    "lit-7plus",                 "Literacy rate (7+)",               "percent", "hindu", True),
     ("Education",    "muslim-higher-ed-enrolment","Higher-ed enrolment (count)",      "count",   None,    None),
     ("Employment",   "lfpr-15plus",               "LFPR (15+)",                       "percent", "hindu", True),

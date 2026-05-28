@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-tripura-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11393/download/14506/DDW16C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-28T00:35:53.094186+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 78336,
+  "sha256": "cb6bc7a69c1e58ab0a4fcc0a753f7be29912905bb5475a73a46cbb3e3e1429ea",
+  "pull_script_version": "0.1.0"
+}

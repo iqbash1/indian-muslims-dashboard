@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-assam-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11365/download/14478/DDW18C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-28T00:33:51.861197+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 286208,
+  "sha256": "a7a01c11d4e2c030ed1605c2dd6436bb97fd971c3821253b7aef08a52c3fc902",
+  "pull_script_version": "0.1.0"
+}

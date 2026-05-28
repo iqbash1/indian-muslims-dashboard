@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-nagaland-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11386/download/14499/DDW13C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-28T00:35:19.629326+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 143360,
+  "sha256": "12ef3cb23aa3cd0b01ada682fe7a933bdcc38f970e3ada0b8143f8815ce485e8",
+  "pull_script_version": "0.1.0"
+}

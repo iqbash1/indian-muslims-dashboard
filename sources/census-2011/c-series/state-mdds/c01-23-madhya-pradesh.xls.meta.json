@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-madhya-pradesh-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11381/download/14494/DDW23C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-28T00:34:57.150404+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 535552,
+  "sha256": "ae8aa3a2003e8070f6b88011953cd50ca344a2716179e7db4fe479688be6379c",
+  "pull_script_version": "0.1.0"
+}

@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-manipur-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11383/download/14496/DDW14C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-28T00:35:07.330930+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 82944,
+  "sha256": "5ec60bf78774f231838b65abd488fc9619f463c2d67f171ceeb2109684891ca3",
+  "pull_script_version": "0.1.0"
+}

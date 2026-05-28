@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2011",
+  "target_id": "c01-daman-diu-state-mdds",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/11370/download/14483/DDW25C-01%20MDDS.XLS",
+  "pulled_at": "2026-05-28T00:34:08.129819+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 26624,
+  "sha256": "5ea87ed51a73a0d8f52c626beb62a9a233a71b342da505afd959d87ae0da8c97",
+  "pull_script_version": "0.1.0"
+}
