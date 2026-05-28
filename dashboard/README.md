@@ -1,6 +1,8 @@
 # L4 Dashboard
 
-Single static HTML preview built from `canonical/*.csv`. Open `preview/index.html` in any browser — no server required, Chart.js loaded from CDN.
+Single static HTML build from `canonical/*.csv`. Output lives at `docs/index.html` (so GitHub Pages can serve it from `/docs`). Open in any browser — no server required, Chart.js loaded from CDN.
+
+Live URL: https://iqbash1.github.io/indian-muslims-dashboard/
 
 ## Build
 

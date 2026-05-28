@@ -6,23 +6,27 @@ Loosely modeled on the Hawaii state dashboard pattern: small anchor set per clus
 
 ## The scorecard (current)
 
-17 metrics across 6 sources, all schema-validated, all values spot-checked against published. *(Snapshot below shows the first 11; the live dashboard has the full set including representation, civic, and housing clusters.)*
+15 metrics on the dashboard scorecard (17 total in canonical including the two prison-share variants), all schema-validated, all values spot-checked against published. **Live at https://iqbash1.github.io/indian-muslims-dashboard/**.
 
-| Cluster | Metric | Year | Muslim | Hindu | Gap |
-|---|---|---|---|---|---|
-| Demographics | Population share | 2011 | 14.23% | — | baseline |
-| Demographics | Sex ratio (F/1000M) | 2011 | 951 | 939 | +12 *(paradox)* |
-| Education | Literacy rate (7+) | 2011 | 68.59% | 73.31% | **−4.72pp** |
-| Education | Higher-ed enrolment (count) | 2021 | 2,108,033 | — | n/a |
-| Employment | LFPR (15+) | 2023 | 55.0% | 60.9% | **−5.90pp** |
-| Employment | WPR (15+) | 2023 | 53.2% | 59.1% | **−5.90pp** |
-| Health | Infant Mortality Rate | 2020 | 33.0 | 35.4 | −2.4 *(paradox)* |
-| Health | Institutional delivery | 2020 | 84.3% | 89.5% | **−5.20pp** |
-| Health | Anaemia in women (15-49) | 2020 | 55.6% | 57.4% | −1.8pp *(paradox)* |
-| Justice | Muslim share of prisoners | 2022 | 20.17% | 71.19% | **+5.94pp over pop share** |
-| Justice | Muslim share of undertrials | 2022 | 20.92% | 70.59% | **+6.69pp over pop share** |
+| Cluster | Metric | Year | Muslim | Hindu | All | Gap vs reference |
+|---|---|---|---|---|---|---|
+| Demographics | Population share | 2011 | 14.23% | — | — | baseline |
+| Demographics | Sex ratio (F/1000M) | 2011 | 951 | 939 | 943 | +12.20 *(paradox)* |
+| Demographics | Top-100 district concentration | 2011 | 58.55% | — | — | — |
+| Education | Literacy rate (7+) | 2011 | 68.59% | 73.31% | 73.02% | **−4.72pp** |
+| Education | Higher-ed enrolment (count) | 2021 | 2,108,033 | — | — | n/a (no Hindu count in source) |
+| Employment | LFPR (15+) | 2023 | 55.00% | 60.90% | 60.10% | **−5.90pp** |
+| Employment | WPR (15+) | 2023 | 53.20% | 59.10% | 58.20% | **−5.90pp** |
+| Health | Infant Mortality Rate | 2020 | 33.0 | 35.4 | 34.7 | −2.37 *(paradox)* |
+| Health | Institutional delivery rate | 2020 | 84.30% | 89.50% | 88.58% | **−5.20pp** |
+| Health | Anaemia in women (15-49) | 2020 | 55.60% | 57.40% | 57.00% | −1.80pp *(paradox)* |
+| Housing | Toilet facility access | 2020 | 90.30% | 80.70% | 82.50% | +9.60pp *(composition effect)* |
+| Justice | Prisoners (rate per 100k pop) | 2022 | 108,968 (63.3/100k) | 384,522 (39.8/100k) | 540,148 (44.6/100k) | **1.59× Hindu rate** |
+| Justice | Undertrials (rate per 100k pop) | 2022 | 83,968 (48.8/100k) | 283,372 (29.3/100k) | 401,419 (33.1/100k) | **1.66× Hindu rate** |
+| Representation | Lok Sabha Muslim share | 2024 | **4.42%** | — | — | **−9.81pp vs 14.23% pop** |
+| Civic | Communal incidents (NCRB) | 2022 | 272 nationally | — | — | civic-society counts higher |
 
-*"Paradox" marks indicators where Muslim outcomes run ahead of Hindu — primarily infant survival, women's anaemia, and sex ratio. These are well-documented in Indian demography and are not a contradiction of the broader pattern: socioeconomic and civic indicators (literacy, employment, representation, justice exposure) consistently show Muslim disadvantage.*
+*"Paradox" marks indicators where Muslim outcomes run ahead of Hindu — primarily infant survival, women's anaemia, sex ratio, and (with composition caveat) toilet access. These are well-documented in Indian demography and are not a contradiction of the broader pattern: socioeconomic and civic indicators (literacy, employment, representation, justice exposure) consistently show Muslim disadvantage. The starkest gaps are political representation (~9.8pp under) and prison overrepresentation (1.59-1.66× Hindu rate).*
 
 ## See the dashboard
 

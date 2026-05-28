@@ -35,6 +35,14 @@
   }
   .status-bar b { color: var(--accent); }
   .status-bar span { color: var(--muted); }
+  section.intro {
+    background: #fff7f0; border-left: 4px solid var(--accent);
+    padding: 14px 18px; margin-bottom: 24px; border-radius: 4px;
+  }
+  section.intro p { margin: 0 0 8px; font-size: 14px; color: #4a3a2a; }
+  section.intro p:last-child { margin-bottom: 0; }
+  section.intro a { color: var(--muslim); }
+  section.intro i { font-style: italic; font-weight: 600; }
   .tile {
     background: var(--card); border: 1px solid var(--rule); border-radius: 6px;
     padding: 22px 24px; margin-bottom: 22px;
@@ -130,7 +138,19 @@
 <div class="page">
 
 <h1>Indian Muslims — Living Conditions Dashboard</h1>
-<p class="tagline">Preview build · 2026-05-28 06:29</p>
+<p class="tagline">Built 2026-05-28 07:55 · <a href="https://github.com/iqbash1/indian-muslims-dashboard">source on GitHub</a></p>
+
+<section class="intro">
+  <p>A scorecard of living-conditions indicators for India's Muslim population, with
+  Hindu and all-India comparison baselines on every metric. The gap between Muslim
+  outcomes and these baselines is the story this dashboard is built around —
+  inheriting the Sachar Committee (2006) methodology of focused, comparative measurement.</p>
+  <p>Each tile shows: source path, methodology note, "data current to" badge, and a
+  link to the underlying canonical CSV. Click any column header in the scorecard to sort.
+  Numbers tagged <i>"paradox"</i> are ones where Muslim outcomes run <i>ahead of</i> Hindu —
+  notably infant survival, women's anaemia, and sex ratio. These coexist with persistent
+  Muslim disadvantage on the socioeconomic, representation, and justice indicators.</p>
+</section>
 
 <div class="status-bar">
   <span><b>17</b> metrics live</span>
@@ -617,7 +637,7 @@
 </section>
 
 <footer>
-  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-28 06:29.
+  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-28 07:55.
   Every number on this page traces L4 → L3 (canonical) → L2 (extracted) → L1 (source file)
   with SHA256 sidecar provenance. Re-run the builder after any canonical change:
   <code>python dashboard/build.py</code></p>
