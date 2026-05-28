@@ -322,10 +322,12 @@ def render_scorecard_rows() -> str:
             )
             continue
 
-        # Special case: ls-share has multiple year rows (time series); show latest
-        if mid == "ls-share":
+        # Special case: ls-share / mla-share — national row, gap vs 14.23% pop share
+        if mid in ("ls-share", "mla-share"):
             data = load_metric(mid)
-            latest = max(data, key=lambda r: int(r["year"])) if data else None
+            # Filter to national row for the latest year
+            nat = [r for r in data if r["geography_level"] == "national"]
+            latest = max(nat, key=lambda r: int(r["year"])) if nat else None
             if latest is None:
                 continue
             m_val = float(latest["value"])
@@ -852,6 +854,24 @@ TEMPLATE = """<!DOCTYPE html>
   candidate affidavits, cross-verified across multiple sources (documented manual entry).</p>
 </section>
 
+<!-- MLA SHARE -->
+<section class="tile">
+  <div class="tile-head">
+    <h2>Muslim share of state assembly MLAs</h2>
+    <p class="source">canonical/mla-share.csv · manual entry from ECI affidavit aggregations</p>
+    <p class="data-current">Data current to · most recent assembly election per state (2023-2026)</p>
+  </div>
+  <div class="headline">{mla_headline}</div>
+  <p class="headline-caption">{mla_caption}</p>
+  <div class="chart-wrap" style="height:340px"><canvas id="mla-chart"></canvas></div>
+  <p class="methodology">National aggregate across 28 state assemblies is ~6%. Per-state values vary
+  sharply: Kerala (25%) and West Bengal (13.7%) come closest to population proportionality, while
+  Chhattisgarh (0%), Madhya Pradesh (0.9%), and Maharashtra (3.5%) are far below their Muslim
+  population share. Like the Lok Sabha figure, this is manual entry from journalistic aggregation
+  of ECI affidavits — religion is not in any official tabulation. Coverage gap: ~19 more state
+  assemblies need their own research (UP, Bihar, Assam, TN, Karnataka, Gujarat, Punjab, etc.).</p>
+</section>
+
 <h2 class="cluster-header">Justice</h2>
 
 <!-- PRISON RATE -->
@@ -1129,6 +1149,17 @@ new Chart(document.getElementById('wpr-chart'), {
     plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
 });
 
+new Chart(document.getElementById('mla-chart'), {
+  type: 'bar',
+  data: {
+    labels: {mla_chart_labels},
+    datasets: [{ label: 'Muslim share of state assembly (%)', data: {mla_chart_values},
+      backgroundColor: 'rgba(43,108,176,0.85)' }],
+  },
+  options: { ...CFG_BASE,
+    plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+});
+
 new Chart(document.getElementById('ci-chart'), {
   type: 'bar',
   data: {
@@ -1214,8 +1245,23 @@ def build() -> None:
     wpr = prep_national_by_religion(load_metric("wpr-15plus"), "percent")
     ps2 = prep_prison_rate("prison")
     us = prep_prison_rate("undertrial")
-    # ls-share time series tile
-    ls_rows = sorted(load_metric("ls-share"), key=lambda r: int(r["year"]))
+    # mla-share: national row + per-state rows (multiple years)
+    mla_data_rows = load_metric("mla-share")
+    mla_national = next((r for r in mla_data_rows if r["geography_level"] == "national"), None)
+    mla_states = sorted([r for r in mla_data_rows if r["geography_level"] == "state"],
+                        key=lambda r: -float(r["value"]))
+    mla_data = {
+        "headline": f"{float(mla_national['value']):.2f}%" if mla_national else "—",
+        "headline_caption": (
+            "All-state aggregate ~<b>6% of MLAs</b> across 28 state assemblies, vs Muslim "
+            "population share ~14.2%. Per-state chart below shows verified counts for 8 states."
+        ),
+        "chart_labels": [state_label(r["geography_code"]) + f' ({r["year"]})' for r in mla_states],
+        "chart_values": [float(r["value"]) for r in mla_states],
+    }
+    # ls-share time series tile (national only)
+    ls_rows = sorted([r for r in load_metric("ls-share") if r["geography_level"] == "national"],
+                     key=lambda r: int(r["year"]))
     ls_latest = ls_rows[-1] if ls_rows else None
     ls_data = {
         "headline": f"{float(ls_latest['value']):.2f}%" if ls_latest else "—",
@@ -1331,6 +1377,11 @@ def build() -> None:
         "{ls_caption}": ls_data["headline_caption"],
         "{ls_chart_labels}": json.dumps(ls_data["chart_labels"]),
         "{ls_chart_values}": json.dumps(ls_data["chart_values"]),
+        # mla share
+        "{mla_headline}": mla_data["headline"],
+        "{mla_caption}": mla_data["headline_caption"],
+        "{mla_chart_labels}": json.dumps(mla_data["chart_labels"]),
+        "{mla_chart_values}": json.dumps(mla_data["chart_values"]),
         # communal incidents
         "{ci_headline}": ci_data["headline"],
         "{ci_caption}": ci_data["headline_caption"],

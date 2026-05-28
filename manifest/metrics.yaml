@@ -490,12 +490,33 @@ metrics:
     cluster: representation
     unit: percent
     higher_is_better: null
+    definition: |
+      Percentage of state legislative assembly seats held by Muslim MLAs.
+      National aggregate (~6%) plus per-state values for 8 major states.
     sources: {primary: prs-eci-affidavits}
-    geography_levels: [state]
+    geography_levels: [national, state]
     religions: [muslim]
+    methodology_notes: |
+      Manual-entry metric — like ls-share, religion is not officially
+      tabulated by ECI or PRS. Underlying data is candidate-affidavit
+      religion classified post-election by journalists (Maktoob, Clarion,
+      India Forum, The Wire, Deccan Herald). National aggregate ~6%
+      across 28 state assemblies; specific state values for: West Bengal
+      2026 (13.65%), Kerala 2026 (25%), Maharashtra 2024 (3.47%),
+      Haryana 2024 (5.56%), MP 2023 (0.87%), Rajasthan 2023 (3%),
+      Telangana 2023 (5.88%), Chhattisgarh 2023 (0%). Coverage gap:
+      19+ more state assemblies need their own research.
     comparison_baselines: []
     phase: 2
-    status: stub
+    status: defined
+    display:
+      scorecard:
+        label: "State MLA Muslim share (national agg)"
+        reference: null
+        unit_format: percent
+        higher_is_better: null
+        order: 145
+        special_render: time_series_latest
 
   # ----- Justice (Phase 2) -----
   - id: prison-share
