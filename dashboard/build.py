@@ -82,10 +82,17 @@ def prep_pop_share(rows: list[dict]) -> dict:
     states = [(r["geography_code"], float(r["value"]))
               for r in rows if r["geography_level"] == "state"]
     states.sort(key=lambda x: -x[1])
+    districts = [(r["geography_code"], float(r["value"]))
+                 for r in rows if r["geography_level"] == "district"]
+    districts.sort(key=lambda x: -x[1])
+    top_districts = districts[:50]
     national = next((float(r["value"]) for r in rows if r["geography_code"] == "IN"), None)
     return {
         "headline": fmt_num(national, "percent") if national else "—",
-        "headline_caption": "All-India Muslim share of total population (2011)",
+        "headline_caption": (
+            f"All-India Muslim share of total population (2011). "
+            f"<b>{len(districts)} districts</b> in canonical with district-level Muslim share."
+        ),
         "chart_labels": [state_label(c) for c, _ in states],
         "chart_values": [round(v, 2) for _, v in states],
         "chart_unit": "%",
@@ -93,6 +100,9 @@ def prep_pop_share(rows: list[dict]) -> dict:
         "national_label": "National avg",
         "rows": [{"label": state_label(c), "value": fmt_num(v, "percent")}
                  for c, v in states],
+        "top_districts": [{"label": c, "value": fmt_num(v, "percent")}
+                          for c, v in top_districts],
+        "n_districts": len(districts),
     }
 
 
@@ -508,6 +518,15 @@ TEMPLATE = """<!DOCTYPE html>
   }
   .scorecard table { font-size: 13px; }
   .scorecard-table tbody tr:hover { background: #faf7f0; }
+  .scorecard-table th.sortable {
+    cursor: pointer; user-select: none;
+  }
+  .scorecard-table th.sortable:hover { color: var(--accent); }
+  .scorecard-table th.sortable::after {
+    content: " ⇅"; font-size: 10px; color: var(--rule);
+  }
+  .scorecard-table th.sorted-asc::after { content: " ↑"; color: var(--accent); }
+  .scorecard-table th.sorted-desc::after { content: " ↓"; color: var(--accent); }
   .scorecard-table .gap-bad { color: var(--accent); font-weight: 600; }
   .scorecard-table .gap-good { color: #2d6a3e; font-weight: 600; }
   .scorecard-table .gap-neutral { color: var(--muted); }
@@ -549,8 +568,14 @@ TEMPLATE = """<!DOCTYPE html>
     <h2>Scorecard — all metrics at a glance</h2>
     <p class="data-current">Muslim outcome vs Hindu/All baseline · sorted by gap magnitude</p>
   </div>
-  <table class="scorecard-table"><thead><tr>
-    <th>Cluster</th><th>Metric</th><th>Year</th><th>Muslim</th><th>Hindu</th><th>All</th><th>Gap vs reference</th>
+  <table class="scorecard-table" id="scorecard"><thead><tr>
+    <th class="sortable" data-col="0">Cluster</th>
+    <th class="sortable" data-col="1">Metric</th>
+    <th class="sortable" data-col="2">Year</th>
+    <th class="sortable" data-col="3">Muslim</th>
+    <th class="sortable" data-col="4">Hindu</th>
+    <th class="sortable" data-col="5">All</th>
+    <th class="sortable" data-col="6">Gap vs reference</th>
   </tr></thead><tbody>
     {scorecard_rows}
   </tbody></table>
@@ -850,6 +875,42 @@ TEMPLATE = """<!DOCTYPE html>
 </div>
 
 <script>
+// Sortable scorecard table. Click a column header to sort.
+(function setupSortableScorecard() {
+  const table = document.getElementById('scorecard');
+  if (!table) return;
+  const headers = table.querySelectorAll('th.sortable');
+  let lastSorted = { col: -1, dir: 1 };
+
+  const sortKey = (cellText, col) => {
+    const t = cellText.trim();
+    // Numeric extraction: pull first numeric token (handles "33.0 per 1000", "1.59× Hindu rate", etc.)
+    const m = t.match(/-?[0-9,]+[.]?[0-9]*/);
+    if (m && col >= 2) return parseFloat(m[0].replace(/,/g, ''));
+    return t.toLowerCase();
+  };
+
+  headers.forEach(h => {
+    h.addEventListener('click', () => {
+      const col = parseInt(h.dataset.col);
+      const tbody = table.querySelector('tbody');
+      const rows = Array.from(tbody.querySelectorAll('tr'));
+      const dir = (lastSorted.col === col) ? -lastSorted.dir : 1;
+      rows.sort((a, b) => {
+        const ka = sortKey(a.cells[col].textContent, col);
+        const kb = sortKey(b.cells[col].textContent, col);
+        if (ka < kb) return -1 * dir;
+        if (ka > kb) return 1 * dir;
+        return 0;
+      });
+      rows.forEach(r => tbody.appendChild(r));
+      headers.forEach(x => x.classList.remove('sorted-asc', 'sorted-desc'));
+      h.classList.add(dir === 1 ? 'sorted-asc' : 'sorted-desc');
+      lastSorted = { col, dir };
+    });
+  });
+})();
+
 const CFG_BASE = {
   responsive: true,
   maintainAspectRatio: false,
@@ -1116,7 +1177,9 @@ def build() -> None:
         "{ps_headline}": pop["headline"],
         "{ps_caption}": pop["headline_caption"],
         "{n_ps_rows}": str(len(pop["rows"])),
+        "{n_ps_districts}": str(pop["n_districts"]),
         "{ps_rows}": render_rows(pop["rows"], ["value"]),
+        "{ps_top_districts}": render_rows(pop["top_districts"], ["value"]),
         "{ps_chart_labels}": json.dumps(pop["chart_labels"]),
         "{ps_chart_values}": json.dumps(pop["chart_values"]),
         # lit-7plus
@@ -1195,6 +1258,16 @@ def build() -> None:
     html_out = TEMPLATE
     for k, v in substitutions.items():
         html_out = html_out.replace(k, v)
+
+    # Auto-linkify references to canonical/*.csv in tile sources so every tile gets
+    # a clickable download link to its source-of-truth CSV (relative path from
+    # dashboard/preview/ to repo root).
+    import re as _re
+    html_out = _re.sub(
+        r"(canonical/[a-zA-Z0-9_\-]+\.csv)",
+        r'<a class="csv-link" href="../../\1">\1</a>',
+        html_out,
+    )
 
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUT_PATH.write_text(html_out)

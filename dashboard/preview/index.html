@@ -95,6 +95,15 @@
   }
   .scorecard table { font-size: 13px; }
   .scorecard-table tbody tr:hover { background: #faf7f0; }
+  .scorecard-table th.sortable {
+    cursor: pointer; user-select: none;
+  }
+  .scorecard-table th.sortable:hover { color: var(--accent); }
+  .scorecard-table th.sortable::after {
+    content: " ⇅"; font-size: 10px; color: var(--rule);
+  }
+  .scorecard-table th.sorted-asc::after { content: " ↑"; color: var(--accent); }
+  .scorecard-table th.sorted-desc::after { content: " ↓"; color: var(--accent); }
   .scorecard-table .gap-bad { color: var(--accent); font-weight: 600; }
   .scorecard-table .gap-good { color: #2d6a3e; font-weight: 600; }
   .scorecard-table .gap-neutral { color: var(--muted); }
@@ -121,7 +130,7 @@
 <div class="page">
 
 <h1>Indian Muslims — Living Conditions Dashboard</h1>
-<p class="tagline">Preview build · 2026-05-28 06:14</p>
+<p class="tagline">Preview build · 2026-05-28 06:16</p>
 
 <div class="status-bar">
   <span><b>17</b> metrics live</span>
@@ -136,8 +145,14 @@
     <h2>Scorecard — all metrics at a glance</h2>
     <p class="data-current">Muslim outcome vs Hindu/All baseline · sorted by gap magnitude</p>
   </div>
-  <table class="scorecard-table"><thead><tr>
-    <th>Cluster</th><th>Metric</th><th>Year</th><th>Muslim</th><th>Hindu</th><th>All</th><th>Gap vs reference</th>
+  <table class="scorecard-table" id="scorecard"><thead><tr>
+    <th class="sortable" data-col="0">Cluster</th>
+    <th class="sortable" data-col="1">Metric</th>
+    <th class="sortable" data-col="2">Year</th>
+    <th class="sortable" data-col="3">Muslim</th>
+    <th class="sortable" data-col="4">Hindu</th>
+    <th class="sortable" data-col="5">All</th>
+    <th class="sortable" data-col="6">Gap vs reference</th>
   </tr></thead><tbody>
     <tr><td>Demographics</td><td>Population share</td><td>2011</td><td>14.23%</td><td>—</td><td>—</td><td class="gap-neutral">baseline</td></tr>
     <tr><td>Demographics</td><td>Sex ratio (F/1000M)</td><td>2011</td><td>951</td><td>939</td><td>943</td><td class="gap-good">+12.20</td></tr>
@@ -167,11 +182,11 @@
 <section class="tile">
   <div class="tile-head">
     <h2>Muslim share of total population</h2>
-    <p class="source">canonical/pop-share.csv · sources/census-2011/c-series/c01-population-by-religion.xls</p>
+    <p class="source"><a class="csv-link" href="../../canonical/pop-share.csv">canonical/pop-share.csv</a> · sources/census-2011/c-series/c01-population-by-religion.xls</p>
     <p class="data-current">Data current to · Census 2011 (next release: 2021 round delayed indefinitely)</p>
   </div>
   <div class="headline">14.23%</div>
-  <p class="headline-caption">All-India Muslim share of total population (2011)</p>
+  <p class="headline-caption">All-India Muslim share of total population (2011). <b>640 districts</b> in canonical with district-level Muslim share.</p>
   <div class="chart-wrap"><canvas id="ps-chart"></canvas></div>
   <p class="methodology">Muslim population / total population at each geography, total residence
   (urban + rural combined). Per Census 2011 published methodology.</p>
@@ -223,7 +238,7 @@
 <section class="tile">
   <div class="tile-head">
     <h2>Literacy rate (7+ years)</h2>
-    <p class="source">canonical/lit-7plus.csv · sources/census-2011/c-series/c09-education-by-religion.xlsx</p>
+    <p class="source"><a class="csv-link" href="../../canonical/lit-7plus.csv">canonical/lit-7plus.csv</a> · sources/census-2011/c-series/c09-education-by-religion.xlsx</p>
     <p class="data-current">Data current to · Census 2011</p>
   </div>
   <div class="headline">68.59%</div>
@@ -284,7 +299,7 @@
 <section class="tile">
   <div class="tile-head">
     <h2>Sex ratio (females per 1000 males)</h2>
-    <p class="source">canonical/sex-ratio.csv · sources/census-2011/c-series/c15-religion-by-age-sex.xlsx</p>
+    <p class="source"><a class="csv-link" href="../../canonical/sex-ratio.csv">canonical/sex-ratio.csv</a> · sources/census-2011/c-series/c15-religion-by-age-sex.xlsx</p>
     <p class="data-current">Data current to · Census 2011</p>
   </div>
   <div class="headline">951</div>
@@ -299,7 +314,7 @@
 <section class="tile">
   <div class="tile-head">
     <h2>Infant Mortality Rate</h2>
-    <p class="source">canonical/imr.csv · sources/nfhs-5/reports/india-report-fr375.pdf (Table 7.2, p. 284) · weighted with sources/census-2011/c-series/c01-population-by-religion.xls</p>
+    <p class="source"><a class="csv-link" href="../../canonical/imr.csv">canonical/imr.csv</a> · sources/nfhs-5/reports/india-report-fr375.pdf (Table 7.2, p. 284) · weighted with sources/census-2011/c-series/c01-population-by-religion.xls</p>
     <p class="data-current">Data current to · NFHS-5 (2019-21); 5-year reference period 2014-2020</p>
   </div>
   <div class="headline">33.0</div>
@@ -318,7 +333,7 @@
 <section class="tile">
   <div class="tile-head">
     <h2>Institutional delivery rate</h2>
-    <p class="source">canonical/inst-delivery.csv · sources/nfhs-5/reports/india-report-fr375.pdf (Table 8.13, p. 324)</p>
+    <p class="source"><a class="csv-link" href="../../canonical/inst-delivery.csv">canonical/inst-delivery.csv</a> · sources/nfhs-5/reports/india-report-fr375.pdf (Table 8.13, p. 324)</p>
     <p class="data-current">Data current to · NFHS-5 (2019-21)</p>
   </div>
   <div class="headline">84.30%</div>
@@ -335,7 +350,7 @@
 <section class="tile">
   <div class="tile-head">
     <h2>Anaemia in women (age 15–49)</h2>
-    <p class="source">canonical/women-anemia.csv · sources/nfhs-5/reports/india-report-fr375.pdf (Table 10.23.1, p. 468)</p>
+    <p class="source"><a class="csv-link" href="../../canonical/women-anemia.csv">canonical/women-anemia.csv</a> · sources/nfhs-5/reports/india-report-fr375.pdf (Table 10.23.1, p. 468)</p>
     <p class="data-current">Data current to · NFHS-5 (2019-21)</p>
   </div>
   <div class="headline">55.60%</div>
@@ -354,7 +369,7 @@
 <section class="tile">
   <div class="tile-head">
     <h2>Toilet facility access (households)</h2>
-    <p class="source">canonical/improved-sanitation.csv · sources/nfhs-5/reports/india-report-fr375.pdf (Table 2.4, p. 74)</p>
+    <p class="source"><a class="csv-link" href="../../canonical/improved-sanitation.csv">canonical/improved-sanitation.csv</a> · sources/nfhs-5/reports/india-report-fr375.pdf (Table 2.4, p. 74)</p>
     <p class="data-current">Data current to · NFHS-5 (2019-21)</p>
   </div>
   <div class="headline">90.30%</div>
@@ -374,7 +389,7 @@
 <section class="tile">
   <div class="tile-head">
     <h2>Labour Force Participation Rate (15+)</h2>
-    <p class="source">canonical/lfpr-15plus.csv · sources/plfs/annual/plfs-annual-report-2023-24.pdf (Table 48, pp. 396–400)</p>
+    <p class="source"><a class="csv-link" href="../../canonical/lfpr-15plus.csv">canonical/lfpr-15plus.csv</a> · sources/plfs/annual/plfs-annual-report-2023-24.pdf (Table 48, pp. 396–400)</p>
     <p class="data-current">Data current to · PLFS 2023-24 (Jul 2023 – Jun 2024)</p>
   </div>
   <div class="headline">55.00%</div>
@@ -390,7 +405,7 @@
 <section class="tile">
   <div class="tile-head">
     <h2>Worker Population Ratio (15+)</h2>
-    <p class="source">canonical/wpr-15plus.csv · sources/plfs/annual/plfs-annual-report-2023-24.pdf (Table 48, pp. 396–400)</p>
+    <p class="source"><a class="csv-link" href="../../canonical/wpr-15plus.csv">canonical/wpr-15plus.csv</a> · sources/plfs/annual/plfs-annual-report-2023-24.pdf (Table 48, pp. 396–400)</p>
     <p class="data-current">Data current to · PLFS 2023-24</p>
   </div>
   <div class="headline">53.20%</div>
@@ -406,7 +421,7 @@
 <section class="tile">
   <div class="tile-head">
     <h2>Muslim share of Lok Sabha members</h2>
-    <p class="source">canonical/ls-share.csv · manual entry from ECI affidavit aggregations (Maktoob Media, FACTLY, The India Forum, Statista)</p>
+    <p class="source"><a class="csv-link" href="../../canonical/ls-share.csv">canonical/ls-share.csv</a> · manual entry from ECI affidavit aggregations (Maktoob Media, FACTLY, The India Forum, Statista)</p>
     <p class="data-current">Data current to · 18th Lok Sabha (2024 general election)</p>
   </div>
   <div class="headline">4.42%</div>
@@ -426,7 +441,7 @@
 <section class="tile">
   <div class="tile-head">
     <h2>Muslim prison population — count and incarceration rate</h2>
-    <p class="source">canonical/prison-share.csv · sources/ncrb-prison/psi-2022.pdf (Tables 2.10C–2.13C, pp. 103, 107, 111, 115)</p>
+    <p class="source"><a class="csv-link" href="../../canonical/prison-share.csv">canonical/prison-share.csv</a> · sources/ncrb-prison/psi-2022.pdf (Tables 2.10C–2.13C, pp. 103, 107, 111, 115)</p>
     <p class="data-current">Data current to · NCRB Prison Statistics India 2022 (as on 2023-12-01)</p>
   </div>
   <div class="headline">108,968</div>
@@ -446,7 +461,7 @@
 <section class="tile">
   <div class="tile-head">
     <h2>Muslim undertrial population — count and rate</h2>
-    <p class="source">canonical/undertrial-share.csv · sources/ncrb-prison/psi-2022.pdf (Table 2.11C, p. 107)</p>
+    <p class="source"><a class="csv-link" href="../../canonical/undertrial-share.csv">canonical/undertrial-share.csv</a> · sources/ncrb-prison/psi-2022.pdf (Table 2.11C, p. 107)</p>
     <p class="data-current">Data current to · NCRB PSI 2022</p>
   </div>
   <div class="headline">83,968</div>
@@ -465,7 +480,7 @@
 <section class="tile">
   <div class="tile-head">
     <h2>Communal/religious rioting incidents (NCRB)</h2>
-    <p class="source">canonical/communal-incidents-govt.csv · sources/ncrb-crime/cii-2022-book1.pdf (Tables 1.2 + 1A.4)</p>
+    <p class="source"><a class="csv-link" href="../../canonical/communal-incidents-govt.csv">canonical/communal-incidents-govt.csv</a> · sources/ncrb-crime/cii-2022-book1.pdf (Tables 1.2 + 1A.4)</p>
     <p class="data-current">Data current to · NCRB Crime in India 2022</p>
   </div>
   <div class="headline">272</div>
@@ -486,7 +501,7 @@
 <section class="tile">
   <div class="tile-head">
     <h2>Muslim student enrolment in higher education</h2>
-    <p class="source">canonical/muslim-higher-ed-enrolment.csv · sources/aishe/aishe-report-2021-22.pdf (Table 15, p. 140)</p>
+    <p class="source"><a class="csv-link" href="../../canonical/muslim-higher-ed-enrolment.csv">canonical/muslim-higher-ed-enrolment.csv</a> · sources/aishe/aishe-report-2021-22.pdf (Table 15, p. 140)</p>
     <p class="data-current">Data current to · AISHE 2021-22 (next release: AISHE 2022-23 expected mid-2026)</p>
   </div>
   <div class="headline">2,108,033</div>
@@ -543,7 +558,7 @@
 </section>
 
 <footer>
-  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-28 06:14.
+  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-28 06:16.
   Every number on this page traces L4 → L3 (canonical) → L2 (extracted) → L1 (source file)
   with SHA256 sidecar provenance. Re-run the builder after any canonical change:
   <code>python dashboard/build.py</code></p>
@@ -552,6 +567,42 @@
 </div>
 
 <script>
+// Sortable scorecard table. Click a column header to sort.
+(function setupSortableScorecard() {
+  const table = document.getElementById('scorecard');
+  if (!table) return;
+  const headers = table.querySelectorAll('th.sortable');
+  let lastSorted = { col: -1, dir: 1 };
+
+  const sortKey = (cellText, col) => {
+    const t = cellText.trim();
+    // Numeric extraction: pull first numeric token (handles "33.0 per 1000", "1.59× Hindu rate", etc.)
+    const m = t.match(/-?[0-9,]+[.]?[0-9]*/);
+    if (m && col >= 2) return parseFloat(m[0].replace(/,/g, ''));
+    return t.toLowerCase();
+  };
+
+  headers.forEach(h => {
+    h.addEventListener('click', () => {
+      const col = parseInt(h.dataset.col);
+      const tbody = table.querySelector('tbody');
+      const rows = Array.from(tbody.querySelectorAll('tr'));
+      const dir = (lastSorted.col === col) ? -lastSorted.dir : 1;
+      rows.sort((a, b) => {
+        const ka = sortKey(a.cells[col].textContent, col);
+        const kb = sortKey(b.cells[col].textContent, col);
+        if (ka < kb) return -1 * dir;
+        if (ka > kb) return 1 * dir;
+        return 0;
+      });
+      rows.forEach(r => tbody.appendChild(r));
+      headers.forEach(x => x.classList.remove('sorted-asc', 'sorted-desc'));
+      h.classList.add(dir === 1 ? 'sorted-asc' : 'sorted-desc');
+      lastSorted = { col, dir };
+    });
+  });
+})();
+
 const CFG_BASE = {
   responsive: true,
   maintainAspectRatio: false,
