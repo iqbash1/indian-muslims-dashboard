@@ -138,7 +138,7 @@
 <div class="page">
 
 <h1>Indian Muslims — Living Conditions Dashboard</h1>
-<p class="tagline">Built 2026-05-28 07:55 · <a href="https://github.com/iqbash1/indian-muslims-dashboard">source on GitHub</a></p>
+<p class="tagline">Built 2026-05-28 07:57 · <a href="https://github.com/iqbash1/indian-muslims-dashboard">source on GitHub</a></p>
 
 <section class="intro">
   <p>A scorecard of living-conditions indicators for India's Muslim population, with
@@ -572,6 +572,30 @@
   total. Civil-society compilations (Documentation of the Oppressed, India Hate Lab) typically
   report substantially higher counts. NCRB tables do not disclose religion of victim or
   perpetrator — only incident counts.</p>
+  <details>
+    <summary>Top 15 states by NCRB-recorded incidents in 2022 (of 35)</summary>
+    <table><thead><tr><th>State / UT</th><th>Incidents 2022</th></tr></thead><tbody>
+      <tr><td>Madhya Pradesh</td><td>68</td></tr>
+      <tr><td>Bihar</td><td>60</td></tr>
+      <tr><td>Jharkhand</td><td>46</td></tr>
+      <tr><td>Maharashtra</td><td>28</td></tr>
+      <tr><td>Karnataka</td><td>19</td></tr>
+      <tr><td>Odisha</td><td>15</td></tr>
+      <tr><td>Andhra Pradesh</td><td>9</td></tr>
+      <tr><td>Gujarat</td><td>9</td></tr>
+      <tr><td>Rajasthan</td><td>5</td></tr>
+      <tr><td>Haryana</td><td>4</td></tr>
+      <tr><td>Telangana</td><td>4</td></tr>
+      <tr><td>Assam</td><td>2</td></tr>
+      <tr><td>Goa</td><td>1</td></tr>
+      <tr><td>Kerala</td><td>1</td></tr>
+      <tr><td>Uttarakhand</td><td>1</td></tr>
+    </tbody></table>
+    <p class="methodology" style="margin-top:8px">Caveat repeated: cross-state comparisons are
+    biased by inconsistent recording practices — some states (e.g. UP, Bengal) show 0 in this
+    table because they no longer classify communal cases separately, not because no incidents
+    occurred.</p>
+  </details>
 </section>
 
 <h2 class="cluster-header">Education — Higher Ed (count)</h2>
@@ -637,7 +661,7 @@
 </section>
 
 <footer>
-  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-28 07:55.
+  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-28 07:57.
   Every number on this page traces L4 → L3 (canonical) → L2 (extracted) → L1 (source file)
   with SHA256 sidecar provenance. Re-run the builder after any canonical change:
   <code>python dashboard/build.py</code></p>

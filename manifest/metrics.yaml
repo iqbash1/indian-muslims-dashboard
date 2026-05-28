@@ -611,9 +611,10 @@ metrics:
     definition: |
       Number of communal/religious rioting incidents recorded by NCRB under
       IPC Sec.147-151 (rioting), specifically the "Communal/Religious"
-      sub-classification. National annual totals, time series.
+      sub-classification. National annual totals (2020-2022) plus state-level
+      breakdown for 2022.
     sources: {primary: ncrb-crime}
-    geography_levels: [national]
+    geography_levels: [national, state]
     religions: [all]
     methodology_notes: |
       NCRB Crime in India 2022, Table 1.2 (national, 2020-2022). Incident

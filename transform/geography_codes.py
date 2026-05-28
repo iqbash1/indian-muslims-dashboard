@@ -74,6 +74,8 @@ STATE_NAME_TO_CODE: dict[str, str] = {
     "puducherry": "IN-S34",
     "pondicherry": "IN-S34",
     "andaman and nicobar islands": "IN-S35",
+    "a&n islands": "IN-S35",
+    "a & n islands": "IN-S35",
     # Post-Census 2011 reorganizations
     "telangana": "IN-S36",
     "ladakh": "IN-S37",

@@ -910,6 +910,16 @@ TEMPLATE = """<!DOCTYPE html>
   total. Civil-society compilations (Documentation of the Oppressed, India Hate Lab) typically
   report substantially higher counts. NCRB tables do not disclose religion of victim or
   perpetrator — only incident counts.</p>
+  <details>
+    <summary>Top 15 states by NCRB-recorded incidents in 2022 (of {ci_n_states})</summary>
+    <table><thead><tr><th>State / UT</th><th>Incidents 2022</th></tr></thead><tbody>
+      {ci_state_rows}
+    </tbody></table>
+    <p class="methodology" style="margin-top:8px">Caveat repeated: cross-state comparisons are
+    biased by inconsistent recording practices — some states (e.g. UP, Bengal) show 0 in this
+    table because they no longer classify communal cases separately, not because no incidents
+    occurred.</p>
+  </details>
 </section>
 
 <h2 class="cluster-header">Education — Higher Ed (count)</h2>
@@ -1217,9 +1227,19 @@ def build() -> None:
         "chart_labels": [r["year"] for r in ls_rows],
         "chart_values": [float(r["value"]) for r in ls_rows],
     }
-    # communal-incidents-govt time series tile
-    ci_rows = sorted(load_metric("communal-incidents-govt"), key=lambda r: int(r["year"]))
-    ci_latest = ci_rows[-1] if ci_rows else None
+    # communal-incidents-govt: national time series + state-2022 drill-down
+    all_ci = load_metric("communal-incidents-govt")
+    ci_national = sorted([r for r in all_ci if r["geography_level"] == "national"],
+                         key=lambda r: int(r["year"]))
+    ci_states = sorted([r for r in all_ci if r["geography_level"] == "state"],
+                       key=lambda r: -int(float(r["value"])))
+    ci_latest = ci_national[-1] if ci_national else None
+    # Render state drill-down rows (top 15)
+    ci_state_rows = "\n      ".join(
+        f'<tr><td>{html.escape(state_label(r["geography_code"]))}</td>'
+        f'<td>{int(float(r["value"]))}</td></tr>'
+        for r in ci_states[:15]
+    )
     ci_data = {
         "headline": f"{int(float(ci_latest['value'])):,}" if ci_latest else "—",
         "headline_caption": (
@@ -1228,8 +1248,10 @@ def build() -> None:
             f"The published decline is contested by civic compilations which report higher counts; "
             f"several states have stopped recording 'communal' as a separate category since ~2017."
         ),
-        "chart_labels": [r["year"] for r in ci_rows],
-        "chart_values": [int(float(r["value"])) for r in ci_rows],
+        "chart_labels": [r["year"] for r in ci_national],
+        "chart_values": [int(float(r["value"])) for r in ci_national],
+        "state_rows": ci_state_rows,
+        "n_states": len(ci_states),
     }
     ahe = prep_muslim_higher_ed(load_metric("muslim-higher-ed-enrolment"))
 
@@ -1314,6 +1336,8 @@ def build() -> None:
         "{ci_caption}": ci_data["headline_caption"],
         "{ci_chart_labels}": json.dumps(ci_data["chart_labels"]),
         "{ci_chart_values}": json.dumps(ci_data["chart_values"]),
+        "{ci_state_rows}": ci_data["state_rows"],
+        "{ci_n_states}": str(ci_data["n_states"]),
         # prison share
         "{ps2_headline}": ps2["headline"],
         "{ps2_caption}": ps2["headline_caption"],
