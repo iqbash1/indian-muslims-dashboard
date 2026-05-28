@@ -402,6 +402,54 @@ metrics:
     phase: 2
     status: defined
 
+  - id: prison-rate-per-100k
+    name: Prison population rate (per 100k of religious population)
+    cluster: justice
+    unit: per_100k_population
+    higher_is_better: false
+    definition: |
+      Incarceration rate: prisoners of religion R per 100,000 of religion R's
+      total population. More direct measure of disproportion than "share of
+      prisoners" — comparable across religions without needing to know
+      population baselines.
+    sources:
+      primary: ncrb-prison
+      cross_check: [census-india-2011]
+    geography_levels: [national]
+    religions: [muslim, hindu, all]
+    methodology_notes: |
+      Cross-source: NCRB PSI 2022 total prisoner count (convicts + undertrials
+      + detenues + other prisoners; STATES + UTs subtotals = ALL-INDIA by
+      construction) divided by Census 2011 national religious population times
+      100,000. The 'denominator' column on each canonical row records the exact
+      (count, population) pair used. Caveat: Maharashtra non-reporting of
+      religion for ~33k undertrials/detenues — religion-reported numerator
+      excludes those; full national population is the denominator.
+    comparison_baselines: [hindu, all]
+    phase: 2
+    status: defined
+
+  - id: undertrial-rate-per-100k
+    name: Undertrial population rate (per 100k of religious population)
+    cluster: justice
+    unit: per_100k_population
+    higher_is_better: false
+    definition: |
+      Undertrial prisoners of religion R per 100,000 of religion R's total
+      population. Sister metric to prison-rate-per-100k.
+    sources:
+      primary: ncrb-prison
+      cross_check: [census-india-2011]
+    geography_levels: [national]
+    religions: [muslim, hindu, all]
+    methodology_notes: |
+      NCRB PSI 2022 Table 2.11C undertrial counts (STATES + UTs subtotals)
+      divided by Census 2011 national religious population times 100,000.
+      Same Maharashtra caveat as prison-rate-per-100k.
+    comparison_baselines: [hindu, all]
+    phase: 2
+    status: defined
+
   - id: undertrial-share
     name: Muslim share of undertrial prisoners
     cluster: justice

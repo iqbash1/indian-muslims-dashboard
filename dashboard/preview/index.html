@@ -121,7 +121,7 @@
 <div class="page">
 
 <h1>Indian Muslims — Living Conditions Dashboard</h1>
-<p class="tagline">Preview build · 2026-05-28 05:32</p>
+<p class="tagline">Preview build · 2026-05-28 05:35</p>
 
 <div class="status-bar">
   <span><b>11</b> metrics live</span>
@@ -148,8 +148,8 @@
     <tr><td>Health</td><td>Infant Mortality Rate</td><td>2020</td><td>33.0</td><td>35.4</td><td>34.7</td><td class="gap-good">-2.37</td></tr>
     <tr><td>Health</td><td>Institutional delivery rate</td><td>2020</td><td>84.30%</td><td>89.50%</td><td>88.58%</td><td class="gap-bad">-5.20pp</td></tr>
     <tr><td>Health</td><td>Anaemia in women (15-49)</td><td>2020</td><td>55.60%</td><td>57.40%</td><td>57.00%</td><td class="gap-good">-1.80pp</td></tr>
-    <tr><td>Justice</td><td>Prisoners (rate per 100k pop)</td><td>2022</td><td><b>108,968</b><br><span class="rate-sub">63.3 per 100k</span></td><td><b>384,522</b><br><span class="rate-sub">39.8 per 100k</span></td><td><b>540,148</b><br><span class="rate-sub">44.6 per 100k</span></td><td class="gap-bad">1.59× Hindu rate</td></tr>
-    <tr><td>Justice</td><td>Undertrials (rate per 100k pop)</td><td>2022</td><td><b>83,968</b><br><span class="rate-sub">48.7 per 100k</span></td><td><b>283,372</b><br><span class="rate-sub">29.3 per 100k</span></td><td><b>401,419</b><br><span class="rate-sub">33.2 per 100k</span></td><td class="gap-bad">1.66× Hindu rate</td></tr>
+    <tr><td>Justice</td><td>Prisoners (rate per 100k pop)</td><td>2022</td><td><b>108,968</b><br><span class="rate-sub">63.26 per 100k</span></td><td><b>384,522</b><br><span class="rate-sub">39.79 per 100k</span></td><td><b>540,148</b><br><span class="rate-sub">44.61 per 100k</span></td><td class="gap-bad">1.59× Hindu rate</td></tr>
+    <tr><td>Justice</td><td>Undertrials (rate per 100k pop)</td><td>2022</td><td><b>83,968</b><br><span class="rate-sub">48.75 per 100k</span></td><td><b>283,372</b><br><span class="rate-sub">29.33 per 100k</span></td><td><b>401,419</b><br><span class="rate-sub">33.15 per 100k</span></td><td class="gap-bad">1.66× Hindu rate</td></tr>
   </tbody></table>
   <p class="methodology">"Gap" is Muslim minus reference baseline (Hindu where available, else All).
   Red gap = Muslim outcome worse than reference; green = Muslim outcome better. For justice
@@ -386,7 +386,7 @@
     <p class="data-current">Data current to · NCRB Prison Statistics India 2022 (as on 2023-12-01)</p>
   </div>
   <div class="headline">108,968</div>
-  <p class="headline-caption">All-India Muslim prison count. <b>63.3 per 100,000 Muslims</b>, vs Hindu 39.8 per 100k and All 44.6 per 100k. Muslim rate is <b>1.59× the Hindu rate</b>.</p>
+  <p class="headline-caption">All-India Muslim prison count. <b>63.26 per 100,000 Muslims</b>, vs Hindu 39.79 per 100k and All 44.61 per 100k. Muslim rate is <b>1.59× the Hindu rate</b>.</p>
   <div class="chart-wrap" style="height:280px"><canvas id="ps2-chart"></canvas></div>
   <p class="methodology">Combined convicts + undertrials + detenues + other prisoners.
   Presented as absolute count and as incarceration rate per 100,000 of religious population
@@ -406,7 +406,7 @@
     <p class="data-current">Data current to · NCRB PSI 2022</p>
   </div>
   <div class="headline">83,968</div>
-  <p class="headline-caption">All-India Muslim undertrial count. <b>48.7 per 100,000 Muslims</b>, vs Hindu 29.3 per 100k and All 33.2 per 100k. Muslim rate is <b>1.66× the Hindu rate</b>.</p>
+  <p class="headline-caption">All-India Muslim undertrial count. <b>48.75 per 100,000 Muslims</b>, vs Hindu 29.33 per 100k and All 33.15 per 100k. Muslim rate is <b>1.66× the Hindu rate</b>.</p>
   <div class="chart-wrap" style="height:280px"><canvas id="us-chart"></canvas></div>
   <p class="methodology">Undertrials are prisoners awaiting trial — not convicted. Muslim
   undertrial rate (48.7 per 100k Muslims) is <b>1.66× the Hindu rate</b> (29.3 per 100k Hindus),
@@ -478,7 +478,7 @@
 </section>
 
 <footer>
-  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-28 05:32.
+  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-28 05:35.
   Every number on this page traces L4 → L3 (canonical) → L2 (extracted) → L1 (source file)
   with SHA256 sidecar provenance. Re-run the builder after any canonical change:
   <code>python dashboard/build.py</code></p>
@@ -611,7 +611,7 @@ new Chart(document.getElementById('ps2-chart'), {
   type: 'bar',
   data: {
     labels: ["Muslim", "Hindu", "All"],
-    datasets: [{ label: 'Prison share (%)', data: [63.3, 39.8, 44.6],
+    datasets: [{ label: 'Prison share (%)', data: [63.26, 39.79, 44.61],
       backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)'] }],
   },
   options: { ...CFG_BASE, indexAxis: 'y',
@@ -622,7 +622,7 @@ new Chart(document.getElementById('us-chart'), {
   type: 'bar',
   data: {
     labels: ["Muslim", "Hindu", "All"],
-    datasets: [{ label: 'Undertrial share (%)', data: [48.7, 29.3, 33.2],
+    datasets: [{ label: 'Undertrial share (%)', data: [48.75, 29.33, 33.15],
       backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)'] }],
   },
   options: { ...CFG_BASE, indexAxis: 'y',

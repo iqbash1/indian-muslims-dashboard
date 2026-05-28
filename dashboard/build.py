@@ -166,79 +166,33 @@ def prep_sex_ratio(rows: list[dict]) -> dict:
 
 
 def compute_prison_rates() -> dict:
-    """Compute per-100k incarceration + undertrial rates from NCRB L2 + Census C-1 L2.
-    Returns {'prison': {religion: {'count': int, 'rate_per_100k': float}, ...},
-             'undertrial': {...},
-             'populations': {religion: int}}"""
-    import csv as _csv
-    counts = {"prison": {"muslim": 0, "hindu": 0, "all": 0},
-              "undertrial": {"muslim": 0, "hindu": 0, "all": 0}}
-    with (REPO_ROOT / "extracted" / "ncrb-prison" / "psi-2022-religion-by-state.csv").open() as f:
-        for row in _csv.DictReader(f):
-            if row["row_type"] != "subtotal_or_total":
-                continue
-            label = row["geography_name"]
-            if "STATES" not in label and "UTs" not in label:
-                continue
-            if not row["value"]:
-                continue
-            v = int(row["value"])
-            rel = row["religion"] if row["religion"] in ("muslim", "hindu") else "all"
-            counts["prison"][rel] += v if row["religion"] in ("muslim", "hindu") else v
-            # "all" = sum across all religion buckets
-            if row["religion"] not in ("muslim", "hindu"):
-                counts["prison"]["all"] += v
-            else:
-                counts["prison"]["all"] += v  # still counts toward all
-            if row["category"] == "undertrials":
-                if row["religion"] in ("muslim", "hindu"):
-                    counts["undertrial"][rel] += v
-                counts["undertrial"]["all"] += v
+    """Read prison + undertrial rates and counts from L3 canonical only.
 
-    # The above double-counts; redo cleanly:
-    counts = {"prison": {"muslim": 0, "hindu": 0, "all": 0},
-              "undertrial": {"muslim": 0, "hindu": 0, "all": 0}}
-    with (REPO_ROOT / "extracted" / "ncrb-prison" / "psi-2022-religion-by-state.csv").open() as f:
-        for row in _csv.DictReader(f):
-            if row["row_type"] != "subtotal_or_total":
+    Canonical metrics:
+      prison-rate-per-100k.csv      value = rate per 100k of religious population
+      undertrial-rate-per-100k.csv  same, undertrials only
+
+    The absolute count is preserved on each canonical row in the `denominator`
+    field as 'population_per_100k (count=N, pop=M)'. We parse it back here so
+    the dashboard never touches L2/L3-raw data — every number it shows traces
+    to a canonical row.
+
+    Returns {'prison': {religion: {'count': int, 'rate_per_100k': float}},
+             'undertrial': {...}}
+    """
+    import re as _re
+    out: dict[str, dict] = {"prison": {}, "undertrial": {}}
+    for kind, metric_id in (("prison", "prison-rate-per-100k"),
+                            ("undertrial", "undertrial-rate-per-100k")):
+        for row in load_metric(metric_id):
+            if row["geography_level"] != "national":
                 continue
-            label = row["geography_name"]
-            if "STATES" not in label and "UTs" not in label:
-                continue
-            if not row["value"]:
-                continue
-            v = int(row["value"])
             rel = row["religion"]
-            counts["prison"]["all"] += v
-            if rel == "muslim":
-                counts["prison"]["muslim"] += v
-            elif rel == "hindu":
-                counts["prison"]["hindu"] += v
-            if row["category"] == "undertrials":
-                counts["undertrial"]["all"] += v
-                if rel == "muslim":
-                    counts["undertrial"]["muslim"] += v
-                elif rel == "hindu":
-                    counts["undertrial"]["hindu"] += v
-
-    pops = {}
-    with (REPO_ROOT / "extracted" / "census-2011" / "c01-population-by-religion.csv").open() as f:
-        for row in _csv.DictReader(f):
-            if row["state_code"] != "00" or row["residence"] != "total" or row["sex"] != "persons":
-                continue
-            if row["religion"] in ("muslim", "hindu", "all"):
-                pops[row["religion"]] = int(row["value"])
-
-    result = {"prison": {}, "undertrial": {}, "populations": pops}
-    for kind in ("prison", "undertrial"):
-        for rel in ("muslim", "hindu", "all"):
-            cnt = counts[kind][rel]
-            pop = pops[rel]
-            result[kind][rel] = {
-                "count": cnt,
-                "rate_per_100k": round(cnt / pop * 100_000, 1),
-            }
-    return result
+            rate = float(row["value"])
+            m = _re.search(r"count=(\d+)", row["denominator"])
+            count = int(m.group(1)) if m else 0
+            out[kind][rel] = {"count": count, "rate_per_100k": rate}
+    return out
 
 
 SCORECARD_SPEC = [
