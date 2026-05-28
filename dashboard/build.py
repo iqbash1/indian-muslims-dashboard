@@ -1316,15 +1316,28 @@ def build() -> None:
     for k, v in substitutions.items():
         html_out = html_out.replace(k, v)
 
-    # Auto-linkify references to canonical/*.csv in tile sources so every tile gets
-    # a clickable download link to its source-of-truth CSV (relative path from
-    # dashboard/preview/ to repo root).
+    # Auto-linkify references to canonical/*.csv. We point at `canonical/X.csv`
+    # relative to the preview folder — and copy the canonical CSVs into
+    # dashboard/preview/canonical/ at build time, so the links work both locally
+    # AND when GitHub Pages publishes only the dashboard/preview/ folder.
     import re as _re
+    import shutil as _shutil
     html_out = _re.sub(
         r"(canonical/[a-zA-Z0-9_\-]+\.csv)",
-        r'<a class="csv-link" href="../../\1">\1</a>',
+        r'<a class="csv-link" href="\1">\1</a>',
         html_out,
     )
+
+    # Copy canonical CSVs into the publish folder so the download links resolve.
+    publish_canonical = OUT_PATH.parent / "canonical"
+    publish_canonical.mkdir(exist_ok=True)
+    for csv_path in CANONICAL_DIR.glob("*.csv"):
+        _shutil.copy2(csv_path, publish_canonical / csv_path.name)
+
+    # Ensure a .nojekyll is inside the publish folder so GitHub Pages serves the
+    # HTML as-is without Jekyll processing (root-level .nojekyll doesn't apply
+    # when publishing from a subfolder).
+    (OUT_PATH.parent / ".nojekyll").touch()
 
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUT_PATH.write_text(html_out)
