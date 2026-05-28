@@ -600,10 +600,20 @@ TEMPLATE = """<!DOCTYPE html>
   <p class="methodology">Muslim population / total population at each geography, total residence
   (urban + rural combined). Per Census 2011 published methodology.</p>
   <details>
-    <summary>Full data ({n_ps_rows} states)</summary>
+    <summary>Full state data ({n_ps_rows} states)</summary>
     <table><thead><tr><th>State / UT</th><th>Muslim share</th></tr></thead><tbody>
       {ps_rows}
     </tbody></table>
+  </details>
+  <details>
+    <summary>Top 50 districts by Muslim share (of {n_ps_districts} total)</summary>
+    <table><thead><tr><th>District code</th><th>Muslim share</th></tr></thead><tbody>
+      {ps_top_districts}
+    </tbody></table>
+    <p class="methodology" style="margin-top:8px">District codes are <code>IN-S&lt;state&gt;-D&lt;distt&gt;</code>
+    using Census 2011 codes. The top of this list is dominated by Kashmir Valley districts
+    (state 01), Lakshadweep (31), Malappuram in Kerala (32), and Murshidabad-belt districts
+    in West Bengal (19).</p>
   </details>
 </section>
 
