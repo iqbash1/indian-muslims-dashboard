@@ -380,12 +380,25 @@ metrics:
     cluster: representation
     unit: percent
     higher_is_better: null
+    definition: |
+      Percentage of Lok Sabha members who are Muslim, by election cycle.
+      Historical time series 2009-2024.
     sources: {primary: prs-eci-affidavits}
     geography_levels: [national]
     religions: [muslim]
+    methodology_notes: |
+      Religion is not tabulated by either ECI or PRS Legislative Research
+      in their official candidate-profile publications. Underlying data is
+      ECI candidate affidavits classified post-election by journalists
+      and researchers. Figures cross-verified across multiple sources:
+      Maktoob Media, FACTLY, The India Forum, Statista. Documented as
+      "manual entry" canonical with citations in each row's methodology note.
+      Time series: 2009=28/543 (5.16%), 2014=22/543 (4.05%), 2019=27/543
+      (4.97%), 2024=24/543 (4.42%). Compare against Muslim population share
+      of ~14.2% — chronic 9-10pp underrepresentation.
     comparison_baselines: []
     phase: 2
-    status: stub
+    status: defined
 
   - id: mla-share
     name: Muslim share of state legislative assembly members

@@ -210,6 +210,7 @@ SCORECARD_SPEC = [
     ("Housing",      "improved-sanitation",       "Toilet facility access",           "percent", "hindu", True),
     ("Justice",      "prison-share",              "Prisoners (rate per 100k pop)",    "rate_per_100k", "hindu", False),
     ("Justice",      "undertrial-share",          "Undertrials (rate per 100k pop)",  "rate_per_100k", "hindu", False),
+    ("Representation", "ls-share",                "Lok Sabha Muslim share (2024)",    "percent", None,    None),
 ]
 MUSLIM_POP_SHARE = 14.23
 
@@ -240,6 +241,29 @@ def render_scorecard_rows() -> str:
                 f'<td>{cell("hindu")}</td>'
                 f'<td>{cell("all")}</td>'
                 f'<td class="{gap_class}">{html.escape(gap_str)}</td>'
+                f'</tr>'
+            )
+            continue
+
+        # Special case: ls-share has multiple year rows (time series); show latest
+        if mid == "ls-share":
+            data = load_metric(mid)
+            latest = max(data, key=lambda r: int(r["year"])) if data else None
+            if latest is None:
+                continue
+            m_val = float(latest["value"])
+            year = latest["year"]
+            gap = m_val - MUSLIM_POP_SHARE
+            sign = "+" if gap > 0 else ""
+            rows.append(
+                f'<tr>'
+                f'<td>{html.escape(cluster)}</td>'
+                f'<td>{html.escape(name)}</td>'
+                f'<td>{year}</td>'
+                f'<td>{m_val:.2f}%</td>'
+                f'<td>—</td>'
+                f'<td>—</td>'
+                f'<td class="{"gap-bad" if gap < 0 else "gap-good"}">{sign}{gap:.2f}pp vs 14.23% pop</td>'
                 f'</tr>'
             )
             continue
@@ -686,6 +710,26 @@ TEMPLATE = """<!DOCTYPE html>
   The Muslim–Hindu gap (5.9pp) parallels LFPR.</p>
 </section>
 
+<h2 class="cluster-header">Representation</h2>
+
+<!-- LOK SABHA SHARE -->
+<section class="tile">
+  <div class="tile-head">
+    <h2>Muslim share of Lok Sabha members</h2>
+    <p class="source">canonical/ls-share.csv · manual entry from ECI affidavit aggregations (Maktoob Media, FACTLY, The India Forum, Statista)</p>
+    <p class="data-current">Data current to · 18th Lok Sabha (2024 general election)</p>
+  </div>
+  <div class="headline">{ls_headline}</div>
+  <p class="headline-caption">{ls_caption}</p>
+  <div class="chart-wrap" style="height:280px"><canvas id="ls-chart"></canvas></div>
+  <p class="methodology">Time series 2009–2024: 28 (5.16%), 22 (4.05%), 27 (4.97%), 24 (4.42%).
+  Muslim share of seats has hovered around 4-5% across the last four Lok Sabhas, against a
+  Muslim population share of <b>~14.2%</b> — chronic 9-10pp underrepresentation, and the
+  second-lowest share since independence (the lowest was 2014). Religion is not tabulated
+  by ECI or PRS Legislative Research; data is post-election journalistic aggregation of
+  candidate affidavits, cross-verified across multiple sources (documented manual entry).</p>
+</section>
+
 <h2 class="cluster-header">Justice</h2>
 
 <!-- PRISON RATE -->
@@ -896,6 +940,20 @@ new Chart(document.getElementById('wpr-chart'), {
     plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
 });
 
+new Chart(document.getElementById('ls-chart'), {
+  type: 'bar',
+  data: {
+    labels: {ls_chart_labels},
+    datasets: [
+      { label: 'Muslim share of Lok Sabha (%)', data: {ls_chart_values}, backgroundColor: 'rgba(43,108,176,0.85)' },
+    ],
+  },
+  options: { ...CFG_BASE,
+    plugins: { ...CFG_BASE.plugins, legend: { display: false } },
+    scales: { ...CFG_BASE.scales, y: { ...CFG_BASE.scales.y, suggestedMin: 0, suggestedMax: 16,
+      ticks: { font: { size: 11 }, callback: function(v) { return v + '%'; } } } } },
+});
+
 new Chart(document.getElementById('ps2-chart'), {
   type: 'bar',
   data: {
@@ -956,10 +1014,23 @@ def build() -> None:
     wpr = prep_national_by_religion(load_metric("wpr-15plus"), "percent")
     ps2 = prep_prison_rate("prison")
     us = prep_prison_rate("undertrial")
+    # ls-share time series tile
+    ls_rows = sorted(load_metric("ls-share"), key=lambda r: int(r["year"]))
+    ls_latest = ls_rows[-1] if ls_rows else None
+    ls_data = {
+        "headline": f"{float(ls_latest['value']):.2f}%" if ls_latest else "—",
+        "headline_caption": (
+            f"Muslim MPs in the 18th Lok Sabha (2024). "
+            f"<b>{float(ls_latest['value']):.2f}% of 543 seats</b> "
+            f"vs Muslim population share ~14.2% — a chronic 9-10pp underrepresentation."
+        ),
+        "chart_labels": [r["year"] for r in ls_rows],
+        "chart_values": [float(r["value"]) for r in ls_rows],
+    }
     ahe = prep_muslim_higher_ed(load_metric("muslim-higher-ed-enrolment"))
 
     n_sources = 6
-    n_metrics = 14  # 11 from before + prison-rate-per-100k + undertrial-rate-per-100k + improved-sanitation
+    n_metrics = 16  # +district-concentration-top100, +ls-share
     n_rows = (len(load_metric("pop-share")) + len(load_metric("lit-7plus"))
               + len(load_metric("sex-ratio")) + len(load_metric("imr"))
               + len(load_metric("inst-delivery")) + len(load_metric("women-anemia"))
@@ -1027,6 +1098,11 @@ def build() -> None:
         "{wpr_caption}": wpr["headline_caption"],
         "{wpr_chart_labels}": json.dumps(wpr["chart_labels"]),
         "{wpr_chart_values}": json.dumps(wpr["chart_values"]),
+        # lok sabha share
+        "{ls_headline}": ls_data["headline"],
+        "{ls_caption}": ls_data["headline_caption"],
+        "{ls_chart_labels}": json.dumps(ls_data["chart_labels"]),
+        "{ls_chart_values}": json.dumps(ls_data["chart_values"]),
         # prison share
         "{ps2_headline}": ps2["headline"],
         "{ps2_caption}": ps2["headline_caption"],
