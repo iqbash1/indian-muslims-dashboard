@@ -1,0 +1,11 @@
+{
+  "source_id": "civic-incident-databases",
+  "target_id": "ihl-2024-annual",
+  "url": "https://www.csohate.org/wp-content/uploads/2025/02/Hate-Speech-Events-in-India_Report_2024.pdf",
+  "pulled_at": "2026-05-28T02:34:11.237969+00:00",
+  "status_code": 200,
+  "content_type": "application/pdf",
+  "content_length": 3573508,
+  "sha256": "a3d09560ca0a9730fa0f9dca608e96e0c3038bb6973e2ba0ffad7a96d4fce28e",
+  "pull_script_version": "0.1.0"
+}

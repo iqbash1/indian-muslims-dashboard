@@ -1,0 +1,11 @@
+{
+  "source_id": "civic-incident-databases",
+  "target_id": "ihl-2023-annual",
+  "url": "https://www.csohate.org/wp-content/uploads/2024/07/report-India-Hate-Lab-Report-Final-13.pdf",
+  "pulled_at": "2026-05-28T02:33:22.781601+00:00",
+  "status_code": 200,
+  "content_type": "application/pdf",
+  "content_length": 4120866,
+  "sha256": "f07806811272fa1c59964590f086fe83a941c54e2728f760baa8c24cf391f991",
+  "pull_script_version": "0.1.0"
+}

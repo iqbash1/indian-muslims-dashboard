@@ -303,8 +303,8 @@ def render_scorecard_rows() -> str:
             )
             continue
 
-        # Special case: communal-incidents-govt time series, show latest year, no religion comparison
-        if mid == "communal-incidents-govt":
+        # Special case: time-series count metrics (communal-incidents-govt + -civic)
+        if mid in ("communal-incidents-govt", "communal-incidents-civic"):
             data = load_metric(mid)
             if not data:
                 continue
@@ -316,8 +316,8 @@ def render_scorecard_rows() -> str:
                 f'<td>{html.escape(cluster)}</td>'
                 f'<td>{html.escape(name)}</td>'
                 f'<td>{year}</td>'
-                f'<td colspan="3" style="text-align:left">{val:,} incidents (national aggregate)</td>'
-                f'<td class="gap-neutral">civil-society counts higher</td>'
+                f'<td colspan="3" style="text-align:left">{val:,} (national aggregate)</td>'
+                f'<td class="gap-neutral">{"NCRB tally; civic counts higher" if mid == "communal-incidents-govt" else "IHL: hate speech events, not riots"}</td>'
                 f'</tr>'
             )
             continue
@@ -959,6 +959,24 @@ TEMPLATE = """<!DOCTYPE html>
   </details>
 </section>
 
+<!-- COMMUNAL INCIDENTS (CIVIC — INDIA HATE LAB) -->
+<section class="tile">
+  <div class="tile-head">
+    <h2>Anti-Muslim hate speech events (India Hate Lab)</h2>
+    <p class="source">canonical/communal-incidents-civic.csv · sources/civic-databases/ihl-2024-annual-report.pdf + ihl-2023-annual-report.pdf</p>
+    <p class="data-current">Data current to · IHL Annual Report 2024 (released Feb 2025)</p>
+  </div>
+  <div class="headline">{cic_headline}</div>
+  <p class="headline-caption">{cic_caption}</p>
+  <div class="chart-wrap" style="height:280px"><canvas id="cic-chart"></canvas></div>
+  <p class="methodology">India Hate Lab documents <b>in-person anti-Muslim hate speech events</b>:
+  political rallies, religious gatherings, electoral events with hateful rhetoric (~98% target
+  Muslims). 668 events in 2023 grew to 1,165 in 2024 — a <b>74% year-on-year rise</b>. Reading
+  alongside the NCRB tile above shows the methodology divide: NCRB counts what becomes a
+  registered crime (272 in 2022); IHL counts what happens regardless of whether police register
+  it. The two views answer different questions.</p>
+</section>
+
 <h2 class="cluster-header">Education — Higher Ed (count)</h2>
 
 <!-- MUSLIM HIGHER ED ENROLMENT -->
@@ -1188,6 +1206,17 @@ new Chart(document.getElementById('mla-chart'), {
     plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
 });
 
+new Chart(document.getElementById('cic-chart'), {
+  type: 'bar',
+  data: {
+    labels: {cic_chart_labels},
+    datasets: [{ label: 'Anti-Muslim hate speech events (IHL)', data: {cic_chart_values},
+      backgroundColor: 'rgba(123,29,34,0.85)' }],
+  },
+  options: { ...CFG_BASE,
+    plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+});
+
 new Chart(document.getElementById('ci-chart'), {
   type: 'bar',
   data: {
@@ -1328,6 +1357,21 @@ def build() -> None:
         "state_rows": ci_state_rows,
         "n_states": len(ci_states),
     }
+
+    # communal-incidents-civic (IHL) time series
+    cic_rows = sorted(load_metric("communal-incidents-civic"), key=lambda r: int(r["year"]))
+    cic_latest = cic_rows[-1] if cic_rows else None
+    cic_data = {
+        "headline": f"{int(float(cic_latest['value'])):,}" if cic_latest else "—",
+        "headline_caption": (
+            f"India Hate Lab documented {int(float(cic_latest['value'])):,} in-person "
+            f"anti-Muslim hate speech events in {cic_latest['year']} — <b>a 74% rise</b> from "
+            f"668 in 2023. ~98% target Muslims. Different unit from NCRB's rioting count; "
+            f"see methodology."
+        ),
+        "chart_labels": [r["year"] for r in cic_rows],
+        "chart_values": [int(float(r["value"])) for r in cic_rows],
+    }
     ahe = prep_muslim_higher_ed(load_metric("muslim-higher-ed-enrolment"))
 
     n_sources = 6
@@ -1416,13 +1460,18 @@ def build() -> None:
         "{mla_caption}": mla_data["headline_caption"],
         "{mla_chart_labels}": json.dumps(mla_data["chart_labels"]),
         "{mla_chart_values}": json.dumps(mla_data["chart_values"]),
-        # communal incidents
+        # communal incidents (NCRB)
         "{ci_headline}": ci_data["headline"],
         "{ci_caption}": ci_data["headline_caption"],
         "{ci_chart_labels}": json.dumps(ci_data["chart_labels"]),
         "{ci_chart_values}": json.dumps(ci_data["chart_values"]),
         "{ci_state_rows}": ci_data["state_rows"],
         "{ci_n_states}": str(ci_data["n_states"]),
+        # communal incidents (India Hate Lab)
+        "{cic_headline}": cic_data["headline"],
+        "{cic_caption}": cic_data["headline_caption"],
+        "{cic_chart_labels}": json.dumps(cic_data["chart_labels"]),
+        "{cic_chart_values}": json.dumps(cic_data["chart_values"]),
         # prison share
         "{ps2_headline}": ps2["headline"],
         "{ps2_caption}": ps2["headline_caption"],

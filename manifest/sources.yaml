@@ -542,27 +542,38 @@ sources:
     targets: []
 
   - id: civic-incident-databases
-    name: Civic-tech incident databases (Documentation of the Oppressed, India Hate Lab, Hindutva Watch)
+    name: Civic-tech incident databases (India Hate Lab, Documentation of the Oppressed, Hindutva Watch)
     publisher: Multiple civic-tech / research initiatives
-    home_url: null
-    cadence: continuous
+    home_url: https://indiahatelab.com/
+    cadence: annual (IHL); continuous (others)
     access:
-      method: mixed
+      method: web-download
       auth_required: false
-    formats: [json, csv, web]
+    formats: [pdf, web]
     religion_disaggregated: incident-level
     geography_levels: [national, state, district]
     coverage:
+      - hate_speech_events_anti_muslim
       - communal_incidents_civic_recorded
-      - hate_crime_incidents
     known_issues:
       - "Methodology varies by source"
       - "Always shown as separate dashboard tile; never aggregated with govt sources"
+      - "IHL tracks hate speech events; not directly comparable to NCRB rioting count"
     archive_dir: sources/civic-databases/
     runbook: docs/runbooks/civic-databases.md
     last_pulled: null
     next_expected: null
-    targets: []
+    targets:
+      - target_id: ihl-2023-annual
+        description: India Hate Lab 2023 Annual Report - Hate Speech Events in India
+        url: https://www.csohate.org/wp-content/uploads/2024/07/report-India-Hate-Lab-Report-Final-13.pdf
+        target_path: sources/civic-databases/ihl-2023-annual-report.pdf
+        status: verified
+      - target_id: ihl-2024-annual
+        description: India Hate Lab 2024 Annual Report - Hate Speech Events in India
+        url: https://www.csohate.org/wp-content/uploads/2025/02/Hate-Speech-Events-in-India_Report_2024.pdf
+        target_path: sources/civic-databases/ihl-2024-annual-report.pdf
+        status: verified
 
   - id: rti-public-sector-employment
     name: RTI filings - Central government & PSU employment by religion

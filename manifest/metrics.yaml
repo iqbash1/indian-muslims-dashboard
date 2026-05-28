@@ -672,16 +672,36 @@ metrics:
         special_render: time_series_count
 
   - id: communal-incidents-civic
-    name: Communal / hate incidents (civic-recorded)
+    name: Anti-Muslim hate speech events (India Hate Lab)
     cluster: civic
     unit: count
     higher_is_better: false
+    definition: |
+      Annual count of verified in-person anti-Muslim hate speech events
+      documented by India Hate Lab (IHL). Includes political rallies,
+      religious gatherings, and electoral events with hateful rhetoric.
     sources: {primary: civic-incident-databases}
-    geography_levels: [national, state, district]
-    religions: []
+    geography_levels: [national]
+    religions: [all]
+    methodology_notes: |
+      Fundamentally different unit from NCRB's `communal-incidents-govt`:
+      IHL counts hate speech events (rallies, political speeches with
+      hateful rhetoric, ~98% targeting Muslims), while NCRB counts
+      police-registered communal rioting incidents (IPC Sec.147-151).
+      Both metrics share the dashboard's Civic cluster intentionally so
+      readers see both views side-by-side.
+      Time series: 2023 = 668 events, 2024 = 1,165 events (74% YoY rise).
     comparison_baselines: []
     phase: 2
-    status: stub
+    status: defined
+    display:
+      scorecard:
+        label: "Anti-Muslim hate speech events (IHL)"
+        reference: null
+        unit_format: count
+        higher_is_better: null
+        order: 155
+        special_render: time_series_count
 
   - id: civil-services-share
     name: Muslim share of central civil services intake

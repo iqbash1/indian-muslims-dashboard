@@ -138,7 +138,7 @@
 <div class="page">
 
 <h1>Indian Muslims — Living Conditions Dashboard</h1>
-<p class="tagline">Built 2026-05-28 08:01 · <a href="https://github.com/iqbash1/indian-muslims-dashboard">source on GitHub</a></p>
+<p class="tagline">Built 2026-05-28 08:05 · <a href="https://github.com/iqbash1/indian-muslims-dashboard">source on GitHub</a></p>
 
 <section class="intro">
   <p>A scorecard of living-conditions indicators for India's Muslim population, with
@@ -190,7 +190,8 @@
     <tr><td>Justice</td><td>Undertrials (rate per 100k pop)</td><td>2022</td><td><b>83,968</b><br><span class="rate-sub">48.75 per 100k</span></td><td><b>283,372</b><br><span class="rate-sub">29.33 per 100k</span></td><td><b>401,419</b><br><span class="rate-sub">33.15 per 100k</span></td><td class="gap-bad">1.66× Hindu rate</td></tr>
     <tr><td>Representation</td><td>Lok Sabha Muslim share (2024)</td><td>2024</td><td>4.42%</td><td>—</td><td>—</td><td class="gap-bad">-9.81pp vs 14.23% pop</td></tr>
     <tr><td>Representation</td><td>State MLA Muslim share (national agg)</td><td>2024</td><td>6.00%</td><td>—</td><td>—</td><td class="gap-bad">-8.23pp vs 14.23% pop</td></tr>
-    <tr><td>Civic</td><td>Communal incidents (NCRB 2022)</td><td>2022</td><td colspan="3" style="text-align:left">272 incidents (national aggregate)</td><td class="gap-neutral">civil-society counts higher</td></tr>
+    <tr><td>Civic</td><td>Communal incidents (NCRB 2022)</td><td>2022</td><td colspan="3" style="text-align:left">272 (national aggregate)</td><td class="gap-neutral">NCRB tally; civic counts higher</td></tr>
+    <tr><td>Civic</td><td>Anti-Muslim hate speech events (IHL)</td><td>2024</td><td colspan="3" style="text-align:left">1,165 (national aggregate)</td><td class="gap-neutral">IHL: hate speech events, not riots</td></tr>
   </tbody></table>
   <p class="methodology">"Gap" is Muslim minus reference baseline (Hindu where available, else All).
   Red gap = Muslim outcome worse than reference; green = Muslim outcome better. For justice
@@ -635,6 +636,24 @@
   </details>
 </section>
 
+<!-- COMMUNAL INCIDENTS (CIVIC — INDIA HATE LAB) -->
+<section class="tile">
+  <div class="tile-head">
+    <h2>Anti-Muslim hate speech events (India Hate Lab)</h2>
+    <p class="source"><a class="csv-link" href="canonical/communal-incidents-civic.csv">canonical/communal-incidents-civic.csv</a> · sources/civic-databases/ihl-2024-annual-report.pdf + ihl-2023-annual-report.pdf</p>
+    <p class="data-current">Data current to · IHL Annual Report 2024 (released Feb 2025)</p>
+  </div>
+  <div class="headline">1,165</div>
+  <p class="headline-caption">India Hate Lab documented 1,165 in-person anti-Muslim hate speech events in 2024 — <b>a 74% rise</b> from 668 in 2023. ~98% target Muslims. Different unit from NCRB's rioting count; see methodology.</p>
+  <div class="chart-wrap" style="height:280px"><canvas id="cic-chart"></canvas></div>
+  <p class="methodology">India Hate Lab documents <b>in-person anti-Muslim hate speech events</b>:
+  political rallies, religious gatherings, electoral events with hateful rhetoric (~98% target
+  Muslims). 668 events in 2023 grew to 1,165 in 2024 — a <b>74% year-on-year rise</b>. Reading
+  alongside the NCRB tile above shows the methodology divide: NCRB counts what becomes a
+  registered crime (272 in 2022); IHL counts what happens regardless of whether police register
+  it. The two views answer different questions.</p>
+</section>
+
 <h2 class="cluster-header">Education — Higher Ed (count)</h2>
 
 <!-- MUSLIM HIGHER ED ENROLMENT -->
@@ -698,7 +717,7 @@
 </section>
 
 <footer>
-  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-28 08:01.
+  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-28 08:05.
   Every number on this page traces L4 → L3 (canonical) → L2 (extracted) → L1 (source file)
   with SHA256 sidecar provenance. Re-run the builder after any canonical change:
   <code>python dashboard/build.py</code></p>
@@ -891,6 +910,17 @@ new Chart(document.getElementById('mla-chart'), {
     labels: ["Kerala (2026)", "West Bengal (2026)", "Telangana (2023)", "Haryana (2024)", "Maharashtra (2024)", "Rajasthan (2023)", "Madhya Pradesh (2023)", "Chhattisgarh (2023)"],
     datasets: [{ label: 'Muslim share of state assembly (%)', data: [25.0, 13.65, 5.88, 5.56, 3.47, 3.0, 0.87, 0.0],
       backgroundColor: 'rgba(43,108,176,0.85)' }],
+  },
+  options: { ...CFG_BASE,
+    plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+});
+
+new Chart(document.getElementById('cic-chart'), {
+  type: 'bar',
+  data: {
+    labels: ["2023", "2024"],
+    datasets: [{ label: 'Anti-Muslim hate speech events (IHL)', data: [668, 1165],
+      backgroundColor: 'rgba(123,29,34,0.85)' }],
   },
   options: { ...CFG_BASE,
     plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
