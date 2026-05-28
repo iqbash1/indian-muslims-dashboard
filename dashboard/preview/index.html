@@ -98,6 +98,9 @@
   .scorecard-table .gap-bad { color: var(--accent); font-weight: 600; }
   .scorecard-table .gap-good { color: #2d6a3e; font-weight: 600; }
   .scorecard-table .gap-neutral { color: var(--muted); }
+  .scorecard-table .rate-sub {
+    font-size: 11px; color: var(--muted); font-weight: 400;
+  }
   .csv-link {
     font-size: 12px; color: var(--muslim); text-decoration: none;
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -118,7 +121,7 @@
 <div class="page">
 
 <h1>Indian Muslims — Living Conditions Dashboard</h1>
-<p class="tagline">Preview build · 2026-05-28 05:11</p>
+<p class="tagline">Preview build · 2026-05-28 05:32</p>
 
 <div class="status-bar">
   <span><b>11</b> metrics live</span>
@@ -145,13 +148,13 @@
     <tr><td>Health</td><td>Infant Mortality Rate</td><td>2020</td><td>33.0</td><td>35.4</td><td>34.7</td><td class="gap-good">-2.37</td></tr>
     <tr><td>Health</td><td>Institutional delivery rate</td><td>2020</td><td>84.30%</td><td>89.50%</td><td>88.58%</td><td class="gap-bad">-5.20pp</td></tr>
     <tr><td>Health</td><td>Anaemia in women (15-49)</td><td>2020</td><td>55.60%</td><td>57.40%</td><td>57.00%</td><td class="gap-good">-1.80pp</td></tr>
-    <tr><td>Justice</td><td>Muslim share of prisoners</td><td>2022</td><td>20.17%</td><td>71.19%</td><td>—</td><td class="gap-bad">+5.94pp vs 14.23% pop</td></tr>
-    <tr><td>Justice</td><td>Muslim share of undertrials</td><td>2022</td><td>20.92%</td><td>70.59%</td><td>—</td><td class="gap-bad">+6.69pp vs 14.23% pop</td></tr>
+    <tr><td>Justice</td><td>Prisoners (rate per 100k pop)</td><td>2022</td><td><b>108,968</b><br><span class="rate-sub">63.3 per 100k</span></td><td><b>384,522</b><br><span class="rate-sub">39.8 per 100k</span></td><td><b>540,148</b><br><span class="rate-sub">44.6 per 100k</span></td><td class="gap-bad">1.59× Hindu rate</td></tr>
+    <tr><td>Justice</td><td>Undertrials (rate per 100k pop)</td><td>2022</td><td><b>83,968</b><br><span class="rate-sub">48.7 per 100k</span></td><td><b>283,372</b><br><span class="rate-sub">29.3 per 100k</span></td><td><b>401,419</b><br><span class="rate-sub">33.2 per 100k</span></td><td class="gap-bad">1.66× Hindu rate</td></tr>
   </tbody></table>
   <p class="methodology">"Gap" is Muslim minus reference baseline (Hindu where available, else All).
-  Red gap = Muslim outcome worse than reference; green = Muslim outcome better. For prison
-  metrics, gap is Muslim share minus Muslim population share (14.2%) — overrepresentation
-  in red, parity green.</p>
+  Red gap = Muslim outcome worse than reference; green = Muslim outcome better. For justice
+  metrics, cells show absolute count + incarceration rate per 100k of religious population;
+  gap is the Muslim-to-Hindu rate ratio (1.0× = parity, >1.0× = Muslim overrepresented).</p>
 </section>
 
 <h2 class="cluster-header">Demographics</h2>
@@ -375,36 +378,41 @@
 
 <h2 class="cluster-header">Justice</h2>
 
-<!-- PRISON SHARE -->
+<!-- PRISON RATE -->
 <section class="tile">
   <div class="tile-head">
-    <h2>Muslim share of prison population</h2>
+    <h2>Muslim prison population — count and incarceration rate</h2>
     <p class="source">canonical/prison-share.csv · sources/ncrb-prison/psi-2022.pdf (Tables 2.10C–2.13C, pp. 103, 107, 111, 115)</p>
     <p class="data-current">Data current to · NCRB Prison Statistics India 2022 (as on 2023-12-01)</p>
   </div>
-  <div class="headline">20.17%</div>
-  <p class="headline-caption">All-India Muslim, NFHS-5. Hindu: 71.19%</p>
+  <div class="headline">108,968</div>
+  <p class="headline-caption">All-India Muslim prison count. <b>63.3 per 100,000 Muslims</b>, vs Hindu 39.8 per 100k and All 44.6 per 100k. Muslim rate is <b>1.59× the Hindu rate</b>.</p>
   <div class="chart-wrap" style="height:280px"><canvas id="ps2-chart"></canvas></div>
-  <p class="methodology">Combined convicts + undertrials + detenues + other prisoners. Muslims
-  are 14.2% of population (per Census 2011) but <b>20.17% of prisoners</b> whose religion was
-  reported — a 6pp overrepresentation. Detenues (preventive-detention prisoners) skew much
-  higher: 40.5% Muslim, driven heavily by J&K. Caveat: Maharashtra did not report religion
-  for ~33k undertrials/detenues — share is computed over religion-reported subset only.</p>
+  <p class="methodology">Combined convicts + undertrials + detenues + other prisoners.
+  Presented as absolute count and as incarceration rate per 100,000 of religious population
+  (a more direct measure of disproportion than "share of prisoners" alone). Muslim incarceration
+  rate of 63.3 per 100k vs Hindu 39.8 per 100k means a Muslim Indian is <b>1.59× as likely to
+  be in prison</b> as a Hindu Indian. Detenues (preventive-detention prisoners) skew much higher:
+  40.5% Muslim by share, driven heavily by J&K. Caveat: Maharashtra did not report religion
+  breakdown for ~33k undertrials/detenues — rates are computed over religion-reported prisoners
+  with full population in the denominator (so the actual rate is mildly understated).</p>
 </section>
 
-<!-- UNDERTRIAL SHARE -->
+<!-- UNDERTRIAL RATE -->
 <section class="tile">
   <div class="tile-head">
-    <h2>Muslim share of undertrial prisoners</h2>
+    <h2>Muslim undertrial population — count and rate</h2>
     <p class="source">canonical/undertrial-share.csv · sources/ncrb-prison/psi-2022.pdf (Table 2.11C, p. 107)</p>
     <p class="data-current">Data current to · NCRB PSI 2022</p>
   </div>
-  <div class="headline">20.92%</div>
-  <p class="headline-caption">All-India Muslim, NFHS-5. Hindu: 70.59%</p>
+  <div class="headline">83,968</div>
+  <p class="headline-caption">All-India Muslim undertrial count. <b>48.7 per 100,000 Muslims</b>, vs Hindu 29.3 per 100k and All 33.2 per 100k. Muslim rate is <b>1.66× the Hindu rate</b>.</p>
   <div class="chart-wrap" style="height:280px"><canvas id="us-chart"></canvas></div>
-  <p class="methodology">Undertrials are prisoners awaiting trial — not convicted. The
-  undertrial Muslim share (20.92%) runs higher than the convict Muslim share (17.13%),
-  consistent with widely-documented patterns of detention-vs-conviction disparity.</p>
+  <p class="methodology">Undertrials are prisoners awaiting trial — not convicted. Muslim
+  undertrial rate (48.7 per 100k Muslims) is <b>1.66× the Hindu rate</b> (29.3 per 100k Hindus),
+  the highest disproportion among the prison categories — consistent with widely-documented
+  patterns of detention-vs-conviction disparity (Muslims face higher pre-trial detention even
+  when conviction rates are similar).</p>
 </section>
 
 <h2 class="cluster-header">Education — Higher Ed (count)</h2>
@@ -470,7 +478,7 @@
 </section>
 
 <footer>
-  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-28 05:11.
+  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-28 05:32.
   Every number on this page traces L4 → L3 (canonical) → L2 (extracted) → L1 (source file)
   with SHA256 sidecar provenance. Re-run the builder after any canonical change:
   <code>python dashboard/build.py</code></p>
@@ -602,8 +610,8 @@ new Chart(document.getElementById('wpr-chart'), {
 new Chart(document.getElementById('ps2-chart'), {
   type: 'bar',
   data: {
-    labels: ["Muslim", "Hindu"],
-    datasets: [{ label: 'Prison share (%)', data: [20.17, 71.19],
+    labels: ["Muslim", "Hindu", "All"],
+    datasets: [{ label: 'Prison share (%)', data: [63.3, 39.8, 44.6],
       backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)'] }],
   },
   options: { ...CFG_BASE, indexAxis: 'y',
@@ -613,8 +621,8 @@ new Chart(document.getElementById('ps2-chart'), {
 new Chart(document.getElementById('us-chart'), {
   type: 'bar',
   data: {
-    labels: ["Muslim", "Hindu"],
-    datasets: [{ label: 'Undertrial share (%)', data: [20.92, 70.59],
+    labels: ["Muslim", "Hindu", "All"],
+    datasets: [{ label: 'Undertrial share (%)', data: [48.7, 29.3, 33.2],
       backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)'] }],
   },
   options: { ...CFG_BASE, indexAxis: 'y',

@@ -165,6 +165,82 @@ def prep_sex_ratio(rows: list[dict]) -> dict:
     }
 
 
+def compute_prison_rates() -> dict:
+    """Compute per-100k incarceration + undertrial rates from NCRB L2 + Census C-1 L2.
+    Returns {'prison': {religion: {'count': int, 'rate_per_100k': float}, ...},
+             'undertrial': {...},
+             'populations': {religion: int}}"""
+    import csv as _csv
+    counts = {"prison": {"muslim": 0, "hindu": 0, "all": 0},
+              "undertrial": {"muslim": 0, "hindu": 0, "all": 0}}
+    with (REPO_ROOT / "extracted" / "ncrb-prison" / "psi-2022-religion-by-state.csv").open() as f:
+        for row in _csv.DictReader(f):
+            if row["row_type"] != "subtotal_or_total":
+                continue
+            label = row["geography_name"]
+            if "STATES" not in label and "UTs" not in label:
+                continue
+            if not row["value"]:
+                continue
+            v = int(row["value"])
+            rel = row["religion"] if row["religion"] in ("muslim", "hindu") else "all"
+            counts["prison"][rel] += v if row["religion"] in ("muslim", "hindu") else v
+            # "all" = sum across all religion buckets
+            if row["religion"] not in ("muslim", "hindu"):
+                counts["prison"]["all"] += v
+            else:
+                counts["prison"]["all"] += v  # still counts toward all
+            if row["category"] == "undertrials":
+                if row["religion"] in ("muslim", "hindu"):
+                    counts["undertrial"][rel] += v
+                counts["undertrial"]["all"] += v
+
+    # The above double-counts; redo cleanly:
+    counts = {"prison": {"muslim": 0, "hindu": 0, "all": 0},
+              "undertrial": {"muslim": 0, "hindu": 0, "all": 0}}
+    with (REPO_ROOT / "extracted" / "ncrb-prison" / "psi-2022-religion-by-state.csv").open() as f:
+        for row in _csv.DictReader(f):
+            if row["row_type"] != "subtotal_or_total":
+                continue
+            label = row["geography_name"]
+            if "STATES" not in label and "UTs" not in label:
+                continue
+            if not row["value"]:
+                continue
+            v = int(row["value"])
+            rel = row["religion"]
+            counts["prison"]["all"] += v
+            if rel == "muslim":
+                counts["prison"]["muslim"] += v
+            elif rel == "hindu":
+                counts["prison"]["hindu"] += v
+            if row["category"] == "undertrials":
+                counts["undertrial"]["all"] += v
+                if rel == "muslim":
+                    counts["undertrial"]["muslim"] += v
+                elif rel == "hindu":
+                    counts["undertrial"]["hindu"] += v
+
+    pops = {}
+    with (REPO_ROOT / "extracted" / "census-2011" / "c01-population-by-religion.csv").open() as f:
+        for row in _csv.DictReader(f):
+            if row["state_code"] != "00" or row["residence"] != "total" or row["sex"] != "persons":
+                continue
+            if row["religion"] in ("muslim", "hindu", "all"):
+                pops[row["religion"]] = int(row["value"])
+
+    result = {"prison": {}, "undertrial": {}, "populations": pops}
+    for kind in ("prison", "undertrial"):
+        for rel in ("muslim", "hindu", "all"):
+            cnt = counts[kind][rel]
+            pop = pops[rel]
+            result[kind][rel] = {
+                "count": cnt,
+                "rate_per_100k": round(cnt / pop * 100_000, 1),
+            }
+    return result
+
+
 SCORECARD_SPEC = [
     # (cluster, metric_id, display_name, unit, reference_religion, higher_is_better)
     ("Demographics", "pop-share",                 "Population share",                 "percent", None,    None),
@@ -176,16 +252,42 @@ SCORECARD_SPEC = [
     ("Health",       "imr",                       "Infant Mortality Rate",            "per_1000_live_births", "hindu", False),
     ("Health",       "inst-delivery",             "Institutional delivery rate",      "percent", "hindu", True),
     ("Health",       "women-anemia",              "Anaemia in women (15-49)",         "percent", "hindu", False),
-    ("Justice",      "prison-share",              "Muslim share of prisoners",        "percent", None,    None),  # gap vs pop-share
-    ("Justice",      "undertrial-share",          "Muslim share of undertrials",      "percent", None,    None),
+    ("Justice",      "prison-share",              "Prisoners (rate per 100k pop)",    "rate_per_100k", "hindu", False),
+    ("Justice",      "undertrial-share",          "Undertrials (rate per 100k pop)",  "rate_per_100k", "hindu", False),
 ]
 MUSLIM_POP_SHARE = 14.23
 
 
 def render_scorecard_rows() -> str:
     """Compute one HTML <tr> per metric showing Muslim/Hindu/All and gap vs reference."""
+    prison_rates = compute_prison_rates()
     rows: list[str] = []
     for cluster, mid, name, unit, ref, higher_better in SCORECARD_SPEC:
+        # Justice metrics get a special two-line presentation: absolute count + rate per 100k pop
+        if mid in ("prison-share", "undertrial-share"):
+            kind = "prison" if mid == "prison-share" else "undertrial"
+            d = prison_rates[kind]
+            year = 2022
+            def cell(rel: str) -> str:
+                x = d[rel]
+                return f'<b>{x["count"]:,}</b><br><span class="rate-sub">{x["rate_per_100k"]} per 100k</span>'
+            # Gap: rate ratio Muslim / Hindu
+            ratio = d["muslim"]["rate_per_100k"] / d["hindu"]["rate_per_100k"]
+            gap_str = f"{ratio:.2f}× Hindu rate"
+            gap_class = "gap-bad" if ratio > 1 else "gap-good"
+            rows.append(
+                f'<tr>'
+                f'<td>{html.escape(cluster)}</td>'
+                f'<td>{html.escape(name)}</td>'
+                f'<td>{year}</td>'
+                f'<td>{cell("muslim")}</td>'
+                f'<td>{cell("hindu")}</td>'
+                f'<td>{cell("all")}</td>'
+                f'<td class="{gap_class}">{html.escape(gap_str)}</td>'
+                f'</tr>'
+            )
+            continue
+
         data = load_metric(mid)
         # Find national row per religion
         by_rel: dict[str, float] = {}
@@ -205,13 +307,7 @@ def render_scorecard_rows() -> str:
         # Gap computation
         gap_str = "—"
         gap_class = "gap-neutral"
-        if mid in ("prison-share", "undertrial-share") and m_val is not None:
-            # Gap is Muslim share - Muslim population share (overrepresentation)
-            diff = m_val - MUSLIM_POP_SHARE
-            sign = "+" if diff > 0 else ""
-            gap_str = f"{sign}{diff:.2f}pp vs 14.23% pop"
-            gap_class = "gap-bad" if diff > 0 else "gap-good"
-        elif ref == "hindu" and m_val is not None and h_val is not None:
+        if ref == "hindu" and m_val is not None and h_val is not None:
             diff = m_val - h_val
             sign = "+" if diff > 0 else ""
             gap_str = f"{sign}{diff:.2f}"
@@ -247,6 +343,26 @@ def render_scorecard_rows() -> str:
             f'</tr>'
         )
     return "\n    ".join(rows)
+
+
+def prep_prison_rate(kind: str) -> dict:
+    """For prison/undertrial: present as absolute count + per-100k rate."""
+    r = compute_prison_rates()[kind]
+    muslim_cnt = r["muslim"]["count"]
+    muslim_rate = r["muslim"]["rate_per_100k"]
+    hindu_rate = r["hindu"]["rate_per_100k"]
+    all_rate = r["all"]["rate_per_100k"]
+    ratio = round(muslim_rate / hindu_rate, 2)
+    return {
+        "headline": f"{muslim_cnt:,}",
+        "headline_caption": (
+            f"All-India Muslim {kind} count. <b>{muslim_rate} per 100,000 Muslims</b>, "
+            f"vs Hindu {hindu_rate} per 100k and All {all_rate} per 100k. "
+            f"Muslim rate is <b>{ratio}× the Hindu rate</b>."
+        ),
+        "chart_labels": ["Muslim", "Hindu", "All"],
+        "chart_values": [muslim_rate, hindu_rate, all_rate],
+    }
 
 
 def prep_national_by_religion(rows: list[dict], unit: str) -> dict:
@@ -395,6 +511,9 @@ TEMPLATE = """<!DOCTYPE html>
   .scorecard-table .gap-bad { color: var(--accent); font-weight: 600; }
   .scorecard-table .gap-good { color: #2d6a3e; font-weight: 600; }
   .scorecard-table .gap-neutral { color: var(--muted); }
+  .scorecard-table .rate-sub {
+    font-size: 11px; color: var(--muted); font-weight: 400;
+  }
   .csv-link {
     font-size: 12px; color: var(--muslim); text-decoration: none;
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -436,9 +555,9 @@ TEMPLATE = """<!DOCTYPE html>
     {scorecard_rows}
   </tbody></table>
   <p class="methodology">"Gap" is Muslim minus reference baseline (Hindu where available, else All).
-  Red gap = Muslim outcome worse than reference; green = Muslim outcome better. For prison
-  metrics, gap is Muslim share minus Muslim population share (14.2%) — overrepresentation
-  in red, parity green.</p>
+  Red gap = Muslim outcome worse than reference; green = Muslim outcome better. For justice
+  metrics, cells show absolute count + incarceration rate per 100k of religious population;
+  gap is the Muslim-to-Hindu rate ratio (1.0× = parity, >1.0× = Muslim overrepresented).</p>
 </section>
 
 <h2 class="cluster-header">Demographics</h2>
@@ -593,36 +712,41 @@ TEMPLATE = """<!DOCTYPE html>
 
 <h2 class="cluster-header">Justice</h2>
 
-<!-- PRISON SHARE -->
+<!-- PRISON RATE -->
 <section class="tile">
   <div class="tile-head">
-    <h2>Muslim share of prison population</h2>
+    <h2>Muslim prison population — count and incarceration rate</h2>
     <p class="source">canonical/prison-share.csv · sources/ncrb-prison/psi-2022.pdf (Tables 2.10C–2.13C, pp. 103, 107, 111, 115)</p>
     <p class="data-current">Data current to · NCRB Prison Statistics India 2022 (as on 2023-12-01)</p>
   </div>
   <div class="headline">{ps2_headline}</div>
   <p class="headline-caption">{ps2_caption}</p>
   <div class="chart-wrap" style="height:280px"><canvas id="ps2-chart"></canvas></div>
-  <p class="methodology">Combined convicts + undertrials + detenues + other prisoners. Muslims
-  are 14.2% of population (per Census 2011) but <b>20.17% of prisoners</b> whose religion was
-  reported — a 6pp overrepresentation. Detenues (preventive-detention prisoners) skew much
-  higher: 40.5% Muslim, driven heavily by J&K. Caveat: Maharashtra did not report religion
-  for ~33k undertrials/detenues — share is computed over religion-reported subset only.</p>
+  <p class="methodology">Combined convicts + undertrials + detenues + other prisoners.
+  Presented as absolute count and as incarceration rate per 100,000 of religious population
+  (a more direct measure of disproportion than "share of prisoners" alone). Muslim incarceration
+  rate of 63.3 per 100k vs Hindu 39.8 per 100k means a Muslim Indian is <b>1.59× as likely to
+  be in prison</b> as a Hindu Indian. Detenues (preventive-detention prisoners) skew much higher:
+  40.5% Muslim by share, driven heavily by J&K. Caveat: Maharashtra did not report religion
+  breakdown for ~33k undertrials/detenues — rates are computed over religion-reported prisoners
+  with full population in the denominator (so the actual rate is mildly understated).</p>
 </section>
 
-<!-- UNDERTRIAL SHARE -->
+<!-- UNDERTRIAL RATE -->
 <section class="tile">
   <div class="tile-head">
-    <h2>Muslim share of undertrial prisoners</h2>
+    <h2>Muslim undertrial population — count and rate</h2>
     <p class="source">canonical/undertrial-share.csv · sources/ncrb-prison/psi-2022.pdf (Table 2.11C, p. 107)</p>
     <p class="data-current">Data current to · NCRB PSI 2022</p>
   </div>
   <div class="headline">{us_headline}</div>
   <p class="headline-caption">{us_caption}</p>
   <div class="chart-wrap" style="height:280px"><canvas id="us-chart"></canvas></div>
-  <p class="methodology">Undertrials are prisoners awaiting trial — not convicted. The
-  undertrial Muslim share (20.92%) runs higher than the convict Muslim share (17.13%),
-  consistent with widely-documented patterns of detention-vs-conviction disparity.</p>
+  <p class="methodology">Undertrials are prisoners awaiting trial — not convicted. Muslim
+  undertrial rate (48.7 per 100k Muslims) is <b>1.66× the Hindu rate</b> (29.3 per 100k Hindus),
+  the highest disproportion among the prison categories — consistent with widely-documented
+  patterns of detention-vs-conviction disparity (Muslims face higher pre-trial detention even
+  when conviction rates are similar).</p>
 </section>
 
 <h2 class="cluster-header">Education — Higher Ed (count)</h2>
@@ -842,8 +966,8 @@ def build() -> None:
     wa = prep_national_by_religion(load_metric("women-anemia"), "percent")
     lfpr = prep_national_by_religion(load_metric("lfpr-15plus"), "percent")
     wpr = prep_national_by_religion(load_metric("wpr-15plus"), "percent")
-    ps2 = prep_national_by_religion(load_metric("prison-share"), "percent")
-    us = prep_national_by_religion(load_metric("undertrial-share"), "percent")
+    ps2 = prep_prison_rate("prison")
+    us = prep_prison_rate("undertrial")
     ahe = prep_muslim_higher_ed(load_metric("muslim-higher-ed-enrolment"))
 
     n_sources = 6
