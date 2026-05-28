@@ -507,12 +507,23 @@ metrics:
     cluster: civic
     unit: count
     higher_is_better: false
-    sources: {primary: mha-parliament-answers}
-    geography_levels: [national, state]
-    religions: []
+    definition: |
+      Number of communal/religious rioting incidents recorded by NCRB under
+      IPC Sec.147-151 (rioting), specifically the "Communal/Religious"
+      sub-classification. National annual totals, time series.
+    sources: {primary: ncrb-crime}
+    geography_levels: [national]
+    religions: [all]
+    methodology_notes: |
+      NCRB Crime in India 2022, Table 1.2 (national, 2020-2022). Incident
+      counts only — no religion of victim/perpetrator in the published table.
+      Caveat: several states stopped recording 'communal' as a separate
+      crime category since ~2017, which deflates the national total over
+      time. Civil-society compilations (Documentation of the Oppressed,
+      India Hate Lab) typically report higher counts.
     comparison_baselines: []
     phase: 2
-    status: stub
+    status: defined
 
   - id: communal-incidents-civic
     name: Communal / hate incidents (civic-recorded)

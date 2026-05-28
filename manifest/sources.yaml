@@ -443,7 +443,12 @@ sources:
     runbook: docs/runbooks/ncrb-crime.md
     last_pulled: null
     next_expected: "2026-11-01"
-    targets: []
+    targets:
+      - target_id: cii-2022-book1
+        description: NCRB Crime in India 2022 Volume I (Book 1 — includes communal rioting tables)
+        url: https://www.ncrb.gov.in/uploads/nationalcrimerecordsbureau/custom/1701607577CrimeinIndia2022Book1.pdf
+        target_path: sources/ncrb-crime/cii-2022-book1.pdf
+        status: verified
 
   - id: rbi-minority-lending
     name: RBI Priority Sector Lending - Minority Concentration

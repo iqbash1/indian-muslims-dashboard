@@ -1,0 +1,11 @@
+{
+  "source_id": "ncrb-crime",
+  "target_id": "cii-2022-book1",
+  "url": "https://www.ncrb.gov.in/uploads/nationalcrimerecordsbureau/custom/1701607577CrimeinIndia2022Book1.pdf",
+  "pulled_at": "2026-05-28T00:41:07.358257+00:00",
+  "status_code": 200,
+  "content_type": "application/pdf",
+  "content_length": 25204515,
+  "sha256": "7c5ee3128b0b6bc7c068f986961eaf40bb383d9f241ff75ad3a38e4ab3c23e8d",
+  "pull_script_version": "0.1.0"
+}

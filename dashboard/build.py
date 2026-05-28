@@ -211,6 +211,7 @@ SCORECARD_SPEC = [
     ("Justice",      "prison-share",              "Prisoners (rate per 100k pop)",    "rate_per_100k", "hindu", False),
     ("Justice",      "undertrial-share",          "Undertrials (rate per 100k pop)",  "rate_per_100k", "hindu", False),
     ("Representation", "ls-share",                "Lok Sabha Muslim share (2024)",    "percent", None,    None),
+    ("Civic",        "communal-incidents-govt",   "Communal incidents (NCRB 2022)",   "count",   None,    None),
 ]
 MUSLIM_POP_SHARE = 14.23
 
@@ -241,6 +242,25 @@ def render_scorecard_rows() -> str:
                 f'<td>{cell("hindu")}</td>'
                 f'<td>{cell("all")}</td>'
                 f'<td class="{gap_class}">{html.escape(gap_str)}</td>'
+                f'</tr>'
+            )
+            continue
+
+        # Special case: communal-incidents-govt time series, show latest year, no religion comparison
+        if mid == "communal-incidents-govt":
+            data = load_metric(mid)
+            if not data:
+                continue
+            latest = max(data, key=lambda r: int(r["year"]))
+            val = int(float(latest["value"]))
+            year = latest["year"]
+            rows.append(
+                f'<tr>'
+                f'<td>{html.escape(cluster)}</td>'
+                f'<td>{html.escape(name)}</td>'
+                f'<td>{year}</td>'
+                f'<td colspan="3" style="text-align:left">{val:,} incidents (national aggregate)</td>'
+                f'<td class="gap-neutral">civil-society counts higher</td>'
                 f'</tr>'
             )
             continue
@@ -769,6 +789,27 @@ TEMPLATE = """<!DOCTYPE html>
   when conviction rates are similar).</p>
 </section>
 
+<h2 class="cluster-header">Civic — communal violence</h2>
+
+<!-- COMMUNAL INCIDENTS (GOVT) -->
+<section class="tile">
+  <div class="tile-head">
+    <h2>Communal/religious rioting incidents (NCRB)</h2>
+    <p class="source">canonical/communal-incidents-govt.csv · sources/ncrb-crime/cii-2022-book1.pdf (Tables 1.2 + 1A.4)</p>
+    <p class="data-current">Data current to · NCRB Crime in India 2022</p>
+  </div>
+  <div class="headline">{ci_headline}</div>
+  <p class="headline-caption">{ci_caption}</p>
+  <div class="chart-wrap" style="height:280px"><canvas id="ci-chart"></canvas></div>
+  <p class="methodology">National annual total of cases registered under "Communal/Religious" rioting
+  (IPC Sec.147-151 sub-classification). The 2020 spike (857) coincides with CAA-NRC protests and
+  the Delhi riots; the subsequent decline (378 → 272) is contested. Several states have stopped
+  recording "communal" as a separate crime category since ~2017, which deflates the national
+  total. Civil-society compilations (Documentation of the Oppressed, India Hate Lab) typically
+  report substantially higher counts. NCRB tables do not disclose religion of victim or
+  perpetrator — only incident counts.</p>
+</section>
+
 <h2 class="cluster-header">Education — Higher Ed (count)</h2>
 
 <!-- MUSLIM HIGHER ED ENROLMENT -->
@@ -940,6 +981,17 @@ new Chart(document.getElementById('wpr-chart'), {
     plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
 });
 
+new Chart(document.getElementById('ci-chart'), {
+  type: 'bar',
+  data: {
+    labels: {ci_chart_labels},
+    datasets: [{ label: 'Communal incidents (NCRB)', data: {ci_chart_values},
+      backgroundColor: 'rgba(123,29,34,0.85)' }],
+  },
+  options: { ...CFG_BASE,
+    plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+});
+
 new Chart(document.getElementById('ls-chart'), {
   type: 'bar',
   data: {
@@ -1027,10 +1079,24 @@ def build() -> None:
         "chart_labels": [r["year"] for r in ls_rows],
         "chart_values": [float(r["value"]) for r in ls_rows],
     }
+    # communal-incidents-govt time series tile
+    ci_rows = sorted(load_metric("communal-incidents-govt"), key=lambda r: int(r["year"]))
+    ci_latest = ci_rows[-1] if ci_rows else None
+    ci_data = {
+        "headline": f"{int(float(ci_latest['value'])):,}" if ci_latest else "—",
+        "headline_caption": (
+            f"Communal/religious rioting incidents recorded by NCRB nationally in "
+            f"{ci_latest['year']}. Time series: 857 (2020) → 378 (2021) → 272 (2022). "
+            f"The published decline is contested by civic compilations which report higher counts; "
+            f"several states have stopped recording 'communal' as a separate category since ~2017."
+        ),
+        "chart_labels": [r["year"] for r in ci_rows],
+        "chart_values": [int(float(r["value"])) for r in ci_rows],
+    }
     ahe = prep_muslim_higher_ed(load_metric("muslim-higher-ed-enrolment"))
 
     n_sources = 6
-    n_metrics = 16  # +district-concentration-top100, +ls-share
+    n_metrics = 17  # +communal-incidents-govt
     n_rows = (len(load_metric("pop-share")) + len(load_metric("lit-7plus"))
               + len(load_metric("sex-ratio")) + len(load_metric("imr"))
               + len(load_metric("inst-delivery")) + len(load_metric("women-anemia"))
@@ -1103,6 +1169,11 @@ def build() -> None:
         "{ls_caption}": ls_data["headline_caption"],
         "{ls_chart_labels}": json.dumps(ls_data["chart_labels"]),
         "{ls_chart_values}": json.dumps(ls_data["chart_values"]),
+        # communal incidents
+        "{ci_headline}": ci_data["headline"],
+        "{ci_caption}": ci_data["headline_caption"],
+        "{ci_chart_labels}": json.dumps(ci_data["chart_labels"]),
+        "{ci_chart_values}": json.dumps(ci_data["chart_values"]),
         # prison share
         "{ps2_headline}": ps2["headline"],
         "{ps2_caption}": ps2["headline_caption"],

@@ -121,10 +121,10 @@
 <div class="page">
 
 <h1>Indian Muslims — Living Conditions Dashboard</h1>
-<p class="tagline">Preview build · 2026-05-28 06:10</p>
+<p class="tagline">Preview build · 2026-05-28 06:14</p>
 
 <div class="status-bar">
-  <span><b>16</b> metrics live</span>
+  <span><b>17</b> metrics live</span>
   <span><b>6</b> sources archived</span>
   <span><b>954</b> canonical rows · all schema-valid</span>
   <span>Comparison baseline on every applicable tile</span>
@@ -153,6 +153,7 @@
     <tr><td>Justice</td><td>Prisoners (rate per 100k pop)</td><td>2022</td><td><b>108,968</b><br><span class="rate-sub">63.26 per 100k</span></td><td><b>384,522</b><br><span class="rate-sub">39.79 per 100k</span></td><td><b>540,148</b><br><span class="rate-sub">44.61 per 100k</span></td><td class="gap-bad">1.59× Hindu rate</td></tr>
     <tr><td>Justice</td><td>Undertrials (rate per 100k pop)</td><td>2022</td><td><b>83,968</b><br><span class="rate-sub">48.75 per 100k</span></td><td><b>283,372</b><br><span class="rate-sub">29.33 per 100k</span></td><td><b>401,419</b><br><span class="rate-sub">33.15 per 100k</span></td><td class="gap-bad">1.66× Hindu rate</td></tr>
     <tr><td>Representation</td><td>Lok Sabha Muslim share (2024)</td><td>2024</td><td>4.42%</td><td>—</td><td>—</td><td class="gap-bad">-9.81pp vs 14.23% pop</td></tr>
+    <tr><td>Civic</td><td>Communal incidents (NCRB 2022)</td><td>2022</td><td colspan="3" style="text-align:left">272 incidents (national aggregate)</td><td class="gap-neutral">civil-society counts higher</td></tr>
   </tbody></table>
   <p class="methodology">"Gap" is Muslim minus reference baseline (Hindu where available, else All).
   Red gap = Muslim outcome worse than reference; green = Muslim outcome better. For justice
@@ -458,6 +459,27 @@
   when conviction rates are similar).</p>
 </section>
 
+<h2 class="cluster-header">Civic — communal violence</h2>
+
+<!-- COMMUNAL INCIDENTS (GOVT) -->
+<section class="tile">
+  <div class="tile-head">
+    <h2>Communal/religious rioting incidents (NCRB)</h2>
+    <p class="source">canonical/communal-incidents-govt.csv · sources/ncrb-crime/cii-2022-book1.pdf (Tables 1.2 + 1A.4)</p>
+    <p class="data-current">Data current to · NCRB Crime in India 2022</p>
+  </div>
+  <div class="headline">272</div>
+  <p class="headline-caption">Communal/religious rioting incidents recorded by NCRB nationally in 2022. Time series: 857 (2020) → 378 (2021) → 272 (2022). The published decline is contested by civic compilations which report higher counts; several states have stopped recording 'communal' as a separate category since ~2017.</p>
+  <div class="chart-wrap" style="height:280px"><canvas id="ci-chart"></canvas></div>
+  <p class="methodology">National annual total of cases registered under "Communal/Religious" rioting
+  (IPC Sec.147-151 sub-classification). The 2020 spike (857) coincides with CAA-NRC protests and
+  the Delhi riots; the subsequent decline (378 → 272) is contested. Several states have stopped
+  recording "communal" as a separate crime category since ~2017, which deflates the national
+  total. Civil-society compilations (Documentation of the Oppressed, India Hate Lab) typically
+  report substantially higher counts. NCRB tables do not disclose religion of victim or
+  perpetrator — only incident counts.</p>
+</section>
+
 <h2 class="cluster-header">Education — Higher Ed (count)</h2>
 
 <!-- MUSLIM HIGHER ED ENROLMENT -->
@@ -521,7 +543,7 @@
 </section>
 
 <footer>
-  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-28 06:10.
+  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-28 06:14.
   Every number on this page traces L4 → L3 (canonical) → L2 (extracted) → L1 (source file)
   with SHA256 sidecar provenance. Re-run the builder after any canonical change:
   <code>python dashboard/build.py</code></p>
@@ -658,6 +680,17 @@ new Chart(document.getElementById('wpr-chart'), {
       backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] }],
   },
   options: { ...CFG_BASE, indexAxis: 'y',
+    plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+});
+
+new Chart(document.getElementById('ci-chart'), {
+  type: 'bar',
+  data: {
+    labels: ["2020", "2021", "2022"],
+    datasets: [{ label: 'Communal incidents (NCRB)', data: [857, 378, 272],
+      backgroundColor: 'rgba(123,29,34,0.85)' }],
+  },
+  options: { ...CFG_BASE,
     plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
 });
 
