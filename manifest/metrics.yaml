@@ -42,6 +42,13 @@ metrics:
     comparison_baselines: []
     phase: 1
     status: defined
+    display:
+      scorecard:
+        label: "Population share"
+        reference: null
+        unit_format: percent
+        higher_is_better: null
+        order: 10
 
   - id: urban-share
     name: Urban share of population
@@ -65,7 +72,14 @@ metrics:
     religions: [muslim, hindu, sc, st, all]
     comparison_baselines: [hindu, all]
     phase: 1
-    status: stub
+    status: defined
+    display:
+      scorecard:
+        label: "Sex ratio (F/1000M)"
+        reference: "hindu"
+        unit_format: females_per_1000_males
+        higher_is_better: true
+        order: 20
 
   - id: district-concentration-top100
     name: Share of Muslim population in top-100 concentration districts
@@ -88,6 +102,13 @@ metrics:
     comparison_baselines: []
     phase: 1
     status: defined
+    display:
+      scorecard:
+        label: "Top-100 district concentration"
+        reference: null
+        unit_format: percent
+        higher_is_better: null
+        order: 30
 
   # ----- Education (Phase 1) -----
   - id: lit-7plus
@@ -113,6 +134,13 @@ metrics:
     comparison_baselines: [hindu, sc, all]
     phase: 1
     status: defined
+    display:
+      scorecard:
+        label: "Literacy rate (7+)"
+        reference: "hindu"
+        unit_format: percent
+        higher_is_better: true
+        order: 40
 
   - id: mean-yrs-schooling
     name: Mean years of schooling (25+)
@@ -161,6 +189,13 @@ metrics:
     comparison_baselines: []
     phase: 1
     status: defined
+    display:
+      scorecard:
+        label: "Higher-ed enrolment (count)"
+        reference: null
+        unit_format: count
+        higher_is_better: null
+        order: 50
 
   # ----- Employment (Phase 1) -----
   - id: lfpr-15plus
@@ -181,6 +216,13 @@ metrics:
     comparison_baselines: [hindu, all]
     phase: 1
     status: defined
+    display:
+      scorecard:
+        label: "LFPR (15+)"
+        reference: "hindu"
+        unit_format: percent
+        higher_is_better: true
+        order: 60
 
   - id: wpr-15plus
     name: Worker Population Ratio (15+)
@@ -198,6 +240,13 @@ metrics:
     comparison_baselines: [hindu, all]
     phase: 1
     status: defined
+    display:
+      scorecard:
+        label: "WPR (15+)"
+        reference: "hindu"
+        unit_format: percent
+        higher_is_better: true
+        order: 70
 
   - id: salaried-share
     name: Share of workers in regular salaried employment
@@ -259,6 +308,13 @@ metrics:
     comparison_baselines: [hindu, all]
     phase: 1
     status: defined
+    display:
+      scorecard:
+        label: "Infant Mortality Rate"
+        reference: "hindu"
+        unit_format: per_1000_live_births
+        higher_is_better: false
+        order: 80
 
   - id: stunting-u5
     name: Stunting prevalence in children under 5
@@ -291,6 +347,13 @@ metrics:
     comparison_baselines: [hindu, all]
     phase: 1
     status: defined
+    display:
+      scorecard:
+        label: "Institutional delivery rate"
+        reference: "hindu"
+        unit_format: percent
+        higher_is_better: true
+        order: 90
 
   - id: women-anemia
     name: Anemia in women aged 15-49
@@ -312,6 +375,13 @@ metrics:
     comparison_baselines: [hindu, all]
     phase: 1
     status: defined
+    display:
+      scorecard:
+        label: "Anaemia in women (15-49)"
+        reference: "hindu"
+        unit_format: percent
+        higher_is_better: false
+        order: 100
 
   # ----- Housing & amenities (Phase 1) -----
   - id: pucca-housing
@@ -348,6 +418,13 @@ metrics:
     comparison_baselines: [hindu, all]
     phase: 1
     status: defined
+    display:
+      scorecard:
+        label: "Toilet facility access"
+        reference: "hindu"
+        unit_format: percent
+        higher_is_better: true
+        order: 110
 
   - id: clean-cooking-fuel
     name: Clean cooking fuel access
@@ -399,6 +476,14 @@ metrics:
     comparison_baselines: []
     phase: 2
     status: defined
+    display:
+      scorecard:
+        label: "Lok Sabha Muslim share (2024)"
+        reference: null
+        unit_format: percent
+        higher_is_better: null
+        order: 140
+        special_render: time_series_latest
 
   - id: mla-share
     name: Muslim share of state legislative assembly members
@@ -460,6 +545,14 @@ metrics:
     comparison_baselines: [hindu, all]
     phase: 2
     status: defined
+    display:
+      scorecard:
+        label: "Prisoners (rate per 100k pop)"
+        reference: "hindu"
+        unit_format: rate_per_100k
+        higher_is_better: false
+        order: 120
+        special_render: prison_rate
 
   - id: undertrial-rate-per-100k
     name: Undertrial population rate (per 100k of religious population)
@@ -481,6 +574,14 @@ metrics:
     comparison_baselines: [hindu, all]
     phase: 2
     status: defined
+    display:
+      scorecard:
+        label: "Undertrials (rate per 100k pop)"
+        reference: "hindu"
+        unit_format: rate_per_100k
+        higher_is_better: false
+        order: 130
+        special_render: undertrial_rate
 
   - id: undertrial-share
     name: Muslim share of undertrial prisoners
@@ -524,6 +625,14 @@ metrics:
     comparison_baselines: []
     phase: 2
     status: defined
+    display:
+      scorecard:
+        label: "Communal incidents (NCRB 2022)"
+        reference: null
+        unit_format: count
+        higher_is_better: null
+        order: 150
+        special_render: time_series_count
 
   - id: communal-incidents-civic
     name: Communal / hate incidents (civic-recorded)

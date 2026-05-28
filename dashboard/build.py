@@ -205,25 +205,72 @@ def compute_prison_rates() -> dict:
     return out
 
 
-SCORECARD_SPEC = [
-    # (cluster, metric_id, display_name, unit, reference_religion, higher_is_better)
-    ("Demographics", "pop-share",                 "Population share",                 "percent", None,    None),
-    ("Demographics", "sex-ratio",                 "Sex ratio (F/1000M)",              "females_per_1000_males", "hindu", True),
-    ("Demographics", "district-concentration-top100", "Top-100 district concentration", "percent", None,    None),
-    ("Education",    "lit-7plus",                 "Literacy rate (7+)",               "percent", "hindu", True),
-    ("Education",    "muslim-higher-ed-enrolment","Higher-ed enrolment (count)",      "count",   None,    None),
-    ("Employment",   "lfpr-15plus",               "LFPR (15+)",                       "percent", "hindu", True),
-    ("Employment",   "wpr-15plus",                "WPR (15+)",                        "percent", "hindu", True),
-    ("Health",       "imr",                       "Infant Mortality Rate",            "per_1000_live_births", "hindu", False),
-    ("Health",       "inst-delivery",             "Institutional delivery rate",      "percent", "hindu", True),
-    ("Health",       "women-anemia",              "Anaemia in women (15-49)",         "percent", "hindu", False),
-    ("Housing",      "improved-sanitation",       "Toilet facility access",           "percent", "hindu", True),
-    ("Justice",      "prison-share",              "Prisoners (rate per 100k pop)",    "rate_per_100k", "hindu", False),
-    ("Justice",      "undertrial-share",          "Undertrials (rate per 100k pop)",  "rate_per_100k", "hindu", False),
-    ("Representation", "ls-share",                "Lok Sabha Muslim share (2024)",    "percent", None,    None),
-    ("Civic",        "communal-incidents-govt",   "Communal incidents (NCRB 2022)",   "count",   None,    None),
-]
 MUSLIM_POP_SHARE = 14.23
+
+# Map metric cluster (from metrics.yaml cluster field) to scorecard cluster display name.
+# (Most just title-case the cluster id; civic/justice get explicit overrides for the dashboard.)
+CLUSTER_DISPLAY = {
+    "demographics": "Demographics",
+    "education": "Education",
+    "employment": "Employment",
+    "income": "Income",
+    "health": "Health",
+    "housing": "Housing",
+    "finance": "Finance",
+    "representation": "Representation",
+    "justice": "Justice",
+    "civic": "Civic",
+}
+
+
+def load_scorecard_spec() -> list[tuple]:
+    """Read display.scorecard blocks from manifest/metrics.yaml and build the
+    SCORECARD_SPEC tuple list. SSOT discipline: scorecard config lives in the
+    manifest, not hardcoded in dashboard code.
+
+    Returns list of (cluster, metric_id, label, unit_format, reference, higher_is_better, special_render).
+    """
+    import yaml as _yaml
+    with (REPO_ROOT / "manifest" / "metrics.yaml").open() as f:
+        data = _yaml.safe_load(f)
+    specs = []
+    for m in data["metrics"]:
+        disp = m.get("display", {}).get("scorecard")
+        if not disp:
+            continue
+        if disp.get("include", True) is False:
+            continue
+        # For prison-share / undertrial-share, scorecard pulls from prison-rate-per-100k
+        # / undertrial-rate-per-100k metrics now — keep them out of the manifest-driven
+        # scorecard if they don't have display blocks.
+        # special_render is honored for ls-share, communal-incidents-govt, prison/undertrial
+        special = disp.get("special_render")
+        # Backward-compat: prison-rate-per-100k -> "prison-share" alias (renderer
+        # in render_scorecard_rows still uses these IDs).
+        mid = m["id"]
+        if special == "prison_rate":
+            mid = "prison-share"  # render_scorecard_rows special-cases this id
+        elif special == "undertrial_rate":
+            mid = "undertrial-share"
+        specs.append((
+            CLUSTER_DISPLAY.get(m["cluster"], m["cluster"].capitalize()),
+            mid,
+            disp["label"],
+            disp["unit_format"],
+            disp.get("reference"),
+            disp.get("higher_is_better"),
+        ))
+    specs.sort(key=lambda s: next(
+        (d["display"]["scorecard"]["order"] for d in data["metrics"]
+         if d["id"] == s[1] or (d["id"] == "prison-rate-per-100k" and s[1] == "prison-share")
+         or (d["id"] == "undertrial-rate-per-100k" and s[1] == "undertrial-share")
+         if d.get("display", {}).get("scorecard")),
+        9999,
+    ))
+    return specs
+
+
+SCORECARD_SPEC = load_scorecard_spec()
 
 
 def render_scorecard_rows() -> str:

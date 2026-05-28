@@ -24,6 +24,25 @@
     "break_notes": {"type": ["string", "null"]},
     "comparison_baselines": {"type": "array", "items": {"type": "string"}},
     "phase": {"enum": [1, 2]},
-    "status": {"enum": ["stub", "defined", "data-loaded", "live"]}
+    "status": {"enum": ["stub", "defined", "data-loaded", "live"]},
+    "display": {
+      "type": "object",
+      "description": "How this metric is presented on the dashboard. Optional; metrics without a display block are not shown in the scorecard.",
+      "properties": {
+        "scorecard": {
+          "type": "object",
+          "required": ["label", "order"],
+          "properties": {
+            "include": {"type": "boolean", "default": true},
+            "label": {"type": "string", "description": "Short name shown in scorecard table"},
+            "reference": {"type": ["string", "null"], "description": "Religion key for gap computation (e.g. 'hindu'). null if no comparison."},
+            "unit_format": {"enum": ["percent", "per_1000_live_births", "females_per_1000_males", "count", "rate_per_100k", "per_100k_population"]},
+            "higher_is_better": {"type": ["boolean", "null"]},
+            "order": {"type": "integer", "description": "Sort order in scorecard"},
+            "special_render": {"enum": ["prison_rate", "undertrial_rate", "time_series_latest", "time_series_count"], "description": "Optional special-case rendering"}
+          }
+        }
+      }
+    }
   }
 }
