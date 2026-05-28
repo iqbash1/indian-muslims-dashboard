@@ -21,7 +21,7 @@ import pathlib
 REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent
 CANONICAL_DIR = REPO_ROOT / "canonical"
 MANIFEST = REPO_ROOT / "manifest" / "metrics.yaml"
-OUT_PATH = REPO_ROOT / "dashboard" / "preview" / "index.html"
+OUT_PATH = REPO_ROOT / "docs" / "index.html"
 
 
 def load_metric(name: str) -> list[dict]:

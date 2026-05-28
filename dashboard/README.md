@@ -6,7 +6,7 @@ Single static HTML preview built from `canonical/*.csv`. Open `preview/index.htm
 
 ```bash
 python dashboard/build.py
-open dashboard/preview/index.html
+open docs/index.html
 ```
 
 The builder reads every `canonical/*.csv` and renders one tile per metric with:

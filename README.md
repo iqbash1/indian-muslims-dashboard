@@ -6,7 +6,7 @@ Loosely modeled on the Hawaii state dashboard pattern: small anchor set per clus
 
 ## The scorecard (current)
 
-11 metrics across 6 sources, all schema-validated, all values spot-checked against published.
+17 metrics across 6 sources, all schema-validated, all values spot-checked against published. *(Snapshot below shows the first 11; the live dashboard has the full set including representation, civic, and housing clusters.)*
 
 | Cluster | Metric | Year | Muslim | Hindu | Gap |
 |---|---|---|---|---|---|
@@ -26,14 +26,14 @@ Loosely modeled on the Hawaii state dashboard pattern: small anchor set per clus
 
 ## See the dashboard
 
-Open `dashboard/preview/index.html` in any browser. No server required, no build step, all charts via Chart.js CDN.
+Open `docs/index.html` in any browser. No server required, no build step, all charts via Chart.js CDN.
 
 ```bash
 python dashboard/build.py
-open dashboard/preview/index.html
+open docs/index.html
 ```
 
-If publishing to GitHub Pages, point Pages at `/dashboard/preview/` on `main`. A `.nojekyll` file is included so the static HTML is served as-is.
+If publishing to GitHub Pages, point Pages at `/docs/` on `main`. A `.nojekyll` file is included so the static HTML is served as-is.
 
 ## Architecture
 
@@ -44,7 +44,7 @@ Four-layer data flow. Every dashboard number traces L4 → L3 → L2 → L1 sour
 | L1 Raw archive | `sources/` | Immutable | Every external file ever pulled, with SHA256 + pull metadata |
 | L2 Structured extraction | `extracted/` | Regenerable | Long-format CSVs parsed from L1 |
 | L3 Canonical metric series | `canonical/` | Regenerable | One CSV per metric — the dashboard's data contract |
-| L4 Dashboard cache | `dashboard/preview/` | Regenerable | Static HTML built from L3 |
+| L4 Dashboard cache | `docs/` | Regenerable | Static HTML built from L3 |
 
 The dashboard never queries an external source live and never reads L1/L2 directly. Methodology breaks (e.g., NFHS-5 → NFHS-6 definitional changes) are recorded as `break_flag` on canonical rows.
 
@@ -80,8 +80,9 @@ manifest/     sources.yaml + metrics.yaml + JSON Schemas
 ingest/       Manifest-driven pull script
 transform/    L1→L2 extractors and L2→L3 canonicalizers
 validate/     Schema validation for manifests and canonical CSVs
-docs/         Per-source runbooks, refresh schedule, RTI tracker, audit log
-dashboard/    L4 static HTML preview build
+dashboard/    L4 builder (build.py); outputs to docs/
+docs/         Published site: index.html (dashboard), canonical/ (CSV copies),
+              runbooks/ (per-source methodology), metrics/, audit-log.md
 ```
 
 ## Quick start
@@ -95,7 +96,7 @@ python3 -m venv .venv
 .venv/bin/python ingest/pull.py --list
 .venv/bin/python validate/validate.py
 .venv/bin/python dashboard/build.py
-open dashboard/preview/index.html
+open docs/index.html
 ```
 
 ## Adding a new metric
@@ -120,7 +121,7 @@ Pure mechanical extension — pattern is proven:
 
 ## Status
 
-11 metrics live, all schema-valid, ~14 commits on `main`. The architecture is battle-tested across 4 source shapes: spreadsheet, dual-column PDF tables, single-column religion sections, and tabular state-row PDFs.
+17 metrics live, all schema-valid, ~25 commits on `main`. The architecture is battle-tested across 4 source shapes: spreadsheet, dual-column PDF tables, single-column religion sections, and tabular state-row PDFs.
 
 See `docs/audit-log.md` for the planned annual audit ritual and `docs/refresh-schedule.md` for the per-source cadence.
 
