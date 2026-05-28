@@ -319,16 +319,25 @@ metrics:
     status: stub
 
   - id: improved-sanitation
-    name: Improved sanitation access
+    name: Toilet facility access (households)
     cluster: housing
     unit: percent
     higher_is_better: true
+    definition: |
+      Percentage of households with access to a toilet facility (any type).
+      Note: not strictly "improved sanitation" per the JMP definition; the
+      NFHS-5 published table aggregates flush, pit, and other toilet types.
     sources: {primary: nfhs-5}
-    geography_levels: [national, state]
-    religions: [muslim, hindu, sc, st, all]
+    geography_levels: [national]
+    religions: [muslim, hindu, all]
+    methodology_notes: |
+      NFHS-5 Table 2.4 (page 74). Total residence, national. Year=2020 =
+      NFHS-5 fieldwork midpoint. Muslim toilet access (90.3%) runs *above*
+      Hindu (80.7%) — partly because urban-Muslim share is higher than
+      urban-Hindu share, and urban access is uniformly higher.
     comparison_baselines: [hindu, all]
     phase: 1
-    status: stub
+    status: defined
 
   - id: clean-cooking-fuel
     name: Clean cooking fuel access

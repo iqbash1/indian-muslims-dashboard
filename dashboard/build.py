@@ -206,6 +206,7 @@ SCORECARD_SPEC = [
     ("Health",       "imr",                       "Infant Mortality Rate",            "per_1000_live_births", "hindu", False),
     ("Health",       "inst-delivery",             "Institutional delivery rate",      "percent", "hindu", True),
     ("Health",       "women-anemia",              "Anaemia in women (15-49)",         "percent", "hindu", False),
+    ("Housing",      "improved-sanitation",       "Toilet facility access",           "percent", "hindu", True),
     ("Justice",      "prison-share",              "Prisoners (rate per 100k pop)",    "rate_per_100k", "hindu", False),
     ("Justice",      "undertrial-share",          "Undertrials (rate per 100k pop)",  "rate_per_100k", "hindu", False),
 ]
@@ -632,6 +633,26 @@ TEMPLATE = """<!DOCTYPE html>
   treat as a methodology break when comparing across rounds.</p>
 </section>
 
+<h2 class="cluster-header">Housing</h2>
+
+<!-- IMPROVED SANITATION -->
+<section class="tile">
+  <div class="tile-head">
+    <h2>Toilet facility access (households)</h2>
+    <p class="source">canonical/improved-sanitation.csv · sources/nfhs-5/reports/india-report-fr375.pdf (Table 2.4, p. 74)</p>
+    <p class="data-current">Data current to · NFHS-5 (2019-21)</p>
+  </div>
+  <div class="headline">{is_headline}</div>
+  <p class="headline-caption">{is_caption}</p>
+  <div class="chart-wrap" style="height:280px"><canvas id="is-chart"></canvas></div>
+  <p class="methodology">Percentage of households with access to a toilet facility (any type —
+  not strictly "improved" per JMP definition). Muslim toilet access (90.3%) runs <b>above
+  Hindu (80.7%)</b> — primarily a composition effect: urban share of Muslim population is
+  higher than urban share of Hindu population, and urban toilet access is uniformly higher
+  than rural. Reading: this is a paradox metric like IMR / sex-ratio — Muslim infrastructure
+  access is not uniformly worse, and the headline number depends heavily on urban-rural mix.</p>
+</section>
+
 <h2 class="cluster-header">Employment</h2>
 
 <!-- LFPR 15+ -->
@@ -817,6 +838,17 @@ new Chart(document.getElementById('imr-chart'), {
     plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
 });
 
+new Chart(document.getElementById('is-chart'), {
+  type: 'bar',
+  data: {
+    labels: {is_chart_labels},
+    datasets: [{ label: 'Toilet access (%)', data: {is_chart_values},
+      backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] }],
+  },
+  options: { ...CFG_BASE, indexAxis: 'y',
+    plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+});
+
 new Chart(document.getElementById('id-chart'), {
   type: 'bar',
   data: {
@@ -918,6 +950,7 @@ def build() -> None:
     imr = prep_national_by_religion(load_metric("imr"), "per_1000_live_births")
     id_ = prep_national_by_religion(load_metric("inst-delivery"), "percent")
     wa = prep_national_by_religion(load_metric("women-anemia"), "percent")
+    is_ = prep_national_by_religion(load_metric("improved-sanitation"), "percent")
     lfpr = prep_national_by_religion(load_metric("lfpr-15plus"), "percent")
     wpr = prep_national_by_religion(load_metric("wpr-15plus"), "percent")
     ps2 = prep_prison_rate("prison")
@@ -925,12 +958,14 @@ def build() -> None:
     ahe = prep_muslim_higher_ed(load_metric("muslim-higher-ed-enrolment"))
 
     n_sources = 6
-    n_metrics = 11
+    n_metrics = 14  # 11 from before + prison-rate-per-100k + undertrial-rate-per-100k + improved-sanitation
     n_rows = (len(load_metric("pop-share")) + len(load_metric("lit-7plus"))
               + len(load_metric("sex-ratio")) + len(load_metric("imr"))
               + len(load_metric("inst-delivery")) + len(load_metric("women-anemia"))
+              + len(load_metric("improved-sanitation"))
               + len(load_metric("lfpr-15plus")) + len(load_metric("wpr-15plus"))
               + len(load_metric("prison-share")) + len(load_metric("undertrial-share"))
+              + len(load_metric("prison-rate-per-100k")) + len(load_metric("undertrial-rate-per-100k"))
               + len(load_metric("muslim-higher-ed-enrolment")))
 
     substitutions = {
@@ -971,6 +1006,11 @@ def build() -> None:
         "{id_caption}": id_["headline_caption"],
         "{id_chart_labels}": json.dumps(id_["chart_labels"]),
         "{id_chart_values}": json.dumps(id_["chart_values"]),
+        # improved sanitation (toilet access)
+        "{is_headline}": is_["headline"],
+        "{is_caption}": is_["headline_caption"],
+        "{is_chart_labels}": json.dumps(is_["chart_labels"]),
+        "{is_chart_values}": json.dumps(is_["chart_values"]),
         # women anaemia
         "{wa_headline}": wa["headline"],
         "{wa_caption}": wa["headline_caption"],
