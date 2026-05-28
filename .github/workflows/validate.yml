@@ -1,0 +1,35 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # LFS files aren't needed for validation (validate.py only reads
+          # text manifests + canonical CSVs, both regular git).
+          lfs: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Validate manifests + canonical CSVs against JSON schemas
+        run: python validate/validate.py
+
+      - name: Check source refresh cadence
+        run: python validate/check_refresh.py
+        # This step is informational only; non-zero exit doesn't fail the workflow.
+        continue-on-error: true
