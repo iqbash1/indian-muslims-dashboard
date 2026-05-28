@@ -138,7 +138,7 @@
 <div class="page">
 
 <h1>Indian Muslims — Living Conditions Dashboard</h1>
-<p class="tagline">Built 2026-05-28 08:05 · <a href="https://github.com/iqbash1/indian-muslims-dashboard">source on GitHub</a></p>
+<p class="tagline">Built 2026-05-29 05:10 · <a href="https://github.com/iqbash1/indian-muslims-dashboard">source on GitHub</a></p>
 
 <section class="intro">
   <p>A scorecard of living-conditions indicators for India's Muslim population, with
@@ -153,7 +153,7 @@
 </section>
 
 <div class="status-bar">
-  <span><b>17</b> metrics live</span>
+  <span><b>18</b> metrics live</span>
   <span><b>6</b> sources archived</span>
   <span><b>954</b> canonical rows · all schema-valid</span>
   <span>Comparison baseline on every applicable tile</span>
@@ -717,7 +717,7 @@
 </section>
 
 <footer>
-  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-28 08:05.
+  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-29 05:10.
   Every number on this page traces L4 → L3 (canonical) → L2 (extracted) → L1 (source file)
   with SHA256 sidecar provenance. Re-run the builder after any canonical change:
   <code>python dashboard/build.py</code></p>
@@ -762,18 +762,38 @@
   });
 })();
 
-const CFG_BASE = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: {
-    legend: { position: 'top', labels: { font: { size: 12 } } },
-    tooltip: { titleFont: { size: 12 }, bodyFont: { size: 12 } },
-  },
-  scales: {
-    y: { ticks: { font: { size: 11 } } },
-    x: { ticks: { font: { size: 11 }, maxRotation: 60, minRotation: 60 } },
-  },
-};
+// Returns a FRESH config object on every call. Chart.js mutates the option
+// objects it is given (it bakes resolved scale `type` into scales.x/scales.y).
+// A shared const would let the first vertical chart pin x:'category'/y:'linear',
+// which then overrides indexAxis:'y' on later horizontal charts and blanks them.
+function cfgBase() {
+  return {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'top', labels: { font: { size: 12 } } },
+      tooltip: { titleFont: { size: 12 }, bodyFont: { size: 12 } },
+    },
+    scales: {
+      // Value axis does not force a zero baseline; it hugs the data range so
+      // small gaps between groups stay legible. `grace` keeps bars off the edges.
+      y: { beginAtZero: false, grace: '5%', ticks: { font: { size: 11 } } },
+      x: { ticks: { font: { size: 11 }, maxRotation: 60, minRotation: 60 } },
+    },
+  };
+}
+
+// Muslim/Hindu/All horizontal comparison tiles. Value axis is x and does NOT
+// force a zero baseline — the axis hugs the data range so the (often small) gap
+// between groups is legible. A small `grace` keeps the shortest bar a visible
+// sliver instead of zero-width. Category axis is y. (Own fresh config per call.)
+function hCompare() {
+  const c = cfgBase();
+  c.indexAxis = 'y';
+  c.plugins.legend = { display: false };
+  c.scales.x = { beginAtZero: false, grace: '5%', ticks: { font: { size: 11 } } };
+  return c;
+}
 
 new Chart(document.getElementById('ps-chart'), {
   type: 'bar',
@@ -784,9 +804,9 @@ new Chart(document.getElementById('ps-chart'), {
     ],
   },
   options: {
-    ...CFG_BASE,
+    ...cfgBase(),
     plugins: {
-      ...CFG_BASE.plugins,
+      ...cfgBase().plugins,
       annotation: {},
       legend: { display: false },
     },
@@ -802,7 +822,7 @@ new Chart(document.getElementById('lit-chart'), {
       { label: 'Hindu',  data: [77.09, 77.24, 62.88, 79.95, 69.74, 79.09, 80.06, 77.67, 66.08, 81.23, 67.67, 83.13, 70.11, 82.01, 79.14, 66.11, 85.17, 68.64, 87.26, 81.97, 91.78, 74.36, 73.17, 77.49, 88.16, 81.79, 69.8, 88.71, 87.08, 75.62, 78.83, 86.98, 85.1, 93.94, 93.51],  backgroundColor: 'rgba(183,106,43,0.85)' },
     ],
   },
-  options: CFG_BASE,
+  options: cfgBase(),
 });
 
 new Chart(document.getElementById('sr-chart'), {
@@ -815,10 +835,10 @@ new Chart(document.getElementById('sr-chart'), {
     ],
   },
   options: {
-    ...CFG_BASE,
+    ...cfgBase(),
     scales: {
-      ...CFG_BASE.scales,
-      y: { ...CFG_BASE.scales.y, suggestedMin: 800, suggestedMax: 1100 },
+      ...cfgBase().scales,
+      y: { ...cfgBase().scales.y, suggestedMin: 800, suggestedMax: 1100 },
     },
   },
 });
@@ -832,8 +852,7 @@ new Chart(document.getElementById('imr-chart'), {
         backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] },
     ],
   },
-  options: { ...CFG_BASE, indexAxis: 'y',
-    plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+  options: hCompare(),
 });
 
 new Chart(document.getElementById('is-chart'), {
@@ -843,8 +862,7 @@ new Chart(document.getElementById('is-chart'), {
     datasets: [{ label: 'Toilet access (%)', data: [90.3, 80.7, 82.5],
       backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] }],
   },
-  options: { ...CFG_BASE, indexAxis: 'y',
-    plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+  options: hCompare(),
 });
 
 new Chart(document.getElementById('id-chart'), {
@@ -854,8 +872,7 @@ new Chart(document.getElementById('id-chart'), {
     datasets: [{ label: 'Institutional delivery (%)', data: [84.3, 89.5, 88.58],
       backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] }],
   },
-  options: { ...CFG_BASE, indexAxis: 'y',
-    plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+  options: hCompare(),
 });
 
 new Chart(document.getElementById('wa-chart'), {
@@ -867,8 +884,7 @@ new Chart(document.getElementById('wa-chart'), {
         backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] },
     ],
   },
-  options: { ...CFG_BASE, indexAxis: 'y',
-    plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+  options: hCompare(),
 });
 
 new Chart(document.getElementById('ss-chart'), {
@@ -878,8 +894,7 @@ new Chart(document.getElementById('ss-chart'), {
     datasets: [{ label: 'Regular salaried share (%)', data: [18.0, 21.9, 21.7],
       backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] }],
   },
-  options: { ...CFG_BASE, indexAxis: 'y',
-    plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+  options: hCompare(),
 });
 
 new Chart(document.getElementById('lfpr-chart'), {
@@ -889,8 +904,7 @@ new Chart(document.getElementById('lfpr-chart'), {
     datasets: [{ label: 'LFPR 15+ (%)', data: [55.0, 60.9, 60.1],
       backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] }],
   },
-  options: { ...CFG_BASE, indexAxis: 'y',
-    plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+  options: hCompare(),
 });
 
 new Chart(document.getElementById('wpr-chart'), {
@@ -900,8 +914,7 @@ new Chart(document.getElementById('wpr-chart'), {
     datasets: [{ label: 'WPR 15+ (%)', data: [53.2, 59.1, 58.2],
       backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] }],
   },
-  options: { ...CFG_BASE, indexAxis: 'y',
-    plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+  options: hCompare(),
 });
 
 new Chart(document.getElementById('mla-chart'), {
@@ -911,8 +924,8 @@ new Chart(document.getElementById('mla-chart'), {
     datasets: [{ label: 'Muslim share of state assembly (%)', data: [25.0, 13.65, 5.88, 5.56, 3.47, 3.0, 0.87, 0.0],
       backgroundColor: 'rgba(43,108,176,0.85)' }],
   },
-  options: { ...CFG_BASE,
-    plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+  options: { ...cfgBase(),
+    plugins: { ...cfgBase().plugins, legend: { display: false } } },
 });
 
 new Chart(document.getElementById('cic-chart'), {
@@ -922,8 +935,8 @@ new Chart(document.getElementById('cic-chart'), {
     datasets: [{ label: 'Anti-Muslim hate speech events (IHL)', data: [668, 1165],
       backgroundColor: 'rgba(123,29,34,0.85)' }],
   },
-  options: { ...CFG_BASE,
-    plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+  options: { ...cfgBase(),
+    plugins: { ...cfgBase().plugins, legend: { display: false } } },
 });
 
 new Chart(document.getElementById('ci-chart'), {
@@ -933,8 +946,8 @@ new Chart(document.getElementById('ci-chart'), {
     datasets: [{ label: 'Communal incidents (NCRB)', data: [857, 378, 272],
       backgroundColor: 'rgba(123,29,34,0.85)' }],
   },
-  options: { ...CFG_BASE,
-    plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+  options: { ...cfgBase(),
+    plugins: { ...cfgBase().plugins, legend: { display: false } } },
 });
 
 new Chart(document.getElementById('ls-chart'), {
@@ -945,9 +958,9 @@ new Chart(document.getElementById('ls-chart'), {
       { label: 'Muslim share of Lok Sabha (%)', data: [5.16, 4.05, 4.97, 4.42], backgroundColor: 'rgba(43,108,176,0.85)' },
     ],
   },
-  options: { ...CFG_BASE,
-    plugins: { ...CFG_BASE.plugins, legend: { display: false } },
-    scales: { ...CFG_BASE.scales, y: { ...CFG_BASE.scales.y, suggestedMin: 0, suggestedMax: 16,
+  options: { ...cfgBase(),
+    plugins: { ...cfgBase().plugins, legend: { display: false } },
+    scales: { ...cfgBase().scales, y: { ...cfgBase().scales.y, suggestedMin: 0, suggestedMax: 16,
       ticks: { font: { size: 11 }, callback: function(v) { return v + '%'; } } } } },
 });
 
@@ -956,10 +969,9 @@ new Chart(document.getElementById('ps2-chart'), {
   data: {
     labels: ["Muslim", "Hindu", "All"],
     datasets: [{ label: 'Prison share (%)', data: [63.26, 39.79, 44.61],
-      backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)'] }],
+      backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] }],
   },
-  options: { ...CFG_BASE, indexAxis: 'y',
-    plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+  options: hCompare(),
 });
 
 new Chart(document.getElementById('us-chart'), {
@@ -967,10 +979,9 @@ new Chart(document.getElementById('us-chart'), {
   data: {
     labels: ["Muslim", "Hindu", "All"],
     datasets: [{ label: 'Undertrial share (%)', data: [48.75, 29.33, 33.15],
-      backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)'] }],
+      backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] }],
   },
-  options: { ...CFG_BASE, indexAxis: 'y',
-    plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+  options: hCompare(),
 });
 
 new Chart(document.getElementById('ahe-chart'), {
@@ -982,7 +993,7 @@ new Chart(document.getElementById('ahe-chart'), {
          backgroundColor: 'rgba(123,29,34,0.85)' },
     ],
   },
-  options: { ...CFG_BASE, plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+  options: { ...cfgBase(), plugins: { ...cfgBase().plugins, legend: { display: false } } },
 });
 </script>
 </body>
