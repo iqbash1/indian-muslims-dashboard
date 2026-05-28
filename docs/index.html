@@ -138,7 +138,7 @@
 <div class="page">
 
 <h1>Indian Muslims — Living Conditions Dashboard</h1>
-<p class="tagline">Built 2026-05-28 07:59 · <a href="https://github.com/iqbash1/indian-muslims-dashboard">source on GitHub</a></p>
+<p class="tagline">Built 2026-05-28 08:01 · <a href="https://github.com/iqbash1/indian-muslims-dashboard">source on GitHub</a></p>
 
 <section class="intro">
   <p>A scorecard of living-conditions indicators for India's Muslim population, with
@@ -181,6 +181,7 @@
     <tr><td>Education</td><td>Higher-ed enrolment (count)</td><td>2021</td><td>2,108,033</td><td>—</td><td>—</td><td class="gap-neutral">n/a (no Hindu count in source)</td></tr>
     <tr><td>Employment</td><td>LFPR (15+)</td><td>2023</td><td>55.00%</td><td>60.90%</td><td>60.10%</td><td class="gap-bad">-5.90pp</td></tr>
     <tr><td>Employment</td><td>WPR (15+)</td><td>2023</td><td>53.20%</td><td>59.10%</td><td>58.20%</td><td class="gap-bad">-5.90pp</td></tr>
+    <tr><td>Employment</td><td>Regular salaried share</td><td>2023</td><td>18.00%</td><td>21.90%</td><td>21.70%</td><td class="gap-bad">-3.90pp</td></tr>
     <tr><td>Health</td><td>Infant Mortality Rate</td><td>2020</td><td>33.0</td><td>35.4</td><td>34.7</td><td class="gap-good">-2.37</td></tr>
     <tr><td>Health</td><td>Institutional delivery rate</td><td>2020</td><td>84.30%</td><td>89.50%</td><td>88.58%</td><td class="gap-bad">-5.20pp</td></tr>
     <tr><td>Health</td><td>Anaemia in women (15-49)</td><td>2020</td><td>55.60%</td><td>57.40%</td><td>57.00%</td><td class="gap-good">-1.80pp</td></tr>
@@ -370,6 +371,23 @@
       <tr><td>Kerala</td><td>93.32%</td><td>93.51%</td><td>94.01%</td><td>+0.19pp</td></tr>
     </tbody></table>
   </details>
+</section>
+
+<!-- SALARIED SHARE -->
+<section class="tile">
+  <div class="tile-head">
+    <h2>Regular salaried-employment share (15+)</h2>
+    <p class="source"><a class="csv-link" href="canonical/salaried-share.csv">canonical/salaried-share.csv</a> · sources/plfs/annual/plfs-annual-report-2023-24.pdf (Table 49, pp. 401-402)</p>
+    <p class="data-current">Data current to · PLFS 2023-24</p>
+  </div>
+  <div class="headline">18.00%</div>
+  <p class="headline-caption">All-India Muslim, NFHS-5. Hindu: 21.90%, All: 21.70%</p>
+  <div class="chart-wrap" style="height:280px"><canvas id="ss-chart"></canvas></div>
+  <p class="methodology">Percentage of workers in 'regular wage/salary' employment, vs self-employed
+  or casual labour. Muslims are <b>over-represented in self-employment</b> (62.2% vs Hindu 58.3%)
+  and <b>under-represented in formal salaried work</b> (18.0% vs Hindu 21.9%) — the classic
+  Sachar-era finding on labor-market segregation. Self-employment in this context is heavily
+  small-shop, artisanal, and informal-sector — not entrepreneurship.</p>
 </section>
 
 <h2 class="cluster-header">Health</h2>
@@ -680,7 +698,7 @@
 </section>
 
 <footer>
-  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-28 07:59.
+  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-28 08:01.
   Every number on this page traces L4 → L3 (canonical) → L2 (extracted) → L1 (source file)
   with SHA256 sidecar provenance. Re-run the builder after any canonical change:
   <code>python dashboard/build.py</code></p>
@@ -829,6 +847,17 @@ new Chart(document.getElementById('wa-chart'), {
       { label: 'Any anaemia (%)', data: [55.6, 57.4, 57.0],
         backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] },
     ],
+  },
+  options: { ...CFG_BASE, indexAxis: 'y',
+    plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+});
+
+new Chart(document.getElementById('ss-chart'), {
+  type: 'bar',
+  data: {
+    labels: ["Muslim", "Hindu", "All"],
+    datasets: [{ label: 'Regular salaried share (%)', data: [18.0, 21.9, 21.7],
+      backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] }],
   },
   options: { ...CFG_BASE, indexAxis: 'y',
     plugins: { ...CFG_BASE.plugins, legend: { display: false } } },

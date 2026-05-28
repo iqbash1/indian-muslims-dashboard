@@ -253,12 +253,27 @@ metrics:
     cluster: employment
     unit: percent
     higher_is_better: true
+    definition: |
+      Percentage of workers (usual status, ps+ss) employed in regular
+      wage/salary positions (as opposed to self-employed or casual labour).
     sources: {primary: plfs}
-    geography_levels: [national, state]
-    religions: [muslim, hindu, sc, st, all]
+    geography_levels: [national]
+    religions: [muslim, hindu, all]
+    methodology_notes: |
+      PLFS 2023-24 Table 49 (pages 401-402). Rural+urban person-level.
+      Muslims disproportionately self-employed (62.2% vs Hindu 58.3%) and
+      under-represented in formal salaried work — the classic Sachar-era
+      finding on labor-market segregation.
     comparison_baselines: [hindu, all]
     phase: 1
-    status: stub
+    status: defined
+    display:
+      scorecard:
+        label: "Regular salaried share"
+        reference: "hindu"
+        unit_format: percent
+        higher_is_better: true
+        order: 75
 
   # ----- Income / consumption / poverty (Phase 1) -----
   - id: mpce

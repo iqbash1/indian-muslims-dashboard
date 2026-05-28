@@ -711,6 +711,23 @@ TEMPLATE = """<!DOCTYPE html>
   </details>
 </section>
 
+<!-- SALARIED SHARE -->
+<section class="tile">
+  <div class="tile-head">
+    <h2>Regular salaried-employment share (15+)</h2>
+    <p class="source">canonical/salaried-share.csv · sources/plfs/annual/plfs-annual-report-2023-24.pdf (Table 49, pp. 401-402)</p>
+    <p class="data-current">Data current to · PLFS 2023-24</p>
+  </div>
+  <div class="headline">{ss_headline}</div>
+  <p class="headline-caption">{ss_caption}</p>
+  <div class="chart-wrap" style="height:280px"><canvas id="ss-chart"></canvas></div>
+  <p class="methodology">Percentage of workers in 'regular wage/salary' employment, vs self-employed
+  or casual labour. Muslims are <b>over-represented in self-employment</b> (62.2% vs Hindu 58.3%)
+  and <b>under-represented in formal salaried work</b> (18.0% vs Hindu 21.9%) — the classic
+  Sachar-era finding on labor-market segregation. Self-employment in this context is heavily
+  small-shop, artisanal, and informal-sector — not entrepreneurship.</p>
+</section>
+
 <h2 class="cluster-header">Health</h2>
 
 <!-- (sex-ratio remains in Demographics cluster — reordering deferred to keep this diff small) -->
@@ -1127,6 +1144,17 @@ new Chart(document.getElementById('wa-chart'), {
     plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
 });
 
+new Chart(document.getElementById('ss-chart'), {
+  type: 'bar',
+  data: {
+    labels: {ss_chart_labels},
+    datasets: [{ label: 'Regular salaried share (%)', data: {ss_chart_values},
+      backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] }],
+  },
+  options: { ...CFG_BASE, indexAxis: 'y',
+    plugins: { ...CFG_BASE.plugins, legend: { display: false } } },
+});
+
 new Chart(document.getElementById('lfpr-chart'), {
   type: 'bar',
   data: {
@@ -1243,6 +1271,7 @@ def build() -> None:
     is_ = prep_national_by_religion(load_metric("improved-sanitation"), "percent")
     lfpr = prep_national_by_religion(load_metric("lfpr-15plus"), "percent")
     wpr = prep_national_by_religion(load_metric("wpr-15plus"), "percent")
+    ss = prep_national_by_religion(load_metric("salaried-share"), "percent")
     ps2 = prep_prison_rate("prison")
     us = prep_prison_rate("undertrial")
     # mla-share: national row + per-state rows (multiple years)
@@ -1362,6 +1391,11 @@ def build() -> None:
         "{wa_caption}": wa["headline_caption"],
         "{wa_chart_labels}": json.dumps(wa["chart_labels"]),
         "{wa_chart_values}": json.dumps(wa["chart_values"]),
+        # salaried share
+        "{ss_headline}": ss["headline"],
+        "{ss_caption}": ss["headline_caption"],
+        "{ss_chart_labels}": json.dumps(ss["chart_labels"]),
+        "{ss_chart_values}": json.dumps(ss["chart_values"]),
         # lfpr 15+
         "{lfpr_headline}": lfpr["headline"],
         "{lfpr_caption}": lfpr["headline_caption"],
