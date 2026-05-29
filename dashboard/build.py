@@ -1079,13 +1079,18 @@ def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
     headline = fmt_num(muslim, unit) if muslim is not None else "—"
     chart_html, js, note = "", None, ""
     if mid == "pop-share":
-        st = [(state_label(r["geography_code"]), float(r["value"]))
-              for r in load_metric(mid) if r["geography_level"] == "state"]
-        st.sort(key=lambda x: -x[1])
-        st = st[:8]
-        chart_html = f'<div class="card-chartwrap" style="height:200px"><canvas id="{cvid}"></canvas></div>'
-        js = f'vbar("{cvid}", {json.dumps([s[0] for s in st])}, {json.dumps([round(s[1], 2) for s in st])}, "#2b6cb0", "%");'
-        note = "Baseline metric — Muslim share of total population. Top-8 states shown; no community ranking."
+        # Decadal multi-community trend (1961->2011): each community's share of
+        # the population over time, Muslim highlighted. No All-India line (shares).
+        years, series, _ = _nat_trend(mid)
+        named = ("muslim", "hindu", "christian", "sikh", "buddhist", "jain", "other")
+        series_map = {rel: [series.get(rel, {}).get(y) for y in years]
+                      for rel in named if rel in series}
+        chart_html = f'<div class="card-chartwrap" style="height:182px"><canvas id="{cvid}"></canvas></div>'
+        js = (f'trendChart("{cvid}", {json.dumps(years)}, {json.dumps(series_map)}, '
+              f'null, "%", false);')
+        note = ("Share of each community in India's population by census. Pre-2001 figures are a "
+                "secondary compilation of the Census decadal series (cross-checked vs primary C-01 "
+                "at 2001/2011); 1981 excludes Assam, 1991 excludes Jammu & Kashmir.")
     elif mid == "district-concentration-top100":
         # Two-bar split: the top-100 districts vs every other district. Directly
         # visualises the concentration the headline measures.

@@ -266,6 +266,43 @@ sources:
         target_path: sources/census-2001/c-series/c09-education-by-religion.xls
         status: verified
 
+  - id: census-decadal-religion
+    name: Census of India — decadal religion proportions (secondary compilation)
+    publisher: Office of the Registrar General & Census Commissioner, MoHA (secondary compilation)
+    home_url: https://censusindia.gov.in/
+    cadence: 10-year
+    cadence_notes: |
+      SECONDARY, manually-entered series: % share of each religious community in
+      India's population by census decade, 1961-1991. The RGI published these
+      figures but no clean machine-readable decadal table is downloadable — the
+      NADA catalog only digitised the 2001 + 2011 religion tables, and reputable
+      transcriptions (Pew, the RGI/PIB press release, the Wayback mirror) all
+      bot-block automated retrieval. Values are the standard Census decadal
+      proportions (reproduced identically by RGI summaries, Pew 2021, and
+      en.wikipedia.org/wiki/Religion_in_India), cross-validated against this
+      repo's PRIMARY C-01 extracts: the 2001 and 2011 shares agree to <0.02pp.
+      Handled like the existing ls-share / mla-share manual-entry metrics —
+      cited, and flagged "secondary" on the dashboard card. The 2001 and 2011
+      pop-share rows come from the primary census-india-2001 / -2011 sources,
+      NOT this entry.
+    access:
+      method: web-search
+      auth_required: false
+    formats: [manual-entry]
+    religion_disaggregated: true
+    geography_levels: [national]
+    coverage:
+      - population_share_by_religion_decadal
+    known_issues:
+      - "1951 omitted — post-Partition coverage gaps + unreliable small-community figures"
+      - "1981 excluded Assam; 1991 excluded Jammu & Kashmir (RGI national figures are interpolated for those rounds)"
+      - "Single secondary source for 1961-1991; replace with a pullable primary/RGI table if one surfaces"
+    archive_dir: sources/census-decadal-religion/
+    runbook: docs/runbooks/census-decadal-religion.md
+    last_pulled: null
+    next_expected: null
+    targets: []
+
   - id: nfhs-5
     name: National Family Health Survey 5 (2019-21)
     publisher: International Institute for Population Sciences (IIPS), MoHFW
