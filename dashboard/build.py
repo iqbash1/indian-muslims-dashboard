@@ -639,7 +639,7 @@ TEMPLATE = """<!DOCTYPE html>
   .card-comp.neutral .comp-verdict, .card-comp.mid .comp-verdict { color: var(--neutral); }
   .comp-note { grid-column: 1 / -1; text-align: left; font-size: var(--t-xs); color: var(--muted); line-height: 1.45; }
   .card-foot { margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: var(--t-2xs); color: var(--muted); }
-  .card-foot a { color: var(--muslim); text-decoration: none; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .card-foot a { color: var(--muslim); text-decoration: none; font-weight: 500; }
   .card-foot a:hover { text-decoration: underline; }
   .card details { margin-top: 10px; border-top: 1px dashed var(--rule); padding-top: 8px; }
   .card details summary { font-size: var(--t-xs); }
@@ -1093,19 +1093,11 @@ def build() -> None:
     for k, v in substitutions.items():
         html_out = html_out.replace(k, v)
 
-    # Auto-linkify references to canonical/*.csv. We point at `canonical/X.csv`
-    # relative to the preview folder — and copy the canonical CSVs into
-    # dashboard/preview/canonical/ at build time, so the links work both locally
-    # AND when GitHub Pages publishes only the dashboard/preview/ folder.
-    import re as _re
     import shutil as _shutil
-    html_out = _re.sub(
-        r"(canonical/[a-zA-Z0-9_\-]+\.csv)",
-        r'<a class="csv-link" href="\1">\1</a>',
-        html_out,
-    )
 
     # Copy canonical CSVs into the publish folder so the download links resolve.
+    # (Card footers link the source NAME directly to its canonical/*.csv — see
+    # _card_shell — so no path-text auto-linkification is needed here.)
     publish_canonical = OUT_PATH.parent / "canonical"
     publish_canonical.mkdir(exist_ok=True)
     for csv_path in CANONICAL_DIR.glob("*.csv"):
@@ -1432,11 +1424,11 @@ def _card_shell(label, value, unit_txt, year, polarity, chart_html, comps_html,
         f'{pill}{chart_html}'
         f'<div class="card-comparisons">{comps_html}</div>'
         f'{details_html}'
-        # Emit the csv path as plain text — build() post-processing auto-linkifies
-        # any canonical/*.csv reference into <a class="csv-link">. Wrapping it in
-        # our own <a> here would double-nest.
-        f'<div class="card-foot"><span>{html.escape(src)}</span>'
-        f'<span>{html.escape(csv_href)}</span></div>'
+        # The source NAME is the hyperlink (target = the canonical CSV); the raw
+        # path is not shown. Built directly here — no post-processing linkifier.
+        f'<div class="card-foot">'
+        f'<a href="{html.escape(csv_href)}">{html.escape(src)}</a>'
+        f'</div>'
         '</section>'
     )
 
