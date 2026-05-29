@@ -1497,7 +1497,7 @@ def render_metric_card(m: dict):
     """Return (card_html, chart_js_or_None) for one live metric."""
     mid = m["id"]
     disp = m["display"]["scorecard"]
-    label = disp["label"]
+    label = m.get("name", disp["label"])  # full metric name on the card (scorecard keeps the short label)
     unit = disp["unit_format"]
     hib = disp.get("higher_is_better", m.get("higher_is_better"))
     special = disp.get("special_render")
