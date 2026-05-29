@@ -29,12 +29,18 @@ REPO_ROOT = pathlib.Path(__file__).resolve().parents[2]
 EXTRACTOR_VERSION = "1.0.0"
 
 ROUNDS = [
-    {"round": "nfhs-4", "year": 2015, "table": "8.13", "page": 260,
+    {"round": "nfhs-4", "year": 2015, "table": "8.13", "page": 260, "mode": "after100",
      "pdf": "sources/nfhs-4/reports/india-report-fr339.pdf",
      "out": "extracted/nfhs-4/nfhs-4-table813-place-of-delivery-by-religion.csv"},
-    {"round": "nfhs-3", "year": 2005, "table": "8.12", "page": 257,
+    {"round": "nfhs-3", "year": 2005, "table": "8.12", "page": 257, "mode": "after100",
      "pdf": "sources/nfhs-3/reports/india-report-frind3.pdf",
      "out": "extracted/nfhs-3/nfhs-3-table812-place-of-delivery-by-religion.csv"},
+    # NFHS-2 Table 8.8 (p323) has no "% in health facility" column — it ends
+    # Total=100.0 then Number. Institution % = Public + NGO/trust + Private
+    # (the first 3 columns). mode=sum3 sums those.
+    {"round": "nfhs-2", "year": 1998, "table": "8.8", "page": 323, "mode": "sum3",
+     "pdf": "sources/nfhs-2/reports/india-report-frind2.pdf",
+     "out": "extracted/nfhs-2/nfhs-2-table88-place-of-delivery-by-religion.csv"},
 ]
 RELIGION_NORM = {
     "Hindu": "hindu", "Muslim": "muslim", "Christian": "christian",
@@ -63,16 +69,21 @@ def extract_round(cfg: dict) -> None:
     with pdfplumber.open(str(pdf_path)) as pdf:
         text = pdf.pages[cfg["page"] - 1].extract_text() or ""
 
+    mode = cfg.get("mode", "after100")
     out_rows = []
     for raw, norm in RELIGION_NORM.items():
         for line in text.splitlines():
             line = line.strip()
             if not line.startswith(raw + " "):
                 continue
-            toks = [t.strip("()") for t in line[len(raw):].split()]
+            toks = [t.strip("()").replace(",", "") for t in line[len(raw):].split()]
             if "100.0" not in toks:
                 continue
-            inst = float(toks[toks.index("100.0") + 1])
+            if mode == "sum3":
+                # institution = Public + NGO/trust + Private (first 3 columns)
+                inst = round(sum(float(t) for t in toks[:3]), 1)
+            else:  # after100: headline "% in health facility" follows the Total col
+                inst = float(toks[toks.index("100.0") + 1])
             out_rows.append({"religion": norm, "value": inst})
             break
 

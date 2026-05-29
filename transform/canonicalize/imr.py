@@ -121,11 +121,19 @@ def canonicalize() -> None:
         # ---- Earlier rounds for the time series (NFHS-4 2015, NFHS-3 2005) ----
         # Both publish a TOTAL-residence panel with IMR by religion directly, so
         # no urban/rural weighting is needed (unlike the NFHS-5 row above).
-        for year, sid, sdoc, ext in (
+        for year, sid, sdoc, ext, note in (
             (2015, "nfhs-4", "sources/nfhs-4/reports/india-report-fr339.pdf",
-             "extracted/nfhs-4/nfhs-4-table72-mortality-by-religion.csv"),
+             "extracted/nfhs-4/nfhs-4-table72-mortality-by-religion.csv",
+             "NFHS-4 Table 7.2 TOTAL-residence panel, infant mortality by religion "
+             "(published total; not urban/rural-weighted like the NFHS-5 row). Year=2015 = round midpoint."),
             (2005, "nfhs-3", "sources/nfhs-3/reports/india-report-frind3.pdf",
-             "extracted/nfhs-3/nfhs-3-table72-mortality-by-religion.csv"),
+             "extracted/nfhs-3/nfhs-3-table72-mortality-by-religion.csv",
+             "NFHS-3 Table 7.2 TOTAL-residence panel, infant mortality by religion "
+             "(published total). Year=2005 = round midpoint."),
+            (1998, "nfhs-2", "sources/nfhs-2/reports/india-report-frind2.pdf",
+             "extracted/nfhs-2/nfhs-2-table64-mortality-by-religion.csv",
+             "NFHS-2 Table 6.4 TOTAL panel, infant mortality by religion; rates for the "
+             "10-year period preceding the survey (~1989-98). Year=1998 = round label."),
         ):
             p = REPO_ROOT / ext
             if not p.exists():
@@ -137,11 +145,7 @@ def canonicalize() -> None:
                     w.writerow([
                         "imr", "national", "IN", year, r["religion"],
                         round(float(r["value"]), 2), "live_births", "", "", "",
-                        sid, sdoc, extraction_run,
-                        (f"NFHS Table 7.2 TOTAL-residence panel, infant mortality by "
-                         f"religion (published total; not urban/rural-weighted like the "
-                         f"NFHS-5 row). Year={year} = round midpoint."),
-                        "false",
+                        sid, sdoc, extraction_run, note, "false",
                     ])
                     n_rows += 1
 

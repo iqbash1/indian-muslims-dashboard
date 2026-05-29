@@ -179,7 +179,7 @@
 <div class="page">
 
 <h1>Indian Muslims — Living Conditions Dashboard</h1>
-<p class="tagline">Built 2026-05-29 14:50 · <a href="https://github.com/iqbash1/indian-muslims-dashboard">source on GitHub</a></p>
+<p class="tagline">Built 2026-05-29 15:58 · <a href="https://github.com/iqbash1/indian-muslims-dashboard">source on GitHub</a></p>
 
 <section class="intro">
   <p>A scorecard of living-conditions indicators for India's Muslim population, with
@@ -197,8 +197,8 @@
 
 <div class="status-bar">
   <span><b>18</b> metrics live</span>
-  <span><b>12</b> sources archived</span>
-  <span><b>2035</b> canonical rows · all schema-valid</span>
+  <span><b>13</b> sources archived</span>
+  <span><b>2050</b> canonical rows · all schema-valid</span>
   <span>Comparison baseline on every applicable card</span>
 </div>
 
@@ -225,9 +225,9 @@
     <tr><td>Education &amp; Employment</td><td>LFPR (15+)</td><td>2023</td><td>55.00%</td><td>60.90%</td><td>60.10%</td><td class="gap-bad">-5.90pp</td></tr>
     <tr><td>Education &amp; Employment</td><td>WPR (15+)</td><td>2023</td><td>53.20%</td><td>59.10%</td><td>58.20%</td><td class="gap-bad">-5.90pp</td></tr>
     <tr><td>Education &amp; Employment</td><td>Regular salaried share</td><td>2023</td><td>18.00%</td><td>21.90%</td><td>21.70%</td><td class="gap-bad">-3.90pp</td></tr>
-    <tr><td>Health &amp; Housing</td><td>Infant Mortality Rate</td><td>2005</td><td>52.4</td><td>58.5</td><td>34.7</td><td class="gap-good">-6.10</td></tr>
-    <tr><td>Health &amp; Housing</td><td>Institutional delivery rate</td><td>2005</td><td>33.00%</td><td>39.10%</td><td>88.58%</td><td class="gap-bad">-6.10pp</td></tr>
-    <tr><td>Health &amp; Housing</td><td>Anaemia in women (15-49)</td><td>2005</td><td>54.70%</td><td>55.90%</td><td>57.00%</td><td class="gap-good">-1.20pp</td></tr>
+    <tr><td>Health &amp; Housing</td><td>Infant Mortality Rate</td><td>1998</td><td>58.8</td><td>77.1</td><td>34.7</td><td class="gap-good">-18.30</td></tr>
+    <tr><td>Health &amp; Housing</td><td>Institutional delivery rate</td><td>1998</td><td>31.50%</td><td>32.90%</td><td>88.58%</td><td class="gap-bad">-1.40pp</td></tr>
+    <tr><td>Health &amp; Housing</td><td>Anaemia in women (15-49)</td><td>1998</td><td>49.60%</td><td>52.40%</td><td>57.00%</td><td class="gap-good">-2.80pp</td></tr>
     <tr><td>Health &amp; Housing</td><td>Toilet facility access</td><td>2020</td><td>90.30%</td><td>80.70%</td><td>82.50%</td><td class="gap-good">+9.60pp</td></tr>
     <tr><td>Justice &amp; Civic</td><td>Prisoners (rate per 100k pop)</td><td>2022</td><td><b>108,968</b><br><span class="rate-sub">63.26 per 100k</span></td><td><b>384,522</b><br><span class="rate-sub">39.79 per 100k</span></td><td><b>540,148</b><br><span class="rate-sub">44.61 per 100k</span></td><td class="gap-bad">1.59× Hindu rate</td></tr>
     <tr><td>Justice &amp; Civic</td><td>Undertrials (rate per 100k pop)</td><td>2022</td><td><b>83,968</b><br><span class="rate-sub">48.75 per 100k</span></td><td><b>283,372</b><br><span class="rate-sub">29.33 per 100k</span></td><td><b>401,419</b><br><span class="rate-sub">33.15 per 100k</span></td><td class="gap-bad">1.66× Hindu rate</td></tr>
@@ -268,7 +268,7 @@
 </div>
 
 <footer>
-  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-29 14:50.
+  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-29 15:58.
   Every number on this page traces L4 → L3 (canonical) → L2 (extracted) → L1 (source file)
   with SHA256 sidecar provenance. Re-run the builder after any canonical change:
   <code>python dashboard/build.py</code></p>
@@ -469,9 +469,9 @@ hbar("cc-muslim-higher-ed-enrolment", ["Uttar Pradesh", "Kerala", "Bihar", "Maha
 hbar("cc-lfpr-15plus", ["Christian", "Hindu", "Sikh", "Muslim"], [62.8, 60.9, 56.1, 55.0], ["#D8DEE2", "#D8DEE2", "#D8DEE2", "#991B1B"], "%", 1, 60.1, "All-India");
 hbar("cc-wpr-15plus", ["Christian", "Hindu", "Muslim", "Sikh"], [59.9, 59.1, 53.2, 52.8], ["#D8DEE2", "#D8DEE2", "#991B1B", "#D8DEE2"], "%", 1, 58.2, "All-India");
 hbar("cc-salaried-share", ["Christian", "Sikh", "Hindu", "Muslim"], [27.6, 26.7, 21.9, 18.0], ["#D8DEE2", "#D8DEE2", "#D8DEE2", "#991B1B"], "%", 1, 21.7, "All-India");
-trendChart("cc-imr", [2005, 2015, 2020], {"muslim": [52.4, 40.0, 33.03], "hindu": [58.5, 41.6, 35.4], "christian": [41.7, 25.0, 25.23], "sikh": [45.6, 29.7, 28.42], "buddhist": [52.8, 30.0, 20.99], "other": [null, null, 30.61]}, [null, null, 34.73], "", false);
-trendChart("cc-inst-delivery", [2005, 2015, 2020], {"muslim": [33.0, 69.2, 84.3], "hindu": [39.1, 80.8, 89.5], "christian": [53.4, 78.5, 83.3], "sikh": [58.3, 92.5, 96.1], "buddhist": [58.8, 92.2, 93.8], "jain": [null, null, 99.7], "other": [null, null, 73.4]}, [null, null, 88.58], "%", false);
-trendChart("cc-women-anemia", [2005, 2015, 2020], {"muslim": [54.7, 50.6, 55.6], "hindu": [55.9, 53.7, 57.4], "christian": [50.3, 47.5, 51.1], "sikh": [39.2, 52.0, 58.8], "buddhist": [52.5, 51.6, 57.3], "jain": [null, null, 45.2], "other": [null, null, 65.5]}, [null, null, 57.0], "%", true);
+trendChart("cc-imr", [1998, 2005, 2015, 2020], {"muslim": [58.8, 52.4, 40.0, 33.03], "hindu": [77.1, 58.5, 41.6, 35.4], "christian": [49.2, 41.7, 25.0, 25.23], "sikh": [53.3, 45.6, 29.7, 28.42], "buddhist": [53.6, 52.8, 30.0, 20.99], "other": [null, null, null, 30.61]}, [null, null, null, 34.73], "", false);
+trendChart("cc-inst-delivery", [1998, 2005, 2015, 2020], {"muslim": [31.5, 33.0, 69.2, 84.3], "hindu": [32.9, 39.1, 80.8, 89.5], "christian": [54.4, 53.4, 78.5, 83.3], "sikh": [47.0, 58.3, 92.5, 96.1], "buddhist": [55.2, 58.8, 92.2, 93.8], "jain": [null, null, null, 99.7], "other": [null, null, null, 73.4]}, [null, null, null, 88.58], "%", false);
+trendChart("cc-women-anemia", [1998, 2005, 2015, 2020], {"muslim": [49.6, 54.7, 50.6, 55.6], "hindu": [52.4, 55.9, 53.7, 57.4], "christian": [47.1, 50.3, 47.5, 51.1], "sikh": [39.6, 39.2, 52.0, 58.8], "buddhist": [48.6, 52.5, 51.6, 57.3], "jain": [null, null, null, 45.2], "other": [null, null, null, 65.5]}, [null, null, null, 57.0], "%", true);
 hbar("cc-improved-sanitation", ["Jain", "Sikh", "Christian", "Muslim", "Buddhist", "Hindu"], [97.6, 97.5, 91.2, 90.3, 87.8, 80.7], ["#D8DEE2", "#D8DEE2", "#D8DEE2", "#555555", "#D8DEE2", "#D8DEE2"], "%", 1, 82.5, "All-India");
 lineChart("cc-ls-share", [2009, 2014, 2019, 2024], [5.16, 4.05, 4.97, 4.42], "#2b6cb0", "%");
 hbar("cc-mla-share", ["Kerala", "West Bengal", "Telangana", "Haryana", "Maharashtra", "Rajasthan", "Madhya Pradesh", "Chhattisgarh"], [25.0, 13.65, 5.88, 5.56, 3.47, 3.0, 0.87, 0.0], ["#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0"], "%", 1);

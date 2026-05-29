@@ -427,6 +427,43 @@ sources:
         target_path: sources/nfhs-3/reports/india-report-frind3.pdf
         status: verified
 
+  - id: nfhs-2
+    name: National Family Health Survey 2 (1998-99)
+    publisher: International Institute for Population Sciences (IIPS), MoHFW
+    home_url: https://rchiips.org/nfhs/
+    cadence: ~5-year
+    cadence_notes: |
+      Second round. Earliest NFHS round with haemoglobin testing — extends the
+      health time series back to 1998-99. Surveyed EVER-MARRIED women only
+      (later rounds cover all women 15-49): a universe break for the anaemia
+      indicator, on top of the existing measurement-method break.
+    access:
+      method: web-download
+      auth_required: false
+      auth_notes: |
+        National report (FRIND2) open on the DHS Program (dhsprogram.com).
+    formats: [pdf]
+    religion_disaggregated: true
+    geography_levels: [national, state]
+    coverage:
+      - child_mortality
+      - women_anemia
+      - maternal_health
+    known_issues:
+      - "Older layout; verified religion tables: IMR Table 6.4 TOTAL panel p217 (10-yr preceding); place of delivery Table 8.8 p323 (births 3-yr preceding; institution = Public+NGO+Private); women anaemia Table 7.6 p278 (EVER-MARRIED, any-anaemia col)."
+      - "Religion categories: Hindu, Muslim, Christian, Sikh, Jain, Buddhist/Neo-Buddhist, Other, No religion."
+      - "Mortality period (10-yr preceding) and delivery period (3-yr) differ slightly from later rounds; document on canonical rows."
+    archive_dir: sources/nfhs-2/
+    runbook: docs/runbooks/nfhs-2.md
+    last_pulled: null
+    next_expected: null
+    targets:
+      - target_id: india-report-frind2
+        description: NFHS-2 India Report (FRIND2 - main report with religion differentials)
+        url: https://www.dhsprogram.com/pubs/pdf/FRIND2/FRIND2.pdf
+        target_path: sources/nfhs-2/reports/india-report-frind2.pdf
+        status: verified
+
   - id: plfs
     name: Periodic Labour Force Survey
     publisher: National Statistical Office (NSO), MoSPI

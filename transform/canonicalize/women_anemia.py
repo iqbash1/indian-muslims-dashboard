@@ -74,11 +74,22 @@ def canonicalize() -> None:
         # ---- Earlier rounds for the time series (NFHS-4 2015, NFHS-3 2005) ----
         # break_flag=true: cross-round anaemia comparability is limited
         # (blood-draw method / cut-offs), so the trend line is not drawn across it.
-        for year, sid, sdoc, ext in (
+        for year, sid, sdoc, ext, denom, note in (
             (2015, "nfhs-4", "sources/nfhs-4/reports/india-report-fr339.pdf",
-             "extracted/nfhs-4/nfhs-4-table10211-women-anaemia-by-religion.csv"),
+             "extracted/nfhs-4/nfhs-4-table10211-women-anaemia-by-religion.csv",
+             "women_age_15_49_tested",
+             "NFHS-4 Table 10.21.1, any anaemia in women 15-49 by religion. Cross-round "
+             "comparability limited (method/cut-offs) — methodology break. Year=2015."),
             (2005, "nfhs-3", "sources/nfhs-3/reports/india-report-frind3.pdf",
-             "extracted/nfhs-3/nfhs-3-table10241-women-anaemia-by-religion.csv"),
+             "extracted/nfhs-3/nfhs-3-table10241-women-anaemia-by-religion.csv",
+             "women_age_15_49_tested",
+             "NFHS-3 Table 10.24.1, any anaemia in women 15-49 by religion. Cross-round "
+             "comparability limited (method/cut-offs) — methodology break. Year=2005."),
+            (1998, "nfhs-2", "sources/nfhs-2/reports/india-report-frind2.pdf",
+             "extracted/nfhs-2/nfhs-2-table76-women-anaemia-by-religion.csv",
+             "ever_married_women_age_15_49_tested",
+             "NFHS-2 Table 7.6, any anaemia — EVER-MARRIED women only (universe break vs "
+             "all-women in later rounds), plus the cross-round method break. Year=1998."),
         ):
             p = REPO_ROOT / ext
             if not p.exists():
@@ -89,11 +100,8 @@ def canonicalize() -> None:
                         continue
                     w.writerow([
                         "women-anemia", "national", "IN", year, r["religion"],
-                        round(float(r["value"]), 2), "women_age_15_49_tested",
-                        "", "", "", sid, sdoc, extraction_run,
-                        (f"NFHS Table 10.21.1/10.24.1, any anaemia in women 15-49 by "
-                         f"religion. Cross-round comparability limited (method/cut-offs) "
-                         f"— treat as methodology break. Year={year}."),
+                        round(float(r["value"]), 2), denom,
+                        "", "", "", sid, sdoc, extraction_run, note,
                         "true",
                     ])
                     n_rows += 1

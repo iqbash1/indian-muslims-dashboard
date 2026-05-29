@@ -76,11 +76,23 @@ def canonicalize() -> None:
             n_rows += 1
 
         # ---- Earlier rounds for the time series (NFHS-4 2015, NFHS-3 2005) ----
-        for year, sid, sdoc, ext in (
+        for year, sid, sdoc, ext, denom, note in (
             (2015, "nfhs-4", "sources/nfhs-4/reports/india-report-fr339.pdf",
-             "extracted/nfhs-4/nfhs-4-table813-place-of-delivery-by-religion.csv"),
+             "extracted/nfhs-4/nfhs-4-table813-place-of-delivery-by-religion.csv",
+             "live_births_5y_preceding_survey",
+             "NFHS-4 Table 8.13, % delivered in a health facility by religion "
+             "(published total-residence panel). Year=2015."),
             (2005, "nfhs-3", "sources/nfhs-3/reports/india-report-frind3.pdf",
-             "extracted/nfhs-3/nfhs-3-table812-place-of-delivery-by-religion.csv"),
+             "extracted/nfhs-3/nfhs-3-table812-place-of-delivery-by-religion.csv",
+             "live_births_5y_preceding_survey",
+             "NFHS-3 Table 8.12, % delivered in a health facility by religion "
+             "(published total-residence panel). Year=2005."),
+            (1998, "nfhs-2", "sources/nfhs-2/reports/india-report-frind2.pdf",
+             "extracted/nfhs-2/nfhs-2-table88-place-of-delivery-by-religion.csv",
+             "live_births_3y_preceding_survey",
+             "NFHS-2 Table 8.8, institutional delivery = Public + NGO/trust + Private "
+             "(no headline 'health facility' column in this round); births in the 3 years "
+             "preceding the survey. Year=1998."),
         ):
             p = REPO_ROOT / ext
             if not p.exists():
@@ -91,10 +103,8 @@ def canonicalize() -> None:
                         continue
                     w.writerow([
                         "inst-delivery", "national", "IN", year, r["religion"],
-                        round(float(r["value"]), 2), "live_births_5y_preceding_survey",
-                        "", "", "", sid, sdoc, extraction_run,
-                        (f"NFHS Table 8.13/8.12, % delivered in a health facility by "
-                         f"religion (published total-residence panel). Year={year}."),
+                        round(float(r["value"]), 2), denom,
+                        "", "", "", sid, sdoc, extraction_run, note,
                         "false",
                     ])
                     n_rows += 1

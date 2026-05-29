@@ -29,12 +29,17 @@ REPO_ROOT = pathlib.Path(__file__).resolve().parents[2]
 EXTRACTOR_VERSION = "1.0.0"
 
 ROUNDS = [
-    {"round": "nfhs-4", "year": 2015, "table": "10.21.1", "page": 366,
+    {"round": "nfhs-4", "year": 2015, "table": "10.21.1", "page": 366, "any_index": 3,
      "pdf": "sources/nfhs-4/reports/india-report-fr339.pdf",
      "out": "extracted/nfhs-4/nfhs-4-table10211-women-anaemia-by-religion.csv"},
-    {"round": "nfhs-3", "year": 2005, "table": "10.24.1", "page": 359,
+    {"round": "nfhs-3", "year": 2005, "table": "10.24.1", "page": 359, "any_index": 3,
      "pdf": "sources/nfhs-3/reports/india-report-frind3.pdf",
      "out": "extracted/nfhs-3/nfhs-3-table10241-women-anaemia-by-religion.csv"},
+    # NFHS-2 Table 7.6 (p278): EVER-MARRIED women. Column order is
+    # "any anaemia | mild | moderate | severe | number" — any-anaemia is col 0.
+    {"round": "nfhs-2", "year": 1998, "table": "7.6", "page": 278, "any_index": 0,
+     "pdf": "sources/nfhs-2/reports/india-report-frind2.pdf",
+     "out": "extracted/nfhs-2/nfhs-2-table76-women-anaemia-by-religion.csv"},
 ]
 RELIGION_NORM = {
     "Hindu": "hindu", "Muslim": "muslim", "Christian": "christian",
@@ -70,10 +75,11 @@ def extract_round(cfg: dict) -> None:
             if not line.startswith(raw + " "):
                 continue
             toks = [t.strip("()") for t in line[len(raw):].split()]
-            # mild, moderate, severe, any, number  -> any = index 3
+            # NFHS-3/4: mild, moderate, severe, any, number -> any at index 3.
+            # NFHS-2: any, mild, moderate, severe, number  -> any at index 0.
             if len(toks) < 5:
                 continue
-            any_anaemia = float(toks[3])
+            any_anaemia = float(toks[cfg.get("any_index", 3)])
             out_rows.append({"religion": norm, "value": any_anaemia})
             break
 

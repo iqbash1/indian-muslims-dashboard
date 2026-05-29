@@ -1,6 +1,6 @@
 source_id,source_document,source_sha256_prefix,extraction_run,table,page,religion,metric,value
-nfhs-3,sources/nfhs-3/reports/india-report-frind3.pdf,c1fb9db3227ef6de,nfhs-anaemia-extract-v1.0.0-20260529T033855Z,10.24.1,359,hindu,any_anaemia_pct,55.9
-nfhs-3,sources/nfhs-3/reports/india-report-frind3.pdf,c1fb9db3227ef6de,nfhs-anaemia-extract-v1.0.0-20260529T033855Z,10.24.1,359,muslim,any_anaemia_pct,54.7
-nfhs-3,sources/nfhs-3/reports/india-report-frind3.pdf,c1fb9db3227ef6de,nfhs-anaemia-extract-v1.0.0-20260529T033855Z,10.24.1,359,christian,any_anaemia_pct,50.3
-nfhs-3,sources/nfhs-3/reports/india-report-frind3.pdf,c1fb9db3227ef6de,nfhs-anaemia-extract-v1.0.0-20260529T033855Z,10.24.1,359,sikh,any_anaemia_pct,39.2
-nfhs-3,sources/nfhs-3/reports/india-report-frind3.pdf,c1fb9db3227ef6de,nfhs-anaemia-extract-v1.0.0-20260529T033855Z,10.24.1,359,buddhist,any_anaemia_pct,52.5
+nfhs-3,sources/nfhs-3/reports/india-report-frind3.pdf,c1fb9db3227ef6de,nfhs-anaemia-extract-v1.0.0-20260529T102636Z,10.24.1,359,hindu,any_anaemia_pct,55.9
+nfhs-3,sources/nfhs-3/reports/india-report-frind3.pdf,c1fb9db3227ef6de,nfhs-anaemia-extract-v1.0.0-20260529T102636Z,10.24.1,359,muslim,any_anaemia_pct,54.7
+nfhs-3,sources/nfhs-3/reports/india-report-frind3.pdf,c1fb9db3227ef6de,nfhs-anaemia-extract-v1.0.0-20260529T102636Z,10.24.1,359,christian,any_anaemia_pct,50.3
+nfhs-3,sources/nfhs-3/reports/india-report-frind3.pdf,c1fb9db3227ef6de,nfhs-anaemia-extract-v1.0.0-20260529T102636Z,10.24.1,359,sikh,any_anaemia_pct,39.2
+nfhs-3,sources/nfhs-3/reports/india-report-frind3.pdf,c1fb9db3227ef6de,nfhs-anaemia-extract-v1.0.0-20260529T102636Z,10.24.1,359,buddhist,any_anaemia_pct,52.5

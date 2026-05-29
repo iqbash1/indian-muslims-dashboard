@@ -1,0 +1,11 @@
+{
+  "source_id": "nfhs-2",
+  "target_id": "india-report-frind2",
+  "url": "https://www.dhsprogram.com/pubs/pdf/FRIND2/FRIND2.pdf",
+  "pulled_at": "2026-05-29T10:23:16.932445+00:00",
+  "status_code": 200,
+  "content_type": "application/pdf",
+  "content_length": 2366182,
+  "sha256": "08c7b5cb1776a2ac9247f69e639cd1a31328181f3d0aa89dfb12973d03655a32",
+  "pull_script_version": "0.1.0"
+}

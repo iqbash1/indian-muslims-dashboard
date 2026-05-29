@@ -34,16 +34,24 @@ EXTRACTOR_VERSION = "1.0.0"
 
 ROUNDS = [
     {
-        "round": "nfhs-4", "year": 2015,
+        "round": "nfhs-4", "year": 2015, "table": "7.2",
         "pdf": "sources/nfhs-4/reports/india-report-fr339.pdf",
         "page": 225,
         "out": "extracted/nfhs-4/nfhs-4-table72-mortality-by-religion.csv",
     },
     {
-        "round": "nfhs-3", "year": 2005,
+        "round": "nfhs-3", "year": 2005, "table": "7.2",
         "pdf": "sources/nfhs-3/reports/india-report-frind3.pdf",
         "page": 231,
         "out": "extracted/nfhs-3/nfhs-3-table72-mortality-by-religion.csv",
+    },
+    {
+        # NFHS-2 Table 6.4, TOTAL panel (p217; URBAN panel is p216). Same column
+        # layout (NN PNN Infant Child U5); rates for the 10-year period preceding.
+        "round": "nfhs-2", "year": 1998, "table": "6.4",
+        "pdf": "sources/nfhs-2/reports/india-report-frind2.pdf",
+        "page": 217,
+        "out": "extracted/nfhs-2/nfhs-2-table64-mortality-by-religion.csv",
     },
 ]
 
@@ -124,7 +132,7 @@ def extract_round(cfg: dict) -> None:
         for r in rows:
             w.writerow([
                 cfg["round"], cfg["pdf"], meta["sha256"][:16], extraction_run,
-                "7.2", cfg["page"], r["religion"], "total", r["metric"], r["value"],
+                cfg.get("table", "7.2"), cfg["page"], r["religion"], "total", r["metric"], r["value"],
                 "true" if r["small"] else "false",
             ])
     imr = {r["religion"]: r["value"] for r in rows if r["metric"] == "imr"}
