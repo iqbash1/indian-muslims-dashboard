@@ -111,18 +111,20 @@ MUSLIM_POP_SHARE = 14.23
 
 # Map metric cluster (from metrics.yaml cluster field) to scorecard cluster display name.
 # (Most just title-case the cluster id; civic/justice get explicit overrides for the dashboard.)
-CLUSTER_DISPLAY = {
-    "demographics": "Demographics",
-    "education": "Education",
-    "employment": "Employment",
-    "income": "Income",
-    "health": "Health",
-    "housing": "Housing",
-    "finance": "Finance",
-    "representation": "Representation",
-    "justice": "Justice",
-    "civic": "Civic",
-}
+# Display sections group one or more metrics.yaml clusters under a single
+# header. The fine-grained `cluster` stays on each metric (semantic); this is
+# purely the dashboard's section layout. Order here = render order; empty
+# sections (no live metric in any member cluster) are skipped.
+SECTION_GROUPS = [
+    ("Demographics", ["demographics"]),
+    ("Education & Employment", ["education", "employment"]),
+    ("Income", ["income"]),
+    ("Health & Housing", ["health", "housing"]),
+    ("Finance", ["finance"]),
+    ("Representation", ["representation"]),
+    ("Justice & Civic", ["justice", "civic"]),
+]
+SECTION_OF = {cid: name for name, cids in SECTION_GROUPS for cid in cids}
 
 
 def load_scorecard_spec() -> list[tuple]:
@@ -155,7 +157,7 @@ def load_scorecard_spec() -> list[tuple]:
         elif special == "undertrial_rate":
             mid = "undertrial-share"
         specs.append((
-            CLUSTER_DISPLAY.get(m["cluster"], m["cluster"].capitalize()),
+            SECTION_OF.get(m["cluster"], m["cluster"].capitalize()),
             mid,
             disp["label"],
             disp["unit_format"],
@@ -1061,11 +1063,30 @@ def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
         js = f'vbar("{cvid}", {json.dumps([s[0] for s in st])}, {json.dumps([round(s[1], 2) for s in st])}, "#2b6cb0", "%");'
         note = "Baseline metric — Muslim share of total population. Top-8 states shown; no community ranking."
     elif mid == "district-concentration-top100":
+        # Two-bar split: the top-100 districts vs every other district. Directly
+        # visualises the concentration the headline measures.
+        rest = round(100 - muslim, 2)
+        chart_html = f'<div class="card-chartwrap" style="height:92px"><canvas id="{cvid}"></canvas></div>'
+        js = (f'hbar("{cvid}", {json.dumps(["Top-100 districts", "Other districts"])}, '
+              f'{json.dumps([round(muslim, 2), rest])}, {json.dumps(["#7b1d22", "#D8DEE2"])}, '
+              f'"%", 1, null, "");')
         note = ("Share of all Indian Muslims living in the 100 most Muslim-populous districts — "
                 "a geographic-concentration measure, not a community comparison.")
     else:  # muslim-higher-ed-enrolment
+        # Top-8 states by Muslim enrolment, shown in thousands (the national
+        # headline is the absolute total; no community comparator exists).
+        st = [(state_label(r["geography_code"]), float(r["value"]))
+              for r in load_metric(mid) if r["geography_level"] == "state"]
+        st.sort(key=lambda x: -x[1])
+        st = st[:8]
+        if st:
+            chart_html = f'<div class="card-chartwrap" style="height:{len(st) * 26 + 20}px"><canvas id="{cvid}"></canvas></div>'
+            labels = [s[0] for s in st]
+            vals = [round(s[1] / 1000) for s in st]
+            js = (f'hbar("{cvid}", {json.dumps(labels)}, {json.dumps(vals)}, '
+                  f'{json.dumps(["#2b6cb0"] * len(st))}, "k", 0, null, "");')
         note = ("No community ranking — AISHE tabulates “Muslim Minority” enrolment separately; "
-                "other communities are not enumerated in the same table.")
+                "other communities are not enumerated in the same table. Top-8 states shown (thousands).")
     comps = f'<div class="comp-note">{html.escape(note)}</div>'
     return _card_shell(label, headline, CAPTION.get(mid, ""), _year_of(mid), "",
                        chart_html, comps, src, csv_href, _state_details(mid, unit)), js
@@ -1153,7 +1174,8 @@ def _card_ts_count(mid, label, src, csv_href, cvid):
 
 
 def render_all_clusters():
-    """Group live metrics by cluster (manifest order) and render each as a card grid.
+    """Group live metrics into the SECTION_GROUPS display sections and render each
+    as a card grid. Within a section, cards order by scorecard `order`.
 
     Returns (clusters_html, charts_js).
     """
@@ -1161,7 +1183,6 @@ def render_all_clusters():
     import yaml as _yaml
     with (REPO_ROOT / "manifest" / "metrics.yaml").open() as f:
         man = _yaml.safe_load(f)
-    cl_order = [c["id"] for c in man["clusters"]]
     by_cluster: dict[str, list] = defaultdict(list)
     for m in man["metrics"]:
         disp = m.get("display", {}).get("scorecard")
@@ -1170,8 +1191,8 @@ def render_all_clusters():
         by_cluster[m["cluster"]].append(m)
 
     grids, charts = [], []
-    for cid in cl_order:
-        ms = by_cluster.get(cid)
+    for name, cluster_ids in SECTION_GROUPS:
+        ms = [m for cid in cluster_ids for m in by_cluster.get(cid, [])]
         if not ms:
             continue
         ms.sort(key=lambda m: m["display"]["scorecard"].get("order", 999))
@@ -1181,7 +1202,6 @@ def render_all_clusters():
             cards.append(card_html)
             if js:
                 charts.append(js)
-        name = CLUSTER_DISPLAY.get(cid, cid.capitalize())
         grids.append(f'<h2 class="cluster-header">{html.escape(name)}</h2>\n'
                      f'<div class="cards">\n{"".join(cards)}\n</div>')
     return "\n\n".join(grids), "\n".join(charts)
