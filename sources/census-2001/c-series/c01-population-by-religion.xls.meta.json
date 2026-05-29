@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2001",
+  "target_id": "c01-population-by-religion",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/21462/download/24594/PC01_C01_00.xls",
+  "pulled_at": "2026-05-29T05:09:51.137022+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 72192,
+  "sha256": "b459efe12563a9a11650de36fa13570b619c9df4c136f07624593e59c745cc4e",
+  "pull_script_version": "0.1.0"
+}

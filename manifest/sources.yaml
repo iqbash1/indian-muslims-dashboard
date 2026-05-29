@@ -225,6 +225,47 @@ sources:
         target_path: sources/census-2011/c-series/state-mdds/c01-05-uttarakhand.xls
         status: verified
 
+  - id: census-india-2001
+    name: Census of India 2001
+    publisher: Office of the Registrar General & Census Commissioner, MoHA
+    home_url: https://censusindia.gov.in/
+    cadence: 10-year
+    cadence_notes: |
+      Prior decennial round to Census 2011. Pulled for decennial (2001 -> 2011)
+      religion differentials on sex-ratio and literacy. Religion tables live in
+      the NADA catalog under idno prefix PC01_* (same table codes as 2011:
+      C-01 population, C-09 education-by-religion).
+    access:
+      method: web-download
+      auth_required: false
+    formats: [xls]
+    religion_disaggregated: true
+    geography_levels: [national, state]
+    coverage:
+      - population
+      - sex_ratio
+      - literacy
+      - educational_attainment
+    known_issues:
+      - "Legacy .xls (BIFF) workbook — read with xlrd, not openpyxl (same as 2011 C-1)"
+      - "censusindia.gov.in NADA serves a cert chain Python's bundled CAs reject; pull.py uses truststore"
+      - "Decennial 2001 -> 2011 comparison uses identical Census literacy (7+) and all-ages sex-ratio definitions — same series, no methodology break"
+    archive_dir: sources/census-2001/
+    runbook: docs/runbooks/census-india-2001.md
+    last_pulled: null
+    next_expected: null
+    targets:
+      - target_id: c01-population-by-religion
+        description: C-1 Population by Religious Community, India 2001 (national + states; persons/males/females → sex ratio + population share)
+        url: https://censusindia.gov.in/nada/index.php/catalog/21462/download/24594/PC01_C01_00.xls
+        target_path: sources/census-2001/c-series/c01-population-by-religion.xls
+        status: verified
+      - target_id: c09-education-by-religion
+        description: C-9 Educational Level by Religious Community and Sex for population age 7+, India 2001 (national + states → literacy rate)
+        url: https://censusindia.gov.in/nada/index.php/catalog/22250/download/25381/PC01_C09_00.xls
+        target_path: sources/census-2001/c-series/c09-education-by-religion.xls
+        status: verified
+
   - id: nfhs-5
     name: National Family Health Survey 5 (2019-21)
     publisher: International Institute for Population Sciences (IIPS), MoHFW

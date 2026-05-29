@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-2001",
+  "target_id": "c09-education-by-religion",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/22250/download/25381/PC01_C09_00.xls",
+  "pulled_at": "2026-05-29T05:10:36.144393+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 6852608,
+  "sha256": "f321cba7ff4138da96d69b3a82dcc8a80f48c9eaed49f93f164685ef5b2cdd40",
+  "pull_script_version": "0.1.0"
+}

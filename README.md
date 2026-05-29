@@ -6,14 +6,14 @@ Modeled on the **hawaiidashboard.org** pattern: a scannable card grid, single au
 
 ## The scorecard (current)
 
-18 metrics on the dashboard scorecard, all schema-validated and spot-checked against published figures. Each renders as a card that ranks the Muslim outcome among religious communities; the NFHS health metrics also carry a 2005→2020 trend line. **Live at https://iqbash1.github.io/indian-muslims-dashboard/**.
+18 metrics on the dashboard scorecard, all schema-validated and spot-checked against published figures. Each renders as a card that ranks the Muslim outcome among religious communities; where a source has multiple rounds the card also draws a trend line — the NFHS health metrics over 2005→2020, and the Census sex-ratio and literacy metrics over the 2001→2011 decennial. **Live at https://iqbash1.github.io/indian-muslims-dashboard/**.
 
 | Cluster | Metric | Year | Muslim | Hindu | All | Gap vs reference |
 |---|---|---|---|---|---|---|
 | Demographics | Population share | 2011 | 14.23% | — | — | baseline |
-| Demographics | Sex ratio (F/1000M) | 2011 | 951 | 939 | 943 | +12.20 *(paradox)* |
+| Demographics | Sex ratio (F/1000M) | 2001→2011 | 951 | 939 | 943 | +12.20 *(paradox)* |
 | Demographics | Top-100 district concentration | 2011 | 58.55% | — | — | — |
-| Education | Literacy rate (7+) | 2011 | 68.59% | 73.31% | 73.02% | **−4.72pp** |
+| Education | Literacy rate (7+) | 2001→2011 | 68.59% | 73.31% | 73.02% | **−4.72pp** |
 | Education | Higher-ed enrolment (count) | 2021 | 2,108,033 | — | — | n/a (no Hindu count in source) |
 | Employment | LFPR (15+) | 2023 | 55.00% | 60.90% | 60.10% | **−5.90pp** |
 | Employment | WPR (15+) | 2023 | 53.20% | 59.10% | 58.20% | **−5.90pp** |
@@ -57,6 +57,7 @@ The dashboard never queries an external source live and never reads L1/L2 direct
 | Source | What it gives us | Cadence | Status |
 |---|---|---|---|
 | **Census of India 2011** | Population by religion (state + district), literacy, sex ratio | 10-year (2021 round delayed indefinitely) | 5 files archived; UP + Bihar + Bengal + J&K district MDDS imported |
+| **Census of India 2001** | Population, literacy, sex ratio by religion (national + states) — gives the 2001→2011 decennial trend for sex-ratio + literacy | 10-year (prior round) | 2 files archived (C-1, C-9) |
 | **NFHS-3 / 4 / 5 (2005-06 → 2019-21)** | IMR, institutional delivery, women's anaemia — by religion, 3 rounds (time series) | ~5-year (NFHS-6 in field) | all 3 round reports archived; 3 metrics × 3 rounds extracted |
 | **PLFS 2023-24** | LFPR, WPR, unemployment by religion | Annual | 2 reports archived; 2 metrics extracted |
 | **AISHE 2021-22** | Higher-education enrolment by religion | Annual | 2 reports archived; 1 metric extracted |
@@ -67,7 +68,7 @@ Each source has a runbook in `docs/runbooks/` documenting URL discovery, archive
 
 ## What this is honest about
 
-- **2021 Census not released.** Every demographic metric dates to 2011; cards show the data year inline.
+- **2021 Census not released.** The latest census point is 2011; sex-ratio and literacy now carry the 2001→2011 decennial trend, but there is no post-2011 census data (population share and district concentration remain 2011-only). Cards show the data year inline.
 - **Maharashtra didn't report religion for ~33k undertrials in PSI 2022.** Prison-share is computed over religion-reported subset only; documented on every tile.
 - **HCES doesn't publish religion crosstabs.** Religion is a survey variable but not tabulated in the published Report 591. MPCE-by-religion requires unit-level processing from microdata.gov.in.
 - **NFHS-5 vs NFHS-4 anaemia methodology break** (capillary vs venous blood). Not comparable across rounds.
@@ -125,7 +126,7 @@ Pure mechanical extension — pattern is proven:
 
 ## Status
 
-18 metrics live, all schema-valid. The dashboard is a card grid with multi-community benchmarking (rank among religious communities) and multi-round trends (NFHS health, 2005→2020). The architecture is battle-tested across 4 source shapes: spreadsheet, dual-column PDF tables, single-column religion sections, and tabular state-row PDFs.
+18 metrics live, all schema-valid. The dashboard is a card grid with multi-community benchmarking (rank among religious communities) and multi-round trends (NFHS health 2005→2020; Census sex-ratio + literacy 2001→2011). The architecture is battle-tested across 4 source shapes: spreadsheet, dual-column PDF tables, single-column religion sections, and tabular state-row PDFs.
 
 See `docs/audit-log.md` for the planned annual audit ritual and `docs/refresh-schedule.md` for the per-source cadence.
 
