@@ -179,25 +179,27 @@
 <div class="page">
 
 <h1>Indian Muslims — Living Conditions Dashboard</h1>
-<p class="tagline">Built 2026-05-29 09:38 · <a href="https://github.com/iqbash1/indian-muslims-dashboard">source on GitHub</a></p>
+<p class="tagline">Built 2026-05-29 10:11 · <a href="https://github.com/iqbash1/indian-muslims-dashboard">source on GitHub</a></p>
 
 <section class="intro">
   <p>A scorecard of living-conditions indicators for India's Muslim population, with
   Hindu and all-India comparison baselines on every metric. The gap between Muslim
   outcomes and these baselines is the story this dashboard is built around —
   inheriting the Sachar Committee (2006) methodology of focused, comparative measurement.</p>
-  <p>Each tile shows: source path, methodology note, "data current to" badge, and a
-  link to the underlying canonical CSV. Click any column header in the scorecard to sort.
-  Numbers tagged <i>"paradox"</i> are ones where Muslim outcomes run <i>ahead of</i> Hindu —
-  notably infant survival, women's anaemia, and sex ratio. These coexist with persistent
-  Muslim disadvantage on the socioeconomic, representation, and justice indicators.</p>
+  <p>Each metric is a card showing the Muslim value, where it ranks among religious
+  communities (the analog of a US state's rank), and — where the source has multiple
+  survey rounds — how it has changed over time, with the source linked to its canonical
+  CSV. Click any scorecard column to sort. Numbers tagged <i>"paradox"</i> are ones where
+  Muslim outcomes run <i>ahead of</i> Hindu — notably infant survival, women's anaemia, and
+  sex ratio. These coexist with persistent Muslim disadvantage on the socioeconomic,
+  representation, and justice indicators.</p>
 </section>
 
 <div class="status-bar">
   <span><b>18</b> metrics live</span>
-  <span><b>6</b> sources archived</span>
-  <span><b>1371</b> canonical rows · all schema-valid</span>
-  <span>Comparison baseline on every applicable tile</span>
+  <span><b>10</b> sources archived</span>
+  <span><b>1430</b> canonical rows · all schema-valid</span>
+  <span>Comparison baseline on every applicable card</span>
 </div>
 
 <!-- SCORECARD -->
@@ -281,7 +283,7 @@
 </div>
 
 <footer>
-  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-29 09:38.
+  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-29 10:11.
   Every number on this page traces L4 → L3 (canonical) → L2 (extracted) → L1 (source file)
   with SHA256 sidecar provenance. Re-run the builder after any canonical change:
   <code>python dashboard/build.py</code></p>

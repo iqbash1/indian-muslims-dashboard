@@ -20,7 +20,6 @@ import pathlib
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent
 CANONICAL_DIR = REPO_ROOT / "canonical"
-MANIFEST = REPO_ROOT / "manifest" / "metrics.yaml"
 OUT_PATH = REPO_ROOT / "docs" / "index.html"
 
 
@@ -77,103 +76,6 @@ def fmt_num(v: float, unit: str) -> str:
 
 
 # ---------- Metric prep ----------
-
-def prep_pop_share(rows: list[dict]) -> dict:
-    states = [(r["geography_code"], float(r["value"]))
-              for r in rows if r["geography_level"] == "state"]
-    states.sort(key=lambda x: -x[1])
-    districts = [(r["geography_code"], float(r["value"]))
-                 for r in rows if r["geography_level"] == "district"]
-    districts.sort(key=lambda x: -x[1])
-    top_districts = districts[:50]
-    national = next((float(r["value"]) for r in rows if r["geography_code"] == "IN"), None)
-    return {
-        "headline": fmt_num(national, "percent") if national else "—",
-        "headline_caption": (
-            f"All-India Muslim share of total population (2011). "
-            f"<b>{len(districts)} districts</b> in canonical with district-level Muslim share."
-        ),
-        "chart_labels": [state_label(c) for c, _ in states],
-        "chart_values": [round(v, 2) for _, v in states],
-        "chart_unit": "%",
-        "national": national,
-        "national_label": "National avg",
-        "rows": [{"label": state_label(c), "value": fmt_num(v, "percent")}
-                 for c, v in states],
-        "top_districts": [{"label": c, "value": fmt_num(v, "percent")}
-                          for c, v in top_districts],
-        "n_districts": len(districts),
-    }
-
-
-def prep_lit_7plus(rows: list[dict]) -> dict:
-    by_geo: dict[str, dict[str, float]] = {}
-    for r in rows:
-        g = r["geography_code"]
-        if g not in by_geo:
-            by_geo[g] = {}
-        by_geo[g][r["religion"]] = float(r["value"])
-
-    national = by_geo.get("IN", {})
-    state_keys = [g for g in by_geo if g.startswith("IN-S")]
-    state_keys.sort(key=lambda g: by_geo[g].get("muslim", 0))
-
-    # Gap chart: Muslim vs Hindu literacy by state
-    chart_labels = [state_label(g) for g in state_keys]
-    muslim = [round(by_geo[g].get("muslim", 0), 2) for g in state_keys]
-    hindu = [round(by_geo[g].get("hindu", 0), 2) for g in state_keys]
-
-    table_rows = []
-    for g in [(None, "IN")] + [(None, k) for k in state_keys]:
-        code = g[1]
-        b = by_geo.get(code, {})
-        gap = b.get("hindu", 0) - b.get("muslim", 0)
-        table_rows.append({
-            "label": state_label(code),
-            "muslim": fmt_num(b.get("muslim", 0), "percent") if "muslim" in b else "—",
-            "hindu": fmt_num(b.get("hindu", 0), "percent") if "hindu" in b else "—",
-            "all": fmt_num(b.get("all", 0), "percent") if "all" in b else "—",
-            "gap": f"{gap:+.2f}pp" if "muslim" in b and "hindu" in b else "—",
-        })
-
-    return {
-        "headline": fmt_num(national.get("muslim", 0), "percent"),
-        "headline_caption": (
-            f"All-India Muslim literacy (7+), 2011. "
-            f"Hindu: {fmt_num(national.get('hindu', 0), 'percent')}, "
-            f"All: {fmt_num(national.get('all', 0), 'percent')}"
-        ),
-        "chart_labels": chart_labels,
-        "muslim_series": muslim,
-        "hindu_series": hindu,
-        "table_rows": table_rows,
-    }
-
-
-def prep_sex_ratio(rows: list[dict]) -> dict:
-    by_geo: dict[str, dict[str, float]] = {}
-    for r in rows:
-        g = r["geography_code"]
-        if g not in by_geo:
-            by_geo[g] = {}
-        by_geo[g][r["religion"]] = float(r["value"])
-
-    national = by_geo.get("IN", {})
-    state_keys = [g for g in by_geo if g.startswith("IN-S")]
-    state_keys.sort(key=lambda g: by_geo[g].get("muslim", 0))
-
-    return {
-        "headline": fmt_num(national.get("muslim", 0), "females_per_1000_males"),
-        "headline_caption": (
-            f"All-India Muslim sex ratio (females per 1000 males), 2011. "
-            f"Hindu: {fmt_num(national.get('hindu', 0), 'females_per_1000_males')}, "
-            f"All: {fmt_num(national.get('all', 0), 'females_per_1000_males')}"
-        ),
-        "chart_labels": [state_label(g) for g in state_keys],
-        "muslim_series": [round(by_geo[g].get("muslim", 0), 1) for g in state_keys],
-        "hindu_series": [round(by_geo[g].get("hindu", 0), 1) for g in state_keys],
-    }
-
 
 def compute_prison_rates() -> dict:
     """Read prison + undertrial rates and counts from L3 canonical only.
@@ -404,72 +306,6 @@ def render_scorecard_rows() -> str:
     return "\n    ".join(rows)
 
 
-def prep_prison_rate(kind: str) -> dict:
-    """For prison/undertrial: present as absolute count + per-100k rate."""
-    r = compute_prison_rates()[kind]
-    muslim_cnt = r["muslim"]["count"]
-    muslim_rate = r["muslim"]["rate_per_100k"]
-    hindu_rate = r["hindu"]["rate_per_100k"]
-    all_rate = r["all"]["rate_per_100k"]
-    ratio = round(muslim_rate / hindu_rate, 2)
-    return {
-        "headline": f"{muslim_cnt:,}",
-        "headline_caption": (
-            f"All-India Muslim {kind} count. <b>{muslim_rate} per 100,000 Muslims</b>, "
-            f"vs Hindu {hindu_rate} per 100k and All {all_rate} per 100k. "
-            f"Muslim rate is <b>{ratio}× the Hindu rate</b>."
-        ),
-        "chart_labels": ["Muslim", "Hindu", "All"],
-        "chart_values": [muslim_rate, hindu_rate, all_rate],
-    }
-
-
-def prep_national_by_religion(rows: list[dict], unit: str) -> dict:
-    """For metrics that only have national-level data (e.g. IMR, anemia from NFHS)."""
-    by_religion = {r["religion"]: float(r["value"]) for r in rows
-                   if r["geography_level"] == "national"}
-    muslim = by_religion.get("muslim")
-    hindu = by_religion.get("hindu")
-    all_v = by_religion.get("all")
-    headline = fmt_num(muslim, unit) if muslim is not None else "—"
-    caption_parts = []
-    if hindu is not None:
-        caption_parts.append(f"Hindu: {fmt_num(hindu, unit)}")
-    if all_v is not None:
-        caption_parts.append(f"All: {fmt_num(all_v, unit)}")
-    caption = "All-India Muslim, NFHS-5. " + ", ".join(caption_parts)
-    # Bar chart of religion comparison
-    order = ["muslim", "hindu", "all"]
-    labels = [r.capitalize() if r != "all" else "All" for r in order if r in by_religion]
-    values = [round(by_religion[r], 2) for r in order if r in by_religion]
-    return {
-        "headline": headline,
-        "headline_caption": caption,
-        "chart_labels": labels,
-        "chart_values": values,
-    }
-
-
-def prep_muslim_higher_ed(rows: list[dict]) -> dict:
-    states = [(r["geography_code"], float(r["value"]))
-              for r in rows if r["geography_level"] == "state"]
-    states.sort(key=lambda x: -x[1])
-    national = next((float(r["value"]) for r in rows if r["geography_code"] == "IN"), None)
-    return {
-        "headline": fmt_num(national, "count") if national else "—",
-        "headline_caption": (
-            "All-India Muslim student enrolment in higher education (AISHE 2021-22). "
-            "Note: AISHE reports Muslim Minority separately; Hindu is residual, not directly enumerated."
-        ),
-        "chart_labels": [state_label(c) for c, _ in states[:20]],
-        "chart_values": [int(v) for _, v in states[:20]],
-        "rows": [{"label": state_label(c), "value": fmt_num(v, "count")}
-                 for c, v in states],
-    }
-
-
-# ---------- HTML rendering ----------
-
 TEMPLATE = """<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -658,18 +494,20 @@ TEMPLATE = """<!DOCTYPE html>
   Hindu and all-India comparison baselines on every metric. The gap between Muslim
   outcomes and these baselines is the story this dashboard is built around —
   inheriting the Sachar Committee (2006) methodology of focused, comparative measurement.</p>
-  <p>Each tile shows: source path, methodology note, "data current to" badge, and a
-  link to the underlying canonical CSV. Click any column header in the scorecard to sort.
-  Numbers tagged <i>"paradox"</i> are ones where Muslim outcomes run <i>ahead of</i> Hindu —
-  notably infant survival, women's anaemia, and sex ratio. These coexist with persistent
-  Muslim disadvantage on the socioeconomic, representation, and justice indicators.</p>
+  <p>Each metric is a card showing the Muslim value, where it ranks among religious
+  communities (the analog of a US state's rank), and — where the source has multiple
+  survey rounds — how it has changed over time, with the source linked to its canonical
+  CSV. Click any scorecard column to sort. Numbers tagged <i>"paradox"</i> are ones where
+  Muslim outcomes run <i>ahead of</i> Hindu — notably infant survival, women's anaemia, and
+  sex ratio. These coexist with persistent Muslim disadvantage on the socioeconomic,
+  representation, and justice indicators.</p>
 </section>
 
 <div class="status-bar">
   <span><b>{n_metrics}</b> metrics live</span>
   <span><b>{n_sources}</b> sources archived</span>
   <span><b>{n_rows}</b> canonical rows · all schema-valid</span>
-  <span>Comparison baseline on every applicable tile</span>
+  <span>Comparison baseline on every applicable card</span>
 </div>
 
 <!-- SCORECARD -->
@@ -876,109 +714,17 @@ function trendChart(id, years, muslim, hindu, suffix, hasBreak) {
 """
 
 
-def render_rows(rows: list[dict], cols: list[str], national_label: str | None = None) -> str:
-    out: list[str] = []
-    for r in rows:
-        cls = ' class="national"' if national_label and r.get("label") == national_label else ""
-        cells = "".join(f"<td>{html.escape(str(r.get(c, '—')))}</td>" for c in cols)
-        out.append(f"<tr{cls}><td>{html.escape(r['label'])}</td>{cells}</tr>")
-    return "\n      ".join(out)
-
-
 def build() -> None:
-    pop = prep_pop_share(load_metric("pop-share"))
-    lit = prep_lit_7plus(load_metric("lit-7plus"))
-    sr = prep_sex_ratio(load_metric("sex-ratio"))
-    imr = prep_national_by_religion(load_metric("imr"), "per_1000_live_births")
-    id_ = prep_national_by_religion(load_metric("inst-delivery"), "percent")
-    wa = prep_national_by_religion(load_metric("women-anemia"), "percent")
-    is_ = prep_national_by_religion(load_metric("improved-sanitation"), "percent")
-    lfpr = prep_national_by_religion(load_metric("lfpr-15plus"), "percent")
-    wpr = prep_national_by_religion(load_metric("wpr-15plus"), "percent")
-    ss = prep_national_by_religion(load_metric("salaried-share"), "percent")
-    ps2 = prep_prison_rate("prison")
-    us = prep_prison_rate("undertrial")
-    # mla-share: national row + per-state rows (multiple years)
-    mla_data_rows = load_metric("mla-share")
-    mla_national = next((r for r in mla_data_rows if r["geography_level"] == "national"), None)
-    mla_states = sorted([r for r in mla_data_rows if r["geography_level"] == "state"],
-                        key=lambda r: -float(r["value"]))
-    mla_data = {
-        "headline": f"{float(mla_national['value']):.2f}%" if mla_national else "—",
-        "headline_caption": (
-            "All-state aggregate ~<b>6% of MLAs</b> across 28 state assemblies, vs Muslim "
-            "population share ~14.2%. Per-state chart below shows verified counts for 8 states."
-        ),
-        "chart_labels": [state_label(r["geography_code"]) + f' ({r["year"]})' for r in mla_states],
-        "chart_values": [float(r["value"]) for r in mla_states],
-    }
-    # ls-share time series tile (national only)
-    ls_rows = sorted([r for r in load_metric("ls-share") if r["geography_level"] == "national"],
-                     key=lambda r: int(r["year"]))
-    ls_latest = ls_rows[-1] if ls_rows else None
-    ls_data = {
-        "headline": f"{float(ls_latest['value']):.2f}%" if ls_latest else "—",
-        "headline_caption": (
-            f"Muslim MPs in the 18th Lok Sabha (2024). "
-            f"<b>{float(ls_latest['value']):.2f}% of 543 seats</b> "
-            f"vs Muslim population share ~14.2% — a chronic 9-10pp underrepresentation."
-        ),
-        "chart_labels": [r["year"] for r in ls_rows],
-        "chart_values": [float(r["value"]) for r in ls_rows],
-    }
-    # communal-incidents-govt: national time series + state-2022 drill-down
-    all_ci = load_metric("communal-incidents-govt")
-    ci_national = sorted([r for r in all_ci if r["geography_level"] == "national"],
-                         key=lambda r: int(r["year"]))
-    ci_states = sorted([r for r in all_ci if r["geography_level"] == "state"],
-                       key=lambda r: -int(float(r["value"])))
-    ci_latest = ci_national[-1] if ci_national else None
-    # Render state drill-down rows (top 15)
-    ci_state_rows = "\n      ".join(
-        f'<tr><td>{html.escape(state_label(r["geography_code"]))}</td>'
-        f'<td>{int(float(r["value"]))}</td></tr>'
-        for r in ci_states[:15]
-    )
-    ci_data = {
-        "headline": f"{int(float(ci_latest['value'])):,}" if ci_latest else "—",
-        "headline_caption": (
-            f"Communal/religious rioting incidents recorded by NCRB nationally in "
-            f"{ci_latest['year']}. Time series: 857 (2020) → 378 (2021) → 272 (2022). "
-            f"The published decline is contested by civic compilations which report higher counts; "
-            f"several states have stopped recording 'communal' as a separate category since ~2017."
-        ),
-        "chart_labels": [r["year"] for r in ci_national],
-        "chart_values": [int(float(r["value"])) for r in ci_national],
-        "state_rows": ci_state_rows,
-        "n_states": len(ci_states),
-    }
-
-    # communal-incidents-civic (IHL) time series
-    cic_rows = sorted(load_metric("communal-incidents-civic"), key=lambda r: int(r["year"]))
-    cic_latest = cic_rows[-1] if cic_rows else None
-    cic_data = {
-        "headline": f"{int(float(cic_latest['value'])):,}" if cic_latest else "—",
-        "headline_caption": (
-            f"India Hate Lab documented {int(float(cic_latest['value'])):,} in-person "
-            f"anti-Muslim hate speech events in {cic_latest['year']} — <b>a 74% rise</b> from "
-            f"668 in 2023. ~98% target Muslims. Different unit from NCRB's rioting count; "
-            f"see methodology."
-        ),
-        "chart_labels": [r["year"] for r in cic_rows],
-        "chart_values": [int(float(r["value"])) for r in cic_rows],
-    }
-    ahe = prep_muslim_higher_ed(load_metric("muslim-higher-ed-enrolment"))
-
-    n_sources = 6
-    n_metrics = len(SCORECARD_SPEC)  # SSOT: derive from the scorecard so it never goes stale
-    n_rows = (len(load_metric("pop-share")) + len(load_metric("lit-7plus"))
-              + len(load_metric("sex-ratio")) + len(load_metric("imr"))
-              + len(load_metric("inst-delivery")) + len(load_metric("women-anemia"))
-              + len(load_metric("improved-sanitation"))
-              + len(load_metric("lfpr-15plus")) + len(load_metric("wpr-15plus"))
-              + len(load_metric("prison-share")) + len(load_metric("undertrial-share"))
-              + len(load_metric("prison-rate-per-100k")) + len(load_metric("undertrial-rate-per-100k"))
-              + len(load_metric("muslim-higher-ed-enrolment")))
+    # Status-bar counts derived from canonical (SSOT — never goes stale).
+    n_metrics = len(SCORECARD_SPEC)
+    n_rows, source_ids = 0, set()
+    for cpath in sorted(CANONICAL_DIR.glob("*.csv")):
+        with cpath.open() as f:
+            for row in csv.DictReader(f):
+                n_rows += 1
+                if row.get("source_id"):
+                    source_ids.add(row["source_id"])
+    n_sources = len(source_ids)
 
     cluster_grids, card_charts = render_all_clusters()
 
@@ -990,104 +736,6 @@ def build() -> None:
         "{scorecard_rows}": render_scorecard_rows(),
         "{cluster_grids}": cluster_grids,
         "{card_charts}": card_charts,
-        # pop-share
-        "{ps_headline}": pop["headline"],
-        "{ps_caption}": pop["headline_caption"],
-        "{n_ps_rows}": str(len(pop["rows"])),
-        "{n_ps_districts}": str(pop["n_districts"]),
-        "{ps_rows}": render_rows(pop["rows"], ["value"]),
-        "{ps_top_districts}": render_rows(pop["top_districts"], ["value"]),
-        "{ps_chart_labels}": json.dumps(pop["chart_labels"]),
-        "{ps_chart_values}": json.dumps(pop["chart_values"]),
-        # lit-7plus
-        "{lit_headline}": lit["headline"],
-        "{lit_caption}": lit["headline_caption"],
-        "{n_lit_rows}": str(len(lit["table_rows"])),
-        "{lit_rows}": render_rows(lit["table_rows"], ["muslim", "hindu", "all", "gap"],
-                                   national_label="All India"),
-        "{lit_chart_labels}": json.dumps(lit["chart_labels"]),
-        "{lit_muslim}": json.dumps(lit["muslim_series"]),
-        "{lit_hindu}": json.dumps(lit["hindu_series"]),
-        # sex-ratio
-        "{sr_headline}": sr["headline"],
-        "{sr_caption}": sr["headline_caption"],
-        "{sr_chart_labels}": json.dumps(sr["chart_labels"]),
-        "{sr_muslim}": json.dumps(sr["muslim_series"]),
-        "{sr_hindu}": json.dumps(sr["hindu_series"]),
-        # imr
-        "{imr_headline}": imr["headline"],
-        "{imr_caption}": imr["headline_caption"],
-        "{imr_chart_labels}": json.dumps(imr["chart_labels"]),
-        "{imr_chart_values}": json.dumps(imr["chart_values"]),
-        # institutional delivery
-        "{id_headline}": id_["headline"],
-        "{id_caption}": id_["headline_caption"],
-        "{id_chart_labels}": json.dumps(id_["chart_labels"]),
-        "{id_chart_values}": json.dumps(id_["chart_values"]),
-        # improved sanitation (toilet access)
-        "{is_headline}": is_["headline"],
-        "{is_caption}": is_["headline_caption"],
-        "{is_chart_labels}": json.dumps(is_["chart_labels"]),
-        "{is_chart_values}": json.dumps(is_["chart_values"]),
-        # women anaemia
-        "{wa_headline}": wa["headline"],
-        "{wa_caption}": wa["headline_caption"],
-        "{wa_chart_labels}": json.dumps(wa["chart_labels"]),
-        "{wa_chart_values}": json.dumps(wa["chart_values"]),
-        # salaried share
-        "{ss_headline}": ss["headline"],
-        "{ss_caption}": ss["headline_caption"],
-        "{ss_chart_labels}": json.dumps(ss["chart_labels"]),
-        "{ss_chart_values}": json.dumps(ss["chart_values"]),
-        # lfpr 15+
-        "{lfpr_headline}": lfpr["headline"],
-        "{lfpr_caption}": lfpr["headline_caption"],
-        "{lfpr_chart_labels}": json.dumps(lfpr["chart_labels"]),
-        "{lfpr_chart_values}": json.dumps(lfpr["chart_values"]),
-        # wpr 15+
-        "{wpr_headline}": wpr["headline"],
-        "{wpr_caption}": wpr["headline_caption"],
-        "{wpr_chart_labels}": json.dumps(wpr["chart_labels"]),
-        "{wpr_chart_values}": json.dumps(wpr["chart_values"]),
-        # lok sabha share
-        "{ls_headline}": ls_data["headline"],
-        "{ls_caption}": ls_data["headline_caption"],
-        "{ls_chart_labels}": json.dumps(ls_data["chart_labels"]),
-        "{ls_chart_values}": json.dumps(ls_data["chart_values"]),
-        # mla share
-        "{mla_headline}": mla_data["headline"],
-        "{mla_caption}": mla_data["headline_caption"],
-        "{mla_chart_labels}": json.dumps(mla_data["chart_labels"]),
-        "{mla_chart_values}": json.dumps(mla_data["chart_values"]),
-        # communal incidents (NCRB)
-        "{ci_headline}": ci_data["headline"],
-        "{ci_caption}": ci_data["headline_caption"],
-        "{ci_chart_labels}": json.dumps(ci_data["chart_labels"]),
-        "{ci_chart_values}": json.dumps(ci_data["chart_values"]),
-        "{ci_state_rows}": ci_data["state_rows"],
-        "{ci_n_states}": str(ci_data["n_states"]),
-        # communal incidents (India Hate Lab)
-        "{cic_headline}": cic_data["headline"],
-        "{cic_caption}": cic_data["headline_caption"],
-        "{cic_chart_labels}": json.dumps(cic_data["chart_labels"]),
-        "{cic_chart_values}": json.dumps(cic_data["chart_values"]),
-        # prison share
-        "{ps2_headline}": ps2["headline"],
-        "{ps2_caption}": ps2["headline_caption"],
-        "{ps2_chart_labels}": json.dumps(ps2["chart_labels"]),
-        "{ps2_chart_values}": json.dumps(ps2["chart_values"]),
-        # undertrial share
-        "{us_headline}": us["headline"],
-        "{us_caption}": us["headline_caption"],
-        "{us_chart_labels}": json.dumps(us["chart_labels"]),
-        "{us_chart_values}": json.dumps(us["chart_values"]),
-        # muslim higher ed
-        "{ahe_headline}": ahe["headline"],
-        "{ahe_caption}": ahe["headline_caption"],
-        "{n_ahe_rows}": str(len(ahe["rows"])),
-        "{ahe_rows}": render_rows(ahe["rows"], ["value"]),
-        "{ahe_chart_labels}": json.dumps(ahe["chart_labels"]),
-        "{ahe_chart_values}": json.dumps(ahe["chart_values"]),
     }
     html_out = TEMPLATE
     for k, v in substitutions.items():
@@ -1130,7 +778,6 @@ COMMUNITY_LABEL = {
     "sikh": "Sikh", "buddhist": "Buddhist", "jain": "Jain",
     "all": "All", "other": "Other",
 }
-EDU_PREVIEW_PATH = REPO_ROOT / "docs" / "preview-education-cards.html"
 # Tier text colors mirror the Hawaii pattern: top third green, bottom third
 # red, middle muted grey ("neutral isn't worth shouting about").
 TIER_HEX = {"good": "#065F46", "mid": "#555555", "bad": "#991B1B"}
@@ -1161,181 +808,6 @@ def community_rank(by_religion: dict[str, float], higher_is_better: bool):
     else:
         tier = "mid"
     return rank, n, tier, present
-
-
-_EDU_CHART_JS = """
-const valueLabels = {
-  id: 'valueLabels',
-  afterDatasetsDraw(chart) {
-    const { ctx } = chart;
-    const meta = chart.getDatasetMeta(0);
-    ctx.save();
-    ctx.font = '600 11px Inter, system-ui, sans-serif';
-    ctx.textBaseline = 'middle';
-    ctx.fillStyle = '#555';
-    meta.data.forEach((bar, i) => {
-      const v = chart.data.datasets[0].data[i];
-      ctx.fillText(v.toFixed(1) + '%', bar.x + 6, bar.y);
-    });
-    ctx.restore();
-  }
-};
-new Chart(document.getElementById('lit-comm-chart'), {
-  type: 'bar',
-  data: {
-    labels: __LABELS__,
-    datasets: [{ data: __VALUES__, backgroundColor: __COLORS__, borderRadius: 3, barPercentage: 0.82, categoryPercentage: 0.86 }],
-  },
-  options: {
-    indexAxis: 'y', responsive: true, maintainAspectRatio: false, animation: false,
-    layout: { padding: { right: 40 } },
-    plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => c.parsed.x.toFixed(2) + '%' } } },
-    scales: {
-      x: { display: false, grace: '6%' },
-      y: { grid: { display: false }, border: { display: false }, ticks: { font: { size: 11 } } },
-    },
-  },
-  plugins: [valueLabels],
-});
-"""
-
-_EDU_PREVIEW_HEAD = """<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>Education — card-grid prototype</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<style>
-  :root {
-    --bg:#f5f5f5; --card-bg:#ffffff; --text:#1a1a1a; --text-muted:#555555;
-    --accent:#7b1d22;
-    --positive:#065F46; --negative:#991B1B; --neutral:#555555;
-    --border:#e6e3da; --radius:8px; --radius-pill:999px;
-    --shadow-card:0 4px 14px rgba(0,0,0,.09);
-    --text-2xs:.70rem; --text-xs:.75rem; --text-sm:.82rem; --text-base:.88rem; --text-lg:1rem;
-    --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
-  }
-  *{box-sizing:border-box;}
-  body{font-family:var(--font);font-size:15px;line-height:1.5;color:var(--text);background:var(--bg);margin:0;padding:0;}
-  .page{max-width:1080px;margin:0 auto;padding:32px 24px 80px;}
-  h1{font-size:1.7rem;margin:0 0 4px;letter-spacing:-.01em;}
-  .tagline{color:var(--text-muted);font-size:.9rem;margin:0 0 18px;}
-  .protobar{background:#fff7f0;border-left:4px solid var(--accent);border-radius:4px;padding:12px 16px;margin-bottom:20px;font-size:.85rem;color:#4a3a2a;}
-  .protobar b{color:var(--accent);}
-  .cluster-header{font-size:.85rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;margin:28px 0 12px;padding-top:10px;border-top:2px solid var(--border);display:flex;justify-content:space-between;align-items:baseline;}
-  .legend{font-size:var(--text-xs);font-weight:500;color:var(--text-muted);letter-spacing:0;text-transform:none;}
-  .legend .sw{display:inline-block;width:10px;height:10px;border-radius:2px;vertical-align:middle;margin:0 4px 0 10px;}
-  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1rem;}
-  .card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.25rem 1rem;display:flex;flex-direction:column;transition:border-color .15s,box-shadow .15s,transform .15s;}
-  .card:hover{border-color:var(--accent);box-shadow:var(--shadow-card);transform:translateY(-2px);}
-  .card-metric{font-size:var(--text-sm);font-weight:600;color:var(--text);margin-bottom:.5rem;line-height:1.3;}
-  .card-hero{display:flex;align-items:baseline;gap:.4rem;margin-bottom:.35rem;}
-  .card-value{font-size:1.6rem;font-weight:700;letter-spacing:-.02em;font-feature-settings:"tnum";}
-  .card-unit,.card-year{font-size:var(--text-sm);color:var(--text-muted);font-weight:500;}
-  .card-direction{align-self:flex-start;font-size:.62rem;font-weight:600;color:var(--text-muted);background:var(--bg);padding:1px 7px;border-radius:var(--radius-pill);margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.03em;}
-  .card-chartwrap{height:188px;width:100%;margin:.1rem 0 .2rem;}
-  .card-comparisons{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-top:.6rem;padding-top:.6rem;border-top:1px solid var(--border);}
-  .card-comp{text-align:center;padding:.35rem .25rem;border-radius:6px;}
-  .comp-label{font-size:var(--text-xs);color:var(--text-muted);font-weight:500;margin-bottom:.15rem;}
-  .comp-verdict{font-size:var(--text-base);font-weight:700;font-feature-settings:"tnum";}
-  .comp-detail{font-size:var(--text-2xs);color:var(--text-muted);margin-top:.1rem;}
-  .card-comp.positive .comp-verdict,.card-comp.good .comp-verdict{color:var(--positive);}
-  .card-comp.negative .comp-verdict,.card-comp.bad .comp-verdict{color:var(--negative);}
-  .card-comp.neutral .comp-verdict,.card-comp.mid .comp-verdict{color:var(--neutral);}
-  .comp-note{grid-column:1/-1;text-align:left;font-size:var(--text-xs);color:var(--text-muted);line-height:1.45;padding:.1rem .15rem;}
-  .card-footer{margin-top:.5rem;padding-top:.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:.5rem;font-size:var(--text-2xs);color:var(--text-muted);}
-  .card-footer a{color:var(--accent);text-decoration:none;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;}
-  .card-footer a:hover{text-decoration:underline;}
-  @media (max-width:560px){.cards{grid-template-columns:1fr;}}
-</style>
-</head>
-<body>
-<div class="page">
-"""
-
-
-def _edu_card(metric, value_html, unit, year, polarity, chart_html, comps_html,
-              source_label, csv_href):
-    pill = f'<div class="card-direction">{html.escape(polarity)}</div>' if polarity else ""
-    return f"""
-  <section class="card">
-    <div class="card-metric">{html.escape(metric)}</div>
-    <div class="card-hero"><span class="card-value">{value_html}</span><span class="card-unit">{html.escape(unit)}</span><span class="card-year">({html.escape(year)})</span></div>
-    {pill}
-    {chart_html}
-    <div class="card-comparisons">{comps_html}</div>
-    <div class="card-footer"><span>{html.escape(source_label)}</span><a href="{html.escape(csv_href)}">{html.escape(csv_href)}</a></div>
-  </section>"""
-
-
-def build_education_cards_preview() -> None:
-    # ---- Literacy 7+ (multi-community) ----
-    lit_nat = {r["religion"]: float(r["value"])
-               for r in load_metric("lit-7plus") if r["geography_level"] == "national"}
-    rank, n, tier, ordered = community_rank(lit_nat, higher_is_better=True)
-    muslim_v, hindu_v, all_v = lit_nat["muslim"], lit_nat["hindu"], lit_nat["all"]
-    gap = muslim_v - hindu_v
-    gap_class = "negative" if gap < 0 else ("positive" if gap > 0 else "neutral")
-
-    chart_labels = [COMMUNITY_LABEL[c] for c, _ in ordered]
-    chart_values = [round(v, 4) for _, v in ordered]
-    colors = [TIER_HEX[tier] if c == "muslim" else "#D8DEE2" for c, _ in ordered]
-
-    lit_comps = (
-        f'<div class="card-comp {gap_class}"><div class="comp-label">vs Hindu</div>'
-        f'<div class="comp-verdict">{gap:+.1f}pp</div>'
-        f'<div class="comp-detail">{"behind" if gap < 0 else "ahead"}</div></div>'
-        f'<div class="card-comp {tier}"><div class="comp-label">Among communities</div>'
-        f'<div class="comp-verdict">{_ordinal(rank)} of {n}</div>'
-        f'<div class="comp-detail">{"bottom tier" if tier == "bad" else ("top tier" if tier == "good" else "middle tier")}</div></div>'
-    )
-    lit_chart = '<div class="card-chartwrap"><canvas id="lit-comm-chart"></canvas></div>'
-    lit_card = _edu_card(
-        "Literacy rate (7+ years)", f"{muslim_v:.1f}%", "literate, age 7+", "2011",
-        "higher is better", lit_chart, lit_comps,
-        "Census 2011 · C-09", "canonical/lit-7plus.csv",
-    )
-
-    # ---- Muslim higher-ed enrolment (Muslim-only — honest no-comparison case) ----
-    ahe_nat = next((float(r["value"]) for r in load_metric("muslim-higher-ed-enrolment")
-                    if r["geography_code"] == "IN"), None)
-    ahe_comps = (
-        '<div class="comp-note">No community ranking available — AISHE tabulates '
-        '<b>“Muslim Minority”</b> enrolment separately; other communities are not '
-        'enumerated in the same table, so a like-for-like rank can’t be computed yet.</div>'
-    )
-    ahe_card = _edu_card(
-        "Higher-education enrolment (Muslim)",
-        fmt_num(ahe_nat, "count") if ahe_nat else "—", "students", "2021-22",
-        "", "", ahe_comps, "AISHE 2021-22", "canonical/muslim-higher-ed-enrolment.csv",
-    )
-
-    body = f"""<h1>Education — card-grid prototype</h1>
-<p class="tagline">Hawaii-Dashboard-style layout · multi-community benchmarking · built {dt.datetime.now().strftime('%Y-%m-%d %H:%M')}</p>
-<div class="protobar"><b>Prototype.</b> Standalone preview of two patterns borrowed from hawaiidashboard.org:
-a compact card grid with a polarity pill + two-up comparison block, and a <b>“rank among communities”</b>
-tier — the analog of Hawaii’s “#N of 50 states.” Muslim literacy ranks <b>{_ordinal(rank)} of {n}</b> named
-religious communities. Diff this against the current single-column tile build.</div>
-<div class="cluster-header"><span>Education</span>
-  <span class="legend">Literacy by community<span class="sw" style="background:{TIER_HEX[tier]}"></span>Muslim<span class="sw" style="background:#D8DEE2"></span>others</span>
-</div>
-<div class="cards">{lit_card}{ahe_card}</div>
-"""
-
-    chart_js = (_EDU_CHART_JS
-                .replace("__LABELS__", json.dumps(chart_labels))
-                .replace("__VALUES__", json.dumps(chart_values))
-                .replace("__COLORS__", json.dumps(colors)))
-
-    page = _EDU_PREVIEW_HEAD + body + "</div>\n<script>\n" + chart_js + "\n</script>\n</body>\n</html>\n"
-    EDU_PREVIEW_PATH.parent.mkdir(parents=True, exist_ok=True)
-    EDU_PREVIEW_PATH.write_text(page)
-    print(f"wrote {EDU_PREVIEW_PATH.relative_to(REPO_ROOT)} "
-          f"({len(page):,} bytes; Muslim literacy rank {rank}/{n}, tier={tier})")
 
 
 # ============================================================================
@@ -1717,4 +1189,3 @@ def render_all_clusters():
 
 if __name__ == "__main__":
     build()
-    build_education_cards_preview()
