@@ -71,6 +71,33 @@ def canonicalize() -> None:
             ])
             n_rows += 1
 
+        # ---- Earlier rounds for the time series (NFHS-4 2015, NFHS-3 2005) ----
+        # break_flag=true: cross-round anaemia comparability is limited
+        # (blood-draw method / cut-offs), so the trend line is not drawn across it.
+        for year, sid, sdoc, ext in (
+            (2015, "nfhs-4", "sources/nfhs-4/reports/india-report-fr339.pdf",
+             "extracted/nfhs-4/nfhs-4-table10211-women-anaemia-by-religion.csv"),
+            (2005, "nfhs-3", "sources/nfhs-3/reports/india-report-frind3.pdf",
+             "extracted/nfhs-3/nfhs-3-table10241-women-anaemia-by-religion.csv"),
+        ):
+            p = REPO_ROOT / ext
+            if not p.exists():
+                continue
+            with p.open() as ef:
+                for r in csv.DictReader(ef):
+                    if r["metric"] != "any_anaemia_pct":
+                        continue
+                    w.writerow([
+                        "women-anemia", "national", "IN", year, r["religion"],
+                        round(float(r["value"]), 2), "women_age_15_49_tested",
+                        "", "", "", sid, sdoc, extraction_run,
+                        (f"NFHS Table 10.21.1/10.24.1, any anaemia in women 15-49 by "
+                         f"religion. Cross-round comparability limited (method/cut-offs) "
+                         f"— treat as methodology break. Year={year}."),
+                        "true",
+                    ])
+                    n_rows += 1
+
     print(f"wrote {OUTPUT_PATH.relative_to(REPO_ROOT)} ({n_rows} rows)")
 
 

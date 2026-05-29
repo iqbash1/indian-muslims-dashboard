@@ -75,6 +75,30 @@ def canonicalize() -> None:
             ])
             n_rows += 1
 
+        # ---- Earlier rounds for the time series (NFHS-4 2015, NFHS-3 2005) ----
+        for year, sid, sdoc, ext in (
+            (2015, "nfhs-4", "sources/nfhs-4/reports/india-report-fr339.pdf",
+             "extracted/nfhs-4/nfhs-4-table813-place-of-delivery-by-religion.csv"),
+            (2005, "nfhs-3", "sources/nfhs-3/reports/india-report-frind3.pdf",
+             "extracted/nfhs-3/nfhs-3-table812-place-of-delivery-by-religion.csv"),
+        ):
+            p = REPO_ROOT / ext
+            if not p.exists():
+                continue
+            with p.open() as ef:
+                for r in csv.DictReader(ef):
+                    if r["metric"] != "institutional_delivery_pct":
+                        continue
+                    w.writerow([
+                        "inst-delivery", "national", "IN", year, r["religion"],
+                        round(float(r["value"]), 2), "live_births_5y_preceding_survey",
+                        "", "", "", sid, sdoc, extraction_run,
+                        (f"NFHS Table 8.13/8.12, % delivered in a health facility by "
+                         f"religion (published total-residence panel). Year={year}."),
+                        "false",
+                    ])
+                    n_rows += 1
+
     print(f"wrote {OUTPUT_PATH.relative_to(REPO_ROOT)} ({n_rows} rows; computed all={all_value}%)")
 
 

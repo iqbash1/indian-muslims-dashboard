@@ -841,6 +841,34 @@ function lineChart(id, labels, values, color, suffix) {
   });
 }
 
+// Multi-round trend: Muslim (solid accent) vs Hindu (dashed reference) over
+// survey rounds. hasBreak → Muslim line dashed too (cross-round comparability
+// caveat, e.g. anaemia). Value axis hugs the data (no forced zero baseline).
+function trendChart(id, years, muslim, hindu, suffix, hasBreak) {
+  new Chart(document.getElementById(id), {
+    type: 'line',
+    data: { labels: years, datasets: [
+      { label: 'Muslim', data: muslim, borderColor: '#7b1d22', backgroundColor: 'rgba(123,29,34,.07)',
+        fill: true, tension: 0.25, pointRadius: 3, pointBackgroundColor: '#7b1d22',
+        borderDash: hasBreak ? [5, 4] : [], spanGaps: false },
+      { label: 'Hindu', data: hindu, borderColor: '#9aa3a8', backgroundColor: 'transparent',
+        fill: false, tension: 0.25, pointRadius: 2, pointBackgroundColor: '#9aa3a8',
+        borderDash: [4, 3], spanGaps: false },
+    ]},
+    options: {
+      responsive: true, maintainAspectRatio: false, animation: false,
+      plugins: {
+        legend: { display: true, position: 'top', align: 'end', labels: { boxWidth: 10, font: { size: 9 } } },
+        tooltip: { callbacks: { label: (c) => c.dataset.label + ': ' + c.parsed.y + suffix } },
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+        y: { beginAtZero: false, grace: '12%', ticks: { font: { size: 10 } } },
+      },
+    },
+  });
+}
+
 {card_charts}
 </script>
 </body>
@@ -1438,8 +1466,39 @@ def _state_details(metric_id: str, unit: str) -> str:
 
 
 def _nat_by_religion(metric_id: str) -> dict:
-    return {r["religion"]: float(r["value"])
-            for r in load_metric(metric_id) if r["geography_level"] == "national"}
+    """National {religion: value} for the LATEST year present (avoids multi-year collision)."""
+    nat = [r for r in load_metric(metric_id) if r["geography_level"] == "national"]
+    if not nat:
+        return {}
+    latest = max(int(r["year"]) for r in nat)
+    return {r["religion"]: float(r["value"]) for r in nat if int(r["year"]) == latest}
+
+
+def _nat_trend(metric_id: str):
+    """Return (years_sorted, {religion:{year:value}}, has_break) for national rows."""
+    nat = [r for r in load_metric(metric_id) if r["geography_level"] == "national"]
+    years = sorted({int(r["year"]) for r in nat})
+    series: dict = {}
+    has_break = False
+    for r in nat:
+        series.setdefault(r["religion"], {})[int(r["year"])] = float(r["value"])
+        if str(r.get("break_flag", "")).strip().lower() in ("true", "1", "yes"):
+            has_break = True
+    return years, series, has_break
+
+
+def _community_table(nat: dict, unit: str, hib) -> str:
+    """<details> table of the latest-year value per named community, Muslim marked."""
+    rows = [(COMMUNITY_LABEL[c], nat[c], c == "muslim") for c in NAMED_COMMUNITIES if c in nat]
+    if hib is not None:
+        rows.sort(key=lambda b: b[1], reverse=bool(hib))
+    trs = []
+    for name, val, is_m in rows:
+        cls = ' style="font-weight:700;color:var(--accent)"' if is_m else ""
+        trs.append(f"<tr{cls}><td>{html.escape(name)}</td><td>{fmt_num(val, unit)}</td></tr>")
+    return ("<details><summary>By community (latest year)</summary>"
+            "<table><thead><tr><th>Community</th><th>Value</th></tr></thead>"
+            f"<tbody>{''.join(trs)}</tbody></table></details>")
 
 
 def render_metric_card(m: dict):
@@ -1477,26 +1536,11 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
     if len(named) >= 4 and hib is not None:
         rank, n, tier, _ = community_rank(nat, bool(hib))
     elif hindu is not None:
-        tier = _verdict(muslim - hindu, hib)
-        tier = {"good": "good", "bad": "bad", "neutral": "mid"}[tier]
+        tier = {"good": "good", "bad": "bad", "neutral": "mid"}[_verdict(muslim - hindu, hib)]
     else:
         tier = "mid"
 
-    # Bars are real communities only. "All" is an aggregate that contains them,
-    # so it is NOT a bar — it is passed to hbar as a dashed baseline reference.
-    pairs = [(COMMUNITY_LABEL[c], nat[c], c == "muslim") for c in named]
-    if hib is not None:
-        pairs.sort(key=lambda b: b[1], reverse=bool(hib))
-    labels = [p[0] for p in pairs]
-    values = [round(p[1], 4) for p in pairs]
-    mhex = TIER_HEX.get(tier, "#555555")
-    colors = [mhex if p[2] else "#D8DEE2" for p in pairs]
-    h = len(pairs) * 28 + 28
-    chart_html = f'<div class="card-chartwrap" style="height:{h}px"><canvas id="{cvid}"></canvas></div>'
-    ref = json.dumps(round(all_v, 4)) if all_v is not None else "null"
-    js = (f'hbar("{cvid}", {json.dumps(labels)}, {json.dumps(values)}, {json.dumps(colors)}, '
-          f'{json.dumps(suffix)}, {dec}, {ref}, "All-India");')
-
+    # Comparison block (latest year): vs-Hindu gap + rank-among-communities (or vs-All).
     comps = ""
     if hindu is not None:
         gap = muslim - hindu
@@ -1509,8 +1553,34 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
         cls = _verdict(gap, hib)
         comps += _comp("vs All-India", _gap_str(gap, unit), _verdict_word(cls), cls)
 
+    years, series, has_break = _nat_trend(mid)
+    if len(years) >= 2:
+        # TIME SERIES card: Muslim trend (solid) vs Hindu (dashed reference) over
+        # rounds; full latest-year community ranking moves to a <details> table.
+        m_series = [series.get("muslim", {}).get(y) for y in years]
+        h_series = [series.get("hindu", {}).get(y) for y in years]
+        chart_html = f'<div class="card-chartwrap" style="height:150px"><canvas id="{cvid}"></canvas></div>'
+        js = (f'trendChart("{cvid}", {json.dumps(years)}, {json.dumps(m_series)}, '
+              f'{json.dumps(h_series)}, {json.dumps(suffix)}, {json.dumps(bool(has_break))});')
+        details = _community_table(nat, unit, hib)
+    else:
+        # SNAPSHOT card: community bar with the All-India dashed baseline.
+        pairs = [(COMMUNITY_LABEL[c], nat[c], c == "muslim") for c in named]
+        if hib is not None:
+            pairs.sort(key=lambda b: b[1], reverse=bool(hib))
+        labels = [p[0] for p in pairs]
+        values = [round(p[1], 4) for p in pairs]
+        mhex = TIER_HEX.get(tier, "#555555")
+        colors = [mhex if p[2] else "#D8DEE2" for p in pairs]
+        h = len(pairs) * 28 + 28
+        chart_html = f'<div class="card-chartwrap" style="height:{h}px"><canvas id="{cvid}"></canvas></div>'
+        ref = json.dumps(round(all_v, 4)) if all_v is not None else "null"
+        js = (f'hbar("{cvid}", {json.dumps(labels)}, {json.dumps(values)}, {json.dumps(colors)}, '
+              f'{json.dumps(suffix)}, {dec}, {ref}, "All-India");')
+        details = _state_details(mid, unit)
+
     return _card_shell(label, headline, CAPTION.get(mid, ""), _year_of(mid), polarity,
-                       chart_html, comps, src, csv_href, _state_details(mid, unit)), js
+                       chart_html, comps, src, csv_href, details), js
 
 
 def _card_muslim_only(mid, label, unit, src, csv_href, cvid):

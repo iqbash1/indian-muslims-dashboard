@@ -1,0 +1,11 @@
+{
+  "source_id": "nfhs-3",
+  "target_id": "india-report-frind3",
+  "url": "https://dhsprogram.com/pubs/pdf/frind3/frind3-vol1andvol2.pdf",
+  "pulled_at": "2026-05-29T03:22:34.854312+00:00",
+  "status_code": 200,
+  "content_type": "application/pdf",
+  "content_length": 5934171,
+  "sha256": "c1fb9db3227ef6dea264bd5babdbbd9fabcb5a80c640bfdfb12c9d070d3a270f",
+  "pull_script_version": "0.1.0"
+}

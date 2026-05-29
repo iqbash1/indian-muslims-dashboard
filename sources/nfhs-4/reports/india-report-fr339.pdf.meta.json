@@ -1,0 +1,11 @@
+{
+  "source_id": "nfhs-4",
+  "target_id": "india-report-fr339",
+  "url": "https://dhsprogram.com/pubs/pdf/FR339/FR339.pdf",
+  "pulled_at": "2026-05-29T03:22:14.200965+00:00",
+  "status_code": 200,
+  "content_type": "application/pdf",
+  "content_length": 7256916,
+  "sha256": "ae829501207767caf54c935f696bb4a39c4ee763f2261d2c1a87ded89cc1e19d",
+  "pull_script_version": "0.1.0"
+}

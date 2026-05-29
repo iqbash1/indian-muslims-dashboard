@@ -278,6 +278,77 @@ sources:
         target_path: sources/nfhs-5/reports/compendium-phase-2.pdf
         status: verified
 
+  - id: nfhs-4
+    name: National Family Health Survey 4 (2015-16)
+    publisher: International Institute for Population Sciences (IIPS), MoHFW
+    home_url: https://rchiips.org/nfhs/
+    cadence: ~5-year
+    cadence_notes: |
+      Prior round to NFHS-5. Pulled for multi-round (time-series) religion
+      differentials on the health indicators.
+    access:
+      method: web-download
+      auth_required: false
+      auth_notes: |
+        National report PDF is open on the DHS Program (dhsprogram.com).
+    formats: [pdf]
+    religion_disaggregated: true
+    geography_levels: [national, state, district]
+    coverage:
+      - child_mortality
+      - women_anemia
+      - maternal_health
+      - household_amenities
+    known_issues:
+      - "Anaemia cross-round comparability is debated (blood-draw method/cut-offs) — treat NFHS-4->5 anaemia as a methodology break, consistent with the women-anemia metric break note."
+      - "Sanitation definitions shift across rounds; document break."
+      - "Table numbering differs from NFHS-5; verify each religion table at extraction."
+    archive_dir: sources/nfhs-4/
+    runbook: docs/runbooks/nfhs-4.md
+    last_pulled: null
+    next_expected: null
+    targets:
+      - target_id: india-report-fr339
+        description: NFHS-4 India Report (FR339 - main report with religion crosstabs)
+        url: https://dhsprogram.com/pubs/pdf/FR339/FR339.pdf
+        target_path: sources/nfhs-4/reports/india-report-fr339.pdf
+        status: verified
+
+  - id: nfhs-3
+    name: National Family Health Survey 3 (2005-06)
+    publisher: International Institute for Population Sciences (IIPS), MoHFW
+    home_url: https://rchiips.org/nfhs/
+    cadence: ~5-year
+    cadence_notes: |
+      Third round. Earliest round with reliably religion-disaggregated health
+      differentials for the indicators tracked here.
+    access:
+      method: web-download
+      auth_required: false
+      auth_notes: |
+        National report (FRIND3, Vol I & II) is open on the DHS Program.
+    formats: [pdf]
+    religion_disaggregated: true
+    geography_levels: [national, state]
+    coverage:
+      - child_mortality
+      - women_anemia
+      - maternal_health
+      - household_amenities
+    known_issues:
+      - "Older report layout; religion breakdown lives in differentials tables but numbering differs from NFHS-4/5 — verify per indicator at extraction; skip any indicator not broken by religion."
+      - "Anaemia/sanitation definitions differ from later rounds; document breaks."
+    archive_dir: sources/nfhs-3/
+    runbook: docs/runbooks/nfhs-3.md
+    last_pulled: null
+    next_expected: null
+    targets:
+      - target_id: india-report-frind3
+        description: NFHS-3 India Report (FRIND3 Vol I & II - main report with religion differentials)
+        url: https://dhsprogram.com/pubs/pdf/frind3/frind3-vol1andvol2.pdf
+        target_path: sources/nfhs-3/reports/india-report-frind3.pdf
+        status: verified
+
   - id: plfs
     name: Periodic Labour Force Survey
     publisher: National Statistical Office (NSO), MoSPI

@@ -118,6 +118,33 @@ def canonicalize() -> None:
             ])
             n_rows += 1
 
+        # ---- Earlier rounds for the time series (NFHS-4 2015, NFHS-3 2005) ----
+        # Both publish a TOTAL-residence panel with IMR by religion directly, so
+        # no urban/rural weighting is needed (unlike the NFHS-5 row above).
+        for year, sid, sdoc, ext in (
+            (2015, "nfhs-4", "sources/nfhs-4/reports/india-report-fr339.pdf",
+             "extracted/nfhs-4/nfhs-4-table72-mortality-by-religion.csv"),
+            (2005, "nfhs-3", "sources/nfhs-3/reports/india-report-frind3.pdf",
+             "extracted/nfhs-3/nfhs-3-table72-mortality-by-religion.csv"),
+        ):
+            p = REPO_ROOT / ext
+            if not p.exists():
+                continue
+            with p.open() as ef:
+                for r in csv.DictReader(ef):
+                    if r["metric"] != "imr":
+                        continue
+                    w.writerow([
+                        "imr", "national", "IN", year, r["religion"],
+                        round(float(r["value"]), 2), "live_births", "", "", "",
+                        sid, sdoc, extraction_run,
+                        (f"NFHS Table 7.2 TOTAL-residence panel, infant mortality by "
+                         f"religion (published total; not urban/rural-weighted like the "
+                         f"NFHS-5 row). Year={year} = round midpoint."),
+                        "false",
+                    ])
+                    n_rows += 1
+
     print(f"wrote {OUTPUT_PATH.relative_to(REPO_ROOT)} ({n_rows} rows)")
 
 
