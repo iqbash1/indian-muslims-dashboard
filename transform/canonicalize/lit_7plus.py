@@ -17,7 +17,12 @@ it our national rate runs ~1pp low (72.98% vs the published 74.04%).
 Under-7 individuals are all illiterate by Census convention, so the literate
 numerator already represents 7+ literates before the Age-not-stated removal.
 
-Emits one row per geography for each religion in (muslim, hindu, all).
+Emits one row per geography for each religion in OUTPUT_RELIGIONS. The
+extracted C-09 table carries all eight Census religion categories, so the
+canonical layer now publishes the six named communities (muslim, hindu,
+christian, sikh, buddhist, jain) plus the residual "other" bucket and the
+"all" total — enabling rank-among-communities benchmarking, not just the
+Muslim-vs-Hindu gap.
 """
 
 from __future__ import annotations
@@ -31,7 +36,9 @@ L2_PATH = REPO_ROOT / "extracted" / "census-2011" / "c09-education-by-religion.c
 OUTPUT_PATH = REPO_ROOT / "canonical" / "lit-7plus.csv"
 CANONICALIZER_VERSION = "1.0.0"
 
-OUTPUT_RELIGIONS = ("muslim", "hindu", "all")
+OUTPUT_RELIGIONS = (
+    "muslim", "hindu", "christian", "sikh", "buddhist", "jain", "other", "all",
+)
 
 
 def geography(state_code: str, area_name: str) -> tuple[str, str]:

@@ -132,13 +132,54 @@
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     background: #efece4; padding: 1px 5px; border-radius: 3px;
   }
+  /* --- Card grid (Hawaii-Dashboard-style rollout) --- */
+  :root {
+    --positive: #065F46; --negative: #991B1B; --neutral: #555555;
+    --radius: 8px; --radius-pill: 999px;
+    --shadow-card: 0 4px 14px rgba(0,0,0,.09);
+    --t-2xs: .70rem; --t-xs: .75rem; --t-sm: .82rem; --t-base: .88rem;
+  }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 16px; margin-bottom: 8px; }
+  .card {
+    background: var(--card); border: 1px solid var(--rule); border-radius: var(--radius);
+    padding: 18px 18px 14px; display: flex; flex-direction: column;
+    transition: border-color .15s, box-shadow .15s, transform .15s;
+  }
+  .card:hover { border-color: var(--accent); box-shadow: var(--shadow-card); transform: translateY(-2px); }
+  .card:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .card-metric { font-size: var(--t-sm); font-weight: 600; color: var(--fg); margin-bottom: 8px; line-height: 1.3; }
+  .card-hero { display: flex; align-items: baseline; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
+  .card-value { font-size: 1.7rem; font-weight: 700; letter-spacing: -.02em; color: var(--accent); font-feature-settings: "tnum"; }
+  .card-unit, .card-year { font-size: var(--t-sm); color: var(--muted); font-weight: 500; }
+  .card-direction {
+    align-self: flex-start; font-size: .62rem; font-weight: 600; color: var(--muted);
+    background: var(--bg); padding: 1px 7px; border-radius: var(--radius-pill);
+    margin-bottom: 8px; text-transform: uppercase; letter-spacing: .03em;
+  }
+  .card-chartwrap { width: 100%; margin: 2px 0 4px; position: relative; }
+  .card-comparisons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: auto; padding-top: 10px; border-top: 1px solid var(--rule); }
+  .card-comp { text-align: center; padding: 5px 4px; border-radius: 6px; }
+  .comp-label { font-size: var(--t-xs); color: var(--muted); font-weight: 500; margin-bottom: 2px; }
+  .comp-verdict { font-size: var(--t-base); font-weight: 700; font-feature-settings: "tnum"; }
+  .comp-detail { font-size: var(--t-2xs); color: var(--muted); margin-top: 1px; }
+  .card-comp.positive .comp-verdict, .card-comp.good .comp-verdict { color: var(--positive); }
+  .card-comp.negative .comp-verdict, .card-comp.bad .comp-verdict { color: var(--negative); }
+  .card-comp.neutral .comp-verdict, .card-comp.mid .comp-verdict { color: var(--neutral); }
+  .comp-note { grid-column: 1 / -1; text-align: left; font-size: var(--t-xs); color: var(--muted); line-height: 1.45; }
+  .card-foot { margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: var(--t-2xs); color: var(--muted); }
+  .card-foot a { color: var(--muslim); text-decoration: none; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .card-foot a:hover { text-decoration: underline; }
+  .card details { margin-top: 10px; border-top: 1px dashed var(--rule); padding-top: 8px; }
+  .card details summary { font-size: var(--t-xs); }
+  .card details table { font-size: 12px; }
+  @media (max-width: 560px) { .cards { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
 <div class="page">
 
 <h1>Indian Muslims — Living Conditions Dashboard</h1>
-<p class="tagline">Built 2026-05-29 05:10 · <a href="https://github.com/iqbash1/indian-muslims-dashboard">source on GitHub</a></p>
+<p class="tagline">Built 2026-05-29 07:58 · <a href="https://github.com/iqbash1/indian-muslims-dashboard">source on GitHub</a></p>
 
 <section class="intro">
   <p>A scorecard of living-conditions indicators for India's Muslim population, with
@@ -155,7 +196,7 @@
 <div class="status-bar">
   <span><b>18</b> metrics live</span>
   <span><b>6</b> sources archived</span>
-  <span><b>954</b> canonical rows · all schema-valid</span>
+  <span><b>1134</b> canonical rows · all schema-valid</span>
   <span>Comparison baseline on every applicable tile</span>
 </div>
 
@@ -200,524 +241,47 @@
 </section>
 
 <h2 class="cluster-header">Demographics</h2>
-
-<!-- POP SHARE -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Muslim share of total population</h2>
-    <p class="source"><a class="csv-link" href="canonical/pop-share.csv">canonical/pop-share.csv</a> · sources/census-2011/c-series/c01-population-by-religion.xls</p>
-    <p class="data-current">Data current to · Census 2011 (next release: 2021 round delayed indefinitely)</p>
-  </div>
-  <div class="headline">14.23%</div>
-  <p class="headline-caption">All-India Muslim share of total population (2011). <b>640 districts</b> in canonical with district-level Muslim share.</p>
-  <div class="chart-wrap"><canvas id="ps-chart"></canvas></div>
-  <p class="methodology">Muslim population / total population at each geography, total residence
-  (urban + rural combined). Per Census 2011 published methodology.</p>
-  <details>
-    <summary>Full state data (35 states)</summary>
-    <table><thead><tr><th>State / UT</th><th>Muslim share</th></tr></thead><tbody>
-      <tr><td>Lakshadweep</td><td>96.58%</td></tr>
-      <tr><td>Jammu &amp; Kashmir</td><td>68.31%</td></tr>
-      <tr><td>Assam</td><td>34.22%</td></tr>
-      <tr><td>West Bengal</td><td>27.01%</td></tr>
-      <tr><td>Kerala</td><td>26.56%</td></tr>
-      <tr><td>Uttar Pradesh</td><td>19.26%</td></tr>
-      <tr><td>Bihar</td><td>16.87%</td></tr>
-      <tr><td>Jharkhand</td><td>14.53%</td></tr>
-      <tr><td>Uttarakhand</td><td>13.95%</td></tr>
-      <tr><td>Karnataka</td><td>12.92%</td></tr>
-      <tr><td>NCT of Delhi</td><td>12.86%</td></tr>
-      <tr><td>Maharashtra</td><td>11.54%</td></tr>
-      <tr><td>Gujarat</td><td>9.67%</td></tr>
-      <tr><td>Andhra Pradesh</td><td>9.56%</td></tr>
-      <tr><td>Rajasthan</td><td>9.07%</td></tr>
-      <tr><td>Tripura</td><td>8.60%</td></tr>
-      <tr><td>Andaman &amp; Nicobar Islands</td><td>8.52%</td></tr>
-      <tr><td>Manipur</td><td>8.40%</td></tr>
-      <tr><td>Goa</td><td>8.33%</td></tr>
-      <tr><td>Daman &amp; Diu</td><td>7.92%</td></tr>
-      <tr><td>Haryana</td><td>7.03%</td></tr>
-      <tr><td>Madhya Pradesh</td><td>6.57%</td></tr>
-      <tr><td>Puducherry</td><td>6.05%</td></tr>
-      <tr><td>Tamil Nadu</td><td>5.86%</td></tr>
-      <tr><td>Chandigarh</td><td>4.87%</td></tr>
-      <tr><td>Meghalaya</td><td>4.40%</td></tr>
-      <tr><td>Dadra &amp; Nagar Haveli</td><td>3.76%</td></tr>
-      <tr><td>Nagaland</td><td>2.47%</td></tr>
-      <tr><td>Himachal Pradesh</td><td>2.18%</td></tr>
-      <tr><td>Odisha</td><td>2.17%</td></tr>
-      <tr><td>Chhattisgarh</td><td>2.02%</td></tr>
-      <tr><td>Arunachal Pradesh</td><td>1.95%</td></tr>
-      <tr><td>Punjab</td><td>1.93%</td></tr>
-      <tr><td>Sikkim</td><td>1.62%</td></tr>
-      <tr><td>Mizoram</td><td>1.35%</td></tr>
-    </tbody></table>
-  </details>
-  <details>
-    <summary>Top 50 districts by Muslim share (of 640 total)</summary>
-    <table><thead><tr><th>District code</th><th>Muslim share</th></tr></thead><tbody>
-      <tr><td>IN-S01-D013</td><td>98.52%</td></tr>
-      <tr><td>IN-S01-D015</td><td>98.49%</td></tr>
-      <tr><td>IN-S01-D014</td><td>97.99%</td></tr>
-      <tr><td>IN-S01-D011</td><td>97.69%</td></tr>
-      <tr><td>IN-S01-D002</td><td>97.65%</td></tr>
-      <tr><td>IN-S01-D009</td><td>97.39%</td></tr>
-      <tr><td>IN-S31-D587</td><td>96.58%</td></tr>
-      <tr><td>IN-S01-D012</td><td>95.49%</td></tr>
-      <tr><td>IN-S01-D010</td><td>95.19%</td></tr>
-      <tr><td>IN-S01-D008</td><td>95.15%</td></tr>
-      <tr><td>IN-S01-D001</td><td>94.59%</td></tr>
-      <tr><td>IN-S01-D005</td><td>90.45%</td></tr>
-      <tr><td>IN-S18-D301</td><td>79.67%</td></tr>
-      <tr><td>IN-S06-D087</td><td>79.20%</td></tr>
-      <tr><td>IN-S01-D004</td><td>76.87%</td></tr>
-      <tr><td>IN-S18-D303</td><td>70.74%</td></tr>
-      <tr><td>IN-S01-D017</td><td>70.68%</td></tr>
-      <tr><td>IN-S32-D592</td><td>70.24%</td></tr>
-      <tr><td>IN-S10-D210</td><td>67.98%</td></tr>
-      <tr><td>IN-S19-D333</td><td>66.27%</td></tr>
-      <tr><td>IN-S18-D325</td><td>64.34%</td></tr>
-      <tr><td>IN-S01-D006</td><td>62.71%</td></tr>
-      <tr><td>IN-S18-D318</td><td>60.31%</td></tr>
-      <tr><td>IN-S01-D018</td><td>57.75%</td></tr>
-      <tr><td>IN-S18-D302</td><td>57.52%</td></tr>
-      <tr><td>IN-S18-D317</td><td>56.36%</td></tr>
-      <tr><td>IN-S18-D305</td><td>55.36%</td></tr>
-      <tr><td>IN-S01-D016</td><td>53.82%</td></tr>
-      <tr><td>IN-S18-D304</td><td>52.56%</td></tr>
-      <tr><td>IN-S19-D332</td><td>51.27%</td></tr>
-      <tr><td>IN-S09-D136</td><td>50.57%</td></tr>
-      <tr><td>IN-S18-D319</td><td>50.22%</td></tr>
-      <tr><td>IN-S19-D330</td><td>49.92%</td></tr>
-      <tr><td>IN-S01-D020</td><td>49.66%</td></tr>
-      <tr><td>IN-S09-D135</td><td>47.12%</td></tr>
-      <tr><td>IN-S10-D212</td><td>44.47%</td></tr>
-      <tr><td>IN-S28-D536</td><td>43.45%</td></tr>
-      <tr><td>IN-S09-D134</td><td>43.04%</td></tr>
-      <tr><td>IN-S10-D209</td><td>42.95%</td></tr>
-      <tr><td>IN-S09-D132</td><td>41.95%</td></tr>
-      <tr><td>IN-S09-D133</td><td>41.30%</td></tr>
-      <tr><td>IN-S09-D137</td><td>40.78%</td></tr>
-      <tr><td>IN-S18-D321</td><td>39.66%</td></tr>
-      <tr><td>IN-S32-D591</td><td>39.24%</td></tr>
-      <tr><td>IN-S10-D211</td><td>38.46%</td></tr>
-      <tr><td>IN-S18-D316</td><td>37.71%</td></tr>
-      <tr><td>IN-S09-D182</td><td>37.51%</td></tr>
-      <tr><td>IN-S32-D588</td><td>37.24%</td></tr>
-      <tr><td>IN-S19-D334</td><td>37.06%</td></tr>
-      <tr><td>IN-S18-D323</td><td>35.96%</td></tr>
-    </tbody></table>
-    <p class="methodology" style="margin-top:8px">District codes are <code>IN-S&lt;state&gt;-D&lt;distt&gt;</code>
-    using Census 2011 codes. The top of this list is dominated by Kashmir Valley districts
-    (state 01), Lakshadweep (31), Malappuram in Kerala (32), and Murshidabad-belt districts
-    in West Bengal (19).</p>
-  </details>
-</section>
+<div class="cards">
+<section class="card"><div class="card-metric">Population share</div><div class="card-hero"><span class="card-value">14.23%</span><span class="card-unit">of total population</span><span class="card-year">(2011)</span></div><div class="card-chartwrap" style="height:200px"><canvas id="cc-pop-share"></canvas></div><div class="card-comparisons"><div class="comp-note">Baseline metric — Muslim share of total population. Top-8 states shown; no community ranking.</div></div><details><summary>Full state data (35 states)</summary><table><thead><tr><th>State / UT</th><th>Muslim</th></tr></thead><tbody><tr><td>Mizoram</td><td>1.35%</td></tr><tr><td>Sikkim</td><td>1.62%</td></tr><tr><td>Punjab</td><td>1.93%</td></tr><tr><td>Arunachal Pradesh</td><td>1.95%</td></tr><tr><td>Chhattisgarh</td><td>2.02%</td></tr><tr><td>Odisha</td><td>2.17%</td></tr><tr><td>Himachal Pradesh</td><td>2.18%</td></tr><tr><td>Nagaland</td><td>2.47%</td></tr><tr><td>Dadra &amp; Nagar Haveli</td><td>3.76%</td></tr><tr><td>Meghalaya</td><td>4.40%</td></tr><tr><td>Chandigarh</td><td>4.87%</td></tr><tr><td>Tamil Nadu</td><td>5.86%</td></tr><tr><td>Puducherry</td><td>6.05%</td></tr><tr><td>Madhya Pradesh</td><td>6.57%</td></tr><tr><td>Haryana</td><td>7.03%</td></tr><tr><td>Daman &amp; Diu</td><td>7.92%</td></tr><tr><td>Goa</td><td>8.33%</td></tr><tr><td>Manipur</td><td>8.40%</td></tr><tr><td>Andaman &amp; Nicobar Islands</td><td>8.52%</td></tr><tr><td>Tripura</td><td>8.60%</td></tr><tr><td>Rajasthan</td><td>9.07%</td></tr><tr><td>Andhra Pradesh</td><td>9.56%</td></tr><tr><td>Gujarat</td><td>9.67%</td></tr><tr><td>Maharashtra</td><td>11.54%</td></tr><tr><td>NCT of Delhi</td><td>12.86%</td></tr><tr><td>Karnataka</td><td>12.92%</td></tr><tr><td>Uttarakhand</td><td>13.95%</td></tr><tr><td>Jharkhand</td><td>14.53%</td></tr><tr><td>Bihar</td><td>16.87%</td></tr><tr><td>Uttar Pradesh</td><td>19.26%</td></tr><tr><td>Kerala</td><td>26.56%</td></tr><tr><td>West Bengal</td><td>27.01%</td></tr><tr><td>Assam</td><td>34.22%</td></tr><tr><td>Jammu &amp; Kashmir</td><td>68.31%</td></tr><tr><td>Lakshadweep</td><td>96.58%</td></tr></tbody></table></details><div class="card-foot"><span>Census 2011 · C-series</span><span><a class="csv-link" href="canonical/pop-share.csv">canonical/pop-share.csv</a></span></div></section><section class="card"><div class="card-metric">Sex ratio (F/1000M)</div><div class="card-hero"><span class="card-value">951</span><span class="card-unit">females per 1,000 males</span><span class="card-year">(2011)</span></div><div class="card-direction">higher is better</div><div class="card-chartwrap" style="height:84px"><canvas id="cc-sex-ratio"></canvas></div><div class="card-comparisons"><div class="card-comp good"><div class="comp-label">vs Hindu</div><div class="comp-verdict">+12.2</div><div class="comp-detail">ahead</div></div><div class="card-comp good"><div class="comp-label">vs All-India</div><div class="comp-verdict">+8.6</div><div class="comp-detail">ahead</div></div></div><details><summary>Full state data (35 states)</summary><table><thead><tr><th>State / UT</th><th>Muslim</th><th>Hindu</th></tr></thead><tbody><tr><td>Sikkim</td><td>510</td><td>856</td></tr><tr><td>Mizoram</td><td>553</td><td>506</td></tr><tr><td>Dadra &amp; Nagar Haveli</td><td>678</td><td>774</td></tr><tr><td>Daman &amp; Diu</td><td>699</td><td>607</td></tr><tr><td>Nagaland</td><td>716</td><td>650</td></tr><tr><td>Chandigarh</td><td>721</td><td>803</td></tr><tr><td>Arunachal Pradesh</td><td>739</td><td>785</td></tr><tr><td>NCT of Delhi</td><td>855</td><td>865</td></tr><tr><td>Himachal Pradesh</td><td>856</td><td>975</td></tr><tr><td>Punjab</td><td>862</td><td>879</td></tr><tr><td>Andaman &amp; Nicobar Islands</td><td>874</td><td>858</td></tr><tr><td>Haryana</td><td>895</td><td>876</td></tr><tr><td>Uttarakhand</td><td>901</td><td>976</td></tr><tr><td>Goa</td><td>905</td><td>929</td></tr><tr><td>Maharashtra</td><td>911</td><td>928</td></tr><tr><td>Meghalaya</td><td>922</td><td>863</td></tr><tr><td>Jammu &amp; Kashmir</td><td>934</td><td>795</td></tr><tr><td>Uttar Pradesh</td><td>937</td><td>907</td></tr><tr><td>Bihar</td><td>941</td><td>913</td></tr><tr><td>Jharkhand</td><td>943</td><td>935</td></tr><tr><td>Gujarat</td><td>944</td><td>916</td></tr><tr><td>Madhya Pradesh</td><td>945</td><td>929</td></tr><tr><td>Rajasthan</td><td>946</td><td>926</td></tr><tr><td>West Bengal</td><td>950</td><td>948</td></tr><tr><td>Chhattisgarh</td><td>952</td><td>990</td></tr><tr><td>Assam</td><td>955</td><td>958</td></tr><tr><td>Odisha</td><td>956</td><td>977</td></tr><tr><td>Tripura</td><td>964</td><td>959</td></tr><tr><td>Karnataka</td><td>969</td><td>972</td></tr><tr><td>Andhra Pradesh</td><td>978</td><td>993</td></tr><tr><td>Manipur</td><td>992</td><td>982</td></tr><tr><td>Lakshadweep</td><td>998</td><td>115</td></tr><tr><td>Tamil Nadu</td><td>1015</td><td>992</td></tr><tr><td>Puducherry</td><td>1073</td><td>1030</td></tr><tr><td>Kerala</td><td>1125</td><td>1077</td></tr></tbody></table></details><div class="card-foot"><span>Census 2011 · C-series</span><span><a class="csv-link" href="canonical/sex-ratio.csv">canonical/sex-ratio.csv</a></span></div></section><section class="card"><div class="card-metric">Top-100 district concentration</div><div class="card-hero"><span class="card-value">58.55%</span><span class="card-unit">of Muslims in top-100 districts</span><span class="card-year">(2011)</span></div><div class="card-comparisons"><div class="comp-note">Share of all Indian Muslims living in the 100 most Muslim-populous districts — a geographic-concentration measure, not a community comparison.</div></div><div class="card-foot"><span>Census 2011 · C-series</span><span><a class="csv-link" href="canonical/district-concentration-top100.csv">canonical/district-concentration-top100.csv</a></span></div></section>
+</div>
 
 <h2 class="cluster-header">Education</h2>
-
-<!-- LIT 7+ -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Literacy rate (7+ years)</h2>
-    <p class="source"><a class="csv-link" href="canonical/lit-7plus.csv">canonical/lit-7plus.csv</a> · sources/census-2011/c-series/c09-education-by-religion.xlsx</p>
-    <p class="data-current">Data current to · Census 2011</p>
-  </div>
-  <div class="headline">68.59%</div>
-  <p class="headline-caption">All-India Muslim literacy (7+), 2011. Hindu: 73.31%, All: 73.02%</p>
-  <div class="chart-wrap"><canvas id="lit-chart"></canvas></div>
-  <p class="methodology">(Literate − age-not-stated) / (Total − 0-6 − age-not-stated) × 100. Matches the
-  Census published literacy definition. Under-7 are all illiterate by Census convention; the gap
-  between Muslim and Hindu literacy is the comparison the dashboard is built around.</p>
-  <details>
-    <summary>Full data (36 rows)</summary>
-    <table><thead><tr>
-      <th>State / UT</th><th>Muslim</th><th>Hindu</th><th>All</th><th>Hindu − Muslim gap</th>
-    </tr></thead><tbody>
-      <tr class="national"><td>All India</td><td>68.59%</td><td>73.31%</td><td>73.02%</td><td>+4.72pp</td></tr>
-      <tr><td>Haryana</td><td>53.40%</td><td>77.09%</td><td>75.57%</td><td>+23.70pp</td></tr>
-      <tr><td>Meghalaya</td><td>54.01%</td><td>77.24%</td><td>74.45%</td><td>+23.23pp</td></tr>
-      <tr><td>Bihar</td><td>56.37%</td><td>62.88%</td><td>61.82%</td><td>+6.51pp</td></tr>
-      <tr><td>Nagaland</td><td>57.87%</td><td>79.95%</td><td>79.56%</td><td>+22.09pp</td></tr>
-      <tr><td>Uttar Pradesh</td><td>58.84%</td><td>69.74%</td><td>67.75%</td><td>+10.90pp</td></tr>
-      <tr><td>Jammu &amp; Kashmir</td><td>61.03%</td><td>79.09%</td><td>67.17%</td><td>+18.06pp</td></tr>
-      <tr><td>Punjab</td><td>61.89%</td><td>80.06%</td><td>75.85%</td><td>+18.17pp</td></tr>
-      <tr><td>Assam</td><td>61.93%</td><td>77.67%</td><td>72.19%</td><td>+15.74pp</td></tr>
-      <tr><td>Rajasthan</td><td>62.73%</td><td>66.08%</td><td>66.15%</td><td>+3.35pp</td></tr>
-      <tr><td>Uttarakhand</td><td>63.19%</td><td>81.23%</td><td>78.83%</td><td>+18.04pp</td></tr>
-      <tr><td>Jharkhand</td><td>66.22%</td><td>67.67%</td><td>66.42%</td><td>+1.45pp</td></tr>
-      <tr><td>Himachal Pradesh</td><td>67.53%</td><td>83.13%</td><td>82.82%</td><td>+15.60pp</td></tr>
-      <tr><td>Arunachal Pradesh</td><td>67.68%</td><td>70.11%</td><td>65.39%</td><td>+2.43pp</td></tr>
-      <tr><td>Manipur</td><td>67.78%</td><td>82.01%</td><td>76.96%</td><td>+14.23pp</td></tr>
-      <tr><td>West Bengal</td><td>68.76%</td><td>79.14%</td><td>76.26%</td><td>+10.39pp</td></tr>
-      <tr><td>Andhra Pradesh</td><td>73.61%</td><td>66.11%</td><td>67.01%</td><td>-7.50pp</td></tr>
-      <tr><td>Chandigarh</td><td>74.68%</td><td>85.17%</td><td>86.05%</td><td>+10.49pp</td></tr>
-      <tr><td>Madhya Pradesh</td><td>74.91%</td><td>68.64%</td><td>69.33%</td><td>-6.27pp</td></tr>
-      <tr><td>NCT of Delhi</td><td>75.60%</td><td>87.26%</td><td>86.22%</td><td>+11.65pp</td></tr>
-      <tr><td>Sikkim</td><td>76.59%</td><td>81.97%</td><td>81.44%</td><td>+5.39pp</td></tr>
-      <tr><td>Mizoram</td><td>77.84%</td><td>91.78%</td><td>91.34%</td><td>+13.95pp</td></tr>
-      <tr><td>Karnataka</td><td>78.90%</td><td>74.36%</td><td>75.37%</td><td>-4.53pp</td></tr>
-      <tr><td>Odisha</td><td>79.99%</td><td>73.17%</td><td>72.89%</td><td>-6.82pp</td></tr>
-      <tr><td>Gujarat</td><td>80.85%</td><td>77.49%</td><td>78.06%</td><td>-3.36pp</td></tr>
-      <tr><td>Tripura</td><td>83.17%</td><td>88.16%</td><td>87.22%</td><td>+5.00pp</td></tr>
-      <tr><td>Maharashtra</td><td>83.60%</td><td>81.79%</td><td>82.37%</td><td>-1.81pp</td></tr>
-      <tr><td>Chhattisgarh</td><td>84.57%</td><td>69.80%</td><td>70.29%</td><td>-14.77pp</td></tr>
-      <tr><td>Goa</td><td>84.74%</td><td>88.71%</td><td>88.72%</td><td>+3.97pp</td></tr>
-      <tr><td>Daman &amp; Diu</td><td>85.88%</td><td>87.08%</td><td>87.11%</td><td>+1.20pp</td></tr>
-      <tr><td>Dadra &amp; Nagar Haveli</td><td>86.60%</td><td>75.62%</td><td>76.25%</td><td>-10.97pp</td></tr>
-      <tr><td>Tamil Nadu</td><td>88.18%</td><td>78.83%</td><td>80.10%</td><td>-9.35pp</td></tr>
-      <tr><td>Andaman &amp; Nicobar Islands</td><td>91.52%</td><td>86.98%</td><td>86.64%</td><td>-4.54pp</td></tr>
-      <tr><td>Puducherry</td><td>91.68%</td><td>85.10%</td><td>85.86%</td><td>-6.58pp</td></tr>
-      <tr><td>Lakshadweep</td><td>91.78%</td><td>93.94%</td><td>91.88%</td><td>+2.16pp</td></tr>
-      <tr><td>Kerala</td><td>93.32%</td><td>93.51%</td><td>94.01%</td><td>+0.19pp</td></tr>
-    </tbody></table>
-  </details>
-</section>
-
-<!-- SALARIED SHARE -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Regular salaried-employment share (15+)</h2>
-    <p class="source"><a class="csv-link" href="canonical/salaried-share.csv">canonical/salaried-share.csv</a> · sources/plfs/annual/plfs-annual-report-2023-24.pdf (Table 49, pp. 401-402)</p>
-    <p class="data-current">Data current to · PLFS 2023-24</p>
-  </div>
-  <div class="headline">18.00%</div>
-  <p class="headline-caption">All-India Muslim, NFHS-5. Hindu: 21.90%, All: 21.70%</p>
-  <div class="chart-wrap" style="height:280px"><canvas id="ss-chart"></canvas></div>
-  <p class="methodology">Percentage of workers in 'regular wage/salary' employment, vs self-employed
-  or casual labour. Muslims are <b>over-represented in self-employment</b> (62.2% vs Hindu 58.3%)
-  and <b>under-represented in formal salaried work</b> (18.0% vs Hindu 21.9%) — the classic
-  Sachar-era finding on labor-market segregation. Self-employment in this context is heavily
-  small-shop, artisanal, and informal-sector — not entrepreneurship.</p>
-</section>
-
-<h2 class="cluster-header">Health</h2>
-
-<!-- (sex-ratio remains in Demographics cluster — reordering deferred to keep this diff small) -->
-<!-- SEX RATIO -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Sex ratio (females per 1000 males)</h2>
-    <p class="source"><a class="csv-link" href="canonical/sex-ratio.csv">canonical/sex-ratio.csv</a> · sources/census-2011/c-series/c15-religion-by-age-sex.xlsx</p>
-    <p class="data-current">Data current to · Census 2011</p>
-  </div>
-  <div class="headline">951</div>
-  <p class="headline-caption">All-India Muslim sex ratio (females per 1000 males), 2011. Hindu: 939, All: 943</p>
-  <div class="chart-wrap"><canvas id="sr-chart"></canvas></div>
-  <p class="methodology">Females ÷ males × 1000, at all ages and total residence. Higher = more females
-  per male. Muslims have a higher national sex ratio than Hindus (951 vs 939) — one of the rare
-  indicators where the Muslim outcome runs ahead.</p>
-</section>
-
-<!-- IMR -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Infant Mortality Rate</h2>
-    <p class="source"><a class="csv-link" href="canonical/imr.csv">canonical/imr.csv</a> · sources/nfhs-5/reports/india-report-fr375.pdf (Table 7.2, p. 284) · weighted with sources/census-2011/c-series/c01-population-by-religion.xls</p>
-    <p class="data-current">Data current to · NFHS-5 (2019-21); 5-year reference period 2014-2020</p>
-  </div>
-  <div class="headline">33.0</div>
-  <p class="headline-caption">All-India Muslim, NFHS-5. Hindu: 35.4, All: 34.7</p>
-  <div class="chart-wrap" style="height:280px"><canvas id="imr-chart"></canvas></div>
-  <p class="methodology">Infant deaths per 1000 live births. NFHS-5 Table 7.2 publishes URBAN
-  and RURAL IMR by religion separately (no total-residence-by-religion column). Total
-  residence computed as population-weighted average using Census 2011 urban/rural population
-  by religion (urban/rural population shares by religion are stable 2011-2021, &lt;1% drift).
-  Note: Muslim IMR running below Hindu IMR is the well-documented "Muslim mortality paradox"
-  in Indian demography — Muslim infant survival outperforms Muslim adult socioeconomic
-  indicators.</p>
-</section>
-
-<!-- INSTITUTIONAL DELIVERY -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Institutional delivery rate</h2>
-    <p class="source"><a class="csv-link" href="canonical/inst-delivery.csv">canonical/inst-delivery.csv</a> · sources/nfhs-5/reports/india-report-fr375.pdf (Table 8.13, p. 324)</p>
-    <p class="data-current">Data current to · NFHS-5 (2019-21)</p>
-  </div>
-  <div class="headline">84.30%</div>
-  <p class="headline-caption">All-India Muslim, NFHS-5. Hindu: 89.50%, All: 88.58%</p>
-  <div class="chart-wrap" style="height:280px"><canvas id="id-chart"></canvas></div>
-  <p class="methodology">Percentage of live births (5 years preceding NFHS-5) that took place in a
-  health facility. Muslim institutional delivery (84.3%) runs 5.2pp below Hindu (89.5%) — unlike
-  IMR and anaemia (where the Muslim outcome runs ahead), this is the expected direction.
-  Suggests the maternal-care system reaches Muslim women less effectively even where infant
-  outcomes are paradoxically better.</p>
-</section>
-
-<!-- WOMEN ANAEMIA -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Anaemia in women (age 15–49)</h2>
-    <p class="source"><a class="csv-link" href="canonical/women-anemia.csv">canonical/women-anemia.csv</a> · sources/nfhs-5/reports/india-report-fr375.pdf (Table 10.23.1, p. 468)</p>
-    <p class="data-current">Data current to · NFHS-5 (2019-21)</p>
-  </div>
-  <div class="headline">55.60%</div>
-  <p class="headline-caption">All-India Muslim, NFHS-5. Hindu: 57.40%, All: 57.00%</p>
-  <div class="chart-wrap" style="height:280px"><canvas id="wa-chart"></canvas></div>
-  <p class="methodology">Any anaemia (haemoglobin &lt;12.0 g/dl non-pregnant, &lt;11.0 g/dl pregnant),
-  altitude-adjusted. Total residence, national. Muslim women's anaemia (55.6%) is slightly
-  below Hindu (57.4%) — the same Muslim-paradox direction as IMR, though both rates are high
-  in absolute terms. Methodology note: NFHS-5 uses capillary blood (vs venous in NFHS-4) —
-  treat as a methodology break when comparing across rounds.</p>
-</section>
-
-<h2 class="cluster-header">Housing</h2>
-
-<!-- IMPROVED SANITATION -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Toilet facility access (households)</h2>
-    <p class="source"><a class="csv-link" href="canonical/improved-sanitation.csv">canonical/improved-sanitation.csv</a> · sources/nfhs-5/reports/india-report-fr375.pdf (Table 2.4, p. 74)</p>
-    <p class="data-current">Data current to · NFHS-5 (2019-21)</p>
-  </div>
-  <div class="headline">90.30%</div>
-  <p class="headline-caption">All-India Muslim, NFHS-5. Hindu: 80.70%, All: 82.50%</p>
-  <div class="chart-wrap" style="height:280px"><canvas id="is-chart"></canvas></div>
-  <p class="methodology">Percentage of households with access to a toilet facility (any type —
-  not strictly "improved" per JMP definition). Muslim toilet access (90.3%) runs <b>above
-  Hindu (80.7%)</b> — primarily a composition effect: urban share of Muslim population is
-  higher than urban share of Hindu population, and urban toilet access is uniformly higher
-  than rural. Reading: this is a paradox metric like IMR / sex-ratio — Muslim infrastructure
-  access is not uniformly worse, and the headline number depends heavily on urban-rural mix.</p>
-</section>
+<div class="cards">
+<section class="card"><div class="card-metric">Literacy rate (7+)</div><div class="card-hero"><span class="card-value">68.59%</span><span class="card-unit">literate, age 7+</span><span class="card-year">(2011)</span></div><div class="card-direction">higher is better</div><div class="card-chartwrap" style="height:196px"><canvas id="cc-lit-7plus"></canvas></div><div class="card-comparisons"><div class="card-comp bad"><div class="comp-label">vs Hindu</div><div class="comp-verdict">-4.7pp</div><div class="comp-detail">behind</div></div><div class="card-comp bad"><div class="comp-label">Among communities</div><div class="comp-verdict">6th of 6</div><div class="comp-detail">bottom tier</div></div></div><details><summary>Full state data (35 states)</summary><table><thead><tr><th>State / UT</th><th>Muslim</th><th>Hindu</th></tr></thead><tbody><tr><td>Haryana</td><td>53.40%</td><td>77.09%</td></tr><tr><td>Meghalaya</td><td>54.01%</td><td>77.24%</td></tr><tr><td>Bihar</td><td>56.37%</td><td>62.88%</td></tr><tr><td>Nagaland</td><td>57.87%</td><td>79.95%</td></tr><tr><td>Uttar Pradesh</td><td>58.84%</td><td>69.74%</td></tr><tr><td>Jammu &amp; Kashmir</td><td>61.03%</td><td>79.09%</td></tr><tr><td>Punjab</td><td>61.89%</td><td>80.06%</td></tr><tr><td>Assam</td><td>61.93%</td><td>77.67%</td></tr><tr><td>Rajasthan</td><td>62.73%</td><td>66.08%</td></tr><tr><td>Uttarakhand</td><td>63.19%</td><td>81.23%</td></tr><tr><td>Jharkhand</td><td>66.22%</td><td>67.67%</td></tr><tr><td>Himachal Pradesh</td><td>67.53%</td><td>83.13%</td></tr><tr><td>Arunachal Pradesh</td><td>67.68%</td><td>70.11%</td></tr><tr><td>Manipur</td><td>67.78%</td><td>82.01%</td></tr><tr><td>West Bengal</td><td>68.76%</td><td>79.14%</td></tr><tr><td>Andhra Pradesh</td><td>73.61%</td><td>66.11%</td></tr><tr><td>Chandigarh</td><td>74.68%</td><td>85.17%</td></tr><tr><td>Madhya Pradesh</td><td>74.91%</td><td>68.64%</td></tr><tr><td>NCT of Delhi</td><td>75.60%</td><td>87.26%</td></tr><tr><td>Sikkim</td><td>76.59%</td><td>81.97%</td></tr><tr><td>Mizoram</td><td>77.84%</td><td>91.78%</td></tr><tr><td>Karnataka</td><td>78.90%</td><td>74.36%</td></tr><tr><td>Odisha</td><td>79.99%</td><td>73.17%</td></tr><tr><td>Gujarat</td><td>80.85%</td><td>77.49%</td></tr><tr><td>Tripura</td><td>83.17%</td><td>88.16%</td></tr><tr><td>Maharashtra</td><td>83.60%</td><td>81.79%</td></tr><tr><td>Chhattisgarh</td><td>84.57%</td><td>69.80%</td></tr><tr><td>Goa</td><td>84.74%</td><td>88.71%</td></tr><tr><td>Daman &amp; Diu</td><td>85.88%</td><td>87.08%</td></tr><tr><td>Dadra &amp; Nagar Haveli</td><td>86.60%</td><td>75.62%</td></tr><tr><td>Tamil Nadu</td><td>88.18%</td><td>78.83%</td></tr><tr><td>Andaman &amp; Nicobar Islands</td><td>91.52%</td><td>86.98%</td></tr><tr><td>Puducherry</td><td>91.68%</td><td>85.10%</td></tr><tr><td>Lakshadweep</td><td>91.78%</td><td>93.94%</td></tr><tr><td>Kerala</td><td>93.32%</td><td>93.51%</td></tr></tbody></table></details><div class="card-foot"><span>Census 2011 · C-series</span><span><a class="csv-link" href="canonical/lit-7plus.csv">canonical/lit-7plus.csv</a></span></div></section><section class="card"><div class="card-metric">Higher-ed enrolment (count)</div><div class="card-hero"><span class="card-value">2,108,033</span><span class="card-unit">students</span><span class="card-year">(2021)</span></div><div class="card-comparisons"><div class="comp-note">No community ranking — AISHE tabulates “Muslim Minority” enrolment separately; other communities are not enumerated in the same table.</div></div><details><summary>Full state data (33 states)</summary><table><thead><tr><th>State / UT</th><th>Muslim</th></tr></thead><tbody><tr><td>Arunachal Pradesh</td><td>107</td></tr><tr><td>Mizoram</td><td>130</td></tr><tr><td>Sikkim</td><td>162</td></tr><tr><td>DNH and Daman &amp; Diu (merged)</td><td>228</td></tr><tr><td>Nagaland</td><td>253</td></tr><tr><td>Andaman &amp; Nicobar Islands</td><td>609</td></tr><tr><td>Chandigarh</td><td>692</td></tr><tr><td>Himachal Pradesh</td><td>1,314</td></tr><tr><td>Manipur</td><td>1,964</td></tr><tr><td>Meghalaya</td><td>2,119</td></tr><tr><td>Tripura</td><td>3,002</td></tr><tr><td>Goa</td><td>3,084</td></tr><tr><td>Puducherry</td><td>3,270</td></tr><tr><td>Chhattisgarh</td><td>5,113</td></tr><tr><td>Odisha</td><td>8,509</td></tr><tr><td>Haryana</td><td>10,961</td></tr><tr><td>Uttarakhand</td><td>16,836</td></tr><tr><td>Punjab</td><td>19,917</td></tr><tr><td>NCT of Delhi</td><td>28,282</td></tr><tr><td>Gujarat</td><td>35,993</td></tr><tr><td>Jharkhand</td><td>38,200</td></tr><tr><td>Madhya Pradesh</td><td>39,205</td></tr><tr><td>Rajasthan</td><td>46,411</td></tr><tr><td>Andhra Pradesh</td><td>56,444</td></tr><tr><td>Assam</td><td>84,808</td></tr><tr><td>Tamil Nadu</td><td>115,690</td></tr><tr><td>Telangana</td><td>121,318</td></tr><tr><td>Jammu &amp; Kashmir</td><td>138,142</td></tr><tr><td>Karnataka</td><td>147,249</td></tr><tr><td>Maharashtra</td><td>154,515</td></tr><tr><td>Bihar</td><td>172,681</td></tr><tr><td>Kerala</td><td>187,358</td></tr><tr><td>Uttar Pradesh</td><td>326,819</td></tr></tbody></table></details><div class="card-foot"><span>AISHE 2021-22</span><span><a class="csv-link" href="canonical/muslim-higher-ed-enrolment.csv">canonical/muslim-higher-ed-enrolment.csv</a></span></div></section>
+</div>
 
 <h2 class="cluster-header">Employment</h2>
+<div class="cards">
+<section class="card"><div class="card-metric">LFPR (15+)</div><div class="card-hero"><span class="card-value">55.00%</span><span class="card-unit">in the labour force, 15+</span><span class="card-year">(2023)</span></div><div class="card-direction">higher is better</div><div class="card-chartwrap" style="height:84px"><canvas id="cc-lfpr-15plus"></canvas></div><div class="card-comparisons"><div class="card-comp bad"><div class="comp-label">vs Hindu</div><div class="comp-verdict">-5.9pp</div><div class="comp-detail">behind</div></div><div class="card-comp bad"><div class="comp-label">vs All-India</div><div class="comp-verdict">-5.1pp</div><div class="comp-detail">behind</div></div></div><div class="card-foot"><span>PLFS 2023-24</span><span><a class="csv-link" href="canonical/lfpr-15plus.csv">canonical/lfpr-15plus.csv</a></span></div></section><section class="card"><div class="card-metric">WPR (15+)</div><div class="card-hero"><span class="card-value">53.20%</span><span class="card-unit">working, 15+</span><span class="card-year">(2023)</span></div><div class="card-direction">higher is better</div><div class="card-chartwrap" style="height:84px"><canvas id="cc-wpr-15plus"></canvas></div><div class="card-comparisons"><div class="card-comp bad"><div class="comp-label">vs Hindu</div><div class="comp-verdict">-5.9pp</div><div class="comp-detail">behind</div></div><div class="card-comp bad"><div class="comp-label">vs All-India</div><div class="comp-verdict">-5.0pp</div><div class="comp-detail">behind</div></div></div><div class="card-foot"><span>PLFS 2023-24</span><span><a class="csv-link" href="canonical/wpr-15plus.csv">canonical/wpr-15plus.csv</a></span></div></section><section class="card"><div class="card-metric">Regular salaried share</div><div class="card-hero"><span class="card-value">18.00%</span><span class="card-unit">in regular salaried work</span><span class="card-year">(2023)</span></div><div class="card-direction">higher is better</div><div class="card-chartwrap" style="height:84px"><canvas id="cc-salaried-share"></canvas></div><div class="card-comparisons"><div class="card-comp bad"><div class="comp-label">vs Hindu</div><div class="comp-verdict">-3.9pp</div><div class="comp-detail">behind</div></div><div class="card-comp bad"><div class="comp-label">vs All-India</div><div class="comp-verdict">-3.7pp</div><div class="comp-detail">behind</div></div></div><div class="card-foot"><span>PLFS 2023-24</span><span><a class="csv-link" href="canonical/salaried-share.csv">canonical/salaried-share.csv</a></span></div></section>
+</div>
 
-<!-- LFPR 15+ -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Labour Force Participation Rate (15+)</h2>
-    <p class="source"><a class="csv-link" href="canonical/lfpr-15plus.csv">canonical/lfpr-15plus.csv</a> · sources/plfs/annual/plfs-annual-report-2023-24.pdf (Table 48, pp. 396–400)</p>
-    <p class="data-current">Data current to · PLFS 2023-24 (Jul 2023 – Jun 2024)</p>
-  </div>
-  <div class="headline">55.00%</div>
-  <p class="headline-caption">All-India Muslim, NFHS-5. Hindu: 60.90%, All: 60.10%</p>
-  <div class="chart-wrap" style="height:280px"><canvas id="lfpr-chart"></canvas></div>
-  <p class="methodology">Share of population age 15+ either working or actively seeking work
-  (usual status, principal + subsidiary). The 5.9pp Muslim–Hindu gap is driven heavily by
-  Muslim women's lower LFPR (30.2% vs Hindu women 43.3% per the source); Muslim men's LFPR
-  (80.6%) actually exceeds Hindu men's (78.6%).</p>
-</section>
+<h2 class="cluster-header">Health</h2>
+<div class="cards">
+<section class="card"><div class="card-metric">Infant Mortality Rate</div><div class="card-hero"><span class="card-value">33.0</span><span class="card-unit">deaths per 1,000 live births</span><span class="card-year">(2020)</span></div><div class="card-direction">lower is better</div><div class="card-chartwrap" style="height:84px"><canvas id="cc-imr"></canvas></div><div class="card-comparisons"><div class="card-comp good"><div class="comp-label">vs Hindu</div><div class="comp-verdict">-2.4</div><div class="comp-detail">ahead</div></div><div class="card-comp good"><div class="comp-label">vs All-India</div><div class="comp-verdict">-1.7</div><div class="comp-detail">ahead</div></div></div><div class="card-foot"><span>NFHS-5 (2019-21)</span><span><a class="csv-link" href="canonical/imr.csv">canonical/imr.csv</a></span></div></section><section class="card"><div class="card-metric">Institutional delivery rate</div><div class="card-hero"><span class="card-value">84.30%</span><span class="card-unit">of births in a facility</span><span class="card-year">(2020)</span></div><div class="card-direction">higher is better</div><div class="card-chartwrap" style="height:84px"><canvas id="cc-inst-delivery"></canvas></div><div class="card-comparisons"><div class="card-comp bad"><div class="comp-label">vs Hindu</div><div class="comp-verdict">-5.2pp</div><div class="comp-detail">behind</div></div><div class="card-comp bad"><div class="comp-label">vs All-India</div><div class="comp-verdict">-4.3pp</div><div class="comp-detail">behind</div></div></div><div class="card-foot"><span>NFHS-5 (2019-21)</span><span><a class="csv-link" href="canonical/inst-delivery.csv">canonical/inst-delivery.csv</a></span></div></section><section class="card"><div class="card-metric">Anaemia in women (15-49)</div><div class="card-hero"><span class="card-value">55.60%</span><span class="card-unit">of women 15–49 anaemic</span><span class="card-year">(2020)</span></div><div class="card-direction">lower is better</div><div class="card-chartwrap" style="height:84px"><canvas id="cc-women-anemia"></canvas></div><div class="card-comparisons"><div class="card-comp good"><div class="comp-label">vs Hindu</div><div class="comp-verdict">-1.8pp</div><div class="comp-detail">ahead</div></div><div class="card-comp good"><div class="comp-label">vs All-India</div><div class="comp-verdict">-1.4pp</div><div class="comp-detail">ahead</div></div></div><div class="card-foot"><span>NFHS-5 (2019-21)</span><span><a class="csv-link" href="canonical/women-anemia.csv">canonical/women-anemia.csv</a></span></div></section>
+</div>
 
-<!-- WPR 15+ -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Worker Population Ratio (15+)</h2>
-    <p class="source"><a class="csv-link" href="canonical/wpr-15plus.csv">canonical/wpr-15plus.csv</a> · sources/plfs/annual/plfs-annual-report-2023-24.pdf (Table 48, pp. 396–400)</p>
-    <p class="data-current">Data current to · PLFS 2023-24</p>
-  </div>
-  <div class="headline">53.20%</div>
-  <p class="headline-caption">All-India Muslim, NFHS-5. Hindu: 59.10%, All: 58.20%</p>
-  <div class="chart-wrap" style="height:280px"><canvas id="wpr-chart"></canvas></div>
-  <p class="methodology">Share of population age 15+ currently working. WPR = LFPR − unemployed.
-  The Muslim–Hindu gap (5.9pp) parallels LFPR.</p>
-</section>
+<h2 class="cluster-header">Housing</h2>
+<div class="cards">
+<section class="card"><div class="card-metric">Toilet facility access</div><div class="card-hero"><span class="card-value">90.30%</span><span class="card-unit">of households have a toilet</span><span class="card-year">(2020)</span></div><div class="card-direction">higher is better</div><div class="card-chartwrap" style="height:84px"><canvas id="cc-improved-sanitation"></canvas></div><div class="card-comparisons"><div class="card-comp good"><div class="comp-label">vs Hindu</div><div class="comp-verdict">+9.6pp</div><div class="comp-detail">ahead</div></div><div class="card-comp good"><div class="comp-label">vs All-India</div><div class="comp-verdict">+7.8pp</div><div class="comp-detail">ahead</div></div></div><div class="card-foot"><span>NFHS-5 (2019-21)</span><span><a class="csv-link" href="canonical/improved-sanitation.csv">canonical/improved-sanitation.csv</a></span></div></section>
+</div>
 
 <h2 class="cluster-header">Representation</h2>
-
-<!-- LOK SABHA SHARE -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Muslim share of Lok Sabha members</h2>
-    <p class="source"><a class="csv-link" href="canonical/ls-share.csv">canonical/ls-share.csv</a> · manual entry from ECI affidavit aggregations (Maktoob Media, FACTLY, The India Forum, Statista)</p>
-    <p class="data-current">Data current to · 18th Lok Sabha (2024 general election)</p>
-  </div>
-  <div class="headline">4.42%</div>
-  <p class="headline-caption">Muslim MPs in the 18th Lok Sabha (2024). <b>4.42% of 543 seats</b> vs Muslim population share ~14.2% — a chronic 9-10pp underrepresentation.</p>
-  <div class="chart-wrap" style="height:280px"><canvas id="ls-chart"></canvas></div>
-  <p class="methodology">Time series 2009–2024: 28 (5.16%), 22 (4.05%), 27 (4.97%), 24 (4.42%).
-  Muslim share of seats has hovered around 4-5% across the last four Lok Sabhas, against a
-  Muslim population share of <b>~14.2%</b> — chronic 9-10pp underrepresentation, and the
-  second-lowest share since independence (the lowest was 2014). Religion is not tabulated
-  by ECI or PRS Legislative Research; data is post-election journalistic aggregation of
-  candidate affidavits, cross-verified across multiple sources (documented manual entry).</p>
-</section>
-
-<!-- MLA SHARE -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Muslim share of state assembly MLAs</h2>
-    <p class="source"><a class="csv-link" href="canonical/mla-share.csv">canonical/mla-share.csv</a> · manual entry from ECI affidavit aggregations</p>
-    <p class="data-current">Data current to · most recent assembly election per state (2023-2026)</p>
-  </div>
-  <div class="headline">6.00%</div>
-  <p class="headline-caption">All-state aggregate ~<b>6% of MLAs</b> across 28 state assemblies, vs Muslim population share ~14.2%. Per-state chart below shows verified counts for 8 states.</p>
-  <div class="chart-wrap" style="height:340px"><canvas id="mla-chart"></canvas></div>
-  <p class="methodology">National aggregate across 28 state assemblies is ~6%. Per-state values vary
-  sharply: Kerala (25%) and West Bengal (13.7%) come closest to population proportionality, while
-  Chhattisgarh (0%), Madhya Pradesh (0.9%), and Maharashtra (3.5%) are far below their Muslim
-  population share. Like the Lok Sabha figure, this is manual entry from journalistic aggregation
-  of ECI affidavits — religion is not in any official tabulation. Coverage gap: ~19 more state
-  assemblies need their own research (UP, Bihar, Assam, TN, Karnataka, Gujarat, Punjab, etc.).</p>
-</section>
+<div class="cards">
+<section class="card"><div class="card-metric">Lok Sabha Muslim share (2024)</div><div class="card-hero"><span class="card-value">4.42%</span><span class="card-unit">of 543 Lok Sabha seats</span><span class="card-year">(2024)</span></div><div class="card-chartwrap" style="height:150px"><canvas id="cc-ls-share"></canvas></div><div class="card-comparisons"><div class="card-comp bad"><div class="comp-label">vs population</div><div class="comp-verdict">-9.8pp</div><div class="comp-detail">vs 14.2% pop share</div></div><div class="card-comp neutral"><div class="comp-label">trend</div><div class="comp-verdict">2009–2024</div><div class="comp-detail">5.2% → 4.4%</div></div></div><div class="card-foot"><span>PRS / ECI affidavits</span><span><a class="csv-link" href="canonical/ls-share.csv">canonical/ls-share.csv</a></span></div></section><section class="card"><div class="card-metric">State MLA Muslim share (national agg)</div><div class="card-hero"><span class="card-value">6.00%</span><span class="card-unit">of state-assembly seats (agg.)</span><span class="card-year">(2024)</span></div><div class="card-chartwrap" style="height:228px"><canvas id="cc-mla-share"></canvas></div><div class="card-comparisons"><div class="card-comp bad"><div class="comp-label">vs population</div><div class="comp-verdict">-8.2pp</div><div class="comp-detail">vs 14.2% pop share</div></div><div class="card-comp neutral"><div class="comp-label">national agg</div><div class="comp-verdict">6.00%</div><div class="comp-detail">across assemblies</div></div></div><div class="card-foot"><span>PRS / ECI affidavits</span><span><a class="csv-link" href="canonical/mla-share.csv">canonical/mla-share.csv</a></span></div></section>
+</div>
 
 <h2 class="cluster-header">Justice</h2>
+<div class="cards">
+<section class="card"><div class="card-metric">Prisoners (rate per 100k pop)</div><div class="card-hero"><span class="card-value">63.3</span><span class="card-unit">per 100k Muslims</span><span class="card-year">(2022)</span></div><div class="card-direction">lower is better</div><div class="card-chartwrap" style="height:84px"><canvas id="cc-prison-rate-per-100k"></canvas></div><div class="card-comparisons"><div class="card-comp bad"><div class="comp-label">vs Hindu rate</div><div class="comp-verdict">1.59×</div><div class="comp-detail">Muslim over-incarceration</div></div><div class="card-comp neutral"><div class="comp-label">Muslims held</div><div class="comp-verdict">108,968</div><div class="comp-detail">absolute count</div></div></div><div class="card-foot"><span>NCRB PSI 2022</span><span><a class="csv-link" href="canonical/prison-rate-per-100k.csv">canonical/prison-rate-per-100k.csv</a></span></div></section><section class="card"><div class="card-metric">Undertrials (rate per 100k pop)</div><div class="card-hero"><span class="card-value">48.8</span><span class="card-unit">per 100k Muslims</span><span class="card-year">(2022)</span></div><div class="card-direction">lower is better</div><div class="card-chartwrap" style="height:84px"><canvas id="cc-undertrial-rate-per-100k"></canvas></div><div class="card-comparisons"><div class="card-comp bad"><div class="comp-label">vs Hindu rate</div><div class="comp-verdict">1.66×</div><div class="comp-detail">Muslim over-incarceration</div></div><div class="card-comp neutral"><div class="comp-label">Muslims held</div><div class="comp-verdict">83,968</div><div class="comp-detail">absolute count</div></div></div><div class="card-foot"><span>NCRB PSI 2022</span><span><a class="csv-link" href="canonical/undertrial-rate-per-100k.csv">canonical/undertrial-rate-per-100k.csv</a></span></div></section>
+</div>
 
-<!-- PRISON RATE -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Muslim prison population — count and incarceration rate</h2>
-    <p class="source"><a class="csv-link" href="canonical/prison-share.csv">canonical/prison-share.csv</a> · sources/ncrb-prison/psi-2022.pdf (Tables 2.10C–2.13C, pp. 103, 107, 111, 115)</p>
-    <p class="data-current">Data current to · NCRB Prison Statistics India 2022 (as on 2023-12-01)</p>
-  </div>
-  <div class="headline">108,968</div>
-  <p class="headline-caption">All-India Muslim prison count. <b>63.26 per 100,000 Muslims</b>, vs Hindu 39.79 per 100k and All 44.61 per 100k. Muslim rate is <b>1.59× the Hindu rate</b>.</p>
-  <div class="chart-wrap" style="height:280px"><canvas id="ps2-chart"></canvas></div>
-  <p class="methodology">Combined convicts + undertrials + detenues + other prisoners.
-  Presented as absolute count and as incarceration rate per 100,000 of religious population
-  (a more direct measure of disproportion than "share of prisoners" alone). Muslim incarceration
-  rate of 63.3 per 100k vs Hindu 39.8 per 100k means a Muslim Indian is <b>1.59× as likely to
-  be in prison</b> as a Hindu Indian. Detenues (preventive-detention prisoners) skew much higher:
-  40.5% Muslim by share, driven heavily by J&K. Caveat: Maharashtra did not report religion
-  breakdown for ~33k undertrials/detenues — rates are computed over religion-reported prisoners
-  with full population in the denominator (so the actual rate is mildly understated).</p>
-</section>
-
-<!-- UNDERTRIAL RATE -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Muslim undertrial population — count and rate</h2>
-    <p class="source"><a class="csv-link" href="canonical/undertrial-share.csv">canonical/undertrial-share.csv</a> · sources/ncrb-prison/psi-2022.pdf (Table 2.11C, p. 107)</p>
-    <p class="data-current">Data current to · NCRB PSI 2022</p>
-  </div>
-  <div class="headline">83,968</div>
-  <p class="headline-caption">All-India Muslim undertrial count. <b>48.75 per 100,000 Muslims</b>, vs Hindu 29.33 per 100k and All 33.15 per 100k. Muslim rate is <b>1.66× the Hindu rate</b>.</p>
-  <div class="chart-wrap" style="height:280px"><canvas id="us-chart"></canvas></div>
-  <p class="methodology">Undertrials are prisoners awaiting trial — not convicted. Muslim
-  undertrial rate (48.7 per 100k Muslims) is <b>1.66× the Hindu rate</b> (29.3 per 100k Hindus),
-  the highest disproportion among the prison categories — consistent with widely-documented
-  patterns of detention-vs-conviction disparity (Muslims face higher pre-trial detention even
-  when conviction rates are similar).</p>
-</section>
-
-<h2 class="cluster-header">Civic — communal violence</h2>
-
-<!-- COMMUNAL INCIDENTS (GOVT) -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Communal/religious rioting incidents (NCRB)</h2>
-    <p class="source"><a class="csv-link" href="canonical/communal-incidents-govt.csv">canonical/communal-incidents-govt.csv</a> · sources/ncrb-crime/cii-2022-book1.pdf (Tables 1.2 + 1A.4)</p>
-    <p class="data-current">Data current to · NCRB Crime in India 2022</p>
-  </div>
-  <div class="headline">272</div>
-  <p class="headline-caption">Communal/religious rioting incidents recorded by NCRB nationally in 2022. Time series: 857 (2020) → 378 (2021) → 272 (2022). The published decline is contested by civic compilations which report higher counts; several states have stopped recording 'communal' as a separate category since ~2017.</p>
-  <div class="chart-wrap" style="height:280px"><canvas id="ci-chart"></canvas></div>
-  <p class="methodology">National annual total of cases registered under "Communal/Religious" rioting
-  (IPC Sec.147-151 sub-classification). The 2020 spike (857) coincides with CAA-NRC protests and
-  the Delhi riots; the subsequent decline (378 → 272) is contested. Several states have stopped
-  recording "communal" as a separate crime category since ~2017, which deflates the national
-  total. Civil-society compilations (Documentation of the Oppressed, India Hate Lab) typically
-  report substantially higher counts. NCRB tables do not disclose religion of victim or
-  perpetrator — only incident counts.</p>
-  <details>
-    <summary>Top 15 states by NCRB-recorded incidents in 2022 (of 35)</summary>
-    <table><thead><tr><th>State / UT</th><th>Incidents 2022</th></tr></thead><tbody>
-      <tr><td>Madhya Pradesh</td><td>68</td></tr>
-      <tr><td>Bihar</td><td>60</td></tr>
-      <tr><td>Jharkhand</td><td>46</td></tr>
-      <tr><td>Maharashtra</td><td>28</td></tr>
-      <tr><td>Karnataka</td><td>19</td></tr>
-      <tr><td>Odisha</td><td>15</td></tr>
-      <tr><td>Andhra Pradesh</td><td>9</td></tr>
-      <tr><td>Gujarat</td><td>9</td></tr>
-      <tr><td>Rajasthan</td><td>5</td></tr>
-      <tr><td>Haryana</td><td>4</td></tr>
-      <tr><td>Telangana</td><td>4</td></tr>
-      <tr><td>Assam</td><td>2</td></tr>
-      <tr><td>Goa</td><td>1</td></tr>
-      <tr><td>Kerala</td><td>1</td></tr>
-      <tr><td>Uttarakhand</td><td>1</td></tr>
-    </tbody></table>
-    <p class="methodology" style="margin-top:8px">Caveat repeated: cross-state comparisons are
-    biased by inconsistent recording practices — some states (e.g. UP, Bengal) show 0 in this
-    table because they no longer classify communal cases separately, not because no incidents
-    occurred.</p>
-  </details>
-</section>
-
-<!-- COMMUNAL INCIDENTS (CIVIC — INDIA HATE LAB) -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Anti-Muslim hate speech events (India Hate Lab)</h2>
-    <p class="source"><a class="csv-link" href="canonical/communal-incidents-civic.csv">canonical/communal-incidents-civic.csv</a> · sources/civic-databases/ihl-2024-annual-report.pdf + ihl-2023-annual-report.pdf</p>
-    <p class="data-current">Data current to · IHL Annual Report 2024 (released Feb 2025)</p>
-  </div>
-  <div class="headline">1,165</div>
-  <p class="headline-caption">India Hate Lab documented 1,165 in-person anti-Muslim hate speech events in 2024 — <b>a 74% rise</b> from 668 in 2023. ~98% target Muslims. Different unit from NCRB's rioting count; see methodology.</p>
-  <div class="chart-wrap" style="height:280px"><canvas id="cic-chart"></canvas></div>
-  <p class="methodology">India Hate Lab documents <b>in-person anti-Muslim hate speech events</b>:
-  political rallies, religious gatherings, electoral events with hateful rhetoric (~98% target
-  Muslims). 668 events in 2023 grew to 1,165 in 2024 — a <b>74% year-on-year rise</b>. Reading
-  alongside the NCRB tile above shows the methodology divide: NCRB counts what becomes a
-  registered crime (272 in 2022); IHL counts what happens regardless of whether police register
-  it. The two views answer different questions.</p>
-</section>
-
-<h2 class="cluster-header">Education — Higher Ed (count)</h2>
-
-<!-- MUSLIM HIGHER ED ENROLMENT -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Muslim student enrolment in higher education</h2>
-    <p class="source"><a class="csv-link" href="canonical/muslim-higher-ed-enrolment.csv">canonical/muslim-higher-ed-enrolment.csv</a> · sources/aishe/aishe-report-2021-22.pdf (Table 15, p. 140)</p>
-    <p class="data-current">Data current to · AISHE 2021-22 (next release: AISHE 2022-23 expected mid-2026)</p>
-  </div>
-  <div class="headline">2,108,033</div>
-  <p class="headline-caption">All-India Muslim student enrolment in higher education (AISHE 2021-22). Note: AISHE reports Muslim Minority separately; Hindu is residual, not directly enumerated.</p>
-  <div class="chart-wrap"><canvas id="ahe-chart"></canvas></div>
-  <p class="methodology">AISHE classifies enrolment as "Muslim Minority" vs "Other Minority Community"
-  (Christians, Sikhs, Buddhists, Jains, Parsis); Hindu enrolment is the residual, not directly
-  enumerated. This tile shows absolute Muslim count. A "Muslim share of total enrolment" metric
-  is a separate canonical target that requires Total Enrolment by state from a different AISHE
-  table (not yet extracted).</p>
-  <div class="note">
-    <b>Known data gap:</b> Ladakh, Lakshadweep, and West Bengal could not be cleanly extracted from
-    AISHE Table 15 (PDF text-layer issues — see <code>transform/aishe/extract_table15.py</code>
-    docstring). Combined, these account for less than 0.1% of national Muslim enrolment.
-  </div>
-  <details>
-    <summary>Full data (33 states)</summary>
-    <table><thead><tr><th>State / UT</th><th>Muslim enrolment</th></tr></thead><tbody>
-      <tr><td>Uttar Pradesh</td><td>326,819</td></tr>
-      <tr><td>Kerala</td><td>187,358</td></tr>
-      <tr><td>Bihar</td><td>172,681</td></tr>
-      <tr><td>Maharashtra</td><td>154,515</td></tr>
-      <tr><td>Karnataka</td><td>147,249</td></tr>
-      <tr><td>Jammu &amp; Kashmir</td><td>138,142</td></tr>
-      <tr><td>Telangana</td><td>121,318</td></tr>
-      <tr><td>Tamil Nadu</td><td>115,690</td></tr>
-      <tr><td>Assam</td><td>84,808</td></tr>
-      <tr><td>Andhra Pradesh</td><td>56,444</td></tr>
-      <tr><td>Rajasthan</td><td>46,411</td></tr>
-      <tr><td>Madhya Pradesh</td><td>39,205</td></tr>
-      <tr><td>Jharkhand</td><td>38,200</td></tr>
-      <tr><td>Gujarat</td><td>35,993</td></tr>
-      <tr><td>NCT of Delhi</td><td>28,282</td></tr>
-      <tr><td>Punjab</td><td>19,917</td></tr>
-      <tr><td>Uttarakhand</td><td>16,836</td></tr>
-      <tr><td>Haryana</td><td>10,961</td></tr>
-      <tr><td>Odisha</td><td>8,509</td></tr>
-      <tr><td>Chhattisgarh</td><td>5,113</td></tr>
-      <tr><td>Puducherry</td><td>3,270</td></tr>
-      <tr><td>Goa</td><td>3,084</td></tr>
-      <tr><td>Tripura</td><td>3,002</td></tr>
-      <tr><td>Meghalaya</td><td>2,119</td></tr>
-      <tr><td>Manipur</td><td>1,964</td></tr>
-      <tr><td>Himachal Pradesh</td><td>1,314</td></tr>
-      <tr><td>Chandigarh</td><td>692</td></tr>
-      <tr><td>Andaman &amp; Nicobar Islands</td><td>609</td></tr>
-      <tr><td>Nagaland</td><td>253</td></tr>
-      <tr><td>DNH and Daman &amp; Diu (merged)</td><td>228</td></tr>
-      <tr><td>Sikkim</td><td>162</td></tr>
-      <tr><td>Mizoram</td><td>130</td></tr>
-      <tr><td>Arunachal Pradesh</td><td>107</td></tr>
-    </tbody></table>
-  </details>
-</section>
+<h2 class="cluster-header">Civic</h2>
+<div class="cards">
+<section class="card"><div class="card-metric">Communal incidents (NCRB 2022)</div><div class="card-hero"><span class="card-value">272</span><span class="card-unit">incidents (NCRB)</span><span class="card-year">(2022)</span></div><div class="card-direction">lower is better</div><div class="card-chartwrap" style="height:150px"><canvas id="cc-communal-incidents-govt"></canvas></div><div class="card-comparisons"><div class="card-comp neutral"><div class="comp-label">trend</div><div class="comp-verdict">2020–2022</div><div class="comp-detail">857 → 272</div></div><div class="card-comp neutral"><div class="comp-label">latest year</div><div class="comp-verdict">2022</div><div class="comp-detail">national count</div></div></div><div class="card-foot"><span>NCRB CII 2022</span><span><a class="csv-link" href="canonical/communal-incidents-govt.csv">canonical/communal-incidents-govt.csv</a></span></div></section><section class="card"><div class="card-metric">Anti-Muslim hate speech events (IHL)</div><div class="card-hero"><span class="card-value">1,165</span><span class="card-unit">hate-speech events (IHL)</span><span class="card-year">(2024)</span></div><div class="card-direction">lower is better</div><div class="card-chartwrap" style="height:150px"><canvas id="cc-communal-incidents-civic"></canvas></div><div class="card-comparisons"><div class="card-comp neutral"><div class="comp-label">trend</div><div class="comp-verdict">2023–2024</div><div class="comp-detail">668 → 1,165</div></div><div class="card-comp neutral"><div class="comp-label">latest year</div><div class="comp-verdict">2024</div><div class="comp-detail">national count</div></div></div><div class="card-foot"><span>India Hate Lab</span><span><a class="csv-link" href="canonical/communal-incidents-civic.csv">canonical/communal-incidents-civic.csv</a></span></div></section>
+</div>
 
 <footer>
-  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-29 05:10.
+  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-29 07:58.
   Every number on this page traces L4 → L3 (canonical) → L2 (extracted) → L1 (source file)
   with SHA256 sidecar provenance. Re-run the builder after any canonical change:
   <code>python dashboard/build.py</code></p>
@@ -795,206 +359,87 @@ function hCompare() {
   return c;
 }
 
-new Chart(document.getElementById('ps-chart'), {
-  type: 'bar',
-  data: {
-    labels: ["Lakshadweep", "Jammu & Kashmir", "Assam", "West Bengal", "Kerala", "Uttar Pradesh", "Bihar", "Jharkhand", "Uttarakhand", "Karnataka", "NCT of Delhi", "Maharashtra", "Gujarat", "Andhra Pradesh", "Rajasthan", "Tripura", "Andaman & Nicobar Islands", "Manipur", "Goa", "Daman & Diu", "Haryana", "Madhya Pradesh", "Puducherry", "Tamil Nadu", "Chandigarh", "Meghalaya", "Dadra & Nagar Haveli", "Nagaland", "Himachal Pradesh", "Odisha", "Chhattisgarh", "Arunachal Pradesh", "Punjab", "Sikkim", "Mizoram"],
-    datasets: [
-      { label: 'Muslim share (%)', data: [96.58, 68.31, 34.22, 27.01, 26.56, 19.26, 16.87, 14.53, 13.95, 12.92, 12.86, 11.54, 9.67, 9.56, 9.07, 8.6, 8.52, 8.4, 8.33, 7.92, 7.03, 6.57, 6.05, 5.86, 4.87, 4.4, 3.76, 2.47, 2.18, 2.17, 2.02, 1.95, 1.93, 1.62, 1.35], backgroundColor: 'rgba(43,108,176,0.85)' },
-    ],
-  },
-  options: {
-    ...cfgBase(),
-    plugins: {
-      ...cfgBase().plugins,
-      annotation: {},
-      legend: { display: false },
+// --- Card-grid chart helpers (generated card initialisers call these) ---
+function _valueLabels(decimals, suffix) {
+  return { id: 'vl', afterDatasetsDraw(chart) {
+    const { ctx } = chart; const meta = chart.getDatasetMeta(0);
+    ctx.save(); ctx.font = '600 11px -apple-system, system-ui, sans-serif';
+    ctx.textBaseline = 'middle'; ctx.fillStyle = '#555';
+    meta.data.forEach((bar, i) => { const v = chart.data.datasets[0].data[i];
+      ctx.fillText(v.toFixed(decimals) + suffix, bar.x + 6, bar.y); });
+    ctx.restore();
+  } };
+}
+// "All-India" is a weighted aggregate that CONTAINS every community, so it is
+// never a peer bar. It is drawn as a dashed baseline reference line (the same
+// way the Hawaiʻi dashboard draws the US reference), passed via refValue.
+function _refLine(refValue, refLabel) {
+  return { id: 'refline', afterDatasetsDraw(chart) {
+    if (refValue == null) return;
+    const { ctx, chartArea: { top, bottom }, scales: { x } } = chart;
+    const px = x.getPixelForValue(refValue);
+    ctx.save();
+    ctx.strokeStyle = '#9aa3a8'; ctx.lineWidth = 1; ctx.setLineDash([4, 3]);
+    ctx.beginPath(); ctx.moveTo(px, top); ctx.lineTo(px, bottom); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.font = '600 9px -apple-system, system-ui, sans-serif';
+    ctx.fillStyle = '#9aa3a8'; ctx.textAlign = 'center';
+    ctx.fillText(refLabel, px, top - 3);
+    ctx.restore();
+  } };
+}
+function hbar(id, labels, values, colors, suffix, decimals, refValue, refLabel) {
+  new Chart(document.getElementById(id), {
+    type: 'bar',
+    data: { labels: labels, datasets: [{ data: values, backgroundColor: colors, borderRadius: 3, barPercentage: 0.82, categoryPercentage: 0.86 }] },
+    options: {
+      indexAxis: 'y', responsive: true, maintainAspectRatio: false, animation: false,
+      layout: { padding: { right: 46, top: 14 } },
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => c.parsed.x.toFixed(decimals) + suffix } } },
+      scales: { x: { display: false, grace: '8%', beginAtZero: false }, y: { grid: { display: false }, border: { display: false }, ticks: { font: { size: 11 } } } },
     },
-  },
-});
-
-new Chart(document.getElementById('lit-chart'), {
-  type: 'bar',
-  data: {
-    labels: ["Haryana", "Meghalaya", "Bihar", "Nagaland", "Uttar Pradesh", "Jammu & Kashmir", "Punjab", "Assam", "Rajasthan", "Uttarakhand", "Jharkhand", "Himachal Pradesh", "Arunachal Pradesh", "Manipur", "West Bengal", "Andhra Pradesh", "Chandigarh", "Madhya Pradesh", "NCT of Delhi", "Sikkim", "Mizoram", "Karnataka", "Odisha", "Gujarat", "Tripura", "Maharashtra", "Chhattisgarh", "Goa", "Daman & Diu", "Dadra & Nagar Haveli", "Tamil Nadu", "Andaman & Nicobar Islands", "Puducherry", "Lakshadweep", "Kerala"],
-    datasets: [
-      { label: 'Muslim', data: [53.4, 54.01, 56.37, 57.87, 58.84, 61.03, 61.89, 61.93, 62.73, 63.19, 66.22, 67.53, 67.68, 67.78, 68.76, 73.61, 74.68, 74.91, 75.6, 76.59, 77.84, 78.9, 79.99, 80.85, 83.17, 83.6, 84.57, 84.74, 85.88, 86.6, 88.18, 91.52, 91.68, 91.78, 93.32], backgroundColor: 'rgba(43,108,176,0.85)' },
-      { label: 'Hindu',  data: [77.09, 77.24, 62.88, 79.95, 69.74, 79.09, 80.06, 77.67, 66.08, 81.23, 67.67, 83.13, 70.11, 82.01, 79.14, 66.11, 85.17, 68.64, 87.26, 81.97, 91.78, 74.36, 73.17, 77.49, 88.16, 81.79, 69.8, 88.71, 87.08, 75.62, 78.83, 86.98, 85.1, 93.94, 93.51],  backgroundColor: 'rgba(183,106,43,0.85)' },
-    ],
-  },
-  options: cfgBase(),
-});
-
-new Chart(document.getElementById('sr-chart'), {
-  type: 'bar',
-  data: {
-    labels: ["Sikkim", "Mizoram", "Dadra & Nagar Haveli", "Daman & Diu", "Nagaland", "Chandigarh", "Arunachal Pradesh", "NCT of Delhi", "Himachal Pradesh", "Punjab", "Andaman & Nicobar Islands", "Haryana", "Uttarakhand", "Goa", "Maharashtra", "Meghalaya", "Jammu & Kashmir", "Uttar Pradesh", "Bihar", "Jharkhand", "Gujarat", "Madhya Pradesh", "Rajasthan", "West Bengal", "Chhattisgarh", "Assam", "Odisha", "Tripura", "Karnataka", "Andhra Pradesh", "Manipur", "Lakshadweep", "Tamil Nadu", "Puducherry", "Kerala"],
-    datasets: [
-      { label: 'Muslim', data: [509.6, 553.1, 678.0, 698.9, 716.4, 721.3, 738.9, 854.6, 855.8, 862.4, 873.5, 895.0, 901.0, 905.0, 910.6, 922.5, 934.5, 937.0, 941.4, 943.1, 944.2, 945.0, 946.2, 950.5, 952.0, 954.7, 956.4, 963.8, 969.4, 978.1, 991.9, 997.9, 1014.8, 1072.9, 1124.7], backgroundColor: 'rgba(43,108,176,0.85)' },
-      { label: 'Hindu',  data: [856.4, 505.8, 774.2, 607.3, 650.5, 803.4, 784.8, 864.7, 975.4, 878.7, 857.6, 875.6, 976.4, 929.3, 927.6, 862.9, 795.0, 906.7, 913.1, 935.0, 916.0, 928.6, 926.5, 948.3, 990.2, 957.9, 977.2, 959.4, 972.4, 993.3, 982.3, 115.4, 992.4, 1029.8, 1076.7],  backgroundColor: 'rgba(183,106,43,0.85)' },
-    ],
-  },
-  options: {
-    ...cfgBase(),
-    scales: {
-      ...cfgBase().scales,
-      y: { ...cfgBase().scales.y, suggestedMin: 800, suggestedMax: 1100 },
+    plugins: [_valueLabels(decimals, suffix), _refLine(refValue == null ? null : refValue, refLabel)],
+  });
+}
+function vbar(id, labels, values, color, suffix) {
+  new Chart(document.getElementById(id), {
+    type: 'bar',
+    data: { labels: labels, datasets: [{ data: values, backgroundColor: color, borderRadius: 3 }] },
+    options: {
+      responsive: true, maintainAspectRatio: false, animation: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => c.parsed.y.toFixed(1) + suffix } } },
+      scales: { y: { beginAtZero: false, grace: '8%', ticks: { font: { size: 10 } } }, x: { ticks: { font: { size: 9 }, maxRotation: 60, minRotation: 60 }, grid: { display: false } } },
     },
-  },
-});
+  });
+}
+function lineChart(id, labels, values, color, suffix) {
+  new Chart(document.getElementById(id), {
+    type: 'line',
+    data: { labels: labels, datasets: [{ data: values, borderColor: color, backgroundColor: 'rgba(43,108,176,.12)', fill: true, tension: 0.3, pointRadius: 3, pointBackgroundColor: color }] },
+    options: {
+      responsive: true, maintainAspectRatio: false, animation: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => c.parsed.y + suffix } } },
+      scales: { x: { grid: { display: false }, ticks: { font: { size: 10 } } }, y: { beginAtZero: false, grace: '10%', ticks: { font: { size: 10 } } } },
+    },
+  });
+}
 
-new Chart(document.getElementById('imr-chart'), {
-  type: 'bar',
-  data: {
-    labels: ["Muslim", "Hindu", "All"],
-    datasets: [
-      { label: 'IMR (per 1000 live births)', data: [33.03, 35.4, 34.73],
-        backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] },
-    ],
-  },
-  options: hCompare(),
-});
-
-new Chart(document.getElementById('is-chart'), {
-  type: 'bar',
-  data: {
-    labels: ["Muslim", "Hindu", "All"],
-    datasets: [{ label: 'Toilet access (%)', data: [90.3, 80.7, 82.5],
-      backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] }],
-  },
-  options: hCompare(),
-});
-
-new Chart(document.getElementById('id-chart'), {
-  type: 'bar',
-  data: {
-    labels: ["Muslim", "Hindu", "All"],
-    datasets: [{ label: 'Institutional delivery (%)', data: [84.3, 89.5, 88.58],
-      backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] }],
-  },
-  options: hCompare(),
-});
-
-new Chart(document.getElementById('wa-chart'), {
-  type: 'bar',
-  data: {
-    labels: ["Muslim", "Hindu", "All"],
-    datasets: [
-      { label: 'Any anaemia (%)', data: [55.6, 57.4, 57.0],
-        backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] },
-    ],
-  },
-  options: hCompare(),
-});
-
-new Chart(document.getElementById('ss-chart'), {
-  type: 'bar',
-  data: {
-    labels: ["Muslim", "Hindu", "All"],
-    datasets: [{ label: 'Regular salaried share (%)', data: [18.0, 21.9, 21.7],
-      backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] }],
-  },
-  options: hCompare(),
-});
-
-new Chart(document.getElementById('lfpr-chart'), {
-  type: 'bar',
-  data: {
-    labels: ["Muslim", "Hindu", "All"],
-    datasets: [{ label: 'LFPR 15+ (%)', data: [55.0, 60.9, 60.1],
-      backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] }],
-  },
-  options: hCompare(),
-});
-
-new Chart(document.getElementById('wpr-chart'), {
-  type: 'bar',
-  data: {
-    labels: ["Muslim", "Hindu", "All"],
-    datasets: [{ label: 'WPR 15+ (%)', data: [53.2, 59.1, 58.2],
-      backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] }],
-  },
-  options: hCompare(),
-});
-
-new Chart(document.getElementById('mla-chart'), {
-  type: 'bar',
-  data: {
-    labels: ["Kerala (2026)", "West Bengal (2026)", "Telangana (2023)", "Haryana (2024)", "Maharashtra (2024)", "Rajasthan (2023)", "Madhya Pradesh (2023)", "Chhattisgarh (2023)"],
-    datasets: [{ label: 'Muslim share of state assembly (%)', data: [25.0, 13.65, 5.88, 5.56, 3.47, 3.0, 0.87, 0.0],
-      backgroundColor: 'rgba(43,108,176,0.85)' }],
-  },
-  options: { ...cfgBase(),
-    plugins: { ...cfgBase().plugins, legend: { display: false } } },
-});
-
-new Chart(document.getElementById('cic-chart'), {
-  type: 'bar',
-  data: {
-    labels: ["2023", "2024"],
-    datasets: [{ label: 'Anti-Muslim hate speech events (IHL)', data: [668, 1165],
-      backgroundColor: 'rgba(123,29,34,0.85)' }],
-  },
-  options: { ...cfgBase(),
-    plugins: { ...cfgBase().plugins, legend: { display: false } } },
-});
-
-new Chart(document.getElementById('ci-chart'), {
-  type: 'bar',
-  data: {
-    labels: ["2020", "2021", "2022"],
-    datasets: [{ label: 'Communal incidents (NCRB)', data: [857, 378, 272],
-      backgroundColor: 'rgba(123,29,34,0.85)' }],
-  },
-  options: { ...cfgBase(),
-    plugins: { ...cfgBase().plugins, legend: { display: false } } },
-});
-
-new Chart(document.getElementById('ls-chart'), {
-  type: 'bar',
-  data: {
-    labels: ["2009", "2014", "2019", "2024"],
-    datasets: [
-      { label: 'Muslim share of Lok Sabha (%)', data: [5.16, 4.05, 4.97, 4.42], backgroundColor: 'rgba(43,108,176,0.85)' },
-    ],
-  },
-  options: { ...cfgBase(),
-    plugins: { ...cfgBase().plugins, legend: { display: false } },
-    scales: { ...cfgBase().scales, y: { ...cfgBase().scales.y, suggestedMin: 0, suggestedMax: 16,
-      ticks: { font: { size: 11 }, callback: function(v) { return v + '%'; } } } } },
-});
-
-new Chart(document.getElementById('ps2-chart'), {
-  type: 'bar',
-  data: {
-    labels: ["Muslim", "Hindu", "All"],
-    datasets: [{ label: 'Prison share (%)', data: [63.26, 39.79, 44.61],
-      backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] }],
-  },
-  options: hCompare(),
-});
-
-new Chart(document.getElementById('us-chart'), {
-  type: 'bar',
-  data: {
-    labels: ["Muslim", "Hindu", "All"],
-    datasets: [{ label: 'Undertrial share (%)', data: [48.75, 29.33, 33.15],
-      backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] }],
-  },
-  options: hCompare(),
-});
-
-new Chart(document.getElementById('ahe-chart'), {
-  type: 'bar',
-  data: {
-    labels: ["Uttar Pradesh", "Kerala", "Bihar", "Maharashtra", "Karnataka", "Jammu & Kashmir", "Telangana", "Tamil Nadu", "Assam", "Andhra Pradesh", "Rajasthan", "Madhya Pradesh", "Jharkhand", "Gujarat", "NCT of Delhi", "Punjab", "Uttarakhand", "Haryana", "Odisha", "Chhattisgarh"],
-    datasets: [
-      { label: 'Muslim enrolment (top 20 states)', data: [326819, 187358, 172681, 154515, 147249, 138142, 121318, 115690, 84808, 56444, 46411, 39205, 38200, 35993, 28282, 19917, 16836, 10961, 8509, 5113],
-         backgroundColor: 'rgba(123,29,34,0.85)' },
-    ],
-  },
-  options: { ...cfgBase(), plugins: { ...cfgBase().plugins, legend: { display: false } } },
-});
+vbar("cc-pop-share", ["Lakshadweep", "Jammu & Kashmir", "Assam", "West Bengal", "Kerala", "Uttar Pradesh", "Bihar", "Jharkhand"], [96.58, 68.31, 34.22, 27.01, 26.56, 19.26, 16.87, 14.53], "#2b6cb0", "%");
+hbar("cc-sex-ratio", ["Muslim", "Hindu"], [951.3, 939.1], ["#065F46", "#D8DEE2"], "", 0, 942.7, "All-India");
+hbar("cc-lit-7plus", ["Jain", "Christian", "Buddhist", "Sikh", "Hindu", "Muslim"], [94.9165, 84.5578, 81.3125, 75.4086, 73.3078, 68.5883], ["#D8DEE2", "#D8DEE2", "#D8DEE2", "#D8DEE2", "#D8DEE2", "#991B1B"], "%", 1, 73.0182, "All-India");
+hbar("cc-lfpr-15plus", ["Hindu", "Muslim"], [60.9, 55.0], ["#D8DEE2", "#991B1B"], "%", 1, 60.1, "All-India");
+hbar("cc-wpr-15plus", ["Hindu", "Muslim"], [59.1, 53.2], ["#D8DEE2", "#991B1B"], "%", 1, 58.2, "All-India");
+hbar("cc-salaried-share", ["Hindu", "Muslim"], [21.9, 18.0], ["#D8DEE2", "#991B1B"], "%", 1, 21.7, "All-India");
+hbar("cc-imr", ["Muslim", "Hindu"], [33.03, 35.4], ["#065F46", "#D8DEE2"], "", 1, 34.73, "All-India");
+hbar("cc-inst-delivery", ["Hindu", "Muslim"], [89.5, 84.3], ["#D8DEE2", "#991B1B"], "%", 1, 88.58, "All-India");
+hbar("cc-women-anemia", ["Muslim", "Hindu"], [55.6, 57.4], ["#065F46", "#D8DEE2"], "%", 1, 57.0, "All-India");
+hbar("cc-improved-sanitation", ["Muslim", "Hindu"], [90.3, 80.7], ["#065F46", "#D8DEE2"], "%", 1, 82.5, "All-India");
+lineChart("cc-ls-share", [2009, 2014, 2019, 2024], [5.16, 4.05, 4.97, 4.42], "#2b6cb0", "%");
+hbar("cc-mla-share", ["Kerala", "West Bengal", "Telangana", "Haryana", "Maharashtra", "Rajasthan", "Madhya Pradesh", "Chhattisgarh"], [25.0, 13.65, 5.88, 5.56, 3.47, 3.0, 0.87, 0.0], ["#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0"], "%", 1);
+hbar("cc-prison-rate-per-100k", ["Hindu", "Muslim"], [39.8, 63.3], ["#D8DEE2", "#991B1B"], "", 1, 44.6, "All-India");
+hbar("cc-undertrial-rate-per-100k", ["Hindu", "Muslim"], [29.3, 48.8], ["#D8DEE2", "#991B1B"], "", 1, 33.1, "All-India");
+lineChart("cc-communal-incidents-govt", [2020, 2021, 2022], [857, 378, 272], "#7b1d22", "");
+lineChart("cc-communal-incidents-civic", [2023, 2024], [668, 1165], "#7b1d22", "");
 </script>
 </body>
 </html>

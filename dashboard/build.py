@@ -604,6 +604,47 @@ TEMPLATE = """<!DOCTYPE html>
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     background: #efece4; padding: 1px 5px; border-radius: 3px;
   }
+  /* --- Card grid (Hawaii-Dashboard-style rollout) --- */
+  :root {
+    --positive: #065F46; --negative: #991B1B; --neutral: #555555;
+    --radius: 8px; --radius-pill: 999px;
+    --shadow-card: 0 4px 14px rgba(0,0,0,.09);
+    --t-2xs: .70rem; --t-xs: .75rem; --t-sm: .82rem; --t-base: .88rem;
+  }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 16px; margin-bottom: 8px; }
+  .card {
+    background: var(--card); border: 1px solid var(--rule); border-radius: var(--radius);
+    padding: 18px 18px 14px; display: flex; flex-direction: column;
+    transition: border-color .15s, box-shadow .15s, transform .15s;
+  }
+  .card:hover { border-color: var(--accent); box-shadow: var(--shadow-card); transform: translateY(-2px); }
+  .card:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .card-metric { font-size: var(--t-sm); font-weight: 600; color: var(--fg); margin-bottom: 8px; line-height: 1.3; }
+  .card-hero { display: flex; align-items: baseline; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
+  .card-value { font-size: 1.7rem; font-weight: 700; letter-spacing: -.02em; color: var(--accent); font-feature-settings: "tnum"; }
+  .card-unit, .card-year { font-size: var(--t-sm); color: var(--muted); font-weight: 500; }
+  .card-direction {
+    align-self: flex-start; font-size: .62rem; font-weight: 600; color: var(--muted);
+    background: var(--bg); padding: 1px 7px; border-radius: var(--radius-pill);
+    margin-bottom: 8px; text-transform: uppercase; letter-spacing: .03em;
+  }
+  .card-chartwrap { width: 100%; margin: 2px 0 4px; position: relative; }
+  .card-comparisons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: auto; padding-top: 10px; border-top: 1px solid var(--rule); }
+  .card-comp { text-align: center; padding: 5px 4px; border-radius: 6px; }
+  .comp-label { font-size: var(--t-xs); color: var(--muted); font-weight: 500; margin-bottom: 2px; }
+  .comp-verdict { font-size: var(--t-base); font-weight: 700; font-feature-settings: "tnum"; }
+  .comp-detail { font-size: var(--t-2xs); color: var(--muted); margin-top: 1px; }
+  .card-comp.positive .comp-verdict, .card-comp.good .comp-verdict { color: var(--positive); }
+  .card-comp.negative .comp-verdict, .card-comp.bad .comp-verdict { color: var(--negative); }
+  .card-comp.neutral .comp-verdict, .card-comp.mid .comp-verdict { color: var(--neutral); }
+  .comp-note { grid-column: 1 / -1; text-align: left; font-size: var(--t-xs); color: var(--muted); line-height: 1.45; }
+  .card-foot { margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: var(--t-2xs); color: var(--muted); }
+  .card-foot a { color: var(--muslim); text-decoration: none; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .card-foot a:hover { text-decoration: underline; }
+  .card details { margin-top: 10px; border-top: 1px dashed var(--rule); padding-top: 8px; }
+  .card details summary { font-size: var(--t-xs); }
+  .card details table { font-size: 12px; }
+  @media (max-width: 560px) { .cards { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -654,358 +695,7 @@ TEMPLATE = """<!DOCTYPE html>
   gap is the Muslim-to-Hindu rate ratio (1.0× = parity, >1.0× = Muslim overrepresented).</p>
 </section>
 
-<h2 class="cluster-header">Demographics</h2>
-
-<!-- POP SHARE -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Muslim share of total population</h2>
-    <p class="source">canonical/pop-share.csv · sources/census-2011/c-series/c01-population-by-religion.xls</p>
-    <p class="data-current">Data current to · Census 2011 (next release: 2021 round delayed indefinitely)</p>
-  </div>
-  <div class="headline">{ps_headline}</div>
-  <p class="headline-caption">{ps_caption}</p>
-  <div class="chart-wrap"><canvas id="ps-chart"></canvas></div>
-  <p class="methodology">Muslim population / total population at each geography, total residence
-  (urban + rural combined). Per Census 2011 published methodology.</p>
-  <details>
-    <summary>Full state data ({n_ps_rows} states)</summary>
-    <table><thead><tr><th>State / UT</th><th>Muslim share</th></tr></thead><tbody>
-      {ps_rows}
-    </tbody></table>
-  </details>
-  <details>
-    <summary>Top 50 districts by Muslim share (of {n_ps_districts} total)</summary>
-    <table><thead><tr><th>District code</th><th>Muslim share</th></tr></thead><tbody>
-      {ps_top_districts}
-    </tbody></table>
-    <p class="methodology" style="margin-top:8px">District codes are <code>IN-S&lt;state&gt;-D&lt;distt&gt;</code>
-    using Census 2011 codes. The top of this list is dominated by Kashmir Valley districts
-    (state 01), Lakshadweep (31), Malappuram in Kerala (32), and Murshidabad-belt districts
-    in West Bengal (19).</p>
-  </details>
-</section>
-
-<h2 class="cluster-header">Education</h2>
-
-<!-- LIT 7+ -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Literacy rate (7+ years)</h2>
-    <p class="source">canonical/lit-7plus.csv · sources/census-2011/c-series/c09-education-by-religion.xlsx</p>
-    <p class="data-current">Data current to · Census 2011</p>
-  </div>
-  <div class="headline">{lit_headline}</div>
-  <p class="headline-caption">{lit_caption}</p>
-  <div class="chart-wrap"><canvas id="lit-chart"></canvas></div>
-  <p class="methodology">(Literate − age-not-stated) / (Total − 0-6 − age-not-stated) × 100. Matches the
-  Census published literacy definition. Under-7 are all illiterate by Census convention; the gap
-  between Muslim and Hindu literacy is the comparison the dashboard is built around.</p>
-  <details>
-    <summary>Full data ({n_lit_rows} rows)</summary>
-    <table><thead><tr>
-      <th>State / UT</th><th>Muslim</th><th>Hindu</th><th>All</th><th>Hindu − Muslim gap</th>
-    </tr></thead><tbody>
-      {lit_rows}
-    </tbody></table>
-  </details>
-</section>
-
-<!-- SALARIED SHARE -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Regular salaried-employment share (15+)</h2>
-    <p class="source">canonical/salaried-share.csv · sources/plfs/annual/plfs-annual-report-2023-24.pdf (Table 49, pp. 401-402)</p>
-    <p class="data-current">Data current to · PLFS 2023-24</p>
-  </div>
-  <div class="headline">{ss_headline}</div>
-  <p class="headline-caption">{ss_caption}</p>
-  <div class="chart-wrap" style="height:280px"><canvas id="ss-chart"></canvas></div>
-  <p class="methodology">Percentage of workers in 'regular wage/salary' employment, vs self-employed
-  or casual labour. Muslims are <b>over-represented in self-employment</b> (62.2% vs Hindu 58.3%)
-  and <b>under-represented in formal salaried work</b> (18.0% vs Hindu 21.9%) — the classic
-  Sachar-era finding on labor-market segregation. Self-employment in this context is heavily
-  small-shop, artisanal, and informal-sector — not entrepreneurship.</p>
-</section>
-
-<h2 class="cluster-header">Health</h2>
-
-<!-- (sex-ratio remains in Demographics cluster — reordering deferred to keep this diff small) -->
-<!-- SEX RATIO -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Sex ratio (females per 1000 males)</h2>
-    <p class="source">canonical/sex-ratio.csv · sources/census-2011/c-series/c15-religion-by-age-sex.xlsx</p>
-    <p class="data-current">Data current to · Census 2011</p>
-  </div>
-  <div class="headline">{sr_headline}</div>
-  <p class="headline-caption">{sr_caption}</p>
-  <div class="chart-wrap"><canvas id="sr-chart"></canvas></div>
-  <p class="methodology">Females ÷ males × 1000, at all ages and total residence. Higher = more females
-  per male. Muslims have a higher national sex ratio than Hindus (951 vs 939) — one of the rare
-  indicators where the Muslim outcome runs ahead.</p>
-</section>
-
-<!-- IMR -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Infant Mortality Rate</h2>
-    <p class="source">canonical/imr.csv · sources/nfhs-5/reports/india-report-fr375.pdf (Table 7.2, p. 284) · weighted with sources/census-2011/c-series/c01-population-by-religion.xls</p>
-    <p class="data-current">Data current to · NFHS-5 (2019-21); 5-year reference period 2014-2020</p>
-  </div>
-  <div class="headline">{imr_headline}</div>
-  <p class="headline-caption">{imr_caption}</p>
-  <div class="chart-wrap" style="height:280px"><canvas id="imr-chart"></canvas></div>
-  <p class="methodology">Infant deaths per 1000 live births. NFHS-5 Table 7.2 publishes URBAN
-  and RURAL IMR by religion separately (no total-residence-by-religion column). Total
-  residence computed as population-weighted average using Census 2011 urban/rural population
-  by religion (urban/rural population shares by religion are stable 2011-2021, &lt;1% drift).
-  Note: Muslim IMR running below Hindu IMR is the well-documented "Muslim mortality paradox"
-  in Indian demography — Muslim infant survival outperforms Muslim adult socioeconomic
-  indicators.</p>
-</section>
-
-<!-- INSTITUTIONAL DELIVERY -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Institutional delivery rate</h2>
-    <p class="source">canonical/inst-delivery.csv · sources/nfhs-5/reports/india-report-fr375.pdf (Table 8.13, p. 324)</p>
-    <p class="data-current">Data current to · NFHS-5 (2019-21)</p>
-  </div>
-  <div class="headline">{id_headline}</div>
-  <p class="headline-caption">{id_caption}</p>
-  <div class="chart-wrap" style="height:280px"><canvas id="id-chart"></canvas></div>
-  <p class="methodology">Percentage of live births (5 years preceding NFHS-5) that took place in a
-  health facility. Muslim institutional delivery (84.3%) runs 5.2pp below Hindu (89.5%) — unlike
-  IMR and anaemia (where the Muslim outcome runs ahead), this is the expected direction.
-  Suggests the maternal-care system reaches Muslim women less effectively even where infant
-  outcomes are paradoxically better.</p>
-</section>
-
-<!-- WOMEN ANAEMIA -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Anaemia in women (age 15–49)</h2>
-    <p class="source">canonical/women-anemia.csv · sources/nfhs-5/reports/india-report-fr375.pdf (Table 10.23.1, p. 468)</p>
-    <p class="data-current">Data current to · NFHS-5 (2019-21)</p>
-  </div>
-  <div class="headline">{wa_headline}</div>
-  <p class="headline-caption">{wa_caption}</p>
-  <div class="chart-wrap" style="height:280px"><canvas id="wa-chart"></canvas></div>
-  <p class="methodology">Any anaemia (haemoglobin &lt;12.0 g/dl non-pregnant, &lt;11.0 g/dl pregnant),
-  altitude-adjusted. Total residence, national. Muslim women's anaemia (55.6%) is slightly
-  below Hindu (57.4%) — the same Muslim-paradox direction as IMR, though both rates are high
-  in absolute terms. Methodology note: NFHS-5 uses capillary blood (vs venous in NFHS-4) —
-  treat as a methodology break when comparing across rounds.</p>
-</section>
-
-<h2 class="cluster-header">Housing</h2>
-
-<!-- IMPROVED SANITATION -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Toilet facility access (households)</h2>
-    <p class="source">canonical/improved-sanitation.csv · sources/nfhs-5/reports/india-report-fr375.pdf (Table 2.4, p. 74)</p>
-    <p class="data-current">Data current to · NFHS-5 (2019-21)</p>
-  </div>
-  <div class="headline">{is_headline}</div>
-  <p class="headline-caption">{is_caption}</p>
-  <div class="chart-wrap" style="height:280px"><canvas id="is-chart"></canvas></div>
-  <p class="methodology">Percentage of households with access to a toilet facility (any type —
-  not strictly "improved" per JMP definition). Muslim toilet access (90.3%) runs <b>above
-  Hindu (80.7%)</b> — primarily a composition effect: urban share of Muslim population is
-  higher than urban share of Hindu population, and urban toilet access is uniformly higher
-  than rural. Reading: this is a paradox metric like IMR / sex-ratio — Muslim infrastructure
-  access is not uniformly worse, and the headline number depends heavily on urban-rural mix.</p>
-</section>
-
-<h2 class="cluster-header">Employment</h2>
-
-<!-- LFPR 15+ -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Labour Force Participation Rate (15+)</h2>
-    <p class="source">canonical/lfpr-15plus.csv · sources/plfs/annual/plfs-annual-report-2023-24.pdf (Table 48, pp. 396–400)</p>
-    <p class="data-current">Data current to · PLFS 2023-24 (Jul 2023 – Jun 2024)</p>
-  </div>
-  <div class="headline">{lfpr_headline}</div>
-  <p class="headline-caption">{lfpr_caption}</p>
-  <div class="chart-wrap" style="height:280px"><canvas id="lfpr-chart"></canvas></div>
-  <p class="methodology">Share of population age 15+ either working or actively seeking work
-  (usual status, principal + subsidiary). The 5.9pp Muslim–Hindu gap is driven heavily by
-  Muslim women's lower LFPR (30.2% vs Hindu women 43.3% per the source); Muslim men's LFPR
-  (80.6%) actually exceeds Hindu men's (78.6%).</p>
-</section>
-
-<!-- WPR 15+ -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Worker Population Ratio (15+)</h2>
-    <p class="source">canonical/wpr-15plus.csv · sources/plfs/annual/plfs-annual-report-2023-24.pdf (Table 48, pp. 396–400)</p>
-    <p class="data-current">Data current to · PLFS 2023-24</p>
-  </div>
-  <div class="headline">{wpr_headline}</div>
-  <p class="headline-caption">{wpr_caption}</p>
-  <div class="chart-wrap" style="height:280px"><canvas id="wpr-chart"></canvas></div>
-  <p class="methodology">Share of population age 15+ currently working. WPR = LFPR − unemployed.
-  The Muslim–Hindu gap (5.9pp) parallels LFPR.</p>
-</section>
-
-<h2 class="cluster-header">Representation</h2>
-
-<!-- LOK SABHA SHARE -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Muslim share of Lok Sabha members</h2>
-    <p class="source">canonical/ls-share.csv · manual entry from ECI affidavit aggregations (Maktoob Media, FACTLY, The India Forum, Statista)</p>
-    <p class="data-current">Data current to · 18th Lok Sabha (2024 general election)</p>
-  </div>
-  <div class="headline">{ls_headline}</div>
-  <p class="headline-caption">{ls_caption}</p>
-  <div class="chart-wrap" style="height:280px"><canvas id="ls-chart"></canvas></div>
-  <p class="methodology">Time series 2009–2024: 28 (5.16%), 22 (4.05%), 27 (4.97%), 24 (4.42%).
-  Muslim share of seats has hovered around 4-5% across the last four Lok Sabhas, against a
-  Muslim population share of <b>~14.2%</b> — chronic 9-10pp underrepresentation, and the
-  second-lowest share since independence (the lowest was 2014). Religion is not tabulated
-  by ECI or PRS Legislative Research; data is post-election journalistic aggregation of
-  candidate affidavits, cross-verified across multiple sources (documented manual entry).</p>
-</section>
-
-<!-- MLA SHARE -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Muslim share of state assembly MLAs</h2>
-    <p class="source">canonical/mla-share.csv · manual entry from ECI affidavit aggregations</p>
-    <p class="data-current">Data current to · most recent assembly election per state (2023-2026)</p>
-  </div>
-  <div class="headline">{mla_headline}</div>
-  <p class="headline-caption">{mla_caption}</p>
-  <div class="chart-wrap" style="height:340px"><canvas id="mla-chart"></canvas></div>
-  <p class="methodology">National aggregate across 28 state assemblies is ~6%. Per-state values vary
-  sharply: Kerala (25%) and West Bengal (13.7%) come closest to population proportionality, while
-  Chhattisgarh (0%), Madhya Pradesh (0.9%), and Maharashtra (3.5%) are far below their Muslim
-  population share. Like the Lok Sabha figure, this is manual entry from journalistic aggregation
-  of ECI affidavits — religion is not in any official tabulation. Coverage gap: ~19 more state
-  assemblies need their own research (UP, Bihar, Assam, TN, Karnataka, Gujarat, Punjab, etc.).</p>
-</section>
-
-<h2 class="cluster-header">Justice</h2>
-
-<!-- PRISON RATE -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Muslim prison population — count and incarceration rate</h2>
-    <p class="source">canonical/prison-share.csv · sources/ncrb-prison/psi-2022.pdf (Tables 2.10C–2.13C, pp. 103, 107, 111, 115)</p>
-    <p class="data-current">Data current to · NCRB Prison Statistics India 2022 (as on 2023-12-01)</p>
-  </div>
-  <div class="headline">{ps2_headline}</div>
-  <p class="headline-caption">{ps2_caption}</p>
-  <div class="chart-wrap" style="height:280px"><canvas id="ps2-chart"></canvas></div>
-  <p class="methodology">Combined convicts + undertrials + detenues + other prisoners.
-  Presented as absolute count and as incarceration rate per 100,000 of religious population
-  (a more direct measure of disproportion than "share of prisoners" alone). Muslim incarceration
-  rate of 63.3 per 100k vs Hindu 39.8 per 100k means a Muslim Indian is <b>1.59× as likely to
-  be in prison</b> as a Hindu Indian. Detenues (preventive-detention prisoners) skew much higher:
-  40.5% Muslim by share, driven heavily by J&K. Caveat: Maharashtra did not report religion
-  breakdown for ~33k undertrials/detenues — rates are computed over religion-reported prisoners
-  with full population in the denominator (so the actual rate is mildly understated).</p>
-</section>
-
-<!-- UNDERTRIAL RATE -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Muslim undertrial population — count and rate</h2>
-    <p class="source">canonical/undertrial-share.csv · sources/ncrb-prison/psi-2022.pdf (Table 2.11C, p. 107)</p>
-    <p class="data-current">Data current to · NCRB PSI 2022</p>
-  </div>
-  <div class="headline">{us_headline}</div>
-  <p class="headline-caption">{us_caption}</p>
-  <div class="chart-wrap" style="height:280px"><canvas id="us-chart"></canvas></div>
-  <p class="methodology">Undertrials are prisoners awaiting trial — not convicted. Muslim
-  undertrial rate (48.7 per 100k Muslims) is <b>1.66× the Hindu rate</b> (29.3 per 100k Hindus),
-  the highest disproportion among the prison categories — consistent with widely-documented
-  patterns of detention-vs-conviction disparity (Muslims face higher pre-trial detention even
-  when conviction rates are similar).</p>
-</section>
-
-<h2 class="cluster-header">Civic — communal violence</h2>
-
-<!-- COMMUNAL INCIDENTS (GOVT) -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Communal/religious rioting incidents (NCRB)</h2>
-    <p class="source">canonical/communal-incidents-govt.csv · sources/ncrb-crime/cii-2022-book1.pdf (Tables 1.2 + 1A.4)</p>
-    <p class="data-current">Data current to · NCRB Crime in India 2022</p>
-  </div>
-  <div class="headline">{ci_headline}</div>
-  <p class="headline-caption">{ci_caption}</p>
-  <div class="chart-wrap" style="height:280px"><canvas id="ci-chart"></canvas></div>
-  <p class="methodology">National annual total of cases registered under "Communal/Religious" rioting
-  (IPC Sec.147-151 sub-classification). The 2020 spike (857) coincides with CAA-NRC protests and
-  the Delhi riots; the subsequent decline (378 → 272) is contested. Several states have stopped
-  recording "communal" as a separate crime category since ~2017, which deflates the national
-  total. Civil-society compilations (Documentation of the Oppressed, India Hate Lab) typically
-  report substantially higher counts. NCRB tables do not disclose religion of victim or
-  perpetrator — only incident counts.</p>
-  <details>
-    <summary>Top 15 states by NCRB-recorded incidents in 2022 (of {ci_n_states})</summary>
-    <table><thead><tr><th>State / UT</th><th>Incidents 2022</th></tr></thead><tbody>
-      {ci_state_rows}
-    </tbody></table>
-    <p class="methodology" style="margin-top:8px">Caveat repeated: cross-state comparisons are
-    biased by inconsistent recording practices — some states (e.g. UP, Bengal) show 0 in this
-    table because they no longer classify communal cases separately, not because no incidents
-    occurred.</p>
-  </details>
-</section>
-
-<!-- COMMUNAL INCIDENTS (CIVIC — INDIA HATE LAB) -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Anti-Muslim hate speech events (India Hate Lab)</h2>
-    <p class="source">canonical/communal-incidents-civic.csv · sources/civic-databases/ihl-2024-annual-report.pdf + ihl-2023-annual-report.pdf</p>
-    <p class="data-current">Data current to · IHL Annual Report 2024 (released Feb 2025)</p>
-  </div>
-  <div class="headline">{cic_headline}</div>
-  <p class="headline-caption">{cic_caption}</p>
-  <div class="chart-wrap" style="height:280px"><canvas id="cic-chart"></canvas></div>
-  <p class="methodology">India Hate Lab documents <b>in-person anti-Muslim hate speech events</b>:
-  political rallies, religious gatherings, electoral events with hateful rhetoric (~98% target
-  Muslims). 668 events in 2023 grew to 1,165 in 2024 — a <b>74% year-on-year rise</b>. Reading
-  alongside the NCRB tile above shows the methodology divide: NCRB counts what becomes a
-  registered crime (272 in 2022); IHL counts what happens regardless of whether police register
-  it. The two views answer different questions.</p>
-</section>
-
-<h2 class="cluster-header">Education — Higher Ed (count)</h2>
-
-<!-- MUSLIM HIGHER ED ENROLMENT -->
-<section class="tile">
-  <div class="tile-head">
-    <h2>Muslim student enrolment in higher education</h2>
-    <p class="source">canonical/muslim-higher-ed-enrolment.csv · sources/aishe/aishe-report-2021-22.pdf (Table 15, p. 140)</p>
-    <p class="data-current">Data current to · AISHE 2021-22 (next release: AISHE 2022-23 expected mid-2026)</p>
-  </div>
-  <div class="headline">{ahe_headline}</div>
-  <p class="headline-caption">{ahe_caption}</p>
-  <div class="chart-wrap"><canvas id="ahe-chart"></canvas></div>
-  <p class="methodology">AISHE classifies enrolment as "Muslim Minority" vs "Other Minority Community"
-  (Christians, Sikhs, Buddhists, Jains, Parsis); Hindu enrolment is the residual, not directly
-  enumerated. This tile shows absolute Muslim count. A "Muslim share of total enrolment" metric
-  is a separate canonical target that requires Total Enrolment by state from a different AISHE
-  table (not yet extracted).</p>
-  <div class="note">
-    <b>Known data gap:</b> Ladakh, Lakshadweep, and West Bengal could not be cleanly extracted from
-    AISHE Table 15 (PDF text-layer issues — see <code>transform/aishe/extract_table15.py</code>
-    docstring). Combined, these account for less than 0.1% of national Muslim enrolment.
-  </div>
-  <details>
-    <summary>Full data ({n_ahe_rows} states)</summary>
-    <table><thead><tr><th>State / UT</th><th>Muslim enrolment</th></tr></thead><tbody>
-      {ahe_rows}
-    </tbody></table>
-  </details>
-</section>
+{cluster_grids}
 
 <footer>
   <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at {timestamp}.
@@ -1086,206 +776,72 @@ function hCompare() {
   return c;
 }
 
-new Chart(document.getElementById('ps-chart'), {
-  type: 'bar',
-  data: {
-    labels: {ps_chart_labels},
-    datasets: [
-      { label: 'Muslim share (%)', data: {ps_chart_values}, backgroundColor: 'rgba(43,108,176,0.85)' },
-    ],
-  },
-  options: {
-    ...cfgBase(),
-    plugins: {
-      ...cfgBase().plugins,
-      annotation: {},
-      legend: { display: false },
+// --- Card-grid chart helpers (generated card initialisers call these) ---
+function _valueLabels(decimals, suffix) {
+  return { id: 'vl', afterDatasetsDraw(chart) {
+    const { ctx } = chart; const meta = chart.getDatasetMeta(0);
+    ctx.save(); ctx.font = '600 11px -apple-system, system-ui, sans-serif';
+    ctx.textBaseline = 'middle'; ctx.fillStyle = '#555';
+    meta.data.forEach((bar, i) => { const v = chart.data.datasets[0].data[i];
+      ctx.fillText(v.toFixed(decimals) + suffix, bar.x + 6, bar.y); });
+    ctx.restore();
+  } };
+}
+// "All-India" is a weighted aggregate that CONTAINS every community, so it is
+// never a peer bar. It is drawn as a dashed baseline reference line (the same
+// way the Hawaiʻi dashboard draws the US reference), passed via refValue.
+function _refLine(refValue, refLabel) {
+  return { id: 'refline', afterDatasetsDraw(chart) {
+    if (refValue == null) return;
+    const { ctx, chartArea: { top, bottom }, scales: { x } } = chart;
+    const px = x.getPixelForValue(refValue);
+    ctx.save();
+    ctx.strokeStyle = '#9aa3a8'; ctx.lineWidth = 1; ctx.setLineDash([4, 3]);
+    ctx.beginPath(); ctx.moveTo(px, top); ctx.lineTo(px, bottom); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.font = '600 9px -apple-system, system-ui, sans-serif';
+    ctx.fillStyle = '#9aa3a8'; ctx.textAlign = 'center';
+    ctx.fillText(refLabel, px, top - 3);
+    ctx.restore();
+  } };
+}
+function hbar(id, labels, values, colors, suffix, decimals, refValue, refLabel) {
+  new Chart(document.getElementById(id), {
+    type: 'bar',
+    data: { labels: labels, datasets: [{ data: values, backgroundColor: colors, borderRadius: 3, barPercentage: 0.82, categoryPercentage: 0.86 }] },
+    options: {
+      indexAxis: 'y', responsive: true, maintainAspectRatio: false, animation: false,
+      layout: { padding: { right: 46, top: 14 } },
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => c.parsed.x.toFixed(decimals) + suffix } } },
+      scales: { x: { display: false, grace: '8%', beginAtZero: false }, y: { grid: { display: false }, border: { display: false }, ticks: { font: { size: 11 } } } },
     },
-  },
-});
-
-new Chart(document.getElementById('lit-chart'), {
-  type: 'bar',
-  data: {
-    labels: {lit_chart_labels},
-    datasets: [
-      { label: 'Muslim', data: {lit_muslim}, backgroundColor: 'rgba(43,108,176,0.85)' },
-      { label: 'Hindu',  data: {lit_hindu},  backgroundColor: 'rgba(183,106,43,0.85)' },
-    ],
-  },
-  options: cfgBase(),
-});
-
-new Chart(document.getElementById('sr-chart'), {
-  type: 'bar',
-  data: {
-    labels: {sr_chart_labels},
-    datasets: [
-      { label: 'Muslim', data: {sr_muslim}, backgroundColor: 'rgba(43,108,176,0.85)' },
-      { label: 'Hindu',  data: {sr_hindu},  backgroundColor: 'rgba(183,106,43,0.85)' },
-    ],
-  },
-  options: {
-    ...cfgBase(),
-    scales: {
-      ...cfgBase().scales,
-      y: { ...cfgBase().scales.y, suggestedMin: 800, suggestedMax: 1100 },
+    plugins: [_valueLabels(decimals, suffix), _refLine(refValue == null ? null : refValue, refLabel)],
+  });
+}
+function vbar(id, labels, values, color, suffix) {
+  new Chart(document.getElementById(id), {
+    type: 'bar',
+    data: { labels: labels, datasets: [{ data: values, backgroundColor: color, borderRadius: 3 }] },
+    options: {
+      responsive: true, maintainAspectRatio: false, animation: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => c.parsed.y.toFixed(1) + suffix } } },
+      scales: { y: { beginAtZero: false, grace: '8%', ticks: { font: { size: 10 } } }, x: { ticks: { font: { size: 9 }, maxRotation: 60, minRotation: 60 }, grid: { display: false } } },
     },
-  },
-});
+  });
+}
+function lineChart(id, labels, values, color, suffix) {
+  new Chart(document.getElementById(id), {
+    type: 'line',
+    data: { labels: labels, datasets: [{ data: values, borderColor: color, backgroundColor: 'rgba(43,108,176,.12)', fill: true, tension: 0.3, pointRadius: 3, pointBackgroundColor: color }] },
+    options: {
+      responsive: true, maintainAspectRatio: false, animation: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => c.parsed.y + suffix } } },
+      scales: { x: { grid: { display: false }, ticks: { font: { size: 10 } } }, y: { beginAtZero: false, grace: '10%', ticks: { font: { size: 10 } } } },
+    },
+  });
+}
 
-new Chart(document.getElementById('imr-chart'), {
-  type: 'bar',
-  data: {
-    labels: {imr_chart_labels},
-    datasets: [
-      { label: 'IMR (per 1000 live births)', data: {imr_chart_values},
-        backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] },
-    ],
-  },
-  options: hCompare(),
-});
-
-new Chart(document.getElementById('is-chart'), {
-  type: 'bar',
-  data: {
-    labels: {is_chart_labels},
-    datasets: [{ label: 'Toilet access (%)', data: {is_chart_values},
-      backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] }],
-  },
-  options: hCompare(),
-});
-
-new Chart(document.getElementById('id-chart'), {
-  type: 'bar',
-  data: {
-    labels: {id_chart_labels},
-    datasets: [{ label: 'Institutional delivery (%)', data: {id_chart_values},
-      backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] }],
-  },
-  options: hCompare(),
-});
-
-new Chart(document.getElementById('wa-chart'), {
-  type: 'bar',
-  data: {
-    labels: {wa_chart_labels},
-    datasets: [
-      { label: 'Any anaemia (%)', data: {wa_chart_values},
-        backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] },
-    ],
-  },
-  options: hCompare(),
-});
-
-new Chart(document.getElementById('ss-chart'), {
-  type: 'bar',
-  data: {
-    labels: {ss_chart_labels},
-    datasets: [{ label: 'Regular salaried share (%)', data: {ss_chart_values},
-      backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] }],
-  },
-  options: hCompare(),
-});
-
-new Chart(document.getElementById('lfpr-chart'), {
-  type: 'bar',
-  data: {
-    labels: {lfpr_chart_labels},
-    datasets: [{ label: 'LFPR 15+ (%)', data: {lfpr_chart_values},
-      backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] }],
-  },
-  options: hCompare(),
-});
-
-new Chart(document.getElementById('wpr-chart'), {
-  type: 'bar',
-  data: {
-    labels: {wpr_chart_labels},
-    datasets: [{ label: 'WPR 15+ (%)', data: {wpr_chart_values},
-      backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] }],
-  },
-  options: hCompare(),
-});
-
-new Chart(document.getElementById('mla-chart'), {
-  type: 'bar',
-  data: {
-    labels: {mla_chart_labels},
-    datasets: [{ label: 'Muslim share of state assembly (%)', data: {mla_chart_values},
-      backgroundColor: 'rgba(43,108,176,0.85)' }],
-  },
-  options: { ...cfgBase(),
-    plugins: { ...cfgBase().plugins, legend: { display: false } } },
-});
-
-new Chart(document.getElementById('cic-chart'), {
-  type: 'bar',
-  data: {
-    labels: {cic_chart_labels},
-    datasets: [{ label: 'Anti-Muslim hate speech events (IHL)', data: {cic_chart_values},
-      backgroundColor: 'rgba(123,29,34,0.85)' }],
-  },
-  options: { ...cfgBase(),
-    plugins: { ...cfgBase().plugins, legend: { display: false } } },
-});
-
-new Chart(document.getElementById('ci-chart'), {
-  type: 'bar',
-  data: {
-    labels: {ci_chart_labels},
-    datasets: [{ label: 'Communal incidents (NCRB)', data: {ci_chart_values},
-      backgroundColor: 'rgba(123,29,34,0.85)' }],
-  },
-  options: { ...cfgBase(),
-    plugins: { ...cfgBase().plugins, legend: { display: false } } },
-});
-
-new Chart(document.getElementById('ls-chart'), {
-  type: 'bar',
-  data: {
-    labels: {ls_chart_labels},
-    datasets: [
-      { label: 'Muslim share of Lok Sabha (%)', data: {ls_chart_values}, backgroundColor: 'rgba(43,108,176,0.85)' },
-    ],
-  },
-  options: { ...cfgBase(),
-    plugins: { ...cfgBase().plugins, legend: { display: false } },
-    scales: { ...cfgBase().scales, y: { ...cfgBase().scales.y, suggestedMin: 0, suggestedMax: 16,
-      ticks: { font: { size: 11 }, callback: function(v) { return v + '%'; } } } } },
-});
-
-new Chart(document.getElementById('ps2-chart'), {
-  type: 'bar',
-  data: {
-    labels: {ps2_chart_labels},
-    datasets: [{ label: 'Prison share (%)', data: {ps2_chart_values},
-      backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] }],
-  },
-  options: hCompare(),
-});
-
-new Chart(document.getElementById('us-chart'), {
-  type: 'bar',
-  data: {
-    labels: {us_chart_labels},
-    datasets: [{ label: 'Undertrial share (%)', data: {us_chart_values},
-      backgroundColor: ['rgba(43,108,176,0.85)', 'rgba(183,106,43,0.85)', 'rgba(90,106,93,0.85)'] }],
-  },
-  options: hCompare(),
-});
-
-new Chart(document.getElementById('ahe-chart'), {
-  type: 'bar',
-  data: {
-    labels: {ahe_chart_labels},
-    datasets: [
-      { label: 'Muslim enrolment (top 20 states)', data: {ahe_chart_values},
-         backgroundColor: 'rgba(123,29,34,0.85)' },
-    ],
-  },
-  options: { ...cfgBase(), plugins: { ...cfgBase().plugins, legend: { display: false } } },
-});
+{card_charts}
 </script>
 </body>
 </html>
@@ -1396,12 +952,16 @@ def build() -> None:
               + len(load_metric("prison-rate-per-100k")) + len(load_metric("undertrial-rate-per-100k"))
               + len(load_metric("muslim-higher-ed-enrolment")))
 
+    cluster_grids, card_charts = render_all_clusters()
+
     substitutions = {
         "{timestamp}": dt.datetime.now().strftime("%Y-%m-%d %H:%M"),
         "{n_metrics}": str(n_metrics),
         "{n_sources}": str(n_sources),
         "{n_rows}": str(n_rows),
         "{scorecard_rows}": render_scorecard_rows(),
+        "{cluster_grids}": cluster_grids,
+        "{card_charts}": card_charts,
         # pop-share
         "{ps_headline}": pop["headline"],
         "{ps_caption}": pop["headline_caption"],
@@ -1533,5 +1093,555 @@ def build() -> None:
     print(f"wrote {OUT_PATH.relative_to(REPO_ROOT)} ({len(html_out):,} bytes)")
 
 
+# ============================================================================
+# Education card-grid prototype (Hawaii-Dashboard-style, multi-community)
+#
+# Non-destructive: writes a standalone docs/preview-education-cards.html so the
+# new layout can be diffed against the current build before any rewrite.
+# Demonstrates two patterns learned from hawaiidashboard.org:
+#   (1) compact card grid with polarity pill + two-up comparison block, and
+#   (2) "rank among communities" — the Muslim-vs-49-other-states analog, now
+#       possible because lit-7plus canonical carries all six named communities.
+# ============================================================================
+
+NAMED_COMMUNITIES = ("hindu", "muslim", "christian", "sikh", "buddhist", "jain")
+COMMUNITY_LABEL = {
+    "hindu": "Hindu", "muslim": "Muslim", "christian": "Christian",
+    "sikh": "Sikh", "buddhist": "Buddhist", "jain": "Jain",
+    "all": "All", "other": "Other",
+}
+EDU_PREVIEW_PATH = REPO_ROOT / "docs" / "preview-education-cards.html"
+# Tier text colors mirror the Hawaii pattern: top third green, bottom third
+# red, middle muted grey ("neutral isn't worth shouting about").
+TIER_HEX = {"good": "#065F46", "mid": "#555555", "bad": "#991B1B"}
+
+
+def _ordinal(k: int) -> str:
+    suffix = "th" if 10 <= k % 100 <= 20 else {1: "st", 2: "nd", 3: "rd"}.get(k % 10, "th")
+    return f"{k}{suffix}"
+
+
+def community_rank(by_religion: dict[str, float], higher_is_better: bool):
+    """Rank 'muslim' among the named communities present. rank 1 = best.
+
+    Returns (rank, n, tier, ordered_pairs) where ordered_pairs is the list of
+    (community, value) sorted best-first, and tier is good/mid/bad by thirds.
+    """
+    present = [(c, by_religion[c]) for c in NAMED_COMMUNITIES if c in by_religion]
+    present.sort(key=lambda kv: kv[1], reverse=bool(higher_is_better))
+    order = [c for c, _ in present]
+    n = len(order)
+    if n == 0 or "muslim" not in order:
+        return 0, n, "mid", present
+    rank = order.index("muslim") + 1
+    if rank <= n / 3:
+        tier = "good"
+    elif rank > 2 * n / 3:
+        tier = "bad"
+    else:
+        tier = "mid"
+    return rank, n, tier, present
+
+
+_EDU_CHART_JS = """
+const valueLabels = {
+  id: 'valueLabels',
+  afterDatasetsDraw(chart) {
+    const { ctx } = chart;
+    const meta = chart.getDatasetMeta(0);
+    ctx.save();
+    ctx.font = '600 11px Inter, system-ui, sans-serif';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#555';
+    meta.data.forEach((bar, i) => {
+      const v = chart.data.datasets[0].data[i];
+      ctx.fillText(v.toFixed(1) + '%', bar.x + 6, bar.y);
+    });
+    ctx.restore();
+  }
+};
+new Chart(document.getElementById('lit-comm-chart'), {
+  type: 'bar',
+  data: {
+    labels: __LABELS__,
+    datasets: [{ data: __VALUES__, backgroundColor: __COLORS__, borderRadius: 3, barPercentage: 0.82, categoryPercentage: 0.86 }],
+  },
+  options: {
+    indexAxis: 'y', responsive: true, maintainAspectRatio: false, animation: false,
+    layout: { padding: { right: 40 } },
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => c.parsed.x.toFixed(2) + '%' } } },
+    scales: {
+      x: { display: false, grace: '6%' },
+      y: { grid: { display: false }, border: { display: false }, ticks: { font: { size: 11 } } },
+    },
+  },
+  plugins: [valueLabels],
+});
+"""
+
+_EDU_PREVIEW_HEAD = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Education — card-grid prototype</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg:#f5f5f5; --card-bg:#ffffff; --text:#1a1a1a; --text-muted:#555555;
+    --accent:#7b1d22;
+    --positive:#065F46; --negative:#991B1B; --neutral:#555555;
+    --border:#e6e3da; --radius:8px; --radius-pill:999px;
+    --shadow-card:0 4px 14px rgba(0,0,0,.09);
+    --text-2xs:.70rem; --text-xs:.75rem; --text-sm:.82rem; --text-base:.88rem; --text-lg:1rem;
+    --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:var(--font);font-size:15px;line-height:1.5;color:var(--text);background:var(--bg);margin:0;padding:0;}
+  .page{max-width:1080px;margin:0 auto;padding:32px 24px 80px;}
+  h1{font-size:1.7rem;margin:0 0 4px;letter-spacing:-.01em;}
+  .tagline{color:var(--text-muted);font-size:.9rem;margin:0 0 18px;}
+  .protobar{background:#fff7f0;border-left:4px solid var(--accent);border-radius:4px;padding:12px 16px;margin-bottom:20px;font-size:.85rem;color:#4a3a2a;}
+  .protobar b{color:var(--accent);}
+  .cluster-header{font-size:.85rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;margin:28px 0 12px;padding-top:10px;border-top:2px solid var(--border);display:flex;justify-content:space-between;align-items:baseline;}
+  .legend{font-size:var(--text-xs);font-weight:500;color:var(--text-muted);letter-spacing:0;text-transform:none;}
+  .legend .sw{display:inline-block;width:10px;height:10px;border-radius:2px;vertical-align:middle;margin:0 4px 0 10px;}
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1rem;}
+  .card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.25rem 1rem;display:flex;flex-direction:column;transition:border-color .15s,box-shadow .15s,transform .15s;}
+  .card:hover{border-color:var(--accent);box-shadow:var(--shadow-card);transform:translateY(-2px);}
+  .card-metric{font-size:var(--text-sm);font-weight:600;color:var(--text);margin-bottom:.5rem;line-height:1.3;}
+  .card-hero{display:flex;align-items:baseline;gap:.4rem;margin-bottom:.35rem;}
+  .card-value{font-size:1.6rem;font-weight:700;letter-spacing:-.02em;font-feature-settings:"tnum";}
+  .card-unit,.card-year{font-size:var(--text-sm);color:var(--text-muted);font-weight:500;}
+  .card-direction{align-self:flex-start;font-size:.62rem;font-weight:600;color:var(--text-muted);background:var(--bg);padding:1px 7px;border-radius:var(--radius-pill);margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.03em;}
+  .card-chartwrap{height:188px;width:100%;margin:.1rem 0 .2rem;}
+  .card-comparisons{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-top:.6rem;padding-top:.6rem;border-top:1px solid var(--border);}
+  .card-comp{text-align:center;padding:.35rem .25rem;border-radius:6px;}
+  .comp-label{font-size:var(--text-xs);color:var(--text-muted);font-weight:500;margin-bottom:.15rem;}
+  .comp-verdict{font-size:var(--text-base);font-weight:700;font-feature-settings:"tnum";}
+  .comp-detail{font-size:var(--text-2xs);color:var(--text-muted);margin-top:.1rem;}
+  .card-comp.positive .comp-verdict,.card-comp.good .comp-verdict{color:var(--positive);}
+  .card-comp.negative .comp-verdict,.card-comp.bad .comp-verdict{color:var(--negative);}
+  .card-comp.neutral .comp-verdict,.card-comp.mid .comp-verdict{color:var(--neutral);}
+  .comp-note{grid-column:1/-1;text-align:left;font-size:var(--text-xs);color:var(--text-muted);line-height:1.45;padding:.1rem .15rem;}
+  .card-footer{margin-top:.5rem;padding-top:.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:.5rem;font-size:var(--text-2xs);color:var(--text-muted);}
+  .card-footer a{color:var(--accent);text-decoration:none;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;}
+  .card-footer a:hover{text-decoration:underline;}
+  @media (max-width:560px){.cards{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="page">
+"""
+
+
+def _edu_card(metric, value_html, unit, year, polarity, chart_html, comps_html,
+              source_label, csv_href):
+    pill = f'<div class="card-direction">{html.escape(polarity)}</div>' if polarity else ""
+    return f"""
+  <section class="card">
+    <div class="card-metric">{html.escape(metric)}</div>
+    <div class="card-hero"><span class="card-value">{value_html}</span><span class="card-unit">{html.escape(unit)}</span><span class="card-year">({html.escape(year)})</span></div>
+    {pill}
+    {chart_html}
+    <div class="card-comparisons">{comps_html}</div>
+    <div class="card-footer"><span>{html.escape(source_label)}</span><a href="{html.escape(csv_href)}">{html.escape(csv_href)}</a></div>
+  </section>"""
+
+
+def build_education_cards_preview() -> None:
+    # ---- Literacy 7+ (multi-community) ----
+    lit_nat = {r["religion"]: float(r["value"])
+               for r in load_metric("lit-7plus") if r["geography_level"] == "national"}
+    rank, n, tier, ordered = community_rank(lit_nat, higher_is_better=True)
+    muslim_v, hindu_v, all_v = lit_nat["muslim"], lit_nat["hindu"], lit_nat["all"]
+    gap = muslim_v - hindu_v
+    gap_class = "negative" if gap < 0 else ("positive" if gap > 0 else "neutral")
+
+    chart_labels = [COMMUNITY_LABEL[c] for c, _ in ordered]
+    chart_values = [round(v, 4) for _, v in ordered]
+    colors = [TIER_HEX[tier] if c == "muslim" else "#D8DEE2" for c, _ in ordered]
+
+    lit_comps = (
+        f'<div class="card-comp {gap_class}"><div class="comp-label">vs Hindu</div>'
+        f'<div class="comp-verdict">{gap:+.1f}pp</div>'
+        f'<div class="comp-detail">{"behind" if gap < 0 else "ahead"}</div></div>'
+        f'<div class="card-comp {tier}"><div class="comp-label">Among communities</div>'
+        f'<div class="comp-verdict">{_ordinal(rank)} of {n}</div>'
+        f'<div class="comp-detail">{"bottom tier" if tier == "bad" else ("top tier" if tier == "good" else "middle tier")}</div></div>'
+    )
+    lit_chart = '<div class="card-chartwrap"><canvas id="lit-comm-chart"></canvas></div>'
+    lit_card = _edu_card(
+        "Literacy rate (7+ years)", f"{muslim_v:.1f}%", "literate, age 7+", "2011",
+        "higher is better", lit_chart, lit_comps,
+        "Census 2011 · C-09", "canonical/lit-7plus.csv",
+    )
+
+    # ---- Muslim higher-ed enrolment (Muslim-only — honest no-comparison case) ----
+    ahe_nat = next((float(r["value"]) for r in load_metric("muslim-higher-ed-enrolment")
+                    if r["geography_code"] == "IN"), None)
+    ahe_comps = (
+        '<div class="comp-note">No community ranking available — AISHE tabulates '
+        '<b>“Muslim Minority”</b> enrolment separately; other communities are not '
+        'enumerated in the same table, so a like-for-like rank can’t be computed yet.</div>'
+    )
+    ahe_card = _edu_card(
+        "Higher-education enrolment (Muslim)",
+        fmt_num(ahe_nat, "count") if ahe_nat else "—", "students", "2021-22",
+        "", "", ahe_comps, "AISHE 2021-22", "canonical/muslim-higher-ed-enrolment.csv",
+    )
+
+    body = f"""<h1>Education — card-grid prototype</h1>
+<p class="tagline">Hawaii-Dashboard-style layout · multi-community benchmarking · built {dt.datetime.now().strftime('%Y-%m-%d %H:%M')}</p>
+<div class="protobar"><b>Prototype.</b> Standalone preview of two patterns borrowed from hawaiidashboard.org:
+a compact card grid with a polarity pill + two-up comparison block, and a <b>“rank among communities”</b>
+tier — the analog of Hawaii’s “#N of 50 states.” Muslim literacy ranks <b>{_ordinal(rank)} of {n}</b> named
+religious communities. Diff this against the current single-column tile build.</div>
+<div class="cluster-header"><span>Education</span>
+  <span class="legend">Literacy by community<span class="sw" style="background:{TIER_HEX[tier]}"></span>Muslim<span class="sw" style="background:#D8DEE2"></span>others</span>
+</div>
+<div class="cards">{lit_card}{ahe_card}</div>
+"""
+
+    chart_js = (_EDU_CHART_JS
+                .replace("__LABELS__", json.dumps(chart_labels))
+                .replace("__VALUES__", json.dumps(chart_values))
+                .replace("__COLORS__", json.dumps(colors)))
+
+    page = _EDU_PREVIEW_HEAD + body + "</div>\n<script>\n" + chart_js + "\n</script>\n</body>\n</html>\n"
+    EDU_PREVIEW_PATH.parent.mkdir(parents=True, exist_ok=True)
+    EDU_PREVIEW_PATH.write_text(page)
+    print(f"wrote {EDU_PREVIEW_PATH.relative_to(REPO_ROOT)} "
+          f"({len(page):,} bytes; Muslim literacy rank {rank}/{n}, tier={tier})")
+
+
+# ============================================================================
+# Full card-grid rollout — generic, manifest-driven renderer for index.html.
+# Replaces the former hand-written single-column tiles. Each live metric (those
+# with a display.scorecard block) becomes one Hawaii-style card. The comparison
+# block adapts: a "rank among communities" tier where >=4 named communities are
+# present (e.g. literacy), else the Muslim-vs-Hindu / vs-All gap.
+# ============================================================================
+
+# Plain-language caption shown next to each headline value (Hawaii-style).
+CAPTION = {
+    "lit-7plus": "literate, age 7+",
+    "sex-ratio": "females per 1,000 males",
+    "lfpr-15plus": "in the labour force, 15+",
+    "wpr-15plus": "working, 15+",
+    "salaried-share": "in regular salaried work",
+    "imr": "deaths per 1,000 live births",
+    "inst-delivery": "of births in a facility",
+    "women-anemia": "of women 15–49 anaemic",
+    "improved-sanitation": "of households have a toilet",
+    "pop-share": "of total population",
+    "district-concentration-top100": "of Muslims in top-100 districts",
+    "muslim-higher-ed-enrolment": "students",
+    "ls-share": "of 543 Lok Sabha seats",
+    "mla-share": "of state-assembly seats (agg.)",
+    "prison-rate-per-100k": "per 100k Muslims",
+    "undertrial-rate-per-100k": "per 100k Muslims",
+    "communal-incidents-govt": "incidents (NCRB)",
+    "communal-incidents-civic": "hate-speech events (IHL)",
+}
+# (suffix, decimals) for chart value labels, keyed by unit_format.
+UNIT_JS = {
+    "percent": ("%", 1), "females_per_1000_males": ("", 0),
+    "per_1000_live_births": ("", 1), "rate_per_100k": ("", 1), "count": ("", 0),
+}
+SOURCE_LABEL = {
+    "census-india-2011": "Census 2011 · C-series",
+    "nfhs-5": "NFHS-5 (2019-21)", "plfs": "PLFS 2023-24", "aishe": "AISHE 2021-22",
+    "ncrb-prison": "NCRB PSI 2022", "ncrb-crime": "NCRB CII 2022",
+    "prs-eci-affidavits": "PRS / ECI affidavits", "civic-incident-databases": "India Hate Lab",
+}
+
+
+def _verdict(gap: float, hib) -> str:
+    """good / bad / neutral for a Muslim-minus-reference gap given polarity."""
+    if hib is None or gap == 0:
+        return "neutral"
+    return "good" if ((gap > 0) if hib else (gap < 0)) else "bad"
+
+
+def _gap_str(gap: float, unit: str) -> str:
+    if unit == "count":
+        return f"{gap:+,.0f}"
+    return f"{gap:+.1f}{'pp' if unit == 'percent' else ''}"
+
+
+def _verdict_word(cls: str) -> str:
+    return {"good": "ahead", "bad": "behind", "neutral": "—"}[cls]
+
+
+def _tier_word(tier: str) -> str:
+    return {"good": "top tier", "mid": "middle tier", "bad": "bottom tier"}[tier]
+
+
+def _year_of(metric_id: str):
+    yrs = [int(r["year"]) for r in load_metric(metric_id) if r["geography_level"] == "national"]
+    return max(yrs) if yrs else ""
+
+
+def _comp(label: str, verdict: str, detail: str, cls: str) -> str:
+    return (f'<div class="card-comp {cls}"><div class="comp-label">{html.escape(label)}</div>'
+            f'<div class="comp-verdict">{html.escape(verdict)}</div>'
+            f'<div class="comp-detail">{html.escape(detail)}</div></div>')
+
+
+def _card_shell(label, value, unit_txt, year, polarity, chart_html, comps_html,
+                src, csv_href, details_html="") -> str:
+    pill = f'<div class="card-direction">{html.escape(polarity)}</div>' if polarity else ""
+    yr = f'<span class="card-year">({html.escape(str(year))})</span>' if year else ""
+    return (
+        '<section class="card">'
+        f'<div class="card-metric">{html.escape(label)}</div>'
+        f'<div class="card-hero"><span class="card-value">{value}</span>'
+        f'<span class="card-unit">{html.escape(unit_txt)}</span>{yr}</div>'
+        f'{pill}{chart_html}'
+        f'<div class="card-comparisons">{comps_html}</div>'
+        f'{details_html}'
+        # Emit the csv path as plain text — build() post-processing auto-linkifies
+        # any canonical/*.csv reference into <a class="csv-link">. Wrapping it in
+        # our own <a> here would double-nest.
+        f'<div class="card-foot"><span>{html.escape(src)}</span>'
+        f'<span>{html.escape(csv_href)}</span></div>'
+        '</section>'
+    )
+
+
+def _state_details(metric_id: str, unit: str) -> str:
+    from collections import defaultdict
+    rows = load_metric(metric_id)
+    by_geo: dict[str, dict] = defaultdict(dict)
+    for r in rows:
+        if r["geography_level"] == "state":
+            by_geo[r["geography_code"]][r["religion"]] = float(r["value"])
+    if not by_geo:
+        return ""
+    has_hindu = any("hindu" in v for v in by_geo.values())
+    order = sorted(by_geo, key=lambda g: by_geo[g].get("muslim", 0))
+    head = "<tr><th>State / UT</th><th>Muslim</th>" + ("<th>Hindu</th>" if has_hindu else "") + "</tr>"
+    trs = []
+    for g in order:
+        b = by_geo[g]
+        cells = (f"<td>{html.escape(state_label(g))}</td>"
+                 f"<td>{fmt_num(b['muslim'], unit) if 'muslim' in b else '—'}</td>")
+        if has_hindu:
+            cells += f"<td>{fmt_num(b['hindu'], unit) if 'hindu' in b else '—'}</td>"
+        trs.append(f"<tr>{cells}</tr>")
+    return (f'<details><summary>Full state data ({len(order)} states)</summary>'
+            f'<table><thead>{head}</thead><tbody>{"".join(trs)}</tbody></table></details>')
+
+
+def _nat_by_religion(metric_id: str) -> dict:
+    return {r["religion"]: float(r["value"])
+            for r in load_metric(metric_id) if r["geography_level"] == "national"}
+
+
+def render_metric_card(m: dict):
+    """Return (card_html, chart_js_or_None) for one live metric."""
+    mid = m["id"]
+    disp = m["display"]["scorecard"]
+    label = disp["label"]
+    unit = disp["unit_format"]
+    hib = disp.get("higher_is_better", m.get("higher_is_better"))
+    special = disp.get("special_render")
+    src = SOURCE_LABEL.get(m.get("sources", {}).get("primary"), m.get("sources", {}).get("primary", ""))
+    csv_href = f"canonical/{mid}.csv"
+    cvid = "cc-" + mid
+    suffix, dec = UNIT_JS.get(unit, ("", 1))
+
+    if special in ("prison_rate", "undertrial_rate"):
+        return _card_rate(mid, label, src, csv_href, cvid)
+    if special == "time_series_latest":
+        return _card_timeseries(mid, label, unit, src, csv_href, cvid)
+    if special == "time_series_count":
+        return _card_ts_count(mid, label, src, csv_href, cvid)
+    if mid in ("pop-share", "district-concentration-top100", "muslim-higher-ed-enrolment"):
+        return _card_muslim_only(mid, label, unit, src, csv_href, cvid)
+    return _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec)
+
+
+def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
+    nat = _nat_by_religion(mid)
+    muslim, hindu, all_v = nat.get("muslim"), nat.get("hindu"), nat.get("all")
+    headline = fmt_num(muslim, unit) if muslim is not None else "—"
+    polarity = "higher is better" if hib is True else ("lower is better" if hib is False else "")
+
+    named = [c for c in NAMED_COMMUNITIES if c in nat]
+    rank = n = 0
+    if len(named) >= 4 and hib is not None:
+        rank, n, tier, _ = community_rank(nat, bool(hib))
+    elif hindu is not None:
+        tier = _verdict(muslim - hindu, hib)
+        tier = {"good": "good", "bad": "bad", "neutral": "mid"}[tier]
+    else:
+        tier = "mid"
+
+    # Bars are real communities only. "All" is an aggregate that contains them,
+    # so it is NOT a bar — it is passed to hbar as a dashed baseline reference.
+    pairs = [(COMMUNITY_LABEL[c], nat[c], c == "muslim") for c in named]
+    if hib is not None:
+        pairs.sort(key=lambda b: b[1], reverse=bool(hib))
+    labels = [p[0] for p in pairs]
+    values = [round(p[1], 4) for p in pairs]
+    mhex = TIER_HEX.get(tier, "#555555")
+    colors = [mhex if p[2] else "#D8DEE2" for p in pairs]
+    h = len(pairs) * 28 + 28
+    chart_html = f'<div class="card-chartwrap" style="height:{h}px"><canvas id="{cvid}"></canvas></div>'
+    ref = json.dumps(round(all_v, 4)) if all_v is not None else "null"
+    js = (f'hbar("{cvid}", {json.dumps(labels)}, {json.dumps(values)}, {json.dumps(colors)}, '
+          f'{json.dumps(suffix)}, {dec}, {ref}, "All-India");')
+
+    comps = ""
+    if hindu is not None:
+        gap = muslim - hindu
+        cls = _verdict(gap, hib)
+        comps += _comp("vs Hindu", _gap_str(gap, unit), _verdict_word(cls), cls)
+    if rank:
+        comps += _comp("Among communities", f"{_ordinal(rank)} of {n}", _tier_word(tier), tier)
+    elif all_v is not None:
+        gap = muslim - all_v
+        cls = _verdict(gap, hib)
+        comps += _comp("vs All-India", _gap_str(gap, unit), _verdict_word(cls), cls)
+
+    return _card_shell(label, headline, CAPTION.get(mid, ""), _year_of(mid), polarity,
+                       chart_html, comps, src, csv_href, _state_details(mid, unit)), js
+
+
+def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
+    nat = _nat_by_religion(mid)
+    muslim = nat.get("muslim")
+    headline = fmt_num(muslim, unit) if muslim is not None else "—"
+    chart_html, js, note = "", None, ""
+    if mid == "pop-share":
+        st = [(state_label(r["geography_code"]), float(r["value"]))
+              for r in load_metric(mid) if r["geography_level"] == "state"]
+        st.sort(key=lambda x: -x[1])
+        st = st[:8]
+        chart_html = f'<div class="card-chartwrap" style="height:200px"><canvas id="{cvid}"></canvas></div>'
+        js = f'vbar("{cvid}", {json.dumps([s[0] for s in st])}, {json.dumps([round(s[1], 2) for s in st])}, "#2b6cb0", "%");'
+        note = "Baseline metric — Muslim share of total population. Top-8 states shown; no community ranking."
+    elif mid == "district-concentration-top100":
+        note = ("Share of all Indian Muslims living in the 100 most Muslim-populous districts — "
+                "a geographic-concentration measure, not a community comparison.")
+    else:  # muslim-higher-ed-enrolment
+        note = ("No community ranking — AISHE tabulates “Muslim Minority” enrolment separately; "
+                "other communities are not enumerated in the same table.")
+    comps = f'<div class="comp-note">{html.escape(note)}</div>'
+    return _card_shell(label, headline, CAPTION.get(mid, ""), _year_of(mid), "",
+                       chart_html, comps, src, csv_href, _state_details(mid, unit)), js
+
+
+def _card_rate(mid, label, src, csv_href, cvid):
+    kind = "prison" if "prison" in mid else "undertrial"
+    r = compute_prison_rates()[kind]
+    muslim, hindu, allr = (r["muslim"]["rate_per_100k"], r["hindu"]["rate_per_100k"],
+                           r["all"]["rate_per_100k"])
+    ratio = round(muslim / hindu, 2) if hindu else 0
+    # "All" is the all-India incarceration rate (contains every community) →
+    # dashed baseline, not a peer bar.
+    pairs = sorted([("Muslim", muslim, True), ("Hindu", hindu, False)], key=lambda b: b[1])
+    labels = [p[0] for p in pairs]
+    values = [round(p[1], 1) for p in pairs]
+    colors = ["#991B1B" if p[2] else "#D8DEE2" for p in pairs]
+    h = len(pairs) * 28 + 28
+    chart_html = f'<div class="card-chartwrap" style="height:{h}px"><canvas id="{cvid}"></canvas></div>'
+    js = (f'hbar("{cvid}", {json.dumps(labels)}, {json.dumps(values)}, {json.dumps(colors)}, '
+          f'"", 1, {json.dumps(round(allr, 1))}, "All-India");')
+    comps = _comp("vs Hindu rate", f"{ratio}×", "Muslim over-incarceration", "bad")
+    comps += _comp("Muslims held", f"{r['muslim']['count']:,}", "absolute count", "neutral")
+    return _card_shell(label, f"{muslim:.1f}", CAPTION.get(mid, "per 100k"), 2022,
+                       "lower is better", chart_html, comps, src, csv_href), js
+
+
+def _card_timeseries(mid, label, unit, src, csv_href, cvid):
+    rows = sorted([r for r in load_metric(mid) if r["geography_level"] == "national"],
+                  key=lambda r: int(r["year"]))
+    latest = rows[-1] if rows else None
+    val = float(latest["value"]) if latest else None
+    headline = fmt_num(val, unit) if val is not None else "—"
+    gap = (val - MUSLIM_POP_SHARE) if val is not None else 0
+    comps = _comp("vs population", f"{gap:+.1f}pp", "vs 14.2% pop share", "bad" if gap < 0 else "good")
+    chart_html, js = "", None
+    if len(rows) >= 2:
+        labels = [int(r["year"]) for r in rows]
+        values = [round(float(r["value"]), 2) for r in rows]
+        chart_html = f'<div class="card-chartwrap" style="height:150px"><canvas id="{cvid}"></canvas></div>'
+        js = f'lineChart("{cvid}", {json.dumps(labels)}, {json.dumps(values)}, "#2b6cb0", "%");'
+        comps += _comp("trend", f"{labels[0]}–{labels[-1]}", f"{values[0]:.1f}% → {values[-1]:.1f}%", "neutral")
+    else:
+        st = sorted([(state_label(r["geography_code"]), float(r["value"]))
+                     for r in load_metric(mid) if r["geography_level"] == "state"],
+                    key=lambda x: -x[1])
+        if st:
+            h = len(st) * 26 + 20
+            chart_html = f'<div class="card-chartwrap" style="height:{h}px"><canvas id="{cvid}"></canvas></div>'
+            js = (f'hbar("{cvid}", {json.dumps([s[0] for s in st])}, '
+                  f'{json.dumps([round(s[1], 2) for s in st])}, '
+                  f'{json.dumps(["#2b6cb0"] * len(st))}, "%", 1);')
+        comps += _comp("national agg", headline, "across assemblies", "neutral")
+    return _card_shell(label, headline, CAPTION.get(mid, ""), latest["year"] if latest else "",
+                       "", chart_html, comps, src, csv_href), js
+
+
+def _card_ts_count(mid, label, src, csv_href, cvid):
+    rows = sorted([r for r in load_metric(mid) if r["geography_level"] == "national"],
+                  key=lambda r: int(r["year"]))
+    latest = rows[-1] if rows else None
+    val = int(float(latest["value"])) if latest else 0
+    comps = ""
+    chart_html, js = "", None
+    if len(rows) >= 2:
+        labels = [int(r["year"]) for r in rows]
+        values = [int(float(r["value"])) for r in rows]
+        chart_html = f'<div class="card-chartwrap" style="height:150px"><canvas id="{cvid}"></canvas></div>'
+        js = f'lineChart("{cvid}", {json.dumps(labels)}, {json.dumps(values)}, "#7b1d22", "");'
+        comps += _comp("trend", f"{labels[0]}–{labels[-1]}", f"{values[0]:,} → {val:,}", "neutral")
+    comps += _comp("latest year", str(latest["year"]) if latest else "—", "national count", "neutral")
+    return _card_shell(label, f"{val:,}", CAPTION.get(mid, "events"), latest["year"] if latest else "",
+                       "lower is better", chart_html, comps, src, csv_href), js
+
+
+def render_all_clusters():
+    """Group live metrics by cluster (manifest order) and render each as a card grid.
+
+    Returns (clusters_html, charts_js).
+    """
+    from collections import defaultdict
+    import yaml as _yaml
+    with (REPO_ROOT / "manifest" / "metrics.yaml").open() as f:
+        man = _yaml.safe_load(f)
+    cl_order = [c["id"] for c in man["clusters"]]
+    by_cluster: dict[str, list] = defaultdict(list)
+    for m in man["metrics"]:
+        disp = m.get("display", {}).get("scorecard")
+        if not disp or disp.get("include", True) is False:
+            continue
+        by_cluster[m["cluster"]].append(m)
+
+    grids, charts = [], []
+    for cid in cl_order:
+        ms = by_cluster.get(cid)
+        if not ms:
+            continue
+        ms.sort(key=lambda m: m["display"]["scorecard"].get("order", 999))
+        cards = []
+        for m in ms:
+            card_html, js = render_metric_card(m)
+            cards.append(card_html)
+            if js:
+                charts.append(js)
+        name = CLUSTER_DISPLAY.get(cid, cid.capitalize())
+        grids.append(f'<h2 class="cluster-header">{html.escape(name)}</h2>\n'
+                     f'<div class="cards">\n{"".join(cards)}\n</div>')
+    return "\n\n".join(grids), "\n".join(charts)
+
+
 if __name__ == "__main__":
     build()
+    build_education_cards_preview()
