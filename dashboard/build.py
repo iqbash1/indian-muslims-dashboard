@@ -1540,21 +1540,32 @@ def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
 def _card_rate(mid, label, src, csv_href, cvid):
     kind = "prison" if "prison" in mid else "undertrial"
     r = compute_prison_rates()[kind]
-    muslim, hindu, allr = (r["muslim"]["rate_per_100k"], r["hindu"]["rate_per_100k"],
-                           r["all"]["rate_per_100k"])
+    rate_by = {rel: r[rel]["rate_per_100k"] for rel in r}
+    muslim, hindu, allr = rate_by.get("muslim"), rate_by.get("hindu"), rate_by.get("all")
     ratio = round(muslim / hindu, 2) if hindu else 0
-    # "All" is the all-India incarceration rate (contains every community) →
-    # dashed baseline, not a peer bar.
-    pairs = sorted([("Muslim", muslim, True), ("Hindu", hindu, False)], key=lambda b: b[1])
+    # Bars are real communities; "All-India" (which contains them all) is the
+    # dashed baseline. Incarceration rate is lower-is-better, so rank ascends.
+    named = [c for c in NAMED_COMMUNITIES if c in rate_by]
+    if len(named) >= 4:
+        rank, n, tier, _ = community_rank(rate_by, higher_is_better=False)
+    else:
+        rank, n, tier = 0, 0, "bad"
+    pairs = sorted([(COMMUNITY_LABEL[c], rate_by[c], c == "muslim") for c in named],
+                   key=lambda b: b[1])
     labels = [p[0] for p in pairs]
     values = [round(p[1], 1) for p in pairs]
-    colors = ["#991B1B" if p[2] else "#D8DEE2" for p in pairs]
+    mhex = TIER_HEX.get(tier, "#991B1B")
+    colors = [mhex if p[2] else "#D8DEE2" for p in pairs]
     h = len(pairs) * 28 + 28
     chart_html = f'<div class="card-chartwrap" style="height:{h}px"><canvas id="{cvid}"></canvas></div>'
+    ref = json.dumps(round(allr, 1)) if allr is not None else "null"
     js = (f'hbar("{cvid}", {json.dumps(labels)}, {json.dumps(values)}, {json.dumps(colors)}, '
-          f'"", 1, {json.dumps(round(allr, 1))}, "All-India");')
-    comps = _comp("vs Hindu rate", f"{ratio}×", "Muslim over-incarceration", "bad")
-    comps += _comp("Muslims held", f"{r['muslim']['count']:,}", "absolute count", "neutral")
+          f'"", 1, {ref}, "All-India");')
+    comps = _comp("vs Hindu rate", f"{ratio}×", f"{r['muslim']['count']:,} held", "bad")
+    if rank:
+        comps += _comp("Among communities", f"{_ordinal(rank)} of {n}", _tier_word(tier), tier)
+    else:
+        comps += _comp("Muslims held", f"{r['muslim']['count']:,}", "absolute count", "neutral")
     return _card_shell(label, f"{muslim:.1f}", CAPTION.get(mid, "per 100k"), 2022,
                        "lower is better", chart_html, comps, src, csv_href), js
 

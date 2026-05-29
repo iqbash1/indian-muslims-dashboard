@@ -179,7 +179,7 @@
 <div class="page">
 
 <h1>Indian Muslims — Living Conditions Dashboard</h1>
-<p class="tagline">Built 2026-05-29 08:04 · <a href="https://github.com/iqbash1/indian-muslims-dashboard">source on GitHub</a></p>
+<p class="tagline">Built 2026-05-29 08:34 · <a href="https://github.com/iqbash1/indian-muslims-dashboard">source on GitHub</a></p>
 
 <section class="intro">
   <p>A scorecard of living-conditions indicators for India's Muslim population, with
@@ -196,7 +196,7 @@
 <div class="status-bar">
   <span><b>18</b> metrics live</span>
   <span><b>6</b> sources archived</span>
-  <span><b>1337</b> canonical rows · all schema-valid</span>
+  <span><b>1341</b> canonical rows · all schema-valid</span>
   <span>Comparison baseline on every applicable tile</span>
 </div>
 
@@ -272,7 +272,7 @@
 
 <h2 class="cluster-header">Justice</h2>
 <div class="cards">
-<section class="card"><div class="card-metric">Prisoners (rate per 100k pop)</div><div class="card-hero"><span class="card-value">63.3</span><span class="card-unit">per 100k Muslims</span><span class="card-year">(2022)</span></div><div class="card-direction">lower is better</div><div class="card-chartwrap" style="height:84px"><canvas id="cc-prison-rate-per-100k"></canvas></div><div class="card-comparisons"><div class="card-comp bad"><div class="comp-label">vs Hindu rate</div><div class="comp-verdict">1.59×</div><div class="comp-detail">Muslim over-incarceration</div></div><div class="card-comp neutral"><div class="comp-label">Muslims held</div><div class="comp-verdict">108,968</div><div class="comp-detail">absolute count</div></div></div><div class="card-foot"><span>NCRB PSI 2022</span><span><a class="csv-link" href="canonical/prison-rate-per-100k.csv">canonical/prison-rate-per-100k.csv</a></span></div></section><section class="card"><div class="card-metric">Undertrials (rate per 100k pop)</div><div class="card-hero"><span class="card-value">48.8</span><span class="card-unit">per 100k Muslims</span><span class="card-year">(2022)</span></div><div class="card-direction">lower is better</div><div class="card-chartwrap" style="height:84px"><canvas id="cc-undertrial-rate-per-100k"></canvas></div><div class="card-comparisons"><div class="card-comp bad"><div class="comp-label">vs Hindu rate</div><div class="comp-verdict">1.66×</div><div class="comp-detail">Muslim over-incarceration</div></div><div class="card-comp neutral"><div class="comp-label">Muslims held</div><div class="comp-verdict">83,968</div><div class="comp-detail">absolute count</div></div></div><div class="card-foot"><span>NCRB PSI 2022</span><span><a class="csv-link" href="canonical/undertrial-rate-per-100k.csv">canonical/undertrial-rate-per-100k.csv</a></span></div></section>
+<section class="card"><div class="card-metric">Prisoners (rate per 100k pop)</div><div class="card-hero"><span class="card-value">63.3</span><span class="card-unit">per 100k Muslims</span><span class="card-year">(2022)</span></div><div class="card-direction">lower is better</div><div class="card-chartwrap" style="height:140px"><canvas id="cc-prison-rate-per-100k"></canvas></div><div class="card-comparisons"><div class="card-comp bad"><div class="comp-label">vs Hindu rate</div><div class="comp-verdict">1.59×</div><div class="comp-detail">108,968 held</div></div><div class="card-comp bad"><div class="comp-label">Among communities</div><div class="comp-verdict">3rd of 4</div><div class="comp-detail">bottom tier</div></div></div><div class="card-foot"><span>NCRB PSI 2022</span><span><a class="csv-link" href="canonical/prison-rate-per-100k.csv">canonical/prison-rate-per-100k.csv</a></span></div></section><section class="card"><div class="card-metric">Undertrials (rate per 100k pop)</div><div class="card-hero"><span class="card-value">48.8</span><span class="card-unit">per 100k Muslims</span><span class="card-year">(2022)</span></div><div class="card-direction">lower is better</div><div class="card-chartwrap" style="height:140px"><canvas id="cc-undertrial-rate-per-100k"></canvas></div><div class="card-comparisons"><div class="card-comp bad"><div class="comp-label">vs Hindu rate</div><div class="comp-verdict">1.66×</div><div class="comp-detail">83,968 held</div></div><div class="card-comp bad"><div class="comp-label">Among communities</div><div class="comp-verdict">3rd of 4</div><div class="comp-detail">bottom tier</div></div></div><div class="card-foot"><span>NCRB PSI 2022</span><span><a class="csv-link" href="canonical/undertrial-rate-per-100k.csv">canonical/undertrial-rate-per-100k.csv</a></span></div></section>
 </div>
 
 <h2 class="cluster-header">Civic</h2>
@@ -281,7 +281,7 @@
 </div>
 
 <footer>
-  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-29 08:04.
+  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-29 08:34.
   Every number on this page traces L4 → L3 (canonical) → L2 (extracted) → L1 (source file)
   with SHA256 sidecar provenance. Re-run the builder after any canonical change:
   <code>python dashboard/build.py</code></p>
@@ -436,8 +436,8 @@ hbar("cc-women-anemia", ["Jain", "Christian", "Muslim", "Buddhist", "Hindu", "Si
 hbar("cc-improved-sanitation", ["Jain", "Sikh", "Christian", "Muslim", "Buddhist", "Hindu"], [97.6, 97.5, 91.2, 90.3, 87.8, 80.7], ["#D8DEE2", "#D8DEE2", "#D8DEE2", "#555555", "#D8DEE2", "#D8DEE2"], "%", 1, 82.5, "All-India");
 lineChart("cc-ls-share", [2009, 2014, 2019, 2024], [5.16, 4.05, 4.97, 4.42], "#2b6cb0", "%");
 hbar("cc-mla-share", ["Kerala", "West Bengal", "Telangana", "Haryana", "Maharashtra", "Rajasthan", "Madhya Pradesh", "Chhattisgarh"], [25.0, 13.65, 5.88, 5.56, 3.47, 3.0, 0.87, 0.0], ["#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0"], "%", 1);
-hbar("cc-prison-rate-per-100k", ["Hindu", "Muslim"], [39.8, 63.3], ["#D8DEE2", "#991B1B"], "", 1, 44.6, "All-India");
-hbar("cc-undertrial-rate-per-100k", ["Hindu", "Muslim"], [29.3, 48.8], ["#D8DEE2", "#991B1B"], "", 1, 33.1, "All-India");
+hbar("cc-prison-rate-per-100k", ["Hindu", "Christian", "Muslim", "Sikh"], [39.8, 56.5, 63.3, 124.5], ["#D8DEE2", "#D8DEE2", "#991B1B", "#D8DEE2"], "", 1, 44.6, "All-India");
+hbar("cc-undertrial-rate-per-100k", ["Hindu", "Christian", "Muslim", "Sikh"], [29.3, 39.1, 48.8, 97.5], ["#D8DEE2", "#D8DEE2", "#991B1B", "#D8DEE2"], "", 1, 33.1, "All-India");
 lineChart("cc-communal-incidents-govt", [2020, 2021, 2022], [857, 378, 272], "#7b1d22", "");
 lineChart("cc-communal-incidents-civic", [2023, 2024], [668, 1165], "#7b1d22", "");
 </script>
