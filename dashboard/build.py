@@ -583,39 +583,6 @@ TEMPLATE = """<!DOCTYPE html>
   });
 })();
 
-// Returns a FRESH config object on every call. Chart.js mutates the option
-// objects it is given (it bakes resolved scale `type` into scales.x/scales.y).
-// A shared const would let the first vertical chart pin x:'category'/y:'linear',
-// which then overrides indexAxis:'y' on later horizontal charts and blanks them.
-function cfgBase() {
-  return {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: { position: 'top', labels: { font: { size: 12 } } },
-      tooltip: { titleFont: { size: 12 }, bodyFont: { size: 12 } },
-    },
-    scales: {
-      // Value axis does not force a zero baseline; it hugs the data range so
-      // small gaps between groups stay legible. `grace` keeps bars off the edges.
-      y: { beginAtZero: false, grace: '5%', ticks: { font: { size: 11 } } },
-      x: { ticks: { font: { size: 11 }, maxRotation: 60, minRotation: 60 } },
-    },
-  };
-}
-
-// Muslim/Hindu/All horizontal comparison tiles. Value axis is x and does NOT
-// force a zero baseline — the axis hugs the data range so the (often small) gap
-// between groups is legible. A small `grace` keeps the shortest bar a visible
-// sliver instead of zero-width. Category axis is y. (Own fresh config per call.)
-function hCompare() {
-  const c = cfgBase();
-  c.indexAxis = 'y';
-  c.plugins.legend = { display: false };
-  c.scales.x = { beginAtZero: false, grace: '5%', ticks: { font: { size: 11 } } };
-  return c;
-}
-
 // --- Card-grid chart helpers (generated card initialisers call these) ---
 function _valueLabels(decimals, suffix) {
   return { id: 'vl', afterDatasetsDraw(chart) {
@@ -656,17 +623,6 @@ function hbar(id, labels, values, colors, suffix, decimals, refValue, refLabel) 
       scales: { x: { display: false, grace: '8%', beginAtZero: false }, y: { grid: { display: false }, border: { display: false }, ticks: { font: { size: 11 } } } },
     },
     plugins: [_valueLabels(decimals, suffix), _refLine(refValue == null ? null : refValue, refLabel)],
-  });
-}
-function vbar(id, labels, values, color, suffix) {
-  new Chart(document.getElementById(id), {
-    type: 'bar',
-    data: { labels: labels, datasets: [{ data: values, backgroundColor: color, borderRadius: 3 }] },
-    options: {
-      responsive: true, maintainAspectRatio: false, animation: false,
-      plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => c.parsed.y.toFixed(1) + suffix } } },
-      scales: { y: { beginAtZero: false, grace: '8%', ticks: { font: { size: 10 } } }, x: { ticks: { font: { size: 9 }, maxRotation: 60, minRotation: 60 }, grid: { display: false } } },
-    },
   });
 }
 function lineChart(id, labels, values, color, suffix) {

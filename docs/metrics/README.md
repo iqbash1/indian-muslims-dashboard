@@ -16,4 +16,4 @@ One markdown page per metric (matching `manifest/metrics.yaml`). The dashboard t
 
 ## Status
 
-Pages land as metrics move from `stub` → `defined` → `data-loaded` → `live` in `manifest/metrics.yaml`. First page expected: `lit-7plus.md` once Census 2011 C-8 is archived and extracted.
+Not yet built — per-metric pages remain a future enhancement. In practice the transparency surface is currently served by: each card's inline methodology note and "data current to" year, the linked canonical L3 CSV (full per-row provenance: `source_id`, `source_document`, `methodology_note`, `break_flag`), and the per-source runbooks in `docs/runbooks/`. When these pages are built, start with `lit-7plus.md` — note its Census 2011 source is **C-9** (education by religious community), not C-8 (see the `census-india-2011` runbook's 2026-05-27 correction).

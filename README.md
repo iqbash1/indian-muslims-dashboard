@@ -6,7 +6,7 @@ Modeled on the **hawaiidashboard.org** pattern: a scannable card grid, single au
 
 ## The scorecard (current)
 
-18 metrics on the dashboard scorecard, all schema-validated and spot-checked against published figures. Each renders as a card that ranks the Muslim outcome among religious communities; where a source has multiple rounds the card also draws a trend line — the NFHS health metrics over 2005→2020, and the Census sex-ratio and literacy metrics over the 2001→2011 decennial. **Live at https://iqbash1.github.io/indian-muslims-dashboard/**.
+18 metrics on the dashboard scorecard, all schema-validated and spot-checked against published figures. Each renders as a card that ranks the Muslim outcome among religious communities; where a source has multiple rounds the card also draws a trend line — the NFHS health metrics across four rounds (1998→2020), sex-ratio and literacy across the 2001→2011 decennial, and population share back to 1961. **Live at https://iqbash1.github.io/indian-muslims-dashboard/**.
 
 | Cluster | Metric | Year | Muslim | Hindu | All | Gap vs reference |
 |---|---|---|---|---|---|---|
@@ -58,7 +58,8 @@ The dashboard never queries an external source live and never reads L1/L2 direct
 |---|---|---|---|
 | **Census of India 2011** | Population by religion (state + district), literacy, sex ratio | 10-year (2021 round delayed indefinitely) | 5 files archived; UP + Bihar + Bengal + J&K district MDDS imported |
 | **Census of India 2001** | Population, literacy, sex ratio by religion (national + states) — gives the 2001→2011 decennial trend for sex-ratio + literacy | 10-year (prior round) | 2 files archived (C-1, C-9) |
-| **NFHS-3 / 4 / 5 (2005-06 → 2019-21)** | IMR, institutional delivery, women's anaemia — by religion, 3 rounds (time series) | ~5-year (NFHS-6 in field) | all 3 round reports archived; 3 metrics × 3 rounds extracted |
+| **Census decadal religion** *(secondary)* | Population share by community 1961-1991 → the pop-share 1961→2011 decadal trend | 10-year | manual-entry secondary (2001/2011 from primary C-1; flagged on card; see runbook) |
+| **NFHS-2 / 3 / 4 / 5 (1998-99 → 2019-21)** | IMR, institutional delivery, women's anaemia — by religion, 4 rounds (time series) | ~5-year (NFHS-6 in field) | all 4 round reports archived; 3 metrics × 4 rounds extracted |
 | **PLFS 2023-24** | LFPR, WPR, unemployment by religion | Annual | 2 reports archived; 2 metrics extracted |
 | **AISHE 2021-22** | Higher-education enrolment by religion | Annual | 2 reports archived; 1 metric extracted |
 | **HCES 2022-23** | Consumption expenditure (MPCE) — by religion needs unit-level | ~5-year | 3 reports archived; metric blocked on unit-level processing (documented in runbook) |
@@ -126,7 +127,7 @@ Pure mechanical extension — pattern is proven:
 
 ## Status
 
-18 metrics live, all schema-valid. The dashboard is a card grid with multi-community benchmarking (rank among religious communities) and multi-round trends (NFHS health 2005→2020; Census sex-ratio + literacy 2001→2011). The architecture is battle-tested across 4 source shapes: spreadsheet, dual-column PDF tables, single-column religion sections, and tabular state-row PDFs.
+18 metrics live, all schema-valid. The dashboard is a card grid with multi-community benchmarking (rank among religious communities) and multi-round trends (NFHS health 1998→2020; Census sex-ratio + literacy 2001→2011; population share 1961→2011). The architecture is battle-tested across 4 source shapes: spreadsheet, dual-column PDF tables, single-column religion sections, and tabular state-row PDFs.
 
 See `docs/audit-log.md` for the planned annual audit ritual and `docs/refresh-schedule.md` for the per-source cadence.
 
