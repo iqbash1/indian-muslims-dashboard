@@ -681,24 +681,46 @@ function lineChart(id, labels, values, color, suffix) {
   });
 }
 
-// Multi-round trend: Muslim (solid accent) vs Hindu (dashed reference) over
-// survey rounds. hasBreak → Muslim line dashed too (cross-round comparability
-// caveat, e.g. anaemia). Value axis hugs the data (no forced zero baseline).
-function trendChart(id, years, muslim, hindu, suffix, hasBreak) {
+// Multi-round trend: every named community over survey rounds, Muslim
+// highlighted (bold solid accent), the others thinner in distinct colours.
+// All-India is the dashed grey baseline — an aggregate that contains every
+// community, so never a peer line. hasBreak dashes the Muslim line (cross-round
+// comparability caveat, e.g. anaemia). Value axis hugs the data (no zero base).
+const TREND_STYLE = {
+  muslim:    { c: '#7b1d22', w: 3,   r: 3, label: 'Muslim' },
+  hindu:     { c: '#e6840f', w: 1.4, r: 2, label: 'Hindu' },
+  christian: { c: '#2b6cb0', w: 1.4, r: 2, label: 'Christian' },
+  sikh:      { c: '#7e3f9e', w: 1.4, r: 2, label: 'Sikh' },
+  buddhist:  { c: '#159e9e', w: 1.4, r: 2, label: 'Buddhist' },
+  jain:      { c: '#4d9221', w: 1.4, r: 2, label: 'Jain' },
+  other:     { c: '#999999', w: 1.4, r: 2, label: 'Other' },
+};
+const TREND_ORDER = ['muslim', 'hindu', 'christian', 'sikh', 'buddhist', 'jain', 'other'];
+function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak) {
+  const ds = [];
+  for (const rel of TREND_ORDER) {
+    if (!seriesMap[rel]) continue;
+    const s = TREND_STYLE[rel];
+    ds.push({
+      label: s.label, data: seriesMap[rel], borderColor: s.c, backgroundColor: 'transparent',
+      fill: false, tension: 0.25, pointRadius: s.r, borderWidth: s.w, pointBackgroundColor: s.c,
+      borderDash: (rel === 'muslim' && hasBreak) ? [5, 4] : [], spanGaps: false,
+      order: rel === 'muslim' ? 0 : 1,
+    });
+  }
+  if (allSeries) ds.push({
+    label: 'All-India', data: allSeries, borderColor: '#555', backgroundColor: 'transparent',
+    fill: false, tension: 0.25, pointRadius: 0, borderWidth: 1, borderDash: [2, 3],
+    spanGaps: false, order: 2,
+  });
   new Chart(document.getElementById(id), {
     type: 'line',
-    data: { labels: years, datasets: [
-      { label: 'Muslim', data: muslim, borderColor: '#7b1d22', backgroundColor: 'rgba(123,29,34,.07)',
-        fill: true, tension: 0.25, pointRadius: 3, pointBackgroundColor: '#7b1d22',
-        borderDash: hasBreak ? [5, 4] : [], spanGaps: false },
-      { label: 'Hindu', data: hindu, borderColor: '#9aa3a8', backgroundColor: 'transparent',
-        fill: false, tension: 0.25, pointRadius: 2, pointBackgroundColor: '#9aa3a8',
-        borderDash: [4, 3], spanGaps: false },
-    ]},
+    data: { labels: years, datasets: ds },
     options: {
       responsive: true, maintainAspectRatio: false, animation: false,
       plugins: {
-        legend: { display: true, position: 'top', align: 'end', labels: { boxWidth: 10, font: { size: 9 } } },
+        legend: { display: true, position: 'top', align: 'start',
+          labels: { boxWidth: 8, boxHeight: 8, font: { size: 9 }, padding: 6 } },
         tooltip: { callbacks: { label: (c) => c.dataset.label + ': ' + c.parsed.y + suffix } },
       },
       scales: {
@@ -1021,13 +1043,15 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
 
     years, series, has_break = _nat_trend(mid)
     if len(years) >= 2:
-        # TIME SERIES card: Muslim trend (solid) vs Hindu (dashed reference) over
-        # rounds; full latest-year community ranking moves to a <details> table.
-        m_series = [series.get("muslim", {}).get(y) for y in years]
-        h_series = [series.get("hindu", {}).get(y) for y in years]
-        chart_html = f'<div class="card-chartwrap" style="height:150px"><canvas id="{cvid}"></canvas></div>'
-        js = (f'trendChart("{cvid}", {json.dumps(years)}, {json.dumps(m_series)}, '
-              f'{json.dumps(h_series)}, {json.dumps(suffix)}, {json.dumps(bool(has_break))});')
+        # TIME SERIES card: every named community over rounds, Muslim highlighted,
+        # All-India dashed baseline; latest-year community ranking is in <details>.
+        named = ("muslim", "hindu", "christian", "sikh", "buddhist", "jain", "other")
+        series_map = {rel: [series.get(rel, {}).get(y) for y in years]
+                      for rel in named if rel in series}
+        all_series = [series.get("all", {}).get(y) for y in years] if "all" in series else None
+        chart_html = f'<div class="card-chartwrap" style="height:182px"><canvas id="{cvid}"></canvas></div>'
+        js = (f'trendChart("{cvid}", {json.dumps(years)}, {json.dumps(series_map)}, '
+              f'{json.dumps(all_series)}, {json.dumps(suffix)}, {json.dumps(bool(has_break))});')
         details = _community_table(nat, unit, hib)
     else:
         # SNAPSHOT card: community bar with the All-India dashed baseline.
