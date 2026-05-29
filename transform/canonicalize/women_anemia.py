@@ -22,7 +22,7 @@ L2_PATH = REPO_ROOT / "extracted" / "nfhs-5" / "nfhs-5-table10231-women-anaemia-
 OUTPUT_PATH = REPO_ROOT / "canonical" / "women-anemia.csv"
 CANONICALIZER_VERSION = "1.0.0"
 
-OUTPUT_RELIGIONS = ("muslim", "hindu", "all")
+OUTPUT_RELIGIONS = ("muslim", "hindu", "christian", "sikh", "buddhist", "jain", "other", "all")
 
 
 def canonicalize() -> None:

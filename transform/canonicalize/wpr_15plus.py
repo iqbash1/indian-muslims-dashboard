@@ -18,7 +18,7 @@ L2_PATH = REPO_ROOT / "extracted" / "plfs" / "plfs-2023-24-table48-employment-by
 OUTPUT_PATH = REPO_ROOT / "canonical" / "wpr-15plus.csv"
 CANONICALIZER_VERSION = "1.0.0"
 
-OUTPUT_RELIGIONS = ("muslim", "hindu", "all")
+OUTPUT_RELIGIONS = ("muslim", "hindu", "christian", "sikh", "buddhist", "jain", "other", "all")
 
 
 def canonicalize() -> None:

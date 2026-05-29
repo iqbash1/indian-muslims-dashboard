@@ -21,7 +21,7 @@ L2_PATH = REPO_ROOT / "extracted" / "census-2011" / "c15-religion-by-age-sex.csv
 OUTPUT_PATH = REPO_ROOT / "canonical" / "sex-ratio.csv"
 CANONICALIZER_VERSION = "1.0.0"
 
-OUTPUT_RELIGIONS = ("muslim", "hindu", "all")
+OUTPUT_RELIGIONS = ("muslim", "hindu", "christian", "sikh", "buddhist", "jain", "other", "all")
 
 
 def geography(state_code: str, distt_code: str) -> tuple[str, str]:

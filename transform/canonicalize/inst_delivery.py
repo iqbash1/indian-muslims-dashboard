@@ -25,7 +25,7 @@ L2_PATH = REPO_ROOT / "extracted" / "nfhs-5" / "nfhs-5-table813-place-of-deliver
 OUTPUT_PATH = REPO_ROOT / "canonical" / "inst-delivery.csv"
 CANONICALIZER_VERSION = "1.0.0"
 
-OUTPUT_RELIGIONS = ("muslim", "hindu", "all")
+OUTPUT_RELIGIONS = ("muslim", "hindu", "christian", "sikh", "buddhist", "jain", "other", "all")
 
 
 def canonicalize() -> None:

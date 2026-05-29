@@ -19,7 +19,7 @@ L2_PATH = REPO_ROOT / "extracted" / "plfs" / "plfs-2023-24-table49-employment-st
 OUTPUT_PATH = REPO_ROOT / "canonical" / "salaried-share.csv"
 CANONICALIZER_VERSION = "1.0.0"
 
-OUTPUT_RELIGIONS = ("muslim", "hindu", "all")
+OUTPUT_RELIGIONS = ("muslim", "hindu", "christian", "sikh", "buddhist", "jain", "other", "all")
 
 
 def canonicalize() -> None:

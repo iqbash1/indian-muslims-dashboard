@@ -39,7 +39,7 @@ CANONICALIZER_VERSION = "1.0.0"
 NFHS_NATIONAL_URBAN_IMR_ALL = 26.6
 NFHS_NATIONAL_RURAL_IMR_ALL = 38.4
 
-OUTPUT_RELIGIONS = ("muslim", "hindu", "all")
+OUTPUT_RELIGIONS = ("muslim", "hindu", "christian", "sikh", "buddhist", "jain", "other", "all")
 
 
 def load_nfhs_imr() -> dict[tuple[str, str], float]:
