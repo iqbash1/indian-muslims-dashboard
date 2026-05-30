@@ -1,81 +1,85 @@
 source_id,source_document,source_sha256_prefix,extraction_run,row_type,year,geography,communal_incidents,page,report_year
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,national_year,2020,ALL INDIA,857,35,2022
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,national_year,2021,ALL INDIA,378,35,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,national_year,2022,ALL INDIA,272,35,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,national_year,2023,ALL INDIA,272,35,2023
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Andhra Pradesh,9,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Arunachal Pradesh,0,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Assam,2,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Bihar,60,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Chhattisgarh,0,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Goa,1,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Gujarat,9,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Haryana,4,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Himachal Pradesh,0,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Jharkhand,46,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Karnataka,19,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Kerala,1,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Madhya Pradesh,68,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Maharashtra,28,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Manipur,0,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Meghalaya,0,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Mizoram,0,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Nagaland,0,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Odisha,15,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Punjab,0,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Rajasthan,5,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Sikkim,0,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Tamil Nadu,0,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Telangana,4,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Tripura,0,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Uttar Pradesh,0,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Uttarakhand,1,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,West Bengal,0,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,subtotal_2022,2022,TOTAL STATE(S),272,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,A&N Islands,0,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Chandigarh,0,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Delhi,0,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Jammu & Kashmir,0,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Ladakh,0,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Lakshadweep,0,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2022,2022,Puducherry,0,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,subtotal_2022,2022,TOTAL UT(S),0,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,subtotal_2022,2022,TOTAL ALL INDIA,272,67,2022
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Andhra Pradesh,0,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Arunachal Pradesh,0,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Assam,1,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Bihar,107,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Chhattisgarh,4,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Goa,0,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Gujarat,5,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Haryana,11,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Himachal Pradesh,0,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Jharkhand,19,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Karnataka,18,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Kerala,1,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Madhya Pradesh,18,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Maharashtra,27,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Manipur,0,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Meghalaya,0,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Mizoram,0,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Nagaland,0,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Odisha,44,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Punjab,0,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Rajasthan,1,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Sikkim,0,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Tamil Nadu,6,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Telangana,2,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Tripura,0,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Uttar Pradesh,0,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Uttarakhand,0,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,West Bengal,1,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,subtotal_2023,2023,TOTAL STATE(S),265,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,A&N Islands,0,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Chandigarh,0,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Delhi,7,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Jammu & Kashmir,0,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Ladakh,0,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Lakshadweep,0,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,state_2023,2023,Puducherry,0,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,subtotal_2023,2023,TOTAL UT(S),7,67,2023
-ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T163857Z,subtotal_2023,2023,TOTAL ALL INDIA,272,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2017-table-1-2.pdf,8649a65bb843cb73,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,national_year,2015,ALL INDIA,789,2,2017
+ncrb-crime,sources/ncrb-crime/cii-2017-table-1-2.pdf,8649a65bb843cb73,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,national_year,2016,ALL INDIA,869,2,2017
+ncrb-crime,sources/ncrb-crime/cii-2017-table-1-2.pdf,8649a65bb843cb73,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,national_year,2017,ALL INDIA,723,2,2017
+ncrb-crime,sources/ncrb-crime/cii-2021-table-1-2.pdf,3fb3baeb8525dfae,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,national_year,2019,ALL INDIA,438,2,2021
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,national_year,2020,ALL INDIA,857,35,2022
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,national_year,2021,ALL INDIA,378,35,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,national_year,2022,ALL INDIA,272,35,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,national_year,2023,ALL INDIA,272,35,2023
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Andhra Pradesh,9,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Arunachal Pradesh,0,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Assam,2,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Bihar,60,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Chhattisgarh,0,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Goa,1,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Gujarat,9,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Haryana,4,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Himachal Pradesh,0,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Jharkhand,46,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Karnataka,19,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Kerala,1,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Madhya Pradesh,68,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Maharashtra,28,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Manipur,0,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Meghalaya,0,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Mizoram,0,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Nagaland,0,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Odisha,15,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Punjab,0,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Rajasthan,5,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Sikkim,0,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Tamil Nadu,0,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Telangana,4,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Tripura,0,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Uttar Pradesh,0,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Uttarakhand,1,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,West Bengal,0,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,subtotal_2022,2022,TOTAL STATE(S),272,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,A&N Islands,0,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Chandigarh,0,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Delhi,0,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Jammu & Kashmir,0,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Ladakh,0,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Lakshadweep,0,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2022,2022,Puducherry,0,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,subtotal_2022,2022,TOTAL UT(S),0,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2022-book1.pdf,7c5ee3128b0b6bc7,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,subtotal_2022,2022,TOTAL ALL INDIA,272,67,2022
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Andhra Pradesh,0,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Arunachal Pradesh,0,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Assam,1,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Bihar,107,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Chhattisgarh,4,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Goa,0,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Gujarat,5,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Haryana,11,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Himachal Pradesh,0,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Jharkhand,19,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Karnataka,18,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Kerala,1,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Madhya Pradesh,18,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Maharashtra,27,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Manipur,0,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Meghalaya,0,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Mizoram,0,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Nagaland,0,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Odisha,44,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Punjab,0,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Rajasthan,1,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Sikkim,0,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Tamil Nadu,6,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Telangana,2,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Tripura,0,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Uttar Pradesh,0,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Uttarakhand,0,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,West Bengal,1,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,subtotal_2023,2023,TOTAL STATE(S),265,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,A&N Islands,0,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Chandigarh,0,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Delhi,7,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Jammu & Kashmir,0,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Ladakh,0,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Lakshadweep,0,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,state_2023,2023,Puducherry,0,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,subtotal_2023,2023,TOTAL UT(S),7,67,2023
+ncrb-crime,sources/ncrb-crime/cii-2023-part1.pdf,553ac8b2eadfe9e2,ncrb-cii-communal-extract-v2.0.0-20260530T165512Z,subtotal_2023,2023,TOTAL ALL INDIA,272,67,2023

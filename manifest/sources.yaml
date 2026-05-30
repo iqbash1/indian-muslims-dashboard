@@ -680,6 +680,16 @@ sources:
         url: https://www.ncrb.gov.in/uploads/files/1CrimeinIndia2023PartI.pdf
         target_path: sources/ncrb-crime/cii-2023-part1.pdf
         status: verified
+      - target_id: cii-2017-table-1-2
+        description: "NCRB Crime in India 2017 Table 1.2 (just the table — per-table PDF, 144 KB). Live NCRB URL is dead post-reorg; served from Wayback capture 20191203051255 of original ncrb.gov.in/StatPublications/CII/CII2017/pdfs/Table 1.2.pdf. Contains 2015/2016/2017 national rioting figures including row 23.1 Communal/Religious."
+        url: https://web.archive.org/web/20191203051255id_/http://ncrb.gov.in/StatPublications/CII/CII2017/pdfs/Table%201.2.pdf
+        target_path: sources/ncrb-crime/cii-2017-table-1-2.pdf
+        status: verified
+      - target_id: cii-2021-table-1-2
+        description: "NCRB Crime in India 2021 Table 1.2 (per-table PDF, 165 KB). Served from Wayback capture 20230923181445 of ncrb.gov.in/sites/default/files/CII-2021/TABLE 1.2.pdf. Contains 2019/2020/2021 national rioting figures."
+        url: https://web.archive.org/web/20230923181445id_/https://ncrb.gov.in/sites/default/files/CII-2021/TABLE%201.2.pdf
+        target_path: sources/ncrb-crime/cii-2021-table-1-2.pdf
+        status: verified
 
   - id: rbi-minority-lending
     name: RBI Priority Sector Lending - Minority Concentration

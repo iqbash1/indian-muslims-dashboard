@@ -37,13 +37,19 @@ REPO_ROOT = pathlib.Path(__file__).resolve().parents[2]
 OUTPUT_PATH = REPO_ROOT / "extracted" / "ncrb-crime" / "cii-communal-incidents.csv"
 EXTRACTOR_VERSION = "2.0.0"
 
-# (source_filename, report_year, [years in Table 1.2 national series])
+# Source kinds:
+#   "main" = full CII volume — Table 1.2 at page 35, Table 1A.4 state at page 67
+#   "table-1-2" = standalone per-table PDF (small) — Table 1.2 scanned across pages,
+#                no state-level (just national time series)
+# Per-source: (filename, kind, report_year, [years in Table 1.2 row])
 REPORTS = [
-    ("cii-2022-book1.pdf", 2022, [2020, 2021, 2022]),
-    ("cii-2023-part1.pdf", 2023, [2021, 2022, 2023]),
+    ("cii-2017-table-1-2.pdf", "table-1-2", 2017, [2015, 2016, 2017]),
+    ("cii-2021-table-1-2.pdf", "table-1-2", 2021, [2019, 2020, 2021]),
+    ("cii-2022-book1.pdf",     "main",      2022, [2020, 2021, 2022]),
+    ("cii-2023-part1.pdf",     "main",      2023, [2021, 2022, 2023]),
 ]
-NATIONAL_PAGE = 35
-STATE_PAGE = 67
+MAIN_NATIONAL_PAGE = 35
+MAIN_STATE_PAGE = 67
 
 # Table 1.2 row format: "23.1 Communal/Religious <y1_i> <y1_r> <y2_i> <y2_r> <y3_i> <y3_r> <share>"
 NATIONAL_TIME_SERIES_RE = re.compile(
@@ -83,58 +89,73 @@ def verify(path: pathlib.Path) -> dict:
     return meta
 
 
-def extract_one_report(source_filename: str, report_year: int, years: list[int]) -> list[dict]:
+def _scan_national_row(pdf, pages_to_scan: list[int]) -> tuple[re.Match | None, int]:
+    """Find the '23.1 Communal/Religious' row across the given page indices. Returns
+    (match, 1-based page_number) or (None, -1)."""
+    for page_idx in pages_to_scan:
+        if page_idx >= len(pdf.pages):
+            continue
+        text = pdf.pages[page_idx].extract_text() or ""
+        for line in text.splitlines():
+            m = NATIONAL_TIME_SERIES_RE.match(line.strip())
+            if m:
+                return m, page_idx + 1
+    return None, -1
+
+
+def extract_one_report(source_filename: str, kind: str, report_year: int, years: list[int]) -> list[dict]:
     src = REPO_ROOT / "sources" / "ncrb-crime" / source_filename
     meta = verify(src)
     sha_prefix = meta["sha256"][:16]
 
     out: list[dict] = []
     with pdfplumber.open(str(src)) as pdf:
-        # National time series (Table 1.2)
-        text = pdf.pages[NATIONAL_PAGE - 1].extract_text() or ""
-        for line in text.splitlines():
-            m = NATIONAL_TIME_SERIES_RE.match(line.strip())
-            if not m:
-                continue
+        if kind == "main":
+            scan_pages = [MAIN_NATIONAL_PAGE - 1]
+        else:
+            # Per-table PDF — scan all pages (tiny file)
+            scan_pages = list(range(len(pdf.pages)))
+        m, found_page = _scan_national_row(pdf, scan_pages)
+        if m:
             for i, yr in enumerate(years):
                 out.append({
                     "row_type": "national_year", "year": yr,
                     "geography": "ALL INDIA",
                     "communal_incidents": int(m.group(1 + i * 2)),
-                    "page": NATIONAL_PAGE,
+                    "page": found_page,
                     "source_document": str(src.relative_to(REPO_ROOT)),
                     "source_sha256_prefix": sha_prefix,
                     "report_year": report_year,
                 })
-            break
 
-        # State-level (Table 1A.4) for the report's most recent year
-        text = pdf.pages[STATE_PAGE - 1].extract_text() or ""
-        latest_year = years[-1]
-        for line in text.splitlines():
-            line = line.strip()
-            m_state = STATE_ROW_RE.match(line)
-            m_total = TOTAL_ROW_RE.match(line)
-            base = {
-                "page": STATE_PAGE,
-                "source_document": str(src.relative_to(REPO_ROOT)),
-                "source_sha256_prefix": sha_prefix,
-                "report_year": report_year,
-            }
-            if m_state:
-                out.append({
-                    **base,
-                    "row_type": f"state_{latest_year}", "year": latest_year,
-                    "geography": m_state.group(2).strip(),
-                    "communal_incidents": int(float(m_state.group(8))),
-                })
-            elif m_total:
-                out.append({
-                    **base,
-                    "row_type": f"subtotal_{latest_year}", "year": latest_year,
-                    "geography": f"TOTAL {m_total.group(1).strip()}",
-                    "communal_incidents": int(float(m_total.group(7))),
-                })
+        # State-level (Table 1A.4) only for "main" volumes
+        if kind == "main":
+            text = pdf.pages[MAIN_STATE_PAGE - 1].extract_text() or ""
+            latest_year = years[-1]
+            for line in text.splitlines():
+                line = line.strip()
+                m_state = STATE_ROW_RE.match(line)
+                m_total = TOTAL_ROW_RE.match(line)
+                base = {
+                    "page": MAIN_STATE_PAGE,
+                    "source_document": str(src.relative_to(REPO_ROOT)),
+                    "source_sha256_prefix": sha_prefix,
+                    "report_year": report_year,
+                }
+                if m_state:
+                    out.append({
+                        **base,
+                        "row_type": f"state_{latest_year}", "year": latest_year,
+                        "geography": m_state.group(2).strip(),
+                        "communal_incidents": int(float(m_state.group(8))),
+                    })
+                elif m_total:
+                    out.append({
+                        **base,
+                        "row_type": f"subtotal_{latest_year}", "year": latest_year,
+                        "geography": f"TOTAL {m_total.group(1).strip()}",
+                        "communal_incidents": int(float(m_total.group(7))),
+                    })
     return out
 
 
@@ -144,8 +165,8 @@ def extract() -> None:
         f"{dt.datetime.now(dt.timezone.utc).strftime('%Y%m%dT%H%M%SZ')}"
     )
     all_rows: list[dict] = []
-    for filename, ryear, years in REPORTS:
-        all_rows.extend(extract_one_report(filename, ryear, years))
+    for filename, kind, ryear, years in REPORTS:
+        all_rows.extend(extract_one_report(filename, kind, ryear, years))
 
     # Dedupe national_year by year (keep latest report's value; consistency
     # check: overlapping years should match across reports).
