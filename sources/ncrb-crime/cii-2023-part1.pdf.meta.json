@@ -1,0 +1,11 @@
+{
+  "source_id": "ncrb-crime",
+  "target_id": "cii-2023-part1",
+  "url": "https://www.ncrb.gov.in/uploads/files/1CrimeinIndia2023PartI.pdf",
+  "pulled_at": "2026-05-30T16:34:31.764786+00:00",
+  "status_code": 200,
+  "content_type": "application/pdf",
+  "content_length": 22439087,
+  "sha256": "553ac8b2eadfe9e2f3e3b80688fb3ced884dde4c1ddb5ba18077ca7432289661",
+  "pull_script_version": "0.1.0"
+}

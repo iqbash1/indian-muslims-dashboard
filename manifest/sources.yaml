@@ -493,6 +493,21 @@ sources:
     last_pulled: null
     next_expected: "2026-07-01"
     targets:
+      - target_id: annual-report-2021-22
+        description: PLFS Annual Report Jul 2021 - Jun 2022 (main report)
+        url: https://www.mospi.gov.in/sites/default/files/publication_reports/AnnualReportPLFS2021-22F1.pdf
+        target_path: sources/plfs/annual/plfs-annual-report-2021-22.pdf
+        status: verified
+      - target_id: annual-report-2022-23
+        description: PLFS Annual Report Jul 2022 - Jun 2023 (main report)
+        url: https://www.mospi.gov.in/sites/default/files/publication_reports/AR_PLFS_2022_23N.pdf
+        target_path: sources/plfs/annual/plfs-annual-report-2022-23.pdf
+        status: verified
+      - target_id: additional-tables-2022-23
+        description: PLFS 2022-23 Additional Tables (religion crosstabs often in here not main report)
+        url: https://mospi.gov.in/sites/default/files/publication_reports/Additional%20Tables%20of%20PLFS%20Annual%20Report%202022-23-fINAL_0.pdf
+        target_path: sources/plfs/annual/plfs-additional-tables-2022-23.pdf
+        status: verified
       - target_id: annual-report-2023-24
         description: PLFS Annual Report Jul 2023 - Jun 2024 (main report)
         url: https://mospi.gov.in/sites/default/files/publication_reports/AnnualReport_PLFS2023-24L2.pdf
@@ -654,6 +669,11 @@ sources:
         description: NCRB Crime in India 2022 Volume I (Book 1 — includes communal rioting tables)
         url: https://www.ncrb.gov.in/uploads/nationalcrimerecordsbureau/custom/1701607577CrimeinIndia2022Book1.pdf
         target_path: sources/ncrb-crime/cii-2022-book1.pdf
+        status: verified
+      - target_id: cii-2023-part1
+        description: NCRB Crime in India 2023 Part I (Volume I — includes communal rioting tables, extends national series)
+        url: https://www.ncrb.gov.in/uploads/files/1CrimeinIndia2023PartI.pdf
+        target_path: sources/ncrb-crime/cii-2023-part1.pdf
         status: verified
 
   - id: rbi-minority-lending

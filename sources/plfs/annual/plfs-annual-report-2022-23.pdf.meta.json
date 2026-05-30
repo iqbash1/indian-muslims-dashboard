@@ -1,0 +1,11 @@
+{
+  "source_id": "plfs",
+  "target_id": "annual-report-2022-23",
+  "url": "https://www.mospi.gov.in/sites/default/files/publication_reports/AR_PLFS_2022_23N.pdf",
+  "pulled_at": "2026-05-30T16:34:44.141569+00:00",
+  "status_code": 200,
+  "content_type": "application/pdf",
+  "content_length": 24093383,
+  "sha256": "c7695a00a16c1002a58dbc203cfcf0847e526adcd794dc200694b7f901cc696f",
+  "pull_script_version": "0.1.0"
+}
