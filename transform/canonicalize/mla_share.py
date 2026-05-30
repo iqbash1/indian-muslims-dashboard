@@ -41,14 +41,27 @@ CANONICALIZER_VERSION = "1.0.0"
 # (year, geography_code, geography_level, geography_label, muslim_mlas, total_seats, cite)
 ROWS = [
     (2024, "IN",     "national", "India (all-states aggregate)",  None,  None, "Across 28 state assemblies, Muslims ≈6% of seats (India Forum, Clarion India, multiple compilations)"),
+    # 2025-2026 cycle
     (2026, "IN-S19", "state",    "West Bengal",                   40,    293,  "The Wire, Deccan Herald (2026 WB assembly)"),
     (2026, "IN-S32", "state",    "Kerala",                        35,    140,  "The Wire (2026 Kerala assembly)"),
+    (2025, "IN-S07", "state",    "Delhi",                          4,     70,  "Maktoob, The Print (2025 Delhi assembly)"),
+    # 2024 cycle
     (2024, "IN-S27", "state",    "Maharashtra",                   10,    288,  "LatestLY, Deccan Herald (2024 Maharashtra)"),
     (2024, "IN-S06", "state",    "Haryana",                        5,     90,  "ummid.com (2024 Haryana)"),
+    # 2023 cycle
+    (2023, "IN-S29", "state",    "Karnataka",                      9,    224,  "The Hindu, Maktoob (2023 Karnataka)"),
     (2023, "IN-S23", "state",    "Madhya Pradesh",                 2,    230,  "TimelineDaily (2023 MP)"),
     (2023, "IN-S08", "state",    "Rajasthan",                      6,    200,  "TimelineDaily (2023 Rajasthan)"),
     (2023, "IN-S36", "state",    "Telangana",                      7,    119,  "TimelineDaily (2023 Telangana)"),
     (2023, "IN-S22", "state",    "Chhattisgarh",                   0,     90,  "TimelineDaily (2023 Chhattisgarh)"),
+    # 2022 cycle
+    (2022, "IN-S09", "state",    "Uttar Pradesh",                 34,    403,  "The Wire, Maktoob, Indian Express (2022 UP)"),
+    (2022, "IN-S24", "state",    "Gujarat",                        3,    182,  "Indian Express, Times of India (2022 Gujarat — historic low after BJP sweep)"),
+    # 2021 cycle
+    (2021, "IN-S18", "state",    "Assam",                         31,    126,  "Maktoob, The Hindu (2021 Assam — Muslims ~34% of population, ~25% of MLAs)"),
+    (2021, "IN-S33", "state",    "Tamil Nadu",                     5,    234,  "The Wire, The Hindu (2021 Tamil Nadu)"),
+    # 2020 cycle
+    (2020, "IN-S10", "state",    "Bihar",                         19,    243,  "Maktoob, The Wire (2020 Bihar — Muslims ~17% of population)"),
 ]
 NATIONAL_AGGREGATE_VALUE = 6.0  # ~6% across all state assemblies
 
