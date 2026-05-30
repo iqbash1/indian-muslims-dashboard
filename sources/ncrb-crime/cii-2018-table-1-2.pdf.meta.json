@@ -1,0 +1,11 @@
+{
+  "source_id": "ncrb-crime",
+  "target_id": "cii-2018-table-1-2",
+  "url": "https://web.archive.org/web/20200125083810id_/http://ncrb.gov.in/StatPublications/CII/CII2018/pdfs/Table%201.2.pdf",
+  "pulled_at": "2026-05-30T16:57:23.515736+00:00",
+  "status_code": 200,
+  "content_type": "application/pdf",
+  "content_length": 145775,
+  "sha256": "8a1d63b984fc9bdcf490ce99d99717b9880acb2122b79361a07a3bcd5cbbf6f7",
+  "pull_script_version": "0.1.0"
+}

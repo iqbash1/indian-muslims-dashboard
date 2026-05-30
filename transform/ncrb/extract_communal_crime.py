@@ -44,6 +44,7 @@ EXTRACTOR_VERSION = "2.0.0"
 # Per-source: (filename, kind, report_year, [years in Table 1.2 row])
 REPORTS = [
     ("cii-2017-table-1-2.pdf", "table-1-2", 2017, [2015, 2016, 2017]),
+    ("cii-2018-table-1-2.pdf", "table-1-2", 2018, [2016, 2017, 2018]),
     ("cii-2021-table-1-2.pdf", "table-1-2", 2021, [2019, 2020, 2021]),
     ("cii-2022-book1.pdf",     "main",      2022, [2020, 2021, 2022]),
     ("cii-2023-part1.pdf",     "main",      2023, [2021, 2022, 2023]),

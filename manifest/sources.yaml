@@ -685,6 +685,11 @@ sources:
         url: https://web.archive.org/web/20191203051255id_/http://ncrb.gov.in/StatPublications/CII/CII2017/pdfs/Table%201.2.pdf
         target_path: sources/ncrb-crime/cii-2017-table-1-2.pdf
         status: verified
+      - target_id: cii-2018-table-1-2
+        description: "NCRB Crime in India 2018 Table 1.2 (per-table PDF, 136 KB). Served from Wayback capture 20200125083810 of (dead) ncrb.gov.in/StatPublications/CII/CII2018/pdfs/Table 1.2.pdf. Contains 2016/2017/2018 national rioting figures — fills the 2018 gap between CII 2017 and CII 2021 tables."
+        url: https://web.archive.org/web/20200125083810id_/http://ncrb.gov.in/StatPublications/CII/CII2018/pdfs/Table%201.2.pdf
+        target_path: sources/ncrb-crime/cii-2018-table-1-2.pdf
+        status: verified
       - target_id: cii-2021-table-1-2
         description: "NCRB Crime in India 2021 Table 1.2 (per-table PDF, 165 KB). Served from Wayback capture 20230923181445 of ncrb.gov.in/sites/default/files/CII-2021/TABLE 1.2.pdf. Contains 2019/2020/2021 national rioting figures."
         url: https://web.archive.org/web/20230923181445id_/https://ncrb.gov.in/sites/default/files/CII-2021/TABLE%201.2.pdf
