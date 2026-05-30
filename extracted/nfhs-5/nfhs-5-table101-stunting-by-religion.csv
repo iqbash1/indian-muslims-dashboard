@@ -1,0 +1,7 @@
+source_id,source_document,source_sha256_prefix,extraction_run,table_id,page,religion,display_name,stunting_pct,severe_stunting_pct,mean_hfa_z_score,n_children
+nfhs-5,sources/nfhs-5/reports/india-report-fr375.pdf,ce1fa5e3c93e5f00,nfhs-5-table101-extract-v1.0.0-20260530T153324Z,10.1,424,hindu,Hindu,35.5,15.0,-1.3,159545
+nfhs-5,sources/nfhs-5/reports/india-report-fr375.pdf,ce1fa5e3c93e5f00,nfhs-5-table101-extract-v1.0.0-20260530T153324Z,10.1,424,muslim,Muslim,36.8,16.2,-1.3,32788
+nfhs-5,sources/nfhs-5/reports/india-report-fr375.pdf,ce1fa5e3c93e5f00,nfhs-5-table101-extract-v1.0.0-20260530T153324Z,10.1,424,christian,Christian,31.3,13.3,-1.2,4358
+nfhs-5,sources/nfhs-5/reports/india-report-fr375.pdf,ce1fa5e3c93e5f00,nfhs-5-table101-extract-v1.0.0-20260530T153324Z,10.1,424,sikh,Sikh,23.6,8.6,-1.0,2446
+nfhs-5,sources/nfhs-5/reports/india-report-fr375.pdf,ce1fa5e3c93e5f00,nfhs-5-table101-extract-v1.0.0-20260530T153324Z,10.1,424,buddhist,Buddhist/Neo-Buddhist,35.4,15.6,-1.2,1010
+nfhs-5,sources/nfhs-5/reports/india-report-fr375.pdf,ce1fa5e3c93e5f00,nfhs-5-table101-extract-v1.0.0-20260530T153324Z,10.1,424,jain,Jain,28.5,17.5,-1.1,283

@@ -353,12 +353,30 @@ metrics:
     cluster: health
     unit: percent
     higher_is_better: false
+    definition: |
+      Percentage of children under age 5 classified as stunted (height-for-age
+      more than 2 SD below the WHO Child Growth Standards median). Stunting
+      indicates chronic malnutrition in early life.
     sources: {primary: nfhs-5}
-    geography_levels: [national, state]
-    religions: [muslim, hindu, sc, st, all]
+    geography_levels: [national]
+    religions: [muslim, hindu, christian, sikh, buddhist, jain, all]
+    methodology_notes: |
+      NFHS-5 (2019-21) Table 10.1 (Nutritional status of children by background
+      characteristics). Religion column = % below -2 SD HFA; all-India value
+      is the sample-size-weighted average of the 6 religion rows (reproduces
+      the published national rate of 35.5%). Single round in canonical for now;
+      NFHS-2/3/4 extension possible (same pattern as IMR / inst-delivery / anaemia
+      trend extractors).
     comparison_baselines: [hindu, all]
     phase: 1
-    status: stub
+    status: defined
+    display:
+      scorecard:
+        label: "Children stunted (under 5)"
+        reference: "hindu"
+        unit_format: percent
+        higher_is_better: false
+        order: 65
 
   - id: inst-delivery
     name: Institutional delivery rate
