@@ -603,10 +603,30 @@ sources:
     last_pulled: null
     next_expected: "2026-11-01"
     targets:
+      - target_id: psi-2018
+        description: "Prison Statistics India 2018 (as on 2018-12-31). NCRB live URL http://ncrb.gov.in/sites/default/files/PSI-2018.pdf is dead post site-reorg; bytes served from Wayback capture 20230528012455 of that URL."
+        url: https://web.archive.org/web/20230528012455id_/http://ncrb.gov.in/sites/default/files/PSI-2018.pdf
+        target_path: sources/ncrb-prison/psi-2018.pdf
+        status: verified
+      - target_id: psi-2019
+        description: "Prison Statistics India 2019 (as on 2019-12-31). NCRB live URL https://ncrb.gov.in/sites/default/files/PSI-2019-27-08-2020.pdf is dead post site-reorg; bytes served from Wayback capture 20211105235151 of that URL."
+        url: https://web.archive.org/web/20211105235151id_/https://ncrb.gov.in/sites/default/files/PSI-2019-27-08-2020.pdf
+        target_path: sources/ncrb-prison/psi-2019.pdf
+        status: verified
+      - target_id: psi-2021
+        description: Prison Statistics India 2021 (as on 2021-12-31)
+        url: https://www.ncrb.gov.in/uploads/nationalcrimerecordsbureau/post/1679316772PSI2021ason31-12-2021.pdf
+        target_path: sources/ncrb-prison/psi-2021.pdf
+        status: verified
       - target_id: psi-2022
         description: Prison Statistics India 2022 (as on 2023-12-01)
         url: https://www.ncrb.gov.in/uploads/nationalcrimerecordsbureau/custom/psiyearwise2022/1701613297PSI2022ason01122023.pdf
         target_path: sources/ncrb-prison/psi-2022.pdf
+        status: verified
+      - target_id: psi-2023
+        description: Prison Statistics India 2023 (as on 2023-12-31)
+        url: https://www.ncrb.gov.in/uploads/files/PSI-2023.pdf
+        target_path: sources/ncrb-prison/psi-2023.pdf
         status: verified
 
   - id: ncrb-crime

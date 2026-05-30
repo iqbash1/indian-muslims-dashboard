@@ -77,36 +77,6 @@ def fmt_num(v: float, unit: str) -> str:
 
 # ---------- Metric prep ----------
 
-def compute_prison_rates() -> dict:
-    """Read prison + undertrial rates and counts from L3 canonical only.
-
-    Canonical metrics:
-      prison-rate-per-100k.csv      value = rate per 100k of religious population
-      undertrial-rate-per-100k.csv  same, undertrials only
-
-    The absolute count is preserved on each canonical row in the `denominator`
-    field as 'population_per_100k (count=N, pop=M)'. We parse it back here so
-    the dashboard never touches L2/L3-raw data — every number it shows traces
-    to a canonical row.
-
-    Returns {'prison': {religion: {'count': int, 'rate_per_100k': float}},
-             'undertrial': {...}}
-    """
-    import re as _re
-    out: dict[str, dict] = {"prison": {}, "undertrial": {}}
-    for kind, metric_id in (("prison", "prison-rate-per-100k"),
-                            ("undertrial", "undertrial-rate-per-100k")):
-        for row in load_metric(metric_id):
-            if row["geography_level"] != "national":
-                continue
-            rel = row["religion"]
-            rate = float(row["value"])
-            m = _re.search(r"count=(\d+)", row["denominator"])
-            count = int(m.group(1)) if m else 0
-            out[kind][rel] = {"count": count, "rate_per_100k": rate}
-    return out
-
-
 MUSLIM_POP_SHARE = 14.23
 
 # Map metric cluster (from metrics.yaml cluster field) to scorecard cluster display name.
@@ -144,21 +114,9 @@ def load_scorecard_spec() -> list[tuple]:
             continue
         if disp.get("include", True) is False:
             continue
-        # For prison-share / undertrial-share, scorecard pulls from prison-rate-per-100k
-        # / undertrial-rate-per-100k metrics now — keep them out of the manifest-driven
-        # scorecard if they don't have display blocks.
-        # special_render is honored for ls-share, communal-incidents-govt, prison/undertrial
-        special = disp.get("special_render")
-        # Backward-compat: prison-rate-per-100k -> "prison-share" alias (renderer
-        # in render_scorecard_rows still uses these IDs).
-        mid = m["id"]
-        if special == "prison_rate":
-            mid = "prison-share"  # render_scorecard_rows special-cases this id
-        elif special == "undertrial_rate":
-            mid = "undertrial-share"
         specs.append((
             SECTION_OF.get(m["cluster"], m["cluster"].capitalize()),
-            mid,
+            m["id"],
             disp["label"],
             disp["unit_format"],
             disp.get("reference"),
@@ -166,9 +124,7 @@ def load_scorecard_spec() -> list[tuple]:
         ))
     specs.sort(key=lambda s: next(
         (d["display"]["scorecard"]["order"] for d in data["metrics"]
-         if d["id"] == s[1] or (d["id"] == "prison-rate-per-100k" and s[1] == "prison-share")
-         or (d["id"] == "undertrial-rate-per-100k" and s[1] == "undertrial-share")
-         if d.get("display", {}).get("scorecard")),
+         if d["id"] == s[1] and d.get("display", {}).get("scorecard")),
         9999,
     ))
     return specs
@@ -179,30 +135,30 @@ SCORECARD_SPEC = load_scorecard_spec()
 
 def render_scorecard_rows() -> str:
     """Compute one HTML <tr> per metric showing Muslim/Hindu/All and gap vs reference."""
-    prison_rates = compute_prison_rates()
     rows: list[str] = []
     for cluster, mid, name, unit, ref, higher_better in SCORECARD_SPEC:
-        # Justice metrics get a special two-line presentation: absolute count + rate per 100k pop
+        # Justice share metrics: latest-year Muslim/Hindu share, gap vs population (~14.2%).
         if mid in ("prison-share", "undertrial-share"):
-            kind = "prison" if mid == "prison-share" else "undertrial"
-            d = prison_rates[kind]
-            year = 2022
-            def cell(rel: str) -> str:
-                x = d[rel]
-                return f'<b>{x["count"]:,}</b><br><span class="rate-sub">{x["rate_per_100k"]} per 100k</span>'
-            # Gap: rate ratio Muslim / Hindu
-            ratio = d["muslim"]["rate_per_100k"] / d["hindu"]["rate_per_100k"]
-            gap_str = f"{ratio:.2f}× Hindu rate"
-            gap_class = "gap-bad" if ratio > 1 else "gap-good"
+            nat = [r for r in load_metric(mid) if r["geography_level"] == "national"]
+            if not nat:
+                continue
+            latest_year = max(int(r["year"]) for r in nat)
+            by_rel = {r["religion"]: float(r["value"]) for r in nat if int(r["year"]) == latest_year}
+            m_val, h_val = by_rel.get("muslim"), by_rel.get("hindu")
+            muslim_str = f"{m_val:.2f}%" if m_val is not None else "—"
+            hindu_str = f"{h_val:.2f}%" if h_val is not None else "—"
+            gap = (m_val - MUSLIM_POP_SHARE) if m_val is not None else 0.0
+            sign = "+" if gap > 0 else ""
+            gap_class = "gap-bad" if gap > 0 else "gap-neutral"  # over-representation is the concern
             rows.append(
                 f'<tr>'
                 f'<td>{html.escape(cluster)}</td>'
                 f'<td>{html.escape(name)}</td>'
-                f'<td>{year}</td>'
-                f'<td>{cell("muslim")}</td>'
-                f'<td>{cell("hindu")}</td>'
-                f'<td>{cell("all")}</td>'
-                f'<td class="{gap_class}">{html.escape(gap_str)}</td>'
+                f'<td>{latest_year}</td>'
+                f'<td>{muslim_str}</td>'
+                f'<td>{hindu_str}</td>'
+                f'<td>—</td>'
+                f'<td class="{gap_class}">{sign}{gap:.2f}pp vs {MUSLIM_POP_SHARE}% pop</td>'
                 f'</tr>'
             )
             continue
@@ -652,7 +608,7 @@ const TREND_STYLE = {
   other:     { c: '#999999', w: 1.4, r: 2, label: 'Other' },
 };
 const TREND_ORDER = ['muslim', 'hindu', 'christian', 'sikh', 'buddhist', 'jain', 'other'];
-function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak) {
+function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak, refLine) {
   const ds = [];
   for (const rel of TREND_ORDER) {
     if (!seriesMap[rel]) continue;
@@ -668,6 +624,13 @@ function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak) {
     label: 'All-India', data: allSeries, borderColor: '#555', backgroundColor: 'transparent',
     fill: false, tension: 0.25, pointRadius: 0, borderWidth: 1, borderDash: [2, 3],
     spanGaps: false, order: 2,
+  });
+  // Optional horizontal reference line (e.g. the Muslim population share) drawn
+  // as a flat dataset so it appears in the legend and the value axis includes it.
+  if (refLine) ds.push({
+    label: refLine.label, data: years.map(() => refLine.value), borderColor: '#9aa3a8',
+    backgroundColor: 'transparent', fill: false, tension: 0, pointRadius: 0, borderWidth: 1,
+    borderDash: [4, 3], spanGaps: false, order: 3,
   });
   new Chart(document.getElementById(id), {
     type: 'line',
@@ -958,8 +921,8 @@ def render_metric_card(m: dict):
     cvid = "cc-" + mid
     suffix, dec = UNIT_JS.get(unit, ("", 1))
 
-    if special in ("prison_rate", "undertrial_rate"):
-        return _card_rate(mid, label, src, csv_href, cvid)
+    if special == "share_trend":
+        return _card_share_trend(mid, label, src, csv_href, cvid)
     if special == "time_series_latest":
         return _card_timeseries(mid, label, unit, src, csv_href, cvid)
     if special == "time_series_count":
@@ -1077,37 +1040,63 @@ def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
                        chart_html, comps, src, csv_href, _state_details(mid, unit)), js
 
 
-def _card_rate(mid, label, src, csv_href, cvid):
-    kind = "prison" if "prison" in mid else "undertrial"
-    r = compute_prison_rates()[kind]
-    rate_by = {rel: r[rel]["rate_per_100k"] for rel in r}
-    muslim, hindu, allr = rate_by.get("muslim"), rate_by.get("hindu"), rate_by.get("all")
-    ratio = round(muslim / hindu, 2) if hindu else 0
-    # Bars are real communities; "All-India" (which contains them all) is the
-    # dashed baseline. Incarceration rate is lower-is-better, so rank ascends.
-    named = [c for c in NAMED_COMMUNITIES if c in rate_by]
-    if len(named) >= 4:
-        rank, n, tier, _ = community_rank(rate_by, higher_is_better=False)
-    else:
-        rank, n, tier = 0, 0, "bad"
-    pairs = sorted([(COMMUNITY_LABEL[c], rate_by[c], c == "muslim") for c in named],
-                   key=lambda b: b[1])
-    labels = [p[0] for p in pairs]
-    values = [round(p[1], 1) for p in pairs]
-    mhex = TIER_HEX.get(tier, "#991B1B")
-    colors = [mhex if p[2] else "#D8DEE2" for p in pairs]
-    h = len(pairs) * 28 + 28
-    chart_html = f'<div class="card-chartwrap" style="height:{h}px"><canvas id="{cvid}"></canvas></div>'
-    ref = json.dumps(round(allr, 1)) if allr is not None else "null"
-    js = (f'hbar("{cvid}", {json.dumps(labels)}, {json.dumps(values)}, {json.dumps(colors)}, '
-          f'"", 1, {ref}, "All-India");')
-    comps = _comp("vs Hindu rate", f"{ratio}×", f"{r['muslim']['count']:,} held", "bad")
-    if rank:
-        comps += _comp("Among communities", f"{_ordinal(rank)} of {n}", _tier_word(tier), tier)
-    else:
-        comps += _comp("Muslims held", f"{r['muslim']['count']:,}", "absolute count", "neutral")
-    return _card_shell(label, f"{muslim:.1f}", CAPTION.get(mid, "per 100k"), 2022,
-                       "lower is better", chart_html, comps, src, csv_href), js
+def _card_share_trend(mid, label, src, csv_href, cvid):
+    """Multi-year Muslim + Hindu share trend with the Muslim population share
+    (~14.2%) drawn as the interpretive reference line. Used for the justice
+    metrics prison-share and undertrial-share. Headline = latest-year Muslim share."""
+    noun = "prisoners" if mid == "prison-share" else "undertrials"
+    years, series, _ = _nat_trend(mid)
+    # Fill internal year gaps (e.g. 2020, not published) with null so the trend
+    # line visibly breaks there rather than silently compressing the axis. The
+    # dashed population reference line still spans every year.
+    axis_years = list(range(years[0], years[-1] + 1)) if years else []
+    nat = _nat_by_religion(mid)  # latest year
+    muslim_latest = nat.get("muslim")
+    headline = f"{muslim_latest:.1f}" if muslim_latest is not None else "—"
+    series_map = {rel: [series.get(rel, {}).get(y) for y in axis_years]
+                  for rel in ("muslim", "hindu") if rel in series}
+    chart_html = f'<div class="card-chartwrap" style="height:188px"><canvas id="{cvid}"></canvas></div>'
+    refline = {"value": MUSLIM_POP_SHARE, "label": f"Muslim population {MUSLIM_POP_SHARE}%"}
+    js = (f'trendChart("{cvid}", {json.dumps(axis_years)}, {json.dumps(series_map)}, '
+          f'null, "%", false, {json.dumps(refline)});')
+
+    comps = ""
+    if muslim_latest is not None:
+        over = muslim_latest - MUSLIM_POP_SHARE
+        comps += _comp("vs population", f"{'+' if over >= 0 else ''}{over:.1f} pp",
+                       f"{muslim_latest:.1f}% of {noun} vs {MUSLIM_POP_SHARE}% of people",
+                       "bad" if over > 0 else "neutral")
+    if len(years) >= 2 and "muslim" in series:
+        mfirst, mlast = series["muslim"].get(years[0]), series["muslim"].get(years[-1])
+        if mfirst is not None and mlast is not None:
+            delta = mlast - mfirst
+            arrow = "↑" if delta > 0 else ("↓" if delta < 0 else "→")
+            comps += _comp(f"Since {years[0]}", f"{arrow} {abs(delta):.1f} pp",
+                           f"{mfirst:.1f}% → {mlast:.1f}%", "mid")
+    note = (f"Muslim share of {noun} whose religion was reported (NCRB PSI). The dashed line is "
+            f"the ~{MUSLIM_POP_SHARE}% Muslim share of India's population (Census 2011); the Muslim "
+            f"line sits above it every year. Some states (e.g. Maharashtra) did not report religion "
+            f"in some years and are excluded from that year's denominator. 2016, 2017 and 2020 are "
+            f"not available in an extractable English edition.")
+    comps += f'<div class="comp-note">{html.escape(note)}</div>'
+    return _card_shell(label, headline, f"% of {noun}", years[-1] if years else "",
+                       "lower is better", chart_html, comps, src, csv_href,
+                       _share_year_details(mid)), js
+
+
+def _share_year_details(mid: str) -> str:
+    """<details> table of Muslim/Hindu share by year for a share-trend metric."""
+    years, series, _ = _nat_trend(mid)
+    trs = []
+    for y in years:
+        m = series.get("muslim", {}).get(y)
+        h = series.get("hindu", {}).get(y)
+        m_str = f"{m:.2f}%" if m is not None else "—"
+        h_str = f"{h:.2f}%" if h is not None else "—"
+        trs.append(f"<tr><td>{y}</td><td>{m_str}</td><td>{h_str}</td></tr>")
+    return ("<details><summary>By year</summary>"
+            "<table><thead><tr><th>Year</th><th>Muslim</th><th>Hindu</th></tr></thead>"
+            f"<tbody>{''.join(trs)}</tbody></table></details>")
 
 
 def _card_timeseries(mid, label, unit, src, csv_href, cvid):

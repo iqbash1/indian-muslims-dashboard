@@ -547,13 +547,22 @@ metrics:
     geography_levels: [national]
     religions: [muslim, hindu]
     methodology_notes: |
-      NCRB PSI 2022 Tables 2.10C-2.13C. Maharashtra did not report religion
-      breakdown for undertrials/detenues, so the religion-reported denominator
-      excludes ~33k Maharashtra prisoners. Shares are computed over religion-
-      reported prisoners only.
+      NCRB PSI Tables 2.10C-2.13C, years 2018-2023 (2016/2017/2020 not available
+      from primary/archive sources; 2015 report has no religion-by-state table).
+      Some states (e.g. Maharashtra) did not report religion for undertrials/
+      detenues in several years, so each year's religion-reported denominator
+      excludes them. Shares are computed over religion-reported prisoners only.
     comparison_baselines: []
     phase: 2
     status: defined
+    display:
+      scorecard:
+        label: "Muslims in prison (% share)"
+        reference: population
+        unit_format: percent
+        higher_is_better: false
+        order: 120
+        special_render: share_trend
 
   - id: prison-rate-per-100k
     name: Prison population rate (per 100k of religious population)
@@ -581,14 +590,9 @@ metrics:
     comparison_baselines: [hindu, all]
     phase: 2
     status: defined
-    display:
-      scorecard:
-        label: "Prisoners (rate per 100k pop)"
-        reference: "hindu"
-        unit_format: rate_per_100k
-        higher_is_better: false
-        order: 120
-        special_render: prison_rate
+    # Rate-per-100k retained as canonical data (2022 only — the rate needs a
+    # Census-year population denominator, clean only to 2011). The carded justice
+    # metric is now the multi-year prison-SHARE trend, so this is not rendered.
 
   - id: undertrial-rate-per-100k
     name: Undertrial population rate (per 100k of religious population)
@@ -610,14 +614,8 @@ metrics:
     comparison_baselines: [hindu, all]
     phase: 2
     status: defined
-    display:
-      scorecard:
-        label: "Undertrials (rate per 100k pop)"
-        reference: "hindu"
-        unit_format: rate_per_100k
-        higher_is_better: false
-        order: 130
-        special_render: undertrial_rate
+    # Rate-per-100k retained as canonical data (2022 only). The carded undertrial
+    # metric is now the multi-year undertrial-SHARE trend, so this is not rendered.
 
   - id: undertrial-share
     name: Muslim share of undertrial prisoners
@@ -632,11 +630,21 @@ metrics:
     geography_levels: [national]
     religions: [muslim, hindu]
     methodology_notes: |
-      NCRB PSI 2022 Table 2.11C. Maharashtra did not report religion breakdown
-      for ~33k undertrials; share is computed over religion-reported subset only.
+      NCRB PSI Table 2.11C, years 2018-2023 (2016/2017/2020 not available from
+      primary/archive sources). Some states (e.g. Maharashtra) did not report
+      religion for undertrials in several years; each year's share is computed
+      over the religion-reported subset only.
     comparison_baselines: []
     phase: 2
     status: defined
+    display:
+      scorecard:
+        label: "Muslims among undertrials (% share)"
+        reference: population
+        unit_format: percent
+        higher_is_better: false
+        order: 130
+        special_render: share_trend
 
   # ----- Civic / safety (Phase 2) -----
   - id: communal-incidents-govt

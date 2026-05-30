@@ -1,21 +1,17 @@
 """
 L2 -> L3 for the `prison-share` metric (Muslim share of total prison population).
+MULTI-YEAR.
 
-Reads:  extracted/ncrb-prison/psi-2022-religion-by-state.csv
-Writes: canonical/prison-share.csv
+Reads:  extracted/ncrb-prison/psi-*-religion-by-state.csv  (globbed, one per year)
+Writes: canonical/prison-share.csv  (one row per year x religion)
 
-Total prison population = convicts + undertrials + detenues + other prisoners.
-NCRB PSI 2022 reports religion separately for each category (Tables 2.10C
-through 2.13C) but the ALL-INDIA row format varies across pages (some span
-two lines and don't match our single-line regex). We compute ALL-INDIA as
-STATES subtotal + UTs subtotal for each category, which by construction
-equals the published ALL-INDIA total.
-
-Important caveat (recorded in methodology): Maharashtra did NOT report
-religion breakdown for undertrials and detenues in PSI 2022. The published
-religion totals therefore exclude ~32,883 Maharashtra undertrials and 189
-Maharashtra detenues whose religion is unknown. Reported shares are
-"Muslim share among prisoners whose religion was reported."
+Total prison population = convicts + undertrials + detenues + other prisoners
+(NCRB Tables 2.10C-2.13C). For each year we sum religion VALUES across the
+STATES + UTs subtotals — this equals the published ALL-INDIA total by
+construction AND auto-excludes states whose religion cells are blank ("-",
+non-reporting, e.g. Maharashtra for undertrials/detenues in several years).
+Reported shares are therefore "Muslim share among prisoners whose religion was
+reported." Validated: 2022 -> Muslim 108,968 / 540,148 = 20.17%.
 """
 
 from __future__ import annotations
@@ -23,90 +19,95 @@ from __future__ import annotations
 import csv
 import datetime as dt
 import pathlib
+import re
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[2]
-L2_PATH = REPO_ROOT / "extracted" / "ncrb-prison" / "psi-2022-religion-by-state.csv"
+L2_DIR = REPO_ROOT / "extracted" / "ncrb-prison"
 OUTPUT_PATH = REPO_ROOT / "canonical" / "prison-share.csv"
-CANONICALIZER_VERSION = "1.0.0"
+CANONICALIZER_VERSION = "2.0.0"
 
-CATEGORIES = ["convicts", "undertrials", "detenues", "other"]
+YEAR_RE = re.compile(r"psi-(\d{4})-religion-by-state\.csv$")
+MUSLIM_POP_SHARE = 14.23  # Census 2011 Muslim share of national population
 
 
-def load_subtotals() -> dict[tuple[str, str], int]:
-    """Returns {(category, religion): count} summed across STATES + UTs subtotals.
-    By construction this equals the ALL-INDIA published total.
-    """
-    out: dict[tuple[str, str], int] = {}
-    with L2_PATH.open() as f:
+def load_year_subtotals(path: pathlib.Path, categories: set[str] | None = None):
+    """Sum religion VALUES across STATES+UTs subtotals for the given year file.
+    Optionally restrict to a subset of categories. Returns (by_religion, source_document)."""
+    by_religion: dict[str, int] = {}
+    source_doc = ""
+    with path.open() as f:
         for row in csv.DictReader(f):
             if row["row_type"] != "subtotal_or_total":
                 continue
+            if categories is not None and row["category"] not in categories:
+                continue
             label = row["geography_name"]
-            # Use STATES and UTs subtotals (their sum equals ALL-INDIA)
             if "STATES" not in label and "UTs" not in label:
                 continue
-            cat = row["category"]
-            rel = row["religion"]
-            val_str = row["value"]
-            if not val_str:  # missing / non-reporting
+            val = row["value"]
+            if not val:  # blank = non-reporting cell
                 continue
-            out[(cat, rel)] = out.get((cat, rel), 0) + int(val_str)
-    return out
+            by_religion[row["religion"]] = by_religion.get(row["religion"], 0) + int(val)
+            source_doc = row["source_document"]
+    return by_religion, source_doc
 
 
 def canonicalize() -> None:
-    sub = load_subtotals()
-
-    # Sum across all categories for each religion
-    by_religion: dict[str, int] = {}
-    for (cat, rel), val in sub.items():
-        by_religion[rel] = by_religion.get(rel, 0) + val
-
-    total = sum(by_religion.values())
-    if total == 0:
-        raise RuntimeError("No prison data found in L2.")
+    files = sorted(L2_DIR.glob("psi-*-religion-by-state.csv"))
+    if not files:
+        raise RuntimeError(f"no L2 files matching psi-*-religion-by-state.csv in {L2_DIR}")
 
     extraction_run = (
         f"canonicalize-prison-share-v{CANONICALIZER_VERSION}-"
         f"{dt.datetime.now(dt.timezone.utc).strftime('%Y%m%dT%H%M%SZ')}"
     )
 
-    OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    n_rows = 0
-    with OUTPUT_PATH.open("w", newline="") as f:
-        w = csv.writer(f)
-        w.writerow([
-            "metric_id", "geography_level", "geography_code", "year", "religion",
-            "value", "denominator", "sample_size", "ci_lower", "ci_upper",
-            "source_id", "source_document", "extraction_run",
-            "methodology_note", "break_flag",
-        ])
+    rows_out: list[tuple] = []
+    summary: list[str] = []
+    for path in files:
+        m = YEAR_RE.search(path.name)
+        if not m:
+            continue
+        year = int(m.group(1))
+        by_religion, source_doc = load_year_subtotals(path)  # all categories
+        total = sum(by_religion.values())
+        if total == 0:
+            raise RuntimeError(f"no prison data found in {path.name}")
+        muslim = by_religion.get("muslim", 0)
         for religion in ("muslim", "hindu"):
             count = by_religion.get(religion)
             if count is None:
                 continue
             share = round(count / total * 100, 2)
-            w.writerow([
-                "prison-share", "national", "IN", 2022, religion,
-                share,
+            note = (
+                f"NCRB PSI {year} Tables 2.10C-2.13C combined (convicts + undertrials + "
+                f"detenues + other prisoners). Muslim share among prisoners whose religion "
+                f"was reported: sum of religion columns across STATES+UTs subtotals (= "
+                f"ALL-INDIA by construction; auto-excludes states that did not report "
+                f"religion, e.g. Maharashtra in several years). {religion.capitalize()} "
+                f"count: {count:,}, religion-reported total: {total:,}. Compare vs Muslim "
+                f"share of population ~{MUSLIM_POP_SHARE}% (Census 2011)."
+            )
+            rows_out.append((
+                "prison-share", "national", "IN", year, religion, share,
                 f"total_prison_population_religion_reported_{total}", "", "", "",
-                "ncrb-prison",
-                "sources/ncrb-prison/psi-2022.pdf",
-                extraction_run,
-                ("NCRB PSI 2022 Tables 2.10C-2.13C combined (convicts + undertrials + "
-                 "detenues + other prisoners). Computed as STATES+UTs subtotals (equals "
-                 f"ALL-INDIA total). Muslim count: {by_religion.get('muslim'):,}, "
-                 f"total: {total:,}. Caveat: Maharashtra did not report religion "
-                 "breakdown for undertrials and detenues in PSI 2022, so the religion-"
-                 "reported denominator excludes ~33k Maharashtra prisoners. Shares are "
-                 "'Muslim share among prisoners whose religion was reported.'"),
-                "false",
-            ])
-            n_rows += 1
+                "ncrb-prison", source_doc, extraction_run, note, "false",
+            ))
+        summary.append(f"  {year}: muslim={muslim:,} total={total:,} share={muslim/total*100:.2f}%")
 
-    print(f"wrote {OUTPUT_PATH.relative_to(REPO_ROOT)} ({n_rows} rows)")
-    print(f"  totals: muslim={by_religion.get('muslim'):,}  hindu={by_religion.get('hindu'):,}  "
-          f"all={total:,}")
+    OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with OUTPUT_PATH.open("w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow([
+            "metric_id", "geography_level", "geography_code", "year", "religion",
+            "value", "denominator", "sample_size", "ci_lower", "ci_upper",
+            "source_id", "source_document", "extraction_run", "methodology_note", "break_flag",
+        ])
+        for r in rows_out:
+            w.writerow(r)
+
+    print(f"wrote {OUTPUT_PATH.relative_to(REPO_ROOT)} ({len(rows_out)} rows, {len(summary)} years)")
+    print("\n".join(summary))
 
 
 if __name__ == "__main__":

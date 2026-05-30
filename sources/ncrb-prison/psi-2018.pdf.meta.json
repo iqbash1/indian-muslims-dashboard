@@ -1,0 +1,11 @@
+{
+  "source_id": "ncrb-prison",
+  "target_id": "psi-2018",
+  "url": "https://web.archive.org/web/20230528012455id_/http://ncrb.gov.in/sites/default/files/PSI-2018.pdf",
+  "pulled_at": "2026-05-29T17:47:11.028577+00:00",
+  "status_code": 200,
+  "content_type": "application/pdf",
+  "content_length": 36921480,
+  "sha256": "7658b44cc01ba9daef859574408aa32719f2be6a4b25ded2eaaf05f2f655e52a",
+  "pull_script_version": "0.1.0"
+}

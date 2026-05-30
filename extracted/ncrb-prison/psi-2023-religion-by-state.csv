@@ -1,0 +1,776 @@
+source_id,source_document,source_sha256_prefix,extraction_run,table_id,category,page,row_type,serial,geography_name,religion,value,row_total
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,1,ANDHRA PRADESH,hindu,1897,2213
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,1,ANDHRA PRADESH,muslim,206,2213
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,1,ANDHRA PRADESH,sikh,2,2213
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,1,ANDHRA PRADESH,christian,105,2213
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,1,ANDHRA PRADESH,others,3,2213
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,2,ARUNACHAL PRADESH,hindu,64,172
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,2,ARUNACHAL PRADESH,muslim,8,172
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,2,ARUNACHAL PRADESH,sikh,1,172
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,2,ARUNACHAL PRADESH,christian,58,172
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,2,ARUNACHAL PRADESH,others,41,172
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,3,ASSAM,hindu,1740,3096
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,3,ASSAM,muslim,1114,3096
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,3,ASSAM,sikh,1,3096
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,3,ASSAM,christian,171,3096
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,3,ASSAM,others,70,3096
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,4,BIHAR,hindu,5581,6544
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,4,BIHAR,muslim,936,6544
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,4,BIHAR,sikh,22,6544
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,4,BIHAR,christian,4,6544
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,4,BIHAR,others,1,6544
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,5,CHHATTISGARH,hindu,6458,6892
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,5,CHHATTISGARH,muslim,213,6892
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,5,CHHATTISGARH,sikh,22,6892
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,5,CHHATTISGARH,christian,180,6892
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,5,CHHATTISGARH,others,19,6892
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,6,GOA,hindu,59,90
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,6,GOA,muslim,6,90
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,6,GOA,sikh,0,90
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,6,GOA,christian,25,90
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,6,GOA,others,0,90
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,7,GUJARAT,hindu,4273,5154
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,7,GUJARAT,muslim,854,5154
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,7,GUJARAT,sikh,13,5154
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,7,GUJARAT,christian,13,5154
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,7,GUJARAT,others,1,5154
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,8,HARYANA,hindu,4941,6293
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,8,HARYANA,muslim,768,6293
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,8,HARYANA,sikh,539,6293
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,8,HARYANA,christian,26,6293
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,8,HARYANA,others,19,6293
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,9,HIMACHAL PRADESH,hindu,917,988
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,9,HIMACHAL PRADESH,muslim,33,988
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,9,HIMACHAL PRADESH,sikh,27,988
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,9,HIMACHAL PRADESH,christian,6,988
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,9,HIMACHAL PRADESH,others,5,988
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,10,JHARKHAND,hindu,3765,5255
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,10,JHARKHAND,muslim,689,5255
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,10,JHARKHAND,sikh,43,5255
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,10,JHARKHAND,christian,341,5255
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,10,JHARKHAND,others,417,5255
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,11,KARNATAKA,hindu,2935,3481
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,11,KARNATAKA,muslim,472,3481
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,11,KARNATAKA,sikh,3,3481
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,11,KARNATAKA,christian,61,3481
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,11,KARNATAKA,others,10,3481
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,12,KERALA,hindu,2094,3577
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,12,KERALA,muslim,888,3577
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,12,KERALA,sikh,0,3577
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,12,KERALA,christian,594,3577
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,12,KERALA,others,1,3577
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,13,MADHYA PRADESH,hindu,19594,22383
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,13,MADHYA PRADESH,muslim,2453,22383
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,13,MADHYA PRADESH,sikh,150,22383
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,13,MADHYA PRADESH,christian,125,22383
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,13,MADHYA PRADESH,others,61,22383
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,14,MAHARASHTRA,hindu,4788,8000
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,14,MAHARASHTRA,muslim,1959,8000
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,14,MAHARASHTRA,sikh,91,8000
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,14,MAHARASHTRA,christian,202,8000
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,14,MAHARASHTRA,others,960,8000
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,15,MANIPUR,hindu,79,118
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,15,MANIPUR,muslim,12,118
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,15,MANIPUR,sikh,0,118
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,15,MANIPUR,christian,19,118
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,15,MANIPUR,others,8,118
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,16,MEGHALAYA,hindu,51,402
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,16,MEGHALAYA,muslim,42,402
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,16,MEGHALAYA,sikh,0,402
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,16,MEGHALAYA,christian,306,402
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,16,MEGHALAYA,others,3,402
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,17,MIZORAM,hindu,23,710
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,17,MIZORAM,muslim,14,710
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,17,MIZORAM,sikh,0,710
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,17,MIZORAM,christian,664,710
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,17,MIZORAM,others,9,710
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,18,NAGALAND,hindu,15,147
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,18,NAGALAND,muslim,11,147
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,18,NAGALAND,sikh,0,147
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,18,NAGALAND,christian,121,147
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,18,NAGALAND,others,0,147
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,19,ODISHA,hindu,3138,3364
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,19,ODISHA,muslim,80,3364
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,19,ODISHA,sikh,3,3364
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,19,ODISHA,christian,136,3364
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,19,ODISHA,others,7,3364
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,20,PUNJAB,hindu,1966,6976
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,20,PUNJAB,muslim,329,6976
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,20,PUNJAB,sikh,3917,6976
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,20,PUNJAB,christian,331,6976
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,20,PUNJAB,others,433,6976
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,21,RAJASTHAN,hindu,4391,5420
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,21,RAJASTHAN,muslim,793,5420
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,21,RAJASTHAN,sikh,176,5420
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,21,RAJASTHAN,christian,28,5420
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,21,RAJASTHAN,others,32,5420
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,22,SIKKIM,hindu,91,147
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,22,SIKKIM,muslim,0,147
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,22,SIKKIM,sikh,0,147
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,22,SIKKIM,christian,28,147
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,22,SIKKIM,others,28,147
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,23,TAMIL NADU,hindu,4523,6031
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,23,TAMIL NADU,muslim,806,6031
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,23,TAMIL NADU,sikh,0,6031
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,23,TAMIL NADU,christian,701,6031
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,23,TAMIL NADU,others,1,6031
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,24,TELANGANA,hindu,1398,2002
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,24,TELANGANA,muslim,507,2002
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,24,TELANGANA,sikh,4,2002
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,24,TELANGANA,christian,93,2002
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,24,TELANGANA,others,0,2002
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,25,TRIPURA,hindu,375,480
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,25,TRIPURA,muslim,68,480
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,25,TRIPURA,sikh,0,480
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,25,TRIPURA,christian,29,480
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,25,TRIPURA,others,8,480
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,26,UTTAR PRADESH,hindu,19740,25146
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,26,UTTAR PRADESH,muslim,5148,25146
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,26,UTTAR PRADESH,sikh,169,25146
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,26,UTTAR PRADESH,christian,33,25146
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,26,UTTAR PRADESH,others,56,25146
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,27,UTTARAKHAND,hindu,1756,2487
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,27,UTTARAKHAND,muslim,560,2487
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,27,UTTARAKHAND,sikh,147,2487
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,27,UTTARAKHAND,christian,12,2487
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,27,UTTARAKHAND,others,12,2487
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,28,WEST BENGAL,hindu,3037,4941
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,28,WEST BENGAL,muslim,1836,4941
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,28,WEST BENGAL,sikh,9,4941
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,28,WEST BENGAL,christian,32,4941
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,28,WEST BENGAL,others,27,4941
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,subtotal_or_total,,TOTAL (STATES),hindu,99689,132509
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,subtotal_or_total,,TOTAL (STATES),muslim,20805,132509
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,subtotal_or_total,,TOTAL (STATES),sikh,5339,132509
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,subtotal_or_total,,TOTAL (STATES),christian,4444,132509
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,subtotal_or_total,,TOTAL (STATES),others,2232,132509
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,29,A & N ISLANDS,hindu,59,205
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,29,A & N ISLANDS,muslim,10,205
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,29,A & N ISLANDS,sikh,0,205
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,29,A & N ISLANDS,christian,77,205
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,29,A & N ISLANDS,others,59,205
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,30,CHANDIGARH,hindu,292,351
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,30,CHANDIGARH,muslim,20,351
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,30,CHANDIGARH,sikh,35,351
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,30,CHANDIGARH,christian,4,351
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,30,CHANDIGARH,others,0,351
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,31,DNH & DAMAN DIU,hindu,9,10
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,31,DNH & DAMAN DIU,muslim,1,10
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,31,DNH & DAMAN DIU,sikh,0,10
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,31,DNH & DAMAN DIU,christian,0,10
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,31,DNH & DAMAN DIU,others,0,10
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,32,DELHI,hindu,1527,2139
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,32,DELHI,muslim,506,2139
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,32,DELHI,sikh,57,2139
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,32,DELHI,christian,43,2139
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,32,DELHI,others,6,2139
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,33,JAMMU & KASHMIR,hindu,65,199
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,33,JAMMU & KASHMIR,muslim,123,199
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,33,JAMMU & KASHMIR,sikh,10,199
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,33,JAMMU & KASHMIR,christian,1,199
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,33,JAMMU & KASHMIR,others,0,199
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,34,LADAKH,hindu,3,4
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,34,LADAKH,muslim,0,4
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,34,LADAKH,sikh,0,4
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,34,LADAKH,christian,0,4
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,34,LADAKH,others,1,4
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,35,LAKSHADWEEP,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,35,LAKSHADWEEP,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,35,LAKSHADWEEP,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,35,LAKSHADWEEP,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,35,LAKSHADWEEP,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,36,PUDUCHERRY,hindu,109,119
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,36,PUDUCHERRY,muslim,4,119
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,36,PUDUCHERRY,sikh,0,119
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,36,PUDUCHERRY,christian,6,119
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,state,36,PUDUCHERRY,others,0,119
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,subtotal_or_total,,TOTAL (UTs),hindu,2064,3027
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,subtotal_or_total,,TOTAL (UTs),muslim,664,3027
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,subtotal_or_total,,TOTAL (UTs),sikh,102,3027
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,subtotal_or_total,,TOTAL (UTs),christian,131,3027
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.10C,convicts,103,subtotal_or_total,,TOTAL (UTs),others,66,3027
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,1,ANDHRA PRADESH,hindu,4788,5568
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,1,ANDHRA PRADESH,muslim,481,5568
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,1,ANDHRA PRADESH,sikh,30,5568
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,1,ANDHRA PRADESH,christian,161,5568
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,1,ANDHRA PRADESH,others,108,5568
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,2,ARUNACHAL PRADESH,hindu,47,188
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,2,ARUNACHAL PRADESH,muslim,20,188
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,2,ARUNACHAL PRADESH,sikh,0,188
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,2,ARUNACHAL PRADESH,christian,94,188
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,2,ARUNACHAL PRADESH,others,27,188
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,3,ASSAM,hindu,3419,7546
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,3,ASSAM,muslim,3539,7546
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,3,ASSAM,sikh,77,7546
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,3,ASSAM,christian,375,7546
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,3,ASSAM,others,136,7546
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,4,BIHAR,hindu,39563,46529
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,4,BIHAR,muslim,6742,46529
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,4,BIHAR,sikh,140,46529
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,4,BIHAR,christian,68,46529
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,4,BIHAR,others,16,46529
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,5,CHHATTISGARH,hindu,10344,11520
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,5,CHHATTISGARH,muslim,769,11520
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,5,CHHATTISGARH,sikh,88,11520
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,5,CHHATTISGARH,christian,272,11520
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,5,CHHATTISGARH,others,47,11520
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,6,GOA,hindu,270,476
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,6,GOA,muslim,84,476
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,6,GOA,sikh,1,476
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,6,GOA,christian,111,476
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,6,GOA,others,10,476
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,7,GUJARAT,hindu,8890,11549
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,7,GUJARAT,muslim,2431,11549
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,7,GUJARAT,sikh,137,11549
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,7,GUJARAT,christian,86,11549
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,7,GUJARAT,others,5,11549
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,8,HARYANA,hindu,14847,19292
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,8,HARYANA,muslim,2548,19292
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,8,HARYANA,sikh,1543,19292
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,8,HARYANA,christian,135,19292
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,8,HARYANA,others,219,19292
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,9,HIMACHAL PRADESH,hindu,1620,1827
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,9,HIMACHAL PRADESH,muslim,114,1827
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,9,HIMACHAL PRADESH,sikh,68,1827
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,9,HIMACHAL PRADESH,christian,16,1827
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,9,HIMACHAL PRADESH,others,9,1827
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,10,JHARKHAND,hindu,9683,13584
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,10,JHARKHAND,muslim,2501,13584
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,10,JHARKHAND,sikh,126,13584
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,10,JHARKHAND,christian,865,13584
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,10,JHARKHAND,others,409,13584
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,11,KARNATAKA,hindu,8675,11723
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,11,KARNATAKA,muslim,2464,11723
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,11,KARNATAKA,sikh,19,11723
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,11,KARNATAKA,christian,535,11723
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,11,KARNATAKA,others,30,11723
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,12,KERALA,hindu,3104,6064
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,12,KERALA,muslim,1925,6064
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,12,KERALA,sikh,9,6064
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,12,KERALA,christian,1010,6064
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,12,KERALA,others,16,6064
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,13,MADHYA PRADESH,hindu,20041,22964
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,13,MADHYA PRADESH,muslim,2658,22964
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,13,MADHYA PRADESH,sikh,157,22964
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,13,MADHYA PRADESH,christian,68,22964
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,13,MADHYA PRADESH,others,40,22964
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,14,MAHARASHTRA$,hindu,,32438
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,14,MAHARASHTRA$,muslim,,32438
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,14,MAHARASHTRA$,sikh,,32438
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,14,MAHARASHTRA$,christian,,32438
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,14,MAHARASHTRA$,others,,32438
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,15,MANIPUR,hindu,158,416
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,15,MANIPUR,muslim,64,416
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,15,MANIPUR,sikh,0,416
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,15,MANIPUR,christian,142,416
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,15,MANIPUR,others,52,416
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,16,MEGHALAYA,hindu,141,881
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,16,MEGHALAYA,muslim,113,881
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,16,MEGHALAYA,sikh,9,881
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,16,MEGHALAYA,christian,611,881
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,16,MEGHALAYA,others,7,881
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,17,MIZORAM,hindu,28,1247
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,17,MIZORAM,muslim,90,1247
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,17,MIZORAM,sikh,0,1247
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,17,MIZORAM,christian,1123,1247
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,17,MIZORAM,others,6,1247
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,18,NAGALAND,hindu,60,432
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,18,NAGALAND,muslim,50,432
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,18,NAGALAND,sikh,0,432
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,18,NAGALAND,christian,320,432
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,18,NAGALAND,others,2,432
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,19,ODISHA,hindu,12795,14778
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,19,ODISHA,muslim,1087,14778
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,19,ODISHA,sikh,44,14778
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,19,ODISHA,christian,760,14778
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,19,ODISHA,others,92,14778
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,20,PUNJAB,hindu,7242,24503
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,20,PUNJAB,muslim,961,24503
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,20,PUNJAB,sikh,14149,24503
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,20,PUNJAB,christian,913,24503
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,20,PUNJAB,others,1238,24503
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,21,RAJASTHAN,hindu,13066,17263
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,21,RAJASTHAN,muslim,2858,17263
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,21,RAJASTHAN,sikh,1088,17263
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,21,RAJASTHAN,christian,120,17263
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,21,RAJASTHAN,others,131,17263
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,22,SIKKIM,hindu,101,171
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,22,SIKKIM,muslim,8,171
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,22,SIKKIM,sikh,41,171
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,22,SIKKIM,christian,21,171
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,22,SIKKIM,others,0,171
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,23,TAMIL NADU,hindu,9347,12351
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,23,TAMIL NADU,muslim,1654,12351
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,23,TAMIL NADU,sikh,27,12351
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,23,TAMIL NADU,christian,1314,12351
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,23,TAMIL NADU,others,9,12351
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,24,TELANGANA,hindu,2643,3799
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,24,TELANGANA,muslim,938,3799
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,24,TELANGANA,sikh,35,3799
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,24,TELANGANA,christian,181,3799
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,24,TELANGANA,others,2,3799
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,25,TRIPURA,hindu,494,847
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,25,TRIPURA,muslim,264,847
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,25,TRIPURA,sikh,3,847
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,25,TRIPURA,christian,20,847
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,25,TRIPURA,others,66,847
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,26,UTTAR PRADESH,hindu,53281,73491
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,26,UTTAR PRADESH,muslim,19442,73491
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,26,UTTAR PRADESH,sikh,438,73491
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,26,UTTAR PRADESH,christian,174,73491
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,26,UTTAR PRADESH,others,156,73491
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,27,UTTARAKHAND,hindu,2709,4398
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,27,UTTARAKHAND,muslim,1377,4398
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,27,UTTARAKHAND,sikh,212,4398
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,27,UTTARAKHAND,christian,59,4398
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,27,UTTARAKHAND,others,41,4398
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,28,WEST BENGAL,hindu,11603,20294
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,28,WEST BENGAL,muslim,8423,20294
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,28,WEST BENGAL,sikh,20,20294
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,28,WEST BENGAL,christian,169,20294
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,28,WEST BENGAL,others,79,20294
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,subtotal_or_total,,TOTAL (STATES),hindu,238959,366139
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,subtotal_or_total,,TOTAL (STATES),muslim,63605,366139
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,subtotal_or_total,,TOTAL (STATES),sikh,18461,366139
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,subtotal_or_total,,TOTAL (STATES),christian,9723,366139
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,subtotal_or_total,,TOTAL (STATES),others,2953,366139
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,29,A & N ISLANDS,hindu,88,168
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,29,A & N ISLANDS,muslim,18,168
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,29,A & N ISLANDS,sikh,1,168
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,29,A & N ISLANDS,christian,26,168
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,29,A & N ISLANDS,others,35,168
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,30,CHANDIGARH,hindu,576,718
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,30,CHANDIGARH,muslim,48,718
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,30,CHANDIGARH,sikh,62,718
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,30,CHANDIGARH,christian,20,718
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,30,CHANDIGARH,others,12,718
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,31,DNH & DAMAN DIU,hindu,99,134
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,31,DNH & DAMAN DIU,muslim,30,134
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,31,DNH & DAMAN DIU,sikh,0,134
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,31,DNH & DAMAN DIU,christian,5,134
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,31,DNH & DAMAN DIU,others,0,134
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,32,DELHI,hindu,12120,17834
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,32,DELHI,muslim,4770,17834
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,32,DELHI,sikh,332,17834
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,32,DELHI,christian,576,17834
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,32,DELHI,others,36,17834
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,33,JAMMU & KASHMIR,hindu,1176,4568
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,33,JAMMU & KASHMIR,muslim,3199,4568
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,33,JAMMU & KASHMIR,sikh,158,4568
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,33,JAMMU & KASHMIR,christian,18,4568
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,33,JAMMU & KASHMIR,others,17,4568
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,34,LADAKH,hindu,14,42
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,34,LADAKH,muslim,14,42
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,34,LADAKH,sikh,2,42
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,34,LADAKH,christian,0,42
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,34,LADAKH,others,12,42
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,35,LAKSHADWEEP,hindu,0,3
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,35,LAKSHADWEEP,muslim,3,3
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,35,LAKSHADWEEP,sikh,0,3
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,35,LAKSHADWEEP,christian,0,3
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,35,LAKSHADWEEP,others,0,3
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,36,PUDUCHERRY,hindu,294,304
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,36,PUDUCHERRY,muslim,3,304
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,36,PUDUCHERRY,sikh,0,304
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,36,PUDUCHERRY,christian,7,304
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,state,36,PUDUCHERRY,others,0,304
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,subtotal_or_total,,TOTAL (UTs),hindu,14367,23771
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,subtotal_or_total,,TOTAL (UTs),muslim,8085,23771
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,subtotal_or_total,,TOTAL (UTs),sikh,555,23771
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,subtotal_or_total,,TOTAL (UTs),christian,652,23771
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,subtotal_or_total,,TOTAL (UTs),others,112,23771
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,subtotal_or_total,,TOTAL (ALL-INDIA),hindu,253326,389910
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,subtotal_or_total,,TOTAL (ALL-INDIA),muslim,71690,389910
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,subtotal_or_total,,TOTAL (ALL-INDIA),sikh,19016,389910
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,subtotal_or_total,,TOTAL (ALL-INDIA),christian,10375,389910
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.11C,undertrials,107,subtotal_or_total,,TOTAL (ALL-INDIA),others,3065,389910
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,1,ANDHRA PRADESH,hindu,87,99
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,1,ANDHRA PRADESH,muslim,8,99
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,1,ANDHRA PRADESH,sikh,0,99
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,1,ANDHRA PRADESH,christian,2,99
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,1,ANDHRA PRADESH,others,2,99
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,2,ARUNACHAL PRADESH,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,2,ARUNACHAL PRADESH,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,2,ARUNACHAL PRADESH,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,2,ARUNACHAL PRADESH,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,2,ARUNACHAL PRADESH,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,3,ASSAM,hindu,0,10
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,3,ASSAM,muslim,0,10
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,3,ASSAM,sikh,10,10
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,3,ASSAM,christian,0,10
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,3,ASSAM,others,0,10
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,4,BIHAR,hindu,1,1
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,4,BIHAR,muslim,0,1
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,4,BIHAR,sikh,0,1
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,4,BIHAR,christian,0,1
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,4,BIHAR,others,0,1
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,5,CHHATTISGARH,hindu,2,4
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,5,CHHATTISGARH,muslim,1,4
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,5,CHHATTISGARH,sikh,0,4
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,5,CHHATTISGARH,christian,1,4
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,5,CHHATTISGARH,others,0,4
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,6,GOA,hindu,2,2
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,6,GOA,muslim,0,2
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,6,GOA,sikh,0,2
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,6,GOA,christian,0,2
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,6,GOA,others,0,2
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,7,GUJARAT,hindu,370,562
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,7,GUJARAT,muslim,160,562
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,7,GUJARAT,sikh,24,562
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,7,GUJARAT,christian,8,562
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,7,GUJARAT,others,0,562
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,8,HARYANA,hindu,56,248
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,8,HARYANA,muslim,186,248
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,8,HARYANA,sikh,6,248
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,8,HARYANA,christian,0,248
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,8,HARYANA,others,0,248
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,9,HIMACHAL PRADESH,hindu,1,1
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,9,HIMACHAL PRADESH,muslim,0,1
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,9,HIMACHAL PRADESH,sikh,0,1
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,9,HIMACHAL PRADESH,christian,0,1
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,9,HIMACHAL PRADESH,others,0,1
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,10,JHARKHAND,hindu,20,23
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,10,JHARKHAND,muslim,0,23
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,10,JHARKHAND,sikh,0,23
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,10,JHARKHAND,christian,3,23
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,10,JHARKHAND,others,0,23
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,11,KARNATAKA,hindu,14,26
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,11,KARNATAKA,muslim,10,26
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,11,KARNATAKA,sikh,0,26
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,11,KARNATAKA,christian,2,26
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,11,KARNATAKA,others,0,26
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,12,KERALA,hindu,130,279
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,12,KERALA,muslim,102,279
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,12,KERALA,sikh,0,279
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,12,KERALA,christian,46,279
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,12,KERALA,others,1,279
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,13,MADHYA PRADESH,hindu,18,24
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,13,MADHYA PRADESH,muslim,4,24
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,13,MADHYA PRADESH,sikh,2,24
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,13,MADHYA PRADESH,christian,0,24
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,13,MADHYA PRADESH,others,0,24
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,14,MAHARASHTRA$,hindu,,367
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,14,MAHARASHTRA$,muslim,,367
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,14,MAHARASHTRA$,sikh,,367
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,14,MAHARASHTRA$,christian,,367
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,14,MAHARASHTRA$,others,,367
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,15,MANIPUR,hindu,1,1
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,15,MANIPUR,muslim,0,1
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,15,MANIPUR,sikh,0,1
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,15,MANIPUR,christian,0,1
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,15,MANIPUR,others,0,1
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,16,MEGHALAYA,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,16,MEGHALAYA,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,16,MEGHALAYA,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,16,MEGHALAYA,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,16,MEGHALAYA,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,17,MIZORAM,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,17,MIZORAM,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,17,MIZORAM,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,17,MIZORAM,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,17,MIZORAM,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,18,NAGALAND,hindu,1,12
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,18,NAGALAND,muslim,1,12
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,18,NAGALAND,sikh,0,12
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,18,NAGALAND,christian,10,12
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,18,NAGALAND,others,0,12
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,19,ODISHA,hindu,22,28
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,19,ODISHA,muslim,6,28
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,19,ODISHA,sikh,0,28
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,19,ODISHA,christian,0,28
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,19,ODISHA,others,0,28
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,20,PUNJAB,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,20,PUNJAB,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,20,PUNJAB,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,20,PUNJAB,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,20,PUNJAB,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,21,RAJASTHAN,hindu,8,12
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,21,RAJASTHAN,muslim,2,12
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,21,RAJASTHAN,sikh,1,12
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,21,RAJASTHAN,christian,1,12
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,21,RAJASTHAN,others,0,12
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,22,SIKKIM,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,22,SIKKIM,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,22,SIKKIM,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,22,SIKKIM,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,22,SIKKIM,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,23,TAMIL NADU,hindu,1061,1354
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,23,TAMIL NADU,muslim,136,1354
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,23,TAMIL NADU,sikh,23,1354
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,23,TAMIL NADU,christian,133,1354
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,23,TAMIL NADU,others,1,1354
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,24,TELANGANA,hindu,25,49
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,24,TELANGANA,muslim,21,49
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,24,TELANGANA,sikh,0,49
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,24,TELANGANA,christian,3,49
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,24,TELANGANA,others,0,49
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,25,TRIPURA,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,25,TRIPURA,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,25,TRIPURA,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,25,TRIPURA,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,25,TRIPURA,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,26,UTTAR PRADESH,hindu,45,160
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,26,UTTAR PRADESH,muslim,115,160
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,26,UTTAR PRADESH,sikh,0,160
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,26,UTTAR PRADESH,christian,0,160
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,26,UTTAR PRADESH,others,0,160
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,27,UTTARAKHAND,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,27,UTTARAKHAND,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,27,UTTARAKHAND,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,27,UTTARAKHAND,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,27,UTTARAKHAND,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,28,WEST BENGAL,hindu,0,1
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,28,WEST BENGAL,muslim,1,1
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,28,WEST BENGAL,sikh,0,1
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,28,WEST BENGAL,christian,0,1
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,28,WEST BENGAL,others,0,1
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,subtotal_or_total,,TOTAL (STATES),hindu,1864,3263
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,subtotal_or_total,,TOTAL (STATES),muslim,753,3263
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,subtotal_or_total,,TOTAL (STATES),sikh,66,3263
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,subtotal_or_total,,TOTAL (STATES),christian,209,3263
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,subtotal_or_total,,TOTAL (STATES),others,4,3263
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,29,A & N ISLANDS,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,29,A & N ISLANDS,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,29,A & N ISLANDS,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,29,A & N ISLANDS,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,29,A & N ISLANDS,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,30,CHANDIGARH,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,30,CHANDIGARH,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,30,CHANDIGARH,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,30,CHANDIGARH,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,30,CHANDIGARH,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,31,DNH & DAMAN DIU,hindu,1,1
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,31,DNH & DAMAN DIU,muslim,0,1
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,31,DNH & DAMAN DIU,sikh,0,1
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,31,DNH & DAMAN DIU,christian,0,1
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,31,DNH & DAMAN DIU,others,0,1
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,32,DELHI,hindu,3,17
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,32,DELHI,muslim,12,17
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,32,DELHI,sikh,2,17
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,32,DELHI,christian,0,17
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,32,DELHI,others,0,17
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,33,JAMMU & KASHMIR,hindu,58,632
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,33,JAMMU & KASHMIR,muslim,563,632
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,33,JAMMU & KASHMIR,sikh,11,632
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,33,JAMMU & KASHMIR,christian,0,632
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,33,JAMMU & KASHMIR,others,0,632
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,34,LADAKH,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,34,LADAKH,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,34,LADAKH,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,34,LADAKH,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,34,LADAKH,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,35,LAKSHADWEEP,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,35,LAKSHADWEEP,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,35,LAKSHADWEEP,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,35,LAKSHADWEEP,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,35,LAKSHADWEEP,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,36,PUDUCHERRY,hindu,3,3
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,36,PUDUCHERRY,muslim,0,3
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,36,PUDUCHERRY,sikh,0,3
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,36,PUDUCHERRY,christian,0,3
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,state,36,PUDUCHERRY,others,0,3
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,subtotal_or_total,,TOTAL (UTs),hindu,65,653
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,subtotal_or_total,,TOTAL (UTs),muslim,575,653
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,subtotal_or_total,,TOTAL (UTs),sikh,13,653
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,subtotal_or_total,,TOTAL (UTs),christian,0,653
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,subtotal_or_total,,TOTAL (UTs),others,0,653
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,subtotal_or_total,,TOTAL (ALL-INDIA),hindu,1929,3916
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,subtotal_or_total,,TOTAL (ALL-INDIA),muslim,1328,3916
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,subtotal_or_total,,TOTAL (ALL-INDIA),sikh,79,3916
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,subtotal_or_total,,TOTAL (ALL-INDIA),christian,209,3916
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.12C,detenues,111,subtotal_or_total,,TOTAL (ALL-INDIA),others,4,3916
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,1,ANDHRA PRADESH,hindu,8,9
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,1,ANDHRA PRADESH,muslim,1,9
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,1,ANDHRA PRADESH,sikh,0,9
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,1,ANDHRA PRADESH,christian,0,9
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,1,ANDHRA PRADESH,others,0,9
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,2,ARUNACHAL PRADESH,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,2,ARUNACHAL PRADESH,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,2,ARUNACHAL PRADESH,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,2,ARUNACHAL PRADESH,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,2,ARUNACHAL PRADESH,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,3,ASSAM,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,3,ASSAM,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,3,ASSAM,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,3,ASSAM,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,3,ASSAM,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,4,BIHAR,hindu,2,2
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,4,BIHAR,muslim,0,2
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,4,BIHAR,sikh,0,2
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,4,BIHAR,christian,0,2
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,4,BIHAR,others,0,2
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,5,CHHATTISGARH,hindu,5,5
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,5,CHHATTISGARH,muslim,0,5
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,5,CHHATTISGARH,sikh,0,5
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,5,CHHATTISGARH,christian,0,5
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,5,CHHATTISGARH,others,0,5
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,6,GOA,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,6,GOA,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,6,GOA,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,6,GOA,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,6,GOA,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,7,GUJARAT,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,7,GUJARAT,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,7,GUJARAT,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,7,GUJARAT,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,7,GUJARAT,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,8,HARYANA,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,8,HARYANA,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,8,HARYANA,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,8,HARYANA,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,8,HARYANA,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,9,HIMACHAL PRADESH,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,9,HIMACHAL PRADESH,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,9,HIMACHAL PRADESH,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,9,HIMACHAL PRADESH,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,9,HIMACHAL PRADESH,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,10,JHARKHAND,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,10,JHARKHAND,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,10,JHARKHAND,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,10,JHARKHAND,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,10,JHARKHAND,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,11,KARNATAKA,hindu,4,6
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,11,KARNATAKA,muslim,1,6
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,11,KARNATAKA,sikh,0,6
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,11,KARNATAKA,christian,1,6
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,11,KARNATAKA,others,0,6
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,12,KERALA,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,12,KERALA,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,12,KERALA,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,12,KERALA,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,12,KERALA,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,13,MADHYA PRADESH,hindu,158,172
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,13,MADHYA PRADESH,muslim,12,172
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,13,MADHYA PRADESH,sikh,0,172
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,13,MADHYA PRADESH,christian,0,172
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,13,MADHYA PRADESH,others,2,172
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,14,MAHARASHTRA,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,14,MAHARASHTRA,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,14,MAHARASHTRA,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,14,MAHARASHTRA,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,14,MAHARASHTRA,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,15,MANIPUR,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,15,MANIPUR,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,15,MANIPUR,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,15,MANIPUR,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,15,MANIPUR,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,16,MEGHALAYA,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,16,MEGHALAYA,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,16,MEGHALAYA,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,16,MEGHALAYA,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,16,MEGHALAYA,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,17,MIZORAM,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,17,MIZORAM,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,17,MIZORAM,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,17,MIZORAM,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,17,MIZORAM,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,18,NAGALAND,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,18,NAGALAND,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,18,NAGALAND,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,18,NAGALAND,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,18,NAGALAND,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,19,ODISHA,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,19,ODISHA,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,19,ODISHA,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,19,ODISHA,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,19,ODISHA,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,20,PUNJAB,hindu,1,50
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,20,PUNJAB,muslim,34,50
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,20,PUNJAB,sikh,3,50
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,20,PUNJAB,christian,11,50
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,20,PUNJAB,others,1,50
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,21,RAJASTHAN,hindu,36,42
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,21,RAJASTHAN,muslim,6,42
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,21,RAJASTHAN,sikh,0,42
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,21,RAJASTHAN,christian,0,42
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,21,RAJASTHAN,others,0,42
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,22,SIKKIM,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,22,SIKKIM,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,22,SIKKIM,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,22,SIKKIM,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,22,SIKKIM,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,23,TAMIL NADU,hindu,2,2
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,23,TAMIL NADU,muslim,0,2
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,23,TAMIL NADU,sikh,0,2
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,23,TAMIL NADU,christian,0,2
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,23,TAMIL NADU,others,0,2
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,24,TELANGANA,hindu,1,3
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,24,TELANGANA,muslim,2,3
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,24,TELANGANA,sikh,0,3
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,24,TELANGANA,christian,0,3
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,24,TELANGANA,others,0,3
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,25,TRIPURA,hindu,2,2
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,25,TRIPURA,muslim,0,2
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,25,TRIPURA,sikh,0,2
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,25,TRIPURA,christian,0,2
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,25,TRIPURA,others,0,2
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,26,UTTAR PRADESH,hindu,2,52
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,26,UTTAR PRADESH,muslim,50,52
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,26,UTTAR PRADESH,sikh,0,52
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,26,UTTAR PRADESH,christian,0,52
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,26,UTTAR PRADESH,others,0,52
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,27,UTTARAKHAND,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,27,UTTARAKHAND,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,27,UTTARAKHAND,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,27,UTTARAKHAND,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,27,UTTARAKHAND,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,28,WEST BENGAL,hindu,203,538
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,28,WEST BENGAL,muslim,331,538
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,28,WEST BENGAL,sikh,0,538
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,28,WEST BENGAL,christian,3,538
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,28,WEST BENGAL,others,1,538
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,subtotal_or_total,,TOTAL (STATES),hindu,424,883
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,subtotal_or_total,,TOTAL (STATES),muslim,437,883
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,subtotal_or_total,,TOTAL (STATES),sikh,3,883
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,subtotal_or_total,,TOTAL (STATES),christian,15,883
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,subtotal_or_total,,TOTAL (STATES),others,4,883
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,29,A & N ISLANDS,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,29,A & N ISLANDS,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,29,A & N ISLANDS,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,29,A & N ISLANDS,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,29,A & N ISLANDS,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,30,CHANDIGARH,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,30,CHANDIGARH,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,30,CHANDIGARH,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,30,CHANDIGARH,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,30,CHANDIGARH,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,31,DNH & DAMAN DIU,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,31,DNH & DAMAN DIU,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,31,DNH & DAMAN DIU,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,31,DNH & DAMAN DIU,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,31,DNH & DAMAN DIU,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,32,DELHI,hindu,58,87
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,32,DELHI,muslim,25,87
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,32,DELHI,sikh,4,87
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,32,DELHI,christian,0,87
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,32,DELHI,others,0,87
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,33,JAMMU & KASHMIR,hindu,0,1
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,33,JAMMU & KASHMIR,muslim,1,1
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,33,JAMMU & KASHMIR,sikh,0,1
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,33,JAMMU & KASHMIR,christian,0,1
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,33,JAMMU & KASHMIR,others,0,1
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,34,LADAKH,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,34,LADAKH,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,34,LADAKH,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,34,LADAKH,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,34,LADAKH,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,35,LAKSHADWEEP,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,35,LAKSHADWEEP,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,35,LAKSHADWEEP,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,35,LAKSHADWEEP,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,35,LAKSHADWEEP,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,36,PUDUCHERRY,hindu,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,36,PUDUCHERRY,muslim,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,36,PUDUCHERRY,sikh,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,36,PUDUCHERRY,christian,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,state,36,PUDUCHERRY,others,0,0
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,subtotal_or_total,,TOTAL (UTs),hindu,58,88
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,subtotal_or_total,,TOTAL (UTs),muslim,26,88
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,subtotal_or_total,,TOTAL (UTs),sikh,4,88
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,subtotal_or_total,,TOTAL (UTs),christian,0,88
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,subtotal_or_total,,TOTAL (UTs),others,0,88
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,subtotal_or_total,,TOTAL (ALL-INDIA),hindu,482,971
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,subtotal_or_total,,TOTAL (ALL-INDIA),muslim,463,971
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,subtotal_or_total,,TOTAL (ALL-INDIA),sikh,7,971
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,subtotal_or_total,,TOTAL (ALL-INDIA),christian,15,971
+ncrb-prison,sources/ncrb-prison/psi-2023.pdf,460382a982f4c758,ncrb-prison-extract-v2.0.0-2023-20260529T175201Z,2.13C,other,115,subtotal_or_total,,TOTAL (ALL-INDIA),others,4,971

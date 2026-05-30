@@ -1,0 +1,11 @@
+{
+  "source_id": "ncrb-prison",
+  "target_id": "psi-2023",
+  "url": "https://www.ncrb.gov.in/uploads/files/PSI-2023.pdf",
+  "pulled_at": "2026-05-29T17:48:35.706840+00:00",
+  "status_code": 200,
+  "content_type": "application/pdf",
+  "content_length": 20570010,
+  "sha256": "460382a982f4c7585c15f28a8b6545287a35404570b6f8864d2c68c9b87d4d57",
+  "pull_script_version": "0.1.0"
+}
