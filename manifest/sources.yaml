@@ -643,6 +643,11 @@ sources:
         url: https://www.ncrb.gov.in/uploads/files/PSI-2023.pdf
         target_path: sources/ncrb-prison/psi-2023.pdf
         status: verified
+      - target_id: psi-2020-hindi-ch2
+        description: "PSI 2020 Hindi edition Chapter 2 (Prison Inmates — religion tables 2.10C-2.13C). English PSI 2020 is unavailable; Hindi edition (split per chapter) survives in Wayback. Table layout + column order identical to English (Hindu Muslim Sikh Christian Others Total); only headers + state names are Devanagari, all numbers are Arabic. Served from Wayback capture 20220802054142 of the (now-dead) ncrb.gov.in/sites/default/files/PSI2020HChapter-2.pdf."
+        url: https://web.archive.org/web/20220802054142id_/https://ncrb.gov.in/sites/default/files/PSI2020HChapter-2.pdf
+        target_path: sources/ncrb-prison/psi-2020-hindi-ch2.pdf
+        status: verified
 
   - id: ncrb-crime
     name: NCRB Crime in India

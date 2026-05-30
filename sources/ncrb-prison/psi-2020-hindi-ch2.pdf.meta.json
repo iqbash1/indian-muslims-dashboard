@@ -1,0 +1,11 @@
+{
+  "source_id": "ncrb-prison",
+  "target_id": "psi-2020-hindi-ch2",
+  "url": "https://web.archive.org/web/20220802054142id_/https://ncrb.gov.in/sites/default/files/PSI2020HChapter-2.pdf",
+  "pulled_at": "2026-05-30T16:44:47.215812+00:00",
+  "status_code": 200,
+  "content_type": "application/pdf",
+  "content_length": 4042079,
+  "sha256": "01e3c6fcfb797204cc1b520f784206450d1badd55f0477b312230aa18dfafa01",
+  "pull_script_version": "0.1.0"
+}

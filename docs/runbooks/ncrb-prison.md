@@ -15,6 +15,7 @@
 |---|---|---|---|---|
 | psi-2018 | 2018 | Wayback `20230528012455` of `ncrb.gov.in/sites/default/files/PSI-2018.pdf` | sources/ncrb-prison/psi-2018.pdf | 7658b44cc01b |
 | psi-2019 | 2019 | Wayback `20211105235151` of `ncrb.gov.in/sites/default/files/PSI-2019-27-08-2020.pdf` | sources/ncrb-prison/psi-2019.pdf | d5cd4e1c497d |
+| psi-2020-hindi-ch2 | 2020 | Wayback `20220802054142` of `ncrb.gov.in/sites/default/files/PSI2020HChapter-2.pdf` (Hindi edition Chapter 2 — English unavailable) | sources/ncrb-prison/psi-2020-hindi-ch2.pdf | 01e3c6fcfb79 |
 | psi-2021 | 2021 | ncrb.gov.in/uploads/nationalcrimerecordsbureau/post/1679316772PSI2021ason31-12-2021.pdf | sources/ncrb-prison/psi-2021.pdf | acf3d55eabb7 |
 | psi-2022 | 2022 | ncrb.gov.in/uploads/nationalcrimerecordsbureau/custom/psiyearwise2022/1701613297PSI2022ason01122023.pdf | sources/ncrb-prison/psi-2022.pdf | 304b92eb2bf1 |
 | psi-2023 | 2023 | ncrb.gov.in/uploads/files/PSI-2023.pdf | sources/ncrb-prison/psi-2023.pdf | 460382a982f4 |
@@ -66,6 +67,7 @@ Resulting series (Muslim share, religion-reported):
 |---|---|---|
 | 2018 | 20.24% | 21.45% |
 | 2019 | 19.39% | 20.43% |
+| 2020 | 20.29% | 21.06% (from Hindi edition Chapter 2 — see below) |
 | 2021 | 18.71% | 19.44% |
 | 2022 | 20.17% | 20.92% |
 | 2023 | 19.08% | 20.05% |
@@ -73,7 +75,25 @@ Resulting series (Muslim share, religion-reported):
 All sit well above the ~14.2% Muslim share of the population (Census 2011), the
 reference line on the dashboard cards.
 
-## Availability wall (why the series is 2018–2023 with a 2020 gap)
+### 2020 COVID-year extraction (Hindi edition)
+
+The English PSI 2020 is unavailable in any primary or Wayback archive. The Hindi
+edition survives in Wayback as a per-chapter split; **Chapter 2** (Prison Inmates)
+carries the religion tables at pages **33** (2.10C convicts), **37** (2.11C
+undertrials), **41** (2.12C detenues), **45** (2.13C other). Column layout is
+IDENTICAL to the English editions (`Hindu | Muslim | Sikh | Christian | Others
+| Total`); only headers, state names, and subtotal labels are Devanagari. Numbers
+are Arabic numerals (language-neutral). The standalone extractor
+`transform/ncrb/extract_prison_religion_2020_hindi.py` ignores the Devanagari
+text entirely and keys on the numeric row structure (`<serial> <name in
+Devanagari> <5 nums> <total>`), then synthesises a single `TOTAL (STATES)`
+subtotal row collapsing the STATES vs UTs split (the downstream canonicalizer
+sums them anyway, so the result is identical). 2020 Muslim share sits slightly
+above 2019 — plausibly attributable to COVID decongestion orders mid-2020 that
+released Hindu prisoners disproportionately (Muslims under-represented in the
+"first-time minor offence" pool that was prioritised for release).
+
+## Availability wall (why the series is 2018–2023, no gap)
 
 - **2015** — the report has **no** religion-by-state table; religion appears only
   in narrative prose. The series cannot reach before 2016.
@@ -81,9 +101,8 @@ reference line on the dashboard cards.
   (2016 has only a truncated 1 MB consolidated stub; 2017 archived only chapters
   8/10 + front-matter), and the live NCRB paths 404. Not recoverable from
   primary/archive sources.
-- **2020** — only the **Hindi** edition was archived; the English consolidated PDF
-  isn't in Wayback and NCRB's live report list is JS-gated. Rendered as a visible
-  gap (null) on the trend, with the population reference line continuing through.
+- **2020** — only the **Hindi** edition was archived. Recovered via the Hindi
+  Chapter 2 numeric extraction described above; the trend is now gapless.
 
 ## Rendering
 
