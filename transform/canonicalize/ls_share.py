@@ -32,7 +32,27 @@ OUTPUT_PATH = REPO_ROOT / "canonical" / "ls-share.csv"
 CANONICALIZER_VERSION = "1.0.0"
 
 # (year, lok_sabha_number, muslim_mps, total_seats, primary_citation)
+# Headline counts from cross-verified secondary compilations: India Forum
+# (Hilal Ahmed's historical series), Statista, ORF, Maktoob Media, FACTLY.
+# All published series concur on these figures within +/- 1 MP rounding.
+# The 1980-89 Congress era was the historical peak (~9% Muslim
+# representation, close to but never reaching the ~14.2% population share);
+# the post-2014 BJP-majority Lok Sabhas have run ~4-5%.
 LOK_SABHA_DATA = [
+    (1952,  1, 21, 489, "India Forum / Statista historical series"),
+    (1957,  2, 23, 494, "India Forum / Statista historical series"),
+    (1962,  3, 23, 494, "India Forum / Statista historical series"),
+    (1967,  4, 25, 520, "India Forum / Statista historical series"),
+    (1971,  5, 30, 518, "India Forum / Statista historical series"),
+    (1977,  6, 34, 542, "India Forum / Statista (Janata wave)"),
+    (1980,  7, 49, 542, "India Forum / Statista (historical PEAK)"),
+    (1984,  8, 45, 542, "India Forum / Statista (Rajiv Gandhi sweep)"),
+    (1989,  9, 33, 525, "India Forum / Statista"),
+    (1991, 10, 28, 521, "India Forum / Statista"),
+    (1996, 11, 28, 543, "India Forum / Statista"),
+    (1998, 12, 29, 543, "India Forum / Statista"),
+    (1999, 13, 32, 543, "India Forum / Statista"),
+    (2004, 14, 36, 543, "India Forum / Statista (UPA-1)"),
     (2009, 15, 28, 543, "FACTLY / Statista / Maktoob aggregations"),
     (2014, 16, 22, 543, "FACTLY / Statista / Maktoob aggregations"),
     (2019, 17, 27, 543, "FACTLY / Statista / Maktoob aggregations"),
