@@ -55,12 +55,29 @@ metrics:
     cluster: demographics
     unit: percent
     higher_is_better: null
+    definition: |
+      Percentage of each community living in urban areas. Census 2011 Table C-01
+      provides religion × residence (rural/urban) × sex breakdowns at national,
+      state, district, and town levels.
     sources: {primary: census-india-2011}
     geography_levels: [national, state]
-    religions: [muslim, hindu, all]
+    religions: [muslim, hindu, christian, sikh, buddhist, jain, other, all]
+    methodology_notes: |
+      Urban share = urban_persons / total_persons * 100, per Census 2011 C-01.
+      Single-year metric (no time series — 2021 Census delayed). Muslims (~40%)
+      and Christians (~40%) are markedly more urbanised than the all-India
+      average (~31%) — a Sachar-era fact that conditions outcomes downstream
+      (urban-poor labour markets, segregation, housing access).
     comparison_baselines: [hindu, all]
     phase: 1
-    status: stub
+    status: defined
+    display:
+      scorecard:
+        label: "Urban share of population"
+        reference: "hindu"
+        unit_format: percent
+        higher_is_better: null
+        order: 15
 
   - id: sex-ratio
     name: Sex ratio (females per 1000 males)
