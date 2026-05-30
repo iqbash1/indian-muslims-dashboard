@@ -172,18 +172,38 @@ metrics:
     status: stub
 
   - id: ger-higher-ed
-    name: Gross Enrollment Ratio in higher education (18-23)
+    name: Gross Enrolment Ratio in higher education (18-23)
     cluster: education
     unit: percent
     higher_is_better: true
+    definition: |
+      Gross Enrolment Ratio = student enrolment in higher education / population
+      in the 18-23 age cohort * 100. The AISHE-published headline GER.
     sources:
       primary: aishe
-      cross_check: [plfs]
-    geography_levels: [national, state]
-    religions: [muslim, hindu, sc, st, all]
-    comparison_baselines: [hindu, sc, all]
+      cross_check: [census-india-2011]
+    geography_levels: [national]
+    religions: [muslim, all]
+    methodology_notes: |
+      Numerator: AISHE 2021-22 (Muslim 21,08,033; total 4,32,68,181 per Report
+      p29 prose). Denominator: Census 2011 C-15 (15-19 + 20-24) × 0.6 as an
+      18-23 effective-cohort proxy — single-year-age table (C-13) not pulled
+      and 2021 Census deferred. This understates the 2021-22 cohort
+      (especially for Muslims, whose age structure is more youth-skewed), so
+      our computed GER sits ~2pp ABOVE published National (28.4%) and ~2pp
+      BELOW published Muslim (~12%). The cross-religion gap (Muslim at
+      roughly one-third the national rate) is robust to denominator choice
+      and is the dashboard story.
+    comparison_baselines: [all]
     phase: 1
-    status: stub
+    status: defined
+    display:
+      scorecard:
+        label: "Higher-ed GER (18-23)"
+        reference: "all"
+        unit_format: percent
+        higher_is_better: true
+        order: 55
 
   - id: muslim-higher-ed-enrolment
     name: Muslim student enrolment in higher education (absolute count)

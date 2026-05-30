@@ -226,23 +226,21 @@ def render_scorecard_rows() -> str:
         # Gap computation
         gap_str = "—"
         gap_class = "gap-neutral"
-        if ref == "hindu" and m_val is not None and h_val is not None:
-            diff = m_val - h_val
-            sign = "+" if diff > 0 else ""
-            gap_str = f"{sign}{diff:.2f}"
-            if unit == "percent":
-                gap_str += "pp"
-            elif unit == "females_per_1000_males":
-                pass  # no unit suffix
-            elif unit == "per_1000_live_births":
-                pass
-            # Class based on direction
-            if higher_better is True:
-                gap_class = "gap-bad" if diff < 0 else ("gap-good" if diff > 0 else "gap-neutral")
-            elif higher_better is False:
-                gap_class = "gap-bad" if diff > 0 else ("gap-good" if diff < 0 else "gap-neutral")
-            else:
-                gap_class = "gap-neutral"
+        if ref in ("hindu", "all"):
+            comp_val = h_val if ref == "hindu" else a_val
+            if m_val is not None and comp_val is not None:
+                diff = m_val - comp_val
+                sign = "+" if diff > 0 else ""
+                gap_str = f"{sign}{diff:.2f}"
+                if unit == "percent":
+                    gap_str += "pp vs " + ("Hindu" if ref == "hindu" else "all-India")
+                # Class based on direction
+                if higher_better is True:
+                    gap_class = "gap-bad" if diff < 0 else ("gap-good" if diff > 0 else "gap-neutral")
+                elif higher_better is False:
+                    gap_class = "gap-bad" if diff > 0 else ("gap-good" if diff < 0 else "gap-neutral")
+                else:
+                    gap_class = "gap-neutral"
         elif mid == "muslim-higher-ed-enrolment":
             gap_str = "n/a (no Hindu count in source)"
             gap_class = "gap-neutral"

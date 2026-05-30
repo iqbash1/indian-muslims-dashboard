@@ -1,0 +1,153 @@
+source_id,source_document,source_sha256_prefix,extraction_run,table_name,geography_level,geography_code,area_name,residence,age_group,religion,persons
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,All ages,all,1210854977
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,All ages,hindu,966257353
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,All ages,muslim,172245158
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,All ages,christian,27819588
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,All ages,sikh,20833116
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,All ages,buddhist,8442972
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,All ages,jain,4451753
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,All ages,other,7937734
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,0-4,all,112806778
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,0-4,hindu,87320843
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,0-4,muslim,19435236
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,0-4,christian,2330405
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,0-4,sikh,1512643
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,0-4,buddhist,685866
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,0-4,jain,274333
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,0-4,other,861894
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,5-9,all,126928126
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,5-9,hindu,98842302
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,5-9,muslim,21478536
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,5-9,christian,2560275
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,5-9,sikh,1687394
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,5-9,buddhist,740778
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,5-9,jain,306113
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,5-9,other,972778
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,10-14,all,132709212
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,10-14,hindu,104107800
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,10-14,muslim,21451442
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,10-14,christian,2760926
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,10-14,sikh,1904993
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,10-14,buddhist,840760
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,10-14,jain,340952
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,10-14,other,968883
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,15-19,all,120526449
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,15-19,hindu,94463520
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,15-19,muslim,19101614
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,15-19,christian,2570883
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,15-19,sikh,2111594
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,15-19,buddhist,827418
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,15-19,jain,359137
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,15-19,other,792176
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,20-24,all,111424222
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,20-24,hindu,88102231
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,20-24,muslim,16640317
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,20-24,christian,2441355
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,20-24,sikh,2051985
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,20-24,buddhist,851088
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,20-24,jain,381590
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,20-24,other,689218
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,25-29,all,101413965
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,25-29,hindu,81398001
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,25-29,muslim,13927787
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,25-29,christian,2305878
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,25-29,sikh,1774466
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,25-29,buddhist,775032
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,25-29,jain,385662
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,25-29,other,623090
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,30-34,all,88594951
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,30-34,hindu,71731534
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,30-34,muslim,11540455
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,30-34,christian,2046431
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,30-34,sikh,1548589
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,30-34,buddhist,658703
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,30-34,jain,365817
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,30-34,other,528517
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,35-39,all,85140684
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,35-39,hindu,69143968
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,35-39,muslim,10873884
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,35-39,christian,2004636
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,35-39,sikh,1473691
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,35-39,buddhist,622972
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,35-39,jain,348301
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,35-39,other,519601
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,40-44,all,72438112
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,40-44,hindu,58915047
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,40-44,muslim,8890392
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,40-44,christian,1828958
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,40-44,sikh,1362766
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,40-44,buddhist,538596
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,40-44,jain,326049
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,40-44,other,454148
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,45-49,all,62318327
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,45-49,hindu,50873920
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,45-49,muslim,7291929
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,45-49,christian,1676544
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,45-49,sikh,1224502
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,45-49,buddhist,441468
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,45-49,jain,309203
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,45-49,other,400007
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,50-54,all,49069254
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,50-54,hindu,40134461
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,50-54,muslim,5579972
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,50-54,christian,1369795
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,50-54,sikh,976351
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,50-54,buddhist,360114
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,50-54,jain,266819
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,50-54,other,302789
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,55-59,all,39146055
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,55-59,hindu,32138810
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,55-59,muslim,4314996
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,55-59,christian,1131188
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,55-59,sikh,759849
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,55-59,buddhist,278973
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,55-59,jain,218824
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,55-59,other,239732
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,60-64,all,37663707
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,60-64,hindu,30934965
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,60-64,muslim,4190178
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,60-64,christian,968165
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,60-64,sikh,823165
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,60-64,buddhist,267115
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,60-64,jain,185827
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,60-64,other,231229
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,65-69,all,26454983
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,65-69,hindu,21841646
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,65-69,muslim,2801836
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,65-69,christian,657583
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,65-69,sikh,596972
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,65-69,buddhist,222174
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,65-69,jain,135810
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,65-69,other,153261
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,70-74,all,19208842
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,70-74,hindu,15922071
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,70-74,muslim,1981615
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,70-74,christian,484815
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,70-74,sikh,431192
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,70-74,buddhist,156029
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,70-74,jain,101862
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,70-74,other,96128
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,75-79,all,9232503
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,75-79,hindu,7640136
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,75-79,muslim,878766
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,75-79,christian,295335
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,75-79,sikh,222010
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,75-79,buddhist,72423
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,75-79,jain,64173
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,75-79,other,41958
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,80+,all,11289005
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,80+,hindu,9212211
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,80+,muslim,1202328
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,80+,christian,330504
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,80+,sikh,327614
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,80+,buddhist,77664
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,80+,jain,66090
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,80+,other,45271
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,Age not stated,all,4489802
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,Age not stated,hindu,3533887
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,Age not stated,muslim,663875
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,Age not stated,christian,55912
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,Age not stated,sikh,43340
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,Age not stated,buddhist,25799
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,Age not stated,jain,15191
+census-india-2011,sources/census-2011/c-series/c15-religion-by-age-sex.xlsx,ad1d2aa830ee6841,census-c15-national-extract-v1.0.0-20260530T160533Z,C1500,national,IN,INDIA,total,Age not stated,other,17054
