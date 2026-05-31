@@ -179,7 +179,7 @@
 <div class="page">
 
 <h1>Indian Muslims — Living Conditions Dashboard</h1>
-<p class="tagline">Built 2026-05-31 06:49 · <a href="https://github.com/iqbash1/indian-muslims-dashboard">source on GitHub</a></p>
+<p class="tagline">Built 2026-05-31 07:40 · <a href="https://github.com/iqbash1/indian-muslims-dashboard">source on GitHub</a></p>
 
 <section class="intro">
   <p>A scorecard of living-conditions indicators for India's Muslim population, with
@@ -198,7 +198,7 @@
 <div class="status-bar">
   <span><b>21</b> metrics live</span>
   <span><b>16</b> sources archived</span>
-  <span><b>2192</b> canonical rows · all schema-valid</span>
+  <span><b>2204</b> canonical rows · all schema-valid</span>
   <span>Comparison baseline on every applicable card</span>
 </div>
 
@@ -271,7 +271,7 @@
 </div>
 
 <footer>
-  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-31 06:49.
+  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-31 07:40.
   Every number on this page traces L4 → L3 (canonical) → L2 (extracted) → L1 (source file)
   with SHA256 sidecar provenance. Re-run the builder after any canonical change:
   <code>python dashboard/build.py</code></p>
@@ -427,9 +427,9 @@ function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak, refLine) 
   });
 }
 
-trendChart("cc-pop-share", [1961, 1971, 1981, 1991, 2001, 2011], {"muslim": [10.69, 11.2543, 11.75, 12.1152, 13.4345, 14.2251], "hindu": [83.45, 83.0617, 82.3, 82.0009, 80.456, 79.7996], "christian": [2.44, 2.6063, 2.44, 2.3421, 2.341, 2.2975], "sikh": [1.79, 1.9018, 1.92, 1.939, 1.8681, 1.7205], "buddhist": [0.74, 0.6986, 0.7, 0.7617, 0.7734, 0.6973], "jain": [0.46, 0.4773, 0.47, 0.3998, 0.4108, 0.3677]}, null, "%", false);
+trendChart("cc-pop-share", [1961, 1971, 1981, 1991, 2001, 2011], {"muslim": [10.6869, 11.2543, 11.3503, 12.1152, 13.4345, 14.2251], "hindu": [83.4478, 83.0617, 82.6378, 82.0009, 80.456, 79.7996], "christian": [2.4426, 2.6063, 2.4298, 2.3421, 2.341, 2.2975], "sikh": [1.7863, 1.9018, 1.9658, 1.939, 1.8681, 1.7205], "buddhist": [0.7413, 0.6986, 0.7094, 0.7617, 0.7734, 0.6973], "jain": [0.4616, 0.4773, 0.4819, 0.3998, 0.4108, 0.3677]}, null, "%", false);
 trendChart("cc-urban-share", [2001, 2011], {"muslim": [35.74, 39.91], "hindu": [26.14, 29.2], "christian": [34.0, 40.12], "sikh": [26.59, 28.33], "buddhist": [38.49, 42.97], "jain": [76.11, 79.68], "other": [9.6, 9.31]}, [27.82, 31.14], "%", false);
-trendChart("cc-sex-ratio", [1961, 1971, 1981, 1991, 2001, 2011], {"muslim": [935.0, 921.6, 937.0, 930.3, 936.1, 951.3], "hindu": [null, 930.2, null, 924.8, 930.5, 939.1], "christian": [null, 986.0, null, 994.2, 1009.2, 1023.1], "sikh": [null, 858.7, null, 888.4, 892.7, 902.8], "buddhist": [null, 962.3, null, 952.1, 952.6, 965.3], "jain": [null, 939.6, null, 946.2, 940.4, 954.2], "other": [null, null, null, 982.2, 992.4, 1008.5]}, [941.0, 929.5, 934.0, 926.8, 932.9, 942.7], "", false);
+trendChart("cc-sex-ratio", [1961, 1971, 1981, 1991, 2001, 2011], {"muslim": [934.7, 921.6, 936.7, 930.3, 936.1, 951.3], "hindu": [941.8, 930.2, 933.2, 924.8, 930.5, 939.1], "christian": [988.7, 986.0, 992.4, 994.2, 1009.2, 1023.1], "sikh": [849.3, 858.7, 879.6, 888.4, 892.7, 902.8], "buddhist": [981.2, 962.3, 952.9, 952.1, 952.6, 965.3], "jain": [924.1, 939.6, 941.5, 946.2, 940.4, 954.2], "other": [1021.6, null, 1010.2, 982.2, 992.4, 1008.5]}, [941.0, 929.5, 934.4, 926.8, 932.9, 942.7], "", false);
 hbar("cc-district-concentration-top100", ["Top-100 districts", "Other districts"], [58.55, 41.45], ["#7b1d22", "#D8DEE2"], "%", 1, null, "");
 trendChart("cc-lit-7plus", [2001, 2011], {"muslim": [59.17, 68.5883], "hindu": [65.1333, 73.3078], "christian": [80.2946, 84.5578], "sikh": [69.559, 75.4086], "buddhist": [72.6989, 81.3125], "jain": [94.1378, 94.9165], "other": [47.0228, 59.9059]}, [64.879, 73.0182], "%", false);
 hbar("cc-muslim-higher-ed-enrolment", ["Uttar Pradesh", "Kerala", "Bihar", "Maharashtra", "Karnataka", "Jammu & Kashmir", "Telangana", "Tamil Nadu"], [327, 187, 173, 155, 147, 138, 121, 116], ["#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0"], "k", 0, null, "");

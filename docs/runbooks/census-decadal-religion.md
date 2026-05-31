@@ -4,8 +4,8 @@
 
 - Manifest entry: `census-decadal-religion`
 - Publisher: Office of the Registrar General & Census Commissioner (figures); compiled here from secondary transcriptions.
-- Tier: **SECONDARY / manual-entry** — flagged as such on the dashboard card. Same handling as the `ls-share` / `mla-share` manual-entry metrics.
-- **Role narrowed post-Commit-AI:** now used ONLY for 1961 + 1981 pop-share national rows. 1971 + 1991 were upgraded to PRIMARY via `census-india-1971` + `census-india-1991` extractors.
+- Tier: **SECONDARY / manual-entry**.
+- **Status post-Commit-AJ:** REGISTERED-BUT-NOT-FEEDING-CANONICAL. All decadal pop-share rows now flow from RGI PRIMARY publications (census-india-1961 / -1971 / -1981 / -1991 / -2001 / -2011). This source served as a fallback for 1961-1991 (Commits originally), then narrowed to 1961+1981 (Commit AI), then retired entirely (Commit AJ) after the RGI 1961 + 1981 religion volumes were located on NADA.
 
 ## Why this exists
 

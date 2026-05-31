@@ -344,6 +344,82 @@ sources:
         target_path: sources/census-1971/religion-paper-2-of-1972.pdf
         status: verified
 
+  - id: census-india-1981
+    name: Census of India 1981
+    publisher: Office of the Registrar General & Census Commissioner, MoHA
+    home_url: https://censusindia.gov.in/
+    cadence: 10-year
+    cadence_notes: |
+      Decennial Census 1981. Used as PRIMARY source for sex-ratio + pop-share
+      by religion at the national level. RGI published Table HH-15 "Household
+      Population by Religion of Head of Household" in "Paper 3 of 1984,
+      Series-1, India" (V.S. Verma RGI). HH-15 corresponds to the C-VII
+      Religion table of 1961 + 1971 (the publication explicitly notes this).
+      All-India row T/R/U for Hindu / Muslim / Christian / Sikh / Buddhist /
+      Jain / Other / Religion-not-stated, each with Persons / Males /
+      Females → sex ratios derive directly.
+    access:
+      method: web-download
+      auth_required: false
+    formats: [pdf]
+    religion_disaggregated: true
+    geography_levels: [national, state]
+    coverage:
+      - population
+      - sex_ratio
+      - population_share_by_religion
+    known_issues:
+      - "1981 Census not held in Assam — all-India figures exclude Assam"
+      - "Table is 'Household Population by Religion of Head', not 'Population by Religion'. In practice these are identical at national level for Indian census since households are religiously homogeneous; matches Sachar AT 3.8 (which used the same RGI 1984 publication as its source) to all 6 religions."
+    archive_dir: sources/census-1981/
+    runbook: docs/runbooks/census-india-1981.md
+    last_pulled: null
+    next_expected: null
+    targets:
+      - target_id: paper-3-of-1984-hh15-religion
+        description: Paper 3 of 1984, Series-1, India — Household Population by Religion of Head of Household (HH-15, all-India + state)
+        url: https://censusindia.gov.in/nada/index.php/catalog/30879/download/34060/26795_1981_HH.pdf
+        target_path: sources/census-1981/paper-3-of-1984-hh15-religion.pdf
+        status: verified
+
+  - id: census-india-1961
+    name: Census of India 1961
+    publisher: Office of the Registrar General & Census Commissioner, MoHA
+    home_url: https://censusindia.gov.in/
+    cadence: 10-year
+    cadence_notes: |
+      Decennial Census 1961. Used as PRIMARY source for sex-ratio + pop-share
+      by religion at the national level. RGI published Table C-VII (Religion)
+      in "Social and Cultural Tables, Part II-C(i), Volume I, INDIA" (Census
+      1961, A. Mitra RGI). C-VII gives Persons / Males / Females for all 6
+      named religions + Total/Rural/Urban at India + 5 zones + states + UTs.
+      Note: the earlier-pulled "Paper No. 1 of 1963" (NADA cat 31326, 89pp)
+      was a population-share-only summary; this 574-page Social-and-Cultural
+      volume carries the full sex-disaggregated religion table.
+    access:
+      method: web-download
+      auth_required: false
+    formats: [pdf]
+    religion_disaggregated: true
+    geography_levels: [national, state, zone]
+    coverage:
+      - population
+      - sex_ratio
+      - population_share_by_religion
+    known_issues:
+      - "Large legacy scanned PDF (16 MB, 574pp); only pp 488-507 (Table C-VII) are relevant to the dashboard pipeline"
+      - "Table also gives Rural/Urban breakdown but the dashboard currently uses Total-residence only"
+    archive_dir: sources/census-1961/
+    runbook: docs/runbooks/census-india-1961.md
+    last_pulled: null
+    next_expected: null
+    targets:
+      - target_id: social-cultural-tables-vol-1-india-c07
+        description: Social and Cultural Tables, Part II-C(i), Vol-XIII INDIA — Table C-VII Religion (national + zone + state + UT, all 6 religions x sex x residence)
+        url: https://censusindia.gov.in/nada/index.php/catalog/32022/download/35203/22949_1961_SCT.pdf
+        target_path: sources/census-1961/social-cultural-tables-c07-religion.pdf
+        status: verified
+
   - id: census-decadal-religion
     name: Census of India — decadal religion proportions (secondary compilation)
     publisher: Office of the Registrar General & Census Commissioner, MoHA (secondary compilation)

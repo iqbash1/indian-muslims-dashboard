@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-1981",
+  "target_id": "paper-3-of-1984-hh15-religion",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/30879/download/34060/26795_1981_HH.pdf",
+  "pulled_at": "2026-05-31T01:57:05.896590+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 2330813,
+  "sha256": "64fc02ea663d8e3b42295b10b7b7d857476bc04c347d1370d69c41701c277b94",
+  "pull_script_version": "0.1.0"
+}

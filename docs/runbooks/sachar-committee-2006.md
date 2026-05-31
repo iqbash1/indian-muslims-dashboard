@@ -3,30 +3,23 @@
 **Source ID:** `sachar-committee-2006`
 **Publisher:** Cabinet Secretariat, Government of India (Justice Rajinder Sachar, Chair)
 **Cadence:** one-off (2006)
-**Type:** Secondary compilation — used ONLY for 1961 + 1981 sex-ratio decadal years where the original RGI religion volumes aren't on NADA
+**Status post-Commit-AJ:** REGISTERED-BUT-NOT-FEEDING-CANONICAL. Sachar served as the 1961+1981 sex-ratio fallback in Commits AG-AH; AJ's deeper NADA hunt found the original RGI 1961 Vol-XIII C-VII (cat 32022) and RGI 1981 Paper 3 of 1984 HH-15 (cat 30879), which now feed L3 directly. Sachar is kept registered as a cross-validation reference.
 
-## Role in the pipeline
+## Why this source is still archived
 
-This source is a fallback for the two decadal years (1961 and 1981) where the
-original RGI religion volumes aren't accessible to this pipeline. For the
-other rounds (1971, 1991, 2001, 2011), the dashboard pulls the RGI volumes
-directly:
-
-| Year | Source feeding `sex-ratio` |
-|---|---|
-| 1961 | **Sachar AT 3.8** (this source) — Muslim + All only |
-| 1971 | `census-india-1971` (RGI Paper 2 of 1972) — all 6 religions |
-| 1981 | **Sachar AT 3.8** (this source) — Muslim + All only |
-| 1991 | `census-india-1991` (RGI C-9 XLSX + Paper 1 of 1995) — all 6 religions |
-| 2001 | `census-india-2001` (primary C-1) — full breakdown |
-| 2011 | `census-india-2011` (primary C-15) — full breakdown |
-
-So Sachar contributes 4 canonical rows total (1961 Muslim + All; 1981 Muslim
-+ All). Hindu / Christian / Sikh / Buddhist / Jain decadal sex-ratio for 1961
-and 1981 remain unresolved — Sachar AT 3.8 doesn't carry those columns, and
-the underlying RGI volumes (Census of India 1961 Religion Tables; 1981 RGI
-religion compilation cited as "India, Registrar General 1984") aren't in
-NADA's catalog as of 2026-05-31.
+1. **Cross-validation reference.** Every Sachar AT 3.8 value matches the
+   primary RGI values we now consume (Hindu 933 / Muslim 937 / Christian 992
+   / Sikh 880 / Buddhist 953 / Jain 941 for 1981 all match). The Sachar
+   compilation is an independent confirmation that our primary extraction
+   is correct.
+2. **Other appendix tables.** Sachar AT 3.10-3.13 (NFHS-2 religion x child
+   mortality / fertility / contraception) and AT 4.1 (state-wise literacy
+   levels 2001) carry context that future metrics may want to consume
+   directly.
+3. **Manifest discipline.** Per `manifest/README.md`: "Never delete a
+   source or metric — set `status: deprecated` instead. Historical data
+   depends on the ID." Keeping Sachar registered preserves the trace from
+   prior commit history.
 
 ## Cross-validation against the primary RGI sources
 

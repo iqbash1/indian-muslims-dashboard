@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-1961",
+  "target_id": "social-cultural-tables-vol-1-india-c07",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/32022/download/35203/22949_1961_SCT.pdf",
+  "pulled_at": "2026-05-31T01:58:02.038866+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 16369949,
+  "sha256": "30179b02a44bdd62baeebb1bb49b2676184f848110e8e140c153f3a2925009b8",
+  "pull_script_version": "0.1.0"
+}

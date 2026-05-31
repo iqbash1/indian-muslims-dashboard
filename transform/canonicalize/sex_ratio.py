@@ -4,40 +4,28 @@ L2 -> L3 for the `sex-ratio` metric (females per 1000 males).
 Decennial series, one canonical row per (year x geography x religion):
   sex_ratio = females / males * 1000   at all ages, total residence
 
-Sources (all PRIMARY where possible; identical all-ages / total-residence
-definition across rounds — verified table-invariant at 2011 where C-01
-and C-15 reproduce the same numbers):
+All six rounds 1961 → 2011 are now PRIMARY (Commit AJ — Sachar fallback
+retired). Identical all-ages / total-residence definition across rounds;
+verified table-invariant at 2011 (C-01 reproduces C-15) and confirmed by
+the Sachar AT 3.8 compilation matching the primary values exactly at
+every overlap.
 
-  2011  PRIMARY  extracted/census-2011/c15-religion-by-age-sex.csv
-        national + state + district
-  2001  PRIMARY  extracted/census-2001/c01-population-by-religion.csv
-        national + state (all-India 2001 C-1 file carries no districts)
-  1991  PRIMARY  extracted/census-1991/c09-religion.csv
-        national row, all six religions + "all" — derived from the RGI
-        1991 C-9 Religion table (XLSX, NADA catalog 35737). Excludes J&K
-        (Census not held there in 1991). Cross-validated against Sachar
-        Committee 2006 AT 3.8 (Muslim 930, All 927) — matches exactly.
-  1971  PRIMARY  extracted/census-1971/religion-summary.csv
-        national row, six named religions (Hindu / Muslim / Christian /
-        Sikh / Buddhist / Jain) — parsed from the RGI 1972 Religion Paper
-        Summary table (Paper 2 of 1972, Series-1, India, by Chandra Sekhar
-        RGI; NADA catalog 31626). The "all-India" row is derived by summing
-        the six named (Sachar AT 3.8's published "All 930" matches the
-        sum). "Other religions and persuasions" not in the Summary.
-  1961, 1981  SECONDARY (manual entry) — Sachar Committee 2006 AT 3.8 (p301),
-        compiled from RGI 1961 + 1984 publications. The original 1961 + 1981
-        RGI religion volumes carrying full sex-by-religion breakdowns are
-        not on NADA, so Sachar's compilation is the closest addressable
-        source. Sachar AT 3.8 provides Muslim + All-India only (no Hindu /
-        Christian / Sikh / Buddhist / Jain decadal for these years). Cross-
-        validated at 2001 where Sachar's "All 933, Muslim 936" matches the
-        primary C-01 derivation to <0.1pp.
+  2011  extracted/census-2011/c15-religion-by-age-sex.csv (national + state + district)
+  2001  extracted/census-2001/c01-population-by-religion.csv (national + state)
+  1991  extracted/census-1991/c09-religion.csv  — RGI C-9 XLSX (NADA cat 35737).
+        India figure EXCLUDES J&K (Census not held there in 1991).
+  1981  extracted/census-1981/hh15-religion.csv — RGI Paper 3 of 1984
+        Household Population by Religion of Head of Household (NADA cat 30879).
+        India figure EXCLUDES Assam (Census not held there in 1981).
+  1971  extracted/census-1971/religion-summary.csv — RGI Paper 2 of 1972
+        Religion Summary table (NADA cat 31626). Six named religions; the
+        "all-India" row is derived by summing the six (matches Sachar AT 3.8
+        published "All 930" exactly).
+  1961  extracted/census-1961/c07-religion.csv — RGI Social and Cultural
+        Tables Vol-XIII INDIA Table C-VII (NADA cat 32022).
 
-Emits each religion in OUTPUT_RELIGIONS. The 1961-2011 trend now spans:
-  - 6 rounds for Muslim + All-India (1961, 1971, 1981, 1991, 2001, 2011)
-  - 4 rounds for Hindu / Christian / Sikh / Buddhist / Jain (1971, 1991,
-    2001, 2011 — gaps at 1961 and 1981 because RGI's per-decade religion
-    volumes for those years aren't accessible to this pipeline)
+Emits each religion in OUTPUT_RELIGIONS. Full 6-round trend for all 6
+named religions + 'all' for the first time.
 """
 
 from __future__ import annotations
@@ -50,9 +38,11 @@ REPO_ROOT = pathlib.Path(__file__).resolve().parents[2]
 L2_C15_2011 = REPO_ROOT / "extracted" / "census-2011" / "c15-religion-by-age-sex.csv"
 L2_C01_2001 = REPO_ROOT / "extracted" / "census-2001" / "c01-population-by-religion.csv"
 L2_C09_1991 = REPO_ROOT / "extracted" / "census-1991" / "c09-religion.csv"
+L2_HH15_1981 = REPO_ROOT / "extracted" / "census-1981" / "hh15-religion.csv"
 L2_REL_1971 = REPO_ROOT / "extracted" / "census-1971" / "religion-summary.csv"
+L2_C07_1961 = REPO_ROOT / "extracted" / "census-1961" / "c07-religion.csv"
 OUTPUT_PATH = REPO_ROOT / "canonical" / "sex-ratio.csv"
-CANONICALIZER_VERSION = "4.0.0"
+CANONICALIZER_VERSION = "5.0.0"
 
 OUTPUT_RELIGIONS = ("muslim", "hindu", "christian", "sikh", "buddhist", "jain", "other", "all")
 DENOMINATOR = "females_per_1000_males_total_residence_all_ages"
@@ -83,27 +73,19 @@ SRC_1971 = (
     "the 'all-India' value here is the sum across the six named (matches RGI's "
     "published all-India 1971 sex ratio of 930).",
 )
-
-# SECONDARY (manual entry). Sachar Committee Report 2006, Appendix Table 3.8
-# (p301), national row only — Muslim + All. Compiled from RGI 1961 & 1984
-# decadal religion publications. Used as fallback ONLY for 1961 and 1981 where
-# the original RGI religion volumes are not on NADA.
-DECADAL_SECONDARY = {
-    1961: {"muslim": 935, "all": 941},
-    1981: {"muslim": 937, "all": 934},  # 1981 excludes Assam (RGI did not enumerate)
-}
-COVERAGE = {
-    1981: " 1981 excludes Assam (RGI did not enumerate).",
-}
-SEC_NOTE = (
-    "SECONDARY (manual entry): Sachar Committee Report 2006, Appendix Table 3.8 "
-    "(p301), compiled from RGI 1961 & 1984 decadal religion publications. Used "
-    "only for 1961 + 1981 where the underlying RGI religion volumes are not on "
-    "NADA. Cross-validated at 2001 against this repo's primary C-01 to <0.1pp."
+SRC_1981 = (
+    "census-india-1981",
+    "sources/census-1981/paper-3-of-1984-hh15-religion.pdf",
+    "Females / Males * 1000 from RGI Paper 3 of 1984 (V.S. Verma RGI), Table "
+    "HH-15 Household Population by Religion of Head of Household, INDIA T row "
+    "spanning PDF pp 23-26. Excludes Assam (Census not held there in 1981).",
 )
-SRC_DECADAL_SECONDARY = (
-    "sachar-committee-2006",
-    "sources/sachar-committee-2006/sachar-comm-report-india-2006.pdf",
+SRC_1961 = (
+    "census-india-1961",
+    "sources/census-1961/social-cultural-tables-c07-religion.pdf",
+    "Females / Males * 1000 from RGI Social and Cultural Tables Vol-XIII "
+    "INDIA Table C-VII Religion (A. Mitra RGI, Census 1961), INDIA T row at "
+    "PDF pp 501-502.",
 )
 
 LEVEL_RANK = {"national": 0, "state": 1, "district": 2}
@@ -178,6 +160,32 @@ def _cells_1971() -> dict[tuple[str, str, str, str], int]:
     return cells
 
 
+def _cells_1981() -> dict[tuple[str, str, str, str], int]:
+    """National-only Total-residence: 6 named religions + 'all' explicit."""
+    cells: dict[tuple[str, str, str, str], int] = {}
+    with L2_HH15_1981.open() as f:
+        for row in csv.DictReader(f):
+            if row["area_level"] != "national" or row["residence"] != "total":
+                continue
+            if row["sex"] not in ("males", "females"):
+                continue
+            cells[("national", "IN", row["religion"], row["sex"])] = int(row["value"])
+    return cells
+
+
+def _cells_1961() -> dict[tuple[str, str, str, str], int]:
+    """National-only Total-residence: 6 named religions + 'all' explicit."""
+    cells: dict[tuple[str, str, str, str], int] = {}
+    with L2_C07_1961.open() as f:
+        for row in csv.DictReader(f):
+            if row["area_level"] != "national" or row["residence"] != "total":
+                continue
+            if row["sex"] not in ("males", "females"):
+                continue
+            cells[("national", "IN", row["religion"], row["sex"])] = int(row["value"])
+    return cells
+
+
 def canonicalize() -> None:
     extraction_run = (
         f"canonicalize-sex-ratio-v{CANONICALIZER_VERSION}-"
@@ -188,7 +196,9 @@ def canonicalize() -> None:
         (2011, _cells_2011(), SRC_2011),
         (2001, _cells_2001(), SRC_2001),
         (1991, _cells_1991(), SRC_1991),
+        (1981, _cells_1981(), SRC_1981),
         (1971, _cells_1971(), SRC_1971),
+        (1961, _cells_1961(), SRC_1961),
     ]
 
     out_rows: list[list] = []
@@ -208,18 +218,6 @@ def canonicalize() -> None:
                     ratio, DENOMINATOR, "", "", "",
                     src_id, src_doc, extraction_run, note, "false",
                 ])
-
-    # SECONDARY: Sachar AT 3.8 national-level Muslim + All for 1961 + 1981
-    # (years where the primary RGI religion volume isn't on NADA).
-    sec_src_id, sec_src_doc = SRC_DECADAL_SECONDARY
-    for year, shares in DECADAL_SECONDARY.items():
-        note = SEC_NOTE + COVERAGE.get(year, "")
-        for religion, ratio in shares.items():
-            out_rows.append([
-                "sex-ratio", "national", "IN", year, religion,
-                float(ratio), DENOMINATOR, "", "", "",
-                sec_src_id, sec_src_doc, extraction_run, note, "false",
-            ])
 
     out_rows.sort(key=lambda r: (LEVEL_RANK[r[1]], r[2], r[3], RELIGION_RANK[r[4]]))
 
