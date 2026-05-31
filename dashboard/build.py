@@ -775,8 +775,6 @@ CAPTION = {
     "muslim-higher-ed-enrolment": "students",
     "ls-share": "of 543 Lok Sabha seats",
     "mla-share": "of state-assembly seats (agg.)",
-    "prison-rate-per-100k": "per 100k Muslims",
-    "undertrial-rate-per-100k": "per 100k Muslims",
     "communal-incidents-govt": "incidents (NCRB)",
     "communal-incidents-civic": "hate-speech events (IHL)",
 }

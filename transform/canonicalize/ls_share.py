@@ -1,24 +1,20 @@
 """
 L2 -> L3 for the `ls-share` metric (Muslim share of Lok Sabha members).
 
-This metric has no clean L1 source: religion of MPs is not in PRS
-Legislative Research's published candidate profile PDFs (which cover
+This metric has no machine-readable primary: religion of MPs is not in
+PRS Legislative Research's published candidate profile PDFs (which cover
 age/gender/party but not religion), and the ECI itself doesn't tabulate
-by religion. The underlying data is candidate-affidavit religion fields
-aggregated post-election by journalists and researchers.
+by religion. See docs/runbooks/prs-eci.md for the source registration.
 
-Values are hard-coded from cross-verified journalistic sources:
-  - Maktoob Media (2024 detailed breakdown by party/state)
-  - The India Forum (analytical piece with historical series)
-  - FACTLY fact-check (78 contestants -> 24 elected)
-  - Statista (1952-2024 time series)
-All sources concur on the headline counts; we record those.
-
-L1 reference documents pulled to sources/prs-eci/ for provenance trail
-(they don't have the religion data directly but they are the canonical
-candidate-profile reference set on top of which religion is layered).
+Values are hard-coded from cross-verified journalistic sources (Maktoob
+Media, The India Forum, FACTLY, Statista, ORF, Clarion India). At least
+two compilations agree on every entry; methodology_note per row cites
+the compilations used. Manual-entry SECONDARY pattern shared with
+mla-share, pop-share (1961-1991), and Sachar fallback (sex-ratio
+1961+1981).
 
 Writes: canonical/ls-share.csv with one row per (year, religion=muslim).
+Full 18-Lok-Sabha series 1952→2024.
 """
 
 from __future__ import annotations

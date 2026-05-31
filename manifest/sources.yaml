@@ -351,11 +351,9 @@ sources:
     cadence: 10-year
     cadence_notes: |
       SECONDARY, manually-entered series: % share of each religious community in
-      India's population by census decade, 1961-1991. The RGI published these
-      figures but no clean machine-readable decadal table is downloadable — the
-      NADA catalog only digitised the 2001 + 2011 religion tables, and reputable
-      transcriptions (Pew, the RGI/PIB press release, the Wayback mirror) all
-      bot-block automated retrieval. Values are the standard Census decadal
+      India's population by census decade, 1961-1991. Used to backfill the
+      `pop-share` decadal trend where no clean machine-readable consolidated
+      RGI decadal table exists. Values are the standard Census decadal
       proportions (reproduced identically by RGI summaries, Pew 2021, and
       en.wikipedia.org/wiki/Religion_in_India), cross-validated against this
       repo's PRIMARY C-01 extracts: the 2001 and 2011 shares agree to <0.02pp.
@@ -363,6 +361,12 @@ sources:
       cited, and flagged "secondary" on the dashboard card. The 2001 and 2011
       pop-share rows come from the primary census-india-2001 / -2011 sources,
       NOT this entry.
+
+      Partial primary upgrade available: census-india-1971 (NADA cat 31626)
+      and census-india-1991 (NADA cat 32995 + C-9 XLSX 35737) are pulled +
+      extracted post-Commit-AG (for sex-ratio). Wiring those L2s into
+      pop_share.py would shift 1971 + 1991 from this secondary to primary,
+      leaving 1961 + 1981 as the only years still depending on this entry.
     access:
       method: web-search
       auth_required: false

@@ -562,7 +562,9 @@ metrics:
     higher_is_better: null
     definition: |
       Percentage of state legislative assembly seats held by Muslim MLAs.
-      National aggregate (~6%) plus per-state values for 8 major states.
+      National aggregate (~6%) plus per-assembly values for all 30
+      state + UT assemblies that hold elections (28 states + Delhi,
+      Puducherry, J&K — most-recent election per assembly).
     sources: {primary: prs-eci-affidavits}
     geography_levels: [national, state]
     religions: [muslim]
@@ -570,12 +572,14 @@ metrics:
       Manual-entry metric — like ls-share, religion is not officially
       tabulated by ECI or PRS. Underlying data is candidate-affidavit
       religion classified post-election by journalists (Maktoob, Clarion,
-      India Forum, The Wire, Deccan Herald). National aggregate ~6%
-      across 28 state assemblies; specific state values for: West Bengal
-      2026 (13.65%), Kerala 2026 (25%), Maharashtra 2024 (3.47%),
-      Haryana 2024 (5.56%), MP 2023 (0.87%), Rajasthan 2023 (3%),
-      Telangana 2023 (5.88%), Chhattisgarh 2023 (0%). Coverage gap:
-      19+ more state assemblies need their own research.
+      India Forum, The Wire, Deccan Herald, Outlook, Radiance Weekly,
+      Free Press Journal, ummid.com, thenewzradar). National aggregate
+      ~6% across the 30 covered assemblies. Highest: J&K 60% (2024 —
+      first election since Article 370 reorg); Kerala 25%, Assam 24.6%.
+      Lowest: HP / Goa / Mizoram / Nagaland / Sikkim / Arunachal /
+      Chhattisgarh / Tripura — 0% (most have never elected a Muslim MLA
+      in state history). Each row's methodology_note cites the source
+      compilation(s) used.
     comparison_baselines: []
     phase: 2
     status: defined

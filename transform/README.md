@@ -11,12 +11,17 @@ L1 (sources/) --[extract]--> L2 (extracted/) --[canonicalize]--> L3 (canonical/)
 ```
 transform/
   <source-id>/
-    extract.py              L1 -> L2 for this source
+    extract_<table>.py      L1 -> L2 for each table in this source
   canonicalize/
-    <metric-id>.py          L2 -> L3 for this metric (when not a simple 1:1)
-  geography_codes.py        shared geography normalization
-  religion_codes.py         shared religion-label normalization
+    <metric-id>.py          L2 -> L3 for this metric
+  geography_codes.py        shared geography normalization (Census 2011
+                            state-codes + post-2014 splits)
 ```
+
+Religion-label normalization happens inline in each extractor — the L3
+controlled vocabulary is just 8 lowercase tokens (`muslim, hindu, christian,
+sikh, buddhist, jain, other, all`); a shared `religion_codes.py` hasn't been
+needed.
 
 ## Rules
 
@@ -27,13 +32,33 @@ transform/
 
 ## Adding a new transform
 
-Each `transform/<source-id>/extract.py` should:
+Each `transform/<source-id>/extract_<table>.py` should:
 1. Read the L1 file path from its `.meta.json` sidecar (verify SHA256 matches).
 2. Parse with explicit per-table logic (no schema-guessing).
-3. Normalize religion labels via `religion_codes.py`.
-4. Normalize geography codes via `geography_codes.py`.
+3. Normalize geography codes via `geography_codes.py`.
+4. Where the source carries a derived column (e.g. printed sex-ratio), cross-validate the computed value against it (the 1971 RGI religion extractor errors out if any derived sex-ratio differs by more than ±1 from the printed value).
 5. Write a long-format CSV to `extracted/<source-id>/<table-id>.csv`.
 
-## Empty for now
+Each `transform/canonicalize/<metric-id>.py` should:
+1. Read its source L2 CSVs.
+2. Combine / aggregate as needed.
+3. Emit the canonical schema row format with `source_id`, `source_document`, `extraction_run`, `methodology_note`, and `break_flag` populated.
+4. Where the metric spans multiple sources (primary + secondary fallback like sex-ratio 1961+1981 via Sachar, or pop-share 1961-1991 via census-decadal-religion), each row's `source_id` flags its tier.
 
-Stubs will land per metric as URL discovery and L1 archival proceeds. Census 2011 is the first planned extractor.
+## Active extractors (post-Commit-AG)
+
+| Source dir | Extractors |
+|---|---|
+| `census-india-2011/` | `extract_c01.py`, `extract_c09.py`, `extract_c15.py` |
+| `census-2011/` | `extract_c15_national_age.py` (national age × religion, for ger-higher-ed) |
+| `census-india-2001/` | `extract_c01.py`, `extract_c09.py` |
+| `census-india-1991/` | `extract_c09_religion.py` (XLSX) |
+| `census-india-1971/` | `extract_religion_summary.py` (PDF, cross-validates printed Sex Ratio) |
+| `nfhs/` | `extract_imr_trend.py`, `extract_delivery_trend.py`, `extract_anaemia_trend.py`, `extract_table24.py` (sanitation), `extract_table72.py`, `extract_table813.py`, `extract_table10231.py`, `extract_table101_stunting.py` (qpdf-rotated landscape page) |
+| `plfs/` | `extract_table48.py`, `extract_table49.py` |
+| `aishe/` | `extract_table15.py` |
+| `ncrb/` | `extract_prison_religion.py` (English, multi-year), `extract_prison_religion_2020_hindi.py` (Hindi-edition fallback for the 2020 COVID-year gap), `extract_communal_crime.py` (multi-year CII Table 1.2 + per-table-PDF) |
+
+Sachar Committee 2006, civic-databases (India Hate Lab), prs-eci-affidavits, and census-decadal-religion are direct-from-L1 manual-entry — no L2 extractor; the canonicalizer reads hardcoded values that cite the published page/figure.
+
+Note: `census-2011/` and `census-india-2011/` are both real directories (the former was added later to hold the C-15 national-age extractor for ger-higher-ed; the latter holds the main C-1/C-9/C-15 religion extractors). Same source from a manifest standpoint (`census-india-2011`).

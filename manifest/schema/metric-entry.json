@@ -39,7 +39,7 @@
             "unit_format": {"enum": ["percent", "per_1000_live_births", "females_per_1000_males", "count", "rate_per_100k", "per_100k_population"]},
             "higher_is_better": {"type": ["boolean", "null"]},
             "order": {"type": "integer", "description": "Sort order in scorecard"},
-            "special_render": {"enum": ["prison_rate", "undertrial_rate", "share_trend", "time_series_latest", "time_series_count"], "description": "Optional special-case rendering"}
+            "special_render": {"enum": ["share_trend", "time_series_latest", "time_series_count"], "description": "Optional special-case rendering"}
           }
         }
       }

@@ -3,14 +3,17 @@ L2 -> L3 for the `pop-share` metric — share of each religious community in
 India's population.
 
 NATIONAL decadal series (1961 -> 2011), the six major communities:
-  1961-1991  SECONDARY, manual-entry compilation of the published Census decadal
-             religion proportions. No clean machine-readable RGI decadal table is
-             downloadable (NADA digitised only 2001 + 2011 religion tables; Pew /
-             PIB / Wayback bot-block automated retrieval). These are the standard
-             Census figures (RGI; reproduced by Pew 2021 and Wikipedia), cross-
-             validated against this repo's PRIMARY C-01 extracts — 2001 & 2011
-             agree to <0.02pp. Flagged "secondary" on the card. (source_id
-             census-decadal-religion)
+  1961-1991  SECONDARY, manual-entry compilation of the published Census
+             decadal religion proportions (source_id census-decadal-religion).
+             Cross-validated against PRIMARY C-01 at 2001/2011 (agrees <0.02pp).
+             Flagged "secondary" on the card.
+             UPGRADE PATH: census-india-1971 (NADA catalog 31626) and
+             census-india-1991 (NADA catalog 32995 + C-9 XLSX 35737) are now
+             registered + extracted for sex-ratio (Commit AG). pop-share could
+             pull from those L2s for 1971 + 1991 to reduce secondary reliance
+             to just 1961 + 1981 (analogous to the sex-ratio Sachar fallback).
+             Not yet done — would require summing religion-share at the
+             national row for each. See docs/runbooks/census-decadal-religion.md.
   2001       PRIMARY — extracted/census-2001/c01-population-by-religion.csv
   2011       PRIMARY — extracted/census-2011/c01-population-by-religion*.csv
 
