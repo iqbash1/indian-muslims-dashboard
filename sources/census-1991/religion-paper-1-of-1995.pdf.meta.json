@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-1991",
+  "target_id": "religion-paper-1-of-1995",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/32995/download/36813/48848_1991_REL.pdf",
+  "pulled_at": "2026-05-31T00:14:33.845742+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 2130087,
+  "sha256": "a1a356e8c09ada29c603904061c53a9dc434aa037a3a1590d24787d1536adba2",
+  "pull_script_version": "0.1.0"
+}

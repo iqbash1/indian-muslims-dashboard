@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-1991",
+  "target_id": "c09-religion-population",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/35737/download/39400/1991-C09T-0100.xlsx",
+  "pulled_at": "2026-05-31T00:14:10.796223+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 309999,
+  "sha256": "62c7d9070465ff07637b197176f6e5a3764483173376b2872762fa0fcb0041ba",
+  "pull_script_version": "0.1.0"
+}

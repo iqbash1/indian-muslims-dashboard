@@ -179,7 +179,7 @@
 <div class="page">
 
 <h1>Indian Muslims — Living Conditions Dashboard</h1>
-<p class="tagline">Built 2026-05-30 22:27 · <a href="https://github.com/iqbash1/indian-muslims-dashboard">source on GitHub</a></p>
+<p class="tagline">Built 2026-05-31 05:49 · <a href="https://github.com/iqbash1/indian-muslims-dashboard">source on GitHub</a></p>
 
 <section class="intro">
   <p>A scorecard of living-conditions indicators for India's Muslim population, with
@@ -197,8 +197,8 @@
 
 <div class="status-bar">
   <span><b>21</b> metrics live</span>
-  <span><b>13</b> sources archived</span>
-  <span><b>2157</b> canonical rows · all schema-valid</span>
+  <span><b>16</b> sources archived</span>
+  <span><b>2192</b> canonical rows · all schema-valid</span>
   <span>Comparison baseline on every applicable card</span>
 </div>
 
@@ -262,7 +262,7 @@
 
 <h2 class="cluster-header">Representation</h2>
 <div class="cards">
-<section class="card"><div class="card-metric">Muslim share of Lok Sabha members</div><div class="card-hero"><span class="card-value">4.42%</span><span class="card-unit">of 543 Lok Sabha seats</span><span class="card-year">(2024)</span></div><div class="card-chartwrap" style="height:150px"><canvas id="cc-ls-share"></canvas></div><div class="card-comparisons"><div class="card-comp bad"><div class="comp-label">vs population</div><div class="comp-verdict">-9.8pp</div><div class="comp-detail">vs 14.2% pop share</div></div><div class="card-comp neutral"><div class="comp-label">trend</div><div class="comp-verdict">1952–2024</div><div class="comp-detail">4.3% → 4.4%</div></div></div><div class="card-foot"><a href="canonical/ls-share.csv">PRS / ECI affidavits</a></div></section><section class="card"><div class="card-metric">Muslim share of state legislative assembly members</div><div class="card-hero"><span class="card-value">6.00%</span><span class="card-unit">of state-assembly seats (agg.)</span><span class="card-year">(2024)</span></div><div class="card-chartwrap" style="height:410px"><canvas id="cc-mla-share"></canvas></div><div class="card-comparisons"><div class="card-comp bad"><div class="comp-label">vs population</div><div class="comp-verdict">-8.2pp</div><div class="comp-detail">vs 14.2% pop share</div></div><div class="card-comp neutral"><div class="comp-label">national agg</div><div class="comp-verdict">6.00%</div><div class="comp-detail">across assemblies</div></div></div><div class="card-foot"><a href="canonical/mla-share.csv">PRS / ECI affidavits</a></div></section>
+<section class="card"><div class="card-metric">Muslim share of Lok Sabha members</div><div class="card-hero"><span class="card-value">4.42%</span><span class="card-unit">of 543 Lok Sabha seats</span><span class="card-year">(2024)</span></div><div class="card-chartwrap" style="height:150px"><canvas id="cc-ls-share"></canvas></div><div class="card-comparisons"><div class="card-comp bad"><div class="comp-label">vs population</div><div class="comp-verdict">-9.8pp</div><div class="comp-detail">vs 14.2% pop share</div></div><div class="card-comp neutral"><div class="comp-label">trend</div><div class="comp-verdict">1952–2024</div><div class="comp-detail">4.3% → 4.4%</div></div></div><div class="card-foot"><a href="canonical/ls-share.csv">PRS / ECI affidavits</a></div></section><section class="card"><div class="card-metric">Muslim share of state legislative assembly members</div><div class="card-hero"><span class="card-value">6.00%</span><span class="card-unit">of state-assembly seats (agg.)</span><span class="card-year">(2024)</span></div><div class="card-chartwrap" style="height:826px"><canvas id="cc-mla-share"></canvas></div><div class="card-comparisons"><div class="card-comp bad"><div class="comp-label">vs population</div><div class="comp-verdict">-8.2pp</div><div class="comp-detail">vs 14.2% pop share</div></div><div class="card-comp neutral"><div class="comp-label">national agg</div><div class="comp-verdict">6.00%</div><div class="comp-detail">across assemblies</div></div></div><div class="card-foot"><a href="canonical/mla-share.csv">PRS / ECI affidavits</a></div></section>
 </div>
 
 <h2 class="cluster-header">Justice &amp; Civic</h2>
@@ -271,7 +271,7 @@
 </div>
 
 <footer>
-  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-30 22:27.
+  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-05-31 05:49.
   Every number on this page traces L4 → L3 (canonical) → L2 (extracted) → L1 (source file)
   with SHA256 sidecar provenance. Re-run the builder after any canonical change:
   <code>python dashboard/build.py</code></p>
@@ -429,7 +429,7 @@ function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak, refLine) 
 
 trendChart("cc-pop-share", [1961, 1971, 1981, 1991, 2001, 2011], {"muslim": [10.69, 11.21, 11.75, 12.61, 13.4345, 14.2251], "hindu": [83.45, 82.73, 82.3, 81.53, 80.456, 79.7996], "christian": [2.44, 2.6, 2.44, 2.32, 2.341, 2.2975], "sikh": [1.79, 1.89, 1.92, 1.94, 1.8681, 1.7205], "buddhist": [0.74, 0.7, 0.7, 0.77, 0.7734, 0.6973], "jain": [0.46, 0.48, 0.47, 0.4, 0.4108, 0.3677]}, null, "%", false);
 trendChart("cc-urban-share", [2001, 2011], {"muslim": [35.74, 39.91], "hindu": [26.14, 29.2], "christian": [34.0, 40.12], "sikh": [26.59, 28.33], "buddhist": [38.49, 42.97], "jain": [76.11, 79.68], "other": [9.6, 9.31]}, [27.82, 31.14], "%", false);
-trendChart("cc-sex-ratio", [2001, 2011], {"muslim": [936.1, 951.3], "hindu": [930.5, 939.1], "christian": [1009.2, 1023.1], "sikh": [892.7, 902.8], "buddhist": [952.6, 965.3], "jain": [940.4, 954.2], "other": [992.4, 1008.5]}, [932.9, 942.7], "", false);
+trendChart("cc-sex-ratio", [1961, 1971, 1981, 1991, 2001, 2011], {"muslim": [935.0, 921.6, 937.0, 930.3, 936.1, 951.3], "hindu": [null, 930.2, null, 924.8, 930.5, 939.1], "christian": [null, 986.0, null, 994.2, 1009.2, 1023.1], "sikh": [null, 858.7, null, 888.4, 892.7, 902.8], "buddhist": [null, 962.3, null, 952.1, 952.6, 965.3], "jain": [null, 939.6, null, 946.2, 940.4, 954.2], "other": [null, null, null, 982.2, 992.4, 1008.5]}, [941.0, 929.5, 934.0, 926.8, 932.9, 942.7], "", false);
 hbar("cc-district-concentration-top100", ["Top-100 districts", "Other districts"], [58.55, 41.45], ["#7b1d22", "#D8DEE2"], "%", 1, null, "");
 trendChart("cc-lit-7plus", [2001, 2011], {"muslim": [59.17, 68.5883], "hindu": [65.1333, 73.3078], "christian": [80.2946, 84.5578], "sikh": [69.559, 75.4086], "buddhist": [72.6989, 81.3125], "jain": [94.1378, 94.9165], "other": [47.0228, 59.9059]}, [64.879, 73.0182], "%", false);
 hbar("cc-muslim-higher-ed-enrolment", ["Uttar Pradesh", "Kerala", "Bihar", "Maharashtra", "Karnataka", "Jammu & Kashmir", "Telangana", "Tamil Nadu"], [327, 187, 173, 155, 147, 138, 121, 116], ["#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0"], "k", 0, null, "");
@@ -443,7 +443,7 @@ trendChart("cc-inst-delivery", [1998, 2005, 2015, 2020], {"muslim": [31.5, 33.0,
 trendChart("cc-women-anemia", [1998, 2005, 2015, 2020], {"muslim": [49.6, 54.7, 50.6, 55.6], "hindu": [52.4, 55.9, 53.7, 57.4], "christian": [47.1, 50.3, 47.5, 51.1], "sikh": [39.6, 39.2, 52.0, 58.8], "buddhist": [48.6, 52.5, 51.6, 57.3], "jain": [null, null, null, 45.2], "other": [null, null, null, 65.5]}, [null, null, null, 57.0], "%", true);
 hbar("cc-improved-sanitation", ["Jain", "Sikh", "Christian", "Muslim", "Buddhist", "Hindu"], [97.6, 97.5, 91.2, 90.3, 87.8, 80.7], ["#D8DEE2", "#D8DEE2", "#D8DEE2", "#555555", "#D8DEE2", "#D8DEE2"], "%", 1, 82.5, "All-India");
 lineChart("cc-ls-share", [1952, 1957, 1962, 1967, 1971, 1977, 1980, 1984, 1989, 1991, 1996, 1998, 1999, 2004, 2009, 2014, 2019, 2024], [4.29, 4.66, 4.66, 4.81, 5.79, 6.27, 9.04, 8.3, 6.29, 5.37, 5.16, 5.34, 5.89, 6.63, 5.16, 4.05, 4.97, 4.42], "#2b6cb0", "%");
-hbar("cc-mla-share", ["Kerala", "Assam", "West Bengal", "Uttar Pradesh", "Bihar", "Telangana", "NCT of Delhi", "Haryana", "Karnataka", "Maharashtra", "Rajasthan", "Tamil Nadu", "Gujarat", "Madhya Pradesh", "Chhattisgarh"], [25.0, 24.6, 13.65, 8.44, 7.82, 5.88, 5.71, 5.56, 4.02, 3.47, 3.0, 2.14, 1.65, 0.87, 0.0], ["#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0"], "%", 1);
+hbar("cc-mla-share", ["Jammu & Kashmir", "Kerala", "Assam", "West Bengal", "Uttar Pradesh", "Bihar", "Telangana", "NCT of Delhi", "Haryana", "Uttarakhand", "Karnataka", "Jharkhand", "Maharashtra", "Puducherry", "Rajasthan", "Tamil Nadu", "Andhra Pradesh", "Manipur", "Gujarat", "Madhya Pradesh", "Punjab", "Odisha", "Arunachal Pradesh", "Sikkim", "Chhattisgarh", "Tripura", "Meghalaya", "Nagaland", "Mizoram", "Himachal Pradesh", "Goa"], [60.0, 25.0, 24.6, 13.65, 8.44, 7.82, 5.88, 5.71, 5.56, 4.29, 4.02, 3.7, 3.47, 3.33, 3.0, 2.14, 1.71, 1.67, 1.65, 0.87, 0.85, 0.68, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], ["#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0", "#2b6cb0"], "%", 1);
 trendChart("cc-prison-share", [2018, 2019, 2020, 2021, 2022, 2023], {"muslim": [20.24, 19.39, 20.29, 18.71, 20.17, 19.08], "hindu": [71.52, 72.48, 72.85, 73.63, 71.19, 71.85]}, null, "%", false, {"value": 14.23, "label": "Muslim population 14.23%"});
 trendChart("cc-undertrial-share", [2018, 2019, 2020, 2021, 2022, 2023], {"muslim": [21.45, 20.43, 21.06, 19.44, 20.92, 20.05], "hindu": [71.24, 71.91, 72.09, 73.26, 70.59, 70.87]}, null, "%", false, {"value": 14.23, "label": "Muslim population 14.23%"});
 lineChart("cc-communal-incidents-govt", [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023], [789, 869, 723, 512, 438, 857, 378, 272, 272], "#7b1d22", "");

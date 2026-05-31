@@ -1,0 +1,11 @@
+{
+  "source_id": "sachar-committee-2006",
+  "target_id": "sachar-comm-report-2006-full",
+  "url": "https://archive.org/download/SacharCommReportIndia2006/Sachar_Comm_Report_India_2006.pdf",
+  "pulled_at": "2026-05-31T00:01:36.168644+00:00",
+  "status_code": 200,
+  "content_type": "application/pdf",
+  "content_length": 6814569,
+  "sha256": "ecfad285a2c6ee94533b7233f2a42bfa688f0eacc83f3416b73bef44db931997",
+  "pull_script_version": "0.1.0"
+}

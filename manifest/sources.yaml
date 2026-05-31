@@ -266,6 +266,84 @@ sources:
         target_path: sources/census-2001/c-series/c09-education-by-religion.xls
         status: verified
 
+  - id: census-india-1991
+    name: Census of India 1991
+    publisher: Office of the Registrar General & Census Commissioner, MoHA
+    home_url: https://censusindia.gov.in/
+    cadence: 10-year
+    cadence_notes: |
+      Decennial Census 1991. Used as PRIMARY source for sex-ratio by religion
+      at the national level, extending the 2001-2011 trend back to 1991. The
+      RGI published the all-India religion-by-residence-by-sex breakdown as
+      table C-9 (1991-numbering). NADA catalog 35737 hosts the machine-
+      readable XLSX. NADA catalog 32995 hosts the companion PDF
+      "Religion, Paper 1 of 1995, Series-1, India" with the same C-9 table
+      printed plus introductory note.
+    access:
+      method: web-download
+      auth_required: false
+    formats: [xlsx, pdf]
+    religion_disaggregated: true
+    geography_levels: [national, state, district]
+    coverage:
+      - population
+      - sex_ratio
+    known_issues:
+      - "1991 Census not held in Jammu & Kashmir — all-India figures exclude J&K"
+      - "1991 'C-9' is the RELIGION table (population x sex x residence x religion). 2011 numbering uses C-9 for EDUCATION-by-religion — different tables, do not confuse."
+      - "Educational level / literacy by religion was NOT published as a separate XLSX on NADA for 1991; only population dimensions are machine-readable for this round"
+    archive_dir: sources/census-1991/
+    runbook: docs/runbooks/census-india-1991.md
+    last_pulled: null
+    next_expected: null
+    targets:
+      - target_id: c09-religion-population
+        description: C-9 Religion (XLSX) — population by religious community x residence x sex for India, states, districts
+        url: https://censusindia.gov.in/nada/index.php/catalog/35737/download/39400/1991-C09T-0100.xlsx
+        target_path: sources/census-1991/c09-religion.xlsx
+        status: verified
+      - target_id: religion-paper-1-of-1995
+        description: Religion, Paper 1 of 1995, Series-1, India — RGI's 1991 religion publication (companion PDF to the C-9 XLSX, with introductory note + 1981→1991 comparison tables)
+        url: https://censusindia.gov.in/nada/index.php/catalog/32995/download/36813/48848_1991_REL.pdf
+        target_path: sources/census-1991/religion-paper-1-of-1995.pdf
+        status: verified
+
+  - id: census-india-1971
+    name: Census of India 1971
+    publisher: Office of the Registrar General & Census Commissioner, MoHA
+    home_url: https://censusindia.gov.in/
+    cadence: 10-year
+    cadence_notes: |
+      Decennial Census 1971. Used as PRIMARY source for sex-ratio by religion
+      at the national level. The RGI publication "Paper 2 of 1972: Religion"
+      (Series-1, India, by A. Chandra Sekhar RGI) summarises the all-India
+      religion-by-sex breakdown for all six major communities in its
+      Introductory Note (p.xiii of the printed paper / p17 of the NADA PDF).
+      No separate XLSX for 1971 religion exists on NADA — only this PDF.
+    access:
+      method: web-download
+      auth_required: false
+    formats: [pdf]
+    religion_disaggregated: true
+    geography_levels: [national, state]
+    coverage:
+      - population
+      - sex_ratio
+    known_issues:
+      - "1971 RGI religion paper is PDF-only (no machine-readable XLSX on NADA); extraction reads the printed Summary table in the Introductory Note"
+      - "Literacy by religion was NOT published in this 1971 religion paper — sex ratio + population only"
+      - "PDF OCR quality is acceptable for the Summary table on p17 but state/district detail tables are messier"
+    archive_dir: sources/census-1971/
+    runbook: docs/runbooks/census-india-1971.md
+    last_pulled: null
+    next_expected: null
+    targets:
+      - target_id: religion-paper-2-of-1972
+        description: Paper 2 of 1972, Religion, Series-1, India — Summary of major religious communities with Persons / Males / Females / Sex Ratio at all-India level
+        url: https://censusindia.gov.in/nada/index.php/catalog/31626/download/34807/24477_1971_REI.pdf
+        target_path: sources/census-1971/religion-paper-2-of-1972.pdf
+        status: verified
+
   - id: census-decadal-religion
     name: Census of India — decadal religion proportions (secondary compilation)
     publisher: Office of the Registrar General & Census Commissioner, MoHA (secondary compilation)
@@ -302,6 +380,47 @@ sources:
     last_pulled: null
     next_expected: null
     targets: []
+
+  - id: sachar-committee-2006
+    name: Prime Minister's High Level Committee Report on the Social, Economic and Educational Status of the Muslim Community of India (Sachar Committee Report)
+    publisher: Cabinet Secretariat, Government of India (Justice Rajinder Sachar, Chair)
+    home_url: https://minorityaffairs.gov.in/reports/sachar-committee-report
+    cadence: one-off
+    cadence_notes: |
+      One-off 2006 government report. Used as a SECONDARY compilation of
+      decadal Census of India series that the RGI itself only published in
+      paper form per-decade (not consolidated by RGI into a single machine-
+      readable historical table). Appendix Table 3.8 (p301) gives the
+      Muslim + All-India sex-ratio 1961-2001 — the only clean decadal
+      compilation we can find for that series. Sachar's underlying source
+      citation: India, Registrar General (1961, 1972, 1984, 1994, 2004).
+      Cross-validated at 2001: Sachar's "All 933, Muslim 936" matches our
+      primary census-india-2001 derivation (all 932.9, muslim 936.1) to
+      <0.1pp.
+    access:
+      method: web-download
+      auth_required: false
+    formats: [pdf]
+    religion_disaggregated: true
+    geography_levels: [national, state]
+    coverage:
+      - sex_ratio_decadal_1961_2001
+      - population_share_decadal_1961_2001
+      - urbanisation_decadal_1961_2001
+    known_issues:
+      - "Sachar AT 3.8 gives Muslim + All only — Hindu/Christian/Sikh/Buddhist/Jain decadal sex-ratio NOT in Sachar"
+      - "Sachar AT for literacy is 2001-only (AT 4.1); decadal literacy by religion is graphical (Fig 4.3) without underlying table"
+      - "1991 J&K interpolated; 1981 Assam interpolated (RGI didn't enumerate in those years)"
+    archive_dir: sources/sachar-committee-2006/
+    runbook: docs/runbooks/sachar-committee-2006.md
+    last_pulled: null
+    next_expected: null
+    targets:
+      - target_id: sachar-comm-report-2006-full
+        description: Full Sachar Committee Report 2006 (425 pages; via Internet Archive mirror of MoMA original)
+        url: https://archive.org/download/SacharCommReportIndia2006/Sachar_Comm_Report_India_2006.pdf
+        target_path: sources/sachar-committee-2006/sachar-comm-report-india-2006.pdf
+        status: verified
 
   - id: nfhs-5
     name: National Family Health Survey 5 (2019-21)

@@ -1,0 +1,11 @@
+{
+  "source_id": "census-india-1971",
+  "target_id": "religion-paper-2-of-1972",
+  "url": "https://censusindia.gov.in/nada/index.php/catalog/31626/download/34807/24477_1971_REI.pdf",
+  "pulled_at": "2026-05-31T00:14:59.638386+00:00",
+  "status_code": 200,
+  "content_type": "application/octet-stream",
+  "content_length": 4176194,
+  "sha256": "ae2f34771312e5b99542186d9a61e30001ffb97fdc08ed6b68228317a885ff63",
+  "pull_script_version": "0.1.0"
+}
