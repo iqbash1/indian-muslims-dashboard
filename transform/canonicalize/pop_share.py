@@ -3,19 +3,24 @@ L2 -> L3 for the `pop-share` metric — share of each religious community in
 India's population.
 
 NATIONAL decadal series (1961 -> 2011), the six major communities:
-  1961-1991  SECONDARY, manual-entry compilation of the published Census
-             decadal religion proportions (source_id census-decadal-religion).
-             Cross-validated against PRIMARY C-01 at 2001/2011 (agrees <0.02pp).
-             Flagged "secondary" on the card.
-             UPGRADE PATH: census-india-1971 (NADA catalog 31626) and
-             census-india-1991 (NADA catalog 32995 + C-9 XLSX 35737) are now
-             registered + extracted for sex-ratio (Commit AG). pop-share could
-             pull from those L2s for 1971 + 1991 to reduce secondary reliance
-             to just 1961 + 1981 (analogous to the sex-ratio Sachar fallback).
-             Not yet done — would require summing religion-share at the
-             national row for each. See docs/runbooks/census-decadal-religion.md.
-  2001       PRIMARY — extracted/census-2001/c01-population-by-religion.csv
-  2011       PRIMARY — extracted/census-2011/c01-population-by-religion*.csv
+  1961, 1981  SECONDARY (manual entry) — census-decadal-religion. The original
+              RGI religion volumes for these years aren't on NADA; we use the
+              standard published Census decadal proportions (reproduced
+              identically by RGI summaries, Pew 2021, and Wikipedia). Cross-
+              validated against the primary C-01 2001/2011 to <0.02pp.
+  1971        PRIMARY — extracted/census-1971/religion-summary.csv (RGI
+              "Paper 2 of 1972, Religion", Summary table). Six named
+              religions only; denominator is sum-of-six-named (the published
+              shares use sum-of-six-plus-others which slightly inflates the
+              denominator — our 1971 Muslim is 11.25% vs published 11.21%,
+              0.04pp delta from the "Others" exclusion).
+  1991        PRIMARY — extracted/census-1991/c09-religion.csv (RGI C-9
+              XLSX). India figure EXCLUDES J&K (Census not held there).
+              Our 1991 Muslim is 12.12% vs published-with-J&K-interpolation
+              12.61% — 0.5pp delta because J&K's ~68% Muslim composition
+              shifts the all-India share notably when interpolated.
+  2001        PRIMARY — extracted/census-2001/c01-population-by-religion.csv
+  2011        PRIMARY — extracted/census-2011/c01-population-by-religion*.csv
 
 Plus the 2011 STATE + DISTRICT Muslim share (primary C-01) for the drill-down.
 
@@ -32,8 +37,10 @@ REPO_ROOT = pathlib.Path(__file__).resolve().parents[2]
 L2_2011_DIR = REPO_ROOT / "extracted" / "census-2011"
 L2_2011_GLOB = "c01-population-by-religion*.csv"
 L2_2001 = REPO_ROOT / "extracted" / "census-2001" / "c01-population-by-religion.csv"
+L2_1991 = REPO_ROOT / "extracted" / "census-1991" / "c09-religion.csv"
+L2_1971 = REPO_ROOT / "extracted" / "census-1971" / "religion-summary.csv"
 OUTPUT_PATH = REPO_ROOT / "canonical" / "pop-share.csv"
-CANONICALIZER_VERSION = "2.0.0"
+CANONICALIZER_VERSION = "3.0.0"
 
 NAMED = ("hindu", "muslim", "christian", "sikh", "buddhist", "jain")
 DENOMINATOR = "all_persons_at_geography_total_residence"
@@ -41,20 +48,21 @@ DENOMINATOR = "all_persons_at_geography_total_residence"
 # SECONDARY (manual entry). Census of India decadal religion proportions, % of
 # total population, all-India. Standard published Census series (RGI; reproduced
 # by Pew 2021 and en.wikipedia.org/wiki/Religion_in_India), cross-checked against
-# this repo's primary C-01 at 2001/2011. 1951 omitted (post-Partition coverage +
-# unreliable small-community figures).
+# this repo's primary C-01 at 2001/2011. Used ONLY for 1961 + 1981 — the years
+# where the RGI religion volume isn't on NADA. 1971 + 1991 now flow from
+# census-india-1971 / census-india-1991 primary L2.
 DECADAL_SECONDARY = {
     1961: {"hindu": 83.45, "muslim": 10.69, "christian": 2.44, "sikh": 1.79, "buddhist": 0.74, "jain": 0.46},
-    1971: {"hindu": 82.73, "muslim": 11.21, "christian": 2.60, "sikh": 1.89, "buddhist": 0.70, "jain": 0.48},
     1981: {"hindu": 82.30, "muslim": 11.75, "christian": 2.44, "sikh": 1.92, "buddhist": 0.70, "jain": 0.47},
-    1991: {"hindu": 81.53, "muslim": 12.61, "christian": 2.32, "sikh": 1.94, "buddhist": 0.77, "jain": 0.40},
 }
 COVERAGE = {
     1981: " 1981 excludes Assam (not enumerated).",
-    1991: " 1991 excludes Jammu & Kashmir (not enumerated).",
 }
-SEC_NOTE = ("SECONDARY (manual entry): Census of India decadal religion proportion, "
-            "cross-checked against primary C-01 at 2001/2011.")
+SEC_NOTE = (
+    "SECONDARY (manual entry): Census of India decadal religion proportion, "
+    "fallback for the years where the underlying RGI religion volume is not on "
+    "NADA. Cross-validated against primary C-01 at 2001/2011 to <0.02pp."
+)
 RELIGION_RANK = {r: i for i, r in enumerate(NAMED)}
 
 
@@ -96,6 +104,28 @@ def _read_2001_national() -> dict[str, int]:
     return out
 
 
+def _read_1991_national() -> dict[str, int]:
+    """religion -> national persons (excl J&K). Reads area_level=national, residence=total, sex=persons."""
+    out: dict[str, int] = {}
+    with L2_1991.open() as f:
+        for row in csv.DictReader(f):
+            if row.get("area_level") != "national" or row["residence"] != "total" or row["sex"] != "persons":
+                continue
+            out[row["religion"]] = int(row["value"])
+    return out
+
+
+def _read_1971_national() -> dict[str, int]:
+    """religion -> national persons. 1971 Summary has 6 named religions only — no 'all' column."""
+    out: dict[str, int] = {}
+    with L2_1971.open() as f:
+        for row in csv.DictReader(f):
+            if row.get("area_level") != "national" or row["sex"] != "persons":
+                continue
+            out[row["religion"]] = int(row["value"])
+    return out
+
+
 def canonicalize() -> None:
     extraction_run = (
         f"canonicalize-pop-share-v{CANONICALIZER_VERSION}-"
@@ -104,6 +134,8 @@ def canonicalize() -> None:
 
     persons_2011, all_2011 = _read_2011()
     nat_2001 = _read_2001_national()
+    nat_1991 = _read_1991_national()
+    nat_1971 = _read_1971_national()
 
     rows: list[list] = []
 
@@ -115,12 +147,45 @@ def canonicalize() -> None:
         ])
 
     # --- National decadal series, all six communities ---
-    # 1961-1991: secondary manual-entry
+    # 1961 + 1981: secondary manual-entry (RGI volumes for these years not on NADA)
     for year, shares in DECADAL_SECONDARY.items():
         note = SEC_NOTE + COVERAGE.get(year, "")
         for rel in NAMED:
             emit("national", "IN", year, rel, shares[rel],
                  "census-decadal-religion", "(manual entry — see methodology_note)", note)
+    # 1971: primary, sum-of-6-named denominator
+    if nat_1971:
+        all71 = sum(nat_1971[rel] for rel in NAMED if rel in nat_1971)
+        note_71 = (
+            "PRIMARY: RGI 1972 Religion Paper (Series-1, India, by A. Chandra Sekhar), "
+            "Summary table at p.xiii / NADA PDF p17. Denominator is the sum of the six "
+            "named religions (Hindu/Muslim/Christian/Sikh/Buddhist/Jain) — 'Other religions "
+            "and persuasions' is not in the Summary, so this share runs ~0.04pp higher than "
+            "the universally-cited published share (which divides by India total including "
+            "Others)."
+        )
+        for rel in NAMED:
+            if rel in nat_1971:
+                emit("national", "IN", 1971, rel, nat_1971[rel] / all71 * 100,
+                     "census-india-1971", "sources/census-1971/religion-paper-2-of-1972.pdf",
+                     note_71)
+    # 1991: primary C-9 XLSX, EXCLUDES J&K (Census not held there)
+    all91 = nat_1991.get("all")
+    if all91:
+        note_91 = (
+            "PRIMARY: RGI 1991 C-9 Religion XLSX (NADA catalog 35737). India figure "
+            "EXCLUDES Jammu & Kashmir (Census was not held there in 1991). Share is "
+            "religion_persons / India-excl-J&K total. This differs from the universally-"
+            "cited published 1991 share (which uses RGI's J&K-interpolated all-India total) "
+            "— the difference is ~0.5pp for Muslim (12.12% here vs 12.61% published) because "
+            "J&K's ~68% Muslim composition shifts the all-India share notably when J&K is "
+            "interpolated back in."
+        )
+        for rel in NAMED:
+            p = nat_1991.get(rel)
+            if p is not None:
+                emit("national", "IN", 1991, rel, p / all91 * 100,
+                     "census-india-1991", "sources/census-1991/c09-religion.xlsx", note_91)
     # 2001: primary C-01 2001
     all01 = nat_2001.get("all")
     if all01:

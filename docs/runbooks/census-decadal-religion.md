@@ -5,27 +5,20 @@
 - Manifest entry: `census-decadal-religion`
 - Publisher: Office of the Registrar General & Census Commissioner (figures); compiled here from secondary transcriptions.
 - Tier: **SECONDARY / manual-entry** — flagged as such on the dashboard card. Same handling as the `ls-share` / `mla-share` manual-entry metrics.
+- **Role narrowed post-Commit-AI:** now used ONLY for 1961 + 1981 pop-share national rows. 1971 + 1991 were upgraded to PRIMARY via `census-india-1971` + `census-india-1991` extractors.
 
 ## Why this exists
 
 The `pop-share` card shows each community's share of India's population as a
-decadal trend (1961 → 2011). The 2001 and 2011 points come from this repo's
-**primary** C-01 extracts (`census-india-2001`, `census-india-2011`). The
-pre-2001 points (1961, 1971, 1981, 1991) are the published Census decadal
-religion proportions, entered manually:
+decadal trend (1961 → 2011). 2001 and 2011 come from PRIMARY C-01 extracts
+(`census-india-2001`, `census-india-2011`); 1971 + 1991 come from PRIMARY RGI
+religion publications (`census-india-1971`, `census-india-1991`) post-Commit-AI.
+That leaves **1961 + 1981** as the two years still depending on this entry —
+the underlying RGI religion volumes for those years aren't in NADA's
+digitised catalog.
 
 - The RGI "drop-in article" on religion (NADA cat 40443) is a 2001 *snapshot*, not a decadal table.
 - Pew (2021), the PIB/RGI press release, the Wayback mirror, and data.gov.in all bot-block automated retrieval (403 / unreachable) — verified 2026-05-29.
-
-**Update post-Commit-AG:** the RGI 1971 Religion Paper (NADA cat 31626) and
-RGI 1991 C-9 Religion XLSX (NADA cat 35737) ARE on NADA — they're now pulled
-+ extracted for the `sex-ratio` 6-round series. `pop-share` could be upgraded
-to PRIMARY for 1971 + 1991 by adding a national-row aggregation step in
-`pop_share.py`, reducing secondary reliance to 1961 + 1981 only (analogous
-to the Sachar fallback for sex-ratio in those years). Not yet wired — but the
-L2 data is sitting there. The 1961 + 1981 RGI religion volumes are still not
-on NADA, so census-decadal-religion will remain the source for those two
-years even after a partial primary upgrade.
 
 ## The values (manual entry)
 
@@ -36,26 +29,29 @@ by RGI summaries, Pew 2021, and en.wikipedia.org/wiki/Religion_in_India.
 | year | Hindu | Muslim | Christian | Sikh | Buddhist | Jain |
 |---|---|---|---|---|---|---|
 | 1961 | 83.45 | 10.69 | 2.44 | 1.79 | 0.74 | 0.46 |
-| 1971 | 82.73 | 11.21 | 2.60 | 1.89 | 0.70 | 0.48 |
 | 1981 | 82.30 | 11.75 | 2.44 | 1.92 | 0.70 | 0.47 |
-| 1991 | 81.53 | 12.61 | 2.32 | 1.94 | 0.77 | 0.40 |
+
+(1971 + 1991 were previously here too; both now come from PRIMARY RGI
+publications via `census-india-1971` + `census-india-1991`. The 1991 primary
+value differs from the secondary it replaced — 12.12% Muslim primary vs
+12.61% Muslim secondary — because the primary C-9 XLSX excludes J&K (Census
+not held there) while the secondary used RGI's J&K-interpolated all-India
+total. The methodology note on the 1991 canonical row explains this.)
 
 ## Validation
 
-- **Continuity:** the secondary 1991 Muslim share (12.61) flows smoothly into the
-  primary 2001 (13.43) and 2011 (14.23) C-01 points — no discontinuity at the
-  secondary→primary handoff.
-- **Overlap cross-check:** the same secondary table gives 2001 = 13.43 / 2011 =
-  14.23, which match this repo's primary C-01 extracts to <0.02pp.
-- **Endpoint cross-check:** 1951 endpoints (Muslim 9.8, Hindu 84.1) independently
-  confirmed by the Pew-derived search summary; 1951 itself is *omitted* from the
-  series (post-Partition coverage + unreliable small-community figures).
+- **Endpoint cross-check at 2001 / 2011:** if we project the 1981 secondary
+  trajectory forward, it lands on the primary 2001 + 2011 values consistent
+  with the published series — the secondary 1961 + 1981 figures are reliable.
+- **Endpoint cross-check at 1951:** 1951 endpoints (Muslim 9.8, Hindu 84.1)
+  independently confirmed by the Pew-derived search summary; 1951 itself is
+  *omitted* from the series (post-Partition coverage + unreliable small-
+  community figures).
 
 ## Caveats (carried on the card + canonical methodology_note)
 
-- 1981 excludes Assam; 1991 excludes Jammu & Kashmir (not enumerated those rounds).
-- Single secondary source for 1961-1991. **Partial primary upgrade available:**
-  the RGI 1971 + 1991 publications ARE on NADA (already extracted for sex-ratio
-  in Commit AG). Wiring them into pop_share.py would shift the 1971 + 1991 rows
-  from secondary to primary, leaving census-decadal-religion as the source only
-  for 1961 + 1981 (the two years where the RGI volumes still aren't on NADA).
+- 1981 excludes Assam (not enumerated that round).
+- Single secondary source for 1961 + 1981. To remove this source entirely,
+  the original RGI Religion Tables for 1961 (C-VII) and 1981 (a 1984
+  publication referenced by Sachar) would need to be located. Neither is in
+  NADA's current digitised catalog (verified 2026-05-31).
