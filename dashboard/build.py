@@ -181,6 +181,19 @@ def load_scorecard_spec() -> list[tuple]:
 SCORECARD_SPEC = load_scorecard_spec()
 
 
+def _load_metric_meta() -> dict:
+    """Return {mid: full metric dict from manifest/metrics.yaml}. Loaded once;
+    consumed by card / modal rendering for fields like definition and
+    methodology_notes that don't live in SCORECARD_SPEC."""
+    import yaml as _yaml
+    with (REPO_ROOT / "manifest" / "metrics.yaml").open() as f:
+        data = _yaml.safe_load(f)
+    return {m["id"]: m for m in data["metrics"]}
+
+
+METRIC_META = _load_metric_meta()
+
+
 def render_scorecard_rows() -> str:
     """Compute one HTML <tr> per metric showing Muslim/Hindu/All and gap vs reference."""
     rows: list[str] = []
@@ -489,6 +502,20 @@ TEMPLATE = """<!DOCTYPE html>
   .card { position: relative; }
   .card:hover .card-expand { color: var(--accent); }
   .modal-body .card-expand { display: none; }
+  .card-method { display: none; }
+  .modal-body .card-method {
+    display: block; margin-top: 18px; padding-top: 16px;
+    border-top: 1px solid var(--rule);
+  }
+  .modal-body .card-method-title {
+    margin: 0 0 8px; font-size: 14px; color: var(--muted);
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .modal-body .card-method p {
+    margin: 0 0 10px; font-size: 14px; color: var(--fg); line-height: 1.55;
+    max-width: 56em; white-space: pre-line;
+  }
+  .modal-body .card-method b { color: var(--accent); font-weight: 600; }
   .card-chartwrap { width: 100%; margin: 2px 0 4px; position: relative; }
   .card-chartscroll { width: 100%; margin: 2px 0 4px; overflow-y: auto; overflow-x: hidden; border: 1px solid var(--rule); border-radius: 4px; }
   .card-chartscroll .card-chartwrap { margin: 0; }
@@ -1408,6 +1435,28 @@ def _card_shell(mid, label, value, unit_txt, year, polarity, chart_html, comps_h
     plain = PLAIN_DEFINITION.get(mid, "")
     plain_html = f'<p class="card-plain">{html.escape(plain)}</p>' if plain else ""
     expand_html = '<span class="card-expand" aria-hidden="true" title="Click for larger view">↗</span>'
+
+    # "About this measurement" block: visible only when the card is cloned
+    # into the modal (display:none on the card grid via CSS). Pulls the
+    # technical definition and methodology notes from manifest/metrics.yaml
+    # so the modal has the full provenance + caveats without crowding the
+    # card.
+    meta = METRIC_META.get(mid, {})
+    method_html = ""
+    def_text = (meta.get("definition") or "").strip()
+    notes_text = (meta.get("methodology_notes") or "").strip()
+    if def_text or notes_text:
+        parts = []
+        if def_text:
+            parts.append(f'<p><b>Definition.</b> {html.escape(def_text)}</p>')
+        if notes_text:
+            parts.append(f'<p><b>Methodology.</b> {html.escape(notes_text)}</p>')
+        method_html = (
+            '<div class="card-method">'
+            '<h3 class="card-method-title">About this measurement</h3>'
+            + "".join(parts) +
+            '</div>'
+        )
     return (
         f'<section class="card" data-metric-id="{html.escape(mid)}" data-metric-name="{html.escape(label)}">'
         f'{expand_html}'
@@ -1417,6 +1466,7 @@ def _card_shell(mid, label, value, unit_txt, year, polarity, chart_html, comps_h
         f'<span class="card-unit">{html.escape(unit_txt)}</span>{yr}</div>'
         f'{polarity_html}{chart_html}'
         f'<div class="card-comparisons">{comps_html}</div>'
+        f'{method_html}'
         f'{details_html}'
         # The source NAME is the hyperlink (target = the canonical CSV); the raw
         # path is not shown. Built directly here — no post-processing linkifier.
@@ -1611,7 +1661,7 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
         series_map = {rel: [series.get(rel, {}).get(y) for y in years]
                       for rel in named if rel in series}
         all_series = [series.get("all", {}).get(y) for y in years] if "all" in series else None
-        chart_html = f'<div class="card-chartwrap" style="height:200px"><canvas id="{cvid}"></canvas></div>'
+        chart_html = f'<div class="card-chartwrap" style="height:200px"><canvas id="{cvid}" role="img" aria-label="Visualisation of this metric; numerical values are listed in the card above."></canvas></div>'
         js = (f'trendChart("{cvid}", {json.dumps(years)}, {json.dumps(series_map)}, '
               f'{json.dumps(all_series)}, {json.dumps(suffix)}, {json.dumps(bool(has_break))});')
         details = ""
@@ -1644,7 +1694,7 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
             js = None
         else:
             h = len(pairs) * 28 + 28
-            chart_html = f'<div class="card-chartwrap" style="height:{h}px"><canvas id="{cvid}"></canvas></div>'
+            chart_html = f'<div class="card-chartwrap" style="height:{h}px"><canvas id="{cvid}" role="img" aria-label="Visualisation of this metric; numerical values are listed in the card above."></canvas></div>'
             # If we already promoted All-India to a peer bar, don't ALSO draw it
             # as a dashed reference line — that would be redundant.
             has_all_bar = any(lbl == "All-India" for lbl in labels)
@@ -1677,7 +1727,7 @@ def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
                       for rel in main_named if rel in series}
         hindu_first = series.get("hindu", {}).get(years[0]) if years else None
         hindu_last = series.get("hindu", {}).get(years[-1]) if years else None
-        chart_html = f'<div class="card-chartwrap" style="height:200px"><canvas id="{cvid}"></canvas></div>'
+        chart_html = f'<div class="card-chartwrap" style="height:200px"><canvas id="{cvid}" role="img" aria-label="Visualisation of this metric; numerical values are listed in the card above."></canvas></div>'
         # No All-India series (shares already sum to ~100%); no refLine.
         js = (f'trendChart("{cvid}", {json.dumps(years)}, {json.dumps(series_map)}, '
               f'null, "%", false);')
@@ -1692,7 +1742,7 @@ def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
         # list (rank, district, state, count, %) is in the collapsible details
         # below the chart — see _top100_districts_table().
         rest = round(100 - muslim, 2)
-        chart_html = f'<div class="card-chartwrap" style="height:92px"><canvas id="{cvid}"></canvas></div>'
+        chart_html = f'<div class="card-chartwrap" style="height:92px"><canvas id="{cvid}" role="img" aria-label="Visualisation of this metric; numerical values are listed in the card above."></canvas></div>'
         js = (f'hbar("{cvid}", {json.dumps(["Top-100 districts", "Other districts"])}, '
               f'{json.dumps([round(muslim, 2), rest])}, {json.dumps(["#7b1d22", "#D8DEE2"])}, '
               f'"%", 1, null, "");')
@@ -1706,7 +1756,7 @@ def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
         st.sort(key=lambda x: -x[1])
         st = st[:8]
         if st:
-            chart_html = f'<div class="card-chartwrap" style="height:{len(st) * 26 + 20}px"><canvas id="{cvid}"></canvas></div>'
+            chart_html = f'<div class="card-chartwrap" style="height:{len(st) * 26 + 20}px"><canvas id="{cvid}" role="img" aria-label="Visualisation of this metric; numerical values are listed in the card above."></canvas></div>'
             labels = [s[0] for s in st]
             vals = [round(s[1] / 1000) for s in st]
             js = (f'hbar("{cvid}", {json.dumps(labels)}, {json.dumps(vals)}, '
@@ -1739,7 +1789,7 @@ def _card_share_trend(mid, label, src, csv_href, cvid):
     headline = f"{muslim_latest:.1f}" if muslim_latest is not None else "n/a"
     series_map = {rel: [series.get(rel, {}).get(y) for y in axis_years]
                   for rel in ("muslim", "hindu") if rel in series}
-    chart_html = f'<div class="card-chartwrap" style="height:188px"><canvas id="{cvid}"></canvas></div>'
+    chart_html = f'<div class="card-chartwrap" style="height:188px"><canvas id="{cvid}" role="img" aria-label="Visualisation of this metric; numerical values are listed in the card above."></canvas></div>'
     refline = {"value": MUSLIM_POP_SHARE, "label": f"Muslim population {MUSLIM_POP_SHARE}%"}
     js = (f'trendChart("{cvid}", {json.dumps(axis_years)}, {json.dumps(series_map)}, '
           f'null, "%", false, {json.dumps(refline)});')
@@ -1795,7 +1845,7 @@ def _card_timeseries(mid, label, unit, src, csv_href, cvid):
     if len(rows) >= 2:
         labels = [int(r["year"]) for r in rows]
         values = [round(float(r["value"]), 2) for r in rows]
-        chart_html = f'<div class="card-chartwrap" style="height:150px"><canvas id="{cvid}"></canvas></div>'
+        chart_html = f'<div class="card-chartwrap" style="height:150px"><canvas id="{cvid}" role="img" aria-label="Visualisation of this metric; numerical values are listed in the card above."></canvas></div>'
         js = f'lineChart("{cvid}", {json.dumps(labels)}, {json.dumps(values)}, "#2b6cb0", "%");'
         comps += _comp("trend", f"{labels[0]}–{labels[-1]}", f"{values[0]:.1f}% → {values[-1]:.1f}%", "neutral")
     else:
@@ -1806,7 +1856,7 @@ def _card_timeseries(mid, label, unit, src, csv_href, cvid):
             inner_h = len(st) * 26 + 20
             max_h = 240
             inner = (f'<div class="card-chartwrap" style="height:{inner_h}px">'
-                     f'<canvas id="{cvid}"></canvas></div>')
+                     f'<canvas id="{cvid}" role="img" aria-label="Visualisation of this metric; numerical values are listed in the card above."></canvas></div>')
             chart_html = (f'<div class="card-chartscroll" style="max-height:{max_h}px">{inner}</div>'
                           if inner_h > max_h else inner)
             js = (f'hbar("{cvid}", {json.dumps([s[0] for s in st])}, '
@@ -1828,7 +1878,7 @@ def _card_ts_count(mid, label, src, csv_href, cvid):
         # 3+ years: a real trend shape worth charting.
         labels = [int(r["year"]) for r in rows]
         values = [int(float(r["value"])) for r in rows]
-        chart_html = f'<div class="card-chartwrap" style="height:150px"><canvas id="{cvid}"></canvas></div>'
+        chart_html = f'<div class="card-chartwrap" style="height:150px"><canvas id="{cvid}" role="img" aria-label="Visualisation of this metric; numerical values are listed in the card above."></canvas></div>'
         js = f'lineChart("{cvid}", {json.dumps(labels)}, {json.dumps(values)}, "#7b1d22", "");'
         comps += _comp("trend", f"{labels[0]}–{labels[-1]}", f"{values[0]:,} → {val:,}", "neutral")
     elif len(rows) == 2:
