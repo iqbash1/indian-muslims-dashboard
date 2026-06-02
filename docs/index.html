@@ -843,9 +843,18 @@ function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak, refLine, 
     options: {
       responsive: true, maintainAspectRatio: false, animation: false,
       layout: { padding: { right: 64, top: 6 } },
+      // Hovering anywhere along the x-axis selects every line at that year,
+      // so the tooltip surfaces the full point-in-time community comparison
+      // (Muslim 40, Hindu 28, Christian 25, ...) instead of just one line.
+      interaction: { mode: 'index', intersect: false, axis: 'x' },
       plugins: {
         legend: { display: false },
-        tooltip: { callbacks: { label: (c) => c.dataset.label + ': ' + c.parsed.y + suffix } },
+        tooltip: {
+          mode: 'index', intersect: false,
+          itemSort: (a, b) => b.parsed.y - a.parsed.y,
+          filter: (item) => item.parsed.y != null && !item.dataset._isRefline,
+          callbacks: { label: (c) => c.dataset.label + ': ' + c.parsed.y + suffix },
+        },
       },
       scales: {
         x: { grid: { display: false }, ticks: { font: { size: 10 } } },
