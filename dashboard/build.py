@@ -881,13 +881,23 @@ function _endLabels() {
   return { id: 'endLabels', afterDatasetsDraw(chart) {
     const { ctx } = chart;
     ctx.save();
-    ctx.font = '600 10px -apple-system, system-ui, sans-serif';
+    // Modal view crowds 5+ labels into the same right edge, so dial the
+    // weight back to medium so the stack reads less aggressive. Cards
+    // typically only label the Muslim line (mode='card'), so keep the
+    // bolder weight there for emphasis.
+    const weight = chart._mode === 'modal' ? '500' : '600';
+    ctx.font = weight + ' 10px -apple-system, system-ui, sans-serif';
     ctx.textBaseline = 'middle';
 
     // Collect each dataset's natural label position at its terminal point.
     const items = [];
     chart.data.datasets.forEach((d, i) => {
-      if (d._isRefline) return;
+      // _isRefline marks aggregates like All-India. In modal mode they are
+      // suppressed (the per-community labels already cover the field). In
+      // card mode the chart only carries Muslim + the All-India refline, so
+      // labelling All-India is what gives the dashed grey line a name.
+      if (d._isRefline && chart._mode !== 'card') return;
+      if (d._noEndLabel) return;
       const data = d.data;
       let lastIdx = data.length - 1;
       while (lastIdx >= 0 && (data[lastIdx] == null)) lastIdx--;
@@ -932,11 +942,16 @@ function _endLabels() {
     ctx.restore();
   }};
 }
-function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak, refLine, dashedExtras) {
+function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak, refLine, dashedExtras, mode) {
+  mode = mode || 'card';
   _spec(id, 'trendChart', Array.from(arguments).slice(1));
   const ds = [];
   for (const rel of TREND_ORDER) {
     if (!seriesMap[rel]) continue;
+    // Card view shows only the Muslim line; the smaller real-estate can't
+    // carry five non-overlapping community labels. Modal re-render passes
+    // mode='modal' to surface the full community comparison.
+    if (mode === 'card' && rel !== 'muslim') continue;
     const s = TREND_STYLE[rel];
     const next = {
       label: s.label, data: seriesMap[rel], borderColor: s.c, backgroundColor: 'transparent',
@@ -976,7 +991,7 @@ function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak, refLine, 
     refDs._isRefline = true;
     ds.push(refDs);
   }
-  new Chart(document.getElementById(id), {
+  const chart = new Chart(document.getElementById(id), {
     type: 'line',
     data: { labels: years, datasets: ds },
     options: {
@@ -1003,6 +1018,8 @@ function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak, refLine, 
     },
     plugins: [_endLabels()],
   });
+  chart._mode = mode;  // endLabels plugin reads this to dial back font-weight in modal
+  return chart;
 }
 
 {card_charts}
@@ -1072,7 +1089,18 @@ function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak, refLine, 
       cloneCanvas.id = modalId;
       const spec = CHART_SPECS[origCanvas.id];
       if (spec && factories[spec.fnName]) {
-        factories[spec.fnName](modalId, ...spec.args);
+        // trendChart's signature is (id, years, seriesMap, allSeries, suffix,
+        // hasBreak, refLine, dashedExtras, mode). Most call sites omit the
+        // trailing optional args, so we pad to length 7 before forcing
+        // mode='modal' at position 7 so it lands in the correct slot rather
+        // than overwriting refLine.
+        let args = spec.args;
+        if (spec.fnName === 'trendChart') {
+          args = spec.args.slice(0, 7);
+          while (args.length < 7) args.push(undefined);
+          args.push('modal');
+        }
+        factories[spec.fnName](modalId, ...args);
         modalChart = Chart.getChart(modalId);
         // Force a resize after the layout settles so labels reflow into
         // the modal's larger real estate (Chart.js measures at construction).
