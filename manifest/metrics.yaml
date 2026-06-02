@@ -426,7 +426,7 @@ metrics:
         order: 90
 
   - id: women-anemia
-    name: Anemia in women aged 15-49
+    name: Anaemia in women aged 15-49
     cluster: health
     unit: percent
     higher_is_better: false
