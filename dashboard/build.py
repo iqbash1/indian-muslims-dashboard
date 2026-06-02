@@ -1,13 +1,19 @@
 """
-L4 preview build: reads canonical/*.csv, writes dashboard/preview/index.html.
+L4 dashboard build: reads canonical/*.csv + manifest/metrics.yaml, writes
+docs/index.html (the published site at muslimdata.in), docs/js/analytics.js
+(GA4 + Clarity loader, IDs substituted from constants below), docs/about/
+index.html (the About page), and docs/m/{mid}/index.html (one OG stub page
+per live metric).
 
-A single static HTML file with the four live metrics, sortable tables,
-inline charts (Chart.js via CDN), per-metric provenance, and a "data
-current to" notice on every tile.
+Output is a fully pre-rendered static site: every chart's data is inlined
+into the page script blocks at build time; the browser never fetches data.
 
 Usage:
   python dashboard/build.py
-  open dashboard/preview/index.html
+  open docs/index.html
+
+Re-runs idempotently. Cloudflare Workers (Static Assets) auto-deploys
+on every push to main, so a `git push` ships the new build in ~1-2 min.
 """
 
 from __future__ import annotations
@@ -500,7 +506,6 @@ TEMPLATE = """<!DOCTYPE html>
   .card-hero { display: flex; align-items: baseline; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
   .card-value { font-size: 1.7rem; font-weight: 700; letter-spacing: -.02em; color: var(--accent); font-feature-settings: "tnum"; }
   .card-unit, .card-year { font-size: var(--t-sm); color: var(--muted); font-weight: 500; }
-  .card-direction { display: none; }
   .card-polarity {
     font-size: 11px; color: var(--muted); margin: -2px 0 8px;
     font-weight: 500; letter-spacing: 0.01em; text-transform: uppercase;
@@ -1607,11 +1612,6 @@ def build() -> None:
     # Emit the About page at /about/index.html.
     _emit_about_page(OUT_PATH.parent, substitutions["{timestamp}"])
 
-    # Ensure a .nojekyll is inside the publish folder so GitHub Pages serves the
-    # HTML as-is without Jekyll processing (root-level .nojekyll doesn't apply
-    # when publishing from a subfolder). Harmless on Cloudflare Pages.
-    (OUT_PATH.parent / ".nojekyll").touch()
-
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUT_PATH.write_text(html_out)
     print(f"wrote {OUT_PATH.relative_to(REPO_ROOT)} ({len(html_out):,} bytes)")
@@ -1985,8 +1985,6 @@ def render_metric_card(m: dict):
     cvid = "cc-" + mid
     suffix, dec = UNIT_JS.get(unit, ("", 1))
 
-    if special == "share_trend":
-        return _card_share_trend(mid, label, src, csv_href, cvid)
     if special == "time_series_latest":
         return _card_timeseries(mid, label, unit, src, csv_href, cvid)
     if special == "time_series_count":
@@ -2170,65 +2168,6 @@ def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
         details = _state_details(mid, unit)
     return _card_shell(mid, label, headline, CAPTION.get(mid, ""), _year_of(mid), "",
                        chart_html, comps, src, csv_href, details), js
-
-
-def _card_share_trend(mid, label, src, csv_href, cvid):
-    """Multi-year Muslim + Hindu share trend with the Muslim population share
-    (~14.2%) drawn as the interpretive reference line. Used for the justice
-    metrics prison-share and undertrial-share. Headline = latest-year Muslim share."""
-    noun = "prisoners" if mid == "prison-share" else "undertrials"
-    years, series, _ = _nat_trend(mid)
-    # Fill internal year gaps (e.g. 2020, not published) with null so the trend
-    # line visibly breaks there rather than silently compressing the axis. The
-    # dashed population reference line still spans every year.
-    axis_years = list(range(years[0], years[-1] + 1)) if years else []
-    nat = _nat_by_religion(mid)  # latest year
-    muslim_latest = nat.get("muslim")
-    headline = f"{muslim_latest:.1f}" if muslim_latest is not None else "n/a"
-    series_map = {rel: [series.get(rel, {}).get(y) for y in axis_years]
-                  for rel in ("muslim", "hindu") if rel in series}
-    chart_html = f'<div class="card-chartwrap" style="height:188px"><canvas id="{cvid}" role="img" aria-label="Visualisation of this metric; numerical values are listed in the card above."></canvas></div>'
-    refline = {"value": MUSLIM_POP_SHARE, "label": f"Muslim population {MUSLIM_POP_SHARE}%"}
-    js = (f'trendChart("{cvid}", {json.dumps(axis_years)}, {json.dumps(series_map)}, '
-          f'null, "%", false, {json.dumps(refline)});')
-
-    comps = ""
-    if muslim_latest is not None:
-        over = muslim_latest - MUSLIM_POP_SHARE
-        comps += _comp("vs population", f"{'+' if over >= 0 else ''}{over:.1f} pp",
-                       f"{muslim_latest:.1f}% of {noun} vs {MUSLIM_POP_SHARE}% of people",
-                       "bad" if over > 0 else "neutral")
-    if len(years) >= 2 and "muslim" in series:
-        mfirst, mlast = series["muslim"].get(years[0]), series["muslim"].get(years[-1])
-        if mfirst is not None and mlast is not None:
-            delta = mlast - mfirst
-            arrow = "↑" if delta > 0 else ("↓" if delta < 0 else "→")
-            comps += _comp(f"Since {years[0]}", f"{arrow} {abs(delta):.1f} pp",
-                           f"{mfirst:.1f}% → {mlast:.1f}%", "mid")
-    note = (f"Muslim share of {noun} whose religion was reported (NCRB PSI). The dashed line is "
-            f"the ~{MUSLIM_POP_SHARE}% Muslim share of India's population (Census 2011); the Muslim "
-            f"line sits above it every year. Some states (e.g. Maharashtra) did not report religion "
-            f"in some years and are excluded from that year's denominator. 2016, 2017 and 2020 are "
-            f"not available in an extractable English edition.")
-    comps += f'<div class="comp-note">{html.escape(note)}</div>'
-    return _card_shell(mid, label, headline, f"% of {noun}", years[-1] if years else "",
-                       "lower is better", chart_html, comps, src, csv_href,
-                       _share_year_details(mid)), js
-
-
-def _share_year_details(mid: str) -> str:
-    """<details> table of Muslim/Hindu share by year for a share-trend metric."""
-    years, series, _ = _nat_trend(mid)
-    trs = []
-    for y in years:
-        m = series.get("muslim", {}).get(y)
-        h = series.get("hindu", {}).get(y)
-        m_str = f"{m:.2f}%" if m is not None else "n/a"
-        h_str = f"{h:.2f}%" if h is not None else "n/a"
-        trs.append(f"<tr><td>{y}</td><td>{m_str}</td><td>{h_str}</td></tr>")
-    return ("<details><summary>By year</summary>"
-            "<table><thead><tr><th>Year</th><th>Muslim</th><th>Hindu</th></tr></thead>"
-            f"<tbody>{''.join(trs)}</tbody></table></details>")
 
 
 def _card_timeseries(mid, label, unit, src, csv_href, cvid):
