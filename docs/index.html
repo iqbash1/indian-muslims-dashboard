@@ -35,8 +35,14 @@
     margin: 0; padding: 0;
   }
   .page { max-width: 1280px; margin: 0 auto; padding: 32px 24px 80px; }
-  h1 { font-size: 26px; margin: 0 0 4px; letter-spacing: -0.01em; }
-  .h1-sub { display: block; font-weight: 400; color: var(--muted); font-size: 16px; letter-spacing: 0; margin-top: 2px; }
+  h1 { font-size: 32px; margin: 0 0 12px; letter-spacing: -0.015em; line-height: 1.2; }
+  .masthead { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
+  .masthead-brand { font-size: 14px; font-weight: 600; color: var(--accent); text-decoration: none; letter-spacing: -0.01em; }
+  .masthead-brand:hover { text-decoration: underline; }
+  .masthead-meta { margin: 0; font-size: 12px; color: var(--muted); }
+  .masthead-meta a { color: var(--muted); }
+  .headline-finding { font-size: 16px; line-height: 1.55; color: var(--fg); margin: 0 0 24px; max-width: 70em; }
+  .headline-finding em { font-style: normal; color: var(--accent); font-weight: 600; }
   h2 { font-size: 20px; margin: 0 0 4px; letter-spacing: -0.01em; font-weight: 600; }
   .tagline { color: var(--muted); margin: 0 0 24px; font-size: 14px; }
   .status-bar {
@@ -270,8 +276,11 @@
 <body>
 <div class="page">
 
-<h1>muslimdata.in<span class="h1-sub">the state of Muslim India, in data</span></h1>
-<p class="tagline">Last updated 2 June 2026 · <a href="https://github.com/iqbash1/indian-muslims-dashboard">open source on GitHub</a></p>
+<div class="masthead">
+  <a class="masthead-brand" href="/">muslimdata.in</a>
+  <p class="masthead-meta">Last updated 2 June 2026 · <a href="https://github.com/iqbash1/indian-muslims-dashboard">open source on GitHub</a></p>
+</div>
+<h1>The state of Muslim India, in data</h1>
 
 <section class="intro">
   <p>Indicators of living conditions for India's Muslim population, with Hindu and
@@ -286,11 +295,18 @@
   Click any table column header to sort.</p>
 </section>
 
+<p class="headline-finding">
+  Muslims are India's largest religious minority at <em>14.2%</em> of the
+  population (Census 2011). On most indicators of education, employment,
+  and political representation, Muslim outcomes trail the national
+  average. On a handful of demographic and health indicators (sex ratio,
+  infant survival, women's anaemia), Muslim outcomes run ahead. This page
+  is the evidence.
+</p>
 <div class="status-bar">
   <span><b>21</b> indicators</span>
   <span><b>16</b> primary sources</span>
   <span><b>2304</b> data points</span>
-  <span>Comparison baseline on every applicable card</span>
 </div>
 
 <!-- SCORECARD -->
