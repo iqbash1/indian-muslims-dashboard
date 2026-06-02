@@ -475,6 +475,20 @@ TEMPLATE = """<!DOCTYPE html>
   .card-value { font-size: 1.7rem; font-weight: 700; letter-spacing: -.02em; color: var(--accent); font-feature-settings: "tnum"; }
   .card-unit, .card-year { font-size: var(--t-sm); color: var(--muted); font-weight: 500; }
   .card-direction { display: none; }
+  .card-polarity {
+    font-size: 11px; color: var(--muted); margin: -2px 0 8px;
+    font-weight: 500; letter-spacing: 0.01em; text-transform: uppercase;
+  }
+  .card-polarity span { color: #2d6a3e; margin-right: 2px; font-weight: 600; }
+  .card-polarity.polarity-down span { color: var(--accent); }
+  .card-expand {
+    position: absolute; top: 12px; right: 14px;
+    font-size: 13px; color: var(--rule); pointer-events: none;
+    transition: color .15s;
+  }
+  .card { position: relative; }
+  .card:hover .card-expand { color: var(--accent); }
+  .modal-body .card-expand { display: none; }
   .card-chartwrap { width: 100%; margin: 2px 0 4px; position: relative; }
   .card-chartscroll { width: 100%; margin: 2px 0 4px; overflow-y: auto; overflow-x: hidden; border: 1px solid var(--rule); border-radius: 4px; }
   .card-chartscroll .card-chartwrap { margin: 0; }
@@ -1381,17 +1395,27 @@ PLAIN_DEFINITION = {
 
 def _card_shell(mid, label, value, unit_txt, year, polarity, chart_html, comps_html,
                 src, csv_href, details_html="") -> str:
-    pill = f'<div class="card-direction">{html.escape(polarity)}</div>' if polarity else ""
+    # `polarity` carries the "higher is better"/"lower is better" hint when the
+    # metric direction is unambiguous (e.g. literacy higher is good, IMR lower
+    # is good). Rendered as a small caption under the hero so a reader can tell
+    # at a glance whether the gap colour they're looking at is good or bad news.
+    polarity_html = ""
+    if polarity == "higher is better":
+        polarity_html = '<p class="card-polarity"><span aria-hidden="true">↑</span> higher is better</p>'
+    elif polarity == "lower is better":
+        polarity_html = '<p class="card-polarity polarity-down"><span aria-hidden="true">↓</span> lower is better</p>'
     yr = f'<span class="card-year">({html.escape(str(year))})</span>' if year else ""
     plain = PLAIN_DEFINITION.get(mid, "")
     plain_html = f'<p class="card-plain">{html.escape(plain)}</p>' if plain else ""
+    expand_html = '<span class="card-expand" aria-hidden="true" title="Click for larger view">↗</span>'
     return (
         f'<section class="card" data-metric-id="{html.escape(mid)}" data-metric-name="{html.escape(label)}">'
+        f'{expand_html}'
         f'<div class="card-metric">{html.escape(label)}</div>'
         f'{plain_html}'
         f'<div class="card-hero"><span class="card-value">{value}</span>'
         f'<span class="card-unit">{html.escape(unit_txt)}</span>{yr}</div>'
-        f'{pill}{chart_html}'
+        f'{polarity_html}{chart_html}'
         f'<div class="card-comparisons">{comps_html}</div>'
         f'{details_html}'
         # The source NAME is the hyperlink (target = the canonical CSV); the raw
