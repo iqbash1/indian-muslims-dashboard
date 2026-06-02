@@ -553,7 +553,7 @@ TEMPLATE = """<!DOCTYPE html>
 <div class="page">
 
 <h1>muslimdata.in<span class="h1-sub">the state of Muslim India, in data</span></h1>
-<p class="tagline">Built {timestamp} · <a href="https://github.com/iqbash1/indian-muslims-dashboard">source on GitHub</a></p>
+<p class="tagline">Last updated {timestamp} · <a href="https://github.com/iqbash1/indian-muslims-dashboard">open source on GitHub</a></p>
 
 <section class="intro">
   <p>Indicators of living conditions for India's Muslim population, with Hindu and
@@ -562,13 +562,14 @@ TEMPLATE = """<!DOCTYPE html>
   population, education, employment, health, representation, and justice.</p>
   <p>Each card shows the Muslim value, how it ranks among religious communities,
   and how it has changed over time when the source has multiple survey rounds.
-  Every card links to its canonical CSV. Click any scorecard column to sort.</p>
+  Click any card to open a larger view; every card links to its downloadable CSV.
+  Click any table column header to sort.</p>
 </section>
 
 <div class="status-bar">
-  <span><b>{n_metrics}</b> metrics live</span>
-  <span><b>{n_sources}</b> sources archived</span>
-  <span><b>{n_rows}</b> canonical rows · all schema-valid</span>
+  <span><b>{n_metrics}</b> indicators</span>
+  <span><b>{n_sources}</b> primary sources</span>
+  <span><b>{n_rows}</b> data points</span>
   <span>Comparison baseline on every applicable card</span>
 </div>
 
@@ -616,10 +617,10 @@ TEMPLATE = """<!DOCTYPE html>
 </div>
 
 <footer>
-  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at {timestamp}.
-  Every number on this page traces L4 → L3 (canonical) → L2 (extracted) → L1 (source file)
-  with SHA256 sidecar provenance. Re-run the builder after any canonical change:
-  <code>python dashboard/build.py</code></p>
+  <p>Last updated {timestamp}. Every number on this page is traced back to a primary
+  source (Census of India, NCRB, NFHS, AISHE, PLFS, PRS, ECI candidate affidavits,
+  and others), with the original file archived alongside its checksum so any value
+  can be independently verified.</p>
 </footer>
 
 </div>
