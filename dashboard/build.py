@@ -494,6 +494,50 @@ TEMPLATE = """<!DOCTYPE html>
   }
   .scroll-table td { padding: 4px 8px; font-size: 12px; }
   @media (max-width: 560px) { .cards { grid-template-columns: 1fr; } }
+
+  /* Modal: click any card to open a larger view of the same chart. */
+  .cards .card { cursor: pointer; }
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(20, 20, 20, 0.5);
+    overflow-y: auto;
+    padding: 40px 20px;
+  }
+  .modal-overlay[hidden] { display: none; }
+  .modal {
+    background: var(--card); border-radius: var(--radius);
+    max-width: 920px; width: 100%; margin: 0 auto;
+    position: relative; padding: 32px 36px 28px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+  }
+  .modal-close {
+    position: absolute; top: 12px; right: 12px;
+    width: 34px; height: 34px;
+    background: var(--card); border: 1px solid var(--rule); border-radius: 6px;
+    font-size: 22px; line-height: 1; cursor: pointer;
+    color: var(--muted); padding: 0;
+    transition: background .15s, border-color .15s, color .15s;
+  }
+  .modal-close:hover { background: var(--bg); border-color: var(--accent); color: var(--accent); }
+  /* Inside the modal body, the cloned card sheds its card styling and the
+     chart wrapper expands to use the larger real estate. */
+  .modal-body .card {
+    padding: 0; border: none; box-shadow: none; cursor: default;
+  }
+  .modal-body .card:hover {
+    border: none; box-shadow: none; transform: none;
+  }
+  .modal-body .card-chartwrap { height: 440px !important; }
+  .modal-body .card-chartscroll { max-height: 440px !important; }
+  .modal-body .card-metric { font-size: 20px; margin-bottom: 12px; }
+  .modal-body .card-value { font-size: 2.4rem; }
+  .modal-body .comp-note { font-size: 14px; line-height: 1.55; }
+  body.modal-open { overflow: hidden; }
+  @media (max-width: 640px) {
+    .modal { padding: 24px 18px; }
+    .modal-body .card-chartwrap { height: 320px !important; }
+    .modal-body .card-chartscroll { max-height: 320px !important; }
+  }
 </style>
 </head>
 <body>
@@ -542,6 +586,13 @@ TEMPLATE = """<!DOCTYPE html>
 </section>
 
 {cluster_grids}
+
+<div class="modal-overlay" id="modal-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal" role="document">
+    <button class="modal-close" id="modal-close" aria-label="Close detail view">&times;</button>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
 
 <footer>
   <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at {timestamp}.
@@ -619,7 +670,13 @@ function _refLine(refValue, refLabel) {
     ctx.restore();
   } };
 }
+// Chart-spec registry: every factory records its (fnName, args) by canvas id
+// so the modal can re-render any card chart on a larger canvas.
+const CHART_SPECS = {};
+function _spec(id, fnName, args) { CHART_SPECS[id] = { fnName, args }; }
+
 function hbar(id, labels, values, colors, suffix, decimals, refValue, refLabel) {
+  _spec(id, 'hbar', Array.from(arguments).slice(1));
   new Chart(document.getElementById(id), {
     type: 'bar',
     data: { labels: labels, datasets: [{ data: values, backgroundColor: colors, borderRadius: 3, barPercentage: 0.82, categoryPercentage: 0.86 }] },
@@ -633,6 +690,7 @@ function hbar(id, labels, values, colors, suffix, decimals, refValue, refLabel) 
   });
 }
 function lineChart(id, labels, values, color, suffix) {
+  _spec(id, 'lineChart', Array.from(arguments).slice(1));
   new Chart(document.getElementById(id), {
     type: 'line',
     data: { labels: labels, datasets: [{ data: values, borderColor: color, backgroundColor: 'rgba(43,108,176,.12)', fill: true, tension: 0.3, pointRadius: 3, pointBackgroundColor: color }] },
@@ -657,8 +715,8 @@ const TREND_STYLE = {
   christian: { c: '#bdbdbd', w: 1.2, r: 0, label: 'Christian' },
   sikh:      { c: '#bdbdbd', w: 1.2, r: 0, label: 'Sikh' },
   buddhist:  { c: '#cfcfcf', w: 1.2, r: 0, label: 'Buddhist' },
-  jain:      { c: '#cfcfcf', w: 1.2, r: 0, label: 'Jain' },
-  other:     { c: '#d8d8d8', w: 1.2, r: 0, label: 'Other' },
+  jain:      { c: '#cfcfcf', w: 1.2, r: 0, label: 'Jain', minor: true },
+  other:     { c: '#d8d8d8', w: 1.2, r: 0, label: 'Other', minor: true },
 };
 const TREND_ORDER = ['muslim', 'hindu', 'christian', 'sikh', 'buddhist', 'jain', 'other'];
 // Direct end-of-line labels in each dataset's own color. Replaces the legend:
@@ -670,43 +728,69 @@ function _endLabels() {
     ctx.save();
     ctx.font = '600 10px -apple-system, system-ui, sans-serif';
     ctx.textBaseline = 'middle';
-    const placed = []; // [y, height]
-    const sorted = chart.data.datasets.map((d, i) => ({d, i})).sort((a, b) => {
-      // Muslim painted last on top; sort by absolute weight (Muslim highest).
-      const wa = a.d.borderWidth || 1, wb = b.d.borderWidth || 1;
-      return wb - wa;
-    });
-    for (const { d, i } of sorted) {
-      if (d._isRefline) continue;
+
+    // Collect each dataset's natural label position at its terminal point.
+    const items = [];
+    chart.data.datasets.forEach((d, i) => {
+      if (d._isRefline) return;
       const data = d.data;
       let lastIdx = data.length - 1;
       while (lastIdx >= 0 && (data[lastIdx] == null)) lastIdx--;
-      if (lastIdx < 0) continue;
+      if (lastIdx < 0) return;
       const meta = chart.getDatasetMeta(i);
       const pt = meta.data[lastIdx];
-      if (!pt) continue;
-      let y = pt.y;
-      // Avoid label collisions: nudge if within 11px of another placed label.
-      while (placed.some(py => Math.abs(py - y) < 11)) y += 11;
-      placed.push(y);
-      ctx.fillStyle = d.borderColor;
+      if (!pt) return;
+      items.push({
+        label: d.label, color: d.borderColor,
+        weight: d.borderWidth || 1,
+        x: pt.x, y: pt.y, naturalY: pt.y,
+      });
+    });
+
+    // Sort top-to-bottom (small canvas-y is visually higher) and resolve overlaps
+    // by cascading each label downward only as far as the previous one forces.
+    const minGap = 11;
+    items.sort((a, b) => a.naturalY - b.naturalY);
+    for (let i = 1; i < items.length; i++) {
+      if (items[i].y - items[i - 1].y < minGap) {
+        items[i].y = items[i - 1].y + minGap;
+      }
+    }
+
+    // Anchor the bottom-most label to its line if cascading pushed the stack
+    // below the plot area; sweep upward to re-tighten with the same minGap.
+    const yMax = chart.chartArea.bottom;
+    if (items.length && items[items.length - 1].y > yMax) {
+      items[items.length - 1].y = Math.min(items[items.length - 1].naturalY, yMax);
+      for (let i = items.length - 2; i >= 0; i--) {
+        if (items[i + 1].y - items[i].y < minGap) {
+          items[i].y = items[i + 1].y - minGap;
+        }
+      }
+    }
+
+    for (const it of items) {
+      ctx.fillStyle = it.color;
       ctx.textAlign = 'left';
-      ctx.fillText(d.label, pt.x + 5, y);
+      ctx.fillText(it.label, it.x + 5, it.y);
     }
     ctx.restore();
   }};
 }
 function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak, refLine, dashedExtras) {
+  _spec(id, 'trendChart', Array.from(arguments).slice(1));
   const ds = [];
   for (const rel of TREND_ORDER) {
     if (!seriesMap[rel]) continue;
     const s = TREND_STYLE[rel];
-    ds.push({
+    const next = {
       label: s.label, data: seriesMap[rel], borderColor: s.c, backgroundColor: 'transparent',
       fill: false, tension: 0.25, pointRadius: s.r, borderWidth: s.w, pointBackgroundColor: s.c,
       borderDash: (rel === 'muslim' && hasBreak) ? [5, 4] : [], spanGaps: false,
       order: rel === 'muslim' ? 0 : 1,
-    });
+    };
+    if (s.minor) next._noEndLabel = true;  // skip end-label for minor communities (Jain, Other)
+    ds.push(next);
   }
   // Extra dashed series (e.g. Hindu as a reference in pop-share). Each entry:
   // {label, data, color?}.  Drawn dashed gray, no points, end-labeled.
@@ -719,11 +803,15 @@ function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak, refLine, 
       });
     }
   }
-  if (allSeries) ds.push({
-    label: 'All-India', data: allSeries, borderColor: '#9e9e9e', backgroundColor: 'transparent',
-    fill: false, tension: 0.25, pointRadius: 0, borderWidth: 1, borderDash: [2, 3],
-    spanGaps: false, order: 3,
-  });
+  if (allSeries) {
+    const allDs = {
+      label: 'All-India', data: allSeries, borderColor: '#9e9e9e', backgroundColor: 'transparent',
+      fill: false, tension: 0.25, pointRadius: 0, borderWidth: 1, borderDash: [2, 3],
+      spanGaps: false, order: 3,
+    };
+    allDs._isRefline = true;  // baseline aggregate, not a peer; suppress end-label.
+    ds.push(allDs);
+  }
   if (refLine) {
     const refDs = {
       label: refLine.label, data: years.map(() => refLine.value), borderColor: '#bdbdbd',
@@ -754,6 +842,79 @@ function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak, refLine, 
 }
 
 {card_charts}
+
+// Modal: clicking a card opens a larger view of the same chart by cloning
+// the card into the modal body and re-rendering the chart on a fresh canvas
+// using the spec captured by _spec() in the factory functions.
+(function modalSetup() {
+  const overlay = document.getElementById('modal-overlay');
+  const body = document.getElementById('modal-body');
+  const closeBtn = document.getElementById('modal-close');
+  const factories = { hbar, lineChart, trendChart };
+  let modalChart = null;
+
+  function openModal(card) {
+    closeChart();
+    const clone = card.cloneNode(true);
+    body.innerHTML = '';
+    body.appendChild(clone);
+
+    // Reveal the modal first so the layout pass settles and the wrapper
+    // picks up its 440px CSS height. Chart.js measures its container at
+    // construction, so we defer instantiation to the next frame.
+    overlay.hidden = false;
+    document.body.classList.add('modal-open');
+    closeBtn.focus();
+
+    const origCanvas = card.querySelector('canvas');
+    const cloneCanvas = clone.querySelector('canvas');
+    if (origCanvas && cloneCanvas) {
+      // Strip dimensions inherited from the source canvas; let Chart.js
+      // size the cloned canvas to its (now-visible) container.
+      cloneCanvas.removeAttribute('width');
+      cloneCanvas.removeAttribute('height');
+      cloneCanvas.style.width = '';
+      cloneCanvas.style.height = '';
+      const modalId = origCanvas.id + '-modal';
+      cloneCanvas.id = modalId;
+      const spec = CHART_SPECS[origCanvas.id];
+      if (spec && factories[spec.fnName]) {
+        factories[spec.fnName](modalId, ...spec.args);
+        modalChart = Chart.getChart(modalId);
+        // Force a resize after the layout settles so labels reflow into
+        // the modal's larger real estate (Chart.js measures at construction).
+        if (modalChart) requestAnimationFrame(() => modalChart && modalChart.resize());
+      }
+    }
+  }
+
+  function closeChart() {
+    if (modalChart) { modalChart.destroy(); modalChart = null; }
+  }
+
+  function closeModal() {
+    closeChart();
+    overlay.hidden = true;
+    document.body.classList.remove('modal-open');
+    body.innerHTML = '';
+  }
+
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !overlay.hidden) closeModal();
+  });
+
+  document.querySelectorAll('.cards .card').forEach((card) => {
+    card.addEventListener('click', (e) => {
+      // Let links, summaries, and download triggers behave normally.
+      if (e.target.closest('a, summary, details, button')) return;
+      openModal(card);
+    });
+  });
+})();
 </script>
 </body>
 </html>
