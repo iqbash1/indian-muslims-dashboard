@@ -92,7 +92,7 @@ metrics:
     status: defined
     display:
       scorecard:
-        label: "Sex ratio (F/1000M)"
+        label: "Sex ratio (females per 1,000 males)"
         reference: "hindu"
         unit_format: females_per_1000_males
         higher_is_better: true
@@ -199,7 +199,7 @@ metrics:
     status: defined
     display:
       scorecard:
-        label: "Higher-ed GER (18-23)"
+        label: "Higher-education enrolment ratio (ages 18-23)"
         reference: "all"
         unit_format: percent
         higher_is_better: true
@@ -228,7 +228,7 @@ metrics:
     status: defined
     display:
       scorecard:
-        label: "Higher-ed enrolment (count)"
+        label: "Higher-education enrolment (count)"
         reference: null
         unit_format: count
         higher_is_better: null
@@ -255,7 +255,7 @@ metrics:
     status: defined
     display:
       scorecard:
-        label: "LFPR (15+)"
+        label: "Labour-force participation (ages 15+)"
         reference: "hindu"
         unit_format: percent
         higher_is_better: true
@@ -279,7 +279,7 @@ metrics:
     status: defined
     display:
       scorecard:
-        label: "WPR (15+)"
+        label: "Worker-population ratio (ages 15+)"
         reference: "hindu"
         unit_format: percent
         higher_is_better: true
@@ -585,7 +585,7 @@ metrics:
     status: defined
     display:
       scorecard:
-        label: "State MLA Muslim share (national agg)"
+        label: "State MLA Muslim share (all states)"
         reference: null
         unit_format: percent
         higher_is_better: null
@@ -730,7 +730,7 @@ metrics:
     status: defined
     display:
       scorecard:
-        label: "Communal incidents (NCRB 2022)"
+        label: "Communal incidents (police records, 2022)"
         reference: null
         unit_format: count
         higher_is_better: null
@@ -762,7 +762,7 @@ metrics:
     status: defined
     display:
       scorecard:
-        label: "Anti-Muslim hate speech events (IHL)"
+        label: "Anti-Muslim hate-speech events"
         reference: null
         unit_format: count
         higher_is_better: null

@@ -560,8 +560,10 @@ TEMPLATE = """<!DOCTYPE html>
 <section class="intro">
   <p>Indicators of living conditions for India's Muslim population, with Hindu and
   all-India comparison baselines on every metric. The methodology follows the
-  Sachar Committee (2006) approach to focused, comparative measurement, covering
-  population, education, employment, health, representation, and justice.</p>
+  approach of the Sachar Committee (the 2006 Prime Minister's commission whose
+  report remains India's most-cited assessment of Muslim socio-economic status):
+  focused, comparative measurement across population, education, employment,
+  health, representation, and justice.</p>
   <p>Each card shows the Muslim value, how it ranks among religious communities,
   and how it has changed over time when the source has multiple survey rounds.
   Click any card to open a larger view; every card links to its downloadable CSV.
@@ -1105,7 +1107,7 @@ def build() -> None:
     cluster_grids, card_charts = render_all_clusters()
 
     substitutions = {
-        "{timestamp}": dt.datetime.now().strftime("%Y-%m-%d %H:%M"),
+        "{timestamp}": dt.datetime.now().strftime("%-d %B %Y"),
         "{n_metrics}": str(n_metrics),
         "{n_sources}": str(n_sources),
         "{n_rows}": str(n_rows),
@@ -1716,7 +1718,7 @@ def _card_timeseries(mid, label, unit, src, csv_href, cvid):
             js = (f'hbar("{cvid}", {json.dumps([s[0] for s in st])}, '
                   f'{json.dumps([round(s[1], 2) for s in st])}, '
                   f'{json.dumps(["#2b6cb0"] * len(st))}, "%", 1);')
-        comps += _comp("national agg", headline, "across assemblies", "neutral")
+        comps += _comp("all states", headline, "aggregate across assemblies", "neutral")
     return _card_shell(mid, label, headline, CAPTION.get(mid, ""), latest["year"] if latest else "",
                        "", chart_html, comps, src, csv_href), js
 
