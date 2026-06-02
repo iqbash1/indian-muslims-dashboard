@@ -974,8 +974,13 @@ function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak, refLine, 
     }
   }
   if (allSeries) {
+    // allSeries may be a raw array (legacy) or {values, label} when the
+    // build wants to flag a non-default label (e.g. "Community median"
+    // when source all-India was sparse).
+    const values = Array.isArray(allSeries) ? allSeries : allSeries.values;
+    const labelText = Array.isArray(allSeries) ? 'All-India' : (allSeries.label || 'All-India');
     const allDs = {
-      label: 'All-India', data: allSeries, borderColor: '#9e9e9e', backgroundColor: 'transparent',
+      label: labelText, data: values, borderColor: '#9e9e9e', backgroundColor: 'transparent',
       fill: false, tension: 0.25, pointRadius: 0, borderWidth: 1, borderDash: [2, 3],
       spanGaps: false, order: 3,
     };
@@ -1622,6 +1627,31 @@ def build() -> None:
 # ============================================================================
 
 NAMED_COMMUNITIES = ("hindu", "muslim", "christian", "sikh", "buddhist", "jain")
+
+
+def _comparison_series(series: dict, years: list[int]):
+    """Return (values, label, pill_label) for the dashed comparison line.
+
+    Prefers the source-published "all" aggregate when it's populated across
+    every year in the trend; otherwise falls back to the per-year median of
+    available community values so the Muslim line always has a benchmark.
+    Labels are honest about which calculation was used so the chart legend
+    and the comp pill don't claim "All-India" when the line is actually a
+    community median."""
+    import statistics as _stats
+    source_all = [series.get("all", {}).get(y) for y in years]
+    if source_all and all(v is not None for v in source_all):
+        return source_all, "All-India", "vs all-India"
+    community_keys = [c for c in NAMED_COMMUNITIES if c in series]
+    if not community_keys:
+        return None, None, None
+    values = []
+    for y in years:
+        vals = [series[c].get(y) for c in community_keys if series[c].get(y) is not None]
+        values.append(_stats.median(vals) if vals else None)
+    if not any(v is not None for v in values):
+        return None, None, None
+    return values, "Community median", "vs community median"
 COMMUNITY_LABEL = {
     "hindu": "Hindu", "muslim": "Muslim", "christian": "Christian",
     "sikh": "Sikh", "buddhist": "Buddhist", "jain": "Jain",
@@ -1978,14 +2008,31 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
     else:
         tier = "mid"
 
-    # Comparison block: default to "vs all-India" baseline. Render "vs Hindu"
-    # alongside (marked data-comp-type="vs-hindu") so a page-level toggle can
-    # swap the visible pill when a viewer wants the inter-community read.
+    years, series, has_break = _nat_trend(mid)
+    # Compute the chart's comparison line once and reuse its latest-year
+    # value for the comparison pill so the pill number matches the dashed
+    # line on the chart. When source "all" is sparse, both fall back to
+    # the per-year median across communities (and the pill label changes
+    # to "vs community median" to stay honest about what's being compared).
+    if years:
+        all_series, all_line_label, all_pill_label = _comparison_series(series, years)
+    else:
+        all_series, all_line_label, all_pill_label = None, None, "vs all-India"
+    if all_series:
+        latest = next((v for v in reversed(all_series) if v is not None), None)
+        if latest is not None:
+            all_v = latest
+
+    # Comparison block: default to "vs all-India" (or "vs community median"
+    # when source all-India is sparse). Render "vs Hindu" alongside (marked
+    # data-comp-type="vs-hindu") so a page-level toggle can swap the visible
+    # pill when a viewer wants the inter-community read.
     comps = ""
-    if all_v is not None:
+    if all_v is not None and muslim is not None:
         gap = muslim - all_v
         cls = _verdict(gap, hib)
-        comps += _comp("vs all-India", _gap_str(gap, unit), _verdict_word(cls), cls,
+        comps += _comp(all_pill_label or "vs all-India",
+                       _gap_str(gap, unit), _verdict_word(cls), cls,
                        comp_type="vs-all")
     if hindu is not None:
         gap = muslim - hindu
@@ -1994,8 +2041,6 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
                        comp_type="vs-hindu")
     if rank:
         comps += _comp("among communities", f"{_ordinal(rank)} of {n}", _tier_word(tier), tier)
-
-    years, series, has_break = _nat_trend(mid)
     # 3+ rounds: multi-line trend chart. 2 rounds: too thin to be a "trend" —
     # show the latest-year community snapshot + a "Since {y0}" delta pill.
     # 1 round / no time dim: snapshot only.
@@ -2006,10 +2051,14 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
         named = ("muslim", "hindu", "christian", "sikh", "buddhist", "jain", "other")
         series_map = {rel: [series.get(rel, {}).get(y) for y in years]
                       for rel in named if rel in series}
-        all_series = [series.get("all", {}).get(y) for y in years] if "all" in series else None
+        # all_series was computed at the top of the function so the comp pill
+        # and the chart's dashed line share the same comparator (source "all"
+        # when populated; median across communities otherwise). Pass it as an
+        # object so the chart's end-of-line label matches the pill label.
         chart_html = f'<div class="card-chartwrap" style="height:200px"><canvas id="{cvid}" role="img" aria-label="Visualisation of this metric; numerical values are listed in the card above."></canvas></div>'
+        all_arg = {"values": all_series, "label": all_line_label} if all_series else None
         js = (f'trendChart("{cvid}", {json.dumps(years)}, {json.dumps(series_map)}, '
-              f'{json.dumps(all_series)}, {json.dumps(suffix)}, {json.dumps(bool(has_break))});')
+              f'{json.dumps(all_arg)}, {json.dumps(suffix)}, {json.dumps(bool(has_break))});')
         details = ""
     else:
         # SNAPSHOT card: latest-year community bar with All-India dashed baseline.
