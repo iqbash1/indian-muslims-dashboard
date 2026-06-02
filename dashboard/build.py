@@ -25,7 +25,7 @@ OUT_PATH = REPO_ROOT / "docs" / "index.html"
 # ----- Site identity (used in <title>, canonical URL, JSON-LD, sitemap) -----
 SITE_DOMAIN = "muslimdata.in"
 SITE_URL = f"https://{SITE_DOMAIN}"
-SITE_TITLE = "muslimdata.in — The state of Muslim India, in data"
+SITE_TITLE = "muslimdata.in: the state of Muslim India, in data"
 SITE_DESCRIPTION = (
     "Indicators of living conditions for India's Muslim population, with Hindu "
     "and all-India comparison baselines on every metric. Covers population, "
@@ -221,8 +221,8 @@ def render_scorecard_rows() -> str:
                 f'<td>{html.escape(name)}</td>'
                 f'<td>{year}</td>'
                 f'<td>{m_val:.2f}%</td>'
-                f'<td>—</td>'
-                f'<td>—</td>'
+                f'<td>n/a</td>'
+                f'<td>n/a</td>'
                 f'<td class="{"gap-bad" if gap < 0 else "gap-good"}">{sign}{gap:.2f}pp vs 14.23% pop</td>'
                 f'</tr>'
             )
@@ -231,7 +231,7 @@ def render_scorecard_rows() -> str:
         data = load_metric(mid)
         # Find national row per religion
         by_rel: dict[str, float] = {}
-        year = "—"
+        year = "n/a"
         for r in data:
             if r["geography_level"] != "national":
                 continue
@@ -240,12 +240,12 @@ def render_scorecard_rows() -> str:
         m_val = by_rel.get("muslim")
         h_val = by_rel.get("hindu")
         a_val = by_rel.get("all")
-        muslim_str = fmt_num(m_val, unit) if m_val is not None else "—"
-        hindu_str = fmt_num(h_val, unit) if h_val is not None else "—"
-        all_str = fmt_num(a_val, unit) if a_val is not None else "—"
+        muslim_str = fmt_num(m_val, unit) if m_val is not None else "n/a"
+        hindu_str = fmt_num(h_val, unit) if h_val is not None else "n/a"
+        all_str = fmt_num(a_val, unit) if a_val is not None else "n/a"
 
         # Gap computation
-        gap_str = "—"
+        gap_str = "n/a"
         gap_class = "gap-neutral"
         if ref in ("hindu", "all"):
             comp_val = h_val if ref == "hindu" else a_val
@@ -320,7 +320,7 @@ TEMPLATE = """<!DOCTYPE html>
   }
   .page { max-width: 1280px; margin: 0 auto; padding: 32px 24px 80px; }
   h1 { font-size: 26px; margin: 0 0 4px; letter-spacing: -0.01em; }
-  .h1-sub { font-weight: 400; color: var(--muted); font-size: 18px; letter-spacing: 0; }
+  .h1-sub { display: block; font-weight: 400; color: var(--muted); font-size: 16px; letter-spacing: 0; margin-top: 2px; }
   h2 { font-size: 20px; margin: 0 0 4px; letter-spacing: -0.01em; font-weight: 600; }
   .tagline { color: var(--muted); margin: 0 0 24px; font-size: 14px; }
   .status-bar {
@@ -480,7 +480,7 @@ TEMPLATE = """<!DOCTYPE html>
     transition: background 0.15s, border-color 0.15s;
   }
   .card details summary::-webkit-details-marker { display: none; }
-  .card details summary::before { content: ""; }  /* override the global "▸ " — we use ::after instead */
+  .card details summary::before { content: ""; }  /* override the global "▸ "; we use ::after instead */
   .card details summary:hover { background: #fff7f0; border-color: var(--accent); }
   .card details summary::after {
     content: "↓"; font-size: 11px; display: inline-block; transition: transform 0.15s;
@@ -499,7 +499,7 @@ TEMPLATE = """<!DOCTYPE html>
 <body>
 <div class="page">
 
-<h1>muslimdata.in <span class="h1-sub">— The state of Muslim India, in data</span></h1>
+<h1>muslimdata.in<span class="h1-sub">the state of Muslim India, in data</span></h1>
 <p class="tagline">Built {timestamp} · <a href="https://github.com/iqbash1/indian-muslims-dashboard">source on GitHub</a></p>
 
 <section class="intro">
@@ -522,7 +522,7 @@ TEMPLATE = """<!DOCTYPE html>
 <!-- SCORECARD -->
 <section class="tile scorecard">
   <div class="tile-head">
-    <h2>Scorecard — all metrics at a glance</h2>
+    <h2>Scorecard: all metrics at a glance</h2>
     <p class="data-current">Muslim outcome vs Hindu/All baseline · sorted by gap magnitude</p>
   </div>
   <table class="scorecard-table" id="scorecard"><thead><tr>
@@ -646,11 +646,11 @@ function lineChart(id, labels, values, color, suffix) {
 
 // Multi-round trend: every named community over survey rounds, Muslim
 // highlighted (bold solid accent), the others thinner in distinct colours.
-// All-India is the dashed grey baseline — an aggregate that contains every
+// All-India is the dashed grey baseline, an aggregate that contains every
 // community, so never a peer line. hasBreak dashes the Muslim line (cross-round
 // comparability caveat, e.g. anaemia). Value axis hugs the data (no zero base).
 // Minimalist palette: Muslim accent + non-Muslim communities in a muted gray family.
-// Each line is identified by an end-of-line label (see _endLabels plugin) — no legend.
+// Each line is identified by an end-of-line label (see _endLabels plugin); no legend.
 const TREND_STYLE = {
   muslim:    { c: '#7b1d22', w: 2.6, r: 3, label: 'Muslim' },
   hindu:     { c: '#9e9e9e', w: 1.2, r: 0, label: 'Hindu' },
@@ -661,7 +661,7 @@ const TREND_STYLE = {
   other:     { c: '#d8d8d8', w: 1.2, r: 0, label: 'Other' },
 };
 const TREND_ORDER = ['muslim', 'hindu', 'christian', 'sikh', 'buddhist', 'jain', 'other'];
-// Direct end-of-line labels in each dataset's own color. Replaces the legend —
+// Direct end-of-line labels in each dataset's own color. Replaces the legend:
 // each line self-identifies right where it terminates. Skips datasets whose last
 // point is null (those lines never reach the right edge).
 function _endLabels() {
@@ -932,7 +932,7 @@ def _gap_str(gap: float, unit: str) -> str:
 
 
 def _verdict_word(cls: str) -> str:
-    return {"good": "ahead", "bad": "behind", "neutral": "—"}[cls]
+    return {"good": "ahead", "bad": "behind", "neutral": "even"}[cls]
 
 
 def _tier_word(tier: str) -> str:
@@ -1012,7 +1012,7 @@ def _top100_districts_table(metric_id: str) -> str:
             f"</tr>"
         )
     return (
-        f'<details><summary>See the full ranked list — top {len(parsed)} districts</summary>'
+        f'<details><summary>See the full ranked list (top {len(parsed)} districts)</summary>'
         f'<div class="scroll-table">'
         f'<table>'
         f'<thead><tr>'
@@ -1043,9 +1043,9 @@ def _state_details(metric_id: str, unit: str) -> str:
     for g in order:
         b = by_geo[g]
         cells = (f"<td>{html.escape(state_label(g))}</td>"
-                 f"<td>{fmt_num(b['muslim'], unit) if 'muslim' in b else '—'}</td>")
+                 f"<td>{fmt_num(b['muslim'], unit) if 'muslim' in b else 'n/a'}</td>")
         if has_hindu:
-            cells += f"<td>{fmt_num(b['hindu'], unit) if 'hindu' in b else '—'}</td>"
+            cells += f"<td>{fmt_num(b['hindu'], unit) if 'hindu' in b else 'n/a'}</td>"
         trs.append(f"<tr>{cells}</tr>")
     return (f'<details><summary>Full state data ({len(order)} states)</summary>'
             f'<table><thead>{head}</thead><tbody>{"".join(trs)}</tbody></table></details>')
@@ -1114,7 +1114,7 @@ def render_metric_card(m: dict):
 def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
     nat = _nat_by_religion(mid)
     muslim, hindu, all_v = nat.get("muslim"), nat.get("hindu"), nat.get("all")
-    headline = fmt_num(muslim, unit) if muslim is not None else "—"
+    headline = fmt_num(muslim, unit) if muslim is not None else "n/a"
     polarity = "higher is better" if hib is True else ("lower is better" if hib is False else "")
 
     named = [c for c in NAMED_COMMUNITIES if c in nat]
@@ -1201,7 +1201,7 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
 def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
     nat = _nat_by_religion(mid)
     muslim = nat.get("muslim")
-    headline = fmt_num(muslim, unit) if muslim is not None else "—"
+    headline = fmt_num(muslim, unit) if muslim is not None else "n/a"
     chart_html, js, note = "", None, ""
     if mid == "pop-share":
         # Decadal multi-community trend (1961->2011). Hindu (~80%) dominates if
@@ -1222,8 +1222,8 @@ def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
         js = (f'trendChart("{cvid}", {json.dumps(years)}, {json.dumps(series_map)}, '
               f'null, "%", false);')
         note = (f"Share of each community in India's population by census. Hindu's share "
-                f"drifted from {hindu_first:.1f}% in 1961 to {hindu_last:.1f}% in 2011 — "
-                f"omitted from the chart so the Muslim + minor-community trends are legible. "
+                f"drifted from {hindu_first:.1f}% in 1961 to {hindu_last:.1f}% in 2011, "
+                f"omitted from the chart so the Muslim and minor-community trends are legible. "
                 f"All values from primary RGI religion volumes 1961-2011; 1981 excludes "
                 f"Assam, 1991 excludes Jammu & Kashmir.")
     elif mid == "district-concentration-top100":
@@ -1236,8 +1236,8 @@ def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
         js = (f'hbar("{cvid}", {json.dumps(["Top-100 districts", "Other districts"])}, '
               f'{json.dumps([round(muslim, 2), rest])}, {json.dumps(["#7b1d22", "#D8DEE2"])}, '
               f'"%", 1, null, "");')
-        note = ("Share of all Indian Muslims living in the 100 most Muslim-populous districts — "
-                "a geographic-concentration measure, not a community comparison.")
+        note = ("Share of all Indian Muslims living in the 100 most Muslim-populous districts. "
+                "This is a geographic-concentration measure, not a community comparison.")
     else:  # muslim-higher-ed-enrolment
         # Top-8 states by Muslim enrolment, shown in thousands (the national
         # headline is the absolute total; no community comparator exists).
@@ -1251,7 +1251,7 @@ def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
             vals = [round(s[1] / 1000) for s in st]
             js = (f'hbar("{cvid}", {json.dumps(labels)}, {json.dumps(vals)}, '
                   f'{json.dumps(["#2b6cb0"] * len(st))}, "k", 0, null, "");')
-        note = ("No community ranking — AISHE tabulates “Muslim Minority” enrolment separately; "
+        note = ("No community ranking. AISHE tabulates “Muslim Minority” enrolment separately; "
                 "other communities are not enumerated in the same table. Top-8 states shown (thousands).")
     comps = f'<div class="comp-note">{html.escape(note)}</div>'
     # Metric-specific drill-down (collapsed by default). For district-concentration
@@ -1276,7 +1276,7 @@ def _card_share_trend(mid, label, src, csv_href, cvid):
     axis_years = list(range(years[0], years[-1] + 1)) if years else []
     nat = _nat_by_religion(mid)  # latest year
     muslim_latest = nat.get("muslim")
-    headline = f"{muslim_latest:.1f}" if muslim_latest is not None else "—"
+    headline = f"{muslim_latest:.1f}" if muslim_latest is not None else "n/a"
     series_map = {rel: [series.get(rel, {}).get(y) for y in axis_years]
                   for rel in ("muslim", "hindu") if rel in series}
     chart_html = f'<div class="card-chartwrap" style="height:188px"><canvas id="{cvid}"></canvas></div>'
@@ -1315,8 +1315,8 @@ def _share_year_details(mid: str) -> str:
     for y in years:
         m = series.get("muslim", {}).get(y)
         h = series.get("hindu", {}).get(y)
-        m_str = f"{m:.2f}%" if m is not None else "—"
-        h_str = f"{h:.2f}%" if h is not None else "—"
+        m_str = f"{m:.2f}%" if m is not None else "n/a"
+        h_str = f"{h:.2f}%" if h is not None else "n/a"
         trs.append(f"<tr><td>{y}</td><td>{m_str}</td><td>{h_str}</td></tr>")
     return ("<details><summary>By year</summary>"
             "<table><thead><tr><th>Year</th><th>Muslim</th><th>Hindu</th></tr></thead>"
@@ -1328,7 +1328,7 @@ def _card_timeseries(mid, label, unit, src, csv_href, cvid):
                   key=lambda r: int(r["year"]))
     latest = rows[-1] if rows else None
     val = float(latest["value"]) if latest else None
-    headline = fmt_num(val, unit) if val is not None else "—"
+    headline = fmt_num(val, unit) if val is not None else "n/a"
     gap = (val - MUSLIM_POP_SHARE) if val is not None else 0
     comps = _comp("vs population", f"{gap:+.1f}pp", "vs 14.2% pop share", "bad" if gap < 0 else "good")
     chart_html, js = "", None
