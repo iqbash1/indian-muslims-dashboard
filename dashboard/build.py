@@ -27,9 +27,10 @@ SITE_DOMAIN = "muslimdata.in"
 SITE_URL = f"https://{SITE_DOMAIN}"
 SITE_TITLE = "muslimdata.in — The state of Muslim India, in data"
 SITE_DESCRIPTION = (
-    "A scorecard of living-conditions indicators for India's Muslim population, "
-    "with Hindu and all-India comparison baselines on every metric. "
-    "Provenance-traced, Sachar-Committee-style measurement."
+    "Indicators of living conditions for India's Muslim population, with Hindu "
+    "and all-India comparison baselines on every metric. Covers population, "
+    "education, employment, health, representation, and justice. Provenance-traced, "
+    "Sachar-Committee-style measurement."
 )
 
 # ----- Analytics IDs (substituted into docs/js/analytics.js at build time) -----
@@ -502,17 +503,13 @@ TEMPLATE = """<!DOCTYPE html>
 <p class="tagline">Built {timestamp} · <a href="https://github.com/iqbash1/indian-muslims-dashboard">source on GitHub</a></p>
 
 <section class="intro">
-  <p>A scorecard of living-conditions indicators for India's Muslim population, with
-  Hindu and all-India comparison baselines on every metric. The gap between Muslim
-  outcomes and these baselines is the story this dashboard is built around —
-  inheriting the Sachar Committee (2006) methodology of focused, comparative measurement.</p>
-  <p>Each metric is a card showing the Muslim value, where it ranks among religious
-  communities (the analog of a US state's rank), and — where the source has multiple
-  survey rounds — how it has changed over time, with the source linked to its canonical
-  CSV. Click any scorecard column to sort. Numbers tagged <i>"paradox"</i> are ones where
-  Muslim outcomes run <i>ahead of</i> Hindu — notably infant survival, women's anaemia, and
-  sex ratio. These coexist with persistent Muslim disadvantage on the socioeconomic,
-  representation, and justice indicators.</p>
+  <p>Indicators of living conditions for India's Muslim population, with Hindu and
+  all-India comparison baselines on every metric. The methodology follows the
+  Sachar Committee (2006) approach to focused, comparative measurement, covering
+  population, education, employment, health, representation, and justice.</p>
+  <p>Each card shows the Muslim value, how it ranks among religious communities,
+  and how it has changed over time when the source has multiple survey rounds.
+  Every card links to its canonical CSV. Click any scorecard column to sort.</p>
 </section>
 
 <div class="status-bar">
