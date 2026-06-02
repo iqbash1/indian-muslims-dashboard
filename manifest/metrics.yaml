@@ -614,14 +614,10 @@ metrics:
     comparison_baselines: []
     phase: 2
     status: defined
-    display:
-      scorecard:
-        label: "Muslims in prison (% share)"
-        reference: population
-        unit_format: percent
-        higher_is_better: false
-        order: 120
-        special_render: share_trend
+    # As of Commit AM (2026-06-02): prison-share is decarded in favour of
+    # prison-rate-per-100k (which compares "% of community in prison" — the
+    # cleaner statistical question than "% of prisoners who are Muslim"). The
+    # multi-year share trend canonical is retained as cross-reference data.
 
   - id: prison-rate-per-100k
     name: Prison population rate (per 100k of religious population)
@@ -649,9 +645,13 @@ metrics:
     comparison_baselines: [hindu, all]
     phase: 2
     status: defined
-    # Rate-per-100k retained as canonical data (2022 only — the rate needs a
-    # Census-year population denominator, clean only to 2011). The carded justice
-    # metric is now the multi-year prison-SHARE trend, so this is not rendered.
+    display:
+      scorecard:
+        label: "Muslim incarceration rate"
+        reference: hindu
+        unit_format: rate_per_100k
+        higher_is_better: false
+        order: 120
 
   - id: undertrial-rate-per-100k
     name: Undertrial population rate (per 100k of religious population)
@@ -673,8 +673,13 @@ metrics:
     comparison_baselines: [hindu, all]
     phase: 2
     status: defined
-    # Rate-per-100k retained as canonical data (2022 only). The carded undertrial
-    # metric is now the multi-year undertrial-SHARE trend, so this is not rendered.
+    display:
+      scorecard:
+        label: "Muslim undertrial rate"
+        reference: hindu
+        unit_format: rate_per_100k
+        higher_is_better: false
+        order: 130
 
   - id: undertrial-share
     name: Muslim share of undertrial prisoners
@@ -696,14 +701,8 @@ metrics:
     comparison_baselines: []
     phase: 2
     status: defined
-    display:
-      scorecard:
-        label: "Muslims among undertrials (% share)"
-        reference: population
-        unit_format: percent
-        higher_is_better: false
-        order: 130
-        special_render: share_trend
+    # As of Commit AM: decarded; superseded by undertrial-rate-per-100k. Share
+    # canonical retained as cross-reference data.
 
   # ----- Civic / safety (Phase 2) -----
   - id: communal-incidents-govt

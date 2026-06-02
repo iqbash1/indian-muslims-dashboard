@@ -97,6 +97,9 @@ def fmt_num(v: float, unit: str) -> str:
         return f"{v:.0f}"
     if unit == "per_1000_live_births":
         return f"{v:.1f}"
+    if unit in ("rate_per_100k", "per_100k_population"):
+        # "63.3" — no unit suffix in the hero (the card's caption carries "per 100k").
+        return f"{v:.1f}"
     if unit == "count":
         return f"{int(v):,}"
     return str(v)
@@ -164,30 +167,6 @@ def render_scorecard_rows() -> str:
     """Compute one HTML <tr> per metric showing Muslim/Hindu/All and gap vs reference."""
     rows: list[str] = []
     for cluster, mid, name, unit, ref, higher_better in SCORECARD_SPEC:
-        # Justice share metrics: latest-year Muslim/Hindu share, gap vs population (~14.2%).
-        if mid in ("prison-share", "undertrial-share"):
-            nat = [r for r in load_metric(mid) if r["geography_level"] == "national"]
-            if not nat:
-                continue
-            latest_year = max(int(r["year"]) for r in nat)
-            by_rel = {r["religion"]: float(r["value"]) for r in nat if int(r["year"]) == latest_year}
-            m_val, h_val = by_rel.get("muslim"), by_rel.get("hindu")
-            muslim_str = f"{m_val:.2f}%" if m_val is not None else "—"
-            hindu_str = f"{h_val:.2f}%" if h_val is not None else "—"
-            gap = (m_val - MUSLIM_POP_SHARE) if m_val is not None else 0.0
-            sign = "+" if gap > 0 else ""
-            gap_class = "gap-bad" if gap > 0 else "gap-neutral"  # over-representation is the concern
-            rows.append(
-                f'<tr>'
-                f'<td>{html.escape(name)}</td>'
-                f'<td>{latest_year}</td>'
-                f'<td>{muslim_str}</td>'
-                f'<td>{hindu_str}</td>'
-                f'<td>—</td>'
-                f'<td class="{gap_class}">{sign}{gap:.2f}pp vs {MUSLIM_POP_SHARE}% pop</td>'
-                f'</tr>'
-            )
-            continue
 
         # Special case: time-series count metrics (communal-incidents-govt + -civic)
         if mid in ("communal-incidents-govt", "communal-incidents-civic"):
@@ -455,7 +434,28 @@ TEMPLATE = """<!DOCTYPE html>
   .card details { margin-top: 10px; border-top: 1px dashed var(--rule); padding-top: 8px; }
   .card details summary { font-size: var(--t-xs); }
   .card details table { font-size: 12px; }
-  .scroll-table { max-height: 320px; overflow-y: auto; border: 1px solid var(--rule); border-radius: 4px; margin-top: 6px; }
+  /* Within a card, lift the disclosure summary so visitors don't pass by the
+     "Top 100 districts" / "Full state data" drill-downs. Accent color + a
+     subtle background; same chevron rotates when [open]. */
+  .card details {
+    margin-top: 12px; border-top: 1px solid var(--rule); padding-top: 10px;
+  }
+  .card details summary {
+    cursor: pointer; user-select: none; list-style: none;
+    color: var(--accent); font-weight: 600; font-size: var(--t-xs);
+    padding: 6px 10px; background: var(--bg);
+    border: 1px solid var(--rule); border-radius: var(--radius);
+    display: inline-flex; align-items: center; gap: 4px;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .card details summary::-webkit-details-marker { display: none; }
+  .card details summary::before { content: ""; }  /* override the global "▸ " — we use ::after instead */
+  .card details summary:hover { background: #fff7f0; border-color: var(--accent); }
+  .card details summary::after {
+    content: "↓"; font-size: 11px; display: inline-block; transition: transform 0.15s;
+  }
+  .card details[open] summary::after { transform: rotate(180deg); }
+  .scroll-table { max-height: 320px; overflow-y: auto; border: 1px solid var(--rule); border-radius: 4px; margin-top: 8px; }
   .scroll-table table { margin-top: 0; }
   .scroll-table thead th {
     position: sticky; top: 0; background: var(--card);
@@ -853,6 +853,8 @@ CAPTION = {
     "muslim-higher-ed-enrolment": "students",
     "ls-share": "of 543 Lok Sabha seats",
     "mla-share": "of state-assembly seats (agg.)",
+    "prison-rate-per-100k": "prisoners per 100k of community",
+    "undertrial-rate-per-100k": "undertrials per 100k of community",
     "communal-incidents-govt": "incidents (NCRB)",
     "communal-incidents-civic": "hate-speech events (IHL)",
 }
@@ -970,7 +972,7 @@ def _top100_districts_table(metric_id: str) -> str:
             f"</tr>"
         )
     return (
-        f'<details><summary>Top {len(parsed)} districts by Muslim population</summary>'
+        f'<details><summary>See the full ranked list — top {len(parsed)} districts</summary>'
         f'<div class="scroll-table">'
         f'<table>'
         f'<thead><tr>'
