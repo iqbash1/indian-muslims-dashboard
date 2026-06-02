@@ -510,15 +510,24 @@ TEMPLATE = """<!DOCTYPE html>
     position: relative; padding: 32px 36px 28px;
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
   }
-  .modal-close {
+  .modal-actions {
     position: absolute; top: 12px; right: 12px;
-    width: 34px; height: 34px;
-    background: var(--card); border: 1px solid var(--rule); border-radius: 6px;
-    font-size: 22px; line-height: 1; cursor: pointer;
-    color: var(--muted); padding: 0;
-    transition: background .15s, border-color .15s, color .15s;
+    display: flex; gap: 6px; align-items: center;
   }
-  .modal-close:hover { background: var(--bg); border-color: var(--accent); color: var(--accent); }
+  .modal-close, .modal-share {
+    background: var(--card); border: 1px solid var(--rule); border-radius: 6px;
+    cursor: pointer; color: var(--muted); padding: 0;
+    transition: background .15s, border-color .15s, color .15s;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .modal-close { width: 34px; height: 34px; font-size: 22px; line-height: 1; }
+  .modal-share { height: 34px; padding: 0 12px; gap: 6px; font-size: 13px; font-weight: 500; }
+  .modal-close:hover, .modal-share:hover {
+    background: var(--bg); border-color: var(--accent); color: var(--accent);
+  }
+  .modal-share.copied {
+    background: #ecf6ec; border-color: #5a8a5a; color: #2e6b2e;
+  }
   /* Inside the modal body, the cloned card sheds its card styling and the
      chart wrapper expands to use the larger real estate. */
   .modal-body .card {
@@ -589,7 +598,19 @@ TEMPLATE = """<!DOCTYPE html>
 
 <div class="modal-overlay" id="modal-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title">
   <div class="modal" role="document">
-    <button class="modal-close" id="modal-close" aria-label="Close detail view">&times;</button>
+    <div class="modal-actions">
+      <button class="modal-share" id="modal-share" aria-label="Copy share link" title="Copy share link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="18" cy="5" r="3"></circle>
+          <circle cx="6" cy="12" r="3"></circle>
+          <circle cx="18" cy="19" r="3"></circle>
+          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+          <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+        </svg>
+        <span class="modal-share-label">Share</span>
+      </button>
+      <button class="modal-close" id="modal-close" aria-label="Close detail view">&times;</button>
+    </div>
     <div class="modal-body" id="modal-body"></div>
   </div>
 </div>
@@ -845,19 +866,24 @@ function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak, refLine, 
 
 // Modal: clicking a card opens a larger view of the same chart by cloning
 // the card into the modal body and re-rendering the chart on a fresh canvas
-// using the spec captured by _spec() in the factory functions.
+// using the spec captured by _spec() in the factory functions. Shareable via
+// per-metric stub pages at /m/{slug}/ that redirect into /#{slug}.
 (function modalSetup() {
   const overlay = document.getElementById('modal-overlay');
   const body = document.getElementById('modal-body');
   const closeBtn = document.getElementById('modal-close');
+  const shareBtn = document.getElementById('modal-share');
   const factories = { hbar, lineChart, trendChart };
   let modalChart = null;
+  let activeMid = null;
 
   function openModal(card) {
     closeChart();
     const clone = card.cloneNode(true);
     body.innerHTML = '';
     body.appendChild(clone);
+
+    activeMid = card.getAttribute('data-metric-id') || null;
 
     // Reveal the modal first so the layout pass settles and the wrapper
     // picks up its 440px CSS height. Chart.js measures its container at
@@ -886,6 +912,15 @@ function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak, refLine, 
         if (modalChart) requestAnimationFrame(() => modalChart && modalChart.resize());
       }
     }
+
+    // Reflect the open metric in the URL so the visitor's address bar is
+    // shareable and the back button closes the modal naturally.
+    if (activeMid && location.hash !== '#' + activeMid) {
+      history.replaceState(null, '', '#' + activeMid);
+    }
+    if (typeof gtag === 'function' && activeMid) {
+      gtag('event', 'metric_opened', { metric_id: activeMid });
+    }
   }
 
   function closeChart() {
@@ -897,6 +932,18 @@ function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak, refLine, 
     overlay.hidden = true;
     document.body.classList.remove('modal-open');
     body.innerHTML = '';
+    activeMid = null;
+    if (location.hash) {
+      history.replaceState(null, '', location.pathname + location.search);
+    }
+  }
+
+  function openByMid(mid) {
+    if (!mid) return false;
+    const card = document.querySelector('.cards .card[data-metric-id="' + CSS.escape(mid) + '"]');
+    if (!card) return false;
+    openModal(card);
+    return true;
   }
 
   closeBtn.addEventListener('click', closeModal);
@@ -907,6 +954,44 @@ function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak, refLine, 
     if (e.key === 'Escape' && !overlay.hidden) closeModal();
   });
 
+  // Share: copy the per-metric permalink to clipboard. The /m/{slug}/ stub
+  // path carries the per-metric OG meta so social cards render properly.
+  shareBtn.addEventListener('click', () => {
+    if (!activeMid) return;
+    const card = body.querySelector('.card');
+    const name = card?.getAttribute('data-metric-name') || activeMid;
+    const url = location.origin + '/m/' + encodeURIComponent(activeMid) + '/';
+    const text = 'muslimdata.in — ' + name + '\\n' + url;
+    const showCopied = (method) => {
+      shareBtn.classList.add('copied');
+      const label = shareBtn.querySelector('.modal-share-label');
+      const prev = label ? label.textContent : '';
+      if (label) label.textContent = 'Copied';
+      setTimeout(() => {
+        shareBtn.classList.remove('copied');
+        if (label) label.textContent = prev || 'Share';
+      }, 1500);
+      if (typeof gtag === 'function') {
+        gtag('event', 'share_clicked', { metric_id: activeMid, method });
+      }
+    };
+    if (navigator.share) {
+      navigator.share({ title: 'muslimdata.in: ' + name, text: name, url })
+        .then(() => showCopied('native'))
+        .catch(() => {
+          // User cancelled the share sheet; fall back to clipboard copy.
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(() => showCopied('clipboard'));
+          }
+        });
+    } else if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(
+        () => showCopied('clipboard'),
+        () => showCopied('clipboard-fail'),
+      );
+    }
+  });
+
   document.querySelectorAll('.cards .card').forEach((card) => {
     card.addEventListener('click', (e) => {
       // Let links, summaries, and download triggers behave normally.
@@ -914,11 +999,92 @@ function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak, refLine, 
       openModal(card);
     });
   });
+
+  // Hash routing: open the matching modal on page load or hash change.
+  function handleHash() {
+    const mid = location.hash.replace(/^#/, '');
+    if (!mid) {
+      if (!overlay.hidden) closeModal();
+      return;
+    }
+    openByMid(mid);
+  }
+  window.addEventListener('hashchange', handleHash);
+  if (location.hash) handleHash();
 })();
 </script>
 </body>
 </html>
 """
+
+
+STUB_TEMPLATE = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{title}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="{description}">
+<link rel="canonical" href="{site_url}/m/{mid}/">
+<meta property="og:title" content="{og_title}">
+<meta property="og:description" content="{description}">
+<meta property="og:url" content="{site_url}/m/{mid}/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="muslimdata.in">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="{og_title}">
+<meta name="twitter:description" content="{description}">
+<meta http-equiv="refresh" content="0; url={site_url}/#{mid}">
+<script>location.replace({redirect_target});</script>
+<style>body{{font:14px -apple-system,system-ui,sans-serif;color:#666;padding:40px;text-align:center}}</style>
+</head>
+<body>
+<p>Redirecting to <a href="{site_url}/#{mid}">muslimdata.in</a>...</p>
+</body>
+</html>
+"""
+
+
+def _emit_metric_stubs(out_dir: pathlib.Path) -> int:
+    """Write a stub HTML page per live metric at /m/{mid}/index.html. Each
+    carries metric-specific OG meta so social-card previews show the right
+    title; body client-redirects into the main page hash to auto-open the
+    modal. Returns the count of stubs written."""
+    import yaml as _yaml
+    with (REPO_ROOT / "manifest" / "metrics.yaml").open() as f:
+        data = _yaml.safe_load(f)
+    stubs_root = out_dir / "m"
+    stubs_root.mkdir(parents=True, exist_ok=True)
+    written = 0
+    for m in data["metrics"]:
+        disp = m.get("display", {}).get("scorecard")
+        if not disp or disp.get("include", True) is False:
+            continue
+        mid = m["id"]
+        name = m.get("name", disp.get("label", mid))
+        # One-sentence description derived from the metric definition, trimmed
+        # to a single line for OG meta. Falls back to a generic line.
+        defn = (m.get("definition") or "").strip().split("\n")[0].strip()
+        description = (
+            f"{name}, with Hindu and all-India comparison baselines on muslimdata.in. "
+            + (defn if defn else "Provenance-traced living-conditions indicator.")
+        )
+        # 200-char cap so the description fits inside what social cards display.
+        if len(description) > 240:
+            description = description[:237].rstrip() + "..."
+        page = STUB_TEMPLATE.format(
+            mid=mid,
+            site_url=SITE_URL,
+            title=html.escape(f"{name}: muslimdata.in"),
+            og_title=html.escape(name),
+            description=html.escape(description),
+            redirect_target=json.dumps(f"{SITE_URL}/#{mid}"),
+        )
+        stub_dir = stubs_root / mid
+        stub_dir.mkdir(exist_ok=True)
+        (stub_dir / "index.html").write_text(page)
+        written += 1
+    return written
 
 
 def build() -> None:
@@ -969,6 +1135,12 @@ def build() -> None:
     js_text = analytics_src.read_text()
     js_text = js_text.replace("__GA4_ID__", GA4_ID).replace("__CLARITY_ID__", CLARITY_ID)
     analytics_out.write_text(js_text)
+
+    # Emit per-metric stub pages at /m/{mid}/index.html. Each carries the
+    # metric-specific OG meta tags so social previews show the right
+    # title/description when a user shares the link; the body then
+    # client-redirects to the main page's hash for the modal to auto-open.
+    _emit_metric_stubs(OUT_PATH.parent)
 
     # Ensure a .nojekyll is inside the publish folder so GitHub Pages serves the
     # HTML as-is without Jekyll processing (root-level .nojekyll doesn't apply
@@ -1111,12 +1283,12 @@ def _comp(label: str, verdict: str, detail: str, cls: str) -> str:
             f'<div class="comp-detail">{html.escape(detail)}</div></div>')
 
 
-def _card_shell(label, value, unit_txt, year, polarity, chart_html, comps_html,
+def _card_shell(mid, label, value, unit_txt, year, polarity, chart_html, comps_html,
                 src, csv_href, details_html="") -> str:
     pill = f'<div class="card-direction">{html.escape(polarity)}</div>' if polarity else ""
     yr = f'<span class="card-year">({html.escape(str(year))})</span>' if year else ""
     return (
-        '<section class="card">'
+        f'<section class="card" data-metric-id="{html.escape(mid)}" data-metric-name="{html.escape(label)}">'
         f'<div class="card-metric">{html.escape(label)}</div>'
         f'<div class="card-hero"><span class="card-value">{value}</span>'
         f'<span class="card-unit">{html.escape(unit_txt)}</span>{yr}</div>'
@@ -1355,7 +1527,7 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
                   f'{json.dumps(suffix)}, {dec}, {ref}, {json.dumps(ref_label)});')
         details = _state_details(mid, unit)
 
-    return _card_shell(label, headline, CAPTION.get(mid, ""), _year_of(mid), polarity,
+    return _card_shell(mid, label, headline, CAPTION.get(mid, ""), _year_of(mid), polarity,
                        chart_html, comps, src, csv_href, details), js
 
 
@@ -1421,7 +1593,7 @@ def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
         details = _top100_districts_table(mid)
     else:
         details = _state_details(mid, unit)
-    return _card_shell(label, headline, CAPTION.get(mid, ""), _year_of(mid), "",
+    return _card_shell(mid, label, headline, CAPTION.get(mid, ""), _year_of(mid), "",
                        chart_html, comps, src, csv_href, details), js
 
 
@@ -1464,7 +1636,7 @@ def _card_share_trend(mid, label, src, csv_href, cvid):
             f"in some years and are excluded from that year's denominator. 2016, 2017 and 2020 are "
             f"not available in an extractable English edition.")
     comps += f'<div class="comp-note">{html.escape(note)}</div>'
-    return _card_shell(label, headline, f"% of {noun}", years[-1] if years else "",
+    return _card_shell(mid, label, headline, f"% of {noun}", years[-1] if years else "",
                        "lower is better", chart_html, comps, src, csv_href,
                        _share_year_details(mid)), js
 
@@ -1514,7 +1686,7 @@ def _card_timeseries(mid, label, unit, src, csv_href, cvid):
                   f'{json.dumps([round(s[1], 2) for s in st])}, '
                   f'{json.dumps(["#2b6cb0"] * len(st))}, "%", 1);')
         comps += _comp("national agg", headline, "across assemblies", "neutral")
-    return _card_shell(label, headline, CAPTION.get(mid, ""), latest["year"] if latest else "",
+    return _card_shell(mid, label, headline, CAPTION.get(mid, ""), latest["year"] if latest else "",
                        "", chart_html, comps, src, csv_href), js
 
 
@@ -1541,7 +1713,7 @@ def _card_ts_count(mid, label, src, csv_href, cvid):
         comps += _comp(f"{rows[0]['year']} → {latest['year']}",
                        f"{arrow} {abs(delta):,}",
                        f"{first:,} → {last:,}", cls)
-    return _card_shell(label, f"{val:,}", CAPTION.get(mid, "events"), latest["year"] if latest else "",
+    return _card_shell(mid, label, f"{val:,}", CAPTION.get(mid, "events"), latest["year"] if latest else "",
                        "lower is better", chart_html, comps, src, csv_href), js
 
 
