@@ -36,8 +36,8 @@ SITE_DESCRIPTION = (
 # Replace these with the real IDs from analytics.google.com and clarity.microsoft.com.
 # When left as the "__..." placeholders, the analytics.js loader skips loading
 # anything — the site ships clean without telemetry until you swap them in.
-GA4_ID = "__GA4_ID__"  # e.g. "G-XXXXXXXXXX"
-CLARITY_ID = "__CLARITY_ID__"  # e.g. "abc123xyz9"
+GA4_ID = "G-SNNEXDK6LK"
+CLARITY_ID = "x0qdfk6233"
 
 
 def load_metric(name: str) -> list[dict]:

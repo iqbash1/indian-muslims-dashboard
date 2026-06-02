@@ -22,15 +22,15 @@
 // debugging. Works on iOS Safari, Android Chrome, desktop browsers.
 //
 // IDs are injected at build time from dashboard/build.py — see the
-// __GA4_ID__ / __CLARITY_ID__ placeholders there. The runtime file
+// G-SNNEXDK6LK / x0qdfk6233 placeholders there. The runtime file
 // already has the real IDs substituted in.
 // ============================================================
 
 (function () {
     'use strict';
 
-    var GA4_ID = '__GA4_ID__';
-    var CLARITY_ID = '__CLARITY_ID__';
+    var GA4_ID = 'G-SNNEXDK6LK';
+    var CLARITY_ID = 'x0qdfk6233';
 
     try {
         var params = new URLSearchParams(location.search);
