@@ -63,9 +63,36 @@ def state_label(code: str) -> str:
     return mapping.get(code, code)
 
 
+# Compact 2-letter state abbreviations (for dense tables like the top-100
+# districts list where the full state name doesn't fit).
+STATE_ABBREV = {
+    "IN-S01": "JK", "IN-S02": "HP", "IN-S03": "PB", "IN-S04": "CH",
+    "IN-S05": "UK", "IN-S06": "HR", "IN-S07": "DL", "IN-S08": "RJ",
+    "IN-S09": "UP", "IN-S10": "BR", "IN-S11": "SK", "IN-S12": "AR",
+    "IN-S13": "NL", "IN-S14": "MN", "IN-S15": "MZ", "IN-S16": "TR",
+    "IN-S17": "ML", "IN-S18": "AS", "IN-S19": "WB", "IN-S20": "JH",
+    "IN-S21": "OD", "IN-S22": "CG", "IN-S23": "MP", "IN-S24": "GJ",
+    "IN-S25": "DD", "IN-S26": "DN", "IN-S27": "MH", "IN-S28": "AP",
+    "IN-S29": "KA", "IN-S30": "GA", "IN-S31": "LD", "IN-S32": "KL",
+    "IN-S33": "TN", "IN-S34": "PY", "IN-S35": "AN", "IN-S36": "TG",
+    "IN-S37": "LA",
+}
+
+
+def state_abbrev(code: str) -> str:
+    """Return 2-letter state abbreviation from a district code IN-S{XX}-D{YYY}."""
+    # district codes have the form IN-S{XX}-D{YYY} — take the state prefix
+    prefix = "-".join(code.split("-")[:2]) if code.startswith("IN-S") else code
+    return STATE_ABBREV.get(prefix, prefix)
+
+
 def fmt_num(v: float, unit: str) -> str:
     if unit in ("percent",):
-        return f"{v:.2f}%"
+        # One-decimal cap, trim trailing ".0" so "55.0%" → "55%" but "84.3%" stays.
+        s = f"{v:.1f}"
+        if s.endswith(".0"):
+            s = s[:-2]
+        return f"{s}%"
     if unit == "females_per_1000_males":
         return f"{v:.0f}"
     if unit == "per_1000_live_births":
@@ -152,7 +179,6 @@ def render_scorecard_rows() -> str:
             gap_class = "gap-bad" if gap > 0 else "gap-neutral"  # over-representation is the concern
             rows.append(
                 f'<tr>'
-                f'<td>{html.escape(cluster)}</td>'
                 f'<td>{html.escape(name)}</td>'
                 f'<td>{latest_year}</td>'
                 f'<td>{muslim_str}</td>'
@@ -173,7 +199,6 @@ def render_scorecard_rows() -> str:
             year = latest["year"]
             rows.append(
                 f'<tr>'
-                f'<td>{html.escape(cluster)}</td>'
                 f'<td>{html.escape(name)}</td>'
                 f'<td>{year}</td>'
                 f'<td colspan="3" style="text-align:left">{val:,} (national aggregate)</td>'
@@ -196,7 +221,6 @@ def render_scorecard_rows() -> str:
             sign = "+" if gap > 0 else ""
             rows.append(
                 f'<tr>'
-                f'<td>{html.escape(cluster)}</td>'
                 f'<td>{html.escape(name)}</td>'
                 f'<td>{year}</td>'
                 f'<td>{m_val:.2f}%</td>'
@@ -250,7 +274,6 @@ def render_scorecard_rows() -> str:
 
         rows.append(
             f'<tr>'
-            f'<td>{html.escape(cluster)}</td>'
             f'<td>{html.escape(name)}</td>'
             f'<td>{year}</td>'
             f'<td>{html.escape(muslim_str)}</td>'
@@ -288,9 +311,9 @@ TEMPLATE = """<!DOCTYPE html>
     color: var(--fg); background: var(--bg);
     margin: 0; padding: 0;
   }
-  .page { max-width: 1080px; margin: 0 auto; padding: 32px 24px 80px; }
+  .page { max-width: 1280px; margin: 0 auto; padding: 32px 24px 80px; }
   h1 { font-size: 26px; margin: 0 0 4px; letter-spacing: -0.01em; }
-  h2 { font-size: 20px; margin: 0 0 4px; letter-spacing: -0.01em; }
+  h2 { font-size: 20px; margin: 0 0 4px; letter-spacing: -0.01em; font-weight: 600; }
   .tagline { color: var(--muted); margin: 0 0 24px; font-size: 14px; }
   .status-bar {
     background: var(--card); border: 1px solid var(--rule); border-radius: 6px;
@@ -360,10 +383,10 @@ TEMPLATE = """<!DOCTYPE html>
     background: #faf7f0; border-radius: 4px; font-size: 13px; color: #5a4a2a;
   }
   .cluster-header {
-    font-size: 14px; font-weight: 700; color: var(--muted);
-    text-transform: uppercase; letter-spacing: 0.08em;
-    margin: 36px 0 10px; padding: 8px 0;
-    border-top: 2px solid var(--rule);
+    font-size: 15px; font-weight: 600; color: var(--fg);
+    letter-spacing: -0.005em;
+    margin: 32px 0 12px; padding: 6px 0 0;
+    border-top: 1px solid var(--rule);
   }
   .scorecard table { font-size: 13px; }
   .scorecard-table tbody tr:hover { background: #faf7f0; }
@@ -403,7 +426,7 @@ TEMPLATE = """<!DOCTYPE html>
     --shadow-card: 0 4px 14px rgba(0,0,0,.09);
     --t-2xs: .70rem; --t-xs: .75rem; --t-sm: .82rem; --t-base: .88rem;
   }
-  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 16px; margin-bottom: 8px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); align-items: start; gap: 16px; margin-bottom: 8px; }
   .card {
     background: var(--card); border: 1px solid var(--rule); border-radius: var(--radius);
     padding: 18px 18px 14px; display: flex; flex-direction: column;
@@ -415,11 +438,7 @@ TEMPLATE = """<!DOCTYPE html>
   .card-hero { display: flex; align-items: baseline; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
   .card-value { font-size: 1.7rem; font-weight: 700; letter-spacing: -.02em; color: var(--accent); font-feature-settings: "tnum"; }
   .card-unit, .card-year { font-size: var(--t-sm); color: var(--muted); font-weight: 500; }
-  .card-direction {
-    align-self: flex-start; font-size: .62rem; font-weight: 600; color: var(--muted);
-    background: var(--bg); padding: 1px 7px; border-radius: var(--radius-pill);
-    margin-bottom: 8px; text-transform: uppercase; letter-spacing: .03em;
-  }
+  .card-direction { display: none; }
   .card-chartwrap { width: 100%; margin: 2px 0 4px; position: relative; }
   .card-comparisons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: auto; padding-top: 10px; border-top: 1px solid var(--rule); }
   .card-comp { text-align: center; padding: 5px 4px; border-radius: 6px; }
@@ -436,6 +455,13 @@ TEMPLATE = """<!DOCTYPE html>
   .card details { margin-top: 10px; border-top: 1px dashed var(--rule); padding-top: 8px; }
   .card details summary { font-size: var(--t-xs); }
   .card details table { font-size: 12px; }
+  .scroll-table { max-height: 320px; overflow-y: auto; border: 1px solid var(--rule); border-radius: 4px; margin-top: 6px; }
+  .scroll-table table { margin-top: 0; }
+  .scroll-table thead th {
+    position: sticky; top: 0; background: var(--card);
+    border-bottom: 1px solid var(--rule); font-size: 11px;
+  }
+  .scroll-table td { padding: 4px 8px; font-size: 12px; }
   @media (max-width: 560px) { .cards { grid-template-columns: 1fr; } }
 </style>
 </head>
@@ -473,13 +499,12 @@ TEMPLATE = """<!DOCTYPE html>
     <p class="data-current">Muslim outcome vs Hindu/All baseline · sorted by gap magnitude</p>
   </div>
   <table class="scorecard-table" id="scorecard"><thead><tr>
-    <th class="sortable" data-col="0">Cluster</th>
-    <th class="sortable" data-col="1">Metric</th>
-    <th class="sortable" data-col="2">Year</th>
-    <th class="sortable" data-col="3">Muslim</th>
-    <th class="sortable" data-col="4">Hindu</th>
-    <th class="sortable" data-col="5">All</th>
-    <th class="sortable" data-col="6">Gap vs reference</th>
+    <th class="sortable" data-col="0">Metric</th>
+    <th class="sortable" data-col="1">Year</th>
+    <th class="sortable" data-col="2">Muslim</th>
+    <th class="sortable" data-col="3">Hindu</th>
+    <th class="sortable" data-col="4">All</th>
+    <th class="sortable" data-col="5">Gap vs reference</th>
   </tr></thead><tbody>
     {scorecard_rows}
   </tbody></table>
@@ -512,7 +537,8 @@ TEMPLATE = """<!DOCTYPE html>
     const t = cellText.trim();
     // Numeric extraction: pull first numeric token (handles "33.0 per 1000", "1.59× Hindu rate", etc.)
     const m = t.match(/-?[0-9,]+[.]?[0-9]*/);
-    if (m && col >= 2) return parseFloat(m[0].replace(/,/g, ''));
+    // After dropping the Cluster column, col 0 = Metric (string), col 1+ = numeric / mixed.
+    if (m && col >= 1) return parseFloat(m[0].replace(/,/g, ''));
     return t.toLowerCase();
   };
 
@@ -596,17 +622,54 @@ function lineChart(id, labels, values, color, suffix) {
 // All-India is the dashed grey baseline — an aggregate that contains every
 // community, so never a peer line. hasBreak dashes the Muslim line (cross-round
 // comparability caveat, e.g. anaemia). Value axis hugs the data (no zero base).
+// Minimalist palette: Muslim accent + non-Muslim communities in a muted gray family.
+// Each line is identified by an end-of-line label (see _endLabels plugin) — no legend.
 const TREND_STYLE = {
-  muslim:    { c: '#7b1d22', w: 3,   r: 3, label: 'Muslim' },
-  hindu:     { c: '#e6840f', w: 1.4, r: 2, label: 'Hindu' },
-  christian: { c: '#2b6cb0', w: 1.4, r: 2, label: 'Christian' },
-  sikh:      { c: '#7e3f9e', w: 1.4, r: 2, label: 'Sikh' },
-  buddhist:  { c: '#159e9e', w: 1.4, r: 2, label: 'Buddhist' },
-  jain:      { c: '#4d9221', w: 1.4, r: 2, label: 'Jain' },
-  other:     { c: '#999999', w: 1.4, r: 2, label: 'Other' },
+  muslim:    { c: '#7b1d22', w: 2.6, r: 3, label: 'Muslim' },
+  hindu:     { c: '#9e9e9e', w: 1.2, r: 0, label: 'Hindu' },
+  christian: { c: '#bdbdbd', w: 1.2, r: 0, label: 'Christian' },
+  sikh:      { c: '#bdbdbd', w: 1.2, r: 0, label: 'Sikh' },
+  buddhist:  { c: '#cfcfcf', w: 1.2, r: 0, label: 'Buddhist' },
+  jain:      { c: '#cfcfcf', w: 1.2, r: 0, label: 'Jain' },
+  other:     { c: '#d8d8d8', w: 1.2, r: 0, label: 'Other' },
 };
 const TREND_ORDER = ['muslim', 'hindu', 'christian', 'sikh', 'buddhist', 'jain', 'other'];
-function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak, refLine) {
+// Direct end-of-line labels in each dataset's own color. Replaces the legend —
+// each line self-identifies right where it terminates. Skips datasets whose last
+// point is null (those lines never reach the right edge).
+function _endLabels() {
+  return { id: 'endLabels', afterDatasetsDraw(chart) {
+    const { ctx } = chart;
+    ctx.save();
+    ctx.font = '600 10px -apple-system, system-ui, sans-serif';
+    ctx.textBaseline = 'middle';
+    const placed = []; // [y, height]
+    const sorted = chart.data.datasets.map((d, i) => ({d, i})).sort((a, b) => {
+      // Muslim painted last on top; sort by absolute weight (Muslim highest).
+      const wa = a.d.borderWidth || 1, wb = b.d.borderWidth || 1;
+      return wb - wa;
+    });
+    for (const { d, i } of sorted) {
+      if (d._isRefline) continue;
+      const data = d.data;
+      let lastIdx = data.length - 1;
+      while (lastIdx >= 0 && (data[lastIdx] == null)) lastIdx--;
+      if (lastIdx < 0) continue;
+      const meta = chart.getDatasetMeta(i);
+      const pt = meta.data[lastIdx];
+      if (!pt) continue;
+      let y = pt.y;
+      // Avoid label collisions: nudge if within 11px of another placed label.
+      while (placed.some(py => Math.abs(py - y) < 11)) y += 11;
+      placed.push(y);
+      ctx.fillStyle = d.borderColor;
+      ctx.textAlign = 'left';
+      ctx.fillText(d.label, pt.x + 5, y);
+    }
+    ctx.restore();
+  }};
+}
+function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak, refLine, dashedExtras) {
   const ds = [];
   for (const rel of TREND_ORDER) {
     if (!seriesMap[rel]) continue;
@@ -618,33 +681,48 @@ function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak, refLine) 
       order: rel === 'muslim' ? 0 : 1,
     });
   }
+  // Extra dashed series (e.g. Hindu as a reference in pop-share). Each entry:
+  // {label, data, color?}.  Drawn dashed gray, no points, end-labeled.
+  if (dashedExtras) {
+    for (const ex of dashedExtras) {
+      ds.push({
+        label: ex.label, data: ex.data, borderColor: ex.color || '#9e9e9e',
+        backgroundColor: 'transparent', fill: false, tension: 0.25, pointRadius: 0,
+        borderWidth: 1, borderDash: [5, 4], spanGaps: false, order: 2,
+      });
+    }
+  }
   if (allSeries) ds.push({
-    label: 'All-India', data: allSeries, borderColor: '#555', backgroundColor: 'transparent',
+    label: 'All-India', data: allSeries, borderColor: '#9e9e9e', backgroundColor: 'transparent',
     fill: false, tension: 0.25, pointRadius: 0, borderWidth: 1, borderDash: [2, 3],
-    spanGaps: false, order: 2,
+    spanGaps: false, order: 3,
   });
-  // Optional horizontal reference line (e.g. the Muslim population share) drawn
-  // as a flat dataset so it appears in the legend and the value axis includes it.
-  if (refLine) ds.push({
-    label: refLine.label, data: years.map(() => refLine.value), borderColor: '#9aa3a8',
-    backgroundColor: 'transparent', fill: false, tension: 0, pointRadius: 0, borderWidth: 1,
-    borderDash: [4, 3], spanGaps: false, order: 3,
-  });
+  if (refLine) {
+    const refDs = {
+      label: refLine.label, data: years.map(() => refLine.value), borderColor: '#bdbdbd',
+      backgroundColor: 'transparent', fill: false, tension: 0, pointRadius: 0, borderWidth: 1,
+      borderDash: [4, 3], spanGaps: false, order: 4,
+    };
+    refDs._isRefline = true;
+    ds.push(refDs);
+  }
   new Chart(document.getElementById(id), {
     type: 'line',
     data: { labels: years, datasets: ds },
     options: {
       responsive: true, maintainAspectRatio: false, animation: false,
+      layout: { padding: { right: 64, top: 6 } },
       plugins: {
-        legend: { display: true, position: 'top', align: 'start',
-          labels: { boxWidth: 8, boxHeight: 8, font: { size: 9 }, padding: 6 } },
+        legend: { display: false },
         tooltip: { callbacks: { label: (c) => c.dataset.label + ': ' + c.parsed.y + suffix } },
       },
       scales: {
         x: { grid: { display: false }, ticks: { font: { size: 10 } } },
-        y: { beginAtZero: false, grace: '12%', ticks: { font: { size: 10 } } },
+        y: { beginAtZero: false, grace: '12%', grid: { color: '#f0ede4', drawTicks: false },
+             border: { display: false }, ticks: { font: { size: 10 }, color: '#999' } },
       },
     },
+    plugins: [_endLabels()],
   });
 }
 
@@ -844,6 +922,62 @@ def _card_shell(label, value, unit_txt, year, polarity, chart_html, comps_html,
     )
 
 
+def _top100_districts_table(metric_id: str) -> str:
+    """Scrollable Rank | District (ST) | Pop (M) | % of pop table built from the
+    per-district rows the canonicalizer now emits. Reads `methodology_note` for
+    rank + district name + within-district Muslim percentage (the canonicalizer
+    stamps these as `rank=N; name=...; muslim_pct_of_district=...`)."""
+    rows = [r for r in load_metric(metric_id) if r["geography_level"] == "district"]
+    if not rows:
+        return ""
+    parsed = []
+    for r in rows:
+        note = r.get("methodology_note") or ""
+        # Parse "rank=N; name=...; muslim_pct_of_district=..."
+        meta = {}
+        for part in note.split(";"):
+            if "=" in part:
+                k, _, v = part.partition("=")
+                meta[k.strip()] = v.strip()
+        rank = int(meta.get("rank", "0") or 0)
+        name = meta.get("name", "")
+        try:
+            pct = float(meta.get("muslim_pct_of_district", "0"))
+        except ValueError:
+            pct = 0.0
+        muslim_count = int(float(r["value"]))
+        st_abbr = state_abbrev(r["geography_code"])
+        parsed.append((rank, name, st_abbr, muslim_count, pct))
+    parsed.sort(key=lambda x: x[0])
+    trs = []
+    for rank, name, st, muslim, pct in parsed:
+        # Format Muslim population in millions ("4.71M") for compactness
+        mil = muslim / 1_000_000
+        mil_str = f"{mil:.2f}M" if mil >= 1 else f"{mil*1000:.0f}k"
+        trs.append(
+            f"<tr>"
+            f'<td style="text-align:right">{rank}</td>'
+            f"<td>{html.escape(name)} <span style=\"color:var(--muted);font-size:11px\">({html.escape(st)})</span></td>"
+            f'<td style="text-align:right;font-feature-settings:&quot;tnum&quot;">{mil_str}</td>'
+            f'<td style="text-align:right;font-feature-settings:&quot;tnum&quot;">{pct:.1f}%</td>'
+            f"</tr>"
+        )
+    return (
+        f'<details><summary>Top {len(parsed)} districts by Muslim population</summary>'
+        f'<div class="scroll-table">'
+        f'<table>'
+        f'<thead><tr>'
+        f'<th style="text-align:right">#</th>'
+        f'<th>District (ST)</th>'
+        f'<th style="text-align:right">Pop</th>'
+        f'<th style="text-align:right">% of pop</th>'
+        f'</tr></thead>'
+        f'<tbody>{"".join(trs)}</tbody>'
+        f'</table>'
+        f'</div></details>'
+    )
+
+
 def _state_details(metric_id: str, unit: str) -> str:
     from collections import defaultdict
     rows = load_metric(metric_id)
@@ -957,31 +1091,58 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
         comps += _comp("vs All-India", _gap_str(gap, unit), _verdict_word(cls), cls)
 
     years, series, has_break = _nat_trend(mid)
-    if len(years) >= 2:
+    # 3+ rounds: multi-line trend chart. 2 rounds: too thin to be a "trend" —
+    # show the latest-year community snapshot + a "Since {y0}" delta pill.
+    # 1 round / no time dim: snapshot only.
+    if len(years) >= 3:
         # TIME SERIES card: every named community over rounds, Muslim highlighted,
-        # All-India dashed baseline; latest-year community ranking is in <details>.
+        # All-India dashed baseline; latest-year community ranking shown via the
+        # end-of-line labels on the chart itself (no redundant details table).
         named = ("muslim", "hindu", "christian", "sikh", "buddhist", "jain", "other")
         series_map = {rel: [series.get(rel, {}).get(y) for y in years]
                       for rel in named if rel in series}
         all_series = [series.get("all", {}).get(y) for y in years] if "all" in series else None
-        chart_html = f'<div class="card-chartwrap" style="height:182px"><canvas id="{cvid}"></canvas></div>'
+        chart_html = f'<div class="card-chartwrap" style="height:200px"><canvas id="{cvid}"></canvas></div>'
         js = (f'trendChart("{cvid}", {json.dumps(years)}, {json.dumps(series_map)}, '
               f'{json.dumps(all_series)}, {json.dumps(suffix)}, {json.dumps(bool(has_break))});')
-        details = _community_table(nat, unit, hib)
+        details = ""
     else:
-        # SNAPSHOT card: community bar with the All-India dashed baseline.
+        # SNAPSHOT card: latest-year community bar with All-India dashed baseline.
+        # If we have a 2-point time series, surface the Muslim Δ as a comparison pill.
+        if len(years) == 2 and "muslim" in series:
+            mfirst = series["muslim"].get(years[0])
+            mlast = series["muslim"].get(years[-1])
+            if mfirst is not None and mlast is not None:
+                delta = mlast - mfirst
+                arrow = "↑" if delta > 0 else ("↓" if delta < 0 else "→")
+                comps += _comp(f"Since {years[0]}", f"{arrow} {abs(delta):.1f}{suffix}",
+                               f"{mfirst:.1f}{suffix} → {mlast:.1f}{suffix}", "mid")
         pairs = [(COMMUNITY_LABEL[c], nat[c], c == "muslim") for c in named]
         if hib is not None:
             pairs.sort(key=lambda b: b[1], reverse=bool(hib))
+        # When the metric carries only Muslim + All-India (e.g. GER higher-ed),
+        # surface All-India as a second bar so the chart actually communicates
+        # the gap instead of being a single redundant bar.
+        if len(pairs) == 1 and all_v is not None:
+            pairs.append(("All-India", float(all_v), False))
         labels = [p[0] for p in pairs]
         values = [round(p[1], 4) for p in pairs]
         mhex = TIER_HEX.get(tier, "#555555")
         colors = [mhex if p[2] else "#D8DEE2" for p in pairs]
-        h = len(pairs) * 28 + 28
-        chart_html = f'<div class="card-chartwrap" style="height:{h}px"><canvas id="{cvid}"></canvas></div>'
-        ref = json.dumps(round(all_v, 4)) if all_v is not None else "null"
-        js = (f'hbar("{cvid}", {json.dumps(labels)}, {json.dumps(values)}, {json.dumps(colors)}, '
-              f'{json.dumps(suffix)}, {dec}, {ref}, "All-India");')
+        # Only skip the chart if there's truly nothing comparative to show.
+        if len(pairs) <= 1:
+            chart_html = ""
+            js = None
+        else:
+            h = len(pairs) * 28 + 28
+            chart_html = f'<div class="card-chartwrap" style="height:{h}px"><canvas id="{cvid}"></canvas></div>'
+            # If we already promoted All-India to a peer bar, don't ALSO draw it
+            # as a dashed reference line — that would be redundant.
+            has_all_bar = any(lbl == "All-India" for lbl in labels)
+            ref = "null" if has_all_bar else (json.dumps(round(all_v, 4)) if all_v is not None else "null")
+            ref_label = "" if has_all_bar else "All-India"
+            js = (f'hbar("{cvid}", {json.dumps(labels)}, {json.dumps(values)}, {json.dumps(colors)}, '
+                  f'{json.dumps(suffix)}, {dec}, {ref}, {json.dumps(ref_label)});')
         details = _state_details(mid, unit)
 
     return _card_shell(label, headline, CAPTION.get(mid, ""), _year_of(mid), polarity,
@@ -994,21 +1155,33 @@ def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
     headline = fmt_num(muslim, unit) if muslim is not None else "—"
     chart_html, js, note = "", None, ""
     if mid == "pop-share":
-        # Decadal multi-community trend (1961->2011): each community's share of
-        # the population over time, Muslim highlighted. No All-India line (shares).
+        # Decadal multi-community trend (1961->2011). Hindu (~80%) dominates if
+        # plotted on the same axis as Muslim + minor religions, so the chart's
+        # y-axis hugs the 0-15% band where the Muslim story is legible; Hindu's
+        # trajectory is summarised as a dashed reference line at its midpoint
+        # value, labeled "Hindu ~80%". (Hindu moved 83.45 -> 79.80 over 50
+        # years — a 3.65pp drift, not visually distinguishable from a flat line
+        # at this resolution, so a single reference value is honest.)
         years, series, _ = _nat_trend(mid)
-        named = ("muslim", "hindu", "christian", "sikh", "buddhist", "jain", "other")
+        main_named = ("muslim", "christian", "sikh", "buddhist", "jain")
         series_map = {rel: [series.get(rel, {}).get(y) for y in years]
-                      for rel in named if rel in series}
-        chart_html = f'<div class="card-chartwrap" style="height:182px"><canvas id="{cvid}"></canvas></div>'
+                      for rel in main_named if rel in series}
+        hindu_first = series.get("hindu", {}).get(years[0]) if years else None
+        hindu_last = series.get("hindu", {}).get(years[-1]) if years else None
+        chart_html = f'<div class="card-chartwrap" style="height:200px"><canvas id="{cvid}"></canvas></div>'
+        # No All-India series (shares already sum to ~100%); no refLine.
         js = (f'trendChart("{cvid}", {json.dumps(years)}, {json.dumps(series_map)}, '
               f'null, "%", false);')
-        note = ("Share of each community in India's population by census. Pre-2001 figures are a "
-                "secondary compilation of the Census decadal series (cross-checked vs primary C-01 "
-                "at 2001/2011); 1981 excludes Assam, 1991 excludes Jammu & Kashmir.")
+        note = (f"Share of each community in India's population by census. Hindu's share "
+                f"drifted from {hindu_first:.1f}% in 1961 to {hindu_last:.1f}% in 2011 — "
+                f"omitted from the chart so the Muslim + minor-community trends are legible. "
+                f"All values from primary RGI religion volumes 1961-2011; 1981 excludes "
+                f"Assam, 1991 excludes Jammu & Kashmir.")
     elif mid == "district-concentration-top100":
         # Two-bar split: the top-100 districts vs every other district. Directly
-        # visualises the concentration the headline measures.
+        # visualises the concentration the headline measures. The full top-100
+        # list (rank, district, state, count, %) is in the collapsible details
+        # below the chart — see _top100_districts_table().
         rest = round(100 - muslim, 2)
         chart_html = f'<div class="card-chartwrap" style="height:92px"><canvas id="{cvid}"></canvas></div>'
         js = (f'hbar("{cvid}", {json.dumps(["Top-100 districts", "Other districts"])}, '
@@ -1032,8 +1205,14 @@ def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
         note = ("No community ranking — AISHE tabulates “Muslim Minority” enrolment separately; "
                 "other communities are not enumerated in the same table. Top-8 states shown (thousands).")
     comps = f'<div class="comp-note">{html.escape(note)}</div>'
+    # Metric-specific drill-down (collapsed by default). For district-concentration
+    # we surface the full top-100 list; for others, state-level data if available.
+    if mid == "district-concentration-top100":
+        details = _top100_districts_table(mid)
+    else:
+        details = _state_details(mid, unit)
     return _card_shell(label, headline, CAPTION.get(mid, ""), _year_of(mid), "",
-                       chart_html, comps, src, csv_href, _state_details(mid, unit)), js
+                       chart_html, comps, src, csv_href, details), js
 
 
 def _card_share_trend(mid, label, src, csv_href, cvid):
