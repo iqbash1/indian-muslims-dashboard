@@ -327,6 +327,26 @@ TEMPLATE = """<!DOCTYPE html>
   .masthead-meta a { color: var(--muted); }
   .headline-finding { font-size: 16px; line-height: 1.55; color: var(--fg); margin: 0 0 24px; max-width: 70em; }
   .headline-finding em { font-style: normal; color: var(--accent); font-weight: 600; }
+  .compare-toggle {
+    display: inline-flex; align-items: center; gap: 8px; margin: 6px 0 20px;
+    padding: 6px 10px 6px 14px; border: 1px solid var(--rule); border-radius: 999px;
+    background: var(--card); font-size: 12px;
+  }
+  .compare-toggle-label { color: var(--muted); }
+  .compare-toggle-btn {
+    border: 1px solid var(--rule); background: var(--bg); color: var(--fg);
+    font-size: 12px; font-weight: 500; padding: 4px 12px; border-radius: 999px;
+    cursor: pointer; transition: background .15s, border-color .15s, color .15s;
+  }
+  .compare-toggle-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .compare-toggle-btn.active {
+    background: var(--accent); border-color: var(--accent); color: #fff;
+  }
+  /* Default: hide vs-Hindu pills. The compare toggle adds .compare-hindu to
+     <body>, which swaps which alternate is shown. */
+  .card-comp[data-comp-type="vs-hindu"] { display: none; }
+  body.compare-hindu .card-comp[data-comp-type="vs-all"] { display: none; }
+  body.compare-hindu .card-comp[data-comp-type="vs-hindu"] { display: block; }
   h2 { font-size: 20px; margin: 0 0 4px; letter-spacing: -0.01em; font-weight: 600; }
   .tagline { color: var(--muted); margin: 0 0 24px; font-size: 14px; }
   .status-bar {
@@ -591,6 +611,11 @@ TEMPLATE = """<!DOCTYPE html>
   <span><b>{n_metrics}</b> indicators</span>
   <span><b>{n_sources}</b> primary sources</span>
   <span><b>{n_rows}</b> data points</span>
+</div>
+<div class="compare-toggle" role="radiogroup" aria-label="Choose comparison baseline for every card">
+  <span class="compare-toggle-label">Compare Muslim outcomes to:</span>
+  <button id="compare-all" class="compare-toggle-btn active" role="radio" aria-checked="true" type="button">all-India</button>
+  <button id="compare-hindu" class="compare-toggle-btn" role="radio" aria-checked="false" type="button">Hindu only</button>
 </div>
 
 <!-- SCORECARD -->
@@ -884,6 +909,30 @@ function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak, refLine, 
 }
 
 {card_charts}
+
+// Compare toggle: flips every comparison pill on the page between vs all-India
+// (default) and vs Hindu. Setting persists across sessions via localStorage so
+// the visitor's last choice is honoured on the next visit.
+(function compareToggle() {
+  const allBtn = document.getElementById('compare-all');
+  const hinduBtn = document.getElementById('compare-hindu');
+  if (!allBtn || !hinduBtn) return;
+  function set(mode) {
+    const hindu = mode === 'hindu';
+    document.body.classList.toggle('compare-hindu', hindu);
+    allBtn.classList.toggle('active', !hindu);
+    hinduBtn.classList.toggle('active', hindu);
+    allBtn.setAttribute('aria-checked', String(!hindu));
+    hinduBtn.setAttribute('aria-checked', String(hindu));
+    try { localStorage.setItem('md_compare', mode); } catch (e) { /* private mode */ }
+    if (typeof gtag === 'function') gtag('event', 'compare_toggle', { mode });
+  }
+  allBtn.addEventListener('click', () => set('all'));
+  hinduBtn.addEventListener('click', () => set('hindu'));
+  let stored = 'all';
+  try { stored = localStorage.getItem('md_compare') || 'all'; } catch (e) { /* private */ }
+  set(stored);
+})();
 
 // Modal: clicking a card opens a larger view of the same chart by cloning
 // the card into the modal body and re-rendering the chart on a fresh canvas
@@ -1298,8 +1347,9 @@ def _year_of(metric_id: str):
     return max(yrs) if yrs else ""
 
 
-def _comp(label: str, verdict: str, detail: str, cls: str) -> str:
-    return (f'<div class="card-comp {cls}"><div class="comp-label">{html.escape(label)}</div>'
+def _comp(label: str, verdict: str, detail: str, cls: str, comp_type: str | None = None) -> str:
+    attr = f' data-comp-type="{comp_type}"' if comp_type else ""
+    return (f'<div class="card-comp {cls}"{attr}><div class="comp-label">{html.escape(label)}</div>'
             f'<div class="comp-verdict">{html.escape(verdict)}</div>'
             f'<div class="comp-detail">{html.escape(detail)}</div></div>')
 
@@ -1508,18 +1558,22 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
     else:
         tier = "mid"
 
-    # Comparison block (latest year): vs-Hindu gap + rank-among-communities (or vs-All).
+    # Comparison block: default to "vs all-India" baseline. Render "vs Hindu"
+    # alongside (marked data-comp-type="vs-hindu") so a page-level toggle can
+    # swap the visible pill when a viewer wants the inter-community read.
     comps = ""
+    if all_v is not None:
+        gap = muslim - all_v
+        cls = _verdict(gap, hib)
+        comps += _comp("vs all-India", _gap_str(gap, unit), _verdict_word(cls), cls,
+                       comp_type="vs-all")
     if hindu is not None:
         gap = muslim - hindu
         cls = _verdict(gap, hib)
-        comps += _comp("vs Hindu", _gap_str(gap, unit), _verdict_word(cls), cls)
+        comps += _comp("vs Hindu", _gap_str(gap, unit), _verdict_word(cls), cls,
+                       comp_type="vs-hindu")
     if rank:
-        comps += _comp("Among communities", f"{_ordinal(rank)} of {n}", _tier_word(tier), tier)
-    elif all_v is not None:
-        gap = muslim - all_v
-        cls = _verdict(gap, hib)
-        comps += _comp("vs All-India", _gap_str(gap, unit), _verdict_word(cls), cls)
+        comps += _comp("among communities", f"{_ordinal(rank)} of {n}", _tier_word(tier), tier)
 
     years, series, has_break = _nat_trend(mid)
     # 3+ rounds: multi-line trend chart. 2 rounds: too thin to be a "trend" —
