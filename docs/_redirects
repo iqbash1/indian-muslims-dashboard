@@ -1,0 +1,3 @@
+# Cloudflare Pages redirect rules.
+# Format: <from> <to> <status>. Evaluated before static content.
+# Empty today — add aliases here when needed.

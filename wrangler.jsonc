@@ -1,0 +1,11 @@
+// Cloudflare Workers Static Assets — serves the built dashboard at muslimdata.in.
+// docs/ is the only thing the site ships; everything else in the repo is data
+// pipeline + manifest + transforms. Cloudflare Pages auto-builds on every push
+// to main (build command: python3 dashboard/build.py; output dir: docs).
+{
+  "name": "muslimdata",
+  "compatibility_date": "2026-06-02",
+  "assets": {
+    "directory": "./docs"
+  }
+}

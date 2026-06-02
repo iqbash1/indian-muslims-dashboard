@@ -22,6 +22,23 @@ REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent
 CANONICAL_DIR = REPO_ROOT / "canonical"
 OUT_PATH = REPO_ROOT / "docs" / "index.html"
 
+# ----- Site identity (used in <title>, canonical URL, JSON-LD, sitemap) -----
+SITE_DOMAIN = "muslimdata.in"
+SITE_URL = f"https://{SITE_DOMAIN}"
+SITE_TITLE = "muslimdata.in — The state of Muslim India, in data"
+SITE_DESCRIPTION = (
+    "A scorecard of living-conditions indicators for India's Muslim population, "
+    "with Hindu and all-India comparison baselines on every metric. "
+    "Provenance-traced, Sachar-Committee-style measurement."
+)
+
+# ----- Analytics IDs (substituted into docs/js/analytics.js at build time) -----
+# Replace these with the real IDs from analytics.google.com and clarity.microsoft.com.
+# When left as the "__..." placeholders, the analytics.js loader skips loading
+# anything — the site ships clean without telemetry until you swap them in.
+GA4_ID = "__GA4_ID__"  # e.g. "G-XXXXXXXXXX"
+CLARITY_ID = "__CLARITY_ID__"  # e.g. "abc123xyz9"
+
 
 def load_metric(name: str) -> list[dict]:
     rows: list[dict] = []
@@ -268,9 +285,19 @@ TEMPLATE = """<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Indian Muslims Living Conditions — Preview</title>
+<title>{site_title}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="{site_description}">
+<link rel="canonical" href="{site_url}/">
+<meta property="og:title" content="{site_title}">
+<meta property="og:description" content="{site_description}">
+<meta property="og:url" content="{site_url}/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="{site_title}">
+<meta name="twitter:description" content="{site_description}">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="js/analytics.js" defer></script>
 <style>
   :root {
     --fg: #1a1a1a;
@@ -292,6 +319,7 @@ TEMPLATE = """<!DOCTYPE html>
   }
   .page { max-width: 1280px; margin: 0 auto; padding: 32px 24px 80px; }
   h1 { font-size: 26px; margin: 0 0 4px; letter-spacing: -0.01em; }
+  .h1-sub { font-weight: 400; color: var(--muted); font-size: 18px; letter-spacing: 0; }
   h2 { font-size: 20px; margin: 0 0 4px; letter-spacing: -0.01em; font-weight: 600; }
   .tagline { color: var(--muted); margin: 0 0 24px; font-size: 14px; }
   .status-bar {
@@ -419,6 +447,8 @@ TEMPLATE = """<!DOCTYPE html>
   .card-unit, .card-year { font-size: var(--t-sm); color: var(--muted); font-weight: 500; }
   .card-direction { display: none; }
   .card-chartwrap { width: 100%; margin: 2px 0 4px; position: relative; }
+  .card-chartscroll { width: 100%; margin: 2px 0 4px; overflow-y: auto; overflow-x: hidden; border: 1px solid var(--rule); border-radius: 4px; }
+  .card-chartscroll .card-chartwrap { margin: 0; }
   .card-comparisons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: auto; padding-top: 10px; border-top: 1px solid var(--rule); }
   .card-comp { text-align: center; padding: 5px 4px; border-radius: 6px; }
   .comp-label { font-size: var(--t-xs); color: var(--muted); font-weight: 500; margin-bottom: 2px; }
@@ -468,7 +498,7 @@ TEMPLATE = """<!DOCTYPE html>
 <body>
 <div class="page">
 
-<h1>Indian Muslims — Living Conditions Dashboard</h1>
+<h1>muslimdata.in <span class="h1-sub">— The state of Muslim India, in data</span></h1>
 <p class="tagline">Built {timestamp} · <a href="https://github.com/iqbash1/indian-muslims-dashboard">source on GitHub</a></p>
 
 <section class="intro">
@@ -755,6 +785,9 @@ def build() -> None:
         "{scorecard_rows}": render_scorecard_rows(),
         "{cluster_grids}": cluster_grids,
         "{card_charts}": card_charts,
+        "{site_title}": html.escape(SITE_TITLE),
+        "{site_description}": html.escape(SITE_DESCRIPTION),
+        "{site_url}": SITE_URL,
     }
     html_out = TEMPLATE
     for k, v in substitutions.items():
@@ -770,14 +803,24 @@ def build() -> None:
     for csv_path in CANONICAL_DIR.glob("*.csv"):
         _shutil.copy2(csv_path, publish_canonical / csv_path.name)
 
+    # Emit docs/js/analytics.js from the template, substituting GA4 + Clarity
+    # IDs. Treated as build output (regenerated each build), like index.html.
+    analytics_src = REPO_ROOT / "dashboard" / "analytics.template.js"
+    analytics_out = OUT_PATH.parent / "js" / "analytics.js"
+    analytics_out.parent.mkdir(parents=True, exist_ok=True)
+    js_text = analytics_src.read_text()
+    js_text = js_text.replace("__GA4_ID__", GA4_ID).replace("__CLARITY_ID__", CLARITY_ID)
+    analytics_out.write_text(js_text)
+
     # Ensure a .nojekyll is inside the publish folder so GitHub Pages serves the
     # HTML as-is without Jekyll processing (root-level .nojekyll doesn't apply
-    # when publishing from a subfolder).
+    # when publishing from a subfolder). Harmless on Cloudflare Pages.
     (OUT_PATH.parent / ".nojekyll").touch()
 
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUT_PATH.write_text(html_out)
     print(f"wrote {OUT_PATH.relative_to(REPO_ROOT)} ({len(html_out):,} bytes)")
+    print(f"wrote {analytics_out.relative_to(REPO_ROOT)} ({len(js_text):,} bytes)")
 
 
 # ============================================================================
@@ -1303,8 +1346,12 @@ def _card_timeseries(mid, label, unit, src, csv_href, cvid):
                      for r in load_metric(mid) if r["geography_level"] == "state"],
                     key=lambda x: -x[1])
         if st:
-            h = len(st) * 26 + 20
-            chart_html = f'<div class="card-chartwrap" style="height:{h}px"><canvas id="{cvid}"></canvas></div>'
+            inner_h = len(st) * 26 + 20
+            max_h = 240
+            inner = (f'<div class="card-chartwrap" style="height:{inner_h}px">'
+                     f'<canvas id="{cvid}"></canvas></div>')
+            chart_html = (f'<div class="card-chartscroll" style="max-height:{max_h}px">{inner}</div>'
+                          if inner_h > max_h else inner)
             js = (f'hbar("{cvid}", {json.dumps([s[0] for s in st])}, '
                   f'{json.dumps([round(s[1], 2) for s in st])}, '
                   f'{json.dumps(["#2b6cb0"] * len(st))}, "%", 1);')

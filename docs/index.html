@@ -2,9 +2,19 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Indian Muslims Living Conditions — Preview</title>
+<title>muslimdata.in — The state of Muslim India, in data</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A scorecard of living-conditions indicators for India&#x27;s Muslim population, with Hindu and all-India comparison baselines on every metric. Provenance-traced, Sachar-Committee-style measurement.">
+<link rel="canonical" href="https://muslimdata.in/">
+<meta property="og:title" content="muslimdata.in — The state of Muslim India, in data">
+<meta property="og:description" content="A scorecard of living-conditions indicators for India&#x27;s Muslim population, with Hindu and all-India comparison baselines on every metric. Provenance-traced, Sachar-Committee-style measurement.">
+<meta property="og:url" content="https://muslimdata.in/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="muslimdata.in — The state of Muslim India, in data">
+<meta name="twitter:description" content="A scorecard of living-conditions indicators for India&#x27;s Muslim population, with Hindu and all-India comparison baselines on every metric. Provenance-traced, Sachar-Committee-style measurement.">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="js/analytics.js" defer></script>
 <style>
   :root {
     --fg: #1a1a1a;
@@ -26,6 +36,7 @@
   }
   .page { max-width: 1280px; margin: 0 auto; padding: 32px 24px 80px; }
   h1 { font-size: 26px; margin: 0 0 4px; letter-spacing: -0.01em; }
+  .h1-sub { font-weight: 400; color: var(--muted); font-size: 18px; letter-spacing: 0; }
   h2 { font-size: 20px; margin: 0 0 4px; letter-spacing: -0.01em; font-weight: 600; }
   .tagline { color: var(--muted); margin: 0 0 24px; font-size: 14px; }
   .status-bar {
@@ -153,6 +164,8 @@
   .card-unit, .card-year { font-size: var(--t-sm); color: var(--muted); font-weight: 500; }
   .card-direction { display: none; }
   .card-chartwrap { width: 100%; margin: 2px 0 4px; position: relative; }
+  .card-chartscroll { width: 100%; margin: 2px 0 4px; overflow-y: auto; overflow-x: hidden; border: 1px solid var(--rule); border-radius: 4px; }
+  .card-chartscroll .card-chartwrap { margin: 0; }
   .card-comparisons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: auto; padding-top: 10px; border-top: 1px solid var(--rule); }
   .card-comp { text-align: center; padding: 5px 4px; border-radius: 6px; }
   .comp-label { font-size: var(--t-xs); color: var(--muted); font-weight: 500; margin-bottom: 2px; }
@@ -202,8 +215,8 @@
 <body>
 <div class="page">
 
-<h1>Indian Muslims — Living Conditions Dashboard</h1>
-<p class="tagline">Built 2026-06-02 16:05 · <a href="https://github.com/iqbash1/indian-muslims-dashboard">source on GitHub</a></p>
+<h1>muslimdata.in <span class="h1-sub">— The state of Muslim India, in data</span></h1>
+<p class="tagline">Built 2026-06-02 16:59 · <a href="https://github.com/iqbash1/indian-muslims-dashboard">source on GitHub</a></p>
 
 <section class="intro">
   <p>A scorecard of living-conditions indicators for India's Muslim population, with
@@ -285,7 +298,7 @@
 
 <h2 class="cluster-header">Representation</h2>
 <div class="cards">
-<section class="card"><div class="card-metric">Muslim share of Lok Sabha members</div><div class="card-hero"><span class="card-value">4.4%</span><span class="card-unit">of 543 Lok Sabha seats</span><span class="card-year">(2024)</span></div><div class="card-chartwrap" style="height:150px"><canvas id="cc-ls-share"></canvas></div><div class="card-comparisons"><div class="card-comp bad"><div class="comp-label">vs population</div><div class="comp-verdict">-9.8pp</div><div class="comp-detail">vs 14.2% pop share</div></div><div class="card-comp neutral"><div class="comp-label">trend</div><div class="comp-verdict">1952–2024</div><div class="comp-detail">4.3% → 4.4%</div></div></div><div class="card-foot"><a href="canonical/ls-share.csv">PRS / ECI affidavits</a></div></section><section class="card"><div class="card-metric">Muslim share of state legislative assembly members</div><div class="card-hero"><span class="card-value">6%</span><span class="card-unit">of state-assembly seats (agg.)</span><span class="card-year">(2024)</span></div><div class="card-chartwrap" style="height:826px"><canvas id="cc-mla-share"></canvas></div><div class="card-comparisons"><div class="card-comp bad"><div class="comp-label">vs population</div><div class="comp-verdict">-8.2pp</div><div class="comp-detail">vs 14.2% pop share</div></div><div class="card-comp neutral"><div class="comp-label">national agg</div><div class="comp-verdict">6%</div><div class="comp-detail">across assemblies</div></div></div><div class="card-foot"><a href="canonical/mla-share.csv">PRS / ECI affidavits</a></div></section>
+<section class="card"><div class="card-metric">Muslim share of Lok Sabha members</div><div class="card-hero"><span class="card-value">4.4%</span><span class="card-unit">of 543 Lok Sabha seats</span><span class="card-year">(2024)</span></div><div class="card-chartwrap" style="height:150px"><canvas id="cc-ls-share"></canvas></div><div class="card-comparisons"><div class="card-comp bad"><div class="comp-label">vs population</div><div class="comp-verdict">-9.8pp</div><div class="comp-detail">vs 14.2% pop share</div></div><div class="card-comp neutral"><div class="comp-label">trend</div><div class="comp-verdict">1952–2024</div><div class="comp-detail">4.3% → 4.4%</div></div></div><div class="card-foot"><a href="canonical/ls-share.csv">PRS / ECI affidavits</a></div></section><section class="card"><div class="card-metric">Muslim share of state legislative assembly members</div><div class="card-hero"><span class="card-value">6%</span><span class="card-unit">of state-assembly seats (agg.)</span><span class="card-year">(2024)</span></div><div class="card-chartscroll" style="max-height:240px"><div class="card-chartwrap" style="height:826px"><canvas id="cc-mla-share"></canvas></div></div><div class="card-comparisons"><div class="card-comp bad"><div class="comp-label">vs population</div><div class="comp-verdict">-8.2pp</div><div class="comp-detail">vs 14.2% pop share</div></div><div class="card-comp neutral"><div class="comp-label">national agg</div><div class="comp-verdict">6%</div><div class="comp-detail">across assemblies</div></div></div><div class="card-foot"><a href="canonical/mla-share.csv">PRS / ECI affidavits</a></div></section>
 </div>
 
 <h2 class="cluster-header">Justice &amp; Civic</h2>
@@ -294,7 +307,7 @@
 </div>
 
 <footer>
-  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-06-02 16:05.
+  <p>Built by <code>dashboard/build.py</code> from <code>canonical/*.csv</code> at 2026-06-02 16:59.
   Every number on this page traces L4 → L3 (canonical) → L2 (extracted) → L1 (source file)
   with SHA256 sidecar provenance. Re-run the builder after any canonical change:
   <code>python dashboard/build.py</code></p>
