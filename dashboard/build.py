@@ -333,9 +333,12 @@ TEMPLATE = """<!DOCTYPE html>
   }
   .page { max-width: 1280px; margin: 0 auto; padding: 32px 24px 80px; }
   h1 { font-size: 32px; margin: 0 0 12px; letter-spacing: -0.015em; line-height: 1.2; }
-  .masthead { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
+  .masthead { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px 16px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
   .masthead-brand { font-size: 14px; font-weight: 600; color: var(--accent); text-decoration: none; letter-spacing: -0.01em; }
   .masthead-brand:hover { text-decoration: underline; }
+  .masthead-nav { display: flex; gap: 14px; margin-right: auto; margin-left: 24px; }
+  .masthead-nav a { font-size: 13px; color: var(--fg); text-decoration: none; font-weight: 500; }
+  .masthead-nav a:hover { color: var(--accent); }
   .masthead-meta { margin: 0; font-size: 12px; color: var(--muted); }
   .masthead-meta a { color: var(--muted); }
   .headline-finding { font-size: 16px; line-height: 1.55; color: var(--fg); margin: 0 0 24px; max-width: 70em; }
@@ -623,7 +626,11 @@ TEMPLATE = """<!DOCTYPE html>
 
 <div class="masthead">
   <a class="masthead-brand" href="/">muslimdata.in</a>
-  <p class="masthead-meta">Last updated {timestamp} · <a href="https://github.com/iqbash1/indian-muslims-dashboard">open source on GitHub</a></p>
+  <nav class="masthead-nav">
+    <a href="/about/">About</a>
+    <a href="https://github.com/iqbash1/indian-muslims-dashboard">GitHub</a>
+  </nav>
+  <p class="masthead-meta">Last updated {timestamp}</p>
 </div>
 <h1>The state of Muslim India, in data</h1>
 
@@ -1198,6 +1205,244 @@ def _emit_metric_stubs(out_dir: pathlib.Path) -> int:
     return written
 
 
+ABOUT_TEMPLATE = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>About — muslimdata.in</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="About muslimdata.in: mission, methodology, sources, and how to contribute or report errors.">
+<link rel="canonical" href="{site_url}/about/">
+<meta property="og:title" content="About muslimdata.in">
+<meta property="og:description" content="A scorecard of living-conditions indicators for India's Muslim population, with Hindu and all-India comparison baselines on every metric.">
+<meta property="og:url" content="{site_url}/about/">
+<meta property="og:type" content="article">
+<script src="/js/analytics.js" defer></script>
+<style>
+  :root {{
+    --fg: #1a1a1a; --muted: #666; --bg: #fafaf7; --card: #ffffff;
+    --rule: #e6e3da; --accent: #7b1d22;
+  }}
+  body {{
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    color: var(--fg); background: var(--bg); margin: 0; padding: 0;
+  }}
+  .page {{ max-width: 760px; margin: 0 auto; padding: 36px 24px 64px; }}
+  .masthead {{
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 8px 16px; margin-bottom: 14px; padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule);
+  }}
+  .masthead-brand {{ font-size: 14px; font-weight: 600; color: var(--accent); text-decoration: none; }}
+  .masthead-nav {{ display: flex; gap: 14px; margin-right: auto; margin-left: 24px; }}
+  .masthead-nav a {{ font-size: 13px; color: var(--fg); text-decoration: none; font-weight: 500; }}
+  .masthead-nav a:hover {{ color: var(--accent); }}
+  .masthead-meta {{ margin: 0; font-size: 12px; color: var(--muted); }}
+  h1 {{ font-size: 30px; margin: 16px 0 8px; letter-spacing: -0.01em; line-height: 1.2; }}
+  .lede {{ font-size: 17px; color: var(--muted); margin: 0 0 28px; }}
+  h2 {{ font-size: 20px; margin: 36px 0 12px; }}
+  p, li {{ font-size: 15px; line-height: 1.65; }}
+  a {{ color: var(--accent); }}
+  ul.sources-list {{ list-style: none; padding: 0; margin: 12px 0; }}
+  ul.sources-list li {{
+    border-bottom: 1px solid var(--rule); padding: 12px 0;
+  }}
+  ul.sources-list li:last-child {{ border-bottom: none; }}
+  .source-name {{ font-weight: 600; color: var(--fg); }}
+  .source-meta {{ font-size: 13px; color: var(--muted); margin-top: 2px; }}
+  .source-meta code {{ background: var(--card); padding: 1px 5px; border-radius: 3px; font-size: 12px; }}
+  hr {{ border: none; border-top: 1px solid var(--rule); margin: 36px 0; }}
+  footer {{ font-size: 13px; color: var(--muted); margin-top: 48px; }}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="masthead">
+  <a class="masthead-brand" href="/">muslimdata.in</a>
+  <nav class="masthead-nav">
+    <a href="/">Dashboard</a>
+    <a href="/about/">About</a>
+    <a href="https://github.com/iqbash1/indian-muslims-dashboard">GitHub</a>
+  </nav>
+  <p class="masthead-meta">Last updated {timestamp}</p>
+</div>
+
+<h1>About muslimdata.in</h1>
+<p class="lede">A scorecard of living-conditions indicators for India's Muslim
+population, with Hindu and all-India comparison baselines on every metric.</p>
+
+<h2>Why this exists</h2>
+<p>The Sachar Committee report (2006) remains India's most-cited assessment of
+Muslim socio-economic status. Nearly two decades later, no single public
+resource keeps that lens current: the data exists, scattered across the
+Census of India, NCRB, NFHS, AISHE, PLFS, and other primary sources, but it
+is not assembled in one place, with comparison baselines, in a form that a
+non-specialist can read in five minutes.</p>
+<p>muslimdata.in is an attempt at that single place. Every number is sourced
+from a primary public dataset, traced back to its original file, and shown
+alongside the Hindu and all-India comparison so the reader can judge the gap
+without having to compute it.</p>
+
+<h2>What's on the dashboard</h2>
+<p>{n_metrics} indicators across six themes (population, education,
+employment, health, representation, justice), drawn from {n_sources}
+primary sources. Each card shows the Muslim value, where it ranks among
+religious communities, and where the source has multiple survey rounds,
+how it has changed over time.</p>
+<p>Click any card to open a larger view with the full methodology notes for
+that indicator, including period covered, cut-offs, sample design, and known
+caveats. Every card also links to the downloadable CSV of the underlying
+data.</p>
+
+<h2>How the data is handled</h2>
+<p>Every published value follows the same four-stage pipeline:</p>
+<ol>
+<li><b>Source.</b> The original file (Census table, NFHS chapter PDF, NCRB
+Crime in India volume, AISHE all-India report, PLFS unit-level data,
+candidate-affidavit compilations, etc.) is downloaded from the publishing
+agency, fingerprinted with a SHA-256 checksum, and archived in this repo's
+<code>/sources</code> directory so any reader can reproduce the extract.</li>
+<li><b>Extract.</b> A per-source script reads the original file and produces
+a cleaned table.</li>
+<li><b>Canonicalise.</b> Cleaned tables are reshaped into a long
+schema-validated CSV per indicator (one row per geography × religion ×
+year), stored in <code>/canonical</code>. These are the files linked from
+every card footer.</li>
+<li><b>Publish.</b> The dashboard you are reading is generated from those
+CSVs, with no live API calls. The build re-runs whenever the canonical
+files change, and the deployed site is rebuilt automatically on every push
+to the main branch.</li>
+</ol>
+<p>The point of this discipline is that any number on the page can be
+independently verified, end-to-end, by anyone with a browser and a
+spreadsheet program.</p>
+
+<h2>Primary sources</h2>
+<p>The {n_sources} sources currently feeding the dashboard, with their
+publishers and release cadence:</p>
+<ul class="sources-list">
+{sources_html}
+</ul>
+
+<h2>Limitations</h2>
+<ul>
+<li>The most recent census is 2011. The 2021 round has been indefinitely
+delayed, so every Census-derived indicator (population share, sex ratio,
+literacy, urban share, district concentration) is dated and will remain so
+until the next round is released.</li>
+<li>Several Muslim-disadvantage indicators commonly cited in news coverage,
+including share of central civil services intake, share of judicial
+appointments, and share of corporate-board seats, are not yet on the
+dashboard because the data is not publicly released in religion-disaggregated
+form. Where civil-society compilations exist, we are evaluating them for
+inclusion.</li>
+<li>NCRB's "communal incidents" series is a count of police-registered
+rioting cases under IPC Sec.147-151. Several states stopped recording
+'communal' as a separate sub-category after ~2017, which deflates the
+official totals. Civil-society compilations (India Hate Lab,
+Documentation of the Oppressed) report substantially higher counts.</li>
+<li>For metrics like the MLA share, religion is not officially tabulated
+by the Election Commission. Numbers rely on candidate-affidavit
+classification by journalists.</li>
+</ul>
+
+<h2>Contributing or reporting an error</h2>
+<p>The repository is open source on
+<a href="https://github.com/iqbash1/indian-muslims-dashboard">GitHub</a>.
+Issues and pull requests are welcome:</p>
+<ul>
+<li>If a number looks wrong, open an issue with the metric, the page URL,
+and the number you expected. The pipeline preserves the full source chain
+so a correction is traceable to its origin.</li>
+<li>If you want a metric added, open an issue with the indicator definition
+and the publicly accessible primary source. We prioritise metrics where
+religion-disaggregated data is officially released.</li>
+<li>If you spot a stale Census date or out-of-date methodology note,
+flagging it as an issue is the fastest fix.</li>
+</ul>
+
+<hr>
+
+<footer>
+<p>muslimdata.in is independent and non-commercial. The project, the
+manifest, the canonical CSVs, and this site are all open source under the
+MIT licence. Last updated {timestamp}.</p>
+</footer>
+
+</div>
+</body>
+</html>
+"""
+
+
+def _emit_about_page(out_dir: pathlib.Path, timestamp: str) -> None:
+    """Render the About page from manifest/sources.yaml plus the static
+    template above. Sources are listed in the order they appear in the
+    manifest, deduplicated by publisher to avoid listing all 36 Census
+    state-MDDS targets as separate sources."""
+    import yaml as _yaml
+    with (REPO_ROOT / "manifest" / "sources.yaml").open() as f:
+        sources_data = _yaml.safe_load(f)
+
+    # Collect only sources that actually feed a live metric (i.e. appear in
+    # canonical/*.csv) so the about page lists what's truly in use.
+    used_source_ids = set()
+    for cpath in sorted(CANONICAL_DIR.glob("*.csv")):
+        with cpath.open() as f:
+            for row in csv.DictReader(f):
+                if row.get("source_id"):
+                    used_source_ids.add(row["source_id"])
+
+    sources_items = []
+    seen = set()
+    for s in sources_data.get("sources", []):
+        sid = s.get("id", "")
+        if sid not in used_source_ids:
+            continue
+        if sid in seen:
+            continue
+        seen.add(sid)
+        name = s.get("name", sid)
+        publisher = s.get("publisher", "")
+        home_url = s.get("home_url", "")
+        cadence = s.get("cadence", "")
+        name_html = (f'<a href="{html.escape(home_url)}">{html.escape(name)}</a>'
+                     if home_url else html.escape(name))
+        meta_bits = []
+        if publisher:
+            meta_bits.append(html.escape(publisher))
+        if cadence:
+            # Cadence comes in as raw strings like "10-year", "annual",
+            # "~5-year", "annual + quarterly-urban". Render each naturally.
+            c = cadence.lower().strip()
+            if c == "annual":
+                pretty = "released annually"
+            elif c == "decadal":
+                pretty = "released every decade"
+            elif c.endswith("-year"):
+                pretty = f"released every {c[:-len('-year')]} years".replace(" ~ ", " ~")
+            else:
+                pretty = f"cadence: {cadence}"
+            meta_bits.append(html.escape(pretty))
+        sources_items.append(
+            f'<li><div class="source-name">{name_html}</div>'
+            f'<div class="source-meta">{" · ".join(meta_bits)}</div></li>'
+        )
+
+    page = ABOUT_TEMPLATE.format(
+        site_url=SITE_URL,
+        timestamp=timestamp,
+        n_metrics=len(SCORECARD_SPEC),
+        n_sources=len(seen),
+        sources_html="\n".join(sources_items),
+    )
+    about_dir = out_dir / "about"
+    about_dir.mkdir(exist_ok=True)
+    (about_dir / "index.html").write_text(page)
+    print(f"wrote {(about_dir / 'index.html').relative_to(REPO_ROOT)} ({len(page):,} bytes)")
+
+
 def build() -> None:
     # Status-bar counts derived from canonical (SSOT — never goes stale).
     n_metrics = len(SCORECARD_SPEC)
@@ -1252,6 +1497,9 @@ def build() -> None:
     # title/description when a user shares the link; the body then
     # client-redirects to the main page's hash for the modal to auto-open.
     _emit_metric_stubs(OUT_PATH.parent)
+
+    # Emit the About page at /about/index.html.
+    _emit_about_page(OUT_PATH.parent, substitutions["{timestamp}"])
 
     # Ensure a .nojekyll is inside the publish folder so GitHub Pages serves the
     # HTML as-is without Jekyll processing (root-level .nojekyll doesn't apply
