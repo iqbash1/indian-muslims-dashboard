@@ -1011,7 +1011,10 @@ function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak, refLine, 
         tooltip: {
           mode: 'index', intersect: false,
           itemSort: (a, b) => b.parsed.y - a.parsed.y,
-          filter: (item) => item.parsed.y != null && !item.dataset._isRefline,
+          // Drop null years (lines that don't have data at this x). Keep
+          // refline datasets (All-India / median) so a card-view tooltip
+          // shows both the Muslim line AND the comparison reference.
+          filter: (item) => item.parsed.y != null,
           callbacks: { label: (c) => c.dataset.label + ': ' + c.parsed.y + suffix },
         },
       },
@@ -1651,7 +1654,7 @@ def _comparison_series(series: dict, years: list[int]):
         values.append(_stats.median(vals) if vals else None)
     if not any(v is not None for v in values):
         return None, None, None
-    return values, "Community median", "vs community median"
+    return values, "All religions (median)", "vs all religions (median)"
 COMMUNITY_LABEL = {
     "hindu": "Hindu", "muslim": "Muslim", "christian": "Christian",
     "sikh": "Sikh", "buddhist": "Buddhist", "jain": "Jain",
