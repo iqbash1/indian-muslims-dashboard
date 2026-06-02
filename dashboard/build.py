@@ -442,7 +442,9 @@ TEMPLATE = """<!DOCTYPE html>
   }
   .card:hover { border-color: var(--accent); box-shadow: var(--shadow-card); transform: translateY(-2px); }
   .card:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
-  .card-metric { font-size: var(--t-sm); font-weight: 600; color: var(--fg); margin-bottom: 8px; line-height: 1.3; }
+  .card-metric { font-size: var(--t-sm); font-weight: 600; color: var(--fg); margin-bottom: 4px; line-height: 1.3; }
+  .card-plain { font-size: var(--t-xs); color: var(--muted); margin: 0 0 10px; line-height: 1.45; font-weight: 400; }
+  .modal-body .card-plain { font-size: 14px; color: var(--fg); margin: 0 0 16px; line-height: 1.55; max-width: 56em; }
   .card-hero { display: flex; align-items: baseline; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
   .card-value { font-size: 1.7rem; font-weight: 700; letter-spacing: -.02em; color: var(--accent); font-feature-settings: "tnum"; }
   .card-unit, .card-year { font-size: var(--t-sm); color: var(--muted); font-weight: 500; }
@@ -1284,13 +1286,41 @@ def _comp(label: str, verdict: str, detail: str, cls: str) -> str:
             f'<div class="comp-detail">{html.escape(detail)}</div></div>')
 
 
+PLAIN_DEFINITION = {
+    "pop-share": "What share of India's population is Muslim, by the most recent census.",
+    "urban-share": "What share of each community lives in towns and cities rather than villages.",
+    "sex-ratio": "Number of females per 1,000 males. Higher is more balanced; lower means a gender imbalance favouring males.",
+    "district-concentration-top100": "Of all Indian Muslims, what fraction lives in the 100 districts with the largest Muslim populations.",
+    "lit-7plus": "Of people aged 7 and older, what share can read and write. The Census uses 7+ as the standard cutoff to exclude very young children.",
+    "ger-higher-ed": "Of every 100 young people in the typical college-going age band (18 to 23), how many are enrolled in higher education.",
+    "muslim-higher-ed-enrolment": "Total number of Muslim students enrolled in higher education across India in the latest year.",
+    "lfpr-15plus": "Of people aged 15 and older, what share is in the workforce, either working or actively looking for work.",
+    "wpr-15plus": "Of people aged 15 and older, what share is currently working.",
+    "salaried-share": "Of all workers, what share has regular salaried jobs (as opposed to self-employment or casual labour).",
+    "imr": "Of every 1,000 babies born, how many die before their first birthday. Lower is better.",
+    "stunting-u5": "Of children under 5, what share is too short for their age, a long-term sign of chronic undernutrition.",
+    "inst-delivery": "Of recent live births, what share took place at a hospital or health facility rather than at home.",
+    "women-anemia": "Of women in childbearing age (15 to 49), what share has anaemia (low haemoglobin).",
+    "improved-sanitation": "Of households, what share has access to a toilet of any type.",
+    "ls-share": "Of the 543 seats in India's national parliament (Lok Sabha), what share is held by Muslim MPs.",
+    "mla-share": "Across all 30 state and UT legislative assemblies that hold elections, what share of MLA seats is held by Muslims.",
+    "prison-rate-per-100k": "For every 100,000 people of a religion, how many are in prison. Allows fair comparison across communities of different size.",
+    "undertrial-rate-per-100k": "For every 100,000 people of a religion, how many are in prison awaiting trial (not yet convicted).",
+    "communal-incidents-govt": "Number of communal or religious rioting incidents recorded in police records each year (NCRB).",
+    "communal-incidents-civic": "Number of in-person events (rallies, religious gatherings, political speeches) targeting Muslims with hateful rhetoric, documented by India Hate Lab.",
+}
+
+
 def _card_shell(mid, label, value, unit_txt, year, polarity, chart_html, comps_html,
                 src, csv_href, details_html="") -> str:
     pill = f'<div class="card-direction">{html.escape(polarity)}</div>' if polarity else ""
     yr = f'<span class="card-year">({html.escape(str(year))})</span>' if year else ""
+    plain = PLAIN_DEFINITION.get(mid, "")
+    plain_html = f'<p class="card-plain">{html.escape(plain)}</p>' if plain else ""
     return (
         f'<section class="card" data-metric-id="{html.escape(mid)}" data-metric-name="{html.escape(label)}">'
         f'<div class="card-metric">{html.escape(label)}</div>'
+        f'{plain_html}'
         f'<div class="card-hero"><span class="card-value">{value}</span>'
         f'<span class="card-unit">{html.escape(unit_txt)}</span>{yr}</div>'
         f'{pill}{chart_html}'
