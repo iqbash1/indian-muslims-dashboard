@@ -440,6 +440,16 @@ TEMPLATE = """<!DOCTYPE html>
   }
   .scorecard table { font-size: 13px; }
   .scorecard-table tbody tr:hover { background: #faf7f0; }
+  .scorecard-search-wrap { margin-top: 10px; }
+  .scorecard-search {
+    width: 100%; max-width: 320px;
+    padding: 7px 12px; font-size: 13px; font-family: inherit;
+    border: 1px solid var(--rule); border-radius: 6px; background: var(--card);
+    color: var(--fg);
+  }
+  .scorecard-search:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+  .scorecard-search::placeholder { color: var(--muted); }
+  .scorecard-table tbody tr.search-hidden { display: none; }
   .scorecard-table th.sortable {
     cursor: pointer; user-select: none;
   }
@@ -565,7 +575,17 @@ TEMPLATE = """<!DOCTYPE html>
     border-bottom: 1px solid var(--rule); font-size: 11px;
   }
   .scroll-table td { padding: 4px 8px; font-size: 12px; }
-  @media (max-width: 560px) { .cards { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) {
+    .cards { grid-template-columns: 1fr; }
+    h1 { font-size: 24px; }
+    .headline-finding { font-size: 14px; }
+    .masthead { gap: 6px 12px; }
+    .masthead-nav { margin-left: 0; gap: 10px; }
+    .compare-toggle { flex-wrap: wrap; padding: 8px 12px; }
+    .compare-toggle-label { width: 100%; margin-bottom: 4px; }
+    .scorecard-table { font-size: 12px; }
+    .scorecard-table th, .scorecard-table td { padding: 6px 4px; }
+  }
 
   /* Modal: click any card to open a larger view of the same chart. */
   .cards .card { cursor: pointer; }
@@ -671,6 +691,10 @@ TEMPLATE = """<!DOCTYPE html>
   <div class="tile-head">
     <h2>Scorecard: all metrics at a glance</h2>
     <p class="data-current">Muslim outcome vs Hindu/All baseline · sorted by gap magnitude</p>
+    <div class="scorecard-search-wrap">
+      <input type="search" id="scorecard-search" class="scorecard-search"
+        placeholder="Search metrics…" aria-label="Search metrics in the scorecard">
+    </div>
   </div>
   <table class="scorecard-table" id="scorecard"><thead><tr>
     <th class="sortable" data-col="0">Metric</th>
@@ -752,6 +776,22 @@ TEMPLATE = """<!DOCTYPE html>
       headers.forEach(x => x.classList.remove('sorted-asc', 'sorted-desc'));
       h.classList.add(dir === 1 ? 'sorted-asc' : 'sorted-desc');
       lastSorted = { col, dir };
+    });
+  });
+})();
+
+// Scorecard search: filters table rows by case-insensitive substring match
+// against the metric name column. Empty input restores all rows.
+(function setupScorecardSearch() {
+  const input = document.getElementById('scorecard-search');
+  const table = document.getElementById('scorecard');
+  if (!input || !table) return;
+  const rows = Array.from(table.querySelectorAll('tbody tr'));
+  input.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    rows.forEach(r => {
+      const name = r.querySelector('td')?.textContent.toLowerCase() || '';
+      r.classList.toggle('search-hidden', q.length > 0 && !name.includes(q));
     });
   });
 })();
@@ -1069,7 +1109,28 @@ function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak, refLine, 
     if (e.target === overlay) closeModal();
   });
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !overlay.hidden) closeModal();
+    if (e.key === 'Escape' && !overlay.hidden) {
+      closeModal();
+      return;
+    }
+    // Focus trap: cycle Tab focus only among interactive elements inside the
+    // open modal so screen-reader / keyboard users can't tab into the page
+    // behind the overlay.
+    if (e.key === 'Tab' && !overlay.hidden) {
+      const focusables = overlay.querySelectorAll(
+        'a[href], button:not([disabled]), input, select, textarea, summary, [tabindex]:not([tabindex="-1"])'
+      );
+      if (!focusables.length) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
   });
 
   // Share: copy the per-metric permalink to clipboard. The /m/{slug}/ stub
