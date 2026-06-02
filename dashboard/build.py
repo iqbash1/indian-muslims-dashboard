@@ -895,8 +895,8 @@ CAPTION = {
     "mla-share": "of state-assembly seats (agg.)",
     "prison-rate-per-100k": "prisoners per 100k of community",
     "undertrial-rate-per-100k": "undertrials per 100k of community",
-    "communal-incidents-govt": "incidents (NCRB)",
-    "communal-incidents-civic": "hate-speech events (IHL)",
+    "communal-incidents-govt": "incidents",
+    "communal-incidents-civic": "hate-speech events",
 }
 # (suffix, decimals) for chart value labels, keyed by unit_format.
 UNIT_JS = {
@@ -1380,7 +1380,6 @@ def _card_ts_count(mid, label, src, csv_href, cvid):
         comps += _comp(f"{rows[0]['year']} → {latest['year']}",
                        f"{arrow} {abs(delta):,}",
                        f"{first:,} → {last:,}", cls)
-    comps += _comp("latest year", str(latest["year"]) if latest else "—", "national count", "neutral")
     return _card_shell(label, f"{val:,}", CAPTION.get(mid, "events"), latest["year"] if latest else "",
                        "lower is better", chart_html, comps, src, csv_href), js
 

@@ -706,7 +706,7 @@ metrics:
 
   # ----- Civic / safety (Phase 2) -----
   - id: communal-incidents-govt
-    name: Communal incidents (government-acknowledged)
+    name: Communal incidents recorded by police
     cluster: civic
     unit: count
     higher_is_better: false
@@ -738,7 +738,7 @@ metrics:
         special_render: time_series_count
 
   - id: communal-incidents-civic
-    name: Anti-Muslim hate speech events (India Hate Lab)
+    name: Anti-Muslim hate speech events
     cluster: civic
     unit: count
     higher_is_better: false
