@@ -862,9 +862,16 @@ UNIT_JS = {
     "per_1000_live_births": ("", 1), "rate_per_100k": ("", 1), "count": ("", 0),
 }
 SOURCE_LABEL = {
+    "census-india-1961": "Census 1961 · C-VII Religion",
+    "census-india-1971": "Census 1971 · Paper 2 of 1972",
+    "census-india-1981": "Census 1981 · HH-15 (Paper 3 of 1984)",
+    "census-india-1991": "Census 1991 · C-9 Religion",
+    "census-india-2001": "Census 2001 · C-series",
     "census-india-2011": "Census 2011 · C-series",
-    "nfhs-5": "NFHS-5 (2019-21)", "plfs": "PLFS 2023-24", "aishe": "AISHE 2021-22",
-    "ncrb-prison": "NCRB PSI 2022", "ncrb-crime": "NCRB CII 2022",
+    "nfhs-2": "NFHS-2 (1998-99)", "nfhs-3": "NFHS-3 (2005-06)",
+    "nfhs-4": "NFHS-4 (2015-16)", "nfhs-5": "NFHS-5 (2019-21)",
+    "plfs": "PLFS 2023-24", "aishe": "AISHE 2021-22",
+    "ncrb-prison": "NCRB PSI (2018-2023)", "ncrb-crime": "NCRB CII (2015-2023)",
     "prs-eci-affidavits": "PRS / ECI affidavits", "civic-incident-databases": "India Hate Lab",
 }
 
@@ -1311,12 +1318,22 @@ def _card_ts_count(mid, label, src, csv_href, cvid):
     val = int(float(latest["value"])) if latest else 0
     comps = ""
     chart_html, js = "", None
-    if len(rows) >= 2:
+    if len(rows) >= 3:
+        # 3+ years: a real trend shape worth charting.
         labels = [int(r["year"]) for r in rows]
         values = [int(float(r["value"])) for r in rows]
         chart_html = f'<div class="card-chartwrap" style="height:150px"><canvas id="{cvid}"></canvas></div>'
         js = f'lineChart("{cvid}", {json.dumps(labels)}, {json.dumps(values)}, "#7b1d22", "");'
         comps += _comp("trend", f"{labels[0]}–{labels[-1]}", f"{values[0]:,} → {val:,}", "neutral")
+    elif len(rows) == 2:
+        # 2-point "trend" is just a straight line — let the Δ pill carry it.
+        first, last = int(float(rows[0]["value"])), val
+        delta = last - first
+        arrow = "↑" if delta > 0 else ("↓" if delta < 0 else "→")
+        cls = "bad" if delta > 0 else ("good" if delta < 0 else "mid")
+        comps += _comp(f"{rows[0]['year']} → {latest['year']}",
+                       f"{arrow} {abs(delta):,}",
+                       f"{first:,} → {last:,}", cls)
     comps += _comp("latest year", str(latest["year"]) if latest else "—", "national count", "neutral")
     return _card_shell(label, f"{val:,}", CAPTION.get(mid, "events"), latest["year"] if latest else "",
                        "lower is better", chart_html, comps, src, csv_href), js

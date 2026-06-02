@@ -45,7 +45,7 @@ Each `transform/canonicalize/<metric-id>.py` should:
 3. Emit the canonical schema row format with `source_id`, `source_document`, `extraction_run`, `methodology_note`, and `break_flag` populated.
 4. Where the metric spans multiple sources (primary + secondary fallback like sex-ratio 1961+1981 via Sachar, or pop-share 1961-1991 via census-decadal-religion), each row's `source_id` flags its tier.
 
-## Active extractors (post-Commit-AG)
+## Active extractors
 
 | Source dir | Extractors |
 |---|---|
@@ -53,12 +53,16 @@ Each `transform/canonicalize/<metric-id>.py` should:
 | `census-2011/` | `extract_c15_national_age.py` (national age × religion, for ger-higher-ed) |
 | `census-india-2001/` | `extract_c01.py`, `extract_c09.py` |
 | `census-india-1991/` | `extract_c09_religion.py` (XLSX) |
+| `census-india-1981/` | `extract_hh15_religion.py` (PDF — HH-15 spans 4 facing pages, parses by token count + sex-ratio cross-check) |
 | `census-india-1971/` | `extract_religion_summary.py` (PDF, cross-validates printed Sex Ratio) |
+| `census-india-1961/` | `extract_c07_religion.py` (PDF — heavy OCR noise, verifies by anchor numbers + Sachar AT 3.8 cross-check) |
 | `nfhs/` | `extract_imr_trend.py`, `extract_delivery_trend.py`, `extract_anaemia_trend.py`, `extract_table24.py` (sanitation), `extract_table72.py`, `extract_table813.py`, `extract_table10231.py`, `extract_table101_stunting.py` (qpdf-rotated landscape page) |
 | `plfs/` | `extract_table48.py`, `extract_table49.py` |
 | `aishe/` | `extract_table15.py` |
 | `ncrb/` | `extract_prison_religion.py` (English, multi-year), `extract_prison_religion_2020_hindi.py` (Hindi-edition fallback for the 2020 COVID-year gap), `extract_communal_crime.py` (multi-year CII Table 1.2 + per-table-PDF) |
 
-Sachar Committee 2006, civic-databases (India Hate Lab), prs-eci-affidavits, and census-decadal-religion are direct-from-L1 manual-entry — no L2 extractor; the canonicalizer reads hardcoded values that cite the published page/figure.
+Direct-from-L1 manual-entry (no L2 extractor; the canonicalizer reads hardcoded values that cite the published page/figure): civic-databases (India Hate Lab) + prs-eci-affidavits.
+
+Registered but no longer feeding L3 (kept for cross-validation reference): sachar-committee-2006, census-decadal-religion — both retired in Commit AJ once the RGI primary 1961+1981 volumes were located on NADA.
 
 Note: `census-2011/` and `census-india-2011/` are both real directories (the former was added later to hold the C-15 national-age extractor for ger-higher-ed; the latter holds the main C-1/C-9/C-15 religion extractors). Same source from a manifest standpoint (`census-india-2011`).

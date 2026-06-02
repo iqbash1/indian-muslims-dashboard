@@ -60,7 +60,7 @@ The dashboard never queries an external source live and never reads L1/L2 direct
 
 ## Sources
 
-17 source-ids feed L3 canonical metrics (21 source-ids registered in `manifest/sources.yaml` total — the remaining 4 are pre-registered for future metrics).
+16 source-ids feed L3 canonical metrics (23 source-ids registered in `manifest/sources.yaml` total — the remaining 7 are either retired-but-archived for cross-validation reference (`sachar-committee-2006`, `census-decadal-religion`) or pre-registered for future metrics (`hces-2022-23`, `mha-parliament-answers`, `niti-mpi`, `rbi-minority-lending`, `rti-public-sector-employment`)).
 
 | Source | What it gives us | Cadence | Status |
 |---|---|---|---|
