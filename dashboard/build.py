@@ -370,7 +370,6 @@ TEMPLATE = """<!DOCTYPE html>
   body.compare-hindu .card-comp[data-comp-type="vs-all"] { display: none; }
   body.compare-hindu .card-comp[data-comp-type="vs-hindu"] { display: block; }
   h2 { font-size: 20px; margin: 0 0 4px; letter-spacing: -0.01em; font-weight: 600; }
-  .tagline { color: var(--muted); margin: 0 0 24px; font-size: 14px; }
   .status-bar {
     background: var(--card); border: 1px solid var(--rule); border-radius: 6px;
     padding: 14px 18px; margin-bottom: 32px;
@@ -404,12 +403,10 @@ TEMPLATE = """<!DOCTYPE html>
     margin: 14px 0 2px; letter-spacing: -0.02em;
     font-feature-settings: "tnum";
   }
-  .headline-caption { font-size: 13px; color: var(--muted); margin: 0 0 18px; }
   .methodology {
     font-size: 12.5px; color: var(--muted); margin: 14px 0 0;
     border-left: 3px solid var(--rule); padding-left: 12px;
   }
-  .chart-wrap { margin: 18px 0; position: relative; height: 420px; }
   details {
     margin-top: 14px; border-top: 1px dashed var(--rule); padding-top: 12px;
   }
@@ -468,9 +465,6 @@ TEMPLATE = """<!DOCTYPE html>
   .scorecard-table .gap-bad { color: var(--accent); font-weight: 600; }
   .scorecard-table .gap-good { color: #2d6a3e; font-weight: 600; }
   .scorecard-table .gap-neutral { color: var(--muted); }
-  .scorecard-table .rate-sub {
-    font-size: 11px; color: var(--muted); font-weight: 400;
-  }
   .csv-link {
     font-size: 12px; color: var(--muslim); text-decoration: none;
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;

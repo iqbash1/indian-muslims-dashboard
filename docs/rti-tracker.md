@@ -4,7 +4,7 @@ Right to Information filings for data not otherwise published (primarily central
 
 ## Standard filing template
 
-Stored at `docs/rti-template.md` (TODO). Replicate, fill in target department, file via rtionline.gov.in or department-specific portal.
+Not yet drafted. When the first filing goes out, capture the wording and the routing (rtionline.gov.in vs department-specific portal) here so the next year's round is mechanical.
 
 ## Annual filing cycle
 
