@@ -24,6 +24,13 @@ import html
 import json
 import pathlib
 
+try:
+    from PIL import Image, ImageDraw, ImageFont
+except ImportError:  # Pillow is in requirements.txt; this guard keeps non-OG builds working.
+    Image = None
+    ImageDraw = None
+    ImageFont = None
+
 REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent
 CANONICAL_DIR = REPO_ROOT / "canonical"
 OUT_PATH = REPO_ROOT / "docs" / "index.html"
@@ -313,9 +320,14 @@ TEMPLATE = """<!DOCTYPE html>
 <meta property="og:description" content="{site_description}">
 <meta property="og:url" content="{site_url}/">
 <meta property="og:type" content="website">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="{site_url}/og/default.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="muslimdata.in — the state of Muslim India, in data. 21 indicators with Hindu and all-India comparison baselines.">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{site_title}">
 <meta name="twitter:description" content="{site_description}">
+<meta name="twitter:image" content="{site_url}/og/default.png">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="js/analytics.js" defer></script>
 <style>
@@ -1295,9 +1307,14 @@ STUB_TEMPLATE = """<!DOCTYPE html>
 <meta property="og:url" content="{site_url}/m/{mid}/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="muslimdata.in">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="{site_url}/og/{mid}.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{og_image_alt}">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{og_title}">
 <meta name="twitter:description" content="{description}">
+<meta name="twitter:image" content="{site_url}/og/{mid}.png">
 <meta http-equiv="refresh" content="0; url={site_url}/#{mid}">
 <script>location.replace({redirect_target});</script>
 <style>body{{font:14px -apple-system,system-ui,sans-serif;color:#666;padding:40px;text-align:center}}</style>
@@ -1307,6 +1324,235 @@ STUB_TEMPLATE = """<!DOCTYPE html>
 </body>
 </html>
 """
+
+
+# ----- Open Graph / Twitter Card image renderer -----
+# 1200x630 PNG per metric, written to docs/og/{mid}.png, referenced from the
+# matching stub page's <meta og:image>. Reuses the same hero + comparison
+# helpers the card grid uses so social previews match the live card values.
+
+OG_W, OG_H = 1200, 630
+_OG_FONT_REGULAR = "/System/Library/Fonts/Supplemental/Arial.ttf"
+_OG_FONT_BOLD = "/System/Library/Fonts/Supplemental/Arial Bold.ttf"
+_OG_BG = (250, 250, 247)      # site bg cream
+_OG_FG = (26, 26, 26)         # body fg
+_OG_MUTED = (102, 102, 102)   # site --muted
+_OG_ACCENT = (123, 29, 34)    # site --accent maroon
+_OG_TIER = {                  # match TIER_HEX for the comp pill color
+    "good": (6, 95, 70),
+    "bad": (153, 27, 27),
+    "mid": (85, 85, 85),
+    "neutral": (85, 85, 85),
+}
+
+
+def _og_font(size: int, bold: bool = False):
+    path = _OG_FONT_BOLD if bold else _OG_FONT_REGULAR
+    try:
+        return ImageFont.truetype(path, size)
+    except (OSError, AttributeError):
+        return ImageFont.load_default()
+
+
+def _og_wrap(draw, text: str, font, max_w: int, max_lines: int = 2) -> list[str]:
+    """Greedy word-wrap by pixel width. Last line is ellipsised if it overflows."""
+    words = text.split()
+    lines: list[str] = []
+    cur = ""
+    for w in words:
+        cand = (cur + " " + w).strip()
+        if draw.textlength(cand, font=font) <= max_w:
+            cur = cand
+        else:
+            if cur:
+                lines.append(cur)
+            cur = w
+    if cur:
+        lines.append(cur)
+    if len(lines) > max_lines:
+        lines = lines[:max_lines]
+        last = lines[-1]
+        while last and draw.textlength(last + "…", font=font) > max_w:
+            last = last.rsplit(" ", 1)[0] if " " in last else last[:-1]
+        lines[-1] = last + "…"
+    return lines
+
+
+def _og_data_for_metric(m: dict):
+    """Compute the OG payload for one metric using the same data path the
+    card grid uses. Returns None when the metric has no carded display."""
+    disp = m.get("display", {}).get("scorecard")
+    if not disp or disp.get("include", True) is False:
+        return None
+    mid = m["id"]
+    name = m.get("name", disp.get("label", mid))
+    unit = disp["unit_format"]
+    hib = disp.get("higher_is_better", m.get("higher_is_better"))
+    special = disp.get("special_render")
+    caption = CAPTION.get(mid, "")
+    polarity = "Higher is better" if hib is True else ("Lower is better" if hib is False else "")
+
+    if special == "time_series_count":
+        rows = sorted([r for r in load_metric(mid) if r["geography_level"] == "national"],
+                      key=lambda r: int(r["year"]))
+        if not rows:
+            return None
+        val = int(float(rows[-1]["value"]))
+        comp_label = comp_value = ""
+        if len(rows) >= 2:
+            first = int(float(rows[0]["value"]))
+            comp_label = f"{rows[0]['year']} → {rows[-1]['year']}"
+            comp_value = f"{first:,} → {val:,}"
+        return dict(name=name, hero=f"{val:,}", caption=caption or "events",
+                    year=str(rows[-1]["year"]), comp_label=comp_label,
+                    comp_value=comp_value, comp_class="mid",
+                    polarity="Lower is better")
+
+    if special == "time_series_latest":
+        rows = sorted([r for r in load_metric(mid) if r["geography_level"] == "national"],
+                      key=lambda r: int(r["year"]))
+        if not rows:
+            return None
+        val = float(rows[-1]["value"])
+        gap = val - MUSLIM_POP_SHARE
+        cls = "bad" if gap < 0 else ("good" if gap > 0 else "mid")
+        return dict(name=name, hero=fmt_num(val, unit), caption=caption,
+                    year=str(rows[-1]["year"]),
+                    comp_label="vs population", comp_value=f"{gap:+.1f}pp",
+                    comp_class=cls, polarity=polarity)
+
+    # muslim-only cards (no community comparator)
+    if mid in ("pop-share", "district-concentration-top100", "muslim-higher-ed-enrolment"):
+        muslim = _nat_by_religion(mid).get("muslim")
+        if muslim is None:
+            return None
+        year = _year_of(mid)
+        return dict(name=name, hero=fmt_num(muslim, unit), caption=caption,
+                    year=str(year) if year else "", comp_label="",
+                    comp_value="", comp_class="mid", polarity=polarity)
+
+    # default comparison card — mirror _card_comparison()
+    nat = _nat_by_religion(mid)
+    muslim = nat.get("muslim")
+    if muslim is None:
+        return None
+    all_v = nat.get("all")
+    years, series, _ = _nat_trend(mid)
+    comp_label = "vs all-India"
+    if years:
+        all_series, _, pill_label = _comparison_series(series, years)
+        if all_series:
+            latest = next((v for v in reversed(all_series) if v is not None), None)
+            if latest is not None:
+                all_v = latest
+                comp_label = pill_label or comp_label
+    comp_value = ""
+    comp_class = "mid"
+    if all_v is not None:
+        gap = muslim - all_v
+        cls = _verdict(gap, hib)
+        comp_value = f"{_gap_str(gap, unit)} {_verdict_word(cls)}"
+        comp_class = cls
+    year = _year_of(mid)
+    return dict(name=name, hero=fmt_num(muslim, unit), caption=caption,
+                year=str(year) if year else "",
+                comp_label=comp_label if comp_value else "",
+                comp_value=comp_value, comp_class=comp_class, polarity=polarity)
+
+
+def _render_og_image(out_path: pathlib.Path, payload: dict) -> None:
+    """Draw a 1200x630 PNG to out_path from the OG payload."""
+    img = Image.new("RGB", (OG_W, OG_H), _OG_BG)
+    draw = ImageDraw.Draw(img)
+    margin = 64
+    # Top accent rule + brand row.
+    draw.rectangle([(0, 0), (OG_W, 12)], fill=_OG_ACCENT)
+    draw.text((margin, 36), "muslimdata.in", font=_og_font(28, bold=True), fill=_OG_ACCENT)
+    # Polarity badge (top-right).
+    if payload.get("polarity"):
+        pol_font = _og_font(20, bold=True)
+        pol_text = payload["polarity"].upper()
+        pol_w = draw.textlength(pol_text, font=pol_font)
+        draw.text((OG_W - margin - pol_w, 42), pol_text, font=pol_font, fill=_OG_MUTED)
+    # Metric name, up to 2 lines.
+    name_font = _og_font(56, bold=True)
+    name_lines = _og_wrap(draw, payload["name"], name_font, OG_W - 2 * margin, max_lines=2)
+    for i, line in enumerate(name_lines):
+        draw.text((margin, 130 + i * 68), line, font=name_font, fill=_OG_FG)
+    # Hero number (left half).
+    hero_y = 310
+    hero_font = _og_font(180, bold=True)
+    draw.text((margin, hero_y), payload["hero"], font=hero_font, fill=_OG_ACCENT)
+    cap_y = hero_y + 200
+    if payload.get("caption"):
+        draw.text((margin, cap_y), payload["caption"], font=_og_font(28), fill=_OG_FG)
+        cap_y += 40
+    if payload.get("year"):
+        draw.text((margin, cap_y), payload["year"], font=_og_font(24), fill=_OG_MUTED)
+    # Comparison block (right half), only when there's something to compare.
+    if payload.get("comp_label") and payload.get("comp_value"):
+        right_x = OG_W - margin
+        label_font = _og_font(28)
+        val_font = _og_font(54, bold=True)
+        label_w = draw.textlength(payload["comp_label"], font=label_font)
+        val_w = draw.textlength(payload["comp_value"], font=val_font)
+        draw.text((right_x - label_w, hero_y + 40),
+                  payload["comp_label"], font=label_font, fill=_OG_MUTED)
+        draw.text((right_x - val_w, hero_y + 90),
+                  payload["comp_value"], font=val_font,
+                  fill=_OG_TIER.get(payload.get("comp_class", "mid"), _OG_MUTED))
+    # Footer.
+    foot = "The state of Muslim India, in data · Hindu and all-India comparison baselines"
+    draw.text((margin, OG_H - 60), foot, font=_og_font(22), fill=_OG_MUTED)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    img.save(out_path, format="PNG", optimize=True)
+
+
+def _render_og_default(out_path: pathlib.Path) -> None:
+    """Generic site OG card — used by the homepage and About page."""
+    img = Image.new("RGB", (OG_W, OG_H), _OG_BG)
+    draw = ImageDraw.Draw(img)
+    margin = 64
+    draw.rectangle([(0, 0), (OG_W, 12)], fill=_OG_ACCENT)
+    draw.text((margin, 36), "muslimdata.in", font=_og_font(28, bold=True), fill=_OG_ACCENT)
+    title_font = _og_font(86, bold=True)
+    title_lines = _og_wrap(draw, "The state of Muslim India, in data.",
+                           title_font, OG_W - 2 * margin, max_lines=2)
+    y = 180
+    for line in title_lines:
+        draw.text((margin, y), line, font=title_font, fill=_OG_FG)
+        y += 104
+    draw.text((margin, y + 20), "21 indicators across 6 themes.",
+              font=_og_font(32), fill=_OG_FG)
+    draw.text((margin, y + 70), "Hindu and all-India comparison baselines on every metric.",
+              font=_og_font(32), fill=_OG_MUTED)
+    draw.text((margin, OG_H - 60),
+              "Census · NFHS · PLFS · AISHE · NCRB · PRS-ECI · India Hate Lab",
+              font=_og_font(22), fill=_OG_MUTED)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    img.save(out_path, format="PNG", optimize=True)
+
+
+def _emit_og_images(out_dir: pathlib.Path) -> int:
+    """Generate a 1200x630 PNG per live metric at /og/{mid}.png plus a
+    /og/default.png for the homepage and About page. Returns the count."""
+    if Image is None:
+        print("WARN: Pillow not installed; skipping OG image generation")
+        return 0
+    import yaml as _yaml
+    with (REPO_ROOT / "manifest" / "metrics.yaml").open() as f:
+        data = _yaml.safe_load(f)
+    og_dir = out_dir / "og"
+    og_dir.mkdir(parents=True, exist_ok=True)
+    written = 0
+    for m in data["metrics"]:
+        payload = _og_data_for_metric(m)
+        if not payload:
+            continue
+        _render_og_image(og_dir / f"{m['id']}.png", payload)
+        written += 1
+    _render_og_default(og_dir / "default.png")
+    return written
 
 
 def _emit_metric_stubs(out_dir: pathlib.Path) -> int:
@@ -1342,6 +1588,7 @@ def _emit_metric_stubs(out_dir: pathlib.Path) -> int:
             title=html.escape(f"{name}: muslimdata.in"),
             og_title=html.escape(name),
             description=html.escape(description),
+            og_image_alt=html.escape(f"{name} — Indian Muslims vs Hindu and all-India baselines on muslimdata.in"),
             redirect_target=json.dumps(f"{SITE_URL}/#{mid}"),
         )
         stub_dir = stubs_root / mid
@@ -1363,6 +1610,14 @@ ABOUT_TEMPLATE = """<!DOCTYPE html>
 <meta property="og:description" content="A scorecard of living-conditions indicators for India's Muslim population, with Hindu and all-India comparison baselines on every metric.">
 <meta property="og:url" content="{site_url}/about/">
 <meta property="og:type" content="article">
+<meta property="og:image" content="{site_url}/og/default.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="muslimdata.in — the state of Muslim India, in data. 21 indicators with Hindu and all-India comparison baselines.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="About muslimdata.in">
+<meta name="twitter:description" content="A scorecard of living-conditions indicators for India's Muslim population, with Hindu and all-India comparison baselines on every metric.">
+<meta name="twitter:image" content="{site_url}/og/default.png">
 <script src="/js/analytics.js" defer></script>
 <style>
   :root {{
@@ -1638,6 +1893,10 @@ def build() -> None:
     js_text = analytics_src.read_text()
     js_text = js_text.replace("__GA4_ID__", GA4_ID).replace("__CLARITY_ID__", CLARITY_ID)
     analytics_out.write_text(js_text)
+
+    # Emit per-metric 1200x630 OG cards at /og/{mid}.png (referenced by the
+    # stub pages below) and a /og/default.png used by the homepage + About.
+    _emit_og_images(OUT_PATH.parent)
 
     # Emit per-metric stub pages at /m/{mid}/index.html. Each carries the
     # metric-specific OG meta tags so social previews show the right

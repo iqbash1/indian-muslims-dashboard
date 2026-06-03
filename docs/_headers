@@ -15,6 +15,10 @@
   Content-Type: text/csv; charset=utf-8
   Access-Control-Allow-Origin: *
 
+/og/*
+  Cache-Control: public, max-age=86400
+  Access-Control-Allow-Origin: *
+
 /metrics/*
   Cache-Control: public, max-age=86400
 
