@@ -580,14 +580,21 @@ TEMPLATE = """<!DOCTYPE html>
     border-bottom: 1px solid var(--rule); font-size: 11px;
   }
   .scroll-table td { padding: 4px 8px; font-size: 12px; }
+  /* Horizontal scroll wrapper for the scorecard table so the table can stay
+     wide enough to show every column without forcing horizontal scroll on the
+     whole page (which broke the mobile layout). */
+  .scorecard-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   @media (max-width: 560px) {
     .cards { grid-template-columns: 1fr; }
     h1 { font-size: 24px; }
     .headline-finding { font-size: 14px; }
     .masthead { gap: 6px 12px; }
     .masthead-nav { margin-left: 0; gap: 10px; }
+    .masthead-nav a { padding: 12px 4px; min-height: 44px; display: inline-flex; align-items: center; }
     .compare-toggle { flex-wrap: wrap; padding: 8px 12px; }
     .compare-toggle-label { width: 100%; margin-bottom: 4px; }
+    .compare-toggle-btn { padding: 0 16px; font-size: 13px; min-height: 44px; }
+    .scorecard-search { padding: 0 14px; font-size: 14px; min-height: 44px; }
     .scorecard-table { font-size: 12px; }
     .scorecard-table th, .scorecard-table td { padding: 6px 4px; }
   }
@@ -701,6 +708,7 @@ TEMPLATE = """<!DOCTYPE html>
         placeholder="Search metrics…" aria-label="Search metrics in the scorecard">
     </div>
   </div>
+  <div class="scorecard-scroll">
   <table class="scorecard-table" id="scorecard"><thead><tr>
     <th class="sortable" data-col="0">Metric</th>
     <th class="sortable" data-col="1">Year</th>
@@ -711,6 +719,7 @@ TEMPLATE = """<!DOCTYPE html>
   </tr></thead><tbody>
     {scorecard_rows}
   </tbody></table>
+  </div>
   <p class="methodology">"Gap" is Muslim minus reference baseline (Hindu where available, else All).
   Red gap = Muslim outcome worse than reference; green = Muslim outcome better. For justice
   metrics, cells show absolute count + incarceration rate per 100k of religious population;
@@ -1036,6 +1045,36 @@ function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak, refLine, 
 }
 
 {card_charts}
+
+// Chart.js sizes its canvas to the parent at construction. Viewport changes
+// (mobile rotation, desktop->mobile resize) leave the canvas at its original
+// width and stretch the card with it. On every resize, clear each canvas's
+// inline dimensions so the card collapses to its true grid track width, then
+// call Chart.resize() to re-measure. Debounced so a slow drag doesn't fire
+// hundreds of times.
+(function resizeChartsOnViewportChange() {
+  let pending = null;
+  window.addEventListener('resize', () => {
+    if (pending) clearTimeout(pending);
+    pending = setTimeout(() => {
+      pending = null;
+      const charts = Object.keys(CHART_SPECS).map(Chart.getChart).filter(Boolean);
+      // Phase 1: clear every canvas's inline size so each card collapses to
+      // its true grid track width. Done in a single pass so the layout reflow
+      // (forced by reading offsetWidth below) settles for all cards at once.
+      for (const c of charts) {
+        c.canvas.style.width = '';
+        c.canvas.style.height = '';
+        c.canvas.removeAttribute('width');
+        c.canvas.removeAttribute('height');
+      }
+      void document.body.offsetWidth;  // force layout reflow
+      // Phase 2: now that the grid tracks have re-sized, Chart.js measures the
+      // (correctly-sized) parent and resizes the canvas to fit.
+      for (const c of charts) c.resize();
+    }, 120);
+  });
+})();
 
 // Compare toggle: flips every comparison pill on the page between vs all-India
 // (default) and vs Hindu. Setting persists across sessions via localStorage so
