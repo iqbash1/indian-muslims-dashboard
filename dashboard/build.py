@@ -673,10 +673,11 @@ TEMPLATE = """<!DOCTYPE html>
   report remains India's most-cited assessment of Muslim socio-economic status):
   focused, comparative measurement across population, education, employment,
   health, representation, and justice.</p>
-  <p>Each card shows the Muslim value, how it ranks among religious communities,
-  and how it has changed over time when the source has multiple survey rounds.
-  Click any card to open a larger view; every card links to its downloadable CSV.
-  Click any table column header to sort.</p>
+  <p>Every card covers one indicator. It shows the latest figure for India's
+  Muslims, where that figure ranks across religious communities, and how it has
+  shifted over time when the source has more than one survey round. Click any
+  card for a larger view with the full methodology. Every card also links to
+  its source CSV. Click any table column header to sort the scorecard.</p>
 </section>
 
 <p class="headline-finding">
@@ -702,7 +703,7 @@ TEMPLATE = """<!DOCTYPE html>
 <section class="tile scorecard">
   <div class="tile-head">
     <h2>Scorecard: all metrics at a glance</h2>
-    <p class="data-current">Muslim outcome vs Hindu/All baseline · sorted by gap magnitude</p>
+    <p class="data-current">Muslim outcome vs Hindu and all-India baselines, sorted by gap size</p>
     <div class="scorecard-search-wrap">
       <input type="search" id="scorecard-search" class="scorecard-search"
         placeholder="Search metrics…" aria-label="Search metrics in the scorecard">
@@ -720,10 +721,11 @@ TEMPLATE = """<!DOCTYPE html>
     {scorecard_rows}
   </tbody></table>
   </div>
-  <p class="methodology">"Gap" is Muslim minus reference baseline (Hindu where available, else All).
-  Red gap = Muslim outcome worse than reference; green = Muslim outcome better. For justice
-  metrics, cells show absolute count + incarceration rate per 100k of religious population;
-  gap is the Muslim-to-Hindu rate ratio (1.0× = parity, >1.0× = Muslim overrepresented).</p>
+  <p class="methodology">"Gap" is the Muslim value minus the reference baseline (Hindu where
+  available, otherwise all-India). Red means the Muslim outcome is worse than the reference;
+  green means it is better. For justice metrics, cells show the absolute count alongside the
+  incarceration rate per 100,000 people of that religion, and the gap is the Muslim-to-Hindu
+  rate ratio (1.0× means parity; above 1.0× means Muslims are overrepresented).</p>
 </section>
 
 {cluster_grids}
@@ -1437,9 +1439,10 @@ without having to compute it.</p>
 <h2>What's on the dashboard</h2>
 <p>{n_metrics} indicators across six themes (population, education,
 employment, health, representation, justice), drawn from {n_sources}
-primary sources. Each card shows the Muslim value, where it ranks among
-religious communities, and where the source has multiple survey rounds,
-how it has changed over time.</p>
+primary sources. Every card covers one indicator. It shows the latest
+figure for India's Muslims, where that figure ranks across religious
+communities, and how it has shifted over time when the source has more
+than one survey round.</p>
 <p>Click any card to open a larger view with the full methodology notes for
 that indicator, including period covered, cut-offs, sample design, and known
 caveats. Every card also links to the downloadable CSV of the underlying
