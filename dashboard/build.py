@@ -421,7 +421,7 @@ TEMPLATE = """<!DOCTYPE html>
 <meta property="og:image" content="{site_url}/og/default.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="muslimdata.in — the state of Muslim India, in data. 21 indicators with Hindu and all-India comparison baselines.">
+<meta property="og:image:alt" content="muslimdata.in: the state of Muslim India, in data. 21 indicators with Hindu and all-India comparison baselines.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{site_title}">
 <meta name="twitter:description" content="{site_description}">
@@ -693,7 +693,7 @@ TEMPLATE = """<!DOCTYPE html>
   .card-comp.negative .comp-verdict, .card-comp.bad .comp-verdict { color: var(--negative); }
   .card-comp.neutral .comp-verdict, .card-comp.mid .comp-verdict { color: var(--neutral); }
   .comp-note { grid-column: 1 / -1; text-align: left; font-size: var(--t-xs); color: var(--muted); line-height: 1.45; }
-  /* Kicker line above the note (e.g. "the top 10 districts alone hold 14%") —
+  /* Kicker line above the note (e.g. "the top 10 districts alone hold 14%"):
      full width, accent-coloured, the card's punchiest single takeaway. */
   .comp-kicker { grid-column: 1 / -1; text-align: left; font-size: var(--t-sm); color: var(--accent); font-weight: 600; line-height: 1.4; margin-bottom: 4px; }
   .card-foot { margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: var(--t-2xs); color: var(--muted); }
@@ -864,7 +864,7 @@ TEMPLATE = """<!DOCTYPE html>
 
 {cluster_grids}
 
-<!-- SCORECARD — moved below the cards (Commit BP) so a new visitor sees the
+<!-- SCORECARD: moved below the cards (Commit BP) so a new visitor sees the
      visual story before the dense table view. Collapsed by default; the
      summary doubles as both the title and the click-to-expand affordance. -->
 <details class="scorecard-details">
@@ -989,7 +989,7 @@ TEMPLATE = """<!DOCTYPE html>
 // delegation off document so it works for tables cloned into the modal too
 // (cloneNode does not copy listeners). Per-table sort state is stashed on the
 // table's dataset. Numeric columns (data-type="num") sort descending on first
-// click — for a "top districts" table you want the biggest first; text
+// click, for a "top districts" table you want the biggest first; text
 // columns sort ascending first. Cells carry data-sort raw values so formatted
 // strings like "4.71M" / "502k" sort by magnitude rather than by string.
 (function setupSortableTables() {
@@ -1374,7 +1374,7 @@ function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak, refLine, 
   let modalChart = null;
   let activeMid = null;
 
-  // Ordered list of metric IDs in card-grid order — built once at setup so
+  // Ordered list of metric IDs in card-grid order, built once at setup so
   // prev/next navigation cycles through cards in the same sequence the
   // visitor sees them on the page (and wraps at both ends).
   const cardOrder = Array.from(document.querySelectorAll('.cards .card'))
@@ -1521,7 +1521,7 @@ function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak, refLine, 
     const card = body.querySelector('.card');
     const name = card?.getAttribute('data-metric-name') || activeMid;
     const url = location.origin + '/m/' + encodeURIComponent(activeMid) + '/';
-    const text = 'muslimdata.in — ' + name + '\\n' + url;
+    const text = 'muslimdata.in: ' + name + '\\n' + url;
     const showCopied = (method) => {
       shareBtn.classList.add('copied');
       const label = shareBtn.querySelector('.modal-share-label');
@@ -1872,7 +1872,7 @@ def _emit_metric_stubs(out_dir: pathlib.Path) -> int:
             title=html.escape(f"{name}: muslimdata.in"),
             og_title=html.escape(name),
             description=html.escape(description),
-            og_image_alt=html.escape(f"{name} — Indian Muslims vs Hindu and all-India baselines on muslimdata.in"),
+            og_image_alt=html.escape(f"{name}: Indian Muslims vs Hindu and all-India baselines on muslimdata.in"),
             redirect_target=json.dumps(f"{SITE_URL}/#{mid}"),
         )
         stub_dir = stubs_root / mid
@@ -1886,7 +1886,7 @@ ABOUT_TEMPLATE = """<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>About — muslimdata.in</title>
+<title>About muslimdata.in</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="About muslimdata.in: mission, methodology, sources, and how to contribute or report errors.">
 <link rel="canonical" href="{site_url}/about/">
@@ -1897,7 +1897,7 @@ ABOUT_TEMPLATE = """<!DOCTYPE html>
 <meta property="og:image" content="{site_url}/og/default.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="muslimdata.in — the state of Muslim India, in data. 21 indicators with Hindu and all-India comparison baselines.">
+<meta property="og:image:alt" content="muslimdata.in: the state of Muslim India, in data. 21 indicators with Hindu and all-India comparison baselines.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="About muslimdata.in">
 <meta name="twitter:description" content="A scorecard of living-conditions indicators for India's Muslim population, with Hindu and all-India comparison baselines on every metric.">
@@ -2314,16 +2314,17 @@ def community_rank(by_religion: dict[str, float], higher_is_better: bool):
 # Plain-language caption shown next to each headline value (Hawaii-style).
 CAPTION = {
     "lit-7plus": "literate, age 7+",
+    "ger-higher-ed": "of 18-23-year-olds",
     "sex-ratio": "females per 1,000 males",
     "lfpr-15plus": "in the labour force, 15+",
     "wpr-15plus": "working, 15+",
     "salaried-share": "in regular salaried work",
     "imr": "deaths per 1,000 live births",
     "inst-delivery": "of births in a facility",
-    "women-anemia": "of women 15–49 anaemic",
-    "improved-sanitation": "of households have a toilet",
-    "pop-share": "of total population",
-    "district-concentration-top100": "of Muslims in top-100 districts",
+    "women-anemia": "of women 15-49 anaemic",
+    "improved-sanitation": "of households",
+    "pop-share": "of all Indians",
+    "district-concentration-top100": "of all Indian Muslims",
     "muslim-higher-ed-enrolment": "students",
     "ls-share": "of 543 Lok Sabha seats",
     "mla-share": "of state-assembly seats (agg.)",
@@ -2386,21 +2387,21 @@ def _comp(label: str, verdict: str, detail: str, cls: str, comp_type: str | None
 
 
 PLAIN_DEFINITION = {
-    "pop-share": "What share of India's population is Muslim, by the most recent census.",
+    "pop-share": "How much of India's population is Muslim, by the latest census.",
     "urban-share": "What share of each community lives in towns and cities rather than villages.",
-    "sex-ratio": "Number of females per 1,000 males. Higher is more balanced; lower means a gender imbalance favouring males.",
-    "district-concentration-top100": "Of all Indian Muslims, what fraction lives in the 100 districts with the largest Muslim populations.",
+    "sex-ratio": "Higher means more women relative to men; a low value signals a gender imbalance favouring males.",
+    "district-concentration-top100": "How geographically concentrated India's Muslims are, measured by the share living in their 100 most-populous districts.",
     "lit-7plus": "Of people aged 7 and older, what share can read and write. The Census uses 7+ as the standard cutoff to exclude very young children.",
     "ger-higher-ed": "Of every 100 young people in the typical college-going age band (18 to 23), how many are enrolled in higher education.",
     "muslim-higher-ed-enrolment": "Total number of Muslim students enrolled in higher education across India in the latest year.",
     "lfpr-15plus": "Of people aged 15 and older, what share is in the workforce, either working or actively looking for work.",
     "wpr-15plus": "Of people aged 15 and older, what share is currently working.",
     "salaried-share": "Of all workers, what share has regular salaried jobs (as opposed to self-employment or casual labour).",
-    "imr": "Of every 1,000 babies born, how many die before their first birthday. Lower is better.",
+    "imr": "Of every 1,000 babies born, how many die before their first birthday.",
     "stunting-u5": "Of children under 5, what share is too short for their age, a long-term sign of chronic undernutrition.",
     "inst-delivery": "Of recent live births, what share took place at a hospital or health facility rather than at home.",
     "women-anemia": "Of women in childbearing age (15 to 49), what share has anaemia (low haemoglobin).",
-    "improved-sanitation": "Of households, what share has access to a toilet of any type.",
+    "improved-sanitation": "What share of households has a toilet of any type.",
     "ls-share": "Of the 543 seats in India's national parliament (Lok Sabha), what share is held by Muslim MPs.",
     "mla-share": "Across all 30 state and UT legislative assemblies that hold elections, what share of MLA seats is held by Muslims.",
     "prison-rate-per-100k": "For every 100,000 people of a religion, how many are in prison. Allows fair comparison across communities of different size.",
@@ -2849,7 +2850,7 @@ def _card_timeseries(mid, label, unit, src, csv_href, cvid):
         values = [round(float(r["value"]), 2) for r in rows]
         chart_html = f'<div class="card-chartwrap" style="height:150px"><canvas id="{cvid}" role="img" aria-label="Visualisation of this metric; numerical values are listed in the card above."></canvas></div>'
         js = f'lineChart("{cvid}", {json.dumps(labels)}, {json.dumps(values)}, "#2b6cb0", "%");'
-        comps += _comp("trend", f"{labels[0]}–{labels[-1]}", f"{values[0]:.1f}% → {values[-1]:.1f}%", "neutral")
+        comps += _comp("trend", f"{labels[0]}-{labels[-1]}", f"{values[0]:.1f}% → {values[-1]:.1f}%", "neutral")
     else:
         st = sorted([(state_label(r["geography_code"]), float(r["value"]))
                      for r in load_metric(mid) if r["geography_level"] == "state"],
@@ -2882,7 +2883,7 @@ def _card_ts_count(mid, label, src, csv_href, cvid):
         values = [int(float(r["value"])) for r in rows]
         chart_html = f'<div class="card-chartwrap" style="height:150px"><canvas id="{cvid}" role="img" aria-label="Visualisation of this metric; numerical values are listed in the card above."></canvas></div>'
         js = f'lineChart("{cvid}", {json.dumps(labels)}, {json.dumps(values)}, "#7b1d22", "");'
-        comps += _comp("trend", f"{labels[0]}–{labels[-1]}", f"{values[0]:,} → {val:,}", "neutral")
+        comps += _comp("trend", f"{labels[0]}-{labels[-1]}", f"{values[0]:,} → {val:,}", "neutral")
     elif len(rows) == 2:
         # 2-point "trend" is just a straight line — let the Δ pill carry it.
         first, last = int(float(rows[0]["value"])), val

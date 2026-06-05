@@ -29,7 +29,7 @@ metrics:
 
   # ----- Demographics (Phase 1) -----
   - id: pop-share
-    name: Muslim share of total population
+    name: Muslim share of population
     cluster: demographics
     unit: percent
     higher_is_better: null
@@ -51,7 +51,7 @@ metrics:
         order: 10
 
   - id: urban-share
-    name: Urban share of population
+    name: Urban share
     cluster: demographics
     unit: percent
     higher_is_better: null
@@ -64,23 +64,23 @@ metrics:
     religions: [muslim, hindu, christian, sikh, buddhist, jain, other, all]
     methodology_notes: |
       Urban share = urban_persons / total_persons * 100, per Census 2011 C-01.
-      Single-year metric (no time series — 2021 Census delayed). Muslims (~40%)
+      Single-year metric (no time series, 2021 Census delayed). Muslims (~40%)
       and Christians (~40%) are markedly more urbanised than the all-India
-      average (~31%) — a Sachar-era fact that conditions outcomes downstream
+      average (~31%), a Sachar-era fact that conditions outcomes downstream
       (urban-poor labour markets, segregation, housing access).
     comparison_baselines: [hindu, all]
     phase: 1
     status: defined
     display:
       scorecard:
-        label: "Urban share of population"
+        label: "Urban share"
         reference: "hindu"
         unit_format: percent
         higher_is_better: null
         order: 15
 
   - id: sex-ratio
-    name: Sex ratio (females per 1000 males)
+    name: Sex ratio
     cluster: demographics
     unit: females_per_1000_males
     higher_is_better: null
@@ -92,14 +92,14 @@ metrics:
     status: defined
     display:
       scorecard:
-        label: "Sex ratio (females per 1,000 males)"
+        label: "Sex ratio"
         reference: "hindu"
         unit_format: females_per_1000_males
         higher_is_better: true
         order: 20
 
   - id: district-concentration-top100
-    name: Share of Muslim population in top-100 concentration districts
+    name: Concentration in top 100 districts
     cluster: demographics
     unit: percent
     higher_is_better: null
@@ -121,7 +121,7 @@ metrics:
     status: defined
     display:
       scorecard:
-        label: "Top-100 district concentration"
+        label: "Top-100 concentration"
         reference: null
         unit_format: percent
         higher_is_better: null
@@ -129,7 +129,7 @@ metrics:
 
   # ----- Education (Phase 1) -----
   - id: lit-7plus
-    name: Literacy rate (7+ years)
+    name: Literacy rate
     cluster: education
     unit: percent
     higher_is_better: true
@@ -153,7 +153,7 @@ metrics:
     status: defined
     display:
       scorecard:
-        label: "Literacy rate (7+)"
+        label: "Literacy rate"
         reference: "hindu"
         unit_format: percent
         higher_is_better: true
@@ -172,7 +172,7 @@ metrics:
     status: stub
 
   - id: ger-higher-ed
-    name: Gross Enrolment Ratio in higher education (18-23)
+    name: Higher education enrolment rate
     cluster: education
     unit: percent
     higher_is_better: true
@@ -187,7 +187,7 @@ metrics:
     methodology_notes: |
       Numerator: AISHE 2021-22 (Muslim 21,08,033; total 4,32,68,181 per Report
       p29 prose). Denominator: Census 2011 C-15 (15-19 + 20-24) × 0.6 as an
-      18-23 effective-cohort proxy — single-year-age table (C-13) not pulled
+      18-23 effective-cohort proxy; single-year-age table (C-13) not pulled
       and 2021 Census deferred. This understates the 2021-22 cohort
       (especially for Muslims, whose age structure is more youth-skewed), so
       our computed GER sits ~2pp ABOVE published National (28.4%) and ~2pp
@@ -199,14 +199,14 @@ metrics:
     status: defined
     display:
       scorecard:
-        label: "Higher-education enrolment ratio (ages 18-23)"
+        label: "Higher-education enrolment rate"
         reference: "all"
         unit_format: percent
         higher_is_better: true
         order: 55
 
   - id: muslim-higher-ed-enrolment
-    name: Muslim student enrolment in higher education (absolute count)
+    name: Muslim students in higher education
     cluster: education
     unit: count
     higher_is_better: null
@@ -236,7 +236,7 @@ metrics:
 
   # ----- Employment (Phase 1) -----
   - id: lfpr-15plus
-    name: Labour Force Participation Rate (15+)
+    name: Labour force participation
     cluster: employment
     unit: percent
     higher_is_better: true
@@ -255,14 +255,14 @@ metrics:
     status: defined
     display:
       scorecard:
-        label: "Labour-force participation (ages 15+)"
+        label: "Labour-force participation"
         reference: "hindu"
         unit_format: percent
         higher_is_better: true
         order: 60
 
   - id: wpr-15plus
-    name: Worker Population Ratio (15+)
+    name: Worker population ratio
     cluster: employment
     unit: percent
     higher_is_better: true
@@ -279,14 +279,14 @@ metrics:
     status: defined
     display:
       scorecard:
-        label: "Worker-population ratio (ages 15+)"
+        label: "Worker-population ratio"
         reference: "hindu"
         unit_format: percent
         higher_is_better: true
         order: 70
 
   - id: salaried-share
-    name: Share of workers in regular salaried employment
+    name: Workers in salaried jobs
     cluster: employment
     unit: percent
     higher_is_better: true
@@ -299,7 +299,7 @@ metrics:
     methodology_notes: |
       PLFS 2023-24 Table 49 (pages 401-402). Rural+urban person-level.
       Muslims disproportionately self-employed (62.2% vs Hindu 58.3%) and
-      under-represented in formal salaried work — the classic Sachar-era
+      under-represented in formal salaried work, the classic Sachar-era
       finding on labor-market segregation.
     comparison_baselines: [hindu, all]
     phase: 1
@@ -339,7 +339,7 @@ metrics:
 
   # ----- Health (Phase 1) -----
   - id: imr
-    name: Infant Mortality Rate
+    name: Infant mortality rate
     cluster: health
     unit: per_1000_live_births
     higher_is_better: false
@@ -362,14 +362,14 @@ metrics:
     status: defined
     display:
       scorecard:
-        label: "Infant Mortality Rate"
+        label: "Infant mortality rate"
         reference: "hindu"
         unit_format: per_1000_live_births
         higher_is_better: false
         order: 80
 
   - id: stunting-u5
-    name: Stunting prevalence in children under 5
+    name: Child stunting (under 5)
     cluster: health
     unit: percent
     higher_is_better: false
@@ -426,7 +426,7 @@ metrics:
         order: 90
 
   - id: women-anemia
-    name: Anaemia in women aged 15-49
+    name: Anaemia in women
     cluster: health
     unit: percent
     higher_is_better: false
@@ -440,7 +440,7 @@ metrics:
       NFHS-5 Table 10.23.1 reports total-residence women's anaemia by religion
       directly. Year=2020 represents the midpoint of NFHS-5 fieldwork.
       Note: NFHS revised anaemia cut-offs between NFHS-4 (Hb <12.0 g/dl) and
-      NFHS-5 (same cut-off, but capillary blood vs venous — affects comparability
+      NFHS-5 (same cut-off, but capillary blood vs venous, which affects comparability
       across rounds). Treat as methodology break for NFHS-4 -> NFHS-5 trends.
     comparison_baselines: [hindu, all]
     phase: 1
@@ -469,7 +469,7 @@ metrics:
     status: stub
 
   - id: improved-sanitation
-    name: Toilet facility access (households)
+    name: Toilet access
     cluster: housing
     unit: percent
     higher_is_better: true
@@ -483,14 +483,14 @@ metrics:
     methodology_notes: |
       NFHS-5 Table 2.4 (page 74). Total residence, national. Year=2020 =
       NFHS-5 fieldwork midpoint. Muslim toilet access (90.3%) runs *above*
-      Hindu (80.7%) — partly because urban-Muslim share is higher than
+      Hindu (80.7%), partly because urban-Muslim share is higher than
       urban-Hindu share, and urban access is uniformly higher.
     comparison_baselines: [hindu, all]
     phase: 1
     status: defined
     display:
       scorecard:
-        label: "Toilet facility access"
+        label: "Toilet access"
         reference: "hindu"
         unit_format: percent
         higher_is_better: true
@@ -523,7 +523,7 @@ metrics:
 
   # ----- Representation (Phase 2) -----
   - id: ls-share
-    name: Muslim share of Lok Sabha members
+    name: Muslim share of the Lok Sabha
     cluster: representation
     unit: percent
     higher_is_better: null
@@ -542,13 +542,13 @@ metrics:
       "manual entry" canonical with citations in each row's methodology note.
       Time series: 2009=28/543 (5.16%), 2014=22/543 (4.05%), 2019=27/543
       (4.97%), 2024=24/543 (4.42%). Compare against Muslim population share
-      of ~14.2% — chronic 9-10pp underrepresentation.
+      of ~14.2%, a chronic 9-10pp underrepresentation.
     comparison_baselines: []
     phase: 2
     status: defined
     display:
       scorecard:
-        label: "Lok Sabha Muslim share (2024)"
+        label: "Lok Sabha Muslim share"
         reference: null
         unit_format: percent
         higher_is_better: null
@@ -556,7 +556,7 @@ metrics:
         special_render: time_series_latest
 
   - id: mla-share
-    name: Muslim share of state legislative assembly members
+    name: Muslim share of state assemblies
     cluster: representation
     unit: percent
     higher_is_better: null
@@ -564,20 +564,20 @@ metrics:
       Percentage of state legislative assembly seats held by Muslim MLAs.
       National aggregate (~6%) plus per-assembly values for all 30
       state + UT assemblies that hold elections (28 states + Delhi,
-      Puducherry, J&K — most-recent election per assembly).
+      Puducherry, J&K, most-recent election per assembly).
     sources: {primary: prs-eci-affidavits}
     geography_levels: [national, state]
     religions: [muslim]
     methodology_notes: |
-      Manual-entry metric — like ls-share, religion is not officially
+      Manual-entry metric, like ls-share: religion is not officially
       tabulated by ECI or PRS. Underlying data is candidate-affidavit
       religion classified post-election by journalists (Maktoob, Clarion,
       India Forum, The Wire, Deccan Herald, Outlook, Radiance Weekly,
       Free Press Journal, ummid.com, thenewzradar). National aggregate
-      ~6% across the 30 covered assemblies. Highest: J&K 60% (2024 —
+      ~6% across the 30 covered assemblies. Highest: J&K 60% (2024,
       first election since Article 370 reorg); Kerala 25%, Assam 24.6%.
       Lowest: HP / Goa / Mizoram / Nagaland / Sikkim / Arunachal /
-      Chhattisgarh / Tripura — 0% (most have never elected a Muslim MLA
+      Chhattisgarh / Tripura, all 0% (most have never elected a Muslim MLA
       in state history). Each row's methodology_note cites the source
       compilation(s) used.
     comparison_baselines: []
@@ -585,7 +585,7 @@ metrics:
     status: defined
     display:
       scorecard:
-        label: "State MLA Muslim share (all states)"
+        label: "State MLA Muslim share"
         reference: null
         unit_format: percent
         higher_is_better: null
@@ -620,14 +620,14 @@ metrics:
     # multi-year share trend canonical is retained as cross-reference data.
 
   - id: prison-rate-per-100k
-    name: Prison population rate (per 100k of religious population)
+    name: Incarceration rate
     cluster: justice
     unit: per_100k_population
     higher_is_better: false
     definition: |
       Incarceration rate: prisoners of religion R per 100,000 of religion R's
       total population. More direct measure of disproportion than "share of
-      prisoners" — comparable across religions without needing to know
+      prisoners", comparable across religions without needing to know
       population baselines.
     sources:
       primary: ncrb-prison
@@ -640,7 +640,7 @@ metrics:
       construction) divided by Census 2011 national religious population times
       100,000. The 'denominator' column on each canonical row records the exact
       (count, population) pair used. Caveat: Maharashtra non-reporting of
-      religion for ~33k undertrials/detenues — religion-reported numerator
+      religion for ~33k undertrials/detenues, so the religion-reported numerator
       excludes those; full national population is the denominator.
     comparison_baselines: [hindu, all]
     phase: 2
@@ -654,7 +654,7 @@ metrics:
         order: 120
 
   - id: undertrial-rate-per-100k
-    name: Undertrial population rate (per 100k of religious population)
+    name: Undertrial rate
     cluster: justice
     unit: per_100k_population
     higher_is_better: false
@@ -720,7 +720,7 @@ metrics:
     religions: [all]
     methodology_notes: |
       NCRB Crime in India 2022, Table 1.2 (national, 2020-2022). Incident
-      counts only — no religion of victim/perpetrator in the published table.
+      counts only, with no religion of victim/perpetrator in the published table.
       Caveat: several states stopped recording 'communal' as a separate
       crime category since ~2017, which deflates the national total over
       time. Civil-society compilations (Documentation of the Oppressed,
@@ -730,7 +730,7 @@ metrics:
     status: defined
     display:
       scorecard:
-        label: "Communal incidents (police records, 2022)"
+        label: "Communal incidents (police)"
         reference: null
         unit_format: count
         higher_is_better: null
