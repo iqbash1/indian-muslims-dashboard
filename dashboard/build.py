@@ -1032,7 +1032,10 @@ function _valueLabels(decimals, suffix) {
     ctx.save(); ctx.font = '600 11px -apple-system, system-ui, sans-serif';
     ctx.textBaseline = 'middle'; ctx.fillStyle = '#555';
     meta.data.forEach((bar, i) => { const v = chart.data.datasets[0].data[i];
-      ctx.fillText(v.toFixed(decimals) + suffix, bar.x + 6, bar.y); });
+      // Integer-count labels get thousands separators ("1,165"); decimal
+      // labels (percentages, rates) keep fixed precision ("73.3%").
+      const label = (decimals === 0 ? Math.round(v).toLocaleString() : v.toFixed(decimals)) + suffix;
+      ctx.fillText(label, bar.x + 6, bar.y); });
     ctx.restore();
   } };
 }
@@ -1059,8 +1062,12 @@ function _refLine(refValue, refLabel) {
 const CHART_SPECS = {};
 function _spec(id, fnName, args) { CHART_SPECS[id] = { fnName, args }; }
 
-function hbar(id, labels, values, colors, suffix, decimals, refValue, refLabel) {
+function hbar(id, labels, values, colors, suffix, decimals, refValue, refLabel, beginAtZero) {
   _spec(id, 'hbar', Array.from(arguments).slice(1));
+  // beginAtZero defaults to false (house style: bars hug the data so
+  // community differences stay visible). Pass true when the bars are a
+  // magnitude comparison where a non-zero baseline would exaggerate the
+  // ratio (e.g. a 2-year count: 668 vs 1,165 must read as "nearly double").
   new Chart(document.getElementById(id), {
     type: 'bar',
     data: { labels: labels, datasets: [{ data: values, backgroundColor: colors, borderRadius: 3, barPercentage: 0.82, categoryPercentage: 0.86 }] },
@@ -1068,7 +1075,7 @@ function hbar(id, labels, values, colors, suffix, decimals, refValue, refLabel) 
       indexAxis: 'y', responsive: true, maintainAspectRatio: false, animation: false,
       layout: { padding: { right: 46, top: 14 } },
       plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => c.parsed.x.toFixed(decimals) + suffix } } },
-      scales: { x: { display: false, grace: '8%', beginAtZero: false }, y: { grid: { display: false }, border: { display: false }, ticks: { font: { size: 11 } } } },
+      scales: { x: { display: false, grace: '8%', beginAtZero: beginAtZero === true }, y: { grid: { display: false }, border: { display: false }, ticks: { font: { size: 11 } } } },
     },
     plugins: [_valueLabels(decimals, suffix), _refLine(refValue == null ? null : refValue, refLabel)],
   });
@@ -2331,7 +2338,7 @@ CAPTION = {
     "prison-rate-per-100k": "prisoners per 100k of community",
     "undertrial-rate-per-100k": "undertrials per 100k of community",
     "communal-incidents-govt": "incidents",
-    "communal-incidents-civic": "hate-speech events",
+    "communal-incidents-civic": "events",
 }
 # (suffix, decimals) for chart value labels, keyed by unit_format.
 UNIT_JS = {
@@ -2407,7 +2414,7 @@ PLAIN_DEFINITION = {
     "prison-rate-per-100k": "For every 100,000 people of a religion, how many are in prison. Allows fair comparison across communities of different size.",
     "undertrial-rate-per-100k": "For every 100,000 people of a religion, how many are in prison awaiting trial (not yet convicted).",
     "communal-incidents-govt": "Number of communal or religious rioting incidents recorded in police records each year (NCRB).",
-    "communal-incidents-civic": "Number of in-person events (rallies, religious gatherings, political speeches) targeting Muslims with hateful rhetoric, documented by India Hate Lab.",
+    "communal-incidents-civic": "In-person events (rallies, religious gatherings, political speeches) where Muslims are targeted with hateful rhetoric.",
 }
 
 
@@ -2885,14 +2892,24 @@ def _card_ts_count(mid, label, src, csv_href, cvid):
         js = f'lineChart("{cvid}", {json.dumps(labels)}, {json.dumps(values)}, "#7b1d22", "");'
         comps += _comp("trend", f"{labels[0]}-{labels[-1]}", f"{values[0]:,} → {val:,}", "neutral")
     elif len(rows) == 2:
-        # 2-point "trend" is just a straight line — let the Δ pill carry it.
+        # Only two rounds: a 2-point line is just a sloped segment, so show the
+        # two years as side-by-side bars instead, so the year-on-year jump
+        # reads at a glance. Zero-based (beginAtZero=True) so bars are honest:
+        # 668 vs 1,165 must look like "nearly double", not "triple". The later
+        # bar is coloured by direction (red if it rose, since lower is better).
         first, last = int(float(rows[0]["value"])), val
         delta = last - first
+        pct = (delta / first * 100) if first else 0
         arrow = "↑" if delta > 0 else ("↓" if delta < 0 else "→")
         cls = "bad" if delta > 0 else ("good" if delta < 0 else "mid")
-        comps += _comp(f"{rows[0]['year']} → {latest['year']}",
-                       f"{arrow} {abs(delta):,}",
-                       f"{first:,} → {last:,}", cls)
+        y0, y1 = str(rows[0]["year"]), str(latest["year"])
+        bar_hex = "#991B1B" if delta > 0 else ("#065F46" if delta < 0 else "#555555")
+        chart_html = (f'<div class="card-chartwrap" style="height:104px"><canvas id="{cvid}" '
+                      f'role="img" aria-label="Bar comparison of {y0} versus {y1}; values listed in the card above."></canvas></div>')
+        js = (f'hbar("{cvid}", {json.dumps([y0, y1])}, {json.dumps([first, last])}, '
+              f'{json.dumps(["#C9CFD3", bar_hex])}, "", 0, null, "", true);')
+        noun = CAPTION.get(mid, "events")
+        comps += _comp(f"vs {y0}", f"{arrow} {abs(pct):.0f}%", f"{delta:+,} {noun}", cls)
     return _card_shell(mid, label, f"{val:,}", CAPTION.get(mid, "events"), latest["year"] if latest else "",
                        "lower is better", chart_html, comps, src, csv_href), js
 

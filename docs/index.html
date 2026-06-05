@@ -588,7 +588,7 @@ counts only, with no religion of victim/perpetrator in the published table.
 Caveat: several states stopped recording &#x27;communal&#x27; as a separate
 crime category since ~2017, which deflates the national total over
 time. Civil-society compilations (Documentation of the Oppressed,
-India Hate Lab) typically report higher counts.</p></div><div class="card-foot"><a href="canonical/communal-incidents-govt.csv">NCRB CII (2015-2023)</a></div></section><section class="card" data-metric-id="communal-incidents-civic" data-metric-name="Anti-Muslim hate speech events"><span class="card-expand" aria-hidden="true" title="Click for larger view">↗</span><div class="card-metric">Anti-Muslim hate speech events</div><p class="card-plain">Number of in-person events (rallies, religious gatherings, political speeches) targeting Muslims with hateful rhetoric, documented by India Hate Lab.</p><div class="card-hero"><span class="card-value">1,165</span><span class="card-unit">hate-speech events</span><span class="card-year">(2024)</span></div><p class="card-polarity polarity-down"><span aria-hidden="true">↓</span> lower is better</p><div class="card-comparisons"><div class="card-comp bad"><div class="comp-label">2023 → 2024</div><div class="comp-verdict">↑ 497</div><div class="comp-detail">668 → 1,165</div></div></div><div class="card-method"><h3 class="card-method-title">About this measurement</h3><p><b>Definition.</b> Annual count of verified in-person anti-Muslim hate speech events
+India Hate Lab) typically report higher counts.</p></div><div class="card-foot"><a href="canonical/communal-incidents-govt.csv">NCRB CII (2015-2023)</a></div></section><section class="card" data-metric-id="communal-incidents-civic" data-metric-name="Anti-Muslim hate speech events"><span class="card-expand" aria-hidden="true" title="Click for larger view">↗</span><div class="card-metric">Anti-Muslim hate speech events</div><p class="card-plain">In-person events (rallies, religious gatherings, political speeches) where Muslims are targeted with hateful rhetoric.</p><div class="card-hero"><span class="card-value">1,165</span><span class="card-unit">events</span><span class="card-year">(2024)</span></div><p class="card-polarity polarity-down"><span aria-hidden="true">↓</span> lower is better</p><div class="card-chartwrap" style="height:104px"><canvas id="cc-communal-incidents-civic" role="img" aria-label="Bar comparison of 2023 versus 2024; values listed in the card above."></canvas></div><div class="card-comparisons"><div class="card-comp bad"><div class="comp-label">vs 2023</div><div class="comp-verdict">↑ 74%</div><div class="comp-detail">+497 events</div></div></div><div class="card-method"><h3 class="card-method-title">About this measurement</h3><p><b>Definition.</b> Annual count of verified in-person anti-Muslim hate speech events
 documented by India Hate Lab (IHL). Includes political rallies,
 religious gatherings, and electoral events with hateful rhetoric.</p><p><b>Methodology.</b> Fundamentally different unit from NCRB&#x27;s `communal-incidents-govt`:
 IHL counts hate speech events (rallies, political speeches with
@@ -787,7 +787,10 @@ function _valueLabels(decimals, suffix) {
     ctx.save(); ctx.font = '600 11px -apple-system, system-ui, sans-serif';
     ctx.textBaseline = 'middle'; ctx.fillStyle = '#555';
     meta.data.forEach((bar, i) => { const v = chart.data.datasets[0].data[i];
-      ctx.fillText(v.toFixed(decimals) + suffix, bar.x + 6, bar.y); });
+      // Integer-count labels get thousands separators ("1,165"); decimal
+      // labels (percentages, rates) keep fixed precision ("73.3%").
+      const label = (decimals === 0 ? Math.round(v).toLocaleString() : v.toFixed(decimals)) + suffix;
+      ctx.fillText(label, bar.x + 6, bar.y); });
     ctx.restore();
   } };
 }
@@ -814,8 +817,12 @@ function _refLine(refValue, refLabel) {
 const CHART_SPECS = {};
 function _spec(id, fnName, args) { CHART_SPECS[id] = { fnName, args }; }
 
-function hbar(id, labels, values, colors, suffix, decimals, refValue, refLabel) {
+function hbar(id, labels, values, colors, suffix, decimals, refValue, refLabel, beginAtZero) {
   _spec(id, 'hbar', Array.from(arguments).slice(1));
+  // beginAtZero defaults to false (house style: bars hug the data so
+  // community differences stay visible). Pass true when the bars are a
+  // magnitude comparison where a non-zero baseline would exaggerate the
+  // ratio (e.g. a 2-year count: 668 vs 1,165 must read as "nearly double").
   new Chart(document.getElementById(id), {
     type: 'bar',
     data: { labels: labels, datasets: [{ data: values, backgroundColor: colors, borderRadius: 3, barPercentage: 0.82, categoryPercentage: 0.86 }] },
@@ -823,7 +830,7 @@ function hbar(id, labels, values, colors, suffix, decimals, refValue, refLabel) 
       indexAxis: 'y', responsive: true, maintainAspectRatio: false, animation: false,
       layout: { padding: { right: 46, top: 14 } },
       plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => c.parsed.x.toFixed(decimals) + suffix } } },
-      scales: { x: { display: false, grace: '8%', beginAtZero: false }, y: { grid: { display: false }, border: { display: false }, ticks: { font: { size: 11 } } } },
+      scales: { x: { display: false, grace: '8%', beginAtZero: beginAtZero === true }, y: { grid: { display: false }, border: { display: false }, ticks: { font: { size: 11 } } } },
     },
     plugins: [_valueLabels(decimals, suffix), _refLine(refValue == null ? null : refValue, refLabel)],
   });
@@ -1078,6 +1085,7 @@ hbar("cc-mla-share", ["Jammu & Kashmir", "Kerala", "Assam", "West Bengal", "Utta
 hbar("cc-prison-rate-per-100k", ["Hindu", "Christian", "Muslim", "Sikh"], [39.79, 56.49, 63.26, 124.54], ["#D8DEE2", "#D8DEE2", "#991B1B", "#D8DEE2"], "", 1, 44.61, "All-India");
 hbar("cc-undertrial-rate-per-100k", ["Hindu", "Christian", "Muslim", "Sikh"], [29.33, 39.06, 48.75, 97.46], ["#D8DEE2", "#D8DEE2", "#991B1B", "#D8DEE2"], "", 1, 33.15, "All-India");
 lineChart("cc-communal-incidents-govt", [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023], [789, 869, 723, 512, 438, 857, 378, 272, 272], "#7b1d22", "");
+hbar("cc-communal-incidents-civic", ["2023", "2024"], [668, 1165], ["#C9CFD3", "#991B1B"], "", 0, null, "", true);
 
 // Chart.js sizes its canvas to the parent at construction. Viewport changes
 // (mobile rotation, desktop->mobile resize) leave the canvas at its original
