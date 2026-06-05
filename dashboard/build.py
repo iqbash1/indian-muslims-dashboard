@@ -157,6 +157,17 @@ SECTION_GROUPS = [
 ]
 SECTION_OF = {cid: name for name, cids in SECTION_GROUPS for cid in cids}
 
+# One-line intro shown under each section header, telling a new visitor what
+# story to expect in the cards below. Written by hand against current data;
+# update when the data changes the direction. Indian-English spelling.
+SECTION_INTROS = {
+    "Demographics": "India's largest religious minority at 14.2% of the population (Census 2011), more urban than the national average, concentrated in a handful of districts in the north and east.",
+    "Education & Employment": "Muslims trail on literacy, higher-education enrolment, and salaried work. Labour-force and worker-population ratios run near the national average.",
+    "Health & Housing": "Muslim infant mortality is below the national average and women's anaemia is the lowest of any community, but under-5 stunting is the highest. Toilet-facility access is now close to par.",
+    "Representation": "Muslim share of elected seats sits well below their share of the population, both in the Lok Sabha (4.4% of MPs vs 14.2% of population) and across state assemblies (6.0%).",
+    "Justice & Civic": "Muslims are over-represented in the prison and undertrial populations on a per-100k-of-community basis. Official NCRB communal-incident counts diverge from civic-society compilations.",
+}
+
 
 def load_scorecard_spec() -> list[tuple]:
     """Read display.scorecard blocks from manifest/metrics.yaml and build the
@@ -531,9 +542,38 @@ TEMPLATE = """<!DOCTYPE html>
   .cluster-header {
     font-size: 15px; font-weight: 600; color: var(--fg);
     letter-spacing: -0.005em;
-    margin: 32px 0 12px; padding: 6px 0 0;
+    margin: 32px 0 6px; padding: 6px 0 0;
     border-top: 1px solid var(--rule);
   }
+  .cluster-intro {
+    margin: 0 0 14px; max-width: 70em;
+    font-size: 14px; color: var(--muted); line-height: 1.5;
+  }
+  /* Scorecard moved below the cards (Commit BP); collapsed-by-default
+     <details> wrapper so a new visitor sees the card story first and the
+     dense table view is one click away for power users. */
+  .scorecard-details {
+    margin: 40px 0 24px;
+    border: 1px solid var(--rule); border-radius: 8px;
+    background: var(--card);
+  }
+  .scorecard-details summary {
+    list-style: none; cursor: pointer;
+    padding: 14px 18px;
+    display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+    border-radius: 8px;
+  }
+  .scorecard-details summary::-webkit-details-marker { display: none; }
+  .scorecard-details summary::before {
+    content: "▸"; color: var(--accent); font-size: 14px;
+    margin-right: 4px; transition: transform 0.15s;
+    display: inline-block;
+  }
+  .scorecard-details[open] summary::before { content: "▾"; }
+  .scorecard-details summary:hover { background: #faf7f0; }
+  .scorecard-summary-title { font-size: 16px; font-weight: 600; color: var(--fg); }
+  .scorecard-summary-detail { font-size: 13px; color: var(--muted); }
+  .scorecard-content { padding: 4px 18px 18px; }
   .scorecard table { font-size: 13px; }
   .scorecard-table tbody tr:hover { background: #faf7f0; }
   .scorecard-search-wrap { margin-top: 10px; }
@@ -765,7 +805,7 @@ TEMPLATE = """<!DOCTYPE html>
   <p>Each card compares the latest Muslim figure to Hindu and all-India
   baselines, drawn from primary government surveys. Click any card for
   a larger view with the full methodology. Every card also links to its
-  source CSV; click any scorecard column header to re-sort.</p>
+  source CSV.</p>
 </section>
 <div class="status-bar">
   <span><b>{n_metrics}</b> indicators</span>
@@ -778,36 +818,40 @@ TEMPLATE = """<!DOCTYPE html>
   <button id="compare-hindu" class="compare-toggle-btn" role="radio" aria-checked="false" type="button">Hindu only</button>
 </div>
 
-<!-- SCORECARD -->
-<section class="tile scorecard">
-  <div class="tile-head">
-    <h2>Scorecard: all metrics at a glance</h2>
-    <p class="data-current">Muslim outcome vs Hindu and all-India baselines, sorted by gap size</p>
+{cluster_grids}
+
+<!-- SCORECARD — moved below the cards (Commit BP) so a new visitor sees the
+     visual story before the dense table view. Collapsed by default; the
+     summary doubles as both the title and the click-to-expand affordance. -->
+<details class="scorecard-details">
+  <summary class="scorecard-summary">
+    <span class="scorecard-summary-title">All {n_metrics} indicators in one table</span>
+    <span class="scorecard-summary-detail">sorted by gap size · click to expand</span>
+  </summary>
+  <div class="scorecard-content">
     <div class="scorecard-search-wrap">
       <input type="search" id="scorecard-search" class="scorecard-search"
         placeholder="Search metrics…" aria-label="Search metrics in the scorecard">
     </div>
+    <div class="scorecard-scroll">
+    <table class="scorecard-table" id="scorecard"><thead><tr>
+      <th class="sortable" data-col="0">Metric</th>
+      <th class="sortable" data-col="1">Year</th>
+      <th class="sortable" data-col="2">Muslim</th>
+      <th class="sortable" data-col="3">Hindu</th>
+      <th class="sortable" data-col="4">All</th>
+      <th class="sortable" data-col="5">Gap vs reference</th>
+    </tr></thead><tbody>
+      {scorecard_rows}
+    </tbody></table>
+    </div>
+    <p class="methodology">"Gap" is the Muslim value minus the reference baseline (Hindu where
+    available, otherwise all-India). Red means the Muslim outcome is worse than the reference;
+    green means it is better. For justice metrics, cells show the absolute count alongside the
+    incarceration rate per 100,000 people of that religion, and the gap is the Muslim-to-Hindu
+    rate ratio (1.0× means parity; above 1.0× means Muslims are overrepresented).</p>
   </div>
-  <div class="scorecard-scroll">
-  <table class="scorecard-table" id="scorecard"><thead><tr>
-    <th class="sortable" data-col="0">Metric</th>
-    <th class="sortable" data-col="1">Year</th>
-    <th class="sortable" data-col="2">Muslim</th>
-    <th class="sortable" data-col="3">Hindu</th>
-    <th class="sortable" data-col="4">All</th>
-    <th class="sortable" data-col="5">Gap vs reference</th>
-  </tr></thead><tbody>
-    {scorecard_rows}
-  </tbody></table>
-  </div>
-  <p class="methodology">"Gap" is the Muslim value minus the reference baseline (Hindu where
-  available, otherwise all-India). Red means the Muslim outcome is worse than the reference;
-  green means it is better. For justice metrics, cells show the absolute count alongside the
-  incarceration rate per 100,000 people of that religion, and the gap is the Muslim-to-Hindu
-  rate ratio (1.0× means parity; above 1.0× means Muslims are overrepresented).</p>
-</section>
-
-{cluster_grids}
+</details>
 
 <div class="modal-overlay" id="modal-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title">
   <div class="modal" role="document">
@@ -2427,18 +2471,22 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
     # Comparison block: default to "vs all-India" (or "vs community median"
     # when source all-India is sparse). Render "vs Hindu" alongside (marked
     # data-comp-type="vs-hindu") so a page-level toggle can swap the visible
-    # pill when a viewer wants the inter-community read.
+    # pill when a viewer wants the inter-community read. The comparator's
+    # actual value is appended to the pill label so the reader doesn't have
+    # to do mental math between the card hero (Muslim) and the gap (verdict).
     comps = ""
     if all_v is not None and muslim is not None:
         gap = muslim - all_v
         cls = _verdict(gap, hib)
-        comps += _comp(all_pill_label or "vs all-India",
+        base_label = all_pill_label or "vs all-India"
+        comps += _comp(f"{base_label} · {fmt_num(all_v, unit)}",
                        _gap_str(gap, unit), _verdict_word(cls), cls,
                        comp_type="vs-all")
     if hindu is not None:
         gap = muslim - hindu
         cls = _verdict(gap, hib)
-        comps += _comp("vs Hindu", _gap_str(gap, unit), _verdict_word(cls), cls,
+        comps += _comp(f"vs Hindu · {fmt_num(hindu, unit)}",
+                       _gap_str(gap, unit), _verdict_word(cls), cls,
                        comp_type="vs-hindu")
     if rank:
         comps += _comp("among communities", f"{_ordinal(rank)} of {n}", _tier_word(tier), tier)
@@ -2660,7 +2708,11 @@ def render_all_clusters():
             cards.append(card_html)
             if js:
                 charts.append(js)
+        intro = SECTION_INTROS.get(name, "")
+        intro_html = (f'<p class="cluster-intro">{html.escape(intro)}</p>\n'
+                      if intro else "")
         grids.append(f'<h2 class="cluster-header">{html.escape(name)}</h2>\n'
+                     f'{intro_html}'
                      f'<div class="cards">\n{"".join(cards)}\n</div>')
     return "\n\n".join(grids), "\n".join(charts)
 
