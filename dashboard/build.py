@@ -607,6 +607,14 @@ TEMPLATE = """<!DOCTYPE html>
   }
   .scorecard-table th.sorted-asc::after { content: " ↑"; color: var(--accent); }
   .scorecard-table th.sorted-desc::after { content: " ↓"; color: var(--accent); }
+  /* Generic sortable tables (e.g. the top-100 districts drill-down). Click a
+     header to sort; numeric columns carry data-sort raw values so "4.71M" /
+     "502k" sort by magnitude, not string. */
+  .sortable-table th.sortable { cursor: pointer; user-select: none; white-space: nowrap; }
+  .sortable-table th.sortable:hover { color: var(--accent); }
+  .sortable-table th.sortable::after { content: " ⇅"; font-size: 9px; color: var(--muted); }
+  .sortable-table th.sorted-asc::after { content: " ↑"; color: var(--accent); }
+  .sortable-table th.sorted-desc::after { content: " ↓"; color: var(--accent); }
   .scorecard-table .gap-bad { color: var(--accent); font-weight: 600; }
   .scorecard-table .gap-good { color: #2d6a3e; font-weight: 600; }
   .scorecard-table .gap-neutral { color: var(--muted); }
@@ -685,6 +693,9 @@ TEMPLATE = """<!DOCTYPE html>
   .card-comp.negative .comp-verdict, .card-comp.bad .comp-verdict { color: var(--negative); }
   .card-comp.neutral .comp-verdict, .card-comp.mid .comp-verdict { color: var(--neutral); }
   .comp-note { grid-column: 1 / -1; text-align: left; font-size: var(--t-xs); color: var(--muted); line-height: 1.45; }
+  /* Kicker line above the note (e.g. "the top 10 districts alone hold 14%") —
+     full width, accent-coloured, the card's punchiest single takeaway. */
+  .comp-kicker { grid-column: 1 / -1; text-align: left; font-size: var(--t-sm); color: var(--accent); font-weight: 600; line-height: 1.4; margin-bottom: 4px; }
   .card-foot { margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: var(--t-2xs); color: var(--muted); }
   .card-foot a { color: var(--muslim); text-decoration: none; font-weight: 500; }
   .card-foot a:hover { text-decoration: underline; }
@@ -974,6 +985,46 @@ TEMPLATE = """<!DOCTYPE html>
   });
 })();
 
+// Generic sortable tables (the top-100 districts drill-down). Uses event
+// delegation off document so it works for tables cloned into the modal too
+// (cloneNode does not copy listeners). Per-table sort state is stashed on the
+// table's dataset. Numeric columns (data-type="num") sort descending on first
+// click — for a "top districts" table you want the biggest first; text
+// columns sort ascending first. Cells carry data-sort raw values so formatted
+// strings like "4.71M" / "502k" sort by magnitude rather than by string.
+(function setupSortableTables() {
+  document.addEventListener('click', (e) => {
+    const h = e.target.closest('table.sortable-table th.sortable');
+    if (!h) return;
+    const table = h.closest('table');
+    const col = parseInt(h.dataset.col);
+    const numeric = h.dataset.type === 'num';
+    const tbody = table.querySelector('tbody');
+    if (!tbody) return;
+    const prevCol = parseInt(table.dataset.sortCol ?? '-1');
+    const prevDir = parseInt(table.dataset.sortDir ?? '1');
+    const dir = (prevCol === col) ? -prevDir : (numeric ? -1 : 1);
+    const key = (cell) => {
+      const ds = cell.getAttribute('data-sort');
+      if (ds !== null && ds !== '') return parseFloat(ds);
+      return cell.textContent.trim().toLowerCase();
+    };
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    rows.sort((a, b) => {
+      const ka = key(a.cells[col]), kb = key(b.cells[col]);
+      if (ka < kb) return -dir;
+      if (ka > kb) return dir;
+      return 0;
+    });
+    rows.forEach((r) => tbody.appendChild(r));
+    table.querySelectorAll('th.sortable').forEach((x) =>
+      x.classList.remove('sorted-asc', 'sorted-desc'));
+    h.classList.add(dir === 1 ? 'sorted-asc' : 'sorted-desc');
+    table.dataset.sortCol = col;
+    table.dataset.sortDir = dir;
+  });
+})();
+
 // --- Card-grid chart helpers (generated card initialisers call these) ---
 function _valueLabels(decimals, suffix) {
   return { id: 'vl', afterDatasetsDraw(chart) {
@@ -1031,6 +1082,50 @@ function lineChart(id, labels, values, color, suffix) {
       responsive: true, maintainAspectRatio: false, animation: false,
       plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => c.parsed.y + suffix } } },
       scales: { x: { grid: { display: false }, ticks: { font: { size: 10 } } }, y: { beginAtZero: false, grace: '10%', ticks: { font: { size: 10 } } } },
+    },
+  });
+}
+
+// Cumulative concentration curve: cumulative share of a population (y) against
+// rank-ordered units (x), e.g. "% of all Indian Muslims" vs "top-N districts".
+// points = [[rank, cumPct], …]; x is a true linear axis so the concave shape
+// reads honestly (steep early = front-loaded concentration). markN highlights
+// one rank (the kicker anchor) with a solid dot. Y is pinned at 0 here (unlike
+// the house no-forced-zero rule, which targets comparison charts): a CUMULATIVE
+// share genuinely builds from zero, and letting grace pad below 0 would draw a
+// meaningless negative-share region.
+function concentrationCurve(id, points, markN, suffix) {
+  _spec(id, 'concentrationCurve', Array.from(arguments).slice(1));
+  const curve = points.map((p) => ({ x: p[0], y: p[1] }));
+  const datasets = [{
+    data: curve, borderColor: '#7b1d22', backgroundColor: 'rgba(123,29,34,.10)',
+    fill: true, tension: 0.25, pointRadius: 0, borderWidth: 2, order: 2,
+  }];
+  const mark = markN ? points.find((p) => p[0] === markN) : null;
+  if (mark) datasets.push({
+    data: [{ x: mark[0], y: mark[1] }], borderColor: '#7b1d22',
+    backgroundColor: '#7b1d22', pointRadius: 4, pointHoverRadius: 6,
+    showLine: false, order: 1,
+  });
+  const maxX = points.length ? points[points.length - 1][0] : 100;
+  new Chart(document.getElementById(id), {
+    type: 'line',
+    data: { datasets: datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false, animation: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: { legend: { display: false }, tooltip: { callbacks: {
+        title: (items) => 'Top ' + items[0].parsed.x + ' districts',
+        label: (c) => c.parsed.y.toFixed(1) + suffix + ' of all Muslims',
+      } } },
+      scales: {
+        x: { type: 'linear', min: 1, max: maxX, grid: { display: false },
+             ticks: { font: { size: 10 }, maxTicksLimit: 6 },
+             title: { display: true, text: 'top-N districts (ranked by Muslim population)',
+                      font: { size: 10 }, color: '#666' } },
+        y: { min: 0, grace: '6%',
+             ticks: { font: { size: 10 }, callback: (v) => v + suffix } },
+      },
     },
   });
 }
@@ -1275,7 +1370,7 @@ function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak, refLine, 
   const shareBtn = document.getElementById('modal-share');
   const prevBtn = document.getElementById('modal-prev');
   const nextBtn = document.getElementById('modal-next');
-  const factories = { hbar, lineChart, trendChart };
+  const factories = { hbar, lineChart, trendChart, concentrationCurve };
   let modalChart = null;
   let activeMid = null;
 
@@ -2372,55 +2467,100 @@ def _card_shell(mid, label, value, unit_txt, year, polarity, chart_html, comps_h
     )
 
 
-def _top100_districts_table(metric_id: str) -> str:
-    """Scrollable Rank | District (ST) | Pop (M) | % of pop table built from the
-    per-district rows the canonicalizer now emits. Reads `methodology_note` for
-    rank + district name + within-district Muslim percentage (the canonicalizer
-    stamps these as `rank=N; name=...; muslim_pct_of_district=...`)."""
-    rows = [r for r in load_metric(metric_id) if r["geography_level"] == "district"]
-    if not rows:
-        return ""
-    parsed = []
-    for r in rows:
-        note = r.get("methodology_note") or ""
-        # Parse "rank=N; name=...; muslim_pct_of_district=..."
+def _parse_district_rows(metric_id: str):
+    """Parse per-district rows for the concentration metric into tuples
+    (rank, name, state_abbrev, muslim_count, pct_of_district), rank-sorted.
+    The canonicalizer stamps `rank=N; name=...; muslim_pct_of_district=...`
+    into each row's methodology_note."""
+    out = []
+    for r in load_metric(metric_id):
+        if r["geography_level"] != "district":
+            continue
         meta = {}
-        for part in note.split(";"):
+        for part in (r.get("methodology_note") or "").split(";"):
             if "=" in part:
                 k, _, v = part.partition("=")
                 meta[k.strip()] = v.strip()
-        rank = int(meta.get("rank", "0") or 0)
-        name = meta.get("name", "")
+        try:
+            rank = int(meta.get("rank", "0") or 0)
+        except ValueError:
+            rank = 0
         try:
             pct = float(meta.get("muslim_pct_of_district", "0"))
         except ValueError:
             pct = 0.0
-        muslim_count = int(float(r["value"]))
-        st_abbr = state_abbrev(r["geography_code"])
-        parsed.append((rank, name, st_abbr, muslim_count, pct))
-    parsed.sort(key=lambda x: x[0])
+        out.append((rank, meta.get("name", ""), state_abbrev(r["geography_code"]),
+                    int(float(r["value"])), pct))
+    out.sort(key=lambda x: x[0])
+    return out
+
+
+def _national_muslim_total(metric_id: str) -> int:
+    """National Muslim total for the concentration metric, from its national
+    row. The denominator field carries 'national_muslim_pop_<N>'; sample_size
+    holds the same number as a fallback."""
+    import re as _re
+    for r in load_metric(metric_id):
+        if r["geography_level"] == "national":
+            m = _re.search(r"national_muslim_pop_(\d+)", r.get("denominator") or "")
+            if m:
+                return int(m.group(1))
+            if r.get("sample_size"):
+                try:
+                    return int(float(r["sample_size"]))
+                except ValueError:
+                    pass
+    return 0
+
+
+def _district_cumulative(metric_id: str):
+    """Return (points, top10_share) where points is [[rank, cumulative_pct], …]
+    for rank 1..N — the cumulative share of the *national* Muslim population
+    held by the top-rank districts. Feeds the concentration curve + the kicker."""
+    parsed = _parse_district_rows(metric_id)
+    nat_total = _national_muslim_total(metric_id) or 1
+    points, cum, top10 = [], 0, 0.0
+    for rank, _name, _st, mcount, _pct in parsed:
+        cum += mcount
+        share = cum / nat_total * 100
+        points.append([rank, round(share, 2)])
+        if rank == 10:
+            top10 = share
+    return points, top10
+
+
+def _top100_districts_table(metric_id: str) -> str:
+    """Sortable, scrollable # | District (ST) | Muslims | % of district table.
+    Built from _parse_district_rows. Each numeric cell carries a `data-sort`
+    raw value so the client sort is correct (text like "4.71M" / "501k" would
+    sort wrong by string); headers are click-sortable (see setupSortableTables
+    JS). Default order = rank ascending."""
+    parsed = _parse_district_rows(metric_id)
+    if not parsed:
+        return ""
     trs = []
     for rank, name, st, muslim, pct in parsed:
-        # Format Muslim population in millions ("4.71M") for compactness
+        # Compact Muslim population ("4.71M" / "502k"); data-sort keeps the raw
+        # count so descending sort puts the most-populous district first.
         mil = muslim / 1_000_000
         mil_str = f"{mil:.2f}M" if mil >= 1 else f"{mil*1000:.0f}k"
         trs.append(
             f"<tr>"
-            f'<td style="text-align:right">{rank}</td>'
+            f'<td style="text-align:right" data-sort="{rank}">{rank}</td>'
             f"<td>{html.escape(name)} <span style=\"color:var(--muted);font-size:11px\">({html.escape(st)})</span></td>"
-            f'<td style="text-align:right;font-feature-settings:&quot;tnum&quot;">{mil_str}</td>'
-            f'<td style="text-align:right;font-feature-settings:&quot;tnum&quot;">{pct:.1f}%</td>'
+            f'<td style="text-align:right;font-feature-settings:&quot;tnum&quot;" data-sort="{muslim}">{mil_str}</td>'
+            f'<td style="text-align:right;font-feature-settings:&quot;tnum&quot;" data-sort="{pct:.4f}">{pct:.1f}%</td>'
             f"</tr>"
         )
     return (
         f'<details><summary>See the full ranked list (top {len(parsed)} districts)</summary>'
         f'<div class="scroll-table">'
-        f'<table>'
+        f'<table class="sortable-table">'
         f'<thead><tr>'
-        f'<th style="text-align:right">#</th>'
-        f'<th>District (ST)</th>'
-        f'<th style="text-align:right">Pop</th>'
-        f'<th style="text-align:right">% of pop</th>'
+        f'<th class="sortable" data-col="0" data-type="num" style="text-align:right">#</th>'
+        f'<th class="sortable" data-col="1">District (ST)</th>'
+        f'<th class="sortable" data-col="2" data-type="num" style="text-align:right">Muslims</th>'
+        f'<th class="sortable" data-col="3" data-type="num" style="text-align:right">% of district</th>'
         f'</tr></thead>'
         f'<tbody>{"".join(trs)}</tbody>'
         f'</table>'
@@ -2629,6 +2769,7 @@ def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
     muslim = nat.get("muslim")
     headline = fmt_num(muslim, unit) if muslim is not None else "n/a"
     chart_html, js, note = "", None, ""
+    kicker_html = ""
     if mid == "pop-share":
         # Decadal multi-community trend (1961->2011). Hindu (~80%) dominates if
         # plotted on the same axis as Muslim + minor religions, so the chart's
@@ -2653,15 +2794,17 @@ def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
                 f"All values from primary RGI religion volumes 1961-2011; 1981 excludes "
                 f"Assam, 1991 excludes Jammu & Kashmir.")
     elif mid == "district-concentration-top100":
-        # Two-bar split: the top-100 districts vs every other district. Directly
-        # visualises the concentration the headline measures. The full top-100
-        # list (rank, district, state, count, %) is in the collapsible details
-        # below the chart — see _top100_districts_table().
-        rest = round(100 - muslim, 2)
-        chart_html = f'<div class="card-chartwrap" style="height:92px"><canvas id="{cvid}" role="img" aria-label="Visualisation of this metric; numerical values are listed in the card above."></canvas></div>'
-        js = (f'hbar("{cvid}", {json.dumps(["Top-100 districts", "Other districts"])}, '
-              f'{json.dumps([round(muslim, 2), rest])}, {json.dumps(["#7b1d22", "#D8DEE2"])}, '
-              f'"%", 1, null, "");')
+        # Cumulative concentration curve: cumulative share of India's Muslim
+        # population (y) as you add districts ranked by Muslim population (x).
+        # The steep-then-flat shape shows how front-loaded the concentration
+        # is; the top-10 point is highlighted to anchor the kicker line. The
+        # full ranked list is in the sortable table below — see
+        # _top100_districts_table().
+        points, top10 = _district_cumulative(mid)
+        chart_html = f'<div class="card-chartwrap" style="height:150px"><canvas id="{cvid}" role="img" aria-label="Cumulative share of India\'s Muslim population held by the top-ranked districts; values listed in the table below."></canvas></div>'
+        js = f'concentrationCurve("{cvid}", {json.dumps(points)}, 10, "%");'
+        kicker_html = (f'<div class="comp-kicker">The top 10 districts alone are home to '
+                       f'{top10:.0f}% of all Indian Muslims.</div>')
         note = (f"India had {TOTAL_DISTRICTS_2011} districts in 2011, yet the 100 most "
                 f"Muslim-populous, just {100 / TOTAL_DISTRICTS_2011 * 100:.0f}% of them, are "
                 f"home to {muslim:.1f}% of all Indian Muslims. This is a geographic-"
@@ -2681,7 +2824,7 @@ def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
                   f'{json.dumps(["#2b6cb0"] * len(st))}, "k", 0, null, "");')
         note = ("No community ranking. AISHE tabulates “Muslim Minority” enrolment separately; "
                 "other communities are not enumerated in the same table. Top-8 states shown (thousands).")
-    comps = f'<div class="comp-note">{html.escape(note)}</div>'
+    comps = kicker_html + f'<div class="comp-note">{html.escape(note)}</div>'
     # Metric-specific drill-down (collapsed by default). For district-concentration
     # we surface the full top-100 list; for others, state-level data if available.
     if mid == "district-concentration-top100":
