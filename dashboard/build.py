@@ -140,6 +140,12 @@ def fmt_num(v: float, unit: str) -> str:
 
 MUSLIM_POP_SHARE = 14.23
 
+# Total districts enumerated in Census 2011. Sourced from this project's own
+# canonical provenance: the district-concentration-top100 row records "640
+# districts considered" (computed across all state MDDS C-1 files). Used to
+# frame how concentrated the top-100 figure is (100 of 640 ≈ 16% of districts).
+TOTAL_DISTRICTS_2011 = 640
+
 # Map metric cluster (from metrics.yaml cluster field) to scorecard cluster display name.
 # (Most just title-case the cluster id; civic/justice get explicit overrides for the dashboard.)
 # Display sections group one or more metrics.yaml clusters under a single
@@ -2656,8 +2662,10 @@ def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
         js = (f'hbar("{cvid}", {json.dumps(["Top-100 districts", "Other districts"])}, '
               f'{json.dumps([round(muslim, 2), rest])}, {json.dumps(["#7b1d22", "#D8DEE2"])}, '
               f'"%", 1, null, "");')
-        note = ("Share of all Indian Muslims living in the 100 most Muslim-populous districts. "
-                "This is a geographic-concentration measure, not a community comparison.")
+        note = (f"India had {TOTAL_DISTRICTS_2011} districts in 2011, yet the 100 most "
+                f"Muslim-populous, just {100 / TOTAL_DISTRICTS_2011 * 100:.0f}% of them, are "
+                f"home to {muslim:.1f}% of all Indian Muslims. This is a geographic-"
+                f"concentration measure, not a community comparison.")
     else:  # muslim-higher-ed-enrolment
         # Top-8 states by Muslim enrolment, shown in thousands (the national
         # headline is the absolute total; no community comparator exists).
