@@ -208,8 +208,13 @@ METRIC_META = _load_metric_meta()
 
 
 def render_scorecard_rows() -> str:
-    """Compute one HTML <tr> per metric showing Muslim/Hindu/All and gap vs reference."""
-    rows: list[str] = []
+    """Compute one HTML <tr> per metric showing Muslim/Hindu/All and gap vs
+    reference, sorted by relative gap size (largest first). Cross-unit
+    comparability comes from |muslim − comparator| / comparator — a 9.8pp
+    gap on a 14.23% population baseline beats a 4.4pp gap on a 73% literacy
+    baseline. Metrics with no usable comparator (muslim-only cards and the
+    pure-count incident counters) land at the bottom."""
+    rows: list[tuple[tuple[int, float], str]] = []
     for cluster, mid, name, unit, ref, higher_better in SCORECARD_SPEC:
 
         # Special case: time-series count metrics (communal-incidents-govt + -civic)
@@ -220,7 +225,7 @@ def render_scorecard_rows() -> str:
             latest = max(data, key=lambda r: int(r["year"]))
             val = int(float(latest["value"]))
             year = latest["year"]
-            rows.append(
+            row_html = (
                 f'<tr>'
                 f'<td>{html.escape(name)}</td>'
                 f'<td>{year}</td>'
@@ -228,6 +233,7 @@ def render_scorecard_rows() -> str:
                 f'<td class="gap-neutral">{"NCRB tally; civic counts higher" if mid == "communal-incidents-govt" else "IHL: hate speech events, not riots"}</td>'
                 f'</tr>'
             )
+            rows.append(((1, 0.0), row_html))
             continue
 
         # Special case: ls-share / mla-share — national row, gap vs 14.23% pop share
@@ -242,7 +248,7 @@ def render_scorecard_rows() -> str:
             year = latest["year"]
             gap = m_val - MUSLIM_POP_SHARE
             sign = "+" if gap > 0 else ""
-            rows.append(
+            row_html = (
                 f'<tr>'
                 f'<td>{html.escape(name)}</td>'
                 f'<td>{year}</td>'
@@ -252,17 +258,19 @@ def render_scorecard_rows() -> str:
                 f'<td class="{"gap-bad" if gap < 0 else "gap-good"}">{sign}{gap:.2f}pp vs 14.23% pop</td>'
                 f'</tr>'
             )
+            rows.append(((0, -abs(gap) / MUSLIM_POP_SHARE), row_html))
             continue
 
-        data = load_metric(mid)
-        # Find national row per religion
-        by_rel: dict[str, float] = {}
-        year = "n/a"
-        for r in data:
-            if r["geography_level"] != "national":
-                continue
-            by_rel[r["religion"]] = float(r["value"])
-            year = r["year"]
+        # National rows for the LATEST year only — without this filter,
+        # canonical files sorted year-DESC (e.g. imr.csv) would leak older
+        # values into the dict and the row would compare across years.
+        nat = [r for r in load_metric(mid) if r["geography_level"] == "national"]
+        if not nat:
+            continue
+        latest_year = max(int(r["year"]) for r in nat)
+        year = str(latest_year)
+        by_rel = {r["religion"]: float(r["value"])
+                  for r in nat if int(r["year"]) == latest_year}
         m_val = by_rel.get("muslim")
         h_val = by_rel.get("hindu")
         a_val = by_rel.get("all")
@@ -270,9 +278,10 @@ def render_scorecard_rows() -> str:
         hindu_str = fmt_num(h_val, unit) if h_val is not None else "n/a"
         all_str = fmt_num(a_val, unit) if a_val is not None else "n/a"
 
-        # Gap computation
+        # Gap computation (display) and sort key (cross-unit relative gap).
         gap_str = "n/a"
         gap_class = "gap-neutral"
+        sort_key: tuple[int, float] = (1, 0.0)
         if ref in ("hindu", "all"):
             comp_val = h_val if ref == "hindu" else a_val
             if m_val is not None and comp_val is not None:
@@ -288,6 +297,9 @@ def render_scorecard_rows() -> str:
                     gap_class = "gap-bad" if diff > 0 else ("gap-good" if diff < 0 else "gap-neutral")
                 else:
                     gap_class = "gap-neutral"
+                # Sort key uses relative gap so different units compare fairly.
+                # comp_val can be 0 for edge-case metrics; guard with max().
+                sort_key = (0, -abs(diff) / max(abs(comp_val), 1e-9))
         elif mid == "muslim-higher-ed-enrolment":
             gap_str = "n/a (no Hindu count in source)"
             gap_class = "gap-neutral"
@@ -295,7 +307,7 @@ def render_scorecard_rows() -> str:
             gap_str = "baseline"
             gap_class = "gap-neutral"
 
-        rows.append(
+        row_html = (
             f'<tr>'
             f'<td>{html.escape(name)}</td>'
             f'<td>{year}</td>'
@@ -305,7 +317,76 @@ def render_scorecard_rows() -> str:
             f'<td class="{gap_class}">{html.escape(gap_str)}</td>'
             f'</tr>'
         )
-    return "\n    ".join(rows)
+        rows.append((sort_key, row_html))
+    rows.sort(key=lambda kv: kv[0])
+    return "\n    ".join(html_row for _, html_row in rows)
+
+
+def _and_join(items: list[str]) -> str:
+    """English-join a short list with an Oxford comma. ['A','B','C'] -> 'A, B, and C'."""
+    if not items:
+        return ""
+    if len(items) == 1:
+        return items[0]
+    if len(items) == 2:
+        return f"{items[0]} and {items[1]}"
+    return ", ".join(items[:-1]) + f", and {items[-1]}"
+
+
+def _compute_headline_stats() -> dict:
+    """Walk carded metrics and return (n_behind, n_ahead, n_total_comparable,
+    top_behind_names, top_ahead_names) for the headline-finding paragraph.
+
+    'Behind' counts a metric whose Muslim value is on the bad side of polarity
+    (higher_is_better True/False), OR where Muslim falls below MUSLIM_POP_SHARE
+    on the representation metrics (ls-share / mla-share — the framing is "vs
+    population share"). Muslim-only cards and the pure-count incident counters
+    are excluded from the count because they have no directional comparator."""
+    behind: list[tuple[float, str]] = []   # (abs_relative_gap, short_label)
+    ahead: list[tuple[float, str]] = []
+    for _cluster, mid, label, _unit, _ref, higher_better in SCORECARD_SPEC:
+        # No comparator → skip from the count entirely.
+        if mid in ("communal-incidents-govt", "communal-incidents-civic"):
+            continue
+        if mid in ("pop-share", "district-concentration-top100",
+                   "muslim-higher-ed-enrolment"):
+            continue
+        # Representation metrics compare vs population share, not vs all-India.
+        if mid in ("ls-share", "mla-share"):
+            rows = [r for r in load_metric(mid) if r["geography_level"] == "national"]
+            if not rows:
+                continue
+            latest = max(rows, key=lambda r: int(r["year"]))
+            val = float(latest["value"])
+            gap = val - MUSLIM_POP_SHARE
+            sev = abs(gap) / MUSLIM_POP_SHARE
+            (behind if gap < 0 else ahead).append((sev, label))
+            continue
+        # Default: compare Muslim to all-India (preferred) or Hindu. Use
+        # _nat_by_religion so the comparison is within a single year (avoids
+        # the multi-year-collision bug that bit the old scorecard helper).
+        by_rel = _nat_by_religion(mid)
+        m_val = by_rel.get("muslim")
+        comp_val = by_rel.get("all") if by_rel.get("all") is not None else by_rel.get("hindu")
+        if m_val is None or comp_val is None or higher_better is None:
+            continue
+        diff = m_val - comp_val
+        is_behind = (diff < 0 and higher_better) or (diff > 0 and not higher_better)
+        is_ahead = (diff > 0 and higher_better) or (diff < 0 and not higher_better)
+        sev = abs(diff) / max(abs(comp_val), 1e-9)
+        if is_behind:
+            behind.append((sev, label))
+        elif is_ahead:
+            ahead.append((sev, label))
+    behind.sort(reverse=True)
+    ahead.sort(reverse=True)
+    return {
+        "n_behind": len(behind),
+        "n_ahead": len(ahead),
+        "n_total_comparable": len(behind) + len(ahead),
+        "top_behind_names": [n for _, n in behind[:3]],
+        "top_ahead_names": [n for _, n in ahead[:3]],
+    }
 
 
 TEMPLATE = """<!DOCTYPE html>
@@ -672,28 +753,20 @@ TEMPLATE = """<!DOCTYPE html>
 </div>
 <h1>The state of Muslim India, in data</h1>
 
-<section class="intro">
-  <p>Indicators of living conditions for India's Muslim population, with Hindu and
-  all-India comparison baselines on every metric. The methodology follows the
-  approach of the Sachar Committee (the 2006 Prime Minister's commission whose
-  report remains India's most-cited assessment of Muslim socio-economic status):
-  focused, comparative measurement across population, education, employment,
-  health, representation, and justice.</p>
-  <p>Every card covers one indicator. It shows the latest figure for India's
-  Muslims, where that figure ranks across religious communities, and how it has
-  shifted over time when the source has more than one survey round. Click any
-  card for a larger view with the full methodology. Every card also links to
-  its source CSV. Click any table column header to sort the scorecard.</p>
-</section>
-
 <p class="headline-finding">
-  Muslims are India's largest religious minority at <em>14.2%</em> of the
-  population (Census 2011). On most indicators of education, employment,
-  and political representation, Muslim outcomes trail the national
-  average. On a handful of demographic and health indicators (sex ratio,
-  infant survival, women's anaemia), Muslim outcomes run ahead. This page
-  is the evidence.
+  India's roughly 200 million Muslims, or <em>14.2%</em> of the population
+  (Census 2011), trail the all-India average on <em>{n_behind} of
+  {n_total_comparable}</em> living-conditions indicators tracked here.
+  The biggest gaps are on <em>{top_behind_joined}</em>.{ahead_clause}
+  Scroll down to see where and by how much.
 </p>
+
+<section class="intro">
+  <p>Each card compares the latest Muslim figure to Hindu and all-India
+  baselines, drawn from primary government surveys. Click any card for
+  a larger view with the full methodology. Every card also links to its
+  source CSV; click any scorecard column header to re-sort.</p>
+</section>
 <div class="status-bar">
   <span><b>{n_metrics}</b> indicators</span>
   <span><b>{n_sources}</b> primary sources</span>
@@ -1859,11 +1932,43 @@ def build() -> None:
 
     cluster_grids, card_charts = render_all_clusters()
 
+    stats = _compute_headline_stats()
+    # Strip the parenthetical qualifier the scorecard labels carry (e.g.
+    # "Lok Sabha Muslim share (2024)" → "Lok Sabha Muslim share") and the
+    # leading "Muslim " prefix when present (the surrounding sentence is
+    # already about Muslims, so "Muslim share of …" repeats it) — but keep
+    # the natural casing so proper nouns stay proper.
+    import re as _re
+
+    PROPER_NOUNS = {
+        "Lok", "Sabha", "MLA", "MLAs", "NCRB", "AISHE", "NFHS", "PLFS",
+        "Hindu", "Muslim", "Census", "India", "All-India",
+    }
+
+    def _prose_label(n: str) -> str:
+        # Strip trailing scorecard qualifier like " (2024)" or " (all states)".
+        n = _re.sub(r"\s*\([^)]*\)\s*$", "", n)
+        # Lowercase every word that isn't a known proper noun, so "Infant
+        # Mortality Rate" → "infant mortality rate" but "Lok Sabha Muslim
+        # share" keeps its capitals.
+        return " ".join(w if w in PROPER_NOUNS else w.lower() for w in n.split())
+
+    top_behind_joined = _and_join([_prose_label(n) for n in stats["top_behind_names"]])
+    top_ahead_joined = _and_join([_prose_label(n) for n in stats["top_ahead_names"]])
+    ahead_clause = (
+        f" They run ahead on a handful (<em>{top_ahead_joined}</em>)."
+        if stats["n_ahead"] > 0 else ""
+    )
+
     substitutions = {
         "{timestamp}": dt.datetime.now().strftime("%-d %B %Y"),
         "{n_metrics}": str(n_metrics),
         "{n_sources}": str(n_sources),
         "{n_rows}": str(n_rows),
+        "{n_behind}": str(stats["n_behind"]),
+        "{n_total_comparable}": str(stats["n_total_comparable"]),
+        "{top_behind_joined}": top_behind_joined,
+        "{ahead_clause}": ahead_clause,
         "{scorecard_rows}": render_scorecard_rows(),
         "{cluster_grids}": cluster_grids,
         "{card_charts}": card_charts,
