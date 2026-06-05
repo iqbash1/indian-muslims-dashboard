@@ -453,6 +453,12 @@ TEMPLATE = """<!DOCTYPE html>
   .masthead-meta a { color: var(--muted); }
   .headline-finding { font-size: 16px; line-height: 1.55; color: var(--fg); margin: 0 0 24px; max-width: 70em; }
   .headline-finding em { font-style: normal; color: var(--accent); font-weight: 600; }
+  .headline-method {
+    display: inline-block; margin-left: 6px;
+    color: var(--muslim); text-decoration: none;
+    font-size: 14px; font-weight: 500; white-space: nowrap;
+  }
+  .headline-method:hover { text-decoration: underline; }
   .compare-toggle {
     display: inline-flex; align-items: center; gap: 8px; margin: 6px 0 20px;
     padding: 6px 10px 6px 14px; border: 1px solid var(--rule); border-radius: 999px;
@@ -715,6 +721,9 @@ TEMPLATE = """<!DOCTYPE html>
     .cards { grid-template-columns: 1fr; }
     h1 { font-size: 24px; }
     .headline-finding { font-size: 14px; }
+    /* Drop the methodology callout to its own line on narrow screens so it
+       doesn't wrap awkwardly inside the headline-finding paragraph. */
+    .headline-method { display: block; margin: 10px 0 0; }
     .masthead { gap: 6px 12px; }
     .masthead-nav { margin-left: 0; gap: 10px; }
     .masthead-nav a { padding: 12px 4px; min-height: 44px; display: inline-flex; align-items: center; }
@@ -724,6 +733,21 @@ TEMPLATE = """<!DOCTYPE html>
     .scorecard-search { padding: 0 14px; font-size: 14px; min-height: 44px; }
     .scorecard-table { font-size: 12px; }
     .scorecard-table th, .scorecard-table td { padding: 6px 4px; }
+    /* Section intros: lighter on mobile so they don't dominate. */
+    .cluster-intro { font-size: 13px; }
+    /* Pill labels carry the comparator value now (Commit BP). On narrow
+       cards the 3-pill row gets tight, so tighten typography and pad. */
+    .comp-label { font-size: 10.5px; line-height: 1.2; }
+    .comp-verdict { font-size: 12.5px; }
+    .comp-detail { font-size: 9.5px; }
+    .card-comp { padding: 4px 3px; }
+    /* Modal actions: 4 buttons (prev, next, share, close) need to fit at
+       375px. Hide text labels on the prev/next/share buttons, leaving
+       chevrons + share-icon as compact controls. */
+    .modal-nav-label { display: none; }
+    .modal-nav { padding: 0 10px; }
+    .modal-share-label { display: none; }
+    .modal-share { padding: 0 10px; gap: 0; }
   }
 
   /* Modal: click any card to open a larger view of the same chart. */
@@ -745,7 +769,7 @@ TEMPLATE = """<!DOCTYPE html>
     position: absolute; top: 12px; right: 12px;
     display: flex; gap: 6px; align-items: center;
   }
-  .modal-close, .modal-share {
+  .modal-close, .modal-share, .modal-nav {
     background: var(--card); border: 1px solid var(--rule); border-radius: 6px;
     cursor: pointer; color: var(--muted); padding: 0;
     transition: background .15s, border-color .15s, color .15s;
@@ -753,7 +777,9 @@ TEMPLATE = """<!DOCTYPE html>
   }
   .modal-close { width: 34px; height: 34px; font-size: 22px; line-height: 1; }
   .modal-share { height: 34px; padding: 0 12px; gap: 6px; font-size: 13px; font-weight: 500; }
-  .modal-close:hover, .modal-share:hover {
+  .modal-nav { height: 34px; padding: 0 10px; font-size: 13px; font-weight: 500; }
+  .modal-nav span[aria-hidden] { font-size: 16px; line-height: 1; }
+  .modal-close:hover, .modal-share:hover, .modal-nav:hover {
     background: var(--bg); border-color: var(--accent); color: var(--accent);
   }
   .modal-share.copied {
@@ -799,6 +825,7 @@ TEMPLATE = """<!DOCTYPE html>
   {n_total_comparable}</em> living-conditions indicators tracked here.
   The biggest gaps are on <em>{top_behind_joined}</em>.{ahead_clause}
   Scroll down to see where and by how much.
+  <a class="headline-method" href="/about/">How are these measured? →</a>
 </p>
 
 <section class="intro">
@@ -856,6 +883,12 @@ TEMPLATE = """<!DOCTYPE html>
 <div class="modal-overlay" id="modal-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title">
   <div class="modal" role="document">
     <div class="modal-actions">
+      <button class="modal-nav" id="modal-prev" aria-label="Previous metric" title="Previous metric (←)">
+        <span aria-hidden="true">‹</span><span class="modal-nav-label"> Prev</span>
+      </button>
+      <button class="modal-nav" id="modal-next" aria-label="Next metric" title="Next metric (→)">
+        <span class="modal-nav-label">Next </span><span aria-hidden="true">›</span>
+      </button>
       <button class="modal-share" id="modal-share" aria-label="Copy share link" title="Copy share link">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <circle cx="18" cy="5" r="3"></circle>
@@ -1234,9 +1267,18 @@ function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak, refLine, 
   const body = document.getElementById('modal-body');
   const closeBtn = document.getElementById('modal-close');
   const shareBtn = document.getElementById('modal-share');
+  const prevBtn = document.getElementById('modal-prev');
+  const nextBtn = document.getElementById('modal-next');
   const factories = { hbar, lineChart, trendChart };
   let modalChart = null;
   let activeMid = null;
+
+  // Ordered list of metric IDs in card-grid order — built once at setup so
+  // prev/next navigation cycles through cards in the same sequence the
+  // visitor sees them on the page (and wraps at both ends).
+  const cardOrder = Array.from(document.querySelectorAll('.cards .card'))
+    .map((c) => c.getAttribute('data-metric-id'))
+    .filter(Boolean);
 
   function openModal(card) {
     closeChart();
@@ -1318,13 +1360,37 @@ function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak, refLine, 
     return true;
   }
 
+  // Prev/next navigation: cycle through cardOrder with wrap-around, so a
+  // visitor who opens the first card sees prev land on the last (rather
+  // than being a dead end). Calls openByMid which rebuilds the modal body
+  // for the new metric and updates the URL hash.
+  function nav(delta) {
+    if (!activeMid || cardOrder.length === 0) return;
+    const i = cardOrder.indexOf(activeMid);
+    if (i < 0) return;
+    const j = (i + delta + cardOrder.length) % cardOrder.length;
+    openByMid(cardOrder[j]);
+  }
+
   closeBtn.addEventListener('click', closeModal);
+  prevBtn.addEventListener('click', () => nav(-1));
+  nextBtn.addEventListener('click', () => nav(1));
   overlay.addEventListener('click', (e) => {
     if (e.target === overlay) closeModal();
   });
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && !overlay.hidden) {
       closeModal();
+      return;
+    }
+    // Arrow keys navigate between metrics when the modal is open. Skip if
+    // focus is in an editable element (don't hijack typing in the share
+    // tooltip or a future inline input).
+    if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && !overlay.hidden) {
+      const t = document.activeElement;
+      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+      nav(e.key === 'ArrowLeft' ? -1 : 1);
+      e.preventDefault();
       return;
     }
     // Focus trap: cycle Tab focus only among interactive elements inside the
