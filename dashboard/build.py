@@ -637,7 +637,7 @@ TEMPLATE = """<!DOCTYPE html>
   }
   .modal-body .card-method p {
     margin: 0 0 10px; font-size: 14px; color: var(--fg); line-height: 1.55;
-    max-width: 56em; white-space: pre-line;
+    max-width: 56em; white-space: normal;
   }
   .modal-body .card-method b { color: var(--accent); font-weight: 600; }
   .card-chartwrap { width: 100%; margin: 2px 0 4px; position: relative; }
@@ -745,7 +745,7 @@ TEMPLATE = """<!DOCTYPE html>
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
   }
   .modal-actions {
-    position: absolute; top: 12px; right: 12px;
+    position: absolute; top: 12px; right: 12px; z-index: 2;
     display: flex; gap: 6px; align-items: center;
   }
   .modal-close, .modal-share, .modal-nav {
@@ -769,7 +769,7 @@ TEMPLATE = """<!DOCTYPE html>
   /* Inside the modal body, the cloned card sheds its card styling and the
      chart wrapper expands to use the larger real estate. */
   .modal-body .card {
-    padding: 0; border: none; box-shadow: none; cursor: default;
+    padding: 0; border: none; box-shadow: none; cursor: default; position: static;
   }
   .modal-body .card:hover {
     border: none; box-shadow: none; transform: none;
@@ -2413,8 +2413,10 @@ def _card_shell(mid, label, value, unit_txt, year, polarity, chart_html, comps_h
     # card.
     meta = METRIC_META.get(mid, {})
     method_html = ""
-    def_text = (meta.get("definition") or "").strip()
-    notes_text = (meta.get("methodology_notes") or "").strip()
+    # Collapse the YAML block-scalar hard-wraps to single spaces so the prose
+    # reflows to the modal width instead of breaking at the source line ends.
+    def_text = " ".join((meta.get("definition") or "").split())
+    notes_text = " ".join((meta.get("methodology_notes") or "").split())
     if def_text or notes_text:
         parts = []
         if def_text:
