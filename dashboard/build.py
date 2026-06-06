@@ -414,6 +414,10 @@ TEMPLATE = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="{site_description}">
 <link rel="canonical" href="{site_url}/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#fafaf7">
 <meta property="og:title" content="{site_title}">
 <meta property="og:description" content="{site_description}">
 <meta property="og:url" content="{site_url}/">
@@ -1549,6 +1553,10 @@ STUB_TEMPLATE = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="{description}">
 <link rel="canonical" href="{site_url}/m/{mid}/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#fafaf7">
 <meta property="og:title" content="{og_title}">
 <meta property="og:description" content="{description}">
 <meta property="og:url" content="{site_url}/m/{mid}/">
@@ -1853,6 +1861,10 @@ ABOUT_TEMPLATE = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="About muslimdata.in: mission, methodology, sources, and how to contribute or report errors.">
 <link rel="canonical" href="{site_url}/about/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#fafaf7">
 <meta property="og:title" content="About muslimdata.in">
 <meta property="og:description" content="A scorecard of living-conditions indicators for India's Muslim population, with Hindu and all-India comparison baselines on every metric.">
 <meta property="og:url" content="{site_url}/about/">
