@@ -30,16 +30,17 @@ Idempotent. Re-run after any `canonical/` change.
 ## What it renders
 
 A masthead (brand · About · GitHub · last-updated date), a value-prop H1,
-a 4-sentence headline finding, a status-bar (live indicator / source /
-row counts), a comparison-baseline toggle (`vs all-India` ↔ `vs Hindu`),
-a sortable + searchable scorecard table, and a responsive card grid
-(one card per live metric, grouped into five themed sections).
+a one-to-two-sentence headline finding, a muted preamble line (primary-
+source count + how-to-read + an About link), a comparison-baseline toggle
+(`vs all-India` ↔ `vs Hindu`), the responsive card grid (one card per
+live metric, grouped into five themed sections), and below it a collapsed,
+sortable + searchable scorecard table.
 
 Cards adapt to the data via `render_metric_card()`:
 
 - **Headline**: metric name, plain-English definition (italic line),
   Muslim value + unit + latest year, polarity tag ("↑ HIGHER IS BETTER"
-  or "↓ LOWER IS BETTER"), small ↗ click-affordance icon.
+  or "↓ LOWER IS BETTER"), a persistent ↗ open-affordance icon (top-right).
 - **Chart**: card view shows only the Muslim line + a dashed comparison
   reference (source "All-India" when populated, else the per-year median
   across communities, labelled honestly). Hovering surfaces both values
@@ -57,8 +58,9 @@ Click any card → opens a modal that re-renders the chart at ~3× the
 card's vertical real estate, with every community line visible (Hindu,
 Christian, Sikh, Buddhist, Other) at lighter (medium-weight) labels.
 The modal also surfaces an "About this measurement" panel with the full
-definition + methodology notes from `manifest/metrics.yaml`. Share button
-copies a permalink (`/m/{mid}/`); ESC / scrim click / × closes.
+definition + methodology notes from `manifest/metrics.yaml`. Prev/next
+buttons (and ← / → keys) step through metrics in card order; the Share
+button copies a permalink (`/m/{mid}/`); ESC / scrim click / × closes.
 
 ## Why static HTML
 

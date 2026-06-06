@@ -1,6 +1,6 @@
 # Refresh schedule
 
-Manifest-driven cadence per source. Update `next_expected` in `manifest/sources.yaml` when a release lands so the dashboard can flag overdue sources.
+Manifest-driven cadence per source. Update `next_expected` in `manifest/sources.yaml` when a release lands so the refresh check can flag overdue sources.
 
 ## Recurring
 
@@ -20,4 +20,4 @@ Manifest-driven cadence per source. Update `next_expected` in `manifest/sources.
 
 ## Overdue alert
 
-A source is considered overdue if `last_pulled` is more than 1.5× the cadence interval past `next_expected`. The dashboard surfaces overdue sources as a banner; the maintainer triages.
+`validate/check_refresh.py` flags any source past its `next_expected` date, and fails CI (non-zero exit) once a source is more than 60 days overdue (`OVERDUE_THRESHOLD_DAYS`). It runs in CI as a punch-list, not as an on-page banner; the maintainer triages.

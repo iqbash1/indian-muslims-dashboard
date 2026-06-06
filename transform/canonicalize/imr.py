@@ -26,7 +26,6 @@ from __future__ import annotations
 import csv
 import datetime as dt
 import pathlib
-import sys
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[2]
 NFHS_L2 = REPO_ROOT / "extracted" / "nfhs-5" / "nfhs-5-table72-mortality-by-religion.csv"

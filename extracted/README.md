@@ -8,7 +8,7 @@ Parsed tables, one per source-document. **Regeneratable** from L1 + the scripts 
 extracted/
   census-2011/
     c01-population-by-religion.csv
-    c08-education-by-religion.csv
+    c09-education-by-religion.csv
   nfhs-5/
     india-report-tables/...
   ...

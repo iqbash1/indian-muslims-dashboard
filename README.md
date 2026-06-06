@@ -17,8 +17,10 @@ justice.
 
 ## What's on the dashboard
 
-21 live indicators across six themes, drawn from 16 primary sources. The
-authoritative scorecard is the live site at https://muslimdata.in/ — it
+21 live indicators across six themes (population, education, employment,
+health, representation, justice), drawn from 16 primary sources, grouped
+into five themed sections on the dashboard. The authoritative scorecard
+is the live site at https://muslimdata.in/ — it
 auto-rebuilds on every push and shows current values, the comparison
 pill, the trend chart, the methodology, and a downloadable CSV per metric.
 
@@ -75,7 +77,7 @@ The dashboard never queries an external source live and never reads L1/L2 direct
 
 | Source | What it gives us | Cadence | Status |
 |---|---|---|---|
-| **Census of India 2011** | Population by religion (state + district), literacy, sex ratio | 10-year (2021 round delayed indefinitely) | 5 files archived; UP + Bihar + Bengal + J&K + Uttarakhand district MDDS imported |
+| **Census of India 2011** | Population by religion (state + district), literacy, sex ratio | 10-year (2021 round delayed indefinitely) | 38 files archived (3 core C-series tables + all 35 state/UT district MDDS); district-level pop-share complete for all states |
 | **Census of India 2001** | Population, literacy, sex ratio by religion (national + states) — gives the 2001→2011 decennial trend for literacy + the 2-point urban-share trend | 10-year (prior round) | 2 files archived (C-1, C-9) |
 | **Census of India 1991** *(new in AG)* | C-9 Religion table by residence × sex — feeds sex-ratio 1991 (all 6 religions, primary) | 10-year | XLSX + companion PDF archived; India figure excludes J&K |
 | **Census of India 1971** *(new in AG)* | Paper 2 of 1972 Religion summary — feeds sex-ratio 1971 (all 6 religions, primary) | 10-year | PDF archived; extractor cross-checks derived sex-ratio against printed values |
@@ -88,7 +90,7 @@ The dashboard never queries an external source live and never reads L1/L2 direct
 | **NCRB PSI 2018-2023** | Prison + undertrial population by religion — multi-year share trend | Annual (~2y lag) | 6 years archived; 2 share metrics + 2 rate-per-100k reference series |
 | **NCRB CII 2015-2023** | Communal incidents by state | Annual (~2y lag) | per-table + main reports archived; 9-year national series |
 | **PRS / ECI affidavits** *(secondary)* | Lok Sabha + state MLA Muslim shares — manual-entry from journalistic compilations | Per-election | 18-point LS series 1952→2024; 30 state/UT assemblies covered |
-| **India Hate Lab + civic incident DBs** *(secondary, contested)* | Civic-society counts of communal incidents | Annual | 2024 IHL count loaded |
+| **India Hate Lab + civic incident DBs** *(secondary, contested)* | Civic-society counts of communal incidents | Annual | 2023 + 2024 IHL counts loaded |
 
 Each source has a runbook in `docs/runbooks/` documenting URL discovery, archived file inventory, where religion crosstabs live, and known data gaps.
 

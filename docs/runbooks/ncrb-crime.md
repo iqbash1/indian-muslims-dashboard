@@ -37,7 +37,7 @@ level disaggregation on Table 1A.4 around page **67**.
 The 2015 report cannot reach this metric — pre-2016 reports used a different
 table structure with no "23.1 Communal/Religious" row. **Pre-2015 hard wall.**
 
-The extractor (`transform/ncrb/extract_communal_incidents_cii.py`) handles
+The extractor (`transform/ncrb/extract_communal_crime.py`) handles
 two source kinds:
 - `main` — full CII volume; locates Table 1.2 + Table 1A.4 by caption
 - `table-1-2` — per-table standalone PDF; scans across pages, no state data

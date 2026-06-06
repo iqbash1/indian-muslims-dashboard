@@ -55,7 +55,6 @@ def validate_metrics() -> int:
 def validate_canonical() -> int:
     schema = load_schema("canonical")
     errors = 0
-    total = 0
     for csv_path in sorted(CANONICAL_DIR.glob("*.csv")):
         n_rows = 0
         file_errors = 0
@@ -88,7 +87,6 @@ def validate_canonical() -> int:
                     file_errors += 1
         print(f"{csv_path.name}: {n_rows} rows, {file_errors} error(s)")
         errors += file_errors
-        total += n_rows
     return errors
 
 

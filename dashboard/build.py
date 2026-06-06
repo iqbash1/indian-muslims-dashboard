@@ -485,24 +485,6 @@ TEMPLATE = """<!DOCTYPE html>
   body.compare-hindu .card-comp[data-comp-type="vs-all"] { display: none; }
   body.compare-hindu .card-comp[data-comp-type="vs-hindu"] { display: block; }
   h2 { font-size: 20px; margin: 0 0 4px; letter-spacing: -0.01em; font-weight: 600; }
-  .tile {
-    background: var(--card); border: 1px solid var(--rule); border-radius: 6px;
-    padding: 22px 24px; margin-bottom: 22px;
-  }
-  .tile-head { border-bottom: 1px solid var(--rule); padding-bottom: 12px; margin-bottom: 16px; }
-  .source {
-    font-size: 12px; color: var(--muted); margin: 2px 0 0;
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  }
-  .data-current {
-    font-size: 11px; color: var(--muted); margin-top: 4px;
-    text-transform: uppercase; letter-spacing: 0.04em;
-  }
-  .headline {
-    font-size: 38px; font-weight: 700; color: var(--accent);
-    margin: 14px 0 2px; letter-spacing: -0.02em;
-    font-feature-settings: "tnum";
-  }
   .methodology {
     font-size: 12.5px; color: var(--muted); margin: 14px 0 0;
     border-left: 3px solid var(--rule); padding-left: 12px;
@@ -530,11 +512,6 @@ TEMPLATE = """<!DOCTYPE html>
   th:first-child, td:first-child { text-align: left; }
   th { font-weight: 600; color: var(--muted); font-size: 12px;
        text-transform: uppercase; letter-spacing: 0.04em; }
-  tr.national td { font-weight: 700; background: #fff7f0; }
-  .note {
-    margin-top: 22px; padding: 14px 16px; border: 1px solid var(--rule);
-    background: #faf7f0; border-radius: 4px; font-size: 13px; color: #5a4a2a;
-  }
   .cluster-header {
     font-size: 15px; font-weight: 600; color: var(--fg);
     letter-spacing: -0.005em;
@@ -602,12 +579,6 @@ TEMPLATE = """<!DOCTYPE html>
   .scorecard-table .gap-bad { color: var(--negative); font-weight: 600; }
   .scorecard-table .gap-good { color: var(--positive); font-weight: 600; }
   .scorecard-table .gap-neutral { color: var(--muted); }
-  .csv-link {
-    font-size: 12px; color: var(--accent); text-decoration: none;
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-    margin-left: 8px;
-  }
-  .csv-link:hover { text-decoration: underline; }
   footer {
     margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--rule);
     color: var(--muted); font-size: 12px;
@@ -673,8 +644,8 @@ TEMPLATE = """<!DOCTYPE html>
   .comp-label { font-size: var(--t-xs); color: var(--muted); font-weight: 500; margin-bottom: 2px; }
   .comp-verdict { font-size: var(--t-base); font-weight: 700; font-feature-settings: "tnum"; }
   .comp-detail { font-size: var(--t-2xs); color: var(--muted); margin-top: 1px; }
-  .card-comp.positive .comp-verdict, .card-comp.good .comp-verdict { color: var(--positive); }
-  .card-comp.negative .comp-verdict, .card-comp.bad .comp-verdict { color: var(--negative); }
+  .card-comp.good .comp-verdict { color: var(--positive); }
+  .card-comp.bad .comp-verdict { color: var(--negative); }
   .card-comp.neutral .comp-verdict, .card-comp.mid .comp-verdict { color: var(--neutral); }
   .comp-note { grid-column: 1 / -1; text-align: left; font-size: var(--t-xs); color: var(--muted); line-height: 1.45; }
   /* Kicker line above the note (e.g. "the top 10 districts alone hold 14%"):
@@ -2605,20 +2576,6 @@ def _nat_trend(metric_id: str):
         if str(r.get("break_flag", "")).strip().lower() in ("true", "1", "yes"):
             has_break = True
     return years, series, has_break
-
-
-def _community_table(nat: dict, unit: str, hib) -> str:
-    """<details> table of the latest-year value per named community, Muslim marked."""
-    rows = [(COMMUNITY_LABEL[c], nat[c], c == "muslim") for c in NAMED_COMMUNITIES if c in nat]
-    if hib is not None:
-        rows.sort(key=lambda b: b[1], reverse=bool(hib))
-    trs = []
-    for name, val, is_m in rows:
-        cls = ' style="font-weight:700;color:var(--accent)"' if is_m else ""
-        trs.append(f"<tr{cls}><td>{html.escape(name)}</td><td>{fmt_num(val, unit)}</td></tr>")
-    return ("<details><summary>By community (latest year)</summary>"
-            "<table><thead><tr><th>Community</th><th>Value</th></tr></thead>"
-            f"<tbody>{''.join(trs)}</tbody></table></details>")
 
 
 def render_metric_card(m: dict):
