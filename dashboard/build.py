@@ -789,10 +789,12 @@ TEMPLATE = """<!DOCTYPE html>
   .modal-close, .modal-share, .modal-nav {
     background: var(--card); border: 1px solid var(--rule); border-radius: 6px;
     cursor: pointer; color: var(--muted); padding: 0;
+    -webkit-appearance: none; appearance: none;
+    line-height: 1; white-space: nowrap;
     transition: background .15s, border-color .15s, color .15s;
     display: inline-flex; align-items: center; justify-content: center;
   }
-  .modal-close { width: 34px; height: 34px; font-size: 22px; line-height: 1; }
+  .modal-close { width: 34px; height: 34px; font-size: 22px; }
   .modal-share { height: 34px; padding: 0 12px; gap: 6px; font-size: 13px; font-weight: 500; }
   .modal-nav { height: 34px; padding: 0 10px; font-size: 13px; font-weight: 500; }
   .modal-nav span[aria-hidden] { font-size: 16px; line-height: 1; }

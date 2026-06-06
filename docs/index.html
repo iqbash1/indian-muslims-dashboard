@@ -381,10 +381,12 @@
   .modal-close, .modal-share, .modal-nav {
     background: var(--card); border: 1px solid var(--rule); border-radius: 6px;
     cursor: pointer; color: var(--muted); padding: 0;
+    -webkit-appearance: none; appearance: none;
+    line-height: 1; white-space: nowrap;
     transition: background .15s, border-color .15s, color .15s;
     display: inline-flex; align-items: center; justify-content: center;
   }
-  .modal-close { width: 34px; height: 34px; font-size: 22px; line-height: 1; }
+  .modal-close { width: 34px; height: 34px; font-size: 22px; }
   .modal-share { height: 34px; padding: 0 12px; gap: 6px; font-size: 13px; font-weight: 500; }
   .modal-nav { height: 34px; padding: 0 10px; font-size: 13px; font-weight: 500; }
   .modal-nav span[aria-hidden] { font-size: 16px; line-height: 1; }
@@ -424,7 +426,7 @@
     <a href="/about/">About</a>
     <a href="https://github.com/iqbash1/indian-muslims-dashboard">GitHub</a>
   </nav>
-  <p class="masthead-meta">Last updated 5 June 2026</p>
+  <p class="masthead-meta">Last updated 6 June 2026</p>
 </div>
 <h1>The state of Muslim India, in data</h1>
 
@@ -679,7 +681,7 @@ Time series: 2023 = 668 events, 2024 = 1,165 events (74% YoY rise).</p></div><di
 </div>
 
 <footer>
-  <p>Last updated 5 June 2026. Every number on this page is traced back to a primary
+  <p>Last updated 6 June 2026. Every number on this page is traced back to a primary
   source (Census of India, NCRB, NFHS, AISHE, PLFS, PRS, ECI candidate affidavits,
   and others), with the original file archived alongside its checksum so any value
   can be independently verified.</p>
