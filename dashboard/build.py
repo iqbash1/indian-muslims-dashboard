@@ -167,11 +167,11 @@ SECTION_OF = {cid: name for name, cids in SECTION_GROUPS for cid in cids}
 # story to expect in the cards below. Written by hand against current data;
 # update when the data changes the direction. Indian-English spelling.
 SECTION_INTROS = {
-    "Demographics": "India's largest religious minority at 14.2% of the population (Census 2011), more urban than the national average, concentrated in a handful of districts in the north and east.",
-    "Education & Employment": "Muslims trail on literacy, higher-education enrolment, and salaried work. Labour-force and worker-population ratios run near the national average.",
-    "Health & Housing": "Muslim infant mortality is below the national average and women's anaemia is the lowest of any community, but under-5 stunting is the highest. Toilet-facility access is now close to par.",
-    "Representation": "Muslim share of elected seats sits well below their share of the population, both in the Lok Sabha (4.4% of MPs vs 14.2% of population) and across state assemblies (6.0%).",
-    "Justice & Civic": "Muslims are over-represented in the prison and undertrial populations on a per-100k-of-community basis. Official NCRB communal-incident counts diverge from civic-society compilations.",
+    "Demographics": "India's largest religious minority, more urban than the national average and concentrated in a handful of districts in the north and east.",
+    "Education & Employment": "Behind on literacy, higher-education enrolment and salaried work; near the national average on workforce participation.",
+    "Health & Housing": "Lower infant mortality and the lowest anaemia of any community, but the highest under-5 stunting; toilet access now close to par.",
+    "Representation": "Far fewer elected seats than their share of the population, both in the Lok Sabha and across the state assemblies.",
+    "Justice & Civic": "Over-represented in the prison and undertrial populations per head of community; official and civic incident counts diverge.",
 }
 
 
@@ -435,10 +435,10 @@ TEMPLATE = """<!DOCTYPE html>
     --bg: #fafaf7;
     --card: #ffffff;
     --rule: #e6e3da;
-    --muslim: #2b6cb0;
+    --muslim: #7b1d22;  /* Muslim data series + the headline Muslim figure */
     --hindu:  #b76a2b;
     --all:    #5a6a5d;
-    --accent: #7b1d22;
+    --accent: #2c5f8a;  /* UI accent: links, emphasis, hover, active, focus */
   }
   * { box-sizing: border-box; }
   body {
@@ -450,7 +450,8 @@ TEMPLATE = """<!DOCTYPE html>
   .page { max-width: 1280px; margin: 0 auto; padding: 32px 24px 80px; }
   h1 { font-size: 32px; margin: 0 0 12px; letter-spacing: -0.015em; line-height: 1.2; }
   .masthead { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px 16px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
-  .masthead-brand { font-size: 14px; font-weight: 600; color: var(--accent); text-decoration: none; letter-spacing: -0.01em; }
+  .masthead-brand { font-size: 14px; font-weight: 600; color: var(--fg); text-decoration: none; letter-spacing: -0.01em; }
+  .masthead-brand:hover { color: var(--accent); }
   .masthead-brand:hover { text-decoration: underline; }
   .masthead-nav { display: flex; gap: 14px; margin-right: auto; margin-left: 24px; }
   .masthead-nav a { font-size: 13px; color: var(--fg); text-decoration: none; font-weight: 500; }
@@ -459,12 +460,10 @@ TEMPLATE = """<!DOCTYPE html>
   .masthead-meta a { color: var(--muted); }
   .headline-finding { font-size: 16px; line-height: 1.55; color: var(--fg); margin: 0 0 24px; max-width: 70em; }
   .headline-finding em { font-style: normal; color: var(--accent); font-weight: 600; }
-  .headline-method {
-    display: inline-block; margin-left: 6px;
-    color: var(--muslim); text-decoration: none;
-    font-size: 14px; font-weight: 500; white-space: nowrap;
-  }
-  .headline-method:hover { text-decoration: underline; }
+  .preamble-note { font-size: 14px; line-height: 1.5; color: var(--muted); margin: 0 0 22px; max-width: 64em; }
+  .preamble-note b { color: var(--fg); font-weight: 600; }
+  .preamble-note a { color: var(--accent); text-decoration: none; font-weight: 500; white-space: nowrap; }
+  .preamble-note a:hover { text-decoration: underline; }
   .compare-toggle {
     display: inline-flex; align-items: center; gap: 8px; margin: 6px 0 20px;
     padding: 6px 10px 6px 14px; border: 1px solid var(--rule); border-radius: 999px;
@@ -486,21 +485,6 @@ TEMPLATE = """<!DOCTYPE html>
   body.compare-hindu .card-comp[data-comp-type="vs-all"] { display: none; }
   body.compare-hindu .card-comp[data-comp-type="vs-hindu"] { display: block; }
   h2 { font-size: 20px; margin: 0 0 4px; letter-spacing: -0.01em; font-weight: 600; }
-  .status-bar {
-    background: var(--card); border: 1px solid var(--rule); border-radius: 6px;
-    padding: 14px 18px; margin-bottom: 32px;
-    display: flex; gap: 24px; flex-wrap: wrap; font-size: 13px;
-  }
-  .status-bar b { color: var(--accent); }
-  .status-bar span { color: var(--muted); }
-  section.intro {
-    background: #fff7f0; border-left: 4px solid var(--accent);
-    padding: 14px 18px; margin-bottom: 24px; border-radius: 4px;
-  }
-  section.intro p { margin: 0 0 8px; font-size: 14px; color: #4a3a2a; }
-  section.intro p:last-child { margin-bottom: 0; }
-  section.intro a { color: var(--muslim); }
-  section.intro i { font-style: italic; font-weight: 600; }
   .tile {
     background: var(--card); border: 1px solid var(--rule); border-radius: 6px;
     padding: 22px 24px; margin-bottom: 22px;
@@ -615,11 +599,11 @@ TEMPLATE = """<!DOCTYPE html>
   .sortable-table th.sortable::after { content: " ⇅"; font-size: 9px; color: var(--muted); }
   .sortable-table th.sorted-asc::after { content: " ↑"; color: var(--accent); }
   .sortable-table th.sorted-desc::after { content: " ↓"; color: var(--accent); }
-  .scorecard-table .gap-bad { color: var(--accent); font-weight: 600; }
-  .scorecard-table .gap-good { color: #2d6a3e; font-weight: 600; }
+  .scorecard-table .gap-bad { color: var(--negative); font-weight: 600; }
+  .scorecard-table .gap-good { color: var(--positive); font-weight: 600; }
   .scorecard-table .gap-neutral { color: var(--muted); }
   .csv-link {
-    font-size: 12px; color: var(--muslim); text-decoration: none;
+    font-size: 12px; color: var(--accent); text-decoration: none;
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     margin-left: 8px;
   }
@@ -651,17 +635,17 @@ TEMPLATE = """<!DOCTYPE html>
   .card-plain { font-size: var(--t-xs); color: var(--muted); margin: 0 0 10px; line-height: 1.45; font-weight: 400; }
   .modal-body .card-plain { font-size: 14px; color: var(--fg); margin: 0 0 16px; line-height: 1.55; max-width: 56em; }
   .card-hero { display: flex; align-items: baseline; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
-  .card-value { font-size: 1.7rem; font-weight: 700; letter-spacing: -.02em; color: var(--accent); font-feature-settings: "tnum"; }
+  .card-value { font-size: 1.7rem; font-weight: 700; letter-spacing: -.02em; color: var(--muslim); font-feature-settings: "tnum"; }
   .card-unit, .card-year { font-size: var(--t-sm); color: var(--muted); font-weight: 500; }
   .card-polarity {
     font-size: 11px; color: var(--muted); margin: -2px 0 8px;
     font-weight: 500; letter-spacing: 0.01em; text-transform: uppercase;
   }
-  .card-polarity span { color: #2d6a3e; margin-right: 2px; font-weight: 600; }
-  .card-polarity.polarity-down span { color: var(--accent); }
+  .card-polarity span { color: var(--positive); margin-right: 2px; font-weight: 600; }
+  .card-polarity.polarity-down span { color: var(--positive); }
   .card-expand {
     position: absolute; top: 12px; right: 14px;
-    font-size: 13px; color: var(--rule); pointer-events: none;
+    font-size: 15px; color: var(--muted); pointer-events: none;
     transition: color .15s;
   }
   .card { position: relative; }
@@ -697,7 +681,7 @@ TEMPLATE = """<!DOCTYPE html>
      full width, accent-coloured, the card's punchiest single takeaway. */
   .comp-kicker { grid-column: 1 / -1; text-align: left; font-size: var(--t-sm); color: var(--accent); font-weight: 600; line-height: 1.4; margin-bottom: 4px; }
   .card-foot { margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: var(--t-2xs); color: var(--muted); }
-  .card-foot a { color: var(--muslim); text-decoration: none; font-weight: 500; }
+  .card-foot a { color: var(--accent); text-decoration: none; font-weight: 500; }
   .card-foot a:hover { text-decoration: underline; }
   .card details { margin-top: 10px; border-top: 1px dashed var(--rule); padding-top: 8px; }
   .card details summary { font-size: var(--t-xs); }
@@ -734,13 +718,16 @@ TEMPLATE = """<!DOCTYPE html>
      wide enough to show every column without forcing horizontal scroll on the
      whole page (which broke the mobile layout). */
   .scorecard-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  /* Phablet / small-tablet band: between the single-column mobile layout and
+     the width where the auto-fill grid naturally fits two 330px columns, the
+     grid would otherwise show one over-wide stretched column. Force two. */
+  @media (min-width: 561px) and (max-width: 767px) {
+    .cards { grid-template-columns: 1fr 1fr; }
+  }
   @media (max-width: 560px) {
     .cards { grid-template-columns: 1fr; }
     h1 { font-size: 24px; }
     .headline-finding { font-size: 14px; }
-    /* Drop the methodology callout to its own line on narrow screens so it
-       doesn't wrap awkwardly inside the headline-finding paragraph. */
-    .headline-method { display: block; margin: 10px 0 0; }
     .masthead { gap: 6px 12px; }
     .masthead-nav { margin-left: 0; gap: 10px; }
     .masthead-nav a { padding: 12px 4px; min-height: 44px; display: inline-flex; align-items: center; }
@@ -762,9 +749,9 @@ TEMPLATE = """<!DOCTYPE html>
        375px. Hide text labels on the prev/next/share buttons, leaving
        chevrons + share-icon as compact controls. */
     .modal-nav-label { display: none; }
-    .modal-nav { padding: 0 10px; }
+    .modal-nav { padding: 0; min-width: 44px; }
     .modal-share-label { display: none; }
-    .modal-share { padding: 0 10px; gap: 0; }
+    .modal-share { padding: 0; gap: 0; min-width: 44px; }
   }
 
   /* Modal: click any card to open a larger view of the same chart. */
@@ -794,9 +781,9 @@ TEMPLATE = """<!DOCTYPE html>
     transition: background .15s, border-color .15s, color .15s;
     display: inline-flex; align-items: center; justify-content: center;
   }
-  .modal-close { width: 34px; height: 34px; font-size: 22px; }
-  .modal-share { height: 34px; padding: 0 12px; gap: 6px; font-size: 13px; font-weight: 500; }
-  .modal-nav { height: 34px; padding: 0 10px; font-size: 13px; font-weight: 500; }
+  .modal-close { width: 44px; height: 44px; font-size: 22px; }
+  .modal-share { height: 44px; padding: 0 14px; gap: 6px; font-size: 13px; font-weight: 500; }
+  .modal-nav { height: 44px; padding: 0 14px; font-size: 13px; font-weight: 500; }
   .modal-nav span[aria-hidden] { font-size: 16px; line-height: 1; }
   .modal-close:hover, .modal-share:hover, .modal-nav:hover {
     background: var(--bg); border-color: var(--accent); color: var(--accent);
@@ -823,6 +810,12 @@ TEMPLATE = """<!DOCTYPE html>
     .modal-body .card-chartwrap { height: 320px !important; }
     .modal-body .card-chartscroll { max-height: 320px !important; }
   }
+  @media (max-width: 767px) {
+    /* Reserve room at the top of the modal for the absolutely-positioned
+       action bar (prev/next/share/close), so a long metric title never runs
+       underneath the buttons on a narrow screen. */
+    .modal { padding-top: 60px; }
+  }
 </style>
 </head>
 <body>
@@ -840,24 +833,14 @@ TEMPLATE = """<!DOCTYPE html>
 
 <p class="headline-finding">
   India's roughly 200 million Muslims, or <em>14.2%</em> of the population
-  (Census 2011), trail the all-India average on <em>{n_behind} of
-  {n_total_comparable}</em> living-conditions indicators tracked here.
-  The biggest gaps are on <em>{top_behind_joined}</em>.{ahead_clause}
-  Scroll down to see where and by how much.
-  <a class="headline-method" href="/about/">How are these measured? →</a>
+  (Census 2011), trail the all-India average on <em>{n_behind} of the
+  {n_total_comparable}</em> indicators that allow a direct comparison, widest on
+  <em>{top_behind_joined}</em>.{ahead_clause}
 </p>
 
-<section class="intro">
-  <p>Each card compares the latest Muslim figure to Hindu and all-India
-  baselines, drawn from primary government surveys. Click any card for
-  a larger view with the full methodology. Every card also links to its
-  source CSV.</p>
-</section>
-<div class="status-bar">
-  <span><b>{n_metrics}</b> indicators</span>
-  <span><b>{n_sources}</b> primary sources</span>
-  <span><b>{n_rows}</b> data points</span>
-</div>
+<p class="preamble-note">
+  Each card sets the latest Muslim figure beside Hindu and all-India baselines, drawn from <b>{n_sources}</b> primary government sources. Open any card for its chart, method and source. <a href="/about/">How these are measured →</a>
+</p>
 <div class="compare-toggle" role="radiogroup" aria-label="Choose comparison baseline for every card">
   <span class="compare-toggle-label">Compare Muslim outcomes to:</span>
   <button id="compare-all" class="compare-toggle-btn active" role="radio" aria-checked="true" type="button">all-India</button>
@@ -2434,7 +2417,7 @@ def _card_shell(mid, label, value, unit_txt, year, polarity, chart_html, comps_h
     yr = f'<span class="card-year">({html.escape(str(year))})</span>' if year else ""
     plain = PLAIN_DEFINITION.get(mid, "")
     plain_html = f'<p class="card-plain">{html.escape(plain)}</p>' if plain else ""
-    expand_html = '<span class="card-expand" aria-hidden="true" title="Click for larger view">↗</span>'
+    expand_html = '<span class="card-expand" aria-hidden="true" title="Open for the full chart and method">↗</span>'
 
     # "About this measurement" block: visible only when the card is cloned
     # into the modal (display:none on the card grid via CSS). Pulls the
