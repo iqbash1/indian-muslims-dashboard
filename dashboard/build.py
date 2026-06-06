@@ -842,7 +842,7 @@ TEMPLATE = """<!DOCTYPE html>
       <th class="sortable" data-col="0">Metric</th>
       <th class="sortable" data-col="1">Year</th>
       <th class="sortable" data-col="2">Muslim</th>
-      <th class="sortable" data-col="3">Hindu</th>
+      <th data-col="3">Hindu</th>
       <th class="sortable" data-col="4">All</th>
       <th class="sortable" data-col="5">Gap vs reference</th>
     </tr></thead><tbody>
@@ -915,8 +915,12 @@ TEMPLATE = """<!DOCTYPE html>
       const rows = Array.from(tbody.querySelectorAll('tr'));
       const dir = (lastSorted.col === col) ? -lastSorted.dir : 1;
       rows.sort((a, b) => {
-        const ka = sortKey(a.cells[col].textContent, col);
-        const kb = sortKey(b.cells[col].textContent, col);
+        // Aggregate rows (hate-speech, communal incidents) use a colspan for
+        // the community columns, so they have no cell at col 2-5; treat the
+        // missing value as lowest so the sort never throws on them.
+        const ca = a.cells[col], cb = b.cells[col];
+        const ka = ca ? sortKey(ca.textContent, col) : (col >= 1 ? -Infinity : '');
+        const kb = cb ? sortKey(cb.textContent, col) : (col >= 1 ? -Infinity : '');
         if (ka < kb) return -1 * dir;
         if (ka > kb) return 1 * dir;
         return 0;
@@ -2555,24 +2559,27 @@ def _state_details(metric_id: str, unit: str) -> str:
         return ""
     has_hindu = any("hindu" in v for v in by_geo.values())
     order = sorted(by_geo, key=lambda g: by_geo[g].get("muslim", 0))
-    # Numeric cells carry the raw value in data-sort so the click-to-sort
-    # handler (setupSortableTables) orders by magnitude, not formatted string;
-    # missing values sort to the low end via a sentinel.
-    def numcell(b: dict, rel: str) -> str:
-        if rel in b:
-            return f'<td data-sort="{b[rel]:.4f}">{fmt_num(b[rel], unit)}</td>'
-        return '<td data-sort="-1">n/a</td>'
+    # State and Muslim (the subject) are click-to-sort: sortable cells carry
+    # the raw value in data-sort so the handler (setupSortableTables) orders by
+    # magnitude, not formatted string; missing values sort low via a sentinel.
+    # Hindu is shown only as a static baseline and is deliberately NOT sortable,
+    # so the table never reads as a Hindu-vs-Muslim ranking.
+    def numcell(b: dict, rel: str, sortable: bool = True) -> str:
+        if rel not in b:
+            return '<td data-sort="-1">n/a</td>' if sortable else "<td>n/a</td>"
+        val = fmt_num(b[rel], unit)
+        return f'<td data-sort="{b[rel]:.4f}">{val}</td>' if sortable else f"<td>{val}</td>"
 
     head = ('<tr><th class="sortable" data-col="0">State / UT</th>'
             '<th class="sortable" data-col="1" data-type="num">Muslim</th>'
-            + ('<th class="sortable" data-col="2" data-type="num">Hindu</th>' if has_hindu else '')
+            + ("<th>Hindu</th>" if has_hindu else "")
             + '</tr>')
     trs = []
     for g in order:
         b = by_geo[g]
         cells = f'<td>{html.escape(state_label(g))}</td>' + numcell(b, "muslim")
         if has_hindu:
-            cells += numcell(b, "hindu")
+            cells += numcell(b, "hindu", sortable=False)
         trs.append(f"<tr>{cells}</tr>")
     return (f'<details><summary>Full state data ({len(order)} states)</summary>'
             f'<table class="sortable-table"><thead>{head}</thead>'
