@@ -185,15 +185,16 @@ metrics:
     geography_levels: [national]
     religions: [muslim, all]
     methodology_notes: |
-      Numerator: AISHE 2021-22 (Muslim 21,08,033; total 4,32,68,181 per Report
-      p29 prose). Denominator: Census 2011 C-15 (15-19 + 20-24) × 0.6 as an
-      18-23 effective-cohort proxy; single-year-age table (C-13) not pulled
-      and 2021 Census deferred. This understates the 2021-22 cohort
-      (especially for Muslims, whose age structure is more youth-skewed), so
-      our computed GER sits ~2pp ABOVE published National (28.4%) and ~2pp
-      BELOW published Muslim (~12%). The cross-religion gap (Muslim at
-      roughly one-third the national rate) is robust to denominator choice
-      and is the dashboard story.
+      Numerator: AISHE 2021-22 published All-India "Muslim Minority" enrolment
+      (Muslim 21,08,033; total 4,32,68,181 per Report p29 prose). Denominator:
+      Census 2011 C-15 (15-19 + 20-24) × 0.6 as an 18-23 effective-cohort
+      proxy; single-year-age table (C-13) not pulled and 2021 Census deferred.
+      The older 2011 denominator makes our computed GER run a few points ABOVE
+      the officially published figures (national 27-28%; published Muslim
+      Minority GER around 9% in recent AISHE rounds). The absolute level is a
+      computation, not an official figure, but the cross-religion gap (Muslim
+      enrolment runs at roughly one-third the national rate) is robust to the
+      choice of denominator and is the dashboard story.
     comparison_baselines: [all]
     phase: 1
     status: defined

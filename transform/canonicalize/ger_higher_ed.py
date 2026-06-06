@@ -21,8 +21,12 @@ AISHE national-total source:
   AISHE 2021-22 Report (sources/aishe/aishe-report-2021-22.pdf), page 29
   prose: "The total estimated enrolment in Higher Education Institutions is
   4,32,68,181" = 43,268,181.
-The Muslim total is the sum of state-level "muslim_total" rows in the existing
-Table 15 L2 extraction (state minority enrolment, all 34 states + UTs).
+The Muslim total is the published All-India "Muslim Minority" enrolment row
+(serial 0) from the Table 15 L2 extraction — NOT a sum of the state rows. The
+published All-India aggregate (2,108,033) exceeds the sum of the listed state
+rows (~1.77 M) because some states report minority enrolment incompletely; the
+official All-India figure is the authoritative one (cross-checked: 2,108,033 =
+4.87% of 4,32,68,181 total enrolment, AISHE 2021-22).
 
 Validated: published AISHE 2021-22 National GER = 28.4% (MoSPI projections);
 our 2011-denominator computation = ~31% (the +2.6pp shift attributable to the
@@ -96,7 +100,8 @@ def canonicalize() -> None:
         f"sits ~2-3pp above due to projection vs Census gap. The Muslim-vs-"
         f"national gap is the story and is robust to the choice of denominator. "
         f"Total enrolment 4,32,68,181 from AISHE 2021-22 Report p29 prose. "
-        f"Muslim enrolment = sum of state-level rows from Table 15."
+        f"Muslim enrolment is the published All-India 'Muslim Minority' total "
+        f"from AISHE Table 15 (the official aggregate, not a sum of state rows)."
     )
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
