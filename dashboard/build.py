@@ -133,6 +133,8 @@ def fmt_num(v: float, unit: str) -> str:
         return f"{v:.1f}"
     if unit == "count":
         return f"{int(v):,}"
+    if unit in ("inr_per_month", "inr_per_year", "inr"):
+        return f"₹{v:,.0f}"
     return str(v)
 
 
@@ -168,8 +170,7 @@ TOTAL_DISTRICTS_2011 = 640
 SECTION_GROUPS = [
     ("Demographics", ["demographics"]),
     ("Health & Housing", ["health", "housing"]),
-    ("Education & Employment", ["education", "employment"]),
-    ("Living standards", ["income"]),
+    ("Education, work & income", ["education", "employment", "income"]),
     ("Finance", ["finance"]),
     ("Representation", ["representation"]),
     ("Justice & Civic", ["justice", "civic"]),
@@ -181,8 +182,7 @@ SECTION_OF = {cid: name for name, cids in SECTION_GROUPS for cid in cids}
 # update when the data changes the direction. Indian-English spelling.
 SECTION_INTROS = {
     "Demographics": "India's largest religious minority, more urban than the national average and concentrated in a handful of districts in the north and east.",
-    "Education & Employment": "Behind on literacy, higher-education enrolment and salaried work; near the national average on workforce participation.",
-    "Living standards": "Measured by the assets a household owns, Muslims sit close to the national average and a little behind Hindus, while Sikhs and Jains are far ahead. Surveys of spending show a wider gap than assets do.",
+    "Education, work & income": "Behind on literacy, higher-education enrolment, salaried work and monthly spending; near the national average on workforce participation.",
     "Health & Housing": "Lower infant mortality and the lowest anaemia of any community, but the highest under-5 stunting; toilet access now close to par.",
     "Representation": "Far fewer elected seats than their share of the population, both in the Lok Sabha and across the state assemblies.",
     "Justice & Civic": "Over-represented in the prison and undertrial populations per head of community; official and civic incident counts diverge.",
@@ -2324,7 +2324,7 @@ CAPTION = {
     "inst-delivery": "of births in a facility",
     "women-anemia": "of women 15-49 anaemic",
     "improved-sanitation": "of households",
-    "wealth-top-quintile": "in the wealthiest 20% of households",
+    "mpce": "spent per person each month",
     "pop-share": "of all Indians",
     "district-concentration-top100": "of all Indian Muslims",
     "muslim-higher-ed-enrolment": "students",
@@ -2339,6 +2339,7 @@ CAPTION = {
 UNIT_JS = {
     "percent": ("%", 1), "females_per_1000_males": ("", 0),
     "per_1000_live_births": ("", 1), "rate_per_100k": ("", 1), "count": ("", 0),
+    "inr_per_month": ("", 0),
 }
 SOURCE_LABEL = {
     "census-india-1961": "Census 1961 · C-VII Religion",
@@ -2352,6 +2353,7 @@ SOURCE_LABEL = {
     "plfs": "PLFS 2023-24", "aishe": "AISHE 2021-22",
     "ncrb-prison": "NCRB PSI (2018-2023)", "ncrb-crime": "NCRB CII (2015-2023)",
     "prs-eci-affidavits": "PRS / ECI affidavits", "civic-incident-databases": "India Hate Lab",
+    "sachar-committee-2006": "Sachar Committee (NSS 2004-05)",
 }
 
 
@@ -2365,6 +2367,8 @@ def _verdict(gap: float, hib) -> str:
 def _gap_str(gap: float, unit: str) -> str:
     if unit == "count":
         return f"{gap:+,.0f}"
+    if unit in ("inr_per_month", "inr_per_year", "inr"):
+        return f"{'+' if gap >= 0 else '-'}₹{abs(gap):,.0f}"
     return f"{gap:+.1f}{'pp' if unit == 'percent' else ''}"
 
 
@@ -2404,7 +2408,7 @@ PLAIN_DEFINITION = {
     "inst-delivery": "Of recent live births, what share took place at a hospital or health facility rather than at home.",
     "women-anemia": "Of women in childbearing age (15 to 49), what share has anaemia (low haemoglobin).",
     "improved-sanitation": "What share of households has a toilet of any type.",
-    "wealth-top-quintile": "Out of all the people in a community, the share who live in the wealthiest 20% of Indian households. Households are ranked by what they own (assets like a TV, fridge, vehicle and the quality of the house), not by income or spending.",
+    "mpce": "How much a typical person in a community spends in a month, on food, rent, fuel, clothes and everything else. In India this is the usual way to measure how well-off people are, because reliable income data does not exist.",
     "ls-share": "Of the 543 seats in India's national parliament (Lok Sabha), what share is held by Muslim MPs.",
     "mla-share": "Across all 30 state and UT legislative assemblies that hold elections, what share of MLA seats is held by Muslims.",
     "prison-rate-per-100k": "For every 100,000 people of a religion, how many are in prison. Allows fair comparison across communities of different size.",

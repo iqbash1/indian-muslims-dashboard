@@ -315,53 +315,36 @@ metrics:
 
   # ----- Income / consumption / poverty (Phase 1) -----
   - id: mpce
-    name: Monthly Per Capita Consumption Expenditure
+    name: Monthly spending per person
     cluster: income
     unit: inr_per_month
     higher_is_better: true
-    sources: {primary: hces-2022-23}
-    geography_levels: [national, state]
-    religions: [muslim, hindu, sc, st, all]
-    comparison_baselines: [hindu, all]
-    phase: 1
-    status: stub
-
-  - id: wealth-top-quintile
-    name: Share in the wealthiest 20%
-    cluster: income
-    unit: percent
-    higher_is_better: true
     definition: |
-      Share of a community's population living in households that fall in the
-      wealthiest 20% of all Indian households. Households are ranked by an
-      asset-based wealth score (ownership of consumer durables, housing quality,
-      drinking water, sanitation and the like), not by income or spending.
+      Average monthly spending per person (Monthly Per Capita Consumption
+      Expenditure, MPCE). In India this is the standard measure of economic
+      well-being, used in place of income, for which no reliable figure by
+      religion exists.
     sources:
-      primary: nfhs-5
-      cross_check: [nfhs-3, nfhs-4]
+      primary: sachar-committee-2006
     geography_levels: [national]
-    religions: [muslim, hindu, christian, sikh, buddhist, jain, all]
+    religions: [muslim, all]
     methodology_notes: |
-      NFHS wealth index: each household gets an asset score and the national
-      population is split into five equal fifths, so by construction 20% of all
-      Indians fall in the wealthiest group and the all-communities line sits at
-      20%. A value below 20% means the community is under-represented among
-      India's wealthiest fifth. Source tables, by religion of household head:
-      NFHS-5 (2019-21) Table 2.9, NFHS-4 (2015-16) Table 2.6, NFHS-3 (2005-06)
-      Table 2.18. IMPORTANT: the wealth index is asset-based and Muslims are
-      more urban than the national average, which lifts asset scores; on
-      consumption spending (MPCE) the Sachar Committee found Muslims clearly
-      below the national average. So this metric understates the Muslim economic
-      gap that spending data shows. Each survey re-cuts its own fifths, so values
-      track relative position within a round, not absolute wealth.
-    comparison_baselines: [hindu, all]
+      Sachar Committee (2006), Chapter 8, from the NSS 61st round (2004-05):
+      all-India average MPCE by socio-religious category. Muslims Rs.635 vs the
+      all-India average Rs.712, near SC/ST (Rs.520) and far below upper-caste
+      'Hindu General' households (Rs.1023); the gap is sharpest in urban areas.
+      This is the most recent figure published by religion: later rounds (HCES
+      2022-23) break spending down by social group (SC/ST/OBC/Others) only, not
+      by religion, so a current religion-wise figure needs the unit-level
+      microdata. Rupees are 2004-05 nominal (not inflation-adjusted).
+    comparison_baselines: [all]
     phase: 1
     status: defined
     display:
       scorecard:
-        label: "Wealthiest 20%"
+        label: "Monthly spending"
         reference: "all"
-        unit_format: percent
+        unit_format: inr_per_month
         higher_is_better: true
         order: 155
 
