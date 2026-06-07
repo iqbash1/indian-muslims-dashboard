@@ -2819,6 +2819,46 @@ def _district_download_link(mid: str) -> str:
             f'<a href="canonical/{html.escape(mid)}-districts.csv" download>download CSV</a></p>')
 
 
+def _sex_details(metric_id: str, unit: str) -> str:
+    """National male-vs-female drill-down for metrics that carry sex='male'/
+    'female' rows; returns '' for metrics that don't (so it's safe to call on any
+    card). Latest year; one row per community, Muslim first and 'All' last."""
+    from collections import defaultdict
+    rows = [r for r in load_metric(metric_id, sex=None)
+            if r["geography_level"] == "national" and r["sex"] in ("male", "female")]
+    if not rows:
+        return ""
+    latest = max(int(r["year"]) for r in rows)
+    by_rel: dict[str, dict[str, float]] = defaultdict(dict)
+    for r in rows:
+        if int(r["year"]) == latest:
+            by_rel[r["religion"]][r["sex"]] = float(r["value"])
+    comms = [rel for rel, sx in by_rel.items() if "male" in sx and "female" in sx]
+    if not comms:
+        return ""
+    # Muslim first (the subject), 'all' baseline last, others by female value.
+    comms.sort(key=lambda rel: (rel != "muslim", rel == "all", by_rel[rel].get("female", 0.0)))
+
+    def comm_label(rel: str) -> str:
+        return "All communities" if rel == "all" else COMMUNITY_LABEL.get(rel, rel.capitalize())
+
+    def cell(rel: str, sx: str) -> str:
+        v = by_rel[rel].get(sx)
+        if v is None:
+            return '<td data-sort="-1">n/a</td>'
+        return f'<td data-sort="{v:.4f}">{fmt_num(v, unit)}</td>'
+
+    trs = "".join(
+        f'<tr><td>{html.escape(comm_label(rel))}</td>{cell(rel, "male")}{cell(rel, "female")}</tr>'
+        for rel in comms)
+    head = ('<tr><th class="sortable" data-col="0">Community</th>'
+            '<th class="sortable" data-col="1" data-type="num">Male</th>'
+            '<th class="sortable" data-col="2" data-type="num">Female</th></tr>')
+    return (f'<details><summary>By sex ({latest})</summary>'
+            f'<table class="sortable-table"><thead>{head}</thead>'
+            f'<tbody>{trs}</tbody></table></details>')
+
+
 def _nat_by_religion(metric_id: str) -> dict:
     """National {religion: value} for the LATEST year present (avoids multi-year collision)."""
     nat = [r for r in load_metric(metric_id) if r["geography_level"] == "national"]
@@ -2935,7 +2975,7 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
               f'{json.dumps(all_arg)}, {json.dumps(suffix)}, {json.dumps(bool(has_break))});')
         # State-level drill-down (e.g. sex-ratio, literacy) sits below the
         # national trend chart; _state_details returns "" for national-only metrics.
-        details = _state_details(mid, unit)
+        details = _state_details(mid, unit) + _sex_details(mid, unit)
     else:
         # SNAPSHOT card: latest-year community bar with All-India dashed baseline.
         # If we have a 2-point time series, surface the Muslim Δ as a comparison pill.
@@ -2974,7 +3014,7 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
                 f"All communities ({fmt_num(all_v, unit)})" if all_v is not None else "All communities")
             js = (f'hbar("{cvid}", {json.dumps(labels)}, {json.dumps(values)}, {json.dumps(colors)}, '
                   f'{json.dumps(suffix)}, {dec}, {ref}, {json.dumps(ref_label)});')
-        details = _state_details(mid, unit)
+        details = _state_details(mid, unit) + _sex_details(mid, unit)
 
     return _card_shell(mid, label, headline, CAPTION.get(mid, ""), _year_of(mid), polarity,
                        chart_html, comps, src, csv_href, details), js
@@ -3046,7 +3086,7 @@ def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
     if mid == "district-concentration-top100":
         details = _top100_districts_table(mid)
     else:
-        details = _state_details(mid, unit) + _district_download_link(mid)
+        details = _state_details(mid, unit) + _district_download_link(mid) + _sex_details(mid, unit)
     return _card_shell(mid, label, headline, CAPTION.get(mid, ""), _year_of(mid), "",
                        chart_html, comps, src, csv_href, details), js
 
