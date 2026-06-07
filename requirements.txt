@@ -1,5 +1,13 @@
+# Deploy/runtime dependencies — the ONLY packages the live build needs.
+#
+# Cloudflare's build step runs `pip install -r requirements.txt` then
+# `python3 dashboard/build.py`. build.py needs nothing but the stdlib + PyYAML
+# (a pure-Python wheel that always installs cleanly). Keeping this file minimal
+# is load-bearing: a heavier native dep here (e.g. Pillow) made the Cloudflare
+# Workers build fail intermittently when its binary wheel didn't install, which
+# froze muslimdata.in. The OG images build.py would use Pillow for are already
+# committed under docs/og/, so the live build never re-renders them.
+#
+# Everything for local authoring, the OG image render, ingest, and the validate
+# CI lives in requirements-dev.txt (which includes this file via `-r`).
 PyYAML>=6.0
-requests>=2.31
-jsonschema>=4.20
-truststore>=0.9
-Pillow>=10.0

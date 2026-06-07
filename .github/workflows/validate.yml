@@ -24,7 +24,9 @@ jobs:
           cache: pip
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        # requirements.txt is the minimal deploy set (PyYAML only); validate.py
+        # also needs jsonschema, so install the dev set here.
+        run: pip install -r requirements-dev.txt
 
       - name: Validate manifests + canonical CSVs against JSON schemas
         run: python validate/validate.py

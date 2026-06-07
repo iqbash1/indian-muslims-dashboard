@@ -26,13 +26,24 @@ rebuilds and ships the site.
 2. Select repo `iqbash1/indian-muslims-dashboard`, branch `main`.
 3. Build settings:
    - **Framework preset**: None
-   - **Build command**: `python3 dashboard/build.py`
+   - **Build command**: **leave empty (recommended)**, or `python3 dashboard/build.py`.
+     `docs/` is committed pre-built, so an empty build command makes Cloudflare
+     just serve the committed `./docs` — no pip, no Python, nothing to fail.
+     This is the most robust setting. Only keep `python3 dashboard/build.py` if
+     you want Cloudflare to rebuild from source on every push; if so, see the
+     dependency note below.
    - **Build output directory**: `docs`
    - **Root directory**: (blank — repo root)
 4. Environment variables: none required (Python 3 is preinstalled in CF builds).
-   Note: `dashboard/build.py` uses only the stdlib + `yaml`. If the build
-   fails on `import yaml`, add `pip install pyyaml` as a pre-build step or
-   commit a `requirements.txt` pointer at the repo root (already present).
+   Dependency note (only relevant if Build command is `python3 dashboard/build.py`):
+   Cloudflare runs `pip install -r requirements.txt` before the build command.
+   `requirements.txt` is deliberately the **minimal deploy set — PyYAML only**
+   (pure Python, always installs). `build.py` needs nothing else: the OG social
+   images are committed under `docs/og/` and are not re-rendered on deploy, so
+   **Pillow and the other pipeline deps live in `requirements-dev.txt`, NOT
+   `requirements.txt`.** Do not move a native dep (Pillow) back into
+   `requirements.txt` — a flaky Pillow wheel install on the build server caused
+   intermittent build failures that froze the site (June 2026).
 5. Save and deploy. The first build should produce
    `https://muslimdata.pages.dev/`.
 
@@ -119,9 +130,16 @@ in GA4 DebugView and the Clarity dashboard within ~5 minutes).
 - **CSVs return CORS error from external tools**: confirm
   `Access-Control-Allow-Origin: *` is still on `/canonical/*` in
   `docs/_headers`.
-- **Build fails on `yaml`**: ensure `pyyaml` is in `requirements.txt`
+- **Build fails on `yaml`**: ensure `PyYAML` is in `requirements.txt`
   and Cloudflare's build step runs `pip install -r requirements.txt`
-  before `python3 dashboard/build.py`. Add via the project's
-  pre-build command in the Cloudflare UI.
+  before `python3 dashboard/build.py`. (Simplest fix: set the Build
+  command to empty so Cloudflare serves the committed `./docs` and runs
+  no Python at all — `docs/` is already built.)
+- **Build fails installing a dependency (e.g. Pillow / a native wheel)**:
+  the deploy build must NOT install native packages. Keep `requirements.txt`
+  to pure-Python deploy deps only (PyYAML); everything else belongs in
+  `requirements-dev.txt`. A native-wheel install flaking on the Cloudflare
+  build server froze the site once (June 2026); the durable fix is an empty
+  Build command (serve committed `./docs`).
 - **Old domain still pointing somewhere**: nameserver propagation can
   take up to 48 hours; verify with `dig NS muslimdata.in` from terminal.

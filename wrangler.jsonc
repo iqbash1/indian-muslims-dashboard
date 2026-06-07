@@ -1,7 +1,17 @@
 // Cloudflare Workers Static Assets — serves the built dashboard at muslimdata.in.
 // docs/ is the only thing the site ships; everything else in the repo is data
-// pipeline + manifest + transforms. Cloudflare Pages auto-builds on every push
-// to main (build command: python3 dashboard/build.py; output dir: docs).
+// pipeline + manifest + transforms.
+//
+// Auto-deploys via Cloudflare Workers Builds on every push to main. docs/ is
+// committed pre-built, so the deploy does not need to run the Python build at
+// all. Two supported configs:
+//   - RECOMMENDED: dashboard Build command = empty -> Cloudflare just serves the
+//     committed ./docs (no pip, no Python, smallest failure surface).
+//   - Current:    Build command = `python3 dashboard/build.py`. This is safe
+//     only because requirements.txt is the minimal deploy set (PyYAML, pure
+//     Python). Do NOT add native deps (e.g. Pillow) to requirements.txt — a
+//     flaky binary-wheel install there froze the site once. See
+//     docs/runbooks/deploy-setup.md.
 {
   "name": "indian-muslims-dashboard",
   "compatibility_date": "2026-06-02",

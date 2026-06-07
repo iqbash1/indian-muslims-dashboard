@@ -1,0 +1,17 @@
+# Local authoring + full pipeline + CI dependencies.
+#   pip install -r requirements-dev.txt
+# Pulls in the minimal deploy set (requirements.txt) plus everything the live
+# Cloudflare build deliberately does NOT install:
+#   - Pillow     OG social-image rendering in dashboard/build.py (_emit_og_images).
+#                Only runs locally; the rendered PNGs are committed to docs/og/.
+#                Native binary wheel — kept off the deploy path so a flaky install
+#                can't freeze the site (see requirements.txt).
+#   - jsonschema validate/validate.py (schema-checks canonical CSVs + manifests).
+#   - requests   ingest/pull.py (L1 source pulls).
+#   - truststore ingest/pull.py (delegate TLS to the system trust store; needed
+#                for sources like censusindia.gov.in — see runbooks/census-india-2011.md).
+-r requirements.txt
+Pillow>=10.0
+jsonschema>=4.20
+requests>=2.31
+truststore>=0.9

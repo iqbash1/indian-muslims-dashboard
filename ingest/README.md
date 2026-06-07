@@ -41,7 +41,9 @@ python ingest/pull.py --source census-india-2011 --no-wayback
 ## Dependencies
 
 ```
-pip install -r requirements.txt
+pip install -r requirements-dev.txt
 ```
 
-`requests`, `PyYAML`, `jsonschema` (for manifest validation, used by `validate/`).
+Ingest needs `requests` + `truststore`; `validate/` also needs `jsonschema`.
+These live in `requirements-dev.txt` (root `requirements.txt` is the minimal
+deploy set — PyYAML only — so the Cloudflare build stays reliable).
