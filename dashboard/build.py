@@ -54,15 +54,24 @@ GA4_ID = "G-SNNEXDK6LK"
 CLARITY_ID = "x0qdfk6233"
 
 
-def load_metric(name: str) -> list[dict]:
+def load_metric(name: str, *, sex: str | None = "all") -> list[dict]:
+    """Canonical rows for a metric. By DEFAULT returns only the both-sexes
+    aggregate (sex='all'); rows with a missing/empty sex column are treated as
+    'all' (back-compat). Pass sex=None for every row (incl. male/female), or
+    sex='male'/'female' to select one. This single choke point keeps every
+    existing consumer aggregate-only when gender rows are added to a metric."""
     rows: list[dict] = []
     p = CANONICAL_DIR / f"{name}.csv"
     if not p.exists():
         return rows
     with p.open() as f:
         for row in csv.DictReader(f):
+            if not row.get("sex"):
+                row["sex"] = "all"
             rows.append(row)
-    return rows
+    if sex is None:
+        return rows
+    return [r for r in rows if r["sex"] == sex]
 
 
 def state_label(code: str) -> str:
@@ -2136,9 +2145,13 @@ def build() -> None:
     for cpath in sorted(CANONICAL_DIR.glob("*.csv")):
         with cpath.open() as f:
             for row in csv.DictReader(f):
-                n_rows += 1
                 if row.get("source_id"):
                     source_ids.add(row["source_id"])
+                # Count the both-sexes aggregate only, so the headline data-point
+                # count keeps meaning "one per geo x year x religion" once
+                # gender (male/female) rows exist for some metrics.
+                if row.get("sex", "all") == "all":
+                    n_rows += 1
     n_sources = len(source_ids)
 
     cluster_grids, card_charts = render_all_clusters()
