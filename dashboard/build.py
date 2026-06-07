@@ -2249,9 +2249,9 @@ def _comparison_series(series: dict, years: list[int]):
     Prefers the source-published "all" aggregate when it's populated across
     every year in the trend; otherwise falls back to the per-year median of
     available community values so the Muslim line always has a benchmark.
-    Labels are honest about which calculation was used so the chart legend
-    and the comp pill don't claim "All-India" when the line is actually a
-    community median."""
+    The fallback line is labelled "All communities" (it is the per-year median
+    across the named communities); the label avoids claiming "All-India" when
+    the benchmark is community-level rather than the official aggregate."""
     import statistics as _stats
     source_all = [series.get("all", {}).get(y) for y in years]
     if source_all and all(v is not None for v in source_all):
@@ -2265,7 +2265,7 @@ def _comparison_series(series: dict, years: list[int]):
         values.append(_stats.median(vals) if vals else None)
     if not any(v is not None for v in values):
         return None, None, None
-    return values, "All religions (median)", "vs all religions (median)"
+    return values, "All communities", "vs all communities"
 COMMUNITY_LABEL = {
     "hindu": "Hindu", "muslim": "Muslim", "christian": "Christian",
     "sikh": "Sikh", "buddhist": "Buddhist", "jain": "Jain",
