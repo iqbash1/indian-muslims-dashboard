@@ -326,6 +326,45 @@ metrics:
     phase: 1
     status: stub
 
+  - id: wealth-top-quintile
+    name: Share in the wealthiest 20%
+    cluster: income
+    unit: percent
+    higher_is_better: true
+    definition: |
+      Share of a community's population living in households that fall in the
+      wealthiest 20% of all Indian households. Households are ranked by an
+      asset-based wealth score (ownership of consumer durables, housing quality,
+      drinking water, sanitation and the like), not by income or spending.
+    sources:
+      primary: nfhs-5
+      cross_check: [nfhs-3, nfhs-4]
+    geography_levels: [national]
+    religions: [muslim, hindu, christian, sikh, buddhist, jain, all]
+    methodology_notes: |
+      NFHS wealth index: each household gets an asset score and the national
+      population is split into five equal fifths, so by construction 20% of all
+      Indians fall in the wealthiest group and the all-communities line sits at
+      20%. A value below 20% means the community is under-represented among
+      India's wealthiest fifth. Source tables, by religion of household head:
+      NFHS-5 (2019-21) Table 2.9, NFHS-4 (2015-16) Table 2.6, NFHS-3 (2005-06)
+      Table 2.18. IMPORTANT: the wealth index is asset-based and Muslims are
+      more urban than the national average, which lifts asset scores; on
+      consumption spending (MPCE) the Sachar Committee found Muslims clearly
+      below the national average. So this metric understates the Muslim economic
+      gap that spending data shows. Each survey re-cuts its own fifths, so values
+      track relative position within a round, not absolute wealth.
+    comparison_baselines: [hindu, all]
+    phase: 1
+    status: defined
+    display:
+      scorecard:
+        label: "Wealthiest 20%"
+        reference: "all"
+        unit_format: percent
+        higher_is_better: true
+        order: 155
+
   - id: mpi-headcount
     name: Multidimensional Poverty Index headcount ratio
     cluster: income
