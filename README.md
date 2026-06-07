@@ -17,9 +17,10 @@ justice.
 
 ## What's on the dashboard
 
-21 live indicators across six themes (population, education, employment,
-health, representation, justice), drawn from 16 primary sources, grouped
-into five themed sections on the dashboard. The authoritative scorecard
+21 live indicators across six themes (population, health, education,
+employment, representation, justice), drawn from 16 primary sources,
+grouped into five themed sections on the dashboard. The authoritative
+scorecard
 is the live site at https://muslimdata.in/ — it
 auto-rebuilds on every push and shows current values, the comparison
 pill, the trend chart, the methodology, and a downloadable CSV per metric.

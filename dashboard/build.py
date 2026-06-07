@@ -152,11 +152,24 @@ TOTAL_DISTRICTS_2011 = 640
 # header. The fine-grained `cluster` stays on each metric (semantic); this is
 # purely the dashboard's section layout. Order here = render order; empty
 # sections (no live metric in any member cluster) are skipped.
+#
+# Sequence rationale (deliberate -- keep it): context -> foundational wellbeing
+# -> life chances -> civic standing, building to the most acute content.
+#   - Demographics (who & where) opens as neutral scene-setting.
+#   - Health & Housing (survival & living conditions) leads the outcomes as the
+#     most foundational human needs.
+#   - Education & Employment (+ the Income/Finance economic placeholders) follow
+#     as life chances.
+#   - The civic block closes: Representation (voice) then Justice & Civic, which
+#     ends on the sharpest material (over-incarceration, communal violence).
+#   Don't lead with a gap section or with Justice (that editorialises the order);
+#   keep Justice & Civic last. The per-metric `order` in metrics.yaml is numbered
+#   to match this render order so the two never drift apart.
 SECTION_GROUPS = [
     ("Demographics", ["demographics"]),
+    ("Health & Housing", ["health", "housing"]),
     ("Education & Employment", ["education", "employment"]),
     ("Income", ["income"]),
-    ("Health & Housing", ["health", "housing"]),
     ("Finance", ["finance"]),
     ("Representation", ["representation"]),
     ("Justice & Civic", ["justice", "civic"]),
@@ -1949,8 +1962,8 @@ alongside the Hindu and all-India comparison so the reader can judge the gap
 without having to compute it.</p>
 
 <h2>What's on the dashboard</h2>
-<p>{n_metrics} indicators across six themes (population, education,
-employment, health, representation, justice), drawn from {n_sources}
+<p>{n_metrics} indicators across six themes (population, health, education,
+employment, representation, justice), drawn from {n_sources}
 primary sources. Every card covers one indicator. It shows the latest
 figure for India's Muslims, where that figure ranks across religious
 communities, and how it has shifted over time when the source has more

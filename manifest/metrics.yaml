@@ -157,7 +157,7 @@ metrics:
         reference: "hindu"
         unit_format: percent
         higher_is_better: true
-        order: 50
+        order: 100
 
   - id: mean-yrs-schooling
     name: Mean years of schooling (25+)
@@ -204,7 +204,7 @@ metrics:
         reference: "all"
         unit_format: percent
         higher_is_better: true
-        order: 60
+        order: 110
 
   - id: muslim-higher-ed-enrolment
     name: Muslim students in higher education
@@ -233,7 +233,7 @@ metrics:
         reference: null
         unit_format: count
         higher_is_better: null
-        order: 70
+        order: 120
 
   # ----- Employment (Phase 1) -----
   - id: lfpr-15plus
@@ -260,7 +260,7 @@ metrics:
         reference: "hindu"
         unit_format: percent
         higher_is_better: true
-        order: 80
+        order: 130
 
   - id: wpr-15plus
     name: Worker population ratio
@@ -284,7 +284,7 @@ metrics:
         reference: "hindu"
         unit_format: percent
         higher_is_better: true
-        order: 90
+        order: 140
 
   - id: salaried-share
     name: Workers in salaried jobs
@@ -311,7 +311,7 @@ metrics:
         reference: "hindu"
         unit_format: percent
         higher_is_better: true
-        order: 100
+        order: 150
 
   # ----- Income / consumption / poverty (Phase 1) -----
   - id: mpce
@@ -367,7 +367,7 @@ metrics:
         reference: "hindu"
         unit_format: per_1000_live_births
         higher_is_better: false
-        order: 120
+        order: 60
 
   - id: stunting-u5
     name: Child stunting (under 5)
@@ -397,7 +397,7 @@ metrics:
         reference: "hindu"
         unit_format: percent
         higher_is_better: false
-        order: 130
+        order: 70
 
   - id: inst-delivery
     name: Institutional delivery rate
@@ -424,7 +424,7 @@ metrics:
         reference: "hindu"
         unit_format: percent
         higher_is_better: true
-        order: 110
+        order: 50
 
   - id: women-anemia
     name: Anaemia in women
@@ -452,7 +452,7 @@ metrics:
         reference: "hindu"
         unit_format: percent
         higher_is_better: false
-        order: 140
+        order: 80
 
   # ----- Housing & amenities (Phase 1) -----
   - id: pucca-housing
@@ -495,7 +495,7 @@ metrics:
         reference: "hindu"
         unit_format: percent
         higher_is_better: true
-        order: 150
+        order: 90
 
   - id: clean-cooking-fuel
     name: Clean cooking fuel access
