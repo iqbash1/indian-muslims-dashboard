@@ -319,7 +319,7 @@ def render_scorecard_rows() -> str:
                 sign = "+" if diff > 0 else ""
                 gap_str = f"{sign}{diff:.2f}"
                 if unit == "percent":
-                    gap_str += "pp vs " + ("Hindu" if ref == "hindu" else "all-India")
+                    gap_str += "pp vs " + ("Hindu" if ref == "hindu" else "all communities")
                 # Class based on direction
                 if higher_better is True:
                     gap_class = "gap-bad" if diff < 0 else ("gap-good" if diff > 0 else "gap-neutral")
@@ -831,7 +831,7 @@ TEMPLATE = """<!DOCTYPE html>
 </p>
 <div class="compare-toggle" role="radiogroup" aria-label="Choose comparison baseline for every card">
   <span class="compare-toggle-label">Compare Muslim outcomes to:</span>
-  <button id="compare-all" class="compare-toggle-btn active" role="radio" aria-checked="true" type="button">all-India</button>
+  <button id="compare-all" class="compare-toggle-btn active" role="radio" aria-checked="true" type="button">all communities</button>
   <button id="compare-hindu" class="compare-toggle-btn" role="radio" aria-checked="false" type="button">Hindu only</button>
 </div>
 
@@ -863,7 +863,7 @@ TEMPLATE = """<!DOCTYPE html>
     </tbody></table>
     </div>
     <p class="methodology">"Gap" is the Muslim value minus the reference baseline (Hindu where
-    available, otherwise all-India). Red means the Muslim outcome is worse than the reference;
+    available, otherwise all communities). Red means the Muslim outcome is worse than the reference;
     green means it is better. For justice metrics, cells show the absolute count alongside the
     incarceration rate per 100,000 people of that religion, and the gap is the Muslim-to-Hindu
     rate ratio (1.0× means parity; above 1.0× means Muslims are overrepresented).</p>
@@ -1016,9 +1016,9 @@ function _valueLabels(decimals, suffix) {
     ctx.restore();
   } };
 }
-// "All-India" is a weighted aggregate that CONTAINS every community, so it is
-// never a peer bar. It is drawn as a dashed baseline reference line (the same
-// way the Hawaiʻi dashboard draws the US reference), passed via refValue.
+// The comparison baseline (labelled "All communities") is a weighted aggregate
+// that CONTAINS every community, so it is never a peer bar. It is drawn as a
+// dashed reference line (like the Hawaiʻi dashboard's US reference), via refValue.
 function _refLine(refValue, refLabel) {
   return { id: 'refline', afterDatasetsDraw(chart) {
     if (refValue == null) return;
@@ -1029,8 +1029,8 @@ function _refLine(refValue, refLabel) {
     ctx.beginPath(); ctx.moveTo(px, top); ctx.lineTo(px, bottom); ctx.stroke();
     ctx.setLineDash([]);
     // Label the reference line. Darker + slightly larger than the line so
-    // "All-India" reads at a glance on every chart (it was easy to miss at
-    // 9px light-grey). Flip alignment near the edges so it never clips off.
+    // the reference label reads at a glance on every chart (it was easy to
+    // miss at 9px light-grey). Flip alignment near the edges so it never clips.
     ctx.font = '600 10px -apple-system, system-ui, sans-serif';
     ctx.fillStyle = '#5f6b73';
     const half = ctx.measureText(refLabel).width / 2;
@@ -1243,7 +1243,7 @@ function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak, refLine, 
     // build wants to flag a non-default label (e.g. "Community median"
     // when source all-India was sparse).
     const values = Array.isArray(allSeries) ? allSeries : allSeries.values;
-    const labelText = Array.isArray(allSeries) ? 'All-India' : (allSeries.label || 'All-India');
+    const labelText = Array.isArray(allSeries) ? 'All communities' : (allSeries.label || 'All communities');
     const allDs = {
       label: labelText, data: values, borderColor: '#9e9e9e', backgroundColor: 'transparent',
       fill: false, tension: 0.25, pointRadius: 0, borderWidth: 1, borderDash: [2, 3],
@@ -1327,7 +1327,7 @@ function trendChart(id, years, seriesMap, allSeries, suffix, hasBreak, refLine, 
   });
 })();
 
-// Compare toggle: flips every comparison pill on the page between vs all-India
+// Compare toggle: flips every comparison pill on the page between vs all communities
 // (default) and vs Hindu. Setting persists across sessions via localStorage so
 // the visitor's last choice is honoured on the next visit.
 (function compareToggle() {
@@ -1718,7 +1718,7 @@ def _og_data_for_metric(m: dict):
         return None
     all_v = nat.get("all")
     years, series, _ = _nat_trend(mid)
-    comp_label = "vs all-India"
+    comp_label = "vs all communities"
     if years:
         all_series, _, pill_label = _comparison_series(series, years)
         if all_series:
@@ -2255,7 +2255,7 @@ def _comparison_series(series: dict, years: list[int]):
     import statistics as _stats
     source_all = [series.get("all", {}).get(y) for y in years]
     if source_all and all(v is not None for v in source_all):
-        return source_all, "All-India", "vs all-India"
+        return source_all, "All communities", "vs all communities"
     community_keys = [c for c in NAMED_COMMUNITIES if c in series]
     if not community_keys:
         return None, None, None
@@ -2677,7 +2677,7 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
     if years:
         all_series, all_line_label, all_pill_label = _comparison_series(series, years)
     else:
-        all_series, all_line_label, all_pill_label = None, None, "vs all-India"
+        all_series, all_line_label, all_pill_label = None, None, "vs all communities"
     if all_series:
         latest = next((v for v in reversed(all_series) if v is not None), None)
         if latest is not None:
@@ -2693,7 +2693,7 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
     if all_v is not None and muslim is not None:
         gap = muslim - all_v
         cls = _verdict(gap, hib)
-        base_label = all_pill_label or "vs all-India"
+        base_label = all_pill_label or "vs all communities"
         comps += _comp(f"{base_label} · {fmt_num(all_v, unit)}",
                        _gap_str(gap, unit), _verdict_word(cls), cls,
                        comp_type="vs-all")
@@ -2742,7 +2742,7 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
         # surface All-India as a second bar so the chart actually communicates
         # the gap instead of being a single redundant bar.
         if len(pairs) == 1 and all_v is not None:
-            pairs.append(("All-India", float(all_v), False))
+            pairs.append(("All communities", float(all_v), False))
         labels = [p[0] for p in pairs]
         values = [round(p[1], 4) for p in pairs]
         mhex = TIER_HEX.get(tier, "#555555")
@@ -2756,9 +2756,10 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
             chart_html = f'<div class="card-chartwrap" style="height:{h}px"><canvas id="{cvid}" role="img" aria-label="Visualisation of this metric; numerical values are listed in the card above."></canvas></div>'
             # If we already promoted All-India to a peer bar, don't ALSO draw it
             # as a dashed reference line — that would be redundant.
-            has_all_bar = any(lbl == "All-India" for lbl in labels)
+            has_all_bar = any(lbl == "All communities" for lbl in labels)
             ref = "null" if has_all_bar else (json.dumps(round(all_v, 4)) if all_v is not None else "null")
-            ref_label = "" if has_all_bar else "All-India"
+            ref_label = "" if has_all_bar else (
+                f"All communities ({fmt_num(all_v, unit)})" if all_v is not None else "All communities")
             js = (f'hbar("{cvid}", {json.dumps(labels)}, {json.dumps(values)}, {json.dumps(colors)}, '
                   f'{json.dumps(suffix)}, {dec}, {ref}, {json.dumps(ref_label)});')
         details = _state_details(mid, unit)
