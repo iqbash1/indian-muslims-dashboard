@@ -1,0 +1,76 @@
+name: deploy
+
+# Ships the dashboard to Cloudflare (muslimdata.in) on every push to main.
+#
+# Replaces Cloudflare's "Connect to Git" auto-build, which failed at checkout:
+# Cloudflare's clone smudges Git LFS, and this repo LFS-tracks ~400 MB of
+# sources/** that the site never serves -> it blew through GitHub's LFS
+# bandwidth quota and `git checkout` failed intermittently, freezing the site.
+# Here we check out with lfs:false (sources/** is not needed to build or serve),
+# rebuild docs/ from the non-LFS canonical/ + manifest/, and deploy with
+# wrangler. No LFS smudge, no native deps -> minimal failure surface.
+#
+# ONE-TIME SETUP:
+#   1. Cloudflare -> My Profile -> API Tokens -> Create Token ->
+#      "Edit Cloudflare Workers" template -> scope it to this account.
+#   2. GitHub repo -> Settings -> Secrets and variables -> Actions -> add:
+#        CLOUDFLARE_API_TOKEN  = <the token from step 1>
+#        CLOUDFLARE_ACCOUNT_ID = a76787eef6b59b0abe8511b17e042bfb
+#   3. Cloudflare -> Workers & Pages -> indian-muslims-dashboard -> Settings ->
+#      Build: disconnect/disable the git auto-build so deploys come only from
+#      here (avoids the failing build + double deploys).
+# Until CLOUDFLARE_API_TOKEN exists this workflow runs GREEN but skips the deploy.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-main
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Gate on deploy secret
+        id: gate
+        env:
+          TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "::warning::CLOUDFLARE_API_TOKEN not set yet — skipping deploy. Add the secret to enable."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Check out (no LFS — sources/** not needed to build or serve)
+        if: steps.gate.outputs.ready == 'true'
+        uses: actions/checkout@v4
+        with:
+          lfs: false
+
+      - name: Set up Python
+        if: steps.gate.outputs.ready == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: pip
+
+      - name: Install deploy deps (PyYAML only — minimal, pure-Python)
+        if: steps.gate.outputs.ready == 'true'
+        run: pip install -r requirements.txt
+
+      - name: Build docs/ (OG images stay the committed PNGs; Pillow not installed)
+        if: steps.gate.outputs.ready == 'true'
+        run: python dashboard/build.py
+
+      - name: Deploy docs/ to Cloudflare Workers
+        if: steps.gate.outputs.ready == 'true'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy

@@ -20,7 +20,31 @@ rebuilds and ships the site.
 
 ---
 
-## 1. Connect Cloudflare Pages to the GitHub repo
+## Deploy method (current): GitHub Actions
+
+Deploys run from `.github/workflows/deploy.yml`, NOT Cloudflare's "Connect to
+Git" auto-build. Why: Cloudflare's git clone smudges Git LFS, and this repo
+LFS-tracks ~400 MB of `sources/**` that the site never serves. That blew
+through GitHub's free LFS bandwidth quota (1 GB/mo) and made `git checkout`
+fail intermittently on Cloudflare's build server, freezing the site (June 2026).
+The workflow checks out with `lfs: false` (sources/** isn't needed to build or
+serve), rebuilds `docs/`, and runs `wrangler deploy`.
+
+One-time setup:
+1. Cloudflare → My Profile → API Tokens → Create Token → **Edit Cloudflare
+   Workers** template.
+2. GitHub repo → Settings → Secrets and variables → Actions → add
+   `CLOUDFLARE_API_TOKEN` (the token) and `CLOUDFLARE_ACCOUNT_ID`
+   (`a76787eef6b59b0abe8511b17e042bfb`).
+3. **Disable** the Cloudflare git auto-build (section 1 below) so deploys come
+   only from the workflow and the failing LFS build stops running.
+
+Section 1 below documents that legacy Cloudflare git-build setup; keep it for
+reference, but it should be disconnected once the workflow is live.
+
+---
+
+## 1. Connect Cloudflare Pages to the GitHub repo (LEGACY — disable this)
 
 1. Cloudflare dashboard → Workers & Pages → Create → Pages → Connect to Git.
 2. Select repo `iqbash1/indian-muslims-dashboard`, branch `main`.
