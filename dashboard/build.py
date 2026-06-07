@@ -134,7 +134,7 @@ def fmt_num(v: float, unit: str) -> str:
     if unit == "count":
         return f"{int(v):,}"
     if unit in ("inr_per_month", "inr_per_year", "inr"):
-        return f"₹{v:,.0f}"
+        return f"Rs {v:,.0f}"
     return str(v)
 
 
@@ -185,7 +185,7 @@ SECTION_INTROS = {
     "Education, work & income": "Behind on literacy, higher-education enrolment, salaried work and monthly spending; near the national average on workforce participation.",
     "Health & Housing": "Lower infant mortality and the lowest anaemia of any community, but the highest under-5 stunting; toilet access now close to par.",
     "Representation": "Far fewer elected seats than their share of the population, both in the Lok Sabha and across the state assemblies.",
-    "Justice & Civic": "Over-represented in the prison and undertrial populations per head of community; official and civic incident counts diverge.",
+    "Justice & Civic": "Over-represented in the prison and undertrial populations per head of community, alongside police-recorded communal incidents.",
 }
 
 
@@ -1808,7 +1808,7 @@ def _render_og_default(out_path: pathlib.Path) -> None:
     draw.text((margin, y + 70), "Hindu and all-India comparison baselines on every metric.",
               font=_og_font(32), fill=_OG_MUTED)
     draw.text((margin, OG_H - 60),
-              "Census · NFHS · PLFS · AISHE · NCRB · PRS-ECI · India Hate Lab",
+              "Census · NFHS · PLFS · AISHE · NCRB · PRS-ECI",
               font=_og_font(22), fill=_OG_MUTED)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     img.save(out_path, format="PNG", optimize=True)
@@ -2027,8 +2027,7 @@ inclusion.</li>
 <li>NCRB's "communal incidents" series is a count of police-registered
 rioting cases under IPC Sec.147-151. Several states stopped recording
 'communal' as a separate sub-category after ~2017, which deflates the
-official totals. Civil-society compilations (India Hate Lab,
-Documentation of the Oppressed) report substantially higher counts.</li>
+official totals. Civil-society compilations report substantially higher counts.</li>
 <li>For metrics like the MLA share, religion is not officially tabulated
 by the Election Commission. Numbers rely on candidate-affidavit
 classification by journalists.</li>
@@ -2368,7 +2367,7 @@ def _gap_str(gap: float, unit: str) -> str:
     if unit == "count":
         return f"{gap:+,.0f}"
     if unit in ("inr_per_month", "inr_per_year", "inr"):
-        return f"{'+' if gap >= 0 else '-'}₹{abs(gap):,.0f}"
+        return f"{'+' if gap >= 0 else '-'}Rs {abs(gap):,.0f}"
     return f"{gap:+.1f}{'pp' if unit == 'percent' else ''}"
 
 

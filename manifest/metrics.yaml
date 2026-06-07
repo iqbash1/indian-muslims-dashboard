@@ -746,8 +746,7 @@ metrics:
       counts only, with no religion of victim/perpetrator in the published table.
       Caveat: several states stopped recording 'communal' as a separate
       crime category since ~2017, which deflates the national total over
-      time. Civil-society compilations (Documentation of the Oppressed,
-      India Hate Lab) typically report higher counts.
+      time. Civil-society compilations typically report higher counts.
     comparison_baselines: []
     phase: 2
     status: defined
@@ -782,15 +781,10 @@ metrics:
       Time series: 2023 = 668 events, 2024 = 1,165 events (74% YoY rise).
     comparison_baselines: []
     phase: 2
+    # Decarded 2026-06-07 at user's request ("data is a bit controversial");
+    # metric + canonical data retained, just not shown. Re-add a display block
+    # to bring it back. The official NCRB view (communal-incidents-govt) stays.
     status: defined
-    display:
-      scorecard:
-        label: "Anti-Muslim hate-speech events"
-        reference: null
-        unit_format: count
-        higher_is_better: null
-        order: 210
-        special_render: time_series_count
 
   - id: civil-services-share
     name: Muslim share of central civil services intake
