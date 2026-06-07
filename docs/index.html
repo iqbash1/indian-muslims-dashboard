@@ -649,15 +649,21 @@ function _valueLabels(decimals, suffix) {
 function _refLine(refValue, refLabel) {
   return { id: 'refline', afterDatasetsDraw(chart) {
     if (refValue == null) return;
-    const { ctx, chartArea: { top, bottom }, scales: { x } } = chart;
+    const { ctx, chartArea: { top, bottom, left, right }, scales: { x } } = chart;
     const px = x.getPixelForValue(refValue);
     ctx.save();
     ctx.strokeStyle = '#9aa3a8'; ctx.lineWidth = 1; ctx.setLineDash([4, 3]);
     ctx.beginPath(); ctx.moveTo(px, top); ctx.lineTo(px, bottom); ctx.stroke();
     ctx.setLineDash([]);
-    ctx.font = '600 9px -apple-system, system-ui, sans-serif';
-    ctx.fillStyle = '#9aa3a8'; ctx.textAlign = 'center';
-    ctx.fillText(refLabel, px, top - 3);
+    // Label the reference line. Darker + slightly larger than the line so
+    // "All-India" reads at a glance on every chart (it was easy to miss at
+    // 9px light-grey). Flip alignment near the edges so it never clips off.
+    ctx.font = '600 10px -apple-system, system-ui, sans-serif';
+    ctx.fillStyle = '#5f6b73';
+    const half = ctx.measureText(refLabel).width / 2;
+    if (px + half > right) { ctx.textAlign = 'right'; ctx.fillText(refLabel, right, top - 3); }
+    else if (px - half < left) { ctx.textAlign = 'left'; ctx.fillText(refLabel, left, top - 3); }
+    else { ctx.textAlign = 'center'; ctx.fillText(refLabel, px, top - 3); }
     ctx.restore();
   } };
 }
