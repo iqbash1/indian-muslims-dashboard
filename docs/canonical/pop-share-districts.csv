@@ -1,0 +1,641 @@
+district_code,state,district,year,religion,value,source
+IN-S01-D001,Jammu & Kashmir,Kupwara,2011,muslim,94.5921,census-india-2011
+IN-S01-D002,Jammu & Kashmir,Badgam,2011,muslim,97.6529,census-india-2011
+IN-S01-D003,Jammu & Kashmir,Leh(Ladakh),2011,muslim,14.2763,census-india-2011
+IN-S01-D004,Jammu & Kashmir,Kargil,2011,muslim,76.8732,census-india-2011
+IN-S01-D005,Jammu & Kashmir,Punch,2011,muslim,90.4462,census-india-2011
+IN-S01-D006,Jammu & Kashmir,Rajouri,2011,muslim,62.7132,census-india-2011
+IN-S01-D007,Jammu & Kashmir,Kathua,2011,muslim,10.4202,census-india-2011
+IN-S01-D008,Jammu & Kashmir,Baramula,2011,muslim,95.1536,census-india-2011
+IN-S01-D009,Jammu & Kashmir,Bandipore,2011,muslim,97.3929,census-india-2011
+IN-S01-D010,Jammu & Kashmir,Srinagar,2011,muslim,95.1904,census-india-2011
+IN-S01-D011,Jammu & Kashmir,Ganderbal,2011,muslim,97.692,census-india-2011
+IN-S01-D012,Jammu & Kashmir,Pulwama,2011,muslim,95.4891,census-india-2011
+IN-S01-D013,Jammu & Kashmir,Shupiyan,2011,muslim,98.5155,census-india-2011
+IN-S01-D014,Jammu & Kashmir,Anantnag,2011,muslim,97.9895,census-india-2011
+IN-S01-D015,Jammu & Kashmir,Kulgam,2011,muslim,98.4906,census-india-2011
+IN-S01-D016,Jammu & Kashmir,Doda,2011,muslim,53.8167,census-india-2011
+IN-S01-D017,Jammu & Kashmir,Ramban,2011,muslim,70.6756,census-india-2011
+IN-S01-D018,Jammu & Kashmir,Kishtwar,2011,muslim,57.7492,census-india-2011
+IN-S01-D019,Jammu & Kashmir,Udhampur,2011,muslim,10.7698,census-india-2011
+IN-S01-D020,Jammu & Kashmir,Reasi,2011,muslim,49.6636,census-india-2011
+IN-S01-D021,Jammu & Kashmir,Jammu,2011,muslim,7.0256,census-india-2011
+IN-S01-D022,Jammu & Kashmir,Samba,2011,muslim,7.1967,census-india-2011
+IN-S02-D023,Himachal Pradesh,Chamba,2011,muslim,6.2524,census-india-2011
+IN-S02-D024,Himachal Pradesh,Kangra,2011,muslim,1.311,census-india-2011
+IN-S02-D025,Himachal Pradesh,Lahul & Spiti,2011,muslim,0.2344,census-india-2011
+IN-S02-D026,Himachal Pradesh,Kullu,2011,muslim,0.6791,census-india-2011
+IN-S02-D027,Himachal Pradesh,Mandi,2011,muslim,0.9462,census-india-2011
+IN-S02-D028,Himachal Pradesh,Hamirpur,2011,muslim,0.816,census-india-2011
+IN-S02-D029,Himachal Pradesh,Una,2011,muslim,2.739,census-india-2011
+IN-S02-D030,Himachal Pradesh,Bilaspur,2011,muslim,1.8285,census-india-2011
+IN-S02-D031,Himachal Pradesh,Solan,2011,muslim,2.5293,census-india-2011
+IN-S02-D032,Himachal Pradesh,Sirmaur,2011,muslim,6.2687,census-india-2011
+IN-S02-D033,Himachal Pradesh,Shimla,2011,muslim,1.4508,census-india-2011
+IN-S02-D034,Himachal Pradesh,Kinnaur,2011,muslim,0.5326,census-india-2011
+IN-S03-D035,Punjab,Gurdaspur,2011,muslim,1.2038,census-india-2011
+IN-S03-D036,Punjab,Kapurthala,2011,muslim,1.25,census-india-2011
+IN-S03-D037,Punjab,Jalandhar,2011,muslim,1.3782,census-india-2011
+IN-S03-D038,Punjab,Hoshiarpur,2011,muslim,1.4552,census-india-2011
+IN-S03-D039,Punjab,Shahid Bhagat Singh Nagar,2011,muslim,1.1153,census-india-2011
+IN-S03-D040,Punjab,Fatehgarh Sahib,2011,muslim,2.8006,census-india-2011
+IN-S03-D041,Punjab,Ludhiana,2011,muslim,2.2212,census-india-2011
+IN-S03-D042,Punjab,Moga,2011,muslim,0.9428,census-india-2011
+IN-S03-D043,Punjab,Firozpur,2011,muslim,0.3373,census-india-2011
+IN-S03-D044,Punjab,Muktsar,2011,muslim,0.4804,census-india-2011
+IN-S03-D045,Punjab,Faridkot,2011,muslim,0.5061,census-india-2011
+IN-S03-D046,Punjab,Bathinda,2011,muslim,1.1738,census-india-2011
+IN-S03-D047,Punjab,Mansa,2011,muslim,1.3478,census-india-2011
+IN-S03-D048,Punjab,Patiala,2011,muslim,2.1123,census-india-2011
+IN-S03-D049,Punjab,Amritsar,2011,muslim,0.502,census-india-2011
+IN-S03-D050,Punjab,Tarn Taran,2011,muslim,0.3443,census-india-2011
+IN-S03-D051,Punjab,Rupnagar,2011,muslim,2.1168,census-india-2011
+IN-S03-D052,Punjab,Sahibzada Ajit Singh Nagar,2011,muslim,2.9647,census-india-2011
+IN-S03-D053,Punjab,Sangrur,2011,muslim,10.8216,census-india-2011
+IN-S03-D054,Punjab,Barnala,2011,muslim,2.1997,census-india-2011
+IN-S04-D055,Chandigarh,Chandigarh,2011,muslim,4.8744,census-india-2011
+IN-S05-D056,Uttarakhand,Uttarkashi,2011,muslim,1.0767,census-india-2011
+IN-S05-D057,Uttarakhand,Chamoli,2011,muslim,1.1223,census-india-2011
+IN-S05-D058,Uttarakhand,Rudraprayag,2011,muslim,0.6133,census-india-2011
+IN-S05-D059,Uttarakhand,Tehri Garhwal,2011,muslim,1.1914,census-india-2011
+IN-S05-D060,Uttarakhand,Dehradun,2011,muslim,11.9089,census-india-2011
+IN-S05-D061,Uttarakhand,Garhwal,2011,muslim,3.3365,census-india-2011
+IN-S05-D062,Uttarakhand,Pithoragarh,2011,muslim,1.2442,census-india-2011
+IN-S05-D063,Uttarakhand,Bageshwar,2011,muslim,0.5541,census-india-2011
+IN-S05-D064,Uttarakhand,Almora,2011,muslim,1.2453,census-india-2011
+IN-S05-D065,Uttarakhand,Champawat,2011,muslim,3.348,census-india-2011
+IN-S05-D066,Uttarakhand,Nainital,2011,muslim,12.6484,census-india-2011
+IN-S05-D067,Uttarakhand,Udham Singh Nagar,2011,muslim,22.5767,census-india-2011
+IN-S05-D068,Uttarakhand,Hardwar,2011,muslim,34.2844,census-india-2011
+IN-S06-D069,Haryana,Panchkula,2011,muslim,4.178,census-india-2011
+IN-S06-D070,Haryana,Ambala,2011,muslim,1.9624,census-india-2011
+IN-S06-D071,Haryana,Yamunanagar,2011,muslim,11.4123,census-india-2011
+IN-S06-D072,Haryana,Kurukshetra,2011,muslim,1.6555,census-india-2011
+IN-S06-D073,Haryana,Kaithal,2011,muslim,0.7663,census-india-2011
+IN-S06-D074,Haryana,Karnal,2011,muslim,2.1025,census-india-2011
+IN-S06-D075,Haryana,Panipat,2011,muslim,7.1859,census-india-2011
+IN-S06-D076,Haryana,Sonipat,2011,muslim,3.1103,census-india-2011
+IN-S06-D077,Haryana,Jind,2011,muslim,1.7251,census-india-2011
+IN-S06-D078,Haryana,Fatehabad,2011,muslim,0.8875,census-india-2011
+IN-S06-D079,Haryana,Sirsa,2011,muslim,0.7353,census-india-2011
+IN-S06-D080,Haryana,Hisar,2011,muslim,1.2414,census-india-2011
+IN-S06-D081,Haryana,Bhiwani,2011,muslim,0.9493,census-india-2011
+IN-S06-D082,Haryana,Rohtak,2011,muslim,0.7713,census-india-2011
+IN-S06-D083,Haryana,Jhajjar,2011,muslim,0.8605,census-india-2011
+IN-S06-D084,Haryana,Mahendragarh,2011,muslim,0.6138,census-india-2011
+IN-S06-D085,Haryana,Rewari,2011,muslim,0.6345,census-india-2011
+IN-S06-D086,Haryana,Gurgaon,2011,muslim,4.6778,census-india-2011
+IN-S06-D087,Haryana,Mewat,2011,muslim,79.1955,census-india-2011
+IN-S06-D088,Haryana,Faridabad,2011,muslim,8.9339,census-india-2011
+IN-S06-D089,Haryana,Palwal,2011,muslim,20.0023,census-india-2011
+IN-S07-D090,NCT of Delhi,North West,2011,muslim,7.9674,census-india-2011
+IN-S07-D091,NCT of Delhi,North,2011,muslim,13.4904,census-india-2011
+IN-S07-D092,NCT of Delhi,North East,2011,muslim,29.3352,census-india-2011
+IN-S07-D093,NCT of Delhi,East,2011,muslim,10.4606,census-india-2011
+IN-S07-D094,NCT of Delhi,New Delhi,2011,muslim,5.9717,census-india-2011
+IN-S07-D095,NCT of Delhi,Central,2011,muslim,33.3628,census-india-2011
+IN-S07-D096,NCT of Delhi,West,2011,muslim,5.8904,census-india-2011
+IN-S07-D097,NCT of Delhi,South West,2011,muslim,4.9147,census-india-2011
+IN-S07-D098,NCT of Delhi,South,2011,muslim,16.3223,census-india-2011
+IN-S08-D099,Rajasthan,Ganganagar,2011,muslim,2.5741,census-india-2011
+IN-S08-D100,Rajasthan,Hanumangarh,2011,muslim,6.687,census-india-2011
+IN-S08-D101,Rajasthan,Bikaner,2011,muslim,9.9724,census-india-2011
+IN-S08-D102,Rajasthan,Churu,2011,muslim,12.2447,census-india-2011
+IN-S08-D103,Rajasthan,Jhunjhunun,2011,muslim,10.6773,census-india-2011
+IN-S08-D104,Rajasthan,Alwar,2011,muslim,14.8968,census-india-2011
+IN-S08-D105,Rajasthan,Bharatpur,2011,muslim,14.569,census-india-2011
+IN-S08-D106,Rajasthan,Dhaulpur,2011,muslim,5.989,census-india-2011
+IN-S08-D107,Rajasthan,Karauli,2011,muslim,5.5925,census-india-2011
+IN-S08-D108,Rajasthan,Sawai Madhopur,2011,muslim,11.6567,census-india-2011
+IN-S08-D109,Rajasthan,Dausa,2011,muslim,2.7831,census-india-2011
+IN-S08-D110,Rajasthan,Jaipur,2011,muslim,10.3748,census-india-2011
+IN-S08-D111,Rajasthan,Sikar,2011,muslim,12.2354,census-india-2011
+IN-S08-D112,Rajasthan,Nagaur,2011,muslim,13.7401,census-india-2011
+IN-S08-D113,Rajasthan,Jodhpur,2011,muslim,11.1619,census-india-2011
+IN-S08-D114,Rajasthan,Jaisalmer,2011,muslim,25.0969,census-india-2011
+IN-S08-D115,Rajasthan,Barmer,2011,muslim,12.3357,census-india-2011
+IN-S08-D116,Rajasthan,Jalor,2011,muslim,4.3194,census-india-2011
+IN-S08-D117,Rajasthan,Sirohi,2011,muslim,2.941,census-india-2011
+IN-S08-D118,Rajasthan,Pali,2011,muslim,7.0415,census-india-2011
+IN-S08-D119,Rajasthan,Ajmer,2011,muslim,12.1623,census-india-2011
+IN-S08-D120,Rajasthan,Tonk,2011,muslim,10.7749,census-india-2011
+IN-S08-D121,Rajasthan,Bundi,2011,muslim,5.9959,census-india-2011
+IN-S08-D122,Rajasthan,Bhilwara,2011,muslim,5.9135,census-india-2011
+IN-S08-D123,Rajasthan,Rajsamand,2011,muslim,2.9117,census-india-2011
+IN-S08-D124,Rajasthan,Dungarpur,2011,muslim,2.0642,census-india-2011
+IN-S08-D125,Rajasthan,Banswara,2011,muslim,2.7168,census-india-2011
+IN-S08-D126,Rajasthan,Chittaurgarh,2011,muslim,6.3364,census-india-2011
+IN-S08-D127,Rajasthan,Kota,2011,muslim,12.506,census-india-2011
+IN-S08-D128,Rajasthan,Baran,2011,muslim,6.5413,census-india-2011
+IN-S08-D129,Rajasthan,Jhalawar,2011,muslim,6.8147,census-india-2011
+IN-S08-D130,Rajasthan,Udaipur,2011,muslim,3.3994,census-india-2011
+IN-S08-D131,Rajasthan,Pratapgarh,2011,muslim,2.9495,census-india-2011
+IN-S09-D132,Uttar Pradesh,Saharanpur,2011,muslim,41.9473,census-india-2011
+IN-S09-D133,Uttar Pradesh,Muzaffarnagar,2011,muslim,41.3044,census-india-2011
+IN-S09-D134,Uttar Pradesh,Bijnor,2011,muslim,43.0446,census-india-2011
+IN-S09-D135,Uttar Pradesh,Moradabad,2011,muslim,47.1163,census-india-2011
+IN-S09-D136,Uttar Pradesh,Rampur,2011,muslim,50.5749,census-india-2011
+IN-S09-D137,Uttar Pradesh,Jyotiba Phule Nagar,2011,muslim,40.776,census-india-2011
+IN-S09-D138,Uttar Pradesh,Meerut,2011,muslim,34.4294,census-india-2011
+IN-S09-D139,Uttar Pradesh,Baghpat,2011,muslim,27.9792,census-india-2011
+IN-S09-D140,Uttar Pradesh,Ghaziabad,2011,muslim,25.3496,census-india-2011
+IN-S09-D141,Uttar Pradesh,Gautam Buddha Nagar,2011,muslim,13.0755,census-india-2011
+IN-S09-D142,Uttar Pradesh,Bulandshahr,2011,muslim,22.2169,census-india-2011
+IN-S09-D143,Uttar Pradesh,Aligarh,2011,muslim,19.8504,census-india-2011
+IN-S09-D144,Uttar Pradesh,Mahamaya Nagar,2011,muslim,10.1903,census-india-2011
+IN-S09-D145,Uttar Pradesh,Mathura,2011,muslim,8.5166,census-india-2011
+IN-S09-D146,Uttar Pradesh,Agra,2011,muslim,9.3083,census-india-2011
+IN-S09-D147,Uttar Pradesh,Firozabad,2011,muslim,12.6018,census-india-2011
+IN-S09-D148,Uttar Pradesh,Mainpuri,2011,muslim,5.3905,census-india-2011
+IN-S09-D149,Uttar Pradesh,Budaun,2011,muslim,21.4703,census-india-2011
+IN-S09-D150,Uttar Pradesh,Bareilly,2011,muslim,34.5416,census-india-2011
+IN-S09-D151,Uttar Pradesh,Pilibhit,2011,muslim,24.1105,census-india-2011
+IN-S09-D152,Uttar Pradesh,Shahjahanpur,2011,muslim,17.5478,census-india-2011
+IN-S09-D153,Uttar Pradesh,Kheri,2011,muslim,20.0833,census-india-2011
+IN-S09-D154,Uttar Pradesh,Sitapur,2011,muslim,19.9315,census-india-2011
+IN-S09-D155,Uttar Pradesh,Hardoi,2011,muslim,13.59,census-india-2011
+IN-S09-D156,Uttar Pradesh,Unnao,2011,muslim,11.6927,census-india-2011
+IN-S09-D157,Uttar Pradesh,Lucknow,2011,muslim,21.462,census-india-2011
+IN-S09-D158,Uttar Pradesh,Rae Bareli,2011,muslim,12.1344,census-india-2011
+IN-S09-D159,Uttar Pradesh,Farrukhabad,2011,muslim,14.6852,census-india-2011
+IN-S09-D160,Uttar Pradesh,Kannauj,2011,muslim,16.5377,census-india-2011
+IN-S09-D161,Uttar Pradesh,Etawah,2011,muslim,7.2045,census-india-2011
+IN-S09-D162,Uttar Pradesh,Auraiya,2011,muslim,7.3911,census-india-2011
+IN-S09-D163,Uttar Pradesh,Kanpur Dehat,2011,muslim,9.8168,census-india-2011
+IN-S09-D164,Uttar Pradesh,Kanpur Nagar,2011,muslim,15.7306,census-india-2011
+IN-S09-D165,Uttar Pradesh,Jalaun,2011,muslim,10.1529,census-india-2011
+IN-S09-D166,Uttar Pradesh,Jhansi,2011,muslim,7.3973,census-india-2011
+IN-S09-D167,Uttar Pradesh,Lalitpur,2011,muslim,2.7607,census-india-2011
+IN-S09-D168,Uttar Pradesh,Hamirpur,2011,muslim,8.265,census-india-2011
+IN-S09-D169,Uttar Pradesh,Mahoba,2011,muslim,6.559,census-india-2011
+IN-S09-D170,Uttar Pradesh,Banda,2011,muslim,8.7591,census-india-2011
+IN-S09-D171,Uttar Pradesh,Chitrakoot,2011,muslim,3.4847,census-india-2011
+IN-S09-D172,Uttar Pradesh,Fatehpur,2011,muslim,13.3208,census-india-2011
+IN-S09-D173,Uttar Pradesh,Pratapgarh,2011,muslim,14.097,census-india-2011
+IN-S09-D174,Uttar Pradesh,Kaushambi,2011,muslim,13.7799,census-india-2011
+IN-S09-D175,Uttar Pradesh,Allahabad,2011,muslim,13.381,census-india-2011
+IN-S09-D176,Uttar Pradesh,Bara Banki,2011,muslim,22.6058,census-india-2011
+IN-S09-D177,Uttar Pradesh,Faizabad,2011,muslim,14.804,census-india-2011
+IN-S09-D178,Uttar Pradesh,Ambedkar Nagar,2011,muslim,16.7513,census-india-2011
+IN-S09-D179,Uttar Pradesh,Sultanpur,2011,muslim,17.1251,census-india-2011
+IN-S09-D180,Uttar Pradesh,Bahraich,2011,muslim,33.527,census-india-2011
+IN-S09-D181,Uttar Pradesh,Shrawasti,2011,muslim,30.7851,census-india-2011
+IN-S09-D182,Uttar Pradesh,Balrampur,2011,muslim,37.5105,census-india-2011
+IN-S09-D183,Uttar Pradesh,Gonda,2011,muslim,19.7621,census-india-2011
+IN-S09-D184,Uttar Pradesh,Siddharthnagar,2011,muslim,29.2296,census-india-2011
+IN-S09-D185,Uttar Pradesh,Basti,2011,muslim,14.7906,census-india-2011
+IN-S09-D186,Uttar Pradesh,Sant Kabir Nagar,2011,muslim,23.5782,census-india-2011
+IN-S09-D187,Uttar Pradesh,Mahrajganj,2011,muslim,17.0838,census-india-2011
+IN-S09-D188,Uttar Pradesh,Gorakhpur,2011,muslim,9.0938,census-india-2011
+IN-S09-D189,Uttar Pradesh,Kushinagar,2011,muslim,17.4004,census-india-2011
+IN-S09-D190,Uttar Pradesh,Deoria,2011,muslim,11.5622,census-india-2011
+IN-S09-D191,Uttar Pradesh,Azamgarh,2011,muslim,15.5766,census-india-2011
+IN-S09-D192,Uttar Pradesh,Mau,2011,muslim,19.4271,census-india-2011
+IN-S09-D193,Uttar Pradesh,Ballia,2011,muslim,6.5881,census-india-2011
+IN-S09-D194,Uttar Pradesh,Jaunpur,2011,muslim,10.7639,census-india-2011
+IN-S09-D195,Uttar Pradesh,Ghazipur,2011,muslim,10.1692,census-india-2011
+IN-S09-D196,Uttar Pradesh,Chandauli,2011,muslim,11.0142,census-india-2011
+IN-S09-D197,Uttar Pradesh,Varanasi,2011,muslim,14.8765,census-india-2011
+IN-S09-D198,Uttar Pradesh,Sant Ravidas Nagar (Bhadohi),2011,muslim,12.9189,census-india-2011
+IN-S09-D199,Uttar Pradesh,Mirzapur,2011,muslim,7.8401,census-india-2011
+IN-S09-D200,Uttar Pradesh,Sonbhadra,2011,muslim,5.5605,census-india-2011
+IN-S09-D201,Uttar Pradesh,Etah,2011,muslim,8.2473,census-india-2011
+IN-S09-D202,Uttar Pradesh,Kanshiram Nagar,2011,muslim,14.8827,census-india-2011
+IN-S10-D203,Bihar,Pashchim Champaran,2011,muslim,21.9843,census-india-2011
+IN-S10-D204,Bihar,Purba Champaran,2011,muslim,19.421,census-india-2011
+IN-S10-D205,Bihar,Sheohar,2011,muslim,15.1379,census-india-2011
+IN-S10-D206,Bihar,Sitamarhi,2011,muslim,21.6178,census-india-2011
+IN-S10-D207,Bihar,Madhubani,2011,muslim,18.2492,census-india-2011
+IN-S10-D208,Bihar,Supaul,2011,muslim,18.3597,census-india-2011
+IN-S10-D209,Bihar,Araria,2011,muslim,42.9455,census-india-2011
+IN-S10-D210,Bihar,Kishanganj,2011,muslim,67.9777,census-india-2011
+IN-S10-D211,Bihar,Purnia,2011,muslim,38.4621,census-india-2011
+IN-S10-D212,Bihar,Katihar,2011,muslim,44.4686,census-india-2011
+IN-S10-D213,Bihar,Madhepura,2011,muslim,12.0774,census-india-2011
+IN-S10-D214,Bihar,Saharsa,2011,muslim,14.0278,census-india-2011
+IN-S10-D215,Bihar,Darbhanga,2011,muslim,22.3873,census-india-2011
+IN-S10-D216,Bihar,Muzaffarpur,2011,muslim,15.5288,census-india-2011
+IN-S10-D217,Bihar,Gopalganj,2011,muslim,17.0201,census-india-2011
+IN-S10-D218,Bihar,Siwan,2011,muslim,18.2642,census-india-2011
+IN-S10-D219,Bihar,Saran,2011,muslim,10.285,census-india-2011
+IN-S10-D220,Bihar,Vaishali,2011,muslim,9.5559,census-india-2011
+IN-S10-D221,Bihar,Samastipur,2011,muslim,10.6151,census-india-2011
+IN-S10-D222,Bihar,Begusarai,2011,muslim,13.7129,census-india-2011
+IN-S10-D223,Bihar,Khagaria,2011,muslim,10.5339,census-india-2011
+IN-S10-D224,Bihar,Bhagalpur,2011,muslim,17.6807,census-india-2011
+IN-S10-D225,Bihar,Banka,2011,muslim,12.3319,census-india-2011
+IN-S10-D226,Bihar,Munger,2011,muslim,8.0727,census-india-2011
+IN-S10-D227,Bihar,Lakhisarai,2011,muslim,4.0849,census-india-2011
+IN-S10-D228,Bihar,Sheikhpura,2011,muslim,5.9171,census-india-2011
+IN-S10-D229,Bihar,Nalanda,2011,muslim,6.8818,census-india-2011
+IN-S10-D230,Bihar,Patna,2011,muslim,7.5354,census-india-2011
+IN-S10-D231,Bihar,Bhojpur,2011,muslim,7.2503,census-india-2011
+IN-S10-D232,Bihar,Buxar,2011,muslim,6.1783,census-india-2011
+IN-S10-D233,Bihar,Kaimur (Bhabua),2011,muslim,9.5477,census-india-2011
+IN-S10-D234,Bihar,Rohtas,2011,muslim,10.1519,census-india-2011
+IN-S10-D235,Bihar,Aurangabad,2011,muslim,9.3443,census-india-2011
+IN-S10-D236,Bihar,Gaya,2011,muslim,11.1153,census-india-2011
+IN-S10-D237,Bihar,Nawada,2011,muslim,11.013,census-india-2011
+IN-S10-D238,Bihar,Jamui,2011,muslim,12.362,census-india-2011
+IN-S10-D239,Bihar,Jehanabad,2011,muslim,6.7307,census-india-2011
+IN-S10-D240,Bihar,Arwal,2011,muslim,9.1688,census-india-2011
+IN-S11-D241,Sikkim,North  District,2011,muslim,1.8646,census-india-2011
+IN-S11-D242,Sikkim,West District,2011,muslim,0.7073,census-india-2011
+IN-S11-D243,Sikkim,South District,2011,muslim,1.2863,census-india-2011
+IN-S11-D244,Sikkim,East District,2011,muslim,2.1856,census-india-2011
+IN-S12-D245,Arunachal Pradesh,Tawang,2011,muslim,1.5747,census-india-2011
+IN-S12-D246,Arunachal Pradesh,West Kameng,2011,muslim,2.3467,census-india-2011
+IN-S12-D247,Arunachal Pradesh,East Kameng,2011,muslim,0.8286,census-india-2011
+IN-S12-D248,Arunachal Pradesh,Papum Pare,2011,muslim,3.4818,census-india-2011
+IN-S12-D249,Arunachal Pradesh,Upper Subansiri,2011,muslim,0.6243,census-india-2011
+IN-S12-D250,Arunachal Pradesh,West Siang,2011,muslim,1.9755,census-india-2011
+IN-S12-D251,Arunachal Pradesh,East Siang,2011,muslim,2.3071,census-india-2011
+IN-S12-D252,Arunachal Pradesh,Upper Siang,2011,muslim,1.1636,census-india-2011
+IN-S12-D253,Arunachal Pradesh,Changlang,2011,muslim,1.4397,census-india-2011
+IN-S12-D254,Arunachal Pradesh,Tirap,2011,muslim,0.985,census-india-2011
+IN-S12-D255,Arunachal Pradesh,Lower Subansiri,2011,muslim,1.7849,census-india-2011
+IN-S12-D256,Arunachal Pradesh,Kurung Kumey,2011,muslim,0.5115,census-india-2011
+IN-S12-D257,Arunachal Pradesh,Dibang Valley,2011,muslim,1.3868,census-india-2011
+IN-S12-D258,Arunachal Pradesh,Lower Dibang Valley,2011,muslim,4.155,census-india-2011
+IN-S12-D259,Arunachal Pradesh,Lohit,2011,muslim,2.6392,census-india-2011
+IN-S12-D260,Arunachal Pradesh,Anjaw,2011,muslim,3.0944,census-india-2011
+IN-S13-D261,Nagaland,Mon,2011,muslim,1.3762,census-india-2011
+IN-S13-D262,Nagaland,Mokokchung,2011,muslim,1.0569,census-india-2011
+IN-S13-D263,Nagaland,Zunheboto,2011,muslim,0.5485,census-india-2011
+IN-S13-D264,Nagaland,Wokha,2011,muslim,1.2282,census-india-2011
+IN-S13-D265,Nagaland,Dimapur,2011,muslim,8.2395,census-india-2011
+IN-S13-D266,Nagaland,Phek,2011,muslim,0.5813,census-india-2011
+IN-S13-D267,Nagaland,Tuensang,2011,muslim,0.5351,census-india-2011
+IN-S13-D268,Nagaland,Longleng,2011,muslim,1.2578,census-india-2011
+IN-S13-D269,Nagaland,Kiphire,2011,muslim,0.7621,census-india-2011
+IN-S13-D270,Nagaland,Kohima,2011,muslim,1.6359,census-india-2011
+IN-S13-D271,Nagaland,Peren,2011,muslim,1.9429,census-india-2011
+IN-S14-D272,Manipur,Senapati,2011,muslim,0.3442,census-india-2011
+IN-S14-D273,Manipur,Tamenglong,2011,muslim,0.4188,census-india-2011
+IN-S14-D274,Manipur,Churachandpur,2011,muslim,1.0527,census-india-2011
+IN-S14-D275,Manipur,Bishnupur,2011,muslim,7.8732,census-india-2011
+IN-S14-D276,Manipur,Thoubal,2011,muslim,25.4219,census-india-2011
+IN-S14-D277,Manipur,Imphal West,2011,muslim,4.6908,census-india-2011
+IN-S14-D278,Manipur,Imphal East,2011,muslim,17.5831,census-india-2011
+IN-S14-D279,Manipur,Ukhrul,2011,muslim,0.606,census-india-2011
+IN-S14-D280,Manipur,Chandel,2011,muslim,2.1404,census-india-2011
+IN-S15-D281,Mizoram,Mamit,2011,muslim,2.0634,census-india-2011
+IN-S15-D282,Mizoram,Kolasib,2011,muslim,5.2719,census-india-2011
+IN-S15-D283,Mizoram,Aizawl,2011,muslim,1.315,census-india-2011
+IN-S15-D284,Mizoram,Champhai,2011,muslim,0.5559,census-india-2011
+IN-S15-D285,Mizoram,Serchhip,2011,muslim,0.5159,census-india-2011
+IN-S15-D286,Mizoram,Lunglei,2011,muslim,0.7991,census-india-2011
+IN-S15-D287,Mizoram,Lawngtlai,2011,muslim,0.4428,census-india-2011
+IN-S15-D288,Mizoram,Saiha,2011,muslim,0.9085,census-india-2011
+IN-S16-D289,Tripura,West Tripura,2011,muslim,8.8537,census-india-2011
+IN-S16-D290,Tripura,South Tripura,2011,muslim,5.6231,census-india-2011
+IN-S16-D291,Tripura,Dhalai,2011,muslim,2.1828,census-india-2011
+IN-S16-D292,Tripura,North Tripura,2011,muslim,15.237,census-india-2011
+IN-S17-D293,Meghalaya,West Garo Hills,2011,muslim,16.6003,census-india-2011
+IN-S17-D294,Meghalaya,East Garo Hills,2011,muslim,1.0566,census-india-2011
+IN-S17-D295,Meghalaya,South Garo Hills,2011,muslim,0.7377,census-india-2011
+IN-S17-D296,Meghalaya,West Khasi Hills,2011,muslim,0.3998,census-india-2011
+IN-S17-D297,Meghalaya,Ribhoi,2011,muslim,0.7101,census-india-2011
+IN-S17-D298,Meghalaya,East Khasi Hills,2011,muslim,1.7175,census-india-2011
+IN-S17-D299,Meghalaya,Jaintia Hills,2011,muslim,0.4166,census-india-2011
+IN-S18-D300,Assam,Kokrajhar,2011,muslim,28.4364,census-india-2011
+IN-S18-D301,Assam,Dhubri,2011,muslim,79.6725,census-india-2011
+IN-S18-D302,Assam,Goalpara,2011,muslim,57.5222,census-india-2011
+IN-S18-D303,Assam,Barpeta,2011,muslim,70.7381,census-india-2011
+IN-S18-D304,Assam,Morigaon,2011,muslim,52.5637,census-india-2011
+IN-S18-D305,Assam,Nagaon,2011,muslim,55.3588,census-india-2011
+IN-S18-D306,Assam,Sonitpur,2011,muslim,18.2181,census-india-2011
+IN-S18-D307,Assam,Lakhimpur,2011,muslim,18.5653,census-india-2011
+IN-S18-D308,Assam,Dhemaji,2011,muslim,1.9639,census-india-2011
+IN-S18-D309,Assam,Tinsukia,2011,muslim,3.6427,census-india-2011
+IN-S18-D310,Assam,Dibrugarh,2011,muslim,4.865,census-india-2011
+IN-S18-D311,Assam,Sivasagar,2011,muslim,8.3014,census-india-2011
+IN-S18-D312,Assam,Jorhat,2011,muslim,5.0065,census-india-2011
+IN-S18-D313,Assam,Golaghat,2011,muslim,8.465,census-india-2011
+IN-S18-D314,Assam,Karbi Anglong,2011,muslim,2.1217,census-india-2011
+IN-S18-D315,Assam,Dima Hasao,2011,muslim,2.0355,census-india-2011
+IN-S18-D316,Assam,Cachar,2011,muslim,37.7064,census-india-2011
+IN-S18-D317,Assam,Karimganj,2011,muslim,56.3601,census-india-2011
+IN-S18-D318,Assam,Hailakandi,2011,muslim,60.3148,census-india-2011
+IN-S18-D319,Assam,Bongaigaon,2011,muslim,50.2208,census-india-2011
+IN-S18-D320,Assam,Chirang,2011,muslim,22.6579,census-india-2011
+IN-S18-D321,Assam,Kamrup,2011,muslim,39.6552,census-india-2011
+IN-S18-D322,Assam,Kamrup Metropolitan,2011,muslim,12.0477,census-india-2011
+IN-S18-D323,Assam,Nalbari,2011,muslim,35.9609,census-india-2011
+IN-S18-D324,Assam,Baksa,2011,muslim,14.2883,census-india-2011
+IN-S18-D325,Assam,Darrang,2011,muslim,64.3395,census-india-2011
+IN-S18-D326,Assam,Udalguri,2011,muslim,12.6636,census-india-2011
+IN-S19-D327,West Bengal,Darjiling,2011,muslim,5.6901,census-india-2011
+IN-S19-D328,West Bengal,Jalpaiguri,2011,muslim,11.5114,census-india-2011
+IN-S19-D329,West Bengal,Koch Bihar,2011,muslim,25.5414,census-india-2011
+IN-S19-D330,West Bengal,Uttar Dinajpur,2011,muslim,49.9203,census-india-2011
+IN-S19-D331,West Bengal,Dakshin Dinajpur,2011,muslim,24.6253,census-india-2011
+IN-S19-D332,West Bengal,Maldah,2011,muslim,51.2718,census-india-2011
+IN-S19-D333,West Bengal,Murshidabad,2011,muslim,66.2683,census-india-2011
+IN-S19-D334,West Bengal,Birbhum,2011,muslim,37.0618,census-india-2011
+IN-S19-D335,West Bengal,Barddhaman,2011,muslim,20.7289,census-india-2011
+IN-S19-D336,West Bengal,Nadia,2011,muslim,26.7568,census-india-2011
+IN-S19-D337,West Bengal,North Twenty Four Parganas,2011,muslim,25.8216,census-india-2011
+IN-S19-D338,West Bengal,Hugli,2011,muslim,15.767,census-india-2011
+IN-S19-D339,West Bengal,Bankura,2011,muslim,8.0755,census-india-2011
+IN-S19-D340,West Bengal,Puruliya,2011,muslim,7.7556,census-india-2011
+IN-S19-D341,West Bengal,Haora,2011,muslim,26.1986,census-india-2011
+IN-S19-D342,West Bengal,Kolkata,2011,muslim,20.6021,census-india-2011
+IN-S19-D343,West Bengal,South Twenty Four Parganas,2011,muslim,35.5684,census-india-2011
+IN-S19-D344,West Bengal,Paschim Medinipur,2011,muslim,10.4939,census-india-2011
+IN-S19-D345,West Bengal,Purba Medinipur,2011,muslim,14.589,census-india-2011
+IN-S20-D346,Jharkhand,Garhwa,2011,muslim,14.7174,census-india-2011
+IN-S20-D347,Jharkhand,Chatra,2011,muslim,11.1911,census-india-2011
+IN-S20-D348,Jharkhand,Kodarma,2011,muslim,14.9412,census-india-2011
+IN-S20-D349,Jharkhand,Giridih,2011,muslim,20.797,census-india-2011
+IN-S20-D350,Jharkhand,Deoghar,2011,muslim,20.2823,census-india-2011
+IN-S20-D351,Jharkhand,Godda,2011,muslim,22.0153,census-india-2011
+IN-S20-D352,Jharkhand,Sahibganj,2011,muslim,34.6128,census-india-2011
+IN-S20-D353,Jharkhand,Pakur,2011,muslim,35.868,census-india-2011
+IN-S20-D354,Jharkhand,Dhanbad,2011,muslim,16.0836,census-india-2011
+IN-S20-D355,Jharkhand,Bokaro,2011,muslim,11.7077,census-india-2011
+IN-S20-D356,Jharkhand,Lohardaga,2011,muslim,20.5747,census-india-2011
+IN-S20-D357,Jharkhand,Purbi Singhbhum,2011,muslim,8.893,census-india-2011
+IN-S20-D358,Jharkhand,Palamu,2011,muslim,12.2841,census-india-2011
+IN-S20-D359,Jharkhand,Latehar,2011,muslim,9.6025,census-india-2011
+IN-S20-D360,Jharkhand,Hazaribagh,2011,muslim,16.2149,census-india-2011
+IN-S20-D361,Jharkhand,Ramgarh,2011,muslim,13.5908,census-india-2011
+IN-S20-D362,Jharkhand,Dumka,2011,muslim,8.087,census-india-2011
+IN-S20-D363,Jharkhand,Jamtara,2011,muslim,20.7835,census-india-2011
+IN-S20-D364,Jharkhand,Ranchi,2011,muslim,14.0948,census-india-2011
+IN-S20-D365,Jharkhand,Khunti,2011,muslim,2.4671,census-india-2011
+IN-S20-D366,Jharkhand,Gumla,2011,muslim,5.0164,census-india-2011
+IN-S20-D367,Jharkhand,Simdega,2011,muslim,2.5189,census-india-2011
+IN-S20-D368,Jharkhand,Pashchimi Singhbhum,2011,muslim,2.5362,census-india-2011
+IN-S20-D369,Jharkhand,Saraikela-Kharsawan,2011,muslim,5.9704,census-india-2011
+IN-S21-D370,Odisha,Bargarh,2011,muslim,0.5082,census-india-2011
+IN-S21-D371,Odisha,Jharsuguda,2011,muslim,2.2058,census-india-2011
+IN-S21-D372,Odisha,Sambalpur,2011,muslim,1.9326,census-india-2011
+IN-S21-D373,Odisha,Debagarh,2011,muslim,0.2253,census-india-2011
+IN-S21-D374,Odisha,Sundargarh,2011,muslim,3.4102,census-india-2011
+IN-S21-D375,Odisha,Kendujhar,2011,muslim,1.5403,census-india-2011
+IN-S21-D376,Odisha,Mayurbhanj,2011,muslim,1.3377,census-india-2011
+IN-S21-D377,Odisha,Baleshwar,2011,muslim,4.0617,census-india-2011
+IN-S21-D378,Odisha,Bhadrak,2011,muslim,6.9176,census-india-2011
+IN-S21-D379,Odisha,Kendrapara,2011,muslim,3.4885,census-india-2011
+IN-S21-D380,Odisha,Jagatsinghapur,2011,muslim,4.1275,census-india-2011
+IN-S21-D381,Odisha,Cuttack,2011,muslim,5.3825,census-india-2011
+IN-S21-D382,Odisha,Jajapur,2011,muslim,5.1249,census-india-2011
+IN-S21-D383,Odisha,Dhenkanal,2011,muslim,0.4028,census-india-2011
+IN-S21-D384,Odisha,Anugul,2011,muslim,0.5897,census-india-2011
+IN-S21-D385,Odisha,Nayagarh,2011,muslim,0.5482,census-india-2011
+IN-S21-D386,Odisha,Khordha,2011,muslim,3.7332,census-india-2011
+IN-S21-D387,Odisha,Puri,2011,muslim,2.7134,census-india-2011
+IN-S21-D388,Odisha,Ganjam,2011,muslim,0.3773,census-india-2011
+IN-S21-D389,Odisha,Gajapati,2011,muslim,0.2693,census-india-2011
+IN-S21-D390,Odisha,Kandhamal,2011,muslim,0.2916,census-india-2011
+IN-S21-D391,Odisha,Baudh,2011,muslim,0.2283,census-india-2011
+IN-S21-D392,Odisha,Subarnapur,2011,muslim,0.2566,census-india-2011
+IN-S21-D393,Odisha,Balangir,2011,muslim,0.4737,census-india-2011
+IN-S21-D394,Odisha,Nuapada,2011,muslim,0.8113,census-india-2011
+IN-S21-D395,Odisha,Kalahandi,2011,muslim,0.3155,census-india-2011
+IN-S21-D396,Odisha,Rayagada,2011,muslim,0.476,census-india-2011
+IN-S21-D397,Odisha,Nabarangapur,2011,muslim,0.5531,census-india-2011
+IN-S21-D398,Odisha,Koraput,2011,muslim,0.6415,census-india-2011
+IN-S21-D399,Odisha,Malkangiri,2011,muslim,0.3051,census-india-2011
+IN-S22-D400,Chhattisgarh,Koriya,2011,muslim,3.9274,census-india-2011
+IN-S22-D401,Chhattisgarh,Surguja,2011,muslim,3.4511,census-india-2011
+IN-S22-D402,Chhattisgarh,Jashpur,2011,muslim,1.8007,census-india-2011
+IN-S22-D403,Chhattisgarh,Raigarh,2011,muslim,1.1601,census-india-2011
+IN-S22-D404,Chhattisgarh,Korba,2011,muslim,2.5024,census-india-2011
+IN-S22-D405,Chhattisgarh,Janjgir - Champa,2011,muslim,0.875,census-india-2011
+IN-S22-D406,Chhattisgarh,Bilaspur,2011,muslim,2.1765,census-india-2011
+IN-S22-D407,Chhattisgarh,Kabeerdham,2011,muslim,1.484,census-india-2011
+IN-S22-D408,Chhattisgarh,Rajnandgaon,2011,muslim,1.5384,census-india-2011
+IN-S22-D409,Chhattisgarh,Durg,2011,muslim,2.4971,census-india-2011
+IN-S22-D410,Chhattisgarh,Raipur,2011,muslim,2.5355,census-india-2011
+IN-S22-D411,Chhattisgarh,Mahasamund,2011,muslim,1.2171,census-india-2011
+IN-S22-D412,Chhattisgarh,Dhamtari,2011,muslim,1.3035,census-india-2011
+IN-S22-D413,Chhattisgarh,Uttar Bastar Kanker,2011,muslim,0.8065,census-india-2011
+IN-S22-D414,Chhattisgarh,Bastar,2011,muslim,0.8784,census-india-2011
+IN-S22-D415,Chhattisgarh,Narayanpur,2011,muslim,0.555,census-india-2011
+IN-S22-D416,Chhattisgarh,Dakshin Bastar Dantewada,2011,muslim,1.2062,census-india-2011
+IN-S22-D417,Chhattisgarh,Bijapur,2011,muslim,0.6335,census-india-2011
+IN-S23-D418,Madhya Pradesh,Sheopur,2011,muslim,6.0181,census-india-2011
+IN-S23-D419,Madhya Pradesh,Morena,2011,muslim,3.8739,census-india-2011
+IN-S23-D420,Madhya Pradesh,Bhind,2011,muslim,3.9211,census-india-2011
+IN-S23-D421,Madhya Pradesh,Gwalior,2011,muslim,6.975,census-india-2011
+IN-S23-D422,Madhya Pradesh,Datia,2011,muslim,3.6203,census-india-2011
+IN-S23-D423,Madhya Pradesh,Shivpuri,2011,muslim,2.9663,census-india-2011
+IN-S23-D424,Madhya Pradesh,Tikamgarh,2011,muslim,3.0545,census-india-2011
+IN-S23-D425,Madhya Pradesh,Chhatarpur,2011,muslim,3.9918,census-india-2011
+IN-S23-D426,Madhya Pradesh,Panna,2011,muslim,3.4642,census-india-2011
+IN-S23-D427,Madhya Pradesh,Sagar,2011,muslim,4.3507,census-india-2011
+IN-S23-D428,Madhya Pradesh,Damoh,2011,muslim,3.7941,census-india-2011
+IN-S23-D429,Madhya Pradesh,Satna,2011,muslim,2.6681,census-india-2011
+IN-S23-D430,Madhya Pradesh,Rewa,2011,muslim,3.6114,census-india-2011
+IN-S23-D431,Madhya Pradesh,Umaria,2011,muslim,2.4763,census-india-2011
+IN-S23-D432,Madhya Pradesh,Neemuch,2011,muslim,8.1499,census-india-2011
+IN-S23-D433,Madhya Pradesh,Mandsaur,2011,muslim,9.3664,census-india-2011
+IN-S23-D434,Madhya Pradesh,Ratlam,2011,muslim,10.3824,census-india-2011
+IN-S23-D435,Madhya Pradesh,Ujjain,2011,muslim,11.7337,census-india-2011
+IN-S23-D436,Madhya Pradesh,Shajapur,2011,muslim,11.5506,census-india-2011
+IN-S23-D437,Madhya Pradesh,Dewas,2011,muslim,11.1439,census-india-2011
+IN-S23-D438,Madhya Pradesh,Dhar,2011,muslim,5.3162,census-india-2011
+IN-S23-D439,Madhya Pradesh,Indore,2011,muslim,12.6695,census-india-2011
+IN-S23-D440,Madhya Pradesh,Khargone (West Nimar),2011,muslim,7.212,census-india-2011
+IN-S23-D441,Madhya Pradesh,Barwani,2011,muslim,4.2011,census-india-2011
+IN-S23-D442,Madhya Pradesh,Rajgarh,2011,muslim,6.9173,census-india-2011
+IN-S23-D443,Madhya Pradesh,Vidisha,2011,muslim,10.2509,census-india-2011
+IN-S23-D444,Madhya Pradesh,Bhopal,2011,muslim,22.1603,census-india-2011
+IN-S23-D445,Madhya Pradesh,Sehore,2011,muslim,10.5221,census-india-2011
+IN-S23-D446,Madhya Pradesh,Raisen,2011,muslim,9.0366,census-india-2011
+IN-S23-D447,Madhya Pradesh,Betul,2011,muslim,2.3861,census-india-2011
+IN-S23-D448,Madhya Pradesh,Harda,2011,muslim,6.7734,census-india-2011
+IN-S23-D449,Madhya Pradesh,Hoshangabad,2011,muslim,4.2107,census-india-2011
+IN-S23-D450,Madhya Pradesh,Katni,2011,muslim,2.8816,census-india-2011
+IN-S23-D451,Madhya Pradesh,Jabalpur,2011,muslim,8.2675,census-india-2011
+IN-S23-D452,Madhya Pradesh,Narsimhapur,2011,muslim,3.5763,census-india-2011
+IN-S23-D453,Madhya Pradesh,Dindori,2011,muslim,0.9561,census-india-2011
+IN-S23-D454,Madhya Pradesh,Mandla,2011,muslim,1.5696,census-india-2011
+IN-S23-D455,Madhya Pradesh,Chhindwara,2011,muslim,4.8157,census-india-2011
+IN-S23-D456,Madhya Pradesh,Seoni,2011,muslim,5.7818,census-india-2011
+IN-S23-D457,Madhya Pradesh,Balaghat,2011,muslim,2.2649,census-india-2011
+IN-S23-D458,Madhya Pradesh,Guna,2011,muslim,3.9631,census-india-2011
+IN-S23-D459,Madhya Pradesh,Ashoknagar,2011,muslim,4.817,census-india-2011
+IN-S23-D460,Madhya Pradesh,Shahdol,2011,muslim,3.9797,census-india-2011
+IN-S23-D461,Madhya Pradesh,Anuppur,2011,muslim,2.866,census-india-2011
+IN-S23-D462,Madhya Pradesh,Sidhi,2011,muslim,3.0539,census-india-2011
+IN-S23-D463,Madhya Pradesh,Singrauli,2011,muslim,3.9527,census-india-2011
+IN-S23-D464,Madhya Pradesh,Jhabua,2011,muslim,1.5349,census-india-2011
+IN-S23-D465,Madhya Pradesh,Alirajpur,2011,muslim,2.4225,census-india-2011
+IN-S23-D466,Madhya Pradesh,Khandwa (East Nimar),2011,muslim,8.8757,census-india-2011
+IN-S23-D467,Madhya Pradesh,Burhanpur,2011,muslim,23.8623,census-india-2011
+IN-S24-D468,Gujarat,Kachchh,2011,muslim,21.1413,census-india-2011
+IN-S24-D469,Gujarat,Banas Kantha,2011,muslim,6.842,census-india-2011
+IN-S24-D470,Gujarat,Patan,2011,muslim,10.6269,census-india-2011
+IN-S24-D471,Gujarat,Mahesana,2011,muslim,6.704,census-india-2011
+IN-S24-D472,Gujarat,Sabar Kantha,2011,muslim,6.1173,census-india-2011
+IN-S24-D473,Gujarat,Gandhinagar,2011,muslim,4.1152,census-india-2011
+IN-S24-D474,Gujarat,Ahmadabad,2011,muslim,12.243,census-india-2011
+IN-S24-D475,Gujarat,Surendranagar,2011,muslim,6.2451,census-india-2011
+IN-S24-D476,Gujarat,Rajkot,2011,muslim,9.4988,census-india-2011
+IN-S24-D477,Gujarat,Jamnagar,2011,muslim,14.8513,census-india-2011
+IN-S24-D478,Gujarat,Porbandar,2011,muslim,5.7332,census-india-2011
+IN-S24-D479,Gujarat,Junagadh,2011,muslim,12.2074,census-india-2011
+IN-S24-D480,Gujarat,Amreli,2011,muslim,6.5451,census-india-2011
+IN-S24-D481,Gujarat,Bhavnagar,2011,muslim,7.3901,census-india-2011
+IN-S24-D482,Gujarat,Anand,2011,muslim,11.9899,census-india-2011
+IN-S24-D483,Gujarat,Kheda,2011,muslim,11.4998,census-india-2011
+IN-S24-D484,Gujarat,Panch Mahals,2011,muslim,6.6302,census-india-2011
+IN-S24-D485,Gujarat,Dohad,2011,muslim,3.1194,census-india-2011
+IN-S24-D486,Gujarat,Vadodara,2011,muslim,9.2322,census-india-2011
+IN-S24-D487,Gujarat,Narmada,2011,muslim,3.8286,census-india-2011
+IN-S24-D488,Gujarat,Bharuch,2011,muslim,22.1474,census-india-2011
+IN-S24-D489,Gujarat,The Dangs,2011,muslim,1.5739,census-india-2011
+IN-S24-D490,Gujarat,Navsari,2011,muslim,5.9164,census-india-2011
+IN-S24-D491,Gujarat,Valsad,2011,muslim,5.513,census-india-2011
+IN-S24-D492,Gujarat,Surat,2011,muslim,10.8656,census-india-2011
+IN-S24-D493,Gujarat,Tapi,2011,muslim,2.7644,census-india-2011
+IN-S25-D494,Daman & Diu,Diu,2011,muslim,6.1259,census-india-2011
+IN-S25-D495,Daman & Diu,Daman,2011,muslim,8.4149,census-india-2011
+IN-S26-D496,Dadra & Nagar Haveli,Dadra & Nagar Haveli,2011,muslim,3.7596,census-india-2011
+IN-S27-D497,Maharashtra,Nandurbar,2011,muslim,5.8352,census-india-2011
+IN-S27-D498,Maharashtra,Dhule,2011,muslim,9.162,census-india-2011
+IN-S27-D499,Maharashtra,Jalgaon,2011,muslim,13.2452,census-india-2011
+IN-S27-D500,Maharashtra,Buldana,2011,muslim,13.6969,census-india-2011
+IN-S27-D501,Maharashtra,Akola,2011,muslim,19.6952,census-india-2011
+IN-S27-D502,Maharashtra,Washim,2011,muslim,11.9175,census-india-2011
+IN-S27-D503,Maharashtra,Amravati,2011,muslim,14.5895,census-india-2011
+IN-S27-D504,Maharashtra,Wardha,2011,muslim,4.1402,census-india-2011
+IN-S27-D505,Maharashtra,Nagpur,2011,muslim,8.4016,census-india-2011
+IN-S27-D506,Maharashtra,Bhandara,2011,muslim,2.2079,census-india-2011
+IN-S27-D507,Maharashtra,Gondiya,2011,muslim,1.9778,census-india-2011
+IN-S27-D508,Maharashtra,Gadchiroli,2011,muslim,1.9631,census-india-2011
+IN-S27-D509,Maharashtra,Chandrapur,2011,muslim,4.1871,census-india-2011
+IN-S27-D510,Maharashtra,Yavatmal,2011,muslim,8.6294,census-india-2011
+IN-S27-D511,Maharashtra,Nanded,2011,muslim,14.0408,census-india-2011
+IN-S27-D512,Maharashtra,Hingoli,2011,muslim,10.8339,census-india-2011
+IN-S27-D513,Maharashtra,Parbhani,2011,muslim,16.6857,census-india-2011
+IN-S27-D514,Maharashtra,Jalna,2011,muslim,13.9977,census-india-2011
+IN-S27-D515,Maharashtra,Aurangabad,2011,muslim,21.2542,census-india-2011
+IN-S27-D516,Maharashtra,Nashik,2011,muslim,11.3481,census-india-2011
+IN-S27-D517,Maharashtra,Thane,2011,muslim,12.2569,census-india-2011
+IN-S27-D518,Maharashtra,Mumbai Suburban,2011,muslim,19.192,census-india-2011
+IN-S27-D519,Maharashtra,Mumbai,2011,muslim,25.059,census-india-2011
+IN-S27-D520,Maharashtra,Raigarh,2011,muslim,8.6351,census-india-2011
+IN-S27-D521,Maharashtra,Pune,2011,muslim,7.1447,census-india-2011
+IN-S27-D522,Maharashtra,Ahmadnagar,2011,muslim,7.0599,census-india-2011
+IN-S27-D523,Maharashtra,Bid,2011,muslim,12.3942,census-india-2011
+IN-S27-D524,Maharashtra,Latur,2011,muslim,14.981,census-india-2011
+IN-S27-D525,Maharashtra,Osmanabad,2011,muslim,10.7944,census-india-2011
+IN-S27-D526,Maharashtra,Solapur,2011,muslim,10.2195,census-india-2011
+IN-S27-D527,Maharashtra,Satara,2011,muslim,4.8929,census-india-2011
+IN-S27-D528,Maharashtra,Ratnagiri,2011,muslim,11.5907,census-india-2011
+IN-S27-D529,Maharashtra,Sindhudurg,2011,muslim,3.0912,census-india-2011
+IN-S27-D530,Maharashtra,Kolhapur,2011,muslim,7.3931,census-india-2011
+IN-S27-D531,Maharashtra,Sangli,2011,muslim,8.4903,census-india-2011
+IN-S28-D532,Andhra Pradesh,Adilabad,2011,muslim,10.0673,census-india-2011
+IN-S28-D533,Andhra Pradesh,Nizamabad,2011,muslim,15.3487,census-india-2011
+IN-S28-D534,Andhra Pradesh,Karimnagar,2011,muslim,6.4805,census-india-2011
+IN-S28-D535,Andhra Pradesh,Medak,2011,muslim,11.2897,census-india-2011
+IN-S28-D536,Andhra Pradesh,Hyderabad,2011,muslim,43.4508,census-india-2011
+IN-S28-D537,Andhra Pradesh,Rangareddy,2011,muslim,11.6585,census-india-2011
+IN-S28-D538,Andhra Pradesh,Mahbubnagar,2011,muslim,8.245,census-india-2011
+IN-S28-D539,Andhra Pradesh,Nalgonda,2011,muslim,5.4072,census-india-2011
+IN-S28-D540,Andhra Pradesh,Warangal,2011,muslim,5.6179,census-india-2011
+IN-S28-D541,Andhra Pradesh,Khammam,2011,muslim,5.6799,census-india-2011
+IN-S28-D542,Andhra Pradesh,Srikakulam,2011,muslim,0.3339,census-india-2011
+IN-S28-D543,Andhra Pradesh,Vizianagaram,2011,muslim,0.7005,census-india-2011
+IN-S28-D544,Andhra Pradesh,Visakhapatnam,2011,muslim,2.0121,census-india-2011
+IN-S28-D545,Andhra Pradesh,East Godavari,2011,muslim,1.509,census-india-2011
+IN-S28-D546,Andhra Pradesh,West Godavari,2011,muslim,2.188,census-india-2011
+IN-S28-D547,Andhra Pradesh,Krishna,2011,muslim,6.7969,census-india-2011
+IN-S28-D548,Andhra Pradesh,Guntur,2011,muslim,11.4524,census-india-2011
+IN-S28-D549,Andhra Pradesh,Prakasam,2011,muslim,6.4947,census-india-2011
+IN-S28-D550,Andhra Pradesh,Sri Potti Sriramulu Nellore,2011,muslim,9.7308,census-india-2011
+IN-S28-D551,Andhra Pradesh,Y.S.R.,2011,muslim,15.7541,census-india-2011
+IN-S28-D552,Andhra Pradesh,Kurnool,2011,muslim,16.5473,census-india-2011
+IN-S28-D553,Andhra Pradesh,Anantapur,2011,muslim,10.866,census-india-2011
+IN-S28-D554,Andhra Pradesh,Chittoor,2011,muslim,9.532,census-india-2011
+IN-S29-D555,Karnataka,Belgaum,2011,muslim,11.0554,census-india-2011
+IN-S29-D556,Karnataka,Bagalkot,2011,muslim,11.6413,census-india-2011
+IN-S29-D557,Karnataka,Bijapur,2011,muslim,16.9744,census-india-2011
+IN-S29-D558,Karnataka,Bidar,2011,muslim,19.6785,census-india-2011
+IN-S29-D559,Karnataka,Raichur,2011,muslim,14.1031,census-india-2011
+IN-S29-D560,Karnataka,Koppal,2011,muslim,11.6388,census-india-2011
+IN-S29-D561,Karnataka,Gadag,2011,muslim,13.4951,census-india-2011
+IN-S29-D562,Karnataka,Dharwad,2011,muslim,20.9436,census-india-2011
+IN-S29-D563,Karnataka,Uttara Kannada,2011,muslim,13.0795,census-india-2011
+IN-S29-D564,Karnataka,Haveri,2011,muslim,18.6476,census-india-2011
+IN-S29-D565,Karnataka,Bellary,2011,muslim,13.0814,census-india-2011
+IN-S29-D566,Karnataka,Chitradurga,2011,muslim,7.7586,census-india-2011
+IN-S29-D567,Karnataka,Davanagere,2011,muslim,13.6626,census-india-2011
+IN-S29-D568,Karnataka,Shimoga,2011,muslim,13.3883,census-india-2011
+IN-S29-D569,Karnataka,Udupi,2011,muslim,8.2167,census-india-2011
+IN-S29-D570,Karnataka,Chikmagalur,2011,muslim,8.8962,census-india-2011
+IN-S29-D571,Karnataka,Tumkur,2011,muslim,9.1797,census-india-2011
+IN-S29-D572,Karnataka,Bangalore,2011,muslim,12.9739,census-india-2011
+IN-S29-D573,Karnataka,Mandya,2011,muslim,4.3085,census-india-2011
+IN-S29-D574,Karnataka,Hassan,2011,muslim,6.7558,census-india-2011
+IN-S29-D575,Karnataka,Dakshina Kannada,2011,muslim,24.0182,census-india-2011
+IN-S29-D576,Karnataka,Kodagu,2011,muslim,15.7387,census-india-2011
+IN-S29-D577,Karnataka,Mysore,2011,muslim,9.6813,census-india-2011
+IN-S29-D578,Karnataka,Chamarajanagar,2011,muslim,4.6248,census-india-2011
+IN-S29-D579,Karnataka,Gulbarga,2011,muslim,19.9945,census-india-2011
+IN-S29-D580,Karnataka,Yadgir,2011,muslim,13.2286,census-india-2011
+IN-S29-D581,Karnataka,Kolar,2011,muslim,13.0092,census-india-2011
+IN-S29-D582,Karnataka,Chikkaballapura,2011,muslim,11.7767,census-india-2011
+IN-S29-D583,Karnataka,Bangalore Rural,2011,muslim,9.3097,census-india-2011
+IN-S29-D584,Karnataka,Ramanagara,2011,muslim,10.5586,census-india-2011
+IN-S30-D585,Goa,North Goa,2011,muslim,7.0832,census-india-2011
+IN-S30-D586,Goa,South Goa,2011,muslim,9.9328,census-india-2011
+IN-S31-D587,Lakshadweep,Lakshadweep,2011,muslim,96.58,census-india-2011
+IN-S32-D588,Kerala,Kasaragod,2011,muslim,37.2436,census-india-2011
+IN-S32-D589,Kerala,Kannur,2011,muslim,29.4285,census-india-2011
+IN-S32-D590,Kerala,Wayanad,2011,muslim,28.6493,census-india-2011
+IN-S32-D591,Kerala,Kozhikode,2011,muslim,39.2423,census-india-2011
+IN-S32-D592,Kerala,Malappuram,2011,muslim,70.2384,census-india-2011
+IN-S32-D593,Kerala,Palakkad,2011,muslim,28.9308,census-india-2011
+IN-S32-D594,Kerala,Thrissur,2011,muslim,17.0716,census-india-2011
+IN-S32-D595,Kerala,Ernakulam,2011,muslim,15.6714,census-india-2011
+IN-S32-D596,Kerala,Idukki,2011,muslim,7.4128,census-india-2011
+IN-S32-D597,Kerala,Kottayam,2011,muslim,6.4065,census-india-2011
+IN-S32-D598,Kerala,Alappuzha,2011,muslim,10.553,census-india-2011
+IN-S32-D599,Kerala,Pathanamthitta,2011,muslim,4.5994,census-india-2011
+IN-S32-D600,Kerala,Kollam,2011,muslim,19.2952,census-india-2011
+IN-S32-D601,Kerala,Thiruvananthapuram,2011,muslim,13.7188,census-india-2011
+IN-S33-D602,Tamil Nadu,Thiruvallur,2011,muslim,3.8382,census-india-2011
+IN-S33-D603,Tamil Nadu,Chennai,2011,muslim,9.4533,census-india-2011
+IN-S33-D604,Tamil Nadu,Kancheepuram,2011,muslim,4.3465,census-india-2011
+IN-S33-D605,Tamil Nadu,Vellore,2011,muslim,10.5367,census-india-2011
+IN-S33-D606,Tamil Nadu,Tiruvannamalai,2011,muslim,3.7177,census-india-2011
+IN-S33-D607,Tamil Nadu,Viluppuram,2011,muslim,3.8711,census-india-2011
+IN-S33-D608,Tamil Nadu,Salem,2011,muslim,2.7423,census-india-2011
+IN-S33-D609,Tamil Nadu,Namakkal,2011,muslim,1.8813,census-india-2011
+IN-S33-D610,Tamil Nadu,Erode,2011,muslim,3.3795,census-india-2011
+IN-S33-D611,Tamil Nadu,The Nilgiris,2011,muslim,10.668,census-india-2011
+IN-S33-D612,Tamil Nadu,Dindigul,2011,muslim,4.8622,census-india-2011
+IN-S33-D613,Tamil Nadu,Karur,2011,muslim,5.0063,census-india-2011
+IN-S33-D614,Tamil Nadu,Tiruchirappalli,2011,muslim,7.0148,census-india-2011
+IN-S33-D615,Tamil Nadu,Perambalur,2011,muslim,5.7857,census-india-2011
+IN-S33-D616,Tamil Nadu,Ariyalur,2011,muslim,1.0521,census-india-2011
+IN-S33-D617,Tamil Nadu,Cuddalore,2011,muslim,4.7488,census-india-2011
+IN-S33-D618,Tamil Nadu,Nagapattinam,2011,muslim,7.9568,census-india-2011
+IN-S33-D619,Tamil Nadu,Thiruvarur,2011,muslim,7.6005,census-india-2011
+IN-S33-D620,Tamil Nadu,Thanjavur,2011,muslim,7.9311,census-india-2011
+IN-S33-D621,Tamil Nadu,Pudukkottai,2011,muslim,7.0562,census-india-2011
+IN-S33-D622,Tamil Nadu,Sivaganga,2011,muslim,5.5492,census-india-2011
+IN-S33-D623,Tamil Nadu,Madurai,2011,muslim,5.5585,census-india-2011
+IN-S33-D624,Tamil Nadu,Theni,2011,muslim,4.555,census-india-2011
+IN-S33-D625,Tamil Nadu,Virudhunagar,2011,muslim,2.463,census-india-2011
+IN-S33-D626,Tamil Nadu,Ramanathapuram,2011,muslim,15.371,census-india-2011
+IN-S33-D627,Tamil Nadu,Thoothukkudi,2011,muslim,4.6133,census-india-2011
+IN-S33-D628,Tamil Nadu,Tirunelveli,2011,muslim,9.8585,census-india-2011
+IN-S33-D629,Tamil Nadu,Kanniyakumari,2011,muslim,4.2018,census-india-2011
+IN-S33-D630,Tamil Nadu,Dharmapuri,2011,muslim,2.542,census-india-2011
+IN-S33-D631,Tamil Nadu,Krishnagiri,2011,muslim,6.1338,census-india-2011
+IN-S33-D632,Tamil Nadu,Coimbatore,2011,muslim,6.1027,census-india-2011
+IN-S33-D633,Tamil Nadu,Tiruppur,2011,muslim,5.0012,census-india-2011
+IN-S34-D634,Puducherry,Yanam,2011,muslim,2.1411,census-india-2011
+IN-S34-D635,Puducherry,Puducherry,2011,muslim,3.4383,census-india-2011
+IN-S34-D636,Puducherry,Mahe,2011,muslim,30.7442,census-india-2011
+IN-S34-D637,Puducherry,Karaikal,2011,muslim,14.4015,census-india-2011
+IN-S35-D638,Andaman & Nicobar Islands,Nicobars,2011,muslim,3.6263,census-india-2011
+IN-S35-D639,Andaman & Nicobar Islands,North  & Middle Andaman,2011,muslim,2.0502,census-india-2011
+IN-S35-D640,Andaman & Nicobar Islands,South Andaman,2011,muslim,12.1407,census-india-2011

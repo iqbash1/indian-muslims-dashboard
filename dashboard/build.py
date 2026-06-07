@@ -2201,6 +2201,10 @@ def build() -> None:
     for csv_path in CANONICAL_DIR.glob("*.csv"):
         _shutil.copy2(csv_path, publish_canonical / csv_path.name)
 
+    # Per-metric district-level downloads (district rows only, names resolved):
+    # too granular for on-screen, offered as a CSV. See _district_download_link.
+    _emit_district_downloads(OUT_PATH.parent)
+
     # Emit docs/js/analytics.js from the template, substituting GA4 + Clarity
     # IDs. Treated as build output (regenerated each build), like index.html.
     analytics_src = REPO_ROOT / "dashboard" / "analytics.template.js"
@@ -2722,6 +2726,86 @@ def _state_details(metric_id: str, unit: str, value_label: str | None = None) ->
             f'<tbody>{"".join(trs)}</tbody></table></details>')
 
 
+_DISTRICT_NAMES: dict[str, str] | None = None
+
+
+def _district_names() -> dict[str, str]:
+    """{district_code -> name} from the 2011 per-state Census C-01 files
+    (area_name, 'District - ' prefix stripped). Codes are built exactly as
+    pop_share's canonicalizer builds them (IN-S{sc}-D{dc}), so they line up with
+    the canonical district rows. Cached after first call."""
+    global _DISTRICT_NAMES
+    if _DISTRICT_NAMES is not None:
+        return _DISTRICT_NAMES
+    names: dict[str, str] = {}
+    cdir = REPO_ROOT / "extracted" / "census-2011"
+    for fp in sorted(cdir.glob("c01-population-by-religion-*.csv")):
+        with fp.open() as f:
+            for row in csv.DictReader(f):
+                if row.get("distt_code", "000") == "000":
+                    continue  # state/national aggregate, not a district
+                code = f'IN-S{row["state_code"]}-D{row["distt_code"]}'
+                if code in names:
+                    continue
+                nm = (row.get("area_name") or "").strip()
+                if nm.startswith("District - "):
+                    nm = nm[len("District - "):].strip()
+                names[code] = nm
+    _DISTRICT_NAMES = names
+    return names
+
+
+def _metrics_with_district_download() -> list[str]:
+    """Metrics whose canonical carries district rows, offered as a CSV download
+    (too granular for on-screen). district-concentration is excluded — it already
+    renders its 100 districts on the card."""
+    out: list[str] = []
+    for cpath in sorted(CANONICAL_DIR.glob("*.csv")):
+        mid = cpath.stem
+        if mid == "district-concentration-top100":
+            continue
+        with cpath.open() as f:
+            if any(r["geography_level"] == "district" for r in csv.DictReader(f)):
+                out.append(mid)
+    return out
+
+
+def _emit_district_downloads(out_dir: pathlib.Path) -> int:
+    """Write docs/canonical/{mid}-districts.csv (district rows only, with state +
+    district names resolved) for each download-eligible metric. Returns count."""
+    names = _district_names()
+    pub = out_dir / "canonical"
+    pub.mkdir(parents=True, exist_ok=True)
+    n_files = 0
+    for mid in _metrics_with_district_download():
+        rows = [r for r in load_metric(mid) if r["geography_level"] == "district"]
+        if not rows:
+            continue
+        rows.sort(key=lambda r: r["geography_code"])
+        with (pub / f"{mid}-districts.csv").open("w", newline="") as f:
+            w = csv.writer(f)
+            w.writerow(["district_code", "state", "district", "year", "religion", "value", "source"])
+            for r in rows:
+                code = r["geography_code"]
+                state = state_label("-".join(code.split("-")[:2]))
+                w.writerow([code, state, names.get(code, ""), r["year"],
+                            r["religion"], r["value"], r.get("source_id", "")])
+        n_files += 1
+    return n_files
+
+
+def _district_download_link(mid: str) -> str:
+    """Small download CTA for a metric's full district CSV (or '' if none)."""
+    if mid == "district-concentration-top100":
+        return ""
+    n = sum(1 for r in load_metric(mid) if r["geography_level"] == "district")
+    if not n:
+        return ""
+    return (f'<p style="margin:8px 0 0;font-size:13px;color:var(--muted)">'
+            f'All {n} districts: '
+            f'<a href="canonical/{html.escape(mid)}-districts.csv" download>download CSV</a></p>')
+
+
 def _nat_by_religion(metric_id: str) -> dict:
     """National {religion: value} for the LATEST year present (avoids multi-year collision)."""
     nat = [r for r in load_metric(metric_id) if r["geography_level"] == "national"]
@@ -2949,7 +3033,7 @@ def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
     if mid == "district-concentration-top100":
         details = _top100_districts_table(mid)
     else:
-        details = _state_details(mid, unit)
+        details = _state_details(mid, unit) + _district_download_link(mid)
     return _card_shell(mid, label, headline, CAPTION.get(mid, ""), _year_of(mid), "",
                        chart_html, comps, src, csv_href, details), js
 
