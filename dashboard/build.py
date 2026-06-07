@@ -2661,11 +2661,25 @@ def _top100_districts_table(metric_id: str) -> str:
 
 def _state_details(metric_id: str, unit: str) -> str:
     from collections import defaultdict
-    rows = load_metric(metric_id)
-    by_geo: dict[str, dict] = defaultdict(dict)
+    rows = [r for r in load_metric(metric_id) if r["geography_level"] == "state"]
+    if not rows:
+        return ""
+    # State data can carry several years (e.g. census 2001 + 2011) or a
+    # different latest year per state (per-assembly election years). Take each
+    # state's OWN latest year so a single table never mixes rounds.
+    latest_year: dict[str, int] = defaultdict(int)
     for r in rows:
-        if r["geography_level"] == "state":
-            by_geo[r["geography_code"]][r["religion"]] = float(r["value"])
+        y = int(r["year"])
+        if y > latest_year[r["geography_code"]]:
+            latest_year[r["geography_code"]] = y
+    by_geo: dict[str, dict] = defaultdict(dict)
+    years_used: set[int] = set()
+    for r in rows:
+        g = r["geography_code"]
+        if int(r["year"]) != latest_year[g]:
+            continue
+        by_geo[g][r["religion"]] = float(r["value"])
+        years_used.add(latest_year[g])
     if not by_geo:
         return ""
     has_hindu = any("hindu" in v for v in by_geo.values())
@@ -2692,7 +2706,8 @@ def _state_details(metric_id: str, unit: str) -> str:
         if has_hindu:
             cells += numcell(b, "hindu", sortable=False)
         trs.append(f"<tr>{cells}</tr>")
-    return (f'<details><summary>Full state data ({len(order)} states)</summary>'
+    yr_txt = f", {next(iter(years_used))}" if len(years_used) == 1 else ""
+    return (f'<details><summary>Full state data ({len(order)} states{yr_txt})</summary>'
             f'<table class="sortable-table"><thead>{head}</thead>'
             f'<tbody>{"".join(trs)}</tbody></table></details>')
 
@@ -2811,7 +2826,9 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
         all_arg = {"values": all_series, "label": all_line_label} if all_series else None
         js = (f'trendChart("{cvid}", {json.dumps(years)}, {json.dumps(series_map)}, '
               f'{json.dumps(all_arg)}, {json.dumps(suffix)}, {json.dumps(bool(has_break))});')
-        details = ""
+        # State-level drill-down (e.g. sex-ratio, literacy) sits below the
+        # national trend chart; _state_details returns "" for national-only metrics.
+        details = _state_details(mid, unit)
     else:
         # SNAPSHOT card: latest-year community bar with All-India dashed baseline.
         # If we have a 2-point time series, surface the Muslim Δ as a comparison pill.
