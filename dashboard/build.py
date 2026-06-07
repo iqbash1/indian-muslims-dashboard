@@ -2659,7 +2659,7 @@ def _top100_districts_table(metric_id: str) -> str:
     )
 
 
-def _state_details(metric_id: str, unit: str) -> str:
+def _state_details(metric_id: str, unit: str, value_label: str | None = None) -> str:
     from collections import defaultdict
     rows = [r for r in load_metric(metric_id) if r["geography_level"] == "state"]
     if not rows:
@@ -2682,13 +2682,23 @@ def _state_details(metric_id: str, unit: str) -> str:
         years_used.add(latest_year[g])
     if not by_geo:
         return ""
-    has_hindu = any("hindu" in v for v in by_geo.values())
-    order = sorted(by_geo, key=lambda g: by_geo[g].get("muslim", 0))
-    # State and Muslim (the subject) are click-to-sort: sortable cells carry
-    # the raw value in data-sort so the handler (setupSortableTables) orders by
-    # magnitude, not formatted string; missing values sort low via a sentinel.
-    # Hindu is shown only as a static baseline and is deliberately NOT sortable,
-    # so the table never reads as a Hindu-vs-Muslim ranking.
+    # Featured (sortable) column: Muslim where the metric splits by religion;
+    # otherwise the single series present (e.g. 'all' for incident counts not
+    # broken out by religion). Muslim metrics sort lowest-first (the gap is the
+    # story); count/all metrics sort highest-first (the biggest count is).
+    if any("muslim" in v for v in by_geo.values()):
+        feature, feat_label, reverse = "muslim", (value_label or "Muslim"), False
+    else:
+        keys = [k for v in by_geo.values() for k in v]
+        feature = max(set(keys), key=keys.count) if keys else "all"
+        feat_label, reverse = (value_label or feature.capitalize()), True
+    # Hindu is shown as a static baseline only when Muslim is the subject, so the
+    # table never reads as a Hindu-vs-Muslim ranking.
+    has_hindu = feature == "muslim" and any("hindu" in v for v in by_geo.values())
+    order = sorted(by_geo, key=lambda g: by_geo[g].get(feature, 0), reverse=reverse)
+    # Sortable cells carry the raw value in data-sort so the handler
+    # (setupSortableTables) orders by magnitude, not formatted string; missing
+    # values sort low via a sentinel.
     def numcell(b: dict, rel: str, sortable: bool = True) -> str:
         if rel not in b:
             return '<td data-sort="-1">n/a</td>' if sortable else "<td>n/a</td>"
@@ -2696,13 +2706,13 @@ def _state_details(metric_id: str, unit: str) -> str:
         return f'<td data-sort="{b[rel]:.4f}">{val}</td>' if sortable else f"<td>{val}</td>"
 
     head = ('<tr><th class="sortable" data-col="0">State / UT</th>'
-            '<th class="sortable" data-col="1" data-type="num">Muslim</th>'
+            f'<th class="sortable" data-col="1" data-type="num">{html.escape(feat_label)}</th>'
             + ("<th>Hindu</th>" if has_hindu else "")
             + '</tr>')
     trs = []
     for g in order:
         b = by_geo[g]
-        cells = f'<td>{html.escape(state_label(g))}</td>' + numcell(b, "muslim")
+        cells = f'<td>{html.escape(state_label(g))}</td>' + numcell(b, feature)
         if has_hindu:
             cells += numcell(b, "hindu", sortable=False)
         trs.append(f"<tr>{cells}</tr>")
@@ -3011,8 +3021,11 @@ def _card_ts_count(mid, label, src, csv_href, cvid):
               f'{json.dumps(["#C9CFD3", bar_hex])}, "", 0, null, "", true);')
         noun = CAPTION.get(mid, "events")
         comps += _comp(f"vs {y0}", f"{arrow} {abs(pct):.0f}%", f"{delta:+,} {noun}", cls)
+    # State-level drill-down for count metrics (e.g. communal-incidents-govt):
+    # State | <noun> count, highest first. Returns "" for national-only metrics.
+    details = _state_details(mid, "count", value_label=CAPTION.get(mid, "count").capitalize())
     return _card_shell(mid, label, f"{val:,}", CAPTION.get(mid, "events"), latest["year"] if latest else "",
-                       "lower is better", chart_html, comps, src, csv_href), js
+                       "lower is better", chart_html, comps, src, csv_href, details), js
 
 
 def render_all_clusters():
