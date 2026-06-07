@@ -73,4 +73,8 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # Pin wrangler 4.x: this is an assets-only Worker (wrangler.jsonc has
+          # `assets` but no `main`). wrangler-action's default (3.90.0) rejects
+          # that with "Missing entry-point"; Workers Static Assets needs >=4.
+          wranglerVersion: '4.91.0'
           command: deploy
