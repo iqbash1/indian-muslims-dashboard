@@ -24,6 +24,9 @@ scorecard
 is the live site at https://muslimdata.in/ — it
 auto-rebuilds on every push and shows current values, the comparison
 pill, the trend chart, the methodology, and a downloadable CSV per metric.
+Where the underlying data supports it, a card also opens a **by-state**
+drill-down table, a **by-sex** (male vs female) breakdown, and a
+**district-level CSV** download.
 
 Coverage at a glance:
 - **Demographics**: population share by religion 1961→2011, urban share,
@@ -38,8 +41,9 @@ Coverage at a glance:
 - **Representation**: Lok Sabha Muslim share 1952→2024 (18 elections),
   state MLA Muslim share aggregated across all 30 state and UT assemblies.
 - **Justice**: prison rate per 100k, undertrial rate per 100k, communal
-  incidents recorded by police (NCRB 2015→2023), anti-Muslim hate-speech
-  events (India Hate Lab 2023+2024).
+  incidents recorded by police (NCRB 2015→2023 national, plus a per-state
+  breakdown for 2023). (An India Hate Lab anti-Muslim hate-speech metric was
+  retired from display in Commit CR; its data is archived for reference.)
 
 ## See the dashboard
 
@@ -67,7 +71,7 @@ Four-layer data flow. Every dashboard number traces L4 → L3 → L2 → L1 sour
 |---|---|---|---|
 | L1 Raw archive | `sources/` | Immutable | Every external file ever pulled, with SHA256 + pull metadata |
 | L2 Structured extraction | `extracted/` | Regenerable | Long-format CSVs parsed from L1 |
-| L3 Canonical metric series | `canonical/` | Regenerable | One CSV per metric — the dashboard's data contract |
+| L3 Canonical metric series | `canonical/` | Regenerable | One CSV per metric (rows keyed by geography × year × religion, with an optional `sex` dimension) — the dashboard's data contract |
 | L4 Dashboard cache | `docs/` | Regenerable | Static HTML built from L3 |
 
 The dashboard never queries an external source live and never reads L1/L2 directly. Methodology breaks (e.g., NFHS-5 → NFHS-6 definitional changes) are recorded as `break_flag` on canonical rows.
@@ -157,6 +161,8 @@ Pure mechanical extension — pattern is proven:
 ## Status
 
 23 canonical metrics (21 carded + 2 reference series kept in `canonical/` but not rendered after Commit V switched justice cards to the share-trend pattern). The dashboard is a card grid with multi-community benchmarking (rank among religious communities) and multi-round trends spanning up to 60+ years (sex-ratio 1961→2011; population share 1961→2011; Lok Sabha 1952→2024; communal incidents 2015→2023; prison/undertrial 2018→2023; NFHS health 1998→2020; Census literacy 2001→2011). The architecture is battle-tested across 5 source shapes: legacy .xls / modern .xlsx spreadsheets, dual-column PDF tables, single-column PDF religion sections, tabular state-row PDFs, and landscape-rotated PDFs (qpdf-pre-rotated at extraction time).
+
+Per-metric depth where the source supports it: **by-state** drill-down tables on 6 metrics (pop-share, sex-ratio, literacy, urban-share, communal-incidents, higher-ed); a **by-sex** (male vs female) breakdown on 5 (LFPR, WPR, salaried, literacy, higher-ed enrolment), national-level via an optional `sex` dimension added to the canonical schema and defaulted to `all` at the `load_metric` read so existing series are unaffected; and a **district-level CSV** download (pop-share, all 640 districts with names).
 
 See `docs/audit-log.md` for the planned annual audit ritual and `docs/refresh-schedule.md` for the per-source cadence.
 
