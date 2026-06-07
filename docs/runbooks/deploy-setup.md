@@ -27,8 +27,11 @@ Git" auto-build. Why: Cloudflare's git clone smudges Git LFS, and this repo
 LFS-tracks ~400 MB of `sources/**` that the site never serves. That blew
 through GitHub's free LFS bandwidth quota (1 GB/mo) and made `git checkout`
 fail intermittently on Cloudflare's build server, freezing the site (June 2026).
-The workflow checks out with `lfs: false` (sources/** isn't needed to build or
-serve), rebuilds `docs/`, and runs `wrangler deploy`.
+The workflow checks out with `lfs: false` (sources/** isn't needed to serve)
+and runs `wrangler deploy` on the **committed** `docs/` — no Python, no rebuild,
+so the live "Last updated" date matches what you committed (a CI rebuild would
+re-stamp it to the runner's UTC date). Build `docs/` locally and commit it (see
+"Rebuild + verify"); the workflow only ships it.
 
 One-time setup:
 1. Cloudflare → My Profile → API Tokens → Create Token → **Edit Cloudflare
