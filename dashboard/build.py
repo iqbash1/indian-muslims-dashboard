@@ -2411,6 +2411,67 @@ PLAIN_DEFINITION = {
 }
 
 
+_SOURCES_REG = None
+def _sources_registry():
+    """source_id -> source dict (name, home_url, publisher) from sources.yaml."""
+    global _SOURCES_REG
+    if _SOURCES_REG is None:
+        import yaml as _yaml
+        with (REPO_ROOT / "manifest" / "sources.yaml").open() as fh:
+            data = _yaml.safe_load(fh)
+        _SOURCES_REG = {s["id"]: s for s in data.get("sources", [])}
+    return _SOURCES_REG
+
+
+def _source_documents(mid):
+    """Original source documents behind a metric's chart, so a reader can open
+    the primary source and recreate the numbers. Each canonical row names its
+    source_document (the archived L1 file); we resolve that to the real weblink
+    via the file's .meta.json sidecar (which also holds the SHA256). Where the
+    provenance is a templated per-state Census path or a manual compilation
+    (no single file), we fall back to the source's home page. Returns
+    [(source_id, label, url)], primary source first, deduped by url."""
+    f = CANONICAL_DIR / f"{mid}.csv"
+    if not f.exists():
+        return []
+    reg = _sources_registry()
+    primary = (METRIC_META.get(mid, {}).get("sources") or {}).get("primary")
+    found = []  # (source_id, label, url, is_fallback)
+    seen_docs = set()
+    with f.open() as fh:
+        for r in csv.DictReader(fh):
+            doc = (r.get("source_document") or "").strip()
+            sid = (r.get("source_id") or "").strip()
+            if not doc or doc in seen_docs:
+                continue
+            seen_docs.add(doc)
+            url, fallback = "", False
+            sidecar = REPO_ROOT / (doc + ".meta.json")
+            if sidecar.exists():
+                try:
+                    url = (json.load(sidecar.open()) or {}).get("url", "") or ""
+                except Exception:
+                    url = ""
+            if not url:  # templated (<state>) path or manual compilation
+                url = (reg.get(sid, {}) or {}).get("home_url", "") or ""
+                fallback = True
+            if not url:
+                continue
+            label = SOURCE_LABEL.get(sid) or (reg.get(sid, {}) or {}).get("name") or sid
+            found.append((sid, label, url, fallback))
+    # Drop a source's home-page fallback if it also has a real document.
+    real_sids = {sid for sid, _, _, fb in found if not fb}
+    found = [t for t in found if not (t[3] and t[0] in real_sids)]
+    # Dedupe by url; primary source first, otherwise canonical order.
+    out, seen_urls = [], set()
+    for sid, label, url, _ in sorted(found, key=lambda t: (t[0] != primary,)):
+        if url in seen_urls:
+            continue
+        seen_urls.add(url)
+        out.append((sid, label, url))
+    return out
+
+
 def _card_shell(mid, label, value, unit_txt, year, polarity, chart_html, comps_html,
                 src, csv_href, details_html="") -> str:
     # `polarity` carries the "higher is better"/"lower is better" hint when the
@@ -2434,22 +2495,41 @@ def _card_shell(mid, label, value, unit_txt, year, polarity, chart_html, comps_h
     # card.
     meta = METRIC_META.get(mid, {})
     method_html = ""
+    # Original source documents (the actual report/table weblinks) so a reader
+    # can open the primary source and recreate the chart. Listed in the modal
+    # panel; the footer links the primary one.
+    docs = _source_documents(mid)
     # Collapse the YAML block-scalar hard-wraps to single spaces so the prose
     # reflows to the modal width instead of breaking at the source line ends.
     def_text = " ".join((meta.get("definition") or "").split())
     notes_text = " ".join((meta.get("methodology_notes") or "").split())
-    if def_text or notes_text:
+    if def_text or notes_text or docs:
         parts = []
         if def_text:
             parts.append(f'<p><b>Definition.</b> {html.escape(def_text)}</p>')
         if notes_text:
             parts.append(f'<p><b>Methodology.</b> {html.escape(notes_text)}</p>')
+        if docs:
+            doc_links = " · ".join(
+                f'<a href="{html.escape(u)}" target="_blank" rel="noopener">{html.escape(l)}</a>'
+                for _, l, u in docs)
+            parts.append(
+                '<p class="card-sources"><b>Where this data comes from.</b> '
+                f'{doc_links}. Data file: '
+                f'<a href="{html.escape(csv_href)}" target="_blank" rel="noopener">{html.escape(mid)}.csv</a>. '
+                'You can open any of these to check the numbers on this chart '
+                'yourself.</p>')
         method_html = (
             '<div class="card-method">'
             '<h3 class="card-method-title">About this measurement</h3>'
             + "".join(parts) +
             '</div>'
         )
+    # Footer: the source NAME links to the original source document; "Data file"
+    # opens the CSV extract. Primary source first (docs is primary-sorted).
+    primary_url = docs[0][2] if docs else ""
+    src_foot = (f'<a href="{html.escape(primary_url)}" target="_blank" rel="noopener">{html.escape(src)}</a>'
+                if primary_url else f'<span class="src-name">{html.escape(src)}</span>')
     return (
         f'<section class="card" data-metric-id="{html.escape(mid)}" data-metric-name="{html.escape(label)}">'
         f'{expand_html}'
@@ -2461,10 +2541,12 @@ def _card_shell(mid, label, value, unit_txt, year, polarity, chart_html, comps_h
         f'<div class="card-comparisons">{comps_html}</div>'
         f'{method_html}'
         f'{details_html}'
-        # The source NAME is the hyperlink (target = the canonical CSV); the raw
-        # path is not shown. Built directly here — no post-processing linkifier.
+        # Footer: source NAME links to the original source document; a separate
+        # "Data file" link opens the CSV extract. Full source list (every
+        # document) is in the modal "About this measurement" panel.
         f'<div class="card-foot">'
-        f'<a href="{html.escape(csv_href)}">{html.escape(src)}</a>'
+        f'{src_foot}'
+        f'<a href="{html.escape(csv_href)}" target="_blank" rel="noopener">Data file</a>'
         f'</div>'
         '</section>'
     )
