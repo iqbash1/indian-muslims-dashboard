@@ -796,7 +796,7 @@ function _endLabels() {
       const pt = meta.data[lastIdx];
       if (!pt) return;
       items.push({
-        label: d.label, color: d.borderColor,
+        label: d.label, color: d.borderColor, isRefline: !!d._isRefline,
         weight: d.borderWidth || 1,
         x: pt.x, y: pt.y, naturalY: pt.y,
       });
@@ -825,7 +825,9 @@ function _endLabels() {
     }
 
     for (const it of items) {
-      ctx.fillStyle = it.color;
+      // Reference-line labels (All-India / median) get the same legible slate
+      // used on the hbar charts, while the dashed line itself stays light grey.
+      ctx.fillStyle = it.isRefline ? '#5f6b73' : it.color;
       ctx.textAlign = 'left';
       ctx.fillText(it.label, it.x + 5, it.y);
     }
