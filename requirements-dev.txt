@@ -16,5 +16,5 @@
 Pillow>=10.0
 jsonschema>=4.20
 requests>=2.31
-truststore>=0.9
+truststore>=0.10.4
 playwright>=1.40
