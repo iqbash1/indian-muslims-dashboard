@@ -128,9 +128,10 @@ def state_abbrev(code: str) -> str:
 
 # Display precision per unit. ONE decimal place for the decimal-bearing units
 # (percent, rates, years); whole numbers for counts/currency/sex-ratio. Values
-# are TRUNCATED (never rounded up) to this precision — the user's explicit call:
-# a consistent, never-inflated display. Full precision is preserved in the
-# canonical CSVs and the data-sort attributes; only the visible number truncates.
+# are ROUNDED to nearest (half up) to this precision, so the display matches the
+# published source figures (e.g. NFHS institutional delivery 88.6%). Full
+# precision is preserved in the canonical CSVs and the data-sort attributes; only
+# the visible number is rounded.
 _DISP_DP = {
     "percent": 1, "per_1000_live_births": 1, "rate_per_100k": 1,
     "per_100k_population": 1, "years": 1, "females_per_1000_males": 0,
@@ -142,30 +143,29 @@ def _disp_dp(unit: str) -> int:
     return _DISP_DP.get(unit, 1)
 
 
-def _trunc(v: float, dp: int = 1) -> float:
-    """Truncate toward zero to `dp` decimals (never rounds up). Pre-rounds to 9dp
-    first so IEEE noise from subtraction (55.0 - 60.9 = -5.89999...) doesn't drop
-    a tenth (-5.9 must not truncate to -5.8); genuine data is <=4dp so the 9dp
-    snap is lossless."""
-    from decimal import Decimal, ROUND_DOWN
+def _round_dp(v: float, dp: int = 1) -> float:
+    """Round half-up to `dp` decimals. Pre-snaps to 9dp first so IEEE noise from
+    subtraction (55.0 - 60.9 = -5.89999...) can't flip a half-boundary; genuine
+    data is <=4dp so the 9dp snap is lossless."""
+    from decimal import Decimal, ROUND_HALF_UP
     d = Decimal(str(round(float(v), 9)))
-    return float(d.quantize(Decimal(1).scaleb(-dp), rounding=ROUND_DOWN))
+    return float(d.quantize(Decimal(1).scaleb(-dp), rounding=ROUND_HALF_UP))
 
 
-def _trunc_str(v: float, dp: int = 1) -> str:
-    """Fixed-width truncated string: _trunc_str(55.0)->'55.0', _trunc_str(88.58)->'88.5'."""
-    from decimal import Decimal, ROUND_DOWN
+def _round_str(v: float, dp: int = 1) -> str:
+    """Fixed-width rounded string: _round_str(55.0)->'55.0', _round_str(88.58)->'88.6'."""
+    from decimal import Decimal, ROUND_HALF_UP
     d = Decimal(str(round(float(v), 9)))
-    return str(d.quantize(Decimal(1).scaleb(-dp), rounding=ROUND_DOWN))
+    return str(d.quantize(Decimal(1).scaleb(-dp), rounding=ROUND_HALF_UP))
 
 
 def fmt_num(v: float, unit: str) -> str:
     if unit == "percent":
-        return f"{_trunc_str(v, 1)}%"
+        return f"{_round_str(v, 1)}%"
     if unit == "females_per_1000_males":
-        return _trunc_str(v, 0)
+        return _round_str(v, 0)
     if unit in ("per_1000_live_births", "rate_per_100k", "per_100k_population", "years"):
-        return _trunc_str(v, 1)
+        return _round_str(v, 1)
     if unit == "count":
         return f"{int(v):,}"
     if unit in ("inr_per_month", "inr_per_year", "inr"):
@@ -318,10 +318,10 @@ def render_scorecard_rows() -> str:
                 f'<tr>'
                 f'<td>{html.escape(name)}</td>'
                 f'<td>{year}</td>'
-                f'<td>{_trunc_str(m_val, 1)}%</td>'
+                f'<td>{_round_str(m_val, 1)}%</td>'
                 f'<td>n/a</td>'
                 f'<td>n/a</td>'
-                f'<td class="{"gap-bad" if gap < 0 else "gap-good"}">{sign}{_trunc_str(gap, 1)}pp vs {_trunc_str(MUSLIM_POP_SHARE, 1)}% pop</td>'
+                f'<td class="{"gap-bad" if gap < 0 else "gap-good"}">{sign}{_round_str(gap, 1)}pp vs {_round_str(MUSLIM_POP_SHARE, 1)}% pop</td>'
                 f'</tr>'
             )
             rows.append(((0, -abs(gap) / MUSLIM_POP_SHARE), row_html))
@@ -353,7 +353,7 @@ def render_scorecard_rows() -> str:
             if m_val is not None and comp_val is not None:
                 diff = m_val - comp_val
                 sign = "+" if diff > 0 else ""
-                gap_str = f"{sign}{_trunc_str(diff, _disp_dp(unit))}"
+                gap_str = f"{sign}{_round_str(diff, _disp_dp(unit))}"
                 if unit == "percent":
                     gap_str += "pp vs " + ("Hindu" if ref == "hindu" else "all communities")
                 # Class based on direction
@@ -2578,7 +2578,7 @@ def _gap_str(gap: float, unit: str) -> str:
     if unit in ("inr_per_month", "inr_per_year", "inr"):
         return f"{'+' if gap >= 0 else '-'}Rs {abs(int(gap)):,}"
     sign = "+" if gap >= 0 else ""
-    return f"{sign}{_trunc_str(gap, _disp_dp(unit))}{'pp' if unit == 'percent' else ''}"
+    return f"{sign}{_round_str(gap, _disp_dp(unit))}{'pp' if unit == 'percent' else ''}"
 
 
 def _verdict_word(cls: str) -> str:
@@ -2824,7 +2824,7 @@ def _district_cumulative(metric_id: str):
     for rank, _name, _st, mcount, _pct in parsed:
         cum += mcount
         share = cum / nat_total * 100
-        points.append([rank, _trunc(share, 1)])
+        points.append([rank, _round_dp(share, 1)])
         if rank == 10:
             top10 = share
     return points, top10
@@ -2850,7 +2850,7 @@ def _top100_districts_table(metric_id: str) -> str:
             f'<td style="text-align:right" data-sort="{rank}">{rank}</td>'
             f"<td>{html.escape(name)} <span style=\"color:var(--muted);font-size:11px\">({html.escape(st)})</span></td>"
             f'<td style="text-align:right;font-feature-settings:&quot;tnum&quot;" data-sort="{muslim}">{mil_str}</td>'
-            f'<td style="text-align:right;font-feature-settings:&quot;tnum&quot;" data-sort="{pct:.4f}">{_trunc_str(pct, 1)}%</td>'
+            f'<td style="text-align:right;font-feature-settings:&quot;tnum&quot;" data-sort="{pct:.4f}">{_round_str(pct, 1)}%</td>'
             f"</tr>"
         )
     return (
@@ -3156,7 +3156,7 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
         # All-India dashed baseline; latest-year community ranking shown via the
         # end-of-line labels on the chart itself (no redundant details table).
         named = ("muslim", "hindu", "christian", "sikh", "buddhist", "jain", "other")
-        series_map = {rel: [(_trunc(v, _disp_dp(unit)) if (v := series.get(rel, {}).get(y)) is not None else None)
+        series_map = {rel: [(_round_dp(v, _disp_dp(unit)) if (v := series.get(rel, {}).get(y)) is not None else None)
                             for y in years]
                       for rel in named if rel in series}
         # all_series was computed at the top of the function so the comp pill
@@ -3164,7 +3164,7 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
         # when populated; median across communities otherwise). Pass it as an
         # object so the chart's end-of-line label matches the pill label.
         chart_html = f'<div class="card-chartwrap" style="height:200px"><canvas id="{cvid}" role="img" aria-label="Visualisation of this metric; numerical values are listed in the card above."></canvas></div>'
-        all_arg = ({"values": [(_trunc(v, _disp_dp(unit)) if v is not None else None) for v in all_series],
+        all_arg = ({"values": [(_round_dp(v, _disp_dp(unit)) if v is not None else None) for v in all_series],
                     "label": all_line_label} if all_series else None)
         js = (f'trendChart("{cvid}", {json.dumps(years)}, {json.dumps(series_map)}, '
               f'{json.dumps(all_arg)}, {json.dumps(suffix)}, {dec}, {json.dumps(bool(has_break))});')
@@ -3180,8 +3180,8 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
             if mfirst is not None and mlast is not None:
                 delta = mlast - mfirst
                 arrow = "↑" if delta > 0 else ("↓" if delta < 0 else "→")
-                comps += _comp(f"Since {years[0]}", f"{arrow} {_trunc_str(abs(delta), _disp_dp(unit))}{suffix}",
-                               f"{_trunc_str(mfirst, _disp_dp(unit))}{suffix} → {_trunc_str(mlast, _disp_dp(unit))}{suffix}", "mid")
+                comps += _comp(f"Since {years[0]}", f"{arrow} {_round_str(abs(delta), _disp_dp(unit))}{suffix}",
+                               f"{_round_str(mfirst, _disp_dp(unit))}{suffix} → {_round_str(mlast, _disp_dp(unit))}{suffix}", "mid")
         pairs = [(COMMUNITY_LABEL[c], nat[c], c == "muslim") for c in named]
         if hib is not None:
             pairs.sort(key=lambda b: b[1], reverse=bool(hib))
@@ -3191,7 +3191,7 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
         if len(pairs) == 1 and all_v is not None:
             pairs.append(("All communities", float(all_v), False))
         labels = [p[0] for p in pairs]
-        values = [_trunc(p[1], _disp_dp(unit)) for p in pairs]
+        values = [_round_dp(p[1], _disp_dp(unit)) for p in pairs]
         mhex = TIER_HEX.get(tier, "#555555")
         colors = [mhex if p[2] else "#D8DEE2" for p in pairs]
         # Only skip the chart if there's truly nothing comparative to show.
@@ -3204,7 +3204,7 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
             # If we already promoted All-India to a peer bar, don't ALSO draw it
             # as a dashed reference line — that would be redundant.
             has_all_bar = any(lbl == "All communities" for lbl in labels)
-            ref = "null" if has_all_bar else (json.dumps(_trunc(all_v, _disp_dp(unit))) if all_v is not None else "null")
+            ref = "null" if has_all_bar else (json.dumps(_round_dp(all_v, _disp_dp(unit))) if all_v is not None else "null")
             ref_label = "" if has_all_bar else (
                 f"All communities ({fmt_num(all_v, unit)})" if all_v is not None else "All communities")
             js = (f'hbar("{cvid}", {json.dumps(labels)}, {json.dumps(values)}, {json.dumps(colors)}, '
@@ -3231,7 +3231,7 @@ def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
         # at this resolution, so a single reference value is honest.)
         years, series, _ = _nat_trend(mid)
         main_named = ("muslim", "christian", "sikh", "buddhist", "jain")
-        series_map = {rel: [(_trunc(v, _disp_dp(unit)) if (v := series.get(rel, {}).get(y)) is not None else None)
+        series_map = {rel: [(_round_dp(v, _disp_dp(unit)) if (v := series.get(rel, {}).get(y)) is not None else None)
                             for y in years]
                       for rel in main_named if rel in series}
         hindu_first = series.get("hindu", {}).get(years[0]) if years else None
@@ -3241,7 +3241,7 @@ def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
         js = (f'trendChart("{cvid}", {json.dumps(years)}, {json.dumps(series_map)}, '
               f'null, "%", {_disp_dp(unit)}, false);')
         note = (f"Share of each community in India's population by census. Hindu's share "
-                f"drifted from {_trunc_str(hindu_first, 1)}% in 1961 to {_trunc_str(hindu_last, 1)}% in 2011, "
+                f"drifted from {_round_str(hindu_first, 1)}% in 1961 to {_round_str(hindu_last, 1)}% in 2011, "
                 f"omitted from the chart so the Muslim and minor-community trends are legible. "
                 f"All values from primary RGI religion volumes 1961-2011; 1981 excludes "
                 f"Assam, 1991 excludes Jammu & Kashmir.")
@@ -3256,10 +3256,10 @@ def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
         chart_html = f'<div class="card-chartwrap" style="height:150px"><canvas id="{cvid}" role="img" aria-label="Cumulative share of India\'s Muslim population held by the top-ranked districts; values listed in the table below."></canvas></div>'
         js = f'concentrationCurve("{cvid}", {json.dumps(points)}, 10, "%");'
         kicker_html = (f'<div class="comp-kicker">The top 10 districts alone are home to '
-                       f'{_trunc_str(top10, 1)}% of all Indian Muslims.</div>')
+                       f'{_round_str(top10, 1)}% of all Indian Muslims.</div>')
         note = (f"India had {TOTAL_DISTRICTS_2011} districts in 2011, yet the 100 most "
-                f"Muslim-populous, just {_trunc_str(100 / TOTAL_DISTRICTS_2011 * 100, 1)}% of them, are "
-                f"home to {_trunc_str(muslim, 1)}% of all Indian Muslims. This is a geographic-"
+                f"Muslim-populous, just {_round_str(100 / TOTAL_DISTRICTS_2011 * 100, 1)}% of them, are "
+                f"home to {_round_str(muslim, 1)}% of all Indian Muslims. This is a geographic-"
                 f"concentration measure, not a community comparison.")
     else:  # muslim-higher-ed-enrolment
         # Top-8 states by Muslim enrolment, shown in thousands (the national
@@ -3294,14 +3294,14 @@ def _card_timeseries(mid, label, unit, src, csv_href, cvid):
     val = float(latest["value"]) if latest else None
     headline = fmt_num(val, unit) if val is not None else "n/a"
     gap = (val - MUSLIM_POP_SHARE) if val is not None else 0
-    comps = _comp("vs population", f"{'+' if gap >= 0 else ''}{_trunc_str(gap, 1)}pp", "vs 14.2% pop share", "bad" if gap < 0 else "good")
+    comps = _comp("vs population", f"{'+' if gap >= 0 else ''}{_round_str(gap, 1)}pp", "vs 14.2% pop share", "bad" if gap < 0 else "good")
     chart_html, js = "", None
     if len(rows) >= 2:
         labels = [int(r["year"]) for r in rows]
-        values = [_trunc(float(r["value"]), _disp_dp(unit)) for r in rows]
+        values = [_round_dp(float(r["value"]), _disp_dp(unit)) for r in rows]
         chart_html = f'<div class="card-chartwrap" style="height:150px"><canvas id="{cvid}" role="img" aria-label="Visualisation of this metric; numerical values are listed in the card above."></canvas></div>'
         js = f'lineChart("{cvid}", {json.dumps(labels)}, {json.dumps(values)}, "#2b6cb0", "%", {_disp_dp(unit)});'
-        comps += _comp("trend", f"{labels[0]}-{labels[-1]}", f"{_trunc_str(values[0], 1)}% → {_trunc_str(values[-1], 1)}%", "neutral")
+        comps += _comp("trend", f"{labels[0]}-{labels[-1]}", f"{_round_str(values[0], 1)}% → {_round_str(values[-1], 1)}%", "neutral")
     else:
         st = sorted([(state_label(r["geography_code"]), float(r["value"]))
                      for r in load_metric(mid) if r["geography_level"] == "state"],
@@ -3314,7 +3314,7 @@ def _card_timeseries(mid, label, unit, src, csv_href, cvid):
             chart_html = (f'<div class="card-chartscroll" style="max-height:{max_h}px">{inner}</div>'
                           if inner_h > max_h else inner)
             js = (f'hbar("{cvid}", {json.dumps([s[0] for s in st])}, '
-                  f'{json.dumps([_trunc(s[1], _disp_dp(unit)) for s in st])}, '
+                  f'{json.dumps([_round_dp(s[1], _disp_dp(unit)) for s in st])}, '
                   f'{json.dumps(["#2b6cb0"] * len(st))}, "%", 1);')
         comps += _comp("all states", headline, "aggregate across assemblies", "neutral")
     return _card_shell(mid, label, headline, CAPTION.get(mid, ""), latest["year"] if latest else "",
