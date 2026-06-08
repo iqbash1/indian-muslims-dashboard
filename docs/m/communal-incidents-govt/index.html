@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <title>Communal incidents recorded by police: muslimdata.in</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Communal incidents recorded by police, with Hindu and all-India comparison baselines on muslimdata.in. Number of communal/religious rioting incidents recorded by NCRB under">
+<meta name="description" content="Communal incidents recorded by police for India&#x27;s Muslims, with Hindu and all-India comparison baselines. Number of communal/religious rioting incidents recorded by NCRB under IPC Sec.147-151 (rioting), specifically the &quot;Communal/Religio...">
 <link rel="canonical" href="https://muslimdata.in/m/communal-incidents-govt/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#fafaf7">
 <meta property="og:title" content="Communal incidents recorded by police">
-<meta property="og:description" content="Communal incidents recorded by police, with Hindu and all-India comparison baselines on muslimdata.in. Number of communal/religious rioting incidents recorded by NCRB under">
+<meta property="og:description" content="Communal incidents recorded by police for India&#x27;s Muslims, with Hindu and all-India comparison baselines. Number of communal/religious rioting incidents recorded by NCRB under IPC Sec.147-151 (rioting), specifically the &quot;Communal/Religio...">
 <meta property="og:url" content="https://muslimdata.in/m/communal-incidents-govt/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="muslimdata.in">
@@ -21,11 +21,61 @@
 <meta property="og:image:alt" content="Communal incidents recorded by police: Indian Muslims vs Hindu and all-India baselines on muslimdata.in">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Communal incidents recorded by police">
-<meta name="twitter:description" content="Communal incidents recorded by police, with Hindu and all-India comparison baselines on muslimdata.in. Number of communal/religious rioting incidents recorded by NCRB under">
+<meta name="twitter:description" content="Communal incidents recorded by police for India&#x27;s Muslims, with Hindu and all-India comparison baselines. Number of communal/religious rioting incidents recorded by NCRB under IPC Sec.147-151 (rioting), specifically the &quot;Communal/Religio...">
 <meta name="twitter:image" content="https://muslimdata.in/og/communal-incidents-govt.png">
-<meta http-equiv="refresh" content="0; url=/#communal-incidents-govt">
-<script>location.replace("/#communal-incidents-govt");</script>
-<style>body{font:14px -apple-system,system-ui,sans-serif;color:#666;padding:40px;text-align:center}</style>
+<script src="/js/analytics.js" defer></script>
+<style>
+  :root {
+    --fg:#1a1a1a; --muted:#666; --bg:#fafaf7; --card:#fff; --rule:#e6e3da;
+    --muslim:#7b1d22; --accent:#2c5f8a; --positive:#065F46; --negative:#991B1B;
+  }
+  * { box-sizing:border-box; }
+  body { font:16px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif; color:var(--fg); background:var(--bg); margin:0; }
+  .page { max-width:820px; margin:0 auto; padding:32px 24px 64px; }
+  a { color:var(--accent); }
+  .masthead { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px 16px; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--rule); }
+  .masthead-brand { font-size:14px; font-weight:600; color:var(--fg); text-decoration:none; }
+  .masthead-brand:hover { color:var(--accent); }
+  .masthead-nav { display:flex; gap:14px; margin-right:auto; margin-left:24px; }
+  .masthead-nav a { font-size:13px; color:var(--fg); text-decoration:none; font-weight:500; }
+  .masthead-nav a:hover { color:var(--accent); }
+  .masthead-meta { margin:0; font-size:12px; color:var(--muted); }
+  .breadcrumb { font-size:13px; color:var(--muted); margin:14px 0 4px; }
+  .breadcrumb a { color:var(--accent); text-decoration:none; }
+  .breadcrumb a:hover { text-decoration:underline; }
+  .breadcrumb [aria-current] { color:var(--fg); font-weight:600; }
+  h1 { font-size:30px; margin:8px 0 8px; letter-spacing:-0.01em; line-height:1.2; }
+  .lede { font-size:17px; color:var(--muted); margin:0 0 20px; max-width:60em; }
+  .hero { display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; margin:8px 0 4px; }
+  .hero-value { font-size:2.6rem; font-weight:700; letter-spacing:-.02em; color:var(--muslim); font-feature-settings:"tnum"; }
+  .hero-unit, .hero-year { font-size:15px; color:var(--muted); font-weight:500; }
+  .polarity { font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:.02em; margin:0 0 6px; font-weight:600; }
+  .polarity span { color:var(--positive); }
+  .compare { font-size:15px; color:var(--fg); margin:0 0 16px; }
+  .compare b { font-feature-settings:"tnum"; }
+  .compare b.good { color:var(--positive); } .compare b.bad { color:var(--negative); } .compare b.mid, .compare b.neutral { color:var(--muted); }
+  .cta { display:inline-block; background:var(--accent); color:#fff; text-decoration:none; font-weight:600; font-size:15px; padding:11px 18px; border-radius:8px; margin:6px 0 8px; transition:background .15s; }
+  .cta:hover { background:#234c70; }
+  h2 { font-size:19px; margin:34px 0 8px; letter-spacing:-0.005em; }
+  .breakdown-sub { font-size:13px; font-weight:400; color:var(--muted); margin-left:8px; }
+  table { width:100%; border-collapse:collapse; margin:10px 0; font-size:14px; font-feature-settings:"tnum"; }
+  th,td { text-align:right; padding:7px 10px; border-bottom:1px solid var(--rule); }
+  th:first-child, td:first-child { text-align:left; }
+  th { font-weight:600; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.04em; }
+  .scroll-table { max-height:380px; overflow-y:auto; border:1px solid var(--rule); border-radius:6px; margin:10px 0; }
+  .scroll-table table { margin:0; }
+  .scroll-table thead th { position:sticky; top:0; background:var(--card); }
+  .src-note { font-size:13px; color:var(--muted); }
+  .meta-block p { font-size:14.5px; line-height:1.6; max-width:60em; }
+  .meta-block b { color:var(--accent); }
+  ul.related { list-style:none; padding:0; margin:10px 0; display:flex; flex-wrap:wrap; gap:8px; }
+  ul.related a { display:inline-block; padding:7px 12px; border:1px solid var(--rule); border-radius:999px; background:var(--card); text-decoration:none; font-size:13px; font-weight:500; color:var(--accent); }
+  ul.related a:hover { border-color:var(--accent); }
+  hr { border:none; border-top:1px solid var(--rule); margin:36px 0 0; }
+  footer { font-size:13px; color:var(--muted); margin-top:24px; }
+  @media (max-width:560px) { h1 { font-size:24px; } .hero-value { font-size:2rem; } .masthead-nav { margin-left:0; } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration:.01ms !important; animation-duration:.01ms !important; } }
+</style>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -68,8 +118,52 @@
   "measurementTechnique": "Extracted from the published ncrb-crime source; provenance at https://muslimdata.in/m/communal-incidents-govt/."
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "muslimdata.in",
+      "item": "https://muslimdata.in/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Communal incidents recorded by police",
+      "item": "https://muslimdata.in/m/communal-incidents-govt/"
+    }
+  ]
+}
+</script>
 </head>
 <body>
-<p>Redirecting to <a href="/#communal-incidents-govt">muslimdata.in</a>...</p>
+<div class="page">
+<div class="masthead">
+  <a class="masthead-brand" href="/">muslimdata.in</a>
+  <nav class="masthead-nav">
+    <a href="/">Dashboard</a>
+    <a href="/about/">About</a>
+    <a href="https://github.com/iqbash1/indian-muslims-dashboard">GitHub</a>
+  </nav>
+  <p class="masthead-meta">Last updated 8 June 2026</p>
+</div>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> › <span>Justice &amp; Civic</span> › <span aria-current="page">Communal incidents recorded by police</span></nav>
+<h1>Communal incidents recorded by police</h1>
+<p class="lede">Number of communal or religious rioting incidents recorded in police records each year (NCRB).</p>
+<div class="hero"><span class="hero-value">272</span><span class="hero-unit">incidents</span><span class="hero-year">(2023)</span></div>
+<p class="polarity"><span aria-hidden="true">↓</span> lower is better</p>
+<p class="compare">2015 → 2023: <b class="mid">789 → 272</b></p>
+<p><a class="cta" href="/#communal-incidents-govt">Explore the interactive chart, with breakdowns by state →</a></p>
+
+<section class="breakdown"><h2>By state<span class="breakdown-sub">35 states, 2023</span></h2><table class="sortable-table"><thead><tr><th class="sortable" data-col="0">State / UT</th><th class="sortable" data-col="1" data-type="num">Incidents</th></tr></thead><tbody><tr><td>Bihar</td><td data-sort="107.0000">107</td></tr><tr><td>Odisha</td><td data-sort="44.0000">44</td></tr><tr><td>Maharashtra</td><td data-sort="27.0000">27</td></tr><tr><td>Jharkhand</td><td data-sort="19.0000">19</td></tr><tr><td>Karnataka</td><td data-sort="18.0000">18</td></tr><tr><td>Madhya Pradesh</td><td data-sort="18.0000">18</td></tr><tr><td>Haryana</td><td data-sort="11.0000">11</td></tr><tr><td>NCT of Delhi</td><td data-sort="7.0000">7</td></tr><tr><td>Tamil Nadu</td><td data-sort="6.0000">6</td></tr><tr><td>Gujarat</td><td data-sort="5.0000">5</td></tr><tr><td>Chhattisgarh</td><td data-sort="4.0000">4</td></tr><tr><td>Telangana</td><td data-sort="2.0000">2</td></tr><tr><td>Assam</td><td data-sort="1.0000">1</td></tr><tr><td>Kerala</td><td data-sort="1.0000">1</td></tr><tr><td>Rajasthan</td><td data-sort="1.0000">1</td></tr><tr><td>West Bengal</td><td data-sort="1.0000">1</td></tr><tr><td>Andhra Pradesh</td><td data-sort="0.0000">0</td></tr><tr><td>Arunachal Pradesh</td><td data-sort="0.0000">0</td></tr><tr><td>Goa</td><td data-sort="0.0000">0</td></tr><tr><td>Himachal Pradesh</td><td data-sort="0.0000">0</td></tr><tr><td>Manipur</td><td data-sort="0.0000">0</td></tr><tr><td>Meghalaya</td><td data-sort="0.0000">0</td></tr><tr><td>Mizoram</td><td data-sort="0.0000">0</td></tr><tr><td>Nagaland</td><td data-sort="0.0000">0</td></tr><tr><td>Punjab</td><td data-sort="0.0000">0</td></tr><tr><td>Sikkim</td><td data-sort="0.0000">0</td></tr><tr><td>Tripura</td><td data-sort="0.0000">0</td></tr><tr><td>Uttar Pradesh</td><td data-sort="0.0000">0</td></tr><tr><td>Uttarakhand</td><td data-sort="0.0000">0</td></tr><tr><td>Andaman &amp; Nicobar Islands</td><td data-sort="0.0000">0</td></tr><tr><td>Chandigarh</td><td data-sort="0.0000">0</td></tr><tr><td>Jammu &amp; Kashmir</td><td data-sort="0.0000">0</td></tr><tr><td>Ladakh</td><td data-sort="0.0000">0</td></tr><tr><td>Lakshadweep</td><td data-sort="0.0000">0</td></tr><tr><td>Puducherry</td><td data-sort="0.0000">0</td></tr></tbody></table></section>
+<h2>About this measurement</h2>
+<div class="meta-block"><p><b>Definition.</b> Number of communal/religious rioting incidents recorded by NCRB under IPC Sec.147-151 (rioting), specifically the &quot;Communal/Religious&quot; sub-classification. National annual totals (2015-2023) plus state-level breakdown for 2022 and 2023.</p><p><b>Methodology.</b> NCRB Crime in India, Table 1.2 row 23.1 &#x27;Communal/Religious&#x27; rioting. National series 2015-2023, compiled across multiple Crime in India volumes (CII 2017 through 2023, each carrying a multi-year national panel); state-level breakdown for 2022 and 2023. Incident counts only, with no religion of victim/perpetrator in the published table. Caveat: several states stopped recording &#x27;communal&#x27; as a separate crime category since ~2017, which deflates the national total over time. Civil-society compilations typically report higher counts.</p><p class="src-note"><b>Sources.</b> <a href="https://web.archive.org/web/20191203051255id_/http://ncrb.gov.in/StatPublications/CII/CII2017/pdfs/Table%201.2.pdf" target="_blank" rel="noopener">NCRB CII (2015-2023)</a> · <a href="https://web.archive.org/web/20200125083810id_/http://ncrb.gov.in/StatPublications/CII/CII2018/pdfs/Table%201.2.pdf" target="_blank" rel="noopener">NCRB CII (2015-2023)</a> · <a href="https://web.archive.org/web/20230923181445id_/https://ncrb.gov.in/sites/default/files/CII-2021/TABLE%201.2.pdf" target="_blank" rel="noopener">NCRB CII (2015-2023)</a> · <a href="https://www.ncrb.gov.in/uploads/nationalcrimerecordsbureau/custom/1701607577CrimeinIndia2022Book1.pdf" target="_blank" rel="noopener">NCRB CII (2015-2023)</a> · <a href="https://www.ncrb.gov.in/uploads/files/1CrimeinIndia2023PartI.pdf" target="_blank" rel="noopener">NCRB CII (2015-2023)</a>. Data file: <a href="/canonical/communal-incidents-govt.csv">communal-incidents-govt.csv</a>.</p></div>
+<h2>Related indicators</h2><ul class="related"><li><a href="/m/prison-rate-per-100k/">Incarceration rate</a></li><li><a href="/m/undertrial-rate-per-100k/">Undertrial rate</a></li></ul>
+<hr>
+<footer><p>Every value traces to a primary source with the original file archived and checksummed. muslimdata.in is independent, non-commercial, and <a href="https://github.com/iqbash1/indian-muslims-dashboard">open source</a>. Last updated 8 June 2026.</p></footer>
+</div>
 </body>
 </html>

@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <title>Workers in salaried jobs: muslimdata.in</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Workers in salaried jobs, with Hindu and all-India comparison baselines on muslimdata.in. Percentage of workers (usual status, ps+ss) employed in regular">
+<meta name="description" content="Workers in salaried jobs for India&#x27;s Muslims, with Hindu and all-India comparison baselines. Percentage of workers (usual status, ps+ss) employed in regular wage/salary positions (as opposed to self-employed or casual labour).">
 <link rel="canonical" href="https://muslimdata.in/m/salaried-share/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#fafaf7">
 <meta property="og:title" content="Workers in salaried jobs">
-<meta property="og:description" content="Workers in salaried jobs, with Hindu and all-India comparison baselines on muslimdata.in. Percentage of workers (usual status, ps+ss) employed in regular">
+<meta property="og:description" content="Workers in salaried jobs for India&#x27;s Muslims, with Hindu and all-India comparison baselines. Percentage of workers (usual status, ps+ss) employed in regular wage/salary positions (as opposed to self-employed or casual labour).">
 <meta property="og:url" content="https://muslimdata.in/m/salaried-share/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="muslimdata.in">
@@ -21,11 +21,61 @@
 <meta property="og:image:alt" content="Workers in salaried jobs: Indian Muslims vs Hindu and all-India baselines on muslimdata.in">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Workers in salaried jobs">
-<meta name="twitter:description" content="Workers in salaried jobs, with Hindu and all-India comparison baselines on muslimdata.in. Percentage of workers (usual status, ps+ss) employed in regular">
+<meta name="twitter:description" content="Workers in salaried jobs for India&#x27;s Muslims, with Hindu and all-India comparison baselines. Percentage of workers (usual status, ps+ss) employed in regular wage/salary positions (as opposed to self-employed or casual labour).">
 <meta name="twitter:image" content="https://muslimdata.in/og/salaried-share.png">
-<meta http-equiv="refresh" content="0; url=/#salaried-share">
-<script>location.replace("/#salaried-share");</script>
-<style>body{font:14px -apple-system,system-ui,sans-serif;color:#666;padding:40px;text-align:center}</style>
+<script src="/js/analytics.js" defer></script>
+<style>
+  :root {
+    --fg:#1a1a1a; --muted:#666; --bg:#fafaf7; --card:#fff; --rule:#e6e3da;
+    --muslim:#7b1d22; --accent:#2c5f8a; --positive:#065F46; --negative:#991B1B;
+  }
+  * { box-sizing:border-box; }
+  body { font:16px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif; color:var(--fg); background:var(--bg); margin:0; }
+  .page { max-width:820px; margin:0 auto; padding:32px 24px 64px; }
+  a { color:var(--accent); }
+  .masthead { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px 16px; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--rule); }
+  .masthead-brand { font-size:14px; font-weight:600; color:var(--fg); text-decoration:none; }
+  .masthead-brand:hover { color:var(--accent); }
+  .masthead-nav { display:flex; gap:14px; margin-right:auto; margin-left:24px; }
+  .masthead-nav a { font-size:13px; color:var(--fg); text-decoration:none; font-weight:500; }
+  .masthead-nav a:hover { color:var(--accent); }
+  .masthead-meta { margin:0; font-size:12px; color:var(--muted); }
+  .breadcrumb { font-size:13px; color:var(--muted); margin:14px 0 4px; }
+  .breadcrumb a { color:var(--accent); text-decoration:none; }
+  .breadcrumb a:hover { text-decoration:underline; }
+  .breadcrumb [aria-current] { color:var(--fg); font-weight:600; }
+  h1 { font-size:30px; margin:8px 0 8px; letter-spacing:-0.01em; line-height:1.2; }
+  .lede { font-size:17px; color:var(--muted); margin:0 0 20px; max-width:60em; }
+  .hero { display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; margin:8px 0 4px; }
+  .hero-value { font-size:2.6rem; font-weight:700; letter-spacing:-.02em; color:var(--muslim); font-feature-settings:"tnum"; }
+  .hero-unit, .hero-year { font-size:15px; color:var(--muted); font-weight:500; }
+  .polarity { font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:.02em; margin:0 0 6px; font-weight:600; }
+  .polarity span { color:var(--positive); }
+  .compare { font-size:15px; color:var(--fg); margin:0 0 16px; }
+  .compare b { font-feature-settings:"tnum"; }
+  .compare b.good { color:var(--positive); } .compare b.bad { color:var(--negative); } .compare b.mid, .compare b.neutral { color:var(--muted); }
+  .cta { display:inline-block; background:var(--accent); color:#fff; text-decoration:none; font-weight:600; font-size:15px; padding:11px 18px; border-radius:8px; margin:6px 0 8px; transition:background .15s; }
+  .cta:hover { background:#234c70; }
+  h2 { font-size:19px; margin:34px 0 8px; letter-spacing:-0.005em; }
+  .breakdown-sub { font-size:13px; font-weight:400; color:var(--muted); margin-left:8px; }
+  table { width:100%; border-collapse:collapse; margin:10px 0; font-size:14px; font-feature-settings:"tnum"; }
+  th,td { text-align:right; padding:7px 10px; border-bottom:1px solid var(--rule); }
+  th:first-child, td:first-child { text-align:left; }
+  th { font-weight:600; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.04em; }
+  .scroll-table { max-height:380px; overflow-y:auto; border:1px solid var(--rule); border-radius:6px; margin:10px 0; }
+  .scroll-table table { margin:0; }
+  .scroll-table thead th { position:sticky; top:0; background:var(--card); }
+  .src-note { font-size:13px; color:var(--muted); }
+  .meta-block p { font-size:14.5px; line-height:1.6; max-width:60em; }
+  .meta-block b { color:var(--accent); }
+  ul.related { list-style:none; padding:0; margin:10px 0; display:flex; flex-wrap:wrap; gap:8px; }
+  ul.related a { display:inline-block; padding:7px 12px; border:1px solid var(--rule); border-radius:999px; background:var(--card); text-decoration:none; font-size:13px; font-weight:500; color:var(--accent); }
+  ul.related a:hover { border-color:var(--accent); }
+  hr { border:none; border-top:1px solid var(--rule); margin:36px 0 0; }
+  footer { font-size:13px; color:var(--muted); margin-top:24px; }
+  @media (max-width:560px) { h1 { font-size:24px; } .hero-value { font-size:2rem; } .masthead-nav { margin-left:0; } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration:.01ms !important; animation-duration:.01ms !important; } }
+</style>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -68,8 +118,52 @@
   "measurementTechnique": "Extracted from the published plfs source; provenance at https://muslimdata.in/m/salaried-share/."
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "muslimdata.in",
+      "item": "https://muslimdata.in/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Workers in salaried jobs",
+      "item": "https://muslimdata.in/m/salaried-share/"
+    }
+  ]
+}
+</script>
 </head>
 <body>
-<p>Redirecting to <a href="/#salaried-share">muslimdata.in</a>...</p>
+<div class="page">
+<div class="masthead">
+  <a class="masthead-brand" href="/">muslimdata.in</a>
+  <nav class="masthead-nav">
+    <a href="/">Dashboard</a>
+    <a href="/about/">About</a>
+    <a href="https://github.com/iqbash1/indian-muslims-dashboard">GitHub</a>
+  </nav>
+  <p class="masthead-meta">Last updated 8 June 2026</p>
+</div>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> › <span>Education, work &amp; income</span> › <span aria-current="page">Workers in salaried jobs</span></nav>
+<h1>Workers in salaried jobs</h1>
+<p class="lede">Of all workers, what share has regular salaried jobs (as opposed to self-employment or casual labour).</p>
+<div class="hero"><span class="hero-value">18.0%</span><span class="hero-unit">in regular salaried work</span><span class="hero-year">(2023)</span></div>
+<p class="polarity"><span aria-hidden="true">↑</span> higher is better</p>
+<p class="compare">vs all communities: <b class="bad">-3.7pp behind</b></p>
+<p><a class="cta" href="/#salaried-share">Explore the interactive chart, with breakdowns by sex →</a></p>
+<h2>Latest figures by community (2023)</h2><table><thead><tr><th scope="col">Community</th><th scope="col">Latest value</th></tr></thead><tbody><tr><td>Muslim</td><td>18.0%</td></tr><tr><td>Hindu</td><td>21.9%</td></tr><tr><td>Christian</td><td>27.6%</td></tr><tr><td>Sikh</td><td>26.7%</td></tr><tr><td>All communities</td><td>21.7%</td></tr></tbody></table>
+<section class="breakdown"><h2>By sex<span class="breakdown-sub">2023</span></h2><table class="sortable-table"><thead><tr><th class="sortable" data-col="0">Community</th><th class="sortable" data-col="1" data-type="num">Male</th><th class="sortable" data-col="2" data-type="num">Female</th></tr></thead><tbody><tr><td>Muslim</td><td data-sort="20.8000">20.8%</td><td data-sort="10.9000">10.9%</td></tr><tr><td>Hindu</td><td data-sort="25.3000">25.3%</td><td data-sort="15.8000">15.8%</td></tr><tr><td>Christian</td><td data-sort="28.4000">28.4%</td><td data-sort="26.3000">26.3%</td></tr><tr><td>Sikh</td><td data-sort="26.7000">26.7%</td><td data-sort="26.9000">26.9%</td></tr><tr><td>All communities</td><td data-sort="24.9000">24.9%</td><td data-sort="15.9000">15.9%</td></tr></tbody></table></section>
+<h2>About this measurement</h2>
+<div class="meta-block"><p><b>Definition.</b> Percentage of workers (usual status, ps+ss) employed in regular wage/salary positions (as opposed to self-employed or casual labour).</p><p><b>Methodology.</b> PLFS 2023-24 Table 49 (pages 401-402). Rural+urban person-level. Muslims disproportionately self-employed (62.2% vs Hindu 58.3%) and under-represented in formal salaried work, the classic Sachar-era finding on labor-market segregation.</p><p class="src-note"><b>Sources.</b> <a href="https://mospi.gov.in/sites/default/files/publication_reports/AnnualReport_PLFS2023-24L2.pdf" target="_blank" rel="noopener">PLFS 2023-24</a>. Data file: <a href="/canonical/salaried-share.csv">salaried-share.csv</a>.</p></div>
+<h2>Related indicators</h2><ul class="related"><li><a href="/m/lit-7plus/">Literacy rate</a></li><li><a href="/m/ger-higher-ed/">Higher education enrolment rate</a></li><li><a href="/m/muslim-higher-ed-enrolment/">Muslim students in higher education</a></li><li><a href="/m/lfpr-15plus/">Labour force participation</a></li><li><a href="/m/wpr-15plus/">Worker population ratio</a></li><li><a href="/m/mpce/">Monthly spending per person</a></li></ul>
+<hr>
+<footer><p>Every value traces to a primary source with the original file archived and checksummed. muslimdata.in is independent, non-commercial, and <a href="https://github.com/iqbash1/indian-muslims-dashboard">open source</a>. Last updated 8 June 2026.</p></footer>
+</div>
 </body>
 </html>

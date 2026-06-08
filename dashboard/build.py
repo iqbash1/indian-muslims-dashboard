@@ -912,6 +912,18 @@ TEMPLATE = """<!DOCTYPE html>
   }
   .share-menu-item:hover svg, .share-menu-item:focus-visible svg { color: var(--accent); }
   .share-menu-item.copied, .share-menu-item.copied svg { color: var(--positive); }
+
+  /* Respect a reduced-motion preference: kill the card hover lift, chart/modal
+     transitions and any animation for visitors who ask the OS to minimise motion. */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    .card:hover { transform: none !important; }
+  }
 </style>
 </head>
 <body>
@@ -2224,11 +2236,12 @@ def _emit_og_images(out_dir: pathlib.Path, view_map: dict | None = None) -> int:
 
 
 def _emit_metric_stubs(out_dir: pathlib.Path, view_map: dict | None = None) -> int:
-    """Write stub pages: /m/{mid}/index.html (overview) plus /m/{mid}/{view}/
-    index.html per modal view. Each carries its own OG meta (title, description,
-    per-view OG image) and client-redirects into the main page's #{mid}[/{view}]
-    hash so the modal auto-opens on the right tab. View stubs canonicalise to the
-    overview to consolidate SEO. Returns the count of stubs written."""
+    """Write per-VIEW redirect stub pages at /m/{mid}/{view}/index.html (the
+    overview /m/{mid}/ is a full landing page, see _emit_metric_landings). Each
+    view stub carries its own OG meta (title, description, per-view OG image) and
+    client-redirects into the main page's #{mid}/{view} hash so the modal
+    auto-opens on the right tab; it canonicalises to the overview landing page to
+    consolidate SEO. Returns the count of stubs written."""
     import yaml as _yaml
     with (REPO_ROOT / "manifest" / "metrics.yaml").open() as f:
         data = _yaml.safe_load(f)
@@ -2266,27 +2279,7 @@ def _emit_metric_stubs(out_dir: pathlib.Path, view_map: dict | None = None) -> i
         mid = m["id"]
         name = m.get("name", disp.get("label", mid))
         overview_canonical = f"{SITE_URL}/m/{mid}/"
-        # One-sentence description derived from the metric definition, trimmed
-        # to a single line for OG meta. Falls back to a generic line.
-        defn = (m.get("definition") or "").strip().split("\n")[0].strip()
-        base_desc = (
-            f"{name}, with Hindu and all-India comparison baselines on muslimdata.in. "
-            + (defn if defn else "Provenance-traced living-conditions indicator.")
-        )
-        # Overview stub.
-        _write(
-            sub_path=mid,
-            og_url_path=f"m/{mid}/",
-            canonical_url=overview_canonical,
-            title=f"{name}: muslimdata.in",
-            og_title=name,
-            description=base_desc,
-            og_image=f"{mid}.png",
-            redirect_hash=mid,
-            jsonld=_dataset_jsonld(m),
-        )
-        written += 1
-        # Per-view stubs (canonical -> overview; their own OG image + title).
+        # Per-view stubs (canonical -> overview landing page; own OG image + title).
         for view in view_map.get(mid, []):
             vid, vlabel, vsub = view["id"], view["label"], view.get("sub", "")
             vdesc = (f"{name} {vlabel.lower()}"
@@ -2304,6 +2297,315 @@ def _emit_metric_stubs(out_dir: pathlib.Path, view_map: dict | None = None) -> i
                 jsonld="",
             )
             written += 1
+    return written
+
+
+# ----- Per-metric landing pages (full, indexable; Hawaii /c/{slug}/ analog) -----
+# Replaces the old /m/{mid}/ redirect stub with a real self-canonical page:
+# hero + comparison, national-by-religion table, the same state/sex/district
+# breakdown tables the modal shows, methodology + sources, related-metric links,
+# and Dataset + BreadcrumbList JSON-LD, with a CTA into the interactive chart at
+# /#{mid}. The per-view stubs (/m/{mid}/{view}/) still redirect + canonicalise here.
+LANDING_TEMPLATE = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{title}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="{description}">
+<link rel="canonical" href="{canonical}">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#fafaf7">
+<meta property="og:title" content="{og_title}">
+<meta property="og:description" content="{description}">
+<meta property="og:url" content="{canonical}">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="muslimdata.in">
+<meta property="og:image" content="{og_image}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{og_image_alt}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{og_title}">
+<meta name="twitter:description" content="{description}">
+<meta name="twitter:image" content="{og_image}">
+<script src="/js/analytics.js" defer></script>
+<style>
+  :root {
+    --fg:#1a1a1a; --muted:#666; --bg:#fafaf7; --card:#fff; --rule:#e6e3da;
+    --muslim:#7b1d22; --accent:#2c5f8a; --positive:#065F46; --negative:#991B1B;
+  }
+  * { box-sizing:border-box; }
+  body { font:16px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif; color:var(--fg); background:var(--bg); margin:0; }
+  .page { max-width:820px; margin:0 auto; padding:32px 24px 64px; }
+  a { color:var(--accent); }
+  .masthead { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px 16px; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--rule); }
+  .masthead-brand { font-size:14px; font-weight:600; color:var(--fg); text-decoration:none; }
+  .masthead-brand:hover { color:var(--accent); }
+  .masthead-nav { display:flex; gap:14px; margin-right:auto; margin-left:24px; }
+  .masthead-nav a { font-size:13px; color:var(--fg); text-decoration:none; font-weight:500; }
+  .masthead-nav a:hover { color:var(--accent); }
+  .masthead-meta { margin:0; font-size:12px; color:var(--muted); }
+  .breadcrumb { font-size:13px; color:var(--muted); margin:14px 0 4px; }
+  .breadcrumb a { color:var(--accent); text-decoration:none; }
+  .breadcrumb a:hover { text-decoration:underline; }
+  .breadcrumb [aria-current] { color:var(--fg); font-weight:600; }
+  h1 { font-size:30px; margin:8px 0 8px; letter-spacing:-0.01em; line-height:1.2; }
+  .lede { font-size:17px; color:var(--muted); margin:0 0 20px; max-width:60em; }
+  .hero { display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; margin:8px 0 4px; }
+  .hero-value { font-size:2.6rem; font-weight:700; letter-spacing:-.02em; color:var(--muslim); font-feature-settings:"tnum"; }
+  .hero-unit, .hero-year { font-size:15px; color:var(--muted); font-weight:500; }
+  .polarity { font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:.02em; margin:0 0 6px; font-weight:600; }
+  .polarity span { color:var(--positive); }
+  .compare { font-size:15px; color:var(--fg); margin:0 0 16px; }
+  .compare b { font-feature-settings:"tnum"; }
+  .compare b.good { color:var(--positive); } .compare b.bad { color:var(--negative); } .compare b.mid, .compare b.neutral { color:var(--muted); }
+  .cta { display:inline-block; background:var(--accent); color:#fff; text-decoration:none; font-weight:600; font-size:15px; padding:11px 18px; border-radius:8px; margin:6px 0 8px; transition:background .15s; }
+  .cta:hover { background:#234c70; }
+  h2 { font-size:19px; margin:34px 0 8px; letter-spacing:-0.005em; }
+  .breakdown-sub { font-size:13px; font-weight:400; color:var(--muted); margin-left:8px; }
+  table { width:100%; border-collapse:collapse; margin:10px 0; font-size:14px; font-feature-settings:"tnum"; }
+  th,td { text-align:right; padding:7px 10px; border-bottom:1px solid var(--rule); }
+  th:first-child, td:first-child { text-align:left; }
+  th { font-weight:600; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.04em; }
+  .scroll-table { max-height:380px; overflow-y:auto; border:1px solid var(--rule); border-radius:6px; margin:10px 0; }
+  .scroll-table table { margin:0; }
+  .scroll-table thead th { position:sticky; top:0; background:var(--card); }
+  .src-note { font-size:13px; color:var(--muted); }
+  .meta-block p { font-size:14.5px; line-height:1.6; max-width:60em; }
+  .meta-block b { color:var(--accent); }
+  ul.related { list-style:none; padding:0; margin:10px 0; display:flex; flex-wrap:wrap; gap:8px; }
+  ul.related a { display:inline-block; padding:7px 12px; border:1px solid var(--rule); border-radius:999px; background:var(--card); text-decoration:none; font-size:13px; font-weight:500; color:var(--accent); }
+  ul.related a:hover { border-color:var(--accent); }
+  hr { border:none; border-top:1px solid var(--rule); margin:36px 0 0; }
+  footer { font-size:13px; color:var(--muted); margin-top:24px; }
+  @media (max-width:560px) { h1 { font-size:24px; } .hero-value { font-size:2rem; } .masthead-nav { margin-left:0; } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration:.01ms !important; animation-duration:.01ms !important; } }
+</style>
+{jsonld}
+</head>
+<body>
+<div class="page">
+<div class="masthead">
+  <a class="masthead-brand" href="/">muslimdata.in</a>
+  <nav class="masthead-nav">
+    <a href="/">Dashboard</a>
+    <a href="/about/">About</a>
+    <a href="https://github.com/iqbash1/indian-muslims-dashboard">GitHub</a>
+  </nav>
+  <p class="masthead-meta">Last updated {timestamp}</p>
+</div>
+<nav class="breadcrumb" aria-label="Breadcrumb">{breadcrumb}</nav>
+<h1>{h1}</h1>
+<p class="lede">{lede}</p>
+<div class="hero"><span class="hero-value">{hero_value}</span><span class="hero-unit">{hero_unit}</span><span class="hero-year">{hero_year}</span></div>
+{polarity_html}
+{compare_html}
+<p><a class="cta" href="/#{mid}">{cta_label}</a></p>
+{national_html}
+{breakdowns_html}
+<h2>About this measurement</h2>
+<div class="meta-block">{about_html}</div>
+{related_html}
+<hr>
+<footer><p>Every value traces to a primary source with the original file archived and checksummed. muslimdata.in is independent, non-commercial, and <a href="https://github.com/iqbash1/indian-muslims-dashboard">open source</a>. Last updated {timestamp}.</p></footer>
+</div>
+</body>
+</html>
+"""
+
+
+def _community_label(rel: str) -> str:
+    return "All communities" if rel == "all" else COMMUNITY_LABEL.get(rel, rel.capitalize())
+
+
+def _landing_national_table(mid: str, unit: str) -> str:
+    """Static Community | Value table for the metric's latest national year.
+    Returns '' for muslim-only metrics (a single row isn't a comparison)."""
+    by_rel = _nat_by_religion(mid)
+    if len(by_rel) <= 1:
+        return ""
+    order = [r for r in ("muslim", "hindu") if r in by_rel]
+    order += sorted([r for r in by_rel if r not in ("muslim", "hindu", "all")],
+                    key=lambda r: -by_rel[r])
+    if "all" in by_rel:
+        order.append("all")
+    rows = "".join(
+        f'<tr><td>{html.escape(_community_label(r))}</td>'
+        f'<td>{html.escape(fmt_num(by_rel[r], unit))}</td></tr>'
+        for r in order)
+    return ('<table><thead><tr><th scope="col">Community</th><th scope="col">Latest value</th></tr></thead>'
+            f'<tbody>{rows}</tbody></table>')
+
+
+def _landing_breakdowns(m: dict, views: list) -> str:
+    """The metric's drill-down tables (state / sex / district), the same ones the
+    modal shows as tabs, rendered inline as static sections. Driven by `views`
+    (= view_map[mid]) so it never shows a breakdown the card lacks; reuses the
+    exact table renderers (stripped of their <details>/<summary> wrapper)."""
+    mid = m["id"]
+    disp = m["display"]["scorecard"]
+    unit = disp["unit_format"]
+    special = disp.get("special_render")
+    parts = []
+    for v in views:
+        vid = v["id"]
+        if vid == "by-state":
+            block = _state_details(
+                mid, "count" if special == "time_series_count" else unit,
+                value_label=(CAPTION.get(mid, "count").capitalize()
+                             if special == "time_series_count" else None))
+        elif vid == "by-sex":
+            block = _sex_details(mid, unit)
+        elif vid == "by-district":
+            block = _top100_districts_table(mid)
+        else:
+            block = ""
+        if not block:
+            continue
+        inner = re.sub(r'^<details\b[^>]*>\s*<summary>.*?</summary>', '', block, flags=re.S)
+        inner = re.sub(r'</details>\s*$', '', inner)
+        sub = f'<span class="breakdown-sub">{html.escape(v["sub"])}</span>' if v.get("sub") else ""
+        parts.append(f'<section class="breakdown"><h2>{html.escape(v["label"])}{sub}</h2>{inner}</section>')
+    return "".join(parts)
+
+
+def _related_metrics(m: dict) -> list:
+    """(id, name) of other carded metrics in the same display section."""
+    section = SECTION_OF.get(m["cluster"], m["cluster"])
+    return [(x["id"], x.get("name", x["id"])) for x in _carded_metrics()
+            if SECTION_OF.get(x["cluster"], x["cluster"]) == section and x["id"] != m["id"]]
+
+
+def _breadcrumb_html(m: dict) -> str:
+    section = SECTION_OF.get(m["cluster"], m["cluster"].capitalize())
+    name = m.get("name", m["id"])
+    return (f'<a href="/">Home</a> › <span>{html.escape(section)}</span> › '
+            f'<span aria-current="page">{html.escape(name)}</span>')
+
+
+def _breadcrumb_jsonld(m: dict) -> str:
+    name = m.get("name", m["id"])
+    obj = {
+        "@context": "https://schema.org", "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "muslimdata.in", "item": SITE_URL + "/"},
+            {"@type": "ListItem", "position": 2, "name": name, "item": f"{SITE_URL}/m/{m['id']}/"},
+        ],
+    }
+    return '<script type="application/ld+json">\n' + json.dumps(obj, indent=2, ensure_ascii=False) + "\n</script>"
+
+
+def _emit_metric_landings(out_dir: pathlib.Path, view_map: dict | None = None) -> int:
+    """Write a full, self-canonical landing page at /m/{mid}/index.html per
+    carded metric. Returns the count written."""
+    import yaml as _yaml
+    with (REPO_ROOT / "manifest" / "metrics.yaml").open() as f:
+        data = _yaml.safe_load(f)
+    view_map = view_map or {}
+    timestamp = dt.datetime.now().strftime("%-d %B %Y")
+    stubs_root = out_dir / "m"
+    stubs_root.mkdir(parents=True, exist_ok=True)
+    written = 0
+    for m in data["metrics"]:
+        disp = m.get("display", {}).get("scorecard")
+        if not disp or disp.get("include", True) is False:
+            continue
+        mid = m["id"]
+        name = m.get("name", disp.get("label", mid))
+        unit = disp["unit_format"]
+        payload = _og_data_for_metric(m) or {}
+        plain = PLAIN_DEFINITION.get(mid, "")
+        defn = " ".join((METRIC_META.get(mid, {}).get("definition") or "").split())
+        notes = " ".join((METRIC_META.get(mid, {}).get("methodology_notes") or "").split())
+        yr = payload.get("year", "")
+
+        polarity_html = ""
+        if payload.get("polarity") == "Higher is better":
+            polarity_html = '<p class="polarity"><span aria-hidden="true">↑</span> higher is better</p>'
+        elif payload.get("polarity") == "Lower is better":
+            polarity_html = '<p class="polarity"><span aria-hidden="true">↓</span> lower is better</p>'
+
+        compare_html = ""
+        if payload.get("comp_label") and payload.get("comp_value"):
+            cls = payload.get("comp_class", "mid")
+            compare_html = (f'<p class="compare">{html.escape(payload["comp_label"])}: '
+                            f'<b class="{cls}">{html.escape(payload["comp_value"])}</b></p>')
+
+        views = view_map.get(mid, [])
+        bk_names = _and_join([v["label"].replace("By ", "").lower() for v in views]) if views else ""
+        cta_label = ("Explore the interactive chart"
+                     + (f", with breakdowns by {bk_names}" if bk_names else "") + " →")
+
+        nt = _landing_national_table(mid, unit)
+        national_html = (f'<h2>Latest figures by community{(" (" + str(yr) + ")") if yr else ""}</h2>{nt}'
+                         if nt else "")
+        breakdowns_html = _landing_breakdowns(m, views)
+
+        about_parts = []
+        if defn:
+            about_parts.append(f'<p><b>Definition.</b> {html.escape(defn)}</p>')
+        if notes:
+            about_parts.append(f'<p><b>Methodology.</b> {html.escape(notes)}</p>')
+        docs = _source_documents(mid)
+        if docs:
+            links = " · ".join(
+                f'<a href="{html.escape(u)}" target="_blank" rel="noopener">{html.escape(l)}</a>'
+                for _, l, u in docs)
+            about_parts.append(f'<p class="src-note"><b>Sources.</b> {links}. '
+                               f'Data file: <a href="/canonical/{mid}.csv">{mid}.csv</a>.</p>')
+        else:
+            about_parts.append(f'<p class="src-note">Data file: '
+                               f'<a href="/canonical/{mid}.csv">{mid}.csv</a>.</p>')
+        about_html = "".join(about_parts)
+
+        rel = _related_metrics(m)
+        related_html = ""
+        if rel:
+            lis = "".join(f'<li><a href="/m/{rid}/">{html.escape(rname)}</a></li>'
+                          for rid, rname in rel)
+            related_html = f'<h2>Related indicators</h2><ul class="related">{lis}</ul>'
+
+        description = (f"{name} for India's Muslims, with Hindu and all-India comparison baselines. "
+                       + (defn[:180] if defn else ""))
+        if len(description) > 240:
+            description = description[:237].rstrip() + "..."
+
+        jsonld = _dataset_jsonld(m) + "\n" + _breadcrumb_jsonld(m)
+        subs = {
+            "{title}": html.escape(f"{name}: muslimdata.in"),
+            "{description}": html.escape(description),
+            "{canonical}": f"{SITE_URL}/m/{mid}/",
+            "{og_title}": html.escape(name),
+            "{og_image}": f"{SITE_URL}/og/{mid}.png",
+            "{og_image_alt}": html.escape(
+                f"{name}: Indian Muslims vs Hindu and all-India baselines on muslimdata.in"),
+            "{breadcrumb}": _breadcrumb_html(m),
+            "{h1}": html.escape(name),
+            "{lede}": html.escape(plain or (defn[:160] if defn else "")),
+            "{hero_value}": html.escape(payload.get("hero", "n/a")),
+            "{hero_unit}": html.escape(payload.get("caption", "")),
+            "{hero_year}": f"({html.escape(str(yr))})" if yr else "",
+            "{polarity_html}": polarity_html,
+            "{compare_html}": compare_html,
+            "{mid}": mid,
+            "{cta_label}": html.escape(cta_label),
+            "{national_html}": national_html,
+            "{breakdowns_html}": breakdowns_html,
+            "{about_html}": about_html,
+            "{related_html}": related_html,
+            "{timestamp}": timestamp,
+        }
+        page = LANDING_TEMPLATE
+        for k, v in subs.items():
+            page = page.replace(k, v)
+        page = page.replace("{jsonld}", jsonld)
+        d = stubs_root / mid
+        d.mkdir(parents=True, exist_ok=True)
+        (d / "index.html").write_text(page)
+        written += 1
     return written
 
 
@@ -2809,10 +3111,11 @@ def build() -> None:
     # stub pages below, and a /og/default.png used by the homepage + About.
     _emit_og_images(OUT_PATH.parent, view_map)
 
-    # Emit stub pages: /m/{mid}/index.html plus /m/{mid}/{view}/index.html per
-    # view. Each carries its own OG meta so a shared per-tab link previews with
-    # the right title/image; the body then client-redirects to the main page's
-    # #{mid}/{view} hash so the modal auto-opens on that tab.
+    # Emit the full, indexable landing page per metric at /m/{mid}/index.html
+    # (hero, data tables, methodology, sources, related links, JSON-LD), then the
+    # per-view redirect stubs at /m/{mid}/{view}/index.html (own OG meta, redirect
+    # into the #{mid}/{view} modal tab, canonical -> the landing page).
+    _emit_metric_landings(OUT_PATH.parent, view_map)
     _emit_metric_stubs(OUT_PATH.parent, view_map)
 
     # Emit the About page at /about/index.html.

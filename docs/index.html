@@ -609,6 +609,18 @@
   }
   .share-menu-item:hover svg, .share-menu-item:focus-visible svg { color: var(--accent); }
   .share-menu-item.copied, .share-menu-item.copied svg { color: var(--positive); }
+
+  /* Respect a reduced-motion preference: kill the card hover lift, chart/modal
+     transitions and any animation for visitors who ask the OS to minimise motion. */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    .card:hover { transform: none !important; }
+  }
 </style>
 </head>
 <body>
@@ -620,7 +632,7 @@
     <a href="/about/">About</a>
     <a href="https://github.com/iqbash1/indian-muslims-dashboard">GitHub</a>
   </nav>
-  <p class="masthead-meta">Last updated 7 June 2026</p>
+  <p class="masthead-meta">Last updated 8 June 2026</p>
 </div>
 <h1>The state of Muslim India, in data</h1>
 
@@ -749,7 +761,7 @@
 </div>
 
 <footer>
-  <p>Last updated 7 June 2026. Every number on this page is traced back to a primary
+  <p>Last updated 8 June 2026. Every number on this page is traced back to a primary
   source (Census of India, NCRB, NFHS, AISHE, PLFS, PRS, ECI candidate affidavits,
   and others), with the original file archived alongside its checksum so any value
   can be independently verified.</p>

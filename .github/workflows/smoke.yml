@@ -1,0 +1,41 @@
+name: smoke
+
+# Headless-browser smoke tests of the built site (tests/smoke.py): homepage,
+# modal tabs, clean per-tab URLs, the share popover, hash deep-links, per-view
+# stub redirects, and the landing pages. Complements validate.yml (which checks
+# the data) by checking the rendered behaviour.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          # Smoke tests read the generated docs/ + manifests, never the LFS
+          # sources/, so skip the LFS smudge (same lesson as validate.yml).
+          lfs: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+          cache: pip
+
+      - name: Install dependencies (build set + Playwright)
+        run: pip install -r requirements-dev.txt
+
+      - name: Install Chromium for Playwright
+        run: python -m playwright install --with-deps chromium
+
+      - name: Build docs/ (so the smoke test runs against fresh output)
+        run: python dashboard/build.py
+
+      - name: Smoke-test the rendered site
+        run: python tests/smoke.py

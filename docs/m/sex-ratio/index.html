@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <title>Sex ratio: muslimdata.in</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Sex ratio, with Hindu and all-India comparison baselines on muslimdata.in. Number of females per 1000 males in the population. A value below 1000">
+<meta name="description" content="Sex ratio for India&#x27;s Muslims, with Hindu and all-India comparison baselines. Number of females per 1000 males in the population. A value below 1000 means fewer women than men. Census series across six censuses, 1961-2011.">
 <link rel="canonical" href="https://muslimdata.in/m/sex-ratio/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#fafaf7">
 <meta property="og:title" content="Sex ratio">
-<meta property="og:description" content="Sex ratio, with Hindu and all-India comparison baselines on muslimdata.in. Number of females per 1000 males in the population. A value below 1000">
+<meta property="og:description" content="Sex ratio for India&#x27;s Muslims, with Hindu and all-India comparison baselines. Number of females per 1000 males in the population. A value below 1000 means fewer women than men. Census series across six censuses, 1961-2011.">
 <meta property="og:url" content="https://muslimdata.in/m/sex-ratio/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="muslimdata.in">
@@ -21,11 +21,61 @@
 <meta property="og:image:alt" content="Sex ratio: Indian Muslims vs Hindu and all-India baselines on muslimdata.in">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Sex ratio">
-<meta name="twitter:description" content="Sex ratio, with Hindu and all-India comparison baselines on muslimdata.in. Number of females per 1000 males in the population. A value below 1000">
+<meta name="twitter:description" content="Sex ratio for India&#x27;s Muslims, with Hindu and all-India comparison baselines. Number of females per 1000 males in the population. A value below 1000 means fewer women than men. Census series across six censuses, 1961-2011.">
 <meta name="twitter:image" content="https://muslimdata.in/og/sex-ratio.png">
-<meta http-equiv="refresh" content="0; url=/#sex-ratio">
-<script>location.replace("/#sex-ratio");</script>
-<style>body{font:14px -apple-system,system-ui,sans-serif;color:#666;padding:40px;text-align:center}</style>
+<script src="/js/analytics.js" defer></script>
+<style>
+  :root {
+    --fg:#1a1a1a; --muted:#666; --bg:#fafaf7; --card:#fff; --rule:#e6e3da;
+    --muslim:#7b1d22; --accent:#2c5f8a; --positive:#065F46; --negative:#991B1B;
+  }
+  * { box-sizing:border-box; }
+  body { font:16px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif; color:var(--fg); background:var(--bg); margin:0; }
+  .page { max-width:820px; margin:0 auto; padding:32px 24px 64px; }
+  a { color:var(--accent); }
+  .masthead { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px 16px; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--rule); }
+  .masthead-brand { font-size:14px; font-weight:600; color:var(--fg); text-decoration:none; }
+  .masthead-brand:hover { color:var(--accent); }
+  .masthead-nav { display:flex; gap:14px; margin-right:auto; margin-left:24px; }
+  .masthead-nav a { font-size:13px; color:var(--fg); text-decoration:none; font-weight:500; }
+  .masthead-nav a:hover { color:var(--accent); }
+  .masthead-meta { margin:0; font-size:12px; color:var(--muted); }
+  .breadcrumb { font-size:13px; color:var(--muted); margin:14px 0 4px; }
+  .breadcrumb a { color:var(--accent); text-decoration:none; }
+  .breadcrumb a:hover { text-decoration:underline; }
+  .breadcrumb [aria-current] { color:var(--fg); font-weight:600; }
+  h1 { font-size:30px; margin:8px 0 8px; letter-spacing:-0.01em; line-height:1.2; }
+  .lede { font-size:17px; color:var(--muted); margin:0 0 20px; max-width:60em; }
+  .hero { display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; margin:8px 0 4px; }
+  .hero-value { font-size:2.6rem; font-weight:700; letter-spacing:-.02em; color:var(--muslim); font-feature-settings:"tnum"; }
+  .hero-unit, .hero-year { font-size:15px; color:var(--muted); font-weight:500; }
+  .polarity { font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:.02em; margin:0 0 6px; font-weight:600; }
+  .polarity span { color:var(--positive); }
+  .compare { font-size:15px; color:var(--fg); margin:0 0 16px; }
+  .compare b { font-feature-settings:"tnum"; }
+  .compare b.good { color:var(--positive); } .compare b.bad { color:var(--negative); } .compare b.mid, .compare b.neutral { color:var(--muted); }
+  .cta { display:inline-block; background:var(--accent); color:#fff; text-decoration:none; font-weight:600; font-size:15px; padding:11px 18px; border-radius:8px; margin:6px 0 8px; transition:background .15s; }
+  .cta:hover { background:#234c70; }
+  h2 { font-size:19px; margin:34px 0 8px; letter-spacing:-0.005em; }
+  .breakdown-sub { font-size:13px; font-weight:400; color:var(--muted); margin-left:8px; }
+  table { width:100%; border-collapse:collapse; margin:10px 0; font-size:14px; font-feature-settings:"tnum"; }
+  th,td { text-align:right; padding:7px 10px; border-bottom:1px solid var(--rule); }
+  th:first-child, td:first-child { text-align:left; }
+  th { font-weight:600; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.04em; }
+  .scroll-table { max-height:380px; overflow-y:auto; border:1px solid var(--rule); border-radius:6px; margin:10px 0; }
+  .scroll-table table { margin:0; }
+  .scroll-table thead th { position:sticky; top:0; background:var(--card); }
+  .src-note { font-size:13px; color:var(--muted); }
+  .meta-block p { font-size:14.5px; line-height:1.6; max-width:60em; }
+  .meta-block b { color:var(--accent); }
+  ul.related { list-style:none; padding:0; margin:10px 0; display:flex; flex-wrap:wrap; gap:8px; }
+  ul.related a { display:inline-block; padding:7px 12px; border:1px solid var(--rule); border-radius:999px; background:var(--card); text-decoration:none; font-size:13px; font-weight:500; color:var(--accent); }
+  ul.related a:hover { border-color:var(--accent); }
+  hr { border:none; border-top:1px solid var(--rule); margin:36px 0 0; }
+  footer { font-size:13px; color:var(--muted); margin-top:24px; }
+  @media (max-width:560px) { h1 { font-size:24px; } .hero-value { font-size:2rem; } .masthead-nav { margin-left:0; } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration:.01ms !important; animation-duration:.01ms !important; } }
+</style>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -68,8 +118,52 @@
   "measurementTechnique": "Extracted from the published census-india-2011 source; provenance at https://muslimdata.in/m/sex-ratio/."
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "muslimdata.in",
+      "item": "https://muslimdata.in/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Sex ratio",
+      "item": "https://muslimdata.in/m/sex-ratio/"
+    }
+  ]
+}
+</script>
 </head>
 <body>
-<p>Redirecting to <a href="/#sex-ratio">muslimdata.in</a>...</p>
+<div class="page">
+<div class="masthead">
+  <a class="masthead-brand" href="/">muslimdata.in</a>
+  <nav class="masthead-nav">
+    <a href="/">Dashboard</a>
+    <a href="/about/">About</a>
+    <a href="https://github.com/iqbash1/indian-muslims-dashboard">GitHub</a>
+  </nav>
+  <p class="masthead-meta">Last updated 8 June 2026</p>
+</div>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> › <span>Demographics</span> › <span aria-current="page">Sex ratio</span></nav>
+<h1>Sex ratio</h1>
+<p class="lede">Higher means more women relative to men; a low value signals a gender imbalance favouring males.</p>
+<div class="hero"><span class="hero-value">951</span><span class="hero-unit">females per 1,000 males</span><span class="hero-year">(2011)</span></div>
+<p class="polarity"><span aria-hidden="true">↑</span> higher is better</p>
+<p class="compare">vs all communities: <b class="good">+9 ahead</b></p>
+<p><a class="cta" href="/#sex-ratio">Explore the interactive chart, with breakdowns by state →</a></p>
+<h2>Latest figures by community (2011)</h2><table><thead><tr><th scope="col">Community</th><th scope="col">Latest value</th></tr></thead><tbody><tr><td>Muslim</td><td>951</td></tr><tr><td>Hindu</td><td>939</td></tr><tr><td>Christian</td><td>1023</td></tr><tr><td>Other</td><td>1009</td></tr><tr><td>Buddhist</td><td>965</td></tr><tr><td>Jain</td><td>954</td></tr><tr><td>Sikh</td><td>903</td></tr><tr><td>All communities</td><td>943</td></tr></tbody></table>
+<section class="breakdown"><h2>By state<span class="breakdown-sub">35 states, 2011</span></h2><table class="sortable-table"><thead><tr><th class="sortable" data-col="0">State / UT</th><th class="sortable" data-col="1" data-type="num">Muslim</th><th>Hindu</th></tr></thead><tbody><tr><td>Sikkim</td><td data-sort="509.6000">510</td><td>856</td></tr><tr><td>Mizoram</td><td data-sort="553.1000">553</td><td>506</td></tr><tr><td>Dadra &amp; Nagar Haveli</td><td data-sort="678.0000">678</td><td>774</td></tr><tr><td>Daman &amp; Diu</td><td data-sort="698.9000">699</td><td>607</td></tr><tr><td>Nagaland</td><td data-sort="716.4000">716</td><td>651</td></tr><tr><td>Chandigarh</td><td data-sort="721.3000">721</td><td>803</td></tr><tr><td>Arunachal Pradesh</td><td data-sort="738.9000">739</td><td>785</td></tr><tr><td>NCT of Delhi</td><td data-sort="854.6000">855</td><td>865</td></tr><tr><td>Himachal Pradesh</td><td data-sort="855.8000">856</td><td>975</td></tr><tr><td>Punjab</td><td data-sort="862.4000">862</td><td>879</td></tr><tr><td>Andaman &amp; Nicobar Islands</td><td data-sort="873.5000">874</td><td>858</td></tr><tr><td>Haryana</td><td data-sort="895.0000">895</td><td>876</td></tr><tr><td>Uttarakhand</td><td data-sort="901.0000">901</td><td>976</td></tr><tr><td>Goa</td><td data-sort="905.0000">905</td><td>929</td></tr><tr><td>Maharashtra</td><td data-sort="910.6000">911</td><td>928</td></tr><tr><td>Meghalaya</td><td data-sort="922.5000">923</td><td>863</td></tr><tr><td>Jammu &amp; Kashmir</td><td data-sort="934.5000">935</td><td>795</td></tr><tr><td>Uttar Pradesh</td><td data-sort="937.0000">937</td><td>907</td></tr><tr><td>Bihar</td><td data-sort="941.4000">941</td><td>913</td></tr><tr><td>Jharkhand</td><td data-sort="943.1000">943</td><td>935</td></tr><tr><td>Gujarat</td><td data-sort="944.2000">944</td><td>916</td></tr><tr><td>Madhya Pradesh</td><td data-sort="945.0000">945</td><td>929</td></tr><tr><td>Rajasthan</td><td data-sort="946.2000">946</td><td>927</td></tr><tr><td>West Bengal</td><td data-sort="950.5000">951</td><td>948</td></tr><tr><td>Chhattisgarh</td><td data-sort="952.0000">952</td><td>990</td></tr><tr><td>Assam</td><td data-sort="954.7000">955</td><td>958</td></tr><tr><td>Odisha</td><td data-sort="956.4000">956</td><td>977</td></tr><tr><td>Tripura</td><td data-sort="963.8000">964</td><td>959</td></tr><tr><td>Karnataka</td><td data-sort="969.4000">969</td><td>972</td></tr><tr><td>Andhra Pradesh</td><td data-sort="978.1000">978</td><td>993</td></tr><tr><td>Manipur</td><td data-sort="991.9000">992</td><td>982</td></tr><tr><td>Lakshadweep</td><td data-sort="997.9000">998</td><td>115</td></tr><tr><td>Tamil Nadu</td><td data-sort="1014.8000">1015</td><td>992</td></tr><tr><td>Puducherry</td><td data-sort="1072.9000">1073</td><td>1030</td></tr><tr><td>Kerala</td><td data-sort="1124.7000">1125</td><td>1077</td></tr></tbody></table></section>
+<h2>About this measurement</h2>
+<div class="meta-block"><p><b>Definition.</b> Number of females per 1000 males in the population. A value below 1000 means fewer women than men. Census series across six censuses, 1961-2011.</p><p><b>Methodology.</b> Females / males * 1000 from Census religion tables across six censuses (1961-2011): 1961 Social &amp; Cultural Tables C-VII, the 1971 and 1981 census religion papers, 1991 C-09, 2001 C-01 and 2011 C-15. National for all six years; state-level for 2001 and 2011. Two all-India figures exclude a state where the Census could not be held: 1981 excludes Assam and 1991 excludes Jammu &amp; Kashmir. The 2021 Census is delayed.</p><p class="src-note"><b>Sources.</b> <a href="https://censusindia.gov.in/nada/index.php/catalog/11400/download/14513/DDW-0000C-15.XLSX" target="_blank" rel="noopener">Census 2011 · C-series</a> · <a href="https://censusindia.gov.in/nada/index.php/catalog/32022/download/35203/22949_1961_SCT.pdf" target="_blank" rel="noopener">Census 1961 · C-VII Religion</a> · <a href="https://censusindia.gov.in/nada/index.php/catalog/31626/download/34807/24477_1971_REI.pdf" target="_blank" rel="noopener">Census 1971 · Paper 2 of 1972</a> · <a href="https://censusindia.gov.in/nada/index.php/catalog/30879/download/34060/26795_1981_HH.pdf" target="_blank" rel="noopener">Census 1981 · HH-15 (Paper 3 of 1984)</a> · <a href="https://censusindia.gov.in/nada/index.php/catalog/35737/download/39400/1991-C09T-0100.xlsx" target="_blank" rel="noopener">Census 1991 · C-9 Religion</a> · <a href="https://censusindia.gov.in/nada/index.php/catalog/21462/download/24594/PC01_C01_00.xls" target="_blank" rel="noopener">Census 2001 · C-series</a>. Data file: <a href="/canonical/sex-ratio.csv">sex-ratio.csv</a>.</p></div>
+<h2>Related indicators</h2><ul class="related"><li><a href="/m/pop-share/">Muslim share of population</a></li><li><a href="/m/urban-share/">Urban share</a></li><li><a href="/m/district-concentration-top100/">Concentration in top 100 districts</a></li></ul>
+<hr>
+<footer><p>Every value traces to a primary source with the original file archived and checksummed. muslimdata.in is independent, non-commercial, and <a href="https://github.com/iqbash1/indian-muslims-dashboard">open source</a>. Last updated 8 June 2026.</p></footer>
+</div>
 </body>
 </html>
