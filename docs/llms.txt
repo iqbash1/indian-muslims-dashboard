@@ -1,0 +1,38 @@
+# muslimdata.in
+
+> Indicators of living conditions for India's Muslim population, with Hindu and all-India comparison baselines on every metric. Covers population, education, employment, health, representation, and justice. Provenance-traced, Sachar-Committee-style measurement.
+
+muslimdata.in is a static, source-traceable dashboard of living-conditions indicators for India's Muslim population, with Hindu and all-India comparison baselines on every metric. It is modelled on the Hawaii state dashboard pattern. Every value traces to a primary government source (Census of India, NFHS, PLFS, NCRB, AISHE, Sachar Committee) with the original file archived and checksummed.
+
+## Reading the data
+- Each metric has a page at /m/{id}/ and a machine-readable CSV at /canonical/{id}.csv (CORS-enabled). CSV columns: metric_id, geography_level, geography_code, year, religion, value, denominator, source_id, source_document, methodology_note.
+- Comparisons are Muslim vs Hindu vs all-India; each metric shows the year its data is current to.
+- The 2021 Census is delayed, so demographic metrics are 2011 or earlier.
+
+## Metrics
+- Muslim share of population (1961-2011; source: census-india-2011): https://muslimdata.in/m/pop-share/ | data: https://muslimdata.in/canonical/pop-share.csv
+- Urban share (2001-2011; source: census-india-2011): https://muslimdata.in/m/urban-share/ | data: https://muslimdata.in/canonical/urban-share.csv
+- Sex ratio (1961-2011; source: census-india-2011): https://muslimdata.in/m/sex-ratio/ | data: https://muslimdata.in/canonical/sex-ratio.csv
+- Concentration in top 100 districts (2011; source: census-india-2011): https://muslimdata.in/m/district-concentration-top100/ | data: https://muslimdata.in/canonical/district-concentration-top100.csv
+- Literacy rate (2001-2011; source: census-india-2011): https://muslimdata.in/m/lit-7plus/ | data: https://muslimdata.in/canonical/lit-7plus.csv
+- Higher education enrolment rate (2021; source: aishe): https://muslimdata.in/m/ger-higher-ed/ | data: https://muslimdata.in/canonical/ger-higher-ed.csv
+- Muslim students in higher education (2021; source: aishe): https://muslimdata.in/m/muslim-higher-ed-enrolment/ | data: https://muslimdata.in/canonical/muslim-higher-ed-enrolment.csv
+- Labour force participation (2023; source: plfs): https://muslimdata.in/m/lfpr-15plus/ | data: https://muslimdata.in/canonical/lfpr-15plus.csv
+- Worker population ratio (2023; source: plfs): https://muslimdata.in/m/wpr-15plus/ | data: https://muslimdata.in/canonical/wpr-15plus.csv
+- Workers in salaried jobs (2023; source: plfs): https://muslimdata.in/m/salaried-share/ | data: https://muslimdata.in/canonical/salaried-share.csv
+- Monthly spending per person (2004; source: sachar-committee-2006): https://muslimdata.in/m/mpce/ | data: https://muslimdata.in/canonical/mpce.csv
+- Infant mortality rate (1998-2020; source: nfhs-5): https://muslimdata.in/m/imr/ | data: https://muslimdata.in/canonical/imr.csv
+- Child stunting (under 5) (2020; source: nfhs-5): https://muslimdata.in/m/stunting-u5/ | data: https://muslimdata.in/canonical/stunting-u5.csv
+- Institutional delivery rate (1998-2020; source: nfhs-5): https://muslimdata.in/m/inst-delivery/ | data: https://muslimdata.in/canonical/inst-delivery.csv
+- Anaemia in women (1998-2020; source: nfhs-5): https://muslimdata.in/m/women-anemia/ | data: https://muslimdata.in/canonical/women-anemia.csv
+- Toilet access (2020; source: nfhs-5): https://muslimdata.in/m/improved-sanitation/ | data: https://muslimdata.in/canonical/improved-sanitation.csv
+- Muslim share of the Lok Sabha (1952-2024; source: prs-eci-affidavits): https://muslimdata.in/m/ls-share/ | data: https://muslimdata.in/canonical/ls-share.csv
+- Muslim share of state assemblies (2020-2026; source: prs-eci-affidavits): https://muslimdata.in/m/mla-share/ | data: https://muslimdata.in/canonical/mla-share.csv
+- Incarceration rate (2022; source: ncrb-prison): https://muslimdata.in/m/prison-rate-per-100k/ | data: https://muslimdata.in/canonical/prison-rate-per-100k.csv
+- Undertrial rate (2022; source: ncrb-prison): https://muslimdata.in/m/undertrial-rate-per-100k/ | data: https://muslimdata.in/canonical/undertrial-rate-per-100k.csv
+- Communal incidents recorded by police (2015-2023; source: ncrb-crime): https://muslimdata.in/m/communal-incidents-govt/ | data: https://muslimdata.in/canonical/communal-incidents-govt.csv
+
+## Pages
+- Home: https://muslimdata.in/
+- About and methodology: https://muslimdata.in/about/
+- Per-source methodology runbooks: https://muslimdata.in/runbooks/

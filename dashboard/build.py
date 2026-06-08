@@ -453,6 +453,7 @@ TEMPLATE = """<!DOCTYPE html>
 <meta name="twitter:title" content="{site_title}">
 <meta name="twitter:description" content="{site_description}">
 <meta name="twitter:image" content="{site_url}/og/default.png">
+{home_jsonld}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="js/analytics.js" defer></script>
 <style>
@@ -1608,6 +1609,7 @@ STUB_TEMPLATE = """<!DOCTYPE html>
 <meta http-equiv="refresh" content="0; url={site_url}/#{mid}">
 <script>location.replace({redirect_target});</script>
 <style>body{{font:14px -apple-system,system-ui,sans-serif;color:#666;padding:40px;text-align:center}}</style>
+<!--DATASET_JSONLD-->
 </head>
 <body>
 <p>Redirecting to <a href="{site_url}/#{mid}">muslimdata.in</a>...</p>
@@ -1881,6 +1883,7 @@ def _emit_metric_stubs(out_dir: pathlib.Path) -> int:
             og_image_alt=html.escape(f"{name}: Indian Muslims vs Hindu and all-India baselines on muslimdata.in"),
             redirect_target=json.dumps(f"{SITE_URL}/#{mid}"),
         )
+        page = page.replace("<!--DATASET_JSONLD-->", _dataset_jsonld(m))
         stub_dir = stubs_root / mid
         stub_dir.mkdir(exist_ok=True)
         (stub_dir / "index.html").write_text(page)
@@ -2138,6 +2141,163 @@ def _emit_about_page(out_dir: pathlib.Path, timestamp: str) -> None:
     print(f"wrote {(about_dir / 'index.html').relative_to(REPO_ROOT)} ({len(page):,} bytes)")
 
 
+# ----- SEO / AI-discoverability (patterns adopted from sibling hawaiidashboard.org) -----
+# Machine-readable structured data (schema.org Dataset per metric -> Google
+# Dataset Search + AI answer engines), an llms.txt site summary, and a sitemap
+# with real <lastmod> taken from git (so the build stays byte-stable between
+# rebuilds — unlike a now()-stamped date).
+
+def _carded_metrics() -> list[dict]:
+    """Metrics with a scorecard display block (the ones actually rendered)."""
+    import yaml as _yaml
+    with (REPO_ROOT / "manifest" / "metrics.yaml").open() as f:
+        data = _yaml.safe_load(f)
+    return [
+        m for m in data["metrics"]
+        if (d := m.get("display", {}).get("scorecard")) and d.get("include", True) is not False
+    ]
+
+
+def _metric_coverage(mid: str):
+    """(sorted distinct years, set of geography_levels) from the canonical CSV."""
+    rows = load_metric(mid, sex=None)
+    years = sorted({int(r["year"]) for r in rows if str(r.get("year", "")).strip().isdigit()})
+    geos = {r.get("geography_level", "").strip() for r in rows if r.get("geography_level")}
+    return years, geos
+
+
+def _git_last_date(rel_path: str) -> str:
+    """Last git commit date (YYYY-MM-DD) for a repo-relative path, for sitemap
+    <lastmod>. Git-derived (deterministic given repo state) so the generated
+    sitemap stays byte-stable between rebuilds; '' if git is unavailable."""
+    import subprocess
+    try:
+        r = subprocess.run(
+            ["git", "log", "-1", "--format=%cs", "--", rel_path],
+            cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=10,
+        )
+        return r.stdout.strip()
+    except Exception:
+        return ""
+
+
+def _dataset_jsonld(m: dict) -> str:
+    """schema.org Dataset block for a metric stub page. Brace-heavy JSON, so
+    callers must inject it via str.replace(), never str.format()."""
+    mid = m["id"]
+    name = m.get("name", mid)
+    defn = " ".join((m.get("definition") or "").split())
+    desc = defn or f"{name} for India's Muslim population, with Hindu and all-India comparison baselines."
+    years, _geos = _metric_coverage(mid)
+    src = (m.get("sources") or {}).get("primary", "")
+    obj = {
+        "@context": "https://schema.org",
+        "@type": "Dataset",
+        "name": f"{name}: India, by religion",
+        "description": desc[:4900],
+        "url": f"{SITE_URL}/m/{mid}/",
+        "license": "https://github.com/iqbash1/indian-muslims-dashboard",
+        "isAccessibleForFree": True,
+        "creator": {"@type": "Organization", "name": "muslimdata.in", "url": SITE_URL},
+        "publisher": {"@type": "Organization", "name": "muslimdata.in", "url": SITE_URL},
+        "spatialCoverage": {"@type": "Place", "name": "India"},
+        "variableMeasured": name,
+        "keywords": [k for k in ["India", "Indian Muslims", "religion", m.get("cluster", ""), name] if k],
+        "distribution": [{
+            "@type": "DataDownload",
+            "encodingFormat": "text/csv",
+            "contentUrl": f"{SITE_URL}/canonical/{mid}.csv",
+        }],
+    }
+    if years:
+        obj["temporalCoverage"] = f"{years[0]}/{years[-1]}" if years[0] != years[-1] else str(years[0])
+    if src:
+        obj["measurementTechnique"] = f"Extracted from the published {src} source; provenance at {SITE_URL}/m/{mid}/."
+    return '<script type="application/ld+json">\n' + json.dumps(obj, indent=2, ensure_ascii=False) + "\n</script>"
+
+
+def _home_jsonld() -> str:
+    """Organization + WebSite + ItemList for the home page; the ItemList lets
+    search engines discover every metric page from the root."""
+    items = [
+        {"@type": "ListItem", "position": i + 1, "url": f"{SITE_URL}/m/{m['id']}/", "name": m.get("name", m["id"])}
+        for i, m in enumerate(_carded_metrics())
+    ]
+    obj = {
+        "@context": "https://schema.org",
+        "@graph": [
+            {"@type": "Organization", "@id": f"{SITE_URL}/#org", "name": "muslimdata.in",
+             "url": SITE_URL, "description": SITE_DESCRIPTION},
+            {"@type": "WebSite", "@id": f"{SITE_URL}/#website", "name": SITE_TITLE, "url": SITE_URL,
+             "description": SITE_DESCRIPTION, "publisher": {"@id": f"{SITE_URL}/#org"}},
+            {"@type": "ItemList", "name": "Living-conditions indicators for India's Muslims",
+             "itemListElement": items},
+        ],
+    }
+    return '<script type="application/ld+json">\n' + json.dumps(obj, indent=2, ensure_ascii=False) + "\n</script>"
+
+
+def _emit_llms_txt(out_dir: pathlib.Path) -> None:
+    """Plain-text site summary for AI/LLM crawlers (llms.txt convention) so
+    answer engines describe the dashboard and cite the right per-metric CSVs."""
+    L = [
+        "# muslimdata.in", "",
+        f"> {SITE_DESCRIPTION}", "",
+        "muslimdata.in is a static, source-traceable dashboard of living-conditions "
+        "indicators for India's Muslim population, with Hindu and all-India comparison "
+        "baselines on every metric. It is modelled on the Hawaii state dashboard pattern. "
+        "Every value traces to a primary government source (Census of India, NFHS, PLFS, "
+        "NCRB, AISHE, Sachar Committee) with the original file archived and checksummed.",
+        "",
+        "## Reading the data",
+        "- Each metric has a page at /m/{id}/ and a machine-readable CSV at /canonical/{id}.csv "
+        "(CORS-enabled). CSV columns: metric_id, geography_level, geography_code, year, religion, "
+        "value, denominator, source_id, source_document, methodology_note.",
+        "- Comparisons are Muslim vs Hindu vs all-India; each metric shows the year its data is current to.",
+        "- The 2021 Census is delayed, so demographic metrics are 2011 or earlier.",
+        "",
+        "## Metrics",
+    ]
+    for m in _carded_metrics():
+        mid, name = m["id"], m.get("name", m["id"])
+        years, _ = _metric_coverage(mid)
+        span = f"{years[0]}-{years[-1]}" if years and years[0] != years[-1] else (str(years[0]) if years else "n/a")
+        src = (m.get("sources") or {}).get("primary", "")
+        L.append(f"- {name} ({span}{'; source: ' + src if src else ''}): "
+                 f"{SITE_URL}/m/{mid}/ | data: {SITE_URL}/canonical/{mid}.csv")
+    L += ["", "## Pages",
+          f"- Home: {SITE_URL}/",
+          f"- About and methodology: {SITE_URL}/about/",
+          f"- Per-source methodology runbooks: {SITE_URL}/runbooks/"]
+    (out_dir / "llms.txt").write_text("\n".join(L) + "\n")
+
+
+def _emit_sitemap(out_dir: pathlib.Path) -> None:
+    """sitemap.xml of home + About + every per-metric page, with <lastmod> from
+    git (a metric page is as fresh as its canonical CSV's last commit). Replaces
+    the previously hand-maintained, lastmod-less file."""
+    build_date = _git_last_date("dashboard/build.py")
+    entries = [
+        (f"{SITE_URL}/", build_date, "weekly", "1.0"),
+        (f"{SITE_URL}/about/", build_date, "monthly", "0.5"),
+    ]
+    for m in _carded_metrics():
+        mid = m["id"]
+        entries.append((f"{SITE_URL}/m/{mid}/", _git_last_date(f"canonical/{mid}.csv"), "monthly", "0.8"))
+    P = ['<?xml version="1.0" encoding="UTF-8"?>',
+         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    for loc, lastmod, cf, pr in entries:
+        P.append("  <url>")
+        P.append(f"    <loc>{loc}</loc>")
+        if lastmod:
+            P.append(f"    <lastmod>{lastmod}</lastmod>")
+        P.append(f"    <changefreq>{cf}</changefreq>")
+        P.append(f"    <priority>{pr}</priority>")
+        P.append("  </url>")
+    P.append("</urlset>")
+    (out_dir / "sitemap.xml").write_text("\n".join(P) + "\n")
+
+
 def build() -> None:
     # Status-bar counts derived from canonical (SSOT — never goes stale).
     n_metrics = len(SCORECARD_SPEC)
@@ -2199,6 +2359,7 @@ def build() -> None:
         "{site_title}": html.escape(SITE_TITLE),
         "{site_description}": html.escape(SITE_DESCRIPTION),
         "{site_url}": SITE_URL,
+        "{home_jsonld}": _home_jsonld(),
     }
     html_out = TEMPLATE
     for k, v in substitutions.items():
@@ -2240,10 +2401,15 @@ def build() -> None:
     # Emit the About page at /about/index.html.
     _emit_about_page(OUT_PATH.parent, substitutions["{timestamp}"])
 
+    # SEO / AI-discoverability: llms.txt summary + sitemap with git-dated lastmod.
+    _emit_llms_txt(OUT_PATH.parent)
+    _emit_sitemap(OUT_PATH.parent)
+
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUT_PATH.write_text(html_out)
     print(f"wrote {OUT_PATH.relative_to(REPO_ROOT)} ({len(html_out):,} bytes)")
     print(f"wrote {analytics_out.relative_to(REPO_ROOT)} ({len(js_text):,} bytes)")
+    print("wrote docs/llms.txt + docs/sitemap.xml (SEO / AI discoverability)")
 
 
 # ============================================================================
