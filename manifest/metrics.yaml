@@ -90,12 +90,14 @@ metrics:
       means fewer women than men. Census series across six censuses, 1961-2011.
     sources: {primary: census-india-2011}
     geography_levels: [national, state, district]
-    religions: [muslim, hindu, sc, st, all]
+    religions: [muslim, hindu, christian, sikh, buddhist, jain, other, all]
     methodology_notes: |
       Females / males * 1000 from Census religion tables across six censuses
       (1961-2011): 1961 Social & Cultural Tables C-VII, the 1971 and 1981
       census religion papers, 1991 C-09, 2001 C-01 and 2011 C-15. National for
-      all six years; state-level for 2001 and 2011. The 2021 Census is delayed.
+      all six years; state-level for 2001 and 2011. Two all-India figures
+      exclude a state where the Census could not be held: 1981 excludes Assam
+      and 1991 excludes Jammu & Kashmir. The 2021 Census is delayed.
     comparison_baselines: [hindu, all]
     phase: 1
     status: defined
@@ -145,19 +147,18 @@ metrics:
     definition: |
       Share of population aged 7 and above who can both read and write
       with understanding in any language.
-    sources:
-      primary: census-india-2011
-      cross_check: [plfs]
+    sources: {primary: census-india-2011}
     geography_levels: [national, state, district]
-    religions: [muslim, hindu, sc, st, all]
+    religions: [muslim, hindu, christian, sikh, buddhist, jain, other, all]
     methodology_notes: |
-      Census defines literacy as ability to read and write with understanding
-      in any language. PLFS uses a similar but not identical definition;
-      document divergence on tile.
-    break_notes: |
-      Census vs PLFS series use slightly different definitions; do not connect
-      them on the same line chart.
-    comparison_baselines: [hindu, sc, all]
+      Census defines literacy as the ability to read and write with
+      understanding in any language. Two-census series (2001 and 2011, Census
+      C-09 education-by-religion tables); both rounds share the same Census
+      definition, so the 2001 -> 2011 change is a like-for-like comparison.
+      PLFS reports a broadly similar literacy measure on a slightly different
+      definition and is a possible future cross-check; no PLFS series is
+      plotted here today.
+    comparison_baselines: [hindu, all]
     phase: 1
     status: defined
     display:
