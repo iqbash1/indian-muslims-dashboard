@@ -13,7 +13,7 @@
 #   - playwright tests/smoke.py (headless-browser smoke tests of the built docs/).
 #                After install, fetch the browser once: `python -m playwright install chromium`.
 -r requirements.txt
-Pillow>=10.0
+Pillow>=12.2.0
 jsonschema>=4.20
 requests>=2.31
 truststore>=0.9
