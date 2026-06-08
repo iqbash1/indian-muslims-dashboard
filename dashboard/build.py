@@ -2426,7 +2426,7 @@ PLAIN_DEFINITION = {
     "improved-sanitation": "What share of households has a toilet of any type.",
     "mpce": "How much a typical person in a community spends in a month, on food, rent, fuel, clothes and everything else. In India this is the usual way to measure how well-off people are, because reliable income data does not exist.",
     "ls-share": "Of the 543 seats in India's national parliament (Lok Sabha), what share is held by Muslim MPs.",
-    "mla-share": "Across all 30 state and UT legislative assemblies that hold elections, what share of MLA seats is held by Muslims.",
+    "mla-share": "Across all 31 state and UT legislative assemblies that hold elections, what share of MLA seats is held by Muslims.",
     "prison-rate-per-100k": "For every 100,000 people of a religion, how many are in prison. Allows fair comparison across communities of different size.",
     "undertrial-rate-per-100k": "For every 100,000 people of a religion, how many are in prison awaiting trial (not yet convicted).",
     "communal-incidents-govt": "Number of communal or religious rioting incidents recorded in police records each year (NCRB).",

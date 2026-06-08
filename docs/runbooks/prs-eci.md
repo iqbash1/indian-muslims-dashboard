@@ -7,7 +7,7 @@
   candidate-affidavit data.
 - Role: feeds the representation-cluster metrics **`ls-share`** (Muslim share
   of Lok Sabha members, 18-point series 1952→2024) and **`mla-share`** (Muslim
-  share of state legislative assembly members, currently 30 state/UT
+  share of state legislative assembly members, currently 31 state/UT
   assemblies covered).
 
 ## Why this is a SECONDARY manual-entry source (no L1 archive)
@@ -49,12 +49,12 @@ discrepancy.
 - Recent: 4.42% (2024, 24/543)
 - Always below the ~14% Muslim population share.
 
-**mla-share** — 30 state/UT assemblies (most-recent election per assembly):
+**mla-share** — 31 state/UT assemblies (most-recent election per assembly):
 - Highest: J&K 2024 (54/90 = 60%) — first election since Article 370 reorg.
 - Lowest: HP, Goa, Mizoram, Nagaland, Sikkim, Arunachal, Chhattisgarh,
   Tripura, Meghalaya — 0% (most have never elected a Muslim MLA in state
   history).
-- National aggregate: ~6% across the 30 covered assemblies.
+- National aggregate: ~6% across the 31 covered assemblies.
 
 ## Caveats (carried on canonical rows)
 

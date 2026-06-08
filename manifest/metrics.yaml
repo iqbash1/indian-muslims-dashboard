@@ -56,18 +56,19 @@ metrics:
     unit: percent
     higher_is_better: null
     definition: |
-      Percentage of each community living in urban areas. Census 2011 Table C-01
+      Percentage of each community living in urban areas. Census Table C-01
       provides religion × residence (rural/urban) × sex breakdowns at national,
-      state, district, and town levels.
+      state, district, and town levels; series covers Census 2001 and 2011.
     sources: {primary: census-india-2011}
     geography_levels: [national, state]
     religions: [muslim, hindu, christian, sikh, buddhist, jain, other, all]
     methodology_notes: |
-      Urban share = urban_persons / total_persons * 100, per Census 2011 C-01.
-      Single-year metric (no time series, 2021 Census delayed). Muslims (~40%)
-      and Christians (~40%) are markedly more urbanised than the all-India
-      average (~31%), a Sachar-era fact that conditions outcomes downstream
-      (urban-poor labour markets, segregation, housing access).
+      Urban share = urban_persons / total_persons * 100, per Census C-01.
+      Two-census series (2001 and 2011) at national and state level; the 2021
+      Census is delayed. Muslims (~40%) and Christians (~40%) are markedly more
+      urbanised than the all-India average (~31%), a Sachar-era fact that
+      conditions outcomes downstream (urban-poor labour markets, segregation,
+      housing access).
     comparison_baselines: [hindu, all]
     phase: 1
     status: defined
@@ -84,9 +85,17 @@ metrics:
     cluster: demographics
     unit: females_per_1000_males
     higher_is_better: null
+    definition: |
+      Number of females per 1000 males in the population. A value below 1000
+      means fewer women than men. Census series across six censuses, 1961-2011.
     sources: {primary: census-india-2011}
     geography_levels: [national, state, district]
     religions: [muslim, hindu, sc, st, all]
+    methodology_notes: |
+      Females / males * 1000 from Census religion tables across six censuses
+      (1961-2011): 1961 Social & Cultural Tables C-VII, the 1971 and 1981
+      census religion papers, 1991 C-09, 2001 C-01 and 2011 C-15. National for
+      all six years; state-level for 2001 and 2011. The 2021 Census is delayed.
     comparison_baselines: [hindu, all]
     phase: 1
     status: defined
@@ -368,18 +377,22 @@ metrics:
     higher_is_better: false
     definition: |
       Probability of dying before the first birthday, expressed per 1000
-      live births. Reference period: 5 years preceding NFHS-5 (2014-2020 approx).
+      live births, for the period preceding each survey round.
     sources:
       primary: nfhs-5
       cross_check: [census-india-2011]
     geography_levels: [national]
     religions: [muslim, hindu, all]
     methodology_notes: |
-      NFHS-5 Table 7.2 publishes URBAN and RURAL IMR by religion separately;
-      no published total-residence-by-religion column. National total computed
-      as population-weighted average using Census 2011 urban/rural population
-      by religion as weights. Census 2011 weights vs NFHS 2019-21 data
-      introduces <1% drift (urban/rural shares by religion are stable).
+      Time series across four NFHS rounds: NFHS-2 (1998-99), NFHS-3 (2005-06),
+      NFHS-4 (2015-16) and NFHS-5 (2019-21); years 1998/2005/2015/2020 are the
+      round labels. For NFHS-5, Table 7.2 publishes URBAN and RURAL IMR by
+      religion separately with no total-residence-by-religion column, so the
+      national total is a population-weighted average using Census 2011
+      urban/rural population by religion as weights (<1% drift; urban/rural
+      shares by religion are stable). Earlier rounds come from each report's
+      religion table; every canonical row's methodology_note records its exact
+      source.
     comparison_baselines: [hindu, all]
     phase: 1
     status: defined
@@ -427,16 +440,20 @@ metrics:
     unit: percent
     higher_is_better: true
     definition: |
-      Percentage of live births in the 5 years preceding NFHS-5 that took
-      place in a health facility (public or private), among women age 15-49.
+      Percentage of live births in the years preceding each survey round that
+      took place in a health facility (public or private), among women age 15-49.
     sources: {primary: nfhs-5}
     geography_levels: [national]
     religions: [muslim, hindu, all]
     methodology_notes: |
-      NFHS-5 Table 8.13 (page 324). The "all" value is computed as a
-      sample-size-weighted average of the 7 religion rates (published
-      Total row was hard to extract cleanly from the dual-column PDF
-      layout). Matches NFHS-5 published 88.6% within rounding.
+      Time series across four NFHS rounds: NFHS-2 (1998-99), NFHS-3 (2005-06),
+      NFHS-4 (2015-16) and NFHS-5 (2019-21); years 1998/2005/2015/2020 are the
+      round labels. For NFHS-5, Table 8.13 (page 324); the "all" value is a
+      sample-size-weighted average of the 7 religion rates (the published Total
+      row was hard to extract cleanly from the dual-column PDF layout) and
+      matches NFHS-5's published 88.6% within rounding. Earlier rounds come from
+      each report's facility-delivery religion table; every canonical row's
+      methodology_note records its exact source.
     comparison_baselines: [hindu, all]
     phase: 1
     status: defined
@@ -460,11 +477,14 @@ metrics:
     geography_levels: [national]
     religions: [muslim, hindu, all]
     methodology_notes: |
-      NFHS-5 Table 10.23.1 reports total-residence women's anaemia by religion
-      directly. Year=2020 represents the midpoint of NFHS-5 fieldwork.
-      Note: NFHS revised anaemia cut-offs between NFHS-4 (Hb <12.0 g/dl) and
-      NFHS-5 (same cut-off, but capillary blood vs venous, which affects comparability
-      across rounds). Treat as methodology break for NFHS-4 -> NFHS-5 trends.
+      Time series across four NFHS rounds: NFHS-2 (1998-99), NFHS-3 (2005-06),
+      NFHS-4 (2015-16) and NFHS-5 (2019-21); years 1998/2005/2015/2020 are the
+      round labels. For NFHS-5, Table 10.23.1 reports total-residence women's
+      anaemia by religion directly. NFHS changed anaemia measurement between
+      NFHS-4 and NFHS-5 (capillary vs venous blood at the same Hb <12.0 g/dl
+      cut-off), which breaks cross-round comparability, so the three pre-NFHS-5
+      rounds carry break_flag=true — do not read the 2015 -> 2020 step as a
+      pure trend.
     comparison_baselines: [hindu, all]
     phase: 1
     status: defined
@@ -589,7 +609,7 @@ metrics:
     higher_is_better: null
     definition: |
       Percentage of state legislative assembly seats held by Muslim MLAs.
-      National aggregate (~6%) plus per-assembly values for all 30
+      National aggregate (~6%) plus per-assembly values for all 31
       state + UT assemblies that hold elections (28 states + Delhi,
       Puducherry, J&K, most-recent election per assembly).
     sources: {primary: prs-eci-affidavits}
@@ -601,12 +621,12 @@ metrics:
       religion classified post-election by journalists (Maktoob, Clarion,
       India Forum, The Wire, Deccan Herald, Outlook, Radiance Weekly,
       Free Press Journal, ummid.com, thenewzradar). National aggregate
-      ~6% across the 30 covered assemblies. Highest: J&K 60% (2024,
+      ~6% across the 31 covered assemblies. Highest: J&K 60% (2024,
       first election since Article 370 reorg); Kerala 25%, Assam 24.6%.
       Lowest: HP / Goa / Mizoram / Nagaland / Sikkim / Arunachal /
-      Chhattisgarh / Tripura, all 0% (most have never elected a Muslim MLA
-      in state history). Each row's methodology_note cites the source
-      compilation(s) used.
+      Chhattisgarh / Tripura / Meghalaya, all 0% (most have never elected a
+      Muslim MLA in state history). Each row's methodology_note cites the
+      source compilation(s) used.
     comparison_baselines: []
     phase: 2
     status: defined
@@ -740,14 +760,17 @@ metrics:
     definition: |
       Number of communal/religious rioting incidents recorded by NCRB under
       IPC Sec.147-151 (rioting), specifically the "Communal/Religious"
-      sub-classification. National annual totals (2020-2022) plus state-level
-      breakdown for 2022.
+      sub-classification. National annual totals (2015-2023) plus state-level
+      breakdown for 2022 and 2023.
     sources: {primary: ncrb-crime}
     geography_levels: [national, state]
     religions: [all]
     methodology_notes: |
-      NCRB Crime in India 2022, Table 1.2 (national, 2020-2022). Incident
-      counts only, with no religion of victim/perpetrator in the published table.
+      NCRB Crime in India, Table 1.2 row 23.1 'Communal/Religious' rioting.
+      National series 2015-2023, compiled across multiple Crime in India
+      volumes (CII 2017 through 2023, each carrying a multi-year national
+      panel); state-level breakdown for 2022 and 2023. Incident counts only,
+      with no religion of victim/perpetrator in the published table.
       Caveat: several states stopped recording 'communal' as a separate
       crime category since ~2017, which deflates the national total over
       time. Civil-society compilations typically report higher counts.
