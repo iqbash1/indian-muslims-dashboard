@@ -834,6 +834,12 @@ TEMPLATE = """<!DOCTYPE html>
     .modal { padding: 24px 18px; }
     .modal-body .card-chartwrap { height: 320px !important; }
     .modal-body .card-chartscroll { max-height: 320px !important; }
+    /* Tabs scroll horizontally instead of wrapping, and shed their sub-labels,
+       so a 3-tab bar stays one tidy row on a phone (Hawaii-dashboard pattern). */
+    .modal-tabs { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .modal-tabs::-webkit-scrollbar { display: none; }
+    .modal-tab { padding: 8px 12px; white-space: nowrap; flex-shrink: 0; min-height: 44px; }
+    .modal-tab .tab-sub { display: none; }
   }
   @media (max-width: 767px) {
     /* Reserve room at the top of the modal for the absolutely-positioned
@@ -841,6 +847,48 @@ TEMPLATE = """<!DOCTYPE html>
        underneath the buttons on a narrow screen. */
     .modal { padding-top: 60px; }
   }
+
+  /* --- Metric "views" as modal tabs (Hawaii-dashboard pattern) ---
+     A metric's drill-downs (by state, by sex, by district) live in the card
+     DOM but are HIDDEN on the card face; the modal lifts each into its own
+     tab so the homepage stays uncluttered. Tabs are UI chrome, so the active
+     tab uses the slate-blue accent, never maroon. */
+  .card-views { display: none; }                 /* card face: drill-downs hidden; modal JS lifts them into tabs */
+  .card-download { display: none; }               /* district-CSV CTA: modal-only (mirror of .card-method) */
+  .modal-body .card-download { display: block; margin: 12px 0 0; font-size: 13px; color: var(--muted); }
+  .modal-body .card-download a { color: var(--accent); font-weight: 500; }
+  /* Minimal card-face cue that more views wait in the detail modal. */
+  .card-views-hint {
+    margin: 12px 0 0; padding-top: 9px; border-top: 1px dashed var(--rule);
+    font-size: var(--t-xs); color: var(--muted); line-height: 1.5;
+  }
+  .card-views-hint:empty { display: none; }
+  .modal-body .card-views-hint { display: none; }
+  .card-view-link {
+    font: inherit; background: none; border: none; padding: 0;
+    color: var(--accent); font-weight: 600; cursor: pointer;
+  }
+  .card-view-link:hover { text-decoration: underline; }
+  .modal-tabs {
+    display: flex; flex-wrap: wrap; gap: 0; margin: 6px 0 0; padding: 0;
+    border-bottom: 2px solid var(--rule);
+  }
+  .modal-tab {
+    font: inherit; font-size: var(--t-sm); font-weight: 600; color: var(--muted);
+    background: none; border: none; border-bottom: 3px solid transparent;
+    border-radius: 0; padding: 8px 15px 9px; margin-bottom: -2px; cursor: pointer;
+    display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
+    transition: color .15s, border-color .15s;
+  }
+  .modal-tab .tab-sub { font-size: var(--t-2xs); font-weight: 400; color: var(--muted); letter-spacing: .01em; line-height: 1; }
+  .modal-tab:hover { color: var(--fg); border-bottom-color: var(--rule); }
+  .modal-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .modal-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .modal-tab.active .tab-sub { color: var(--accent); opacity: .75; }
+  .modal-panel { display: none; }
+  .modal-panel.active { display: block; }
+  .modal-panel-view { padding-top: 6px; }
+  .modal-panel-view table { margin-top: 0; }
 </style>
 </head>
 <body>
@@ -1410,11 +1458,72 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
     .map((c) => c.getAttribute('data-metric-id'))
     .filter(Boolean);
 
-  function openModal(card) {
+  function switchView(view) {
+    body.querySelectorAll('.modal-tab').forEach((t) =>
+      t.classList.toggle('active', t.dataset.view === view));
+    body.querySelectorAll('.modal-panel').forEach((p) =>
+      p.classList.toggle('active', p.dataset.view === view));
+    if (typeof gtag === 'function' && view !== 'overview' && activeMid) {
+      gtag('event', 'metric_view_opened', { metric_id: activeMid, view });
+    }
+  }
+
+  function openModal(card, targetView) {
     closeChart();
     const clone = card.cloneNode(true);
     body.innerHTML = '';
-    body.appendChild(clone);
+
+    // --- Tabbed layout (Hawaii-dashboard pattern) ----------------------
+    // The card carries its drill-down "views" (By state / By sex / By
+    // district) in a hidden .card-views block. Lift each into its own modal
+    // tab so the card face stays uncluttered while the detail view keeps the
+    // full data one click away. An "Overview" tab holds the cloned card
+    // (chart, comparisons, About). Metrics without extra views get no tab bar.
+    const panels = document.createElement('div');
+    panels.className = 'modal-panels';
+    const overview = document.createElement('div');
+    overview.className = 'modal-panel active';
+    overview.dataset.view = 'overview';
+    overview.appendChild(clone);
+    panels.appendChild(overview);
+
+    const views = Array.from(clone.querySelectorAll('.card-views > details[data-view-label]'));
+    if (views.length) {
+      const tabBar = document.createElement('div');
+      tabBar.className = 'modal-tabs';
+      tabBar.setAttribute('role', 'tablist');
+      const mkTab = (label, sub, view, active) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'modal-tab' + (active ? ' active' : '');
+        b.setAttribute('role', 'tab');
+        b.dataset.view = view;
+        b.innerHTML = '<span>' + label + '</span>' +
+          (sub ? '<span class="tab-sub">' + sub + '</span>' : '');
+        b.addEventListener('click', () => switchView(view));
+        return b;
+      };
+      tabBar.appendChild(mkTab('Overview', 'Chart and summary', 'overview', true));
+      views.forEach((d, i) => {
+        const vid = 'v' + i;
+        const label = d.getAttribute('data-view-label') || 'View';
+        const sub = d.getAttribute('data-view-sub') || '';
+        const panel = document.createElement('div');
+        panel.className = 'modal-panel modal-panel-view';
+        panel.dataset.view = vid;
+        // Move the disclosure's content (minus its <summary>) into the panel;
+        // the tab itself is now the label, so the summary is redundant.
+        Array.from(d.childNodes).forEach((n) => {
+          if (n.nodeType === 1 && n.tagName === 'SUMMARY') return;
+          panel.appendChild(n);
+        });
+        d.remove();
+        panels.appendChild(panel);
+        tabBar.appendChild(mkTab(label, sub, vid, false));
+      });
+      body.appendChild(tabBar);
+    }
+    body.appendChild(panels);
 
     activeMid = card.getAttribute('data-metric-id') || null;
 
@@ -1456,6 +1565,11 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
         if (modalChart) requestAnimationFrame(() => modalChart && modalChart.resize());
       }
     }
+
+    // Honour a requested initial tab (e.g. a card-face "By state" hint). The
+    // chart was built above while Overview was visible so Chart.js could
+    // measure it; only now do we reveal the requested view.
+    if (targetView && targetView !== 'overview') switchView(targetView);
 
     // Reflect the open metric in the URL so the visitor's address bar is
     // shareable and the back button closes the modal naturally.
@@ -1583,6 +1697,14 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
 
   document.querySelectorAll('.cards .card').forEach((card) => {
     card.addEventListener('click', (e) => {
+      // A card-face "view" hint (e.g. "By state") opens the modal straight to
+      // that tab; data-view-idx lines up with the modal's v0/v1/... tabs.
+      const viewLink = e.target.closest('.card-view-link');
+      if (viewLink) {
+        const idx = viewLink.getAttribute('data-view-idx');
+        openModal(card, idx != null ? 'v' + idx : undefined);
+        return;
+      }
       // Let links, summaries, and download triggers behave normally.
       if (e.target.closest('a, summary, details, button')) return;
       openModal(card);
@@ -2689,7 +2811,7 @@ def _source_documents(mid):
 
 
 def _card_shell(mid, label, value, unit_txt, year, polarity, chart_html, comps_html,
-                src, csv_href, details_html="") -> str:
+                src, csv_href, details_html="", download_html="") -> str:
     # `polarity` carries the "higher is better"/"lower is better" hint when the
     # metric direction is unambiguous (e.g. literacy higher is good, IMR lower
     # is good). Rendered as a small caption under the hero so a reader can tell
@@ -2746,6 +2868,25 @@ def _card_shell(mid, label, value, unit_txt, year, polarity, chart_html, comps_h
     primary_url = docs[0][2] if docs else ""
     src_foot = (f'<a href="{html.escape(primary_url)}" target="_blank" rel="noopener">{html.escape(src)}</a>'
                 if primary_url else f'<span class="src-name">{html.escape(src)}</span>')
+
+    # The metric's extra "views" (state / sex / district drill-downs) ride
+    # along in the card DOM inside a hidden .card-views block; the modal JS
+    # lifts each into its own tab (see modalSetup). On the card face we render
+    # only a minimal one-line hint listing the view names so the homepage stays
+    # uncluttered. Each view's tab label is carried in data-view-label= on its
+    # <details>; we mirror those into the hint here (same DOM order = same tab
+    # order, so data-view-idx lines up with the modal's 'v0', 'v1', ... tabs).
+    import re as _re
+    views_html = f'<div class="card-views">{details_html}</div>' if details_html else ""
+    hint_html = ""
+    view_labels = _re.findall(r'data-view-label="([^"]*)"', details_html)
+    if view_labels:
+        links = " · ".join(
+            f'<button type="button" class="card-view-link" data-view-idx="{i}">{html.escape(lbl)}</button>'
+            for i, lbl in enumerate(view_labels))
+        hint_html = (f'<div class="card-views-hint">More views: {links} '
+                     f'<span aria-hidden="true">↗</span></div>')
+
     return (
         f'<section class="card" data-metric-id="{html.escape(mid)}" data-metric-name="{html.escape(label)}">'
         f'{expand_html}'
@@ -2756,7 +2897,9 @@ def _card_shell(mid, label, value, unit_txt, year, polarity, chart_html, comps_h
         f'{polarity_html}{chart_html}'
         f'<div class="card-comparisons">{comps_html}</div>'
         f'{method_html}'
-        f'{details_html}'
+        f'{download_html}'
+        f'{views_html}'
+        f'{hint_html}'
         # Footer: source NAME links to the original source document; a separate
         # "Data file" link opens the CSV extract. Full source list (every
         # document) is in the modal "About this measurement" panel.
@@ -2854,7 +2997,8 @@ def _top100_districts_table(metric_id: str) -> str:
             f"</tr>"
         )
     return (
-        f'<details><summary>See the full ranked list (top {len(parsed)} districts)</summary>'
+        f'<details data-view-label="By district" data-view-sub="top {len(parsed)} by population">'
+        f'<summary>See the full ranked list (top {len(parsed)} districts)</summary>'
         f'<div class="scroll-table">'
         f'<table class="sortable-table">'
         f'<thead><tr>'
@@ -2927,7 +3071,8 @@ def _state_details(metric_id: str, unit: str, value_label: str | None = None) ->
             cells += numcell(b, "hindu", sortable=False)
         trs.append(f"<tr>{cells}</tr>")
     yr_txt = f", {next(iter(years_used))}" if len(years_used) == 1 else ""
-    return (f'<details><summary>Full state data ({len(order)} states{yr_txt})</summary>'
+    return (f'<details data-view-label="By state" data-view-sub="{len(order)} states{yr_txt}">'
+            f'<summary>Full state data ({len(order)} states{yr_txt})</summary>'
             f'<table class="sortable-table"><thead>{head}</thead>'
             f'<tbody>{"".join(trs)}</tbody></table></details>')
 
@@ -3007,7 +3152,7 @@ def _district_download_link(mid: str) -> str:
     n = sum(1 for r in load_metric(mid) if r["geography_level"] == "district")
     if not n:
         return ""
-    return (f'<p style="margin:8px 0 0;font-size:13px;color:var(--muted)">'
+    return (f'<p class="card-download">'
             f'All {n} districts: '
             f'<a href="canonical/{html.escape(mid)}-districts.csv" download>download CSV</a></p>')
 
@@ -3047,7 +3192,8 @@ def _sex_details(metric_id: str, unit: str) -> str:
     head = ('<tr><th class="sortable" data-col="0">Community</th>'
             '<th class="sortable" data-col="1" data-type="num">Male</th>'
             '<th class="sortable" data-col="2" data-type="num">Female</th></tr>')
-    return (f'<details><summary>By sex ({latest})</summary>'
+    return (f'<details data-view-label="By sex" data-view-sub="{latest}">'
+            f'<summary>By sex ({latest})</summary>'
             f'<table class="sortable-table"><thead>{head}</thead>'
             f'<tbody>{trs}</tbody></table></details>')
 
@@ -3168,8 +3314,9 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
                     "label": all_line_label} if all_series else None)
         js = (f'trendChart("{cvid}", {json.dumps(years)}, {json.dumps(series_map)}, '
               f'{json.dumps(all_arg)}, {json.dumps(suffix)}, {dec}, {json.dumps(bool(has_break))});')
-        # State-level drill-down (e.g. sex-ratio, literacy) sits below the
-        # national trend chart; _state_details returns "" for national-only metrics.
+        # State + sex drill-downs become modal tabs (see _card_shell / modalSetup);
+        # each returns "" for metrics that lack that breakdown, so the metric
+        # simply gets fewer tabs.
         details = _state_details(mid, unit) + _sex_details(mid, unit)
     else:
         # SNAPSHOT card: latest-year community bar with All-India dashed baseline.
@@ -3277,14 +3424,17 @@ def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
         note = ("No community ranking. AISHE tabulates “Muslim Minority” enrolment separately; "
                 "other communities are not enumerated in the same table. Top-8 states shown (thousands).")
     comps = kicker_html + f'<div class="comp-note">{html.escape(note)}</div>'
-    # Metric-specific drill-down (collapsed by default). For district-concentration
-    # we surface the full top-100 list; for others, state-level data if available.
+    # Metric-specific drill-down(s), lifted into modal tabs by _card_shell.
+    # district-concentration gets the full top-100 list as its one extra tab;
+    # other muslim-only metrics get state data (a tab) plus, where the canonical
+    # carries district rows, a modal-only "download all districts" CSV link.
     if mid == "district-concentration-top100":
-        details = _top100_districts_table(mid)
+        details, download = _top100_districts_table(mid), ""
     else:
-        details = _state_details(mid, unit) + _district_download_link(mid) + _sex_details(mid, unit)
+        details = _state_details(mid, unit) + _sex_details(mid, unit)
+        download = _district_download_link(mid)
     return _card_shell(mid, label, headline, CAPTION.get(mid, ""), _year_of(mid), "",
-                       chart_html, comps, src, csv_href, details), js
+                       chart_html, comps, src, csv_href, details, download_html=download), js
 
 
 def _card_timeseries(mid, label, unit, src, csv_href, cvid):
