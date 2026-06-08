@@ -22,11 +22,13 @@ employment, representation, justice), drawn from 16 primary sources,
 grouped into five themed sections on the dashboard. The authoritative
 scorecard
 is the live site at https://muslimdata.in/ — it
-auto-rebuilds on every push and shows current values, the comparison
+ships on every push and shows current values, the comparison
 pill, the trend chart, the methodology, and a downloadable CSV per metric.
-Where the underlying data supports it, a card also opens a **by-state**
-drill-down table, a **by-sex** (male vs female) breakdown, and a
-**district-level CSV** download.
+Where the underlying data supports it, opening a card reveals **modal tabs**
+for the **by-state**, **by-sex** (male vs female), and **by-district**
+breakdowns; each tab has its own shareable URL and social-preview image, and
+every metric also has a full landing page at `/m/{id}/` (data tables, sources,
+JSON-LD) with a district-level CSV download where available.
 
 Coverage at a glance:
 - **Demographics**: population share by religion 1961→2011, urban share,
@@ -47,21 +49,29 @@ Coverage at a glance:
 
 ## See the dashboard
 
-Open `docs/index.html` in any browser. No server required, no build step,
-all charts via Chart.js CDN.
+Open `docs/index.html` in any browser to view the dashboard (charts use a
+self-hosted, SRI-pinned Chart.js, no CDN). The per-metric landing pages and
+per-tab share URLs use real paths, so they resolve when `docs/` is served over
+HTTP rather than opened from the filesystem.
 
 ```bash
 .venv/bin/python dashboard/build.py
-open docs/index.html
+open docs/index.html                      # quick view
+python3 -m http.server --directory docs   # full routing (landing pages, share URLs)
 ```
 
 ## Deploy
 
-The site auto-deploys to muslimdata.in on every push to `main`. Cloudflare
-Workers (Static Assets) runs `npx wrangler deploy` against the connected
-GitHub repo and serves `docs/` directly; build config lives in
-`wrangler.jsonc`, security headers + CORS in `docs/_headers`. End-to-end
-setup is documented in `docs/runbooks/deploy-setup.md`.
+The site auto-deploys to muslimdata.in on every push to `main`: a GitHub
+Actions workflow (`.github/workflows/deploy.yml`) runs `wrangler deploy` to
+ship the **committed** `docs/` to Cloudflare Workers (Static Assets). CI does
+no rebuild, so `docs/` is built locally and committed. (Cloudflare's own
+git auto-build is deliberately disabled: it smudged the Git-LFS `sources/`
+archive and blew the LFS bandwidth quota.) Two more workflows run on push:
+`validate.yml` (schema + doc/data-consistency + source-refresh gates) and
+`smoke.yml` (Playwright browser smoke tests of the rendered site). Build config
+lives in `wrangler.jsonc`, security headers + CORS in `docs/_headers`;
+end-to-end setup is documented in `docs/runbooks/deploy-setup.md`.
 
 ## Architecture
 
@@ -119,8 +129,10 @@ ingest/       Manifest-driven pull script
 transform/    L1→L2 extractors and L2→L3 canonicalizers
 validate/     Schema validation for manifests and canonical CSVs
 dashboard/    L4 builder (build.py); outputs to docs/
-docs/         Published site: index.html (dashboard), canonical/ (CSV copies),
-              runbooks/ (per-source methodology), metrics/, audit-log.md
+tests/        Playwright browser smoke tests (smoke.py)
+docs/         Published site: index.html (dashboard), about/, m/{id}/ (per-metric
+              landing pages + per-tab share stubs), og/ (social-card images),
+              canonical/ (CSV copies), runbooks/ (per-source methodology), audit-log.md
 ```
 
 ## Quick start
@@ -161,7 +173,7 @@ Pure mechanical extension — pattern is proven:
 
 23 canonical metrics (21 carded + 2 reference series kept in `canonical/` but not rendered after Commit V switched justice cards to the share-trend pattern). The dashboard is a card grid with multi-community benchmarking (rank among religious communities) and multi-round trends spanning up to 60+ years (sex-ratio 1961→2011; population share 1961→2011; Lok Sabha 1952→2024; communal incidents 2015→2023; prison/undertrial 2018→2023; NFHS health 1998→2020; Census literacy 2001→2011). The architecture is battle-tested across 5 source shapes: legacy .xls / modern .xlsx spreadsheets, dual-column PDF tables, single-column PDF religion sections, tabular state-row PDFs, and landscape-rotated PDFs (qpdf-pre-rotated at extraction time).
 
-Per-metric depth where the source supports it: **by-state** drill-down tables on 6 metrics (pop-share, sex-ratio, literacy, urban-share, communal-incidents, higher-ed); a **by-sex** (male vs female) breakdown on 5 (LFPR, WPR, salaried, literacy, higher-ed enrolment), national-level via an optional `sex` dimension added to the canonical schema and defaulted to `all` at the `load_metric` read so existing series are unaffected; and a **district-level CSV** download (pop-share, all 640 districts with names).
+Per-metric depth where the source supports it, shown as **modal tabs** (each with its own shareable `/m/{id}/{view}/` URL + social-preview image) and mirrored on the metric's full `/m/{id}/` landing page: **by-state** tables on 6 metrics (pop-share, sex-ratio, literacy, urban-share, communal-incidents, higher-ed); a **by-sex** (male vs female) breakdown on 5 (LFPR, WPR, salaried, literacy, higher-ed enrolment), national-level via an optional `sex` dimension added to the canonical schema and defaulted to `all` at the `load_metric` read so existing series are unaffected; a **by-district** top-100 ranking (district-concentration); and a **district-level CSV** download (pop-share, all 640 districts with names).
 
 See `docs/audit-log.md` for the planned annual audit ritual and `docs/refresh-schedule.md` for the per-source cadence.
 
