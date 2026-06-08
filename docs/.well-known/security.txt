@@ -1,0 +1,4 @@
+Contact: mailto:iqbal@guild.im
+Expires: 2027-06-07T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://muslimdata.in/.well-known/security.txt

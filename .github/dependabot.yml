@@ -1,0 +1,16 @@
+version: 2
+updates:
+  # Keep the deploy/validate workflow actions patched (supply-chain hygiene).
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: ci
+  # Flag vulnerable Python build/validate deps (requirements*.txt at repo root).
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: deps

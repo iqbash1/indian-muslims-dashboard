@@ -454,7 +454,7 @@ TEMPLATE = """<!DOCTYPE html>
 <meta name="twitter:description" content="{site_description}">
 <meta name="twitter:image" content="{site_url}/og/default.png">
 {home_jsonld}
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="/js/chart.umd.min.js" integrity="sha384-e6nUZLBkQ86NJ6TVVKAeSaK8jWa3NhkYWZFomE39AvDbQWeie9PlQqM3pmYW5d1g"></script>
 <script src="js/analytics.js" defer></script>
 <style>
   :root {
