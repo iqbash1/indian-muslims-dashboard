@@ -56,6 +56,15 @@ LOK_SABHA_DATA = [
 ]
 
 
+def _ordinal(n: int) -> str:
+    """1 -> '1st', 2 -> '2nd', 11 -> '11th', 18 -> '18th'."""
+    if 10 <= n % 100 <= 20:
+        suffix = "th"
+    else:
+        suffix = {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+    return f"{n}{suffix}"
+
+
 def canonicalize() -> None:
     extraction_run = (
         f"canonicalize-ls-share-v{CANONICALIZER_VERSION}-"
@@ -81,7 +90,7 @@ def canonicalize() -> None:
                 "prs-eci-affidavits",
                 "MANUAL: cross-verified journalistic aggregation of ECI affidavit data",
                 extraction_run,
-                (f"Muslim MPs in the {ls_num}th Lok Sabha: {mps} of {total} seats. "
+                (f"Muslim MPs in the {_ordinal(ls_num)} Lok Sabha: {mps} of {total} seats. "
                  f"Source: {cite}. Religion is derived from ECI candidate affidavits; "
                  f"PRS Legislative Research vital-stats PDFs cover candidate profiles "
                  f"but do not tabulate religion. This is a documented manual-entry "
