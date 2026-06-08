@@ -44,8 +44,8 @@ One runbook per source. Owned by the data maintainer; the operational memory for
 ### Civic and contested counts
 - [civic-databases.md](civic-databases.md) — India Hate Lab and similar
 
-### Historical context (one-off)
-- [sachar-committee-2006.md](sachar-committee-2006.md) — used as fallback for 1961 and 1981 sex-ratio
+### Income / consumption (one-off)
+- [sachar-committee-2006.md](sachar-committee-2006.md) — feeds the mpce (monthly spending) metric; also a sex-ratio cross-validation reference
 
 ### Pre-registered for future metrics (not yet feeding dashboard)
 - [mha-parliament.md](mha-parliament.md)

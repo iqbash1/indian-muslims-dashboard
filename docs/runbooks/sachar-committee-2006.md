@@ -3,7 +3,7 @@
 **Source ID:** `sachar-committee-2006`
 **Publisher:** Cabinet Secretariat, Government of India (Justice Rajinder Sachar, Chair)
 **Cadence:** one-off (2006)
-**Status post-Commit-AJ:** REGISTERED-BUT-NOT-FEEDING-CANONICAL. Sachar served as the 1961+1981 sex-ratio fallback in Commits AG-AH; AJ's deeper NADA hunt found the original RGI 1961 Vol-XIII C-VII (cat 32022) and RGI 1981 Paper 3 of 1984 HH-15 (cat 30879), which now feed L3 directly. Sachar is kept registered as a cross-validation reference.
+**Status post-Commit-CQ:** FEEDS L3 via the `mpce` metric (Monthly Per Capita Consumption Expenditure by religion, NSS 61st round 2004-05; added Commit CQ). Earlier history: Sachar served as the 1961+1981 sex-ratio fallback in Commits AG-AH, until AJ's deeper NADA hunt found the original RGI 1961 Vol-XIII C-VII (cat 32022) and RGI 1981 Paper 3 of 1984 HH-15 (cat 30879), which now feed sex-ratio directly. Sachar remains a sex-ratio cross-validation reference.
 
 ## Why this source is still archived
 

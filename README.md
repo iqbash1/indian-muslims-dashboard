@@ -39,7 +39,7 @@ Coverage at a glance:
   women's anaemia (4 rounds 1998→2020 from NFHS-2/3/4/5).
 - **Housing**: improved sanitation access.
 - **Representation**: Lok Sabha Muslim share 1952→2024 (18 elections),
-  state MLA Muslim share aggregated across all 30 state and UT assemblies.
+  state MLA Muslim share aggregated across all 31 state and UT assemblies.
 - **Justice**: prison rate per 100k, undertrial rate per 100k, communal
   incidents recorded by police (NCRB 2015→2023 national, plus a per-state
   breakdown for 2023). (An India Hate Lab anti-Muslim hate-speech metric was
@@ -78,31 +78,30 @@ The dashboard never queries an external source live and never reads L1/L2 direct
 
 ## Sources
 
-16 source-ids feed L3 canonical metrics (23 source-ids registered in `manifest/sources.yaml` total — the remaining 7 are either retired-but-archived for cross-validation reference (`sachar-committee-2006`, `census-decadal-religion`) or pre-registered for future metrics (`hces-2022-23`, `mha-parliament-answers`, `niti-mpi`, `rbi-minority-lending`, `rti-public-sector-employment`)).
+16 source-ids feed L3 canonical metrics (23 source-ids registered in `manifest/sources.yaml` total — the remaining 7 are `census-decadal-religion` (superseded by the primary RGI volumes, kept for cross-validation), `civic-incident-databases` (the hate-speech metric was decarded in Commit CR; data archived), and five pre-registered for future metrics: `hces-2022-23`, `mha-parliament-answers`, `niti-mpi`, `rbi-minority-lending`, `rti-public-sector-employment`).
 
 | Source | What it gives us | Cadence | Status |
 |---|---|---|---|
 | **Census of India 2011** | Population by religion (state + district), literacy, sex ratio | 10-year (2021 round delayed indefinitely) | 38 files archived (3 core C-series tables + all 35 state/UT district MDDS); district-level pop-share complete for all states |
 | **Census of India 2001** | Population, literacy, sex ratio by religion (national + states) — gives the 2001→2011 decennial trend for literacy + the 2-point urban-share trend | 10-year (prior round) | 2 files archived (C-1, C-9) |
-| **Census of India 1991** *(new in AG)* | C-9 Religion table by residence × sex — feeds sex-ratio 1991 (all 6 religions, primary) | 10-year | XLSX + companion PDF archived; India figure excludes J&K |
-| **Census of India 1971** *(new in AG)* | Paper 2 of 1972 Religion summary — feeds sex-ratio 1971 (all 6 religions, primary) | 10-year | PDF archived; extractor cross-checks derived sex-ratio against printed values |
-| **Census decadal religion** *(secondary)* | Population share by community 1961-1991 → the pop-share 1961→2011 decadal trend | 10-year | manual-entry secondary (2001/2011 from primary C-1; flagged on card; see runbook) |
-| **Sachar Committee 2006** *(new in AG)* | Appendix Table 3.8 — sex-ratio Muslim + All-India 1961 + 1981 (fallback only — RGI religion volumes for those years not on NADA) | one-off (2006) | Full report PDF archived; cross-validated against primary at 1971/1991/2001 |
+| **Census of India 1961 / 1971 / 1981 / 1991** | RGI primary religion volumes (1961 C-VII, 1971 Paper 2 of 1972, 1981 Paper 3 of 1984 HH-15, 1991 C-9) — feed pop-share and sex-ratio 1961-1991 (all six religions, primary) | 10-year | PDFs/XLSX archived; 1981 excludes Assam and 1991 excludes J&K (Census not held there); extractors cross-check derived sex-ratios against Sachar AT 3.8 |
+| **Census decadal religion** *(superseded)* | Former manual-entry source for pop-share 1961-1991 | 10-year | superseded by the RGI primary volumes above; kept registered for cross-validation |
+| **Sachar Committee 2006** | MPCE (monthly spending per person) by religion, NSS 61st round 2004-05 — feeds the `mpce` metric | one-off (2006) | Full report PDF archived; also a sex-ratio cross-validation reference (AT 3.8) |
 | **NFHS-2 / 3 / 4 / 5 (1998-99 → 2019-21)** | IMR, institutional delivery, women's anaemia — by religion, 4 rounds (time series); stunting + sanitation single-round | ~5-year (NFHS-6 in field) | all 4 round reports archived; 5 metrics extracted |
 | **PLFS 2023-24** | LFPR, WPR, salaried-share by religion | Annual | 2 reports archived; 3 metrics extracted |
 | **AISHE 2021-22** | Higher-education enrolment by religion | Annual | 2 reports archived; 2 metrics extracted (count + GER cross-source) |
 | **HCES 2022-23** | Consumption expenditure (MPCE) — by religion needs unit-level | ~5-year | 3 reports archived; metric blocked on unit-level processing (documented in runbook) |
 | **NCRB PSI 2018-2023** | Prison + undertrial population by religion — multi-year share trend | Annual (~2y lag) | 6 years archived; 2 share metrics + 2 rate-per-100k reference series |
 | **NCRB CII 2015-2023** | Communal incidents by state | Annual (~2y lag) | per-table + main reports archived; 9-year national series |
-| **PRS / ECI affidavits** *(secondary)* | Lok Sabha + state MLA Muslim shares — manual-entry from journalistic compilations | Per-election | 18-point LS series 1952→2024; 30 state/UT assemblies covered |
-| **India Hate Lab + civic incident DBs** *(secondary, contested)* | Civic-society counts of communal incidents | Annual | 2023 + 2024 IHL counts loaded |
+| **PRS / ECI affidavits** *(secondary)* | Lok Sabha + state MLA Muslim shares — manual-entry from journalistic compilations | Per-election | 18-point LS series 1952→2024; 31 state/UT assemblies covered |
+| **India Hate Lab + civic incident DBs** *(secondary, contested)* | Civic-society counts of communal incidents | Annual | decarded in Commit CR (contested); data archived, not currently rendered |
 
 Each source has a runbook in `docs/runbooks/` documenting URL discovery, archived file inventory, where religion crosstabs live, and known data gaps.
 
 ## What this is honest about
 
 - **2021 Census not released.** The latest census point is 2011; population share and district concentration remain 2011-only. Cards show the data year inline.
-- **Sex-ratio decadal 1961-1981 uses Sachar Committee 2006 (secondary) for Muslim + All only.** The underlying RGI religion volumes for 1961 + 1981 aren't on NADA; the 1971 + 1991 + 2001 + 2011 rounds use RGI primary publications with all six religions. Cross-validated at the overlap years.
+- **Sex-ratio and population-share decadal series (1961-2011) are now all primary RGI census.** Earlier builds used Sachar Committee 2006 (sex-ratio 1961/1981) and a manual decadal compilation (pop-share 1961-1991) as fallbacks; the original RGI religion volumes were since located on NADA and now feed both directly, with all six religions. 1981 excludes Assam and 1991 excludes Jammu & Kashmir (Census not held there those rounds).
 - **Maharashtra didn't report religion for ~33k undertrials in PSI 2022.** Prison-share is computed over religion-reported subset only; documented on every tile.
 - **HCES doesn't publish religion crosstabs.** Religion is a survey variable but not tabulated in the published Report 591. MPCE-by-religion requires unit-level processing from microdata.gov.in.
 - **NFHS-5 vs NFHS-4 anaemia methodology break** (capillary vs venous blood). Not comparable across rounds.

@@ -38,9 +38,10 @@ SRC_DIR = REPO_ROOT / "sources" / "ncrb-prison"
 OUT_DIR = REPO_ROOT / "extracted" / "ncrb-prison"
 EXTRACTOR_VERSION = "2.0.0"
 
-# PSI years whose religion-by-state tables we archive. (2015 has no religion
-# table; 2016/2017/2020 are not available from primary/archive sources — see
-# manifest + runbook.)
+# PSI years this (English) extractor archives. (2015 has no religion table;
+# 2016/2017 are not available from primary/archive sources; 2020 has no English
+# report and is recovered separately by extract_prison_religion_2020_hindi.py —
+# see manifest + runbook.)
 YEARS = [2018, 2019, 2021, 2022, 2023]
 
 # (table_id, category, caption regex). Table ids are stable across all years.

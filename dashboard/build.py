@@ -169,8 +169,8 @@ TOTAL_DISTRICTS_2011 = 640
 #   - Demographics (who & where) opens as neutral scene-setting.
 #   - Health & Housing (survival & living conditions) leads the outcomes as the
 #     most foundational human needs.
-#   - Education & Employment (+ the Income/Finance economic placeholders) follow
-#     as life chances.
+#   - Education, work & income (income now carries the live MPCE metric; the
+#     Finance cluster is still stub) follows as life chances.
 #   - The civic block closes: Representation (voice) then Justice & Civic, which
 #     ends on the sharpest material (over-incarceration, communal violence).
 #   Don't lead with a gap section or with Justice (that editorialises the order);

@@ -10,8 +10,8 @@ Values are hard-coded from cross-verified journalistic sources (Maktoob
 Media, The India Forum, FACTLY, Statista, ORF, Clarion India). At least
 two compilations agree on every entry; methodology_note per row cites
 the compilations used. Manual-entry SECONDARY pattern shared with
-mla-share, pop-share (1961-1991), and Sachar fallback (sex-ratio
-1961+1981).
+mla-share (the other per-election journalistic series; pop-share and
+sex-ratio were once fallback-sourced too, but are now primary RGI census).
 
 Writes: canonical/ls-share.csv with one row per (year, religion=muslim).
 Full 18-Lok-Sabha series 1952→2024.

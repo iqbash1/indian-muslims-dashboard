@@ -22,7 +22,7 @@ Defined by `manifest/schema/canonical.json`. Every row carries:
 |---|---|---|
 | metric_id | yes | matches `manifest/metrics.yaml` |
 | geography_level | yes | national / state / district / sub-district |
-| geography_code | yes | single normalized scheme (TODO: pick — ISO 3166-2:IN for state? LGD for district?) |
+| geography_code | yes | `IN` (national), `IN-S<NN>` (state, Census MDDS state code), `IN-S<NN>-D<NNN>` (district) |
 | year | yes | reference year, not publication year |
 | religion | yes | controlled vocabulary |
 | value | yes | numeric |

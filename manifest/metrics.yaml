@@ -654,8 +654,9 @@ metrics:
     geography_levels: [national]
     religions: [muslim, hindu]
     methodology_notes: |
-      NCRB PSI Tables 2.10C-2.13C, years 2018-2023 (2016/2017/2020 not available
-      from primary/archive sources; 2015 report has no religion-by-state table).
+      NCRB PSI Tables 2.10C-2.13C, years 2018-2023 (2016/2017 not available
+      from primary/archive sources, 2020 recovered from the NCRB Hindi-edition
+      PSI; 2015 report has no religion-by-state table).
       Some states (e.g. Maharashtra) did not report religion for undertrials/
       detenues in several years, so each year's religion-reported denominator
       excludes them. Shares are computed over religion-reported prisoners only.
@@ -742,8 +743,9 @@ metrics:
     geography_levels: [national]
     religions: [muslim, hindu]
     methodology_notes: |
-      NCRB PSI Table 2.11C, years 2018-2023 (2016/2017/2020 not available from
-      primary/archive sources). Some states (e.g. Maharashtra) did not report
+      NCRB PSI Table 2.11C, years 2018-2023 (2016/2017 not available from
+      primary/archive sources, 2020 recovered from the NCRB Hindi-edition PSI).
+      Some states (e.g. Maharashtra) did not report
       religion for undertrials in several years; each year's share is computed
       over the religion-reported subset only.
     comparison_baselines: []

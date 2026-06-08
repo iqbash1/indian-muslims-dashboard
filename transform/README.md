@@ -43,7 +43,7 @@ Each `transform/canonicalize/<metric-id>.py` should:
 1. Read its source L2 CSVs.
 2. Combine / aggregate as needed.
 3. Emit the canonical schema row format with `source_id`, `source_document`, `extraction_run`, `methodology_note`, and `break_flag` populated.
-4. Where the metric spans multiple sources (primary + secondary fallback like sex-ratio 1961+1981 via Sachar, or pop-share 1961-1991 via census-decadal-religion), each row's `source_id` flags its tier.
+4. Where a metric blends sources of different tiers (e.g. ls-share / mla-share are manual-entry journalistic per-election compilations), each row's `source_id` flags its tier. (Sex-ratio and pop-share 1961-1991 were once secondary-fallback like this — Sachar and census-decadal-religion respectively — but now use primary RGI census throughout.)
 
 ## Active extractors
 
@@ -63,6 +63,6 @@ Each `transform/canonicalize/<metric-id>.py` should:
 
 Direct-from-L1 manual-entry (no L2 extractor; the canonicalizer reads hardcoded values that cite the published page/figure): civic-databases (India Hate Lab) + prs-eci-affidavits.
 
-Registered but no longer feeding L3 (kept for cross-validation reference): sachar-committee-2006, census-decadal-religion — both retired in Commit AJ once the RGI primary 1961+1981 volumes were located on NADA.
+Registered but not feeding L3: census-decadal-religion — retired in Commit AJ once the RGI primary 1961-1991 volumes were located on NADA (pop-share now uses them directly); kept for cross-validation reference. (sachar-committee-2006 was also the sex-ratio 1961/1981 fallback until AJ, but feeds L3 again via the `mpce` metric added in Commit CQ.)
 
 Note: `census-2011/` and `census-india-2011/` are both real directories (the former was added later to hold the C-15 national-age extractor for ger-higher-ed; the latter holds the main C-1/C-9/C-15 religion extractors). Same source from a manifest standpoint (`census-india-2011`).
