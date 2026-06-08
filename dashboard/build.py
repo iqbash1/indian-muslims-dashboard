@@ -23,6 +23,7 @@ import datetime as dt
 import html
 import json
 import pathlib
+import re
 
 try:
     from PIL import Image, ImageDraw, ImageFont
@@ -889,6 +890,28 @@ TEMPLATE = """<!DOCTYPE html>
   .modal-panel.active { display: block; }
   .modal-panel-view { padding-top: 6px; }
   .modal-panel-view table { margin-top: 0; }
+
+  /* Share popover (Hawaii-dashboard pattern): a small menu under the Share
+     button with Copy / Email / X / LinkedIn / Bluesky. Chrome only, so hover /
+     focus use the slate-blue accent, never maroon. */
+  .share-menu {
+    position: fixed; z-index: 1100; min-width: 212px;
+    background: var(--card); border: 1px solid var(--rule); border-radius: 10px;
+    box-shadow: 0 12px 32px rgba(0,0,0,.18); padding: 6px;
+    display: flex; flex-direction: column;
+  }
+  .share-menu-item {
+    display: flex; align-items: center; gap: 11px; width: 100%;
+    padding: 9px 12px; border: none; background: none; border-radius: 7px;
+    font: inherit; font-size: 14px; color: var(--fg); text-decoration: none;
+    cursor: pointer; text-align: left;
+  }
+  .share-menu-item svg { width: 17px; height: 17px; flex-shrink: 0; color: var(--muted); }
+  .share-menu-item:hover, .share-menu-item:focus-visible {
+    background: var(--bg); color: var(--accent); outline: none;
+  }
+  .share-menu-item:hover svg, .share-menu-item:focus-visible svg { color: var(--accent); }
+  .share-menu-item.copied, .share-menu-item.copied svg { color: var(--positive); }
 </style>
 </head>
 <body>
@@ -1458,11 +1481,23 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
     .map((c) => c.getAttribute('data-metric-id'))
     .filter(Boolean);
 
+  // Clean per-tab URL (Hawaii pattern): the address bar always shows the
+  // shareable /m/{mid}/ (overview) or /m/{mid}/{view}/ path. A reload of that
+  // path hits the matching static stub, which redirects back through the
+  // #{mid}/{view} hash into the SPA, which then rewrites to this clean path.
+  function setMetricUrl(mid, view) {
+    if (!mid) return;
+    const path = '/m/' + encodeURIComponent(mid) + '/' +
+      (view && view !== 'overview' ? encodeURIComponent(view) + '/' : '');
+    if (location.pathname !== path) history.replaceState(null, '', path);
+  }
+
   function switchView(view) {
     body.querySelectorAll('.modal-tab').forEach((t) =>
       t.classList.toggle('active', t.dataset.view === view));
     body.querySelectorAll('.modal-panel').forEach((p) =>
       p.classList.toggle('active', p.dataset.view === view));
+    setMetricUrl(activeMid, view);
     if (typeof gtag === 'function' && view !== 'overview' && activeMid) {
       gtag('event', 'metric_view_opened', { metric_id: activeMid, view });
     }
@@ -1487,7 +1522,7 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
     overview.appendChild(clone);
     panels.appendChild(overview);
 
-    const views = Array.from(clone.querySelectorAll('.card-views > details[data-view-label]'));
+    const views = Array.from(clone.querySelectorAll('.card-views > details[data-view-id]'));
     if (views.length) {
       const tabBar = document.createElement('div');
       tabBar.className = 'modal-tabs';
@@ -1504,8 +1539,8 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
         return b;
       };
       tabBar.appendChild(mkTab('Overview', 'Chart and summary', 'overview', true));
-      views.forEach((d, i) => {
-        const vid = 'v' + i;
+      views.forEach((d) => {
+        const vid = d.getAttribute('data-view-id') || 'view';
         const label = d.getAttribute('data-view-label') || 'View';
         const sub = d.getAttribute('data-view-sub') || '';
         const panel = document.createElement('div');
@@ -1571,11 +1606,9 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
     // measure it; only now do we reveal the requested view.
     if (targetView && targetView !== 'overview') switchView(targetView);
 
-    // Reflect the open metric in the URL so the visitor's address bar is
-    // shareable and the back button closes the modal naturally.
-    if (activeMid && location.hash !== '#' + activeMid) {
-      history.replaceState(null, '', '#' + activeMid);
-    }
+    // Reflect the open metric + tab in the address bar as a shareable clean
+    // path (switchView already did this for a non-overview target).
+    setMetricUrl(activeMid, targetView || 'overview');
     if (typeof gtag === 'function' && activeMid) {
       gtag('event', 'metric_opened', { metric_id: activeMid });
     }
@@ -1586,28 +1619,30 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
   }
 
   function closeModal() {
+    ShareMenu.close();
     closeChart();
     overlay.hidden = true;
     document.body.classList.remove('modal-open');
     body.innerHTML = '';
     activeMid = null;
-    if (location.hash) {
-      history.replaceState(null, '', location.pathname + location.search);
+    // Reset the address bar to the site root so closing leaves a shareable URL.
+    if (location.pathname !== '/' || location.hash) {
+      history.replaceState(null, '', '/' + location.search);
     }
   }
 
-  function openByMid(mid) {
+  function openByMid(mid, view) {
     if (!mid) return false;
     const card = document.querySelector('.cards .card[data-metric-id="' + CSS.escape(mid) + '"]');
     if (!card) return false;
-    openModal(card);
+    openModal(card, view);
     return true;
   }
 
   // Prev/next navigation: cycle through cardOrder with wrap-around, so a
   // visitor who opens the first card sees prev land on the last (rather
   // than being a dead end). Calls openByMid which rebuilds the modal body
-  // for the new metric and updates the URL hash.
+  // for the new metric (resetting to its Overview tab) and updates the URL.
   function nav(delta) {
     if (!activeMid || cardOrder.length === 0) return;
     const i = cardOrder.indexOf(activeMid);
@@ -1657,52 +1692,143 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
     }
   });
 
-  // Share: copy the per-metric permalink to clipboard. The /m/{slug}/ stub
-  // path carries the per-metric OG meta so social cards render properly.
-  shareBtn.addEventListener('click', () => {
+  // --- Share menu (Hawaii-dashboard pattern) ---------------------------
+  // A small popover: Copy link / Email / X / LinkedIn / Bluesky. On a touch
+  // device with a native share sheet we use that instead. The shared URL is the
+  // ACTIVE tab's clean permalink, so the preview unfurls from the matching
+  // per-view stub's OG meta. Chrome only (slate-blue accent), never maroon.
+  const ShareMenu = (function () {
+    const ICON = {
+      copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>',
+      email: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>',
+      x: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 1.6h3.3l-7.2 8.2L23.7 22h-6.6l-5.2-6.8L5.9 22H2.6l7.7-8.8L1 1.6h6.8l4.7 6.2zM17.7 20h1.8L7.1 3.5H5.1z"/></svg>',
+      linkedin: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.4 3H3.6a.6.6 0 0 0-.6.6v16.8a.6.6 0 0 0 .6.6h16.8a.6.6 0 0 0 .6-.6V3.6a.6.6 0 0 0-.6-.6zM8.3 18.3H5.6V9.7h2.7v8.6zM6.9 8.5a1.6 1.6 0 1 1 0-3.1 1.6 1.6 0 0 1 0 3.1zm11.4 9.8h-2.7v-4.2c0-1 0-2.3-1.4-2.3s-1.6 1.1-1.6 2.2v4.3H9.9V9.7h2.6v1.2h.1c.4-.7 1.2-1.4 2.5-1.4 2.7 0 3.2 1.8 3.2 4.1v4.7z"/></svg>',
+      bluesky: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.3 4.2C8.6 5.9 11 9.4 12 11.3c1-1.9 3.4-5.4 5.7-7.1 1.7-1.2 4.3-2.2 4.3 1.7 0 .8-.5 5.2-.7 5.9-.8 2.4-3.2 3-5.4 2.7 3.8.6 4.8 2.8 2.7 4.9-4 4-5.7-1-6.1-2.3-.1-.2-.1-.3-.2-.3s-.1.1-.2.3c-.4 1.3-2.1 6.3-6.1 2.3-2.1-2.1-1.1-4.3 2.7-4.9-2.2.3-4.6-.3-5.4-2.7-.2-.7-.7-5.1-.7-5.9 0-3.9 2.6-2.9 4.3-1.7z"/></svg>',
+    };
+    let menu = null, anchor = null;
+    function close() {
+      if (menu) { menu.remove(); menu = null; }
+      if (anchor) { anchor.setAttribute('aria-expanded', 'false'); anchor = null; }
+      document.removeEventListener('click', onDoc, true);
+      document.removeEventListener('keydown', onKey, true);
+      window.removeEventListener('resize', close);
+      window.removeEventListener('scroll', close, true);
+    }
+    function onDoc(e) {
+      if (!menu) return;
+      if (menu.contains(e.target) || (anchor && anchor.contains(e.target))) return;
+      close();
+    }
+    function onKey(e) {
+      if (!menu) return;
+      if (e.key === 'Escape') { const a = anchor; close(); if (a) a.focus(); e.stopPropagation(); e.preventDefault(); return; }
+      if (e.key === 'Tab') {
+        e.stopPropagation();
+        const items = Array.from(menu.querySelectorAll('.share-menu-item'));
+        if (!items.length) return;
+        const first = items[0], last = items[items.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        return;
+      }
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') e.stopPropagation();
+    }
+    function place() {
+      const r = anchor.getBoundingClientRect();
+      let top = r.bottom + 6;
+      if (top + menu.offsetHeight + 8 > window.innerHeight && r.top - menu.offsetHeight - 6 > 0)
+        top = r.top - menu.offsetHeight - 6;
+      let left = Math.min(r.right - menu.offsetWidth, window.innerWidth - menu.offsetWidth - 8);
+      left = Math.max(8, left);
+      menu.style.top = top + 'px';
+      menu.style.left = left + 'px';
+    }
+    function mkItem(method, label, href, onClick) {
+      const el = document.createElement(href ? 'a' : 'button');
+      el.className = 'share-menu-item';
+      el.setAttribute('role', 'menuitem');
+      if (href) { el.href = href; el.target = '_blank'; el.rel = 'noopener'; }
+      else { el.type = 'button'; }
+      el.innerHTML = ICON[method] + '<span>' + label + '</span>';
+      el.addEventListener('click', onClick);
+      return el;
+    }
+    function open(btn, opts) {
+      if (menu && anchor === btn) { close(); return; }   // toggle
+      const touch = window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+      if (touch && navigator.share) {
+        navigator.share({ title: opts.title, text: opts.lede, url: opts.url })
+          .then(() => opts.track && opts.track('native')).catch(() => {});
+        return;
+      }
+      close();
+      anchor = btn;
+      const url = opts.url, title = opts.title, lede = opts.lede;
+      const track = (m) => { try { if (opts.track) opts.track(m); } catch (e) {} };
+      menu = document.createElement('div');
+      menu.className = 'share-menu';
+      menu.setAttribute('role', 'menu');
+      menu.appendChild(mkItem('copy', 'Copy link', null, (e) => {
+        e.preventDefault();
+        const it = e.currentTarget, span = it.querySelector('span');
+        const finish = () => { if (span) span.textContent = 'Copied'; it.classList.add('copied'); track('copy'); setTimeout(close, 900); };
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(finish, finish);
+        else finish();
+      }));
+      menu.appendChild(mkItem('email', 'Email',
+        'mailto:?subject=' + encodeURIComponent(title) + '&body=' + encodeURIComponent(lede + '\\n\\n' + url),
+        () => { track('email'); close(); }));
+      menu.appendChild(mkItem('x', 'Share on X',
+        'https://x.com/intent/post?text=' + encodeURIComponent(title) + '&url=' + encodeURIComponent(url),
+        () => { track('x'); close(); }));
+      menu.appendChild(mkItem('linkedin', 'Share on LinkedIn',
+        'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(url),
+        () => { track('linkedin'); close(); }));
+      menu.appendChild(mkItem('bluesky', 'Share on Bluesky',
+        'https://bsky.app/intent/compose?text=' + encodeURIComponent(title + ' ' + url),
+        () => { track('bluesky'); close(); }));
+      document.body.appendChild(menu);
+      btn.setAttribute('aria-expanded', 'true');
+      place();
+      document.addEventListener('click', onDoc, true);
+      document.addEventListener('keydown', onKey, true);
+      window.addEventListener('resize', close);
+      window.addEventListener('scroll', close, true);
+      const first = menu.querySelector('.share-menu-item');
+      if (first) first.focus();
+    }
+    return { open, close };
+  })();
+
+  // Share button -> open the menu for the ACTIVE tab's permalink.
+  shareBtn.setAttribute('aria-haspopup', 'menu');
+  shareBtn.setAttribute('aria-expanded', 'false');
+  shareBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
     if (!activeMid) return;
     const card = body.querySelector('.card');
-    const name = card?.getAttribute('data-metric-name') || activeMid;
-    const url = location.origin + '/m/' + encodeURIComponent(activeMid) + '/';
-    const text = 'muslimdata.in: ' + name + '\\n' + url;
-    const showCopied = (method) => {
-      shareBtn.classList.add('copied');
-      const label = shareBtn.querySelector('.modal-share-label');
-      const prev = label ? label.textContent : '';
-      if (label) label.textContent = 'Copied';
-      setTimeout(() => {
-        shareBtn.classList.remove('copied');
-        if (label) label.textContent = prev || 'Share';
-      }, 1500);
-      if (typeof gtag === 'function') {
-        gtag('event', 'share_clicked', { metric_id: activeMid, method });
-      }
-    };
-    if (navigator.share) {
-      navigator.share({ title: 'muslimdata.in: ' + name, text: name, url })
-        .then(() => showCopied('native'))
-        .catch(() => {
-          // User cancelled the share sheet; fall back to clipboard copy.
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(url).then(() => showCopied('clipboard'));
-          }
-        });
-    } else if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(url).then(
-        () => showCopied('clipboard'),
-        () => showCopied('clipboard-fail'),
-      );
-    }
+    const name = card ? (card.getAttribute('data-metric-name') || activeMid) : activeMid;
+    const activeTabEl = body.querySelector('.modal-tab.active');
+    const view = activeTabEl ? activeTabEl.dataset.view : 'overview';
+    const labelSpan = activeTabEl ? activeTabEl.querySelector('span') : null;
+    const viewLabel = (view && view !== 'overview' && labelSpan) ? labelSpan.textContent : '';
+    const url = location.origin + '/m/' + encodeURIComponent(activeMid) + '/' +
+      (view && view !== 'overview' ? encodeURIComponent(view) + '/' : '');
+    ShareMenu.open(shareBtn, {
+      url: url,
+      title: 'muslimdata.in: ' + name + (viewLabel ? ' (' + viewLabel + ')' : ''),
+      lede: name,
+      track: (method) => { if (typeof gtag === 'function') gtag('event', 'share_clicked', { metric_id: activeMid, view: view, method: method }); },
+    });
   });
 
   document.querySelectorAll('.cards .card').forEach((card) => {
     card.addEventListener('click', (e) => {
       // A card-face "view" hint (e.g. "By state") opens the modal straight to
-      // that tab; data-view-idx lines up with the modal's v0/v1/... tabs.
+      // that tab; data-view-id matches the modal tab's data-view + URL segment.
       const viewLink = e.target.closest('.card-view-link');
       if (viewLink) {
-        const idx = viewLink.getAttribute('data-view-idx');
-        openModal(card, idx != null ? 'v' + idx : undefined);
+        openModal(card, viewLink.getAttribute('data-view-id') || undefined);
         return;
       }
       // Let links, summaries, and download triggers behave normally.
@@ -1711,14 +1837,19 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
     });
   });
 
-  // Hash routing: open the matching modal on page load or hash change.
+  // Hash routing: open the matching modal on page load or hash change. The hash
+  // form is #{mid} or #{mid}/{view} (the per-tab stub's redirect target);
+  // openModal then rewrites the address bar to the clean /m/{mid}/{view}/ path.
   function handleHash() {
-    const mid = location.hash.replace(/^#/, '');
-    if (!mid) {
+    const raw = location.hash.replace(/^#/, '');
+    if (!raw) {
       if (!overlay.hidden) closeModal();
       return;
     }
-    openByMid(mid);
+    const slash = raw.indexOf('/');
+    const mid = slash === -1 ? raw : raw.slice(0, slash);
+    const view = slash === -1 ? undefined : raw.slice(slash + 1);
+    openByMid(mid, view);
   }
   window.addEventListener('hashchange', handleHash);
   if (location.hash) handleHash();
@@ -1736,31 +1867,31 @@ STUB_TEMPLATE = """<!DOCTYPE html>
 <title>{title}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="{description}">
-<link rel="canonical" href="{site_url}/m/{mid}/">
+<link rel="canonical" href="{canonical_url}">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#fafaf7">
 <meta property="og:title" content="{og_title}">
 <meta property="og:description" content="{description}">
-<meta property="og:url" content="{site_url}/m/{mid}/">
+<meta property="og:url" content="{og_url}">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="muslimdata.in">
-<meta property="og:image" content="{site_url}/og/{mid}.png">
+<meta property="og:image" content="{og_image_url}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="{og_image_alt}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{og_title}">
 <meta name="twitter:description" content="{description}">
-<meta name="twitter:image" content="{site_url}/og/{mid}.png">
-<meta http-equiv="refresh" content="0; url={site_url}/#{mid}">
+<meta name="twitter:image" content="{og_image_url}">
+<meta http-equiv="refresh" content="0; url={refresh_url}">
 <script>location.replace({redirect_target});</script>
 <style>body{{font:14px -apple-system,system-ui,sans-serif;color:#666;padding:40px;text-align:center}}</style>
 <!--DATASET_JSONLD-->
 </head>
 <body>
-<p>Redirecting to <a href="{site_url}/#{mid}">muslimdata.in</a>...</p>
+<p>Redirecting to <a href="{refresh_url}">muslimdata.in</a>...</p>
 </body>
 </html>
 """
@@ -1900,6 +2031,78 @@ def _og_data_for_metric(m: dict):
                 comp_value=comp_value, comp_class=comp_class, polarity=polarity)
 
 
+def _state_extremes(mid: str):
+    """(hi_name, hi_val, lo_name, lo_val) for a metric's state-level feature
+    series (Muslim where the metric splits by religion, else the dominant
+    series), each state at its OWN latest year. None if no state rows. Mirrors
+    the feature-selection logic in _state_details so the OG nugget matches the
+    'By state' tab."""
+    from collections import defaultdict
+    rows = [r for r in load_metric(mid) if r["geography_level"] == "state"]
+    if not rows:
+        return None
+    latest_year: dict[str, int] = defaultdict(int)
+    for r in rows:
+        y = int(r["year"])
+        if y > latest_year[r["geography_code"]]:
+            latest_year[r["geography_code"]] = y
+    by_geo: dict[str, dict] = defaultdict(dict)
+    for r in rows:
+        g = r["geography_code"]
+        if int(r["year"]) == latest_year[g]:
+            by_geo[g][r["religion"]] = float(r["value"])
+    if any("muslim" in v for v in by_geo.values()):
+        feature = "muslim"
+    else:
+        keys = [k for v in by_geo.values() for k in v]
+        feature = max(set(keys), key=keys.count) if keys else "all"
+    vals = [(g, v[feature]) for g, v in by_geo.items() if feature in v]
+    if not vals:
+        return None
+    hi = max(vals, key=lambda x: x[1])
+    lo = min(vals, key=lambda x: x[1])
+    return state_label(hi[0]), hi[1], state_label(lo[0]), lo[1]
+
+
+def _og_view_data(m: dict, view: dict):
+    """OG payload for one metric VIEW (by-state / by-sex / by-district): the base
+    metric card payload plus a `view_label` badge and a one-line `view_detail`
+    data nugget. Falls back to the view's sub-label if the nugget can't be
+    computed. Returns None when the base metric has no carded payload."""
+    base = _og_data_for_metric(m)
+    if not base:
+        return None
+    mid = m["id"]
+    unit = m["display"]["scorecard"]["unit_format"]
+    vid = view["id"]
+    detail = ""
+    if vid == "by-state":
+        ex = _state_extremes(mid)
+        if ex:
+            hi_n, hi_v, lo_n, lo_v = ex
+            detail = (f"Highest {hi_n} {fmt_num(hi_v, unit)} · "
+                      f"Lowest {lo_n} {fmt_num(lo_v, unit)}")
+    elif vid == "by-sex":
+        rows = [r for r in load_metric(mid, sex=None)
+                if r["geography_level"] == "national" and r["religion"] == "muslim"
+                and r["sex"] in ("male", "female")]
+        if rows:
+            latest = max(int(r["year"]) for r in rows)
+            bys = {r["sex"]: float(r["value"]) for r in rows if int(r["year"]) == latest}
+            if "male" in bys and "female" in bys:
+                detail = (f"Muslim male {fmt_num(bys['male'], unit)} · "
+                          f"female {fmt_num(bys['female'], unit)}")
+    elif vid == "by-district":
+        try:
+            _, top10 = _district_cumulative(mid)
+            detail = f"Top 10 districts hold {_round_str(top10, 1)}% of all Indian Muslims"
+        except Exception:
+            detail = ""
+    if not detail:
+        detail = view.get("sub", "")
+    return dict(base, view_label=view["label"], view_detail=detail)
+
+
 def _render_og_image(out_path: pathlib.Path, payload: dict) -> None:
     """Draw a 1200x630 PNG to out_path from the OG payload."""
     img = Image.new("RGB", (OG_W, OG_H), _OG_BG)
@@ -1908,8 +2111,14 @@ def _render_og_image(out_path: pathlib.Path, payload: dict) -> None:
     # Top accent rule + brand row.
     draw.rectangle([(0, 0), (OG_W, 12)], fill=_OG_ACCENT)
     draw.text((margin, 36), "muslimdata.in", font=_og_font(28, bold=True), fill=_OG_ACCENT)
-    # Polarity badge (top-right).
-    if payload.get("polarity"):
+    # Top-right badge: the view name (accent) for a per-view card, else the
+    # polarity hint (muted) for the base metric card.
+    if payload.get("view_label"):
+        badge_font = _og_font(22, bold=True)
+        badge_text = payload["view_label"].upper()
+        badge_w = draw.textlength(badge_text, font=badge_font)
+        draw.text((OG_W - margin - badge_w, 42), badge_text, font=badge_font, fill=_OG_ACCENT)
+    elif payload.get("polarity"):
         pol_font = _og_font(20, bold=True)
         pol_text = payload["polarity"].upper()
         pol_w = draw.textlength(pol_text, font=pol_font)
@@ -1929,8 +2138,19 @@ def _render_og_image(out_path: pathlib.Path, payload: dict) -> None:
         cap_y += 40
     if payload.get("year"):
         draw.text((margin, cap_y), payload["year"], font=_og_font(24), fill=_OG_MUTED)
-    # Comparison block (right half), only when there's something to compare.
-    if payload.get("comp_label") and payload.get("comp_value"):
+    # Right column: for a per-view card, a "BREAKDOWN" data nugget (e.g. highest/
+    # lowest state, male vs female, top-10 district share); otherwise the
+    # comparison block (vs all communities / vs Hindu), when present.
+    if payload.get("view_label") and payload.get("view_detail"):
+        col_x = 620
+        head_font = _og_font(24, bold=True)
+        draw.text((col_x, hero_y + 10), "BREAKDOWN", font=head_font, fill=_OG_MUTED)
+        nug_font = _og_font(34, bold=True)
+        nug_lines = _og_wrap(draw, payload["view_detail"], nug_font,
+                             OG_W - margin - col_x, max_lines=4)
+        for i, line in enumerate(nug_lines):
+            draw.text((col_x, hero_y + 56 + i * 46), line, font=nug_font, fill=_OG_FG)
+    elif payload.get("comp_label") and payload.get("comp_value"):
         right_x = OG_W - margin
         label_font = _og_font(28)
         val_font = _og_font(54, bold=True)
@@ -1973,15 +2193,17 @@ def _render_og_default(out_path: pathlib.Path) -> None:
     img.save(out_path, format="PNG", optimize=True)
 
 
-def _emit_og_images(out_dir: pathlib.Path) -> int:
-    """Generate a 1200x630 PNG per live metric at /og/{mid}.png plus a
-    /og/default.png for the homepage and About page. Returns the count."""
+def _emit_og_images(out_dir: pathlib.Path, view_map: dict | None = None) -> int:
+    """Generate 1200x630 PNGs: /og/{mid}.png per metric, /og/{mid}-{view}.png per
+    modal view (by-state / by-sex / by-district), plus /og/default.png for the
+    homepage and About page. Returns the total count written."""
     if Image is None:
         print("WARN: Pillow not installed; skipping OG image generation")
         return 0
     import yaml as _yaml
     with (REPO_ROOT / "manifest" / "metrics.yaml").open() as f:
         data = _yaml.safe_load(f)
+    view_map = view_map or {}
     og_dir = out_dir / "og"
     og_dir.mkdir(parents=True, exist_ok=True)
     written = 0
@@ -1991,51 +2213,97 @@ def _emit_og_images(out_dir: pathlib.Path) -> int:
             continue
         _render_og_image(og_dir / f"{m['id']}.png", payload)
         written += 1
+        for view in view_map.get(m["id"], []):
+            vpayload = _og_view_data(m, view)
+            if not vpayload:
+                continue
+            _render_og_image(og_dir / f"{m['id']}-{view['id']}.png", vpayload)
+            written += 1
     _render_og_default(og_dir / "default.png")
     return written
 
 
-def _emit_metric_stubs(out_dir: pathlib.Path) -> int:
-    """Write a stub HTML page per live metric at /m/{mid}/index.html. Each
-    carries metric-specific OG meta so social-card previews show the right
-    title; body client-redirects into the main page hash to auto-open the
-    modal. Returns the count of stubs written."""
+def _emit_metric_stubs(out_dir: pathlib.Path, view_map: dict | None = None) -> int:
+    """Write stub pages: /m/{mid}/index.html (overview) plus /m/{mid}/{view}/
+    index.html per modal view. Each carries its own OG meta (title, description,
+    per-view OG image) and client-redirects into the main page's #{mid}[/{view}]
+    hash so the modal auto-opens on the right tab. View stubs canonicalise to the
+    overview to consolidate SEO. Returns the count of stubs written."""
     import yaml as _yaml
     with (REPO_ROOT / "manifest" / "metrics.yaml").open() as f:
         data = _yaml.safe_load(f)
+    view_map = view_map or {}
     stubs_root = out_dir / "m"
     stubs_root.mkdir(parents=True, exist_ok=True)
     written = 0
+
+    def _write(sub_path, og_url_path, canonical_url, title, og_title,
+               description, og_image, redirect_hash, jsonld):
+        # 240-char cap so the description fits inside what social cards display.
+        if len(description) > 240:
+            description = description[:237].rstrip() + "..."
+        page = STUB_TEMPLATE.format(
+            title=html.escape(title),
+            og_title=html.escape(og_title),
+            description=html.escape(description),
+            og_image_alt=html.escape(
+                f"{og_title}: Indian Muslims vs Hindu and all-India baselines on muslimdata.in"),
+            canonical_url=canonical_url,
+            og_url=f"{SITE_URL}/{og_url_path}",
+            og_image_url=f"{SITE_URL}/og/{og_image}",
+            refresh_url=f"/#{redirect_hash}",
+            redirect_target=json.dumps(f"/#{redirect_hash}"),
+        )
+        page = page.replace("<!--DATASET_JSONLD-->", jsonld)
+        d = stubs_root / sub_path
+        d.mkdir(parents=True, exist_ok=True)
+        (d / "index.html").write_text(page)
+
     for m in data["metrics"]:
         disp = m.get("display", {}).get("scorecard")
         if not disp or disp.get("include", True) is False:
             continue
         mid = m["id"]
         name = m.get("name", disp.get("label", mid))
+        overview_canonical = f"{SITE_URL}/m/{mid}/"
         # One-sentence description derived from the metric definition, trimmed
         # to a single line for OG meta. Falls back to a generic line.
         defn = (m.get("definition") or "").strip().split("\n")[0].strip()
-        description = (
+        base_desc = (
             f"{name}, with Hindu and all-India comparison baselines on muslimdata.in. "
             + (defn if defn else "Provenance-traced living-conditions indicator.")
         )
-        # 200-char cap so the description fits inside what social cards display.
-        if len(description) > 240:
-            description = description[:237].rstrip() + "..."
-        page = STUB_TEMPLATE.format(
-            mid=mid,
-            site_url=SITE_URL,
-            title=html.escape(f"{name}: muslimdata.in"),
-            og_title=html.escape(name),
-            description=html.escape(description),
-            og_image_alt=html.escape(f"{name}: Indian Muslims vs Hindu and all-India baselines on muslimdata.in"),
-            redirect_target=json.dumps(f"{SITE_URL}/#{mid}"),
+        # Overview stub.
+        _write(
+            sub_path=mid,
+            og_url_path=f"m/{mid}/",
+            canonical_url=overview_canonical,
+            title=f"{name}: muslimdata.in",
+            og_title=name,
+            description=base_desc,
+            og_image=f"{mid}.png",
+            redirect_hash=mid,
+            jsonld=_dataset_jsonld(m),
         )
-        page = page.replace("<!--DATASET_JSONLD-->", _dataset_jsonld(m))
-        stub_dir = stubs_root / mid
-        stub_dir.mkdir(exist_ok=True)
-        (stub_dir / "index.html").write_text(page)
         written += 1
+        # Per-view stubs (canonical -> overview; their own OG image + title).
+        for view in view_map.get(mid, []):
+            vid, vlabel, vsub = view["id"], view["label"], view.get("sub", "")
+            vdesc = (f"{name} {vlabel.lower()}"
+                     + (f" ({vsub})" if vsub else "")
+                     + ", with Hindu and all-India baselines on muslimdata.in.")
+            _write(
+                sub_path=f"{mid}/{vid}",
+                og_url_path=f"m/{mid}/{vid}/",
+                canonical_url=overview_canonical,
+                title=f"{name}, {vlabel.lower()}: muslimdata.in",
+                og_title=f"{name} · {vlabel}",
+                description=vdesc,
+                og_image=f"{mid}-{vid}.png",
+                redirect_hash=f"{mid}/{vid}",
+                jsonld="",
+            )
+            written += 1
     return written
 
 
@@ -2462,7 +2730,7 @@ def build() -> None:
                     n_rows += 1
     n_sources = len(source_ids)
 
-    cluster_grids, card_charts = render_all_clusters()
+    cluster_grids, card_charts, view_map = render_all_clusters()
 
     stats = _compute_headline_stats()
     # Strip the parenthetical qualifier the scorecard labels carry (e.g.
@@ -2536,15 +2804,16 @@ def build() -> None:
     js_text = js_text.replace("__GA4_ID__", GA4_ID).replace("__CLARITY_ID__", CLARITY_ID)
     analytics_out.write_text(js_text)
 
-    # Emit per-metric 1200x630 OG cards at /og/{mid}.png (referenced by the
-    # stub pages below) and a /og/default.png used by the homepage + About.
-    _emit_og_images(OUT_PATH.parent)
+    # Emit 1200x630 OG cards: /og/{mid}.png per metric plus /og/{mid}-{view}.png
+    # for each modal view (by-state / by-sex / by-district), referenced by the
+    # stub pages below, and a /og/default.png used by the homepage + About.
+    _emit_og_images(OUT_PATH.parent, view_map)
 
-    # Emit per-metric stub pages at /m/{mid}/index.html. Each carries the
-    # metric-specific OG meta tags so social previews show the right
-    # title/description when a user shares the link; the body then
-    # client-redirects to the main page's hash for the modal to auto-open.
-    _emit_metric_stubs(OUT_PATH.parent)
+    # Emit stub pages: /m/{mid}/index.html plus /m/{mid}/{view}/index.html per
+    # view. Each carries its own OG meta so a shared per-tab link previews with
+    # the right title/image; the body then client-redirects to the main page's
+    # #{mid}/{view} hash so the modal auto-opens on that tab.
+    _emit_metric_stubs(OUT_PATH.parent, view_map)
 
     # Emit the About page at /about/index.html.
     _emit_about_page(OUT_PATH.parent, substitutions["{timestamp}"])
@@ -2810,6 +3079,24 @@ def _source_documents(mid):
     return out
 
 
+def _extract_views(html_str: str) -> list[dict]:
+    """Parse the drill-down `<details data-view-id=... data-view-label=...
+    data-view-sub=...>` tags out of a card's HTML, in document (= tab) order.
+    Single source of truth for both the card-face hint AND the per-view stub /
+    OG generation, so they never drift from what the card actually renders."""
+    out: list[dict] = []
+    for tag in re.findall(r"<details\b[^>]*>", html_str):
+        if "data-view-id" not in tag:
+            continue
+        def attr(name: str) -> str:
+            m = re.search(name + r'="([^"]*)"', tag)
+            return m.group(1) if m else ""
+        out.append({"id": attr("data-view-id"),
+                    "label": attr("data-view-label"),
+                    "sub": attr("data-view-sub")})
+    return out
+
+
 def _card_shell(mid, label, value, unit_txt, year, polarity, chart_html, comps_html,
                 src, csv_href, details_html="", download_html="") -> str:
     # `polarity` carries the "higher is better"/"lower is better" hint when the
@@ -2874,16 +3161,15 @@ def _card_shell(mid, label, value, unit_txt, year, polarity, chart_html, comps_h
     # lifts each into its own tab (see modalSetup). On the card face we render
     # only a minimal one-line hint listing the view names so the homepage stays
     # uncluttered. Each view's tab label is carried in data-view-label= on its
-    # <details>; we mirror those into the hint here (same DOM order = same tab
-    # order, so data-view-idx lines up with the modal's 'v0', 'v1', ... tabs).
-    import re as _re
+    # <details>; the hint's data-view-id matches the modal tab's data-view, so a
+    # hint click opens that exact tab (and its shareable /m/{mid}/{view}/ URL).
     views_html = f'<div class="card-views">{details_html}</div>' if details_html else ""
     hint_html = ""
-    view_labels = _re.findall(r'data-view-label="([^"]*)"', details_html)
-    if view_labels:
+    metric_views = _extract_views(details_html)
+    if metric_views:
         links = " · ".join(
-            f'<button type="button" class="card-view-link" data-view-idx="{i}">{html.escape(lbl)}</button>'
-            for i, lbl in enumerate(view_labels))
+            f'<button type="button" class="card-view-link" data-view-id="{html.escape(v["id"])}">{html.escape(v["label"])}</button>'
+            for v in metric_views)
         hint_html = (f'<div class="card-views-hint">More views: {links} '
                      f'<span aria-hidden="true">↗</span></div>')
 
@@ -2997,7 +3283,7 @@ def _top100_districts_table(metric_id: str) -> str:
             f"</tr>"
         )
     return (
-        f'<details data-view-label="By district" data-view-sub="top {len(parsed)} by population">'
+        f'<details data-view-id="by-district" data-view-label="By district" data-view-sub="top {len(parsed)} by population">'
         f'<summary>See the full ranked list (top {len(parsed)} districts)</summary>'
         f'<div class="scroll-table">'
         f'<table class="sortable-table">'
@@ -3071,7 +3357,7 @@ def _state_details(metric_id: str, unit: str, value_label: str | None = None) ->
             cells += numcell(b, "hindu", sortable=False)
         trs.append(f"<tr>{cells}</tr>")
     yr_txt = f", {next(iter(years_used))}" if len(years_used) == 1 else ""
-    return (f'<details data-view-label="By state" data-view-sub="{len(order)} states{yr_txt}">'
+    return (f'<details data-view-id="by-state" data-view-label="By state" data-view-sub="{len(order)} states{yr_txt}">'
             f'<summary>Full state data ({len(order)} states{yr_txt})</summary>'
             f'<table class="sortable-table"><thead>{head}</thead>'
             f'<tbody>{"".join(trs)}</tbody></table></details>')
@@ -3192,7 +3478,7 @@ def _sex_details(metric_id: str, unit: str) -> str:
     head = ('<tr><th class="sortable" data-col="0">Community</th>'
             '<th class="sortable" data-col="1" data-type="num">Male</th>'
             '<th class="sortable" data-col="2" data-type="num">Female</th></tr>')
-    return (f'<details data-view-label="By sex" data-view-sub="{latest}">'
+    return (f'<details data-view-id="by-sex" data-view-label="By sex" data-view-sub="{latest}">'
             f'<summary>By sex ({latest})</summary>'
             f'<table class="sortable-table"><thead>{head}</thead>'
             f'<tbody>{trs}</tbody></table></details>')
@@ -3221,7 +3507,8 @@ def _nat_trend(metric_id: str):
 
 
 def render_metric_card(m: dict):
-    """Return (card_html, chart_js_or_None) for one live metric."""
+    """Return (card_html, chart_js_or_None, views) for one live metric, where
+    views is the list of drill-down view dicts ({id,label,sub}) in tab order."""
     mid = m["id"]
     disp = m["display"]["scorecard"]
     label = m.get("name", disp["label"])  # full metric name on the card (scorecard keeps the short label)
@@ -3234,12 +3521,17 @@ def render_metric_card(m: dict):
     suffix, dec = UNIT_JS.get(unit, ("", 1))
 
     if special == "time_series_latest":
-        return _card_timeseries(mid, label, unit, src, csv_href, cvid)
-    if special == "time_series_count":
-        return _card_ts_count(mid, label, src, csv_href, cvid)
-    if mid in ("pop-share", "district-concentration-top100", "muslim-higher-ed-enrolment"):
-        return _card_muslim_only(mid, label, unit, src, csv_href, cvid)
-    return _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec)
+        card_html, js = _card_timeseries(mid, label, unit, src, csv_href, cvid)
+    elif special == "time_series_count":
+        card_html, js = _card_ts_count(mid, label, src, csv_href, cvid)
+    elif mid in ("pop-share", "district-concentration-top100", "muslim-higher-ed-enrolment"):
+        card_html, js = _card_muslim_only(mid, label, unit, src, csv_href, cvid)
+    else:
+        card_html, js = _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec)
+    # Third element: this metric's drill-down views (id/label/sub), in tab order,
+    # for the per-view stub + OG generators. Extracted from the rendered card so
+    # it can never drift from what actually appears in the modal.
+    return card_html, js, _extract_views(card_html)
 
 
 def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
@@ -3515,7 +3807,8 @@ def render_all_clusters():
     """Group live metrics into the SECTION_GROUPS display sections and render each
     as a card grid. Within a section, cards order by scorecard `order`.
 
-    Returns (clusters_html, charts_js).
+    Returns (clusters_html, charts_js, view_map) where view_map is
+    {mid: [{id,label,sub}, ...]} for the per-view stub + OG generators.
     """
     from collections import defaultdict
     import yaml as _yaml
@@ -3529,6 +3822,7 @@ def render_all_clusters():
         by_cluster[m["cluster"]].append(m)
 
     grids, charts = [], []
+    view_map: dict[str, list] = {}
     for name, cluster_ids in SECTION_GROUPS:
         ms = [m for cid in cluster_ids for m in by_cluster.get(cid, [])]
         if not ms:
@@ -3536,17 +3830,19 @@ def render_all_clusters():
         ms.sort(key=lambda m: m["display"]["scorecard"].get("order", 999))
         cards = []
         for m in ms:
-            card_html, js = render_metric_card(m)
+            card_html, js, views = render_metric_card(m)
             cards.append(card_html)
             if js:
                 charts.append(js)
+            if views:
+                view_map[m["id"]] = views
         intro = SECTION_INTROS.get(name, "")
         intro_html = (f'<p class="cluster-intro">{html.escape(intro)}</p>\n'
                       if intro else "")
         grids.append(f'<h2 class="cluster-header">{html.escape(name)}</h2>\n'
                      f'{intro_html}'
                      f'<div class="cards">\n{"".join(cards)}\n</div>')
-    return "\n\n".join(grids), "\n".join(charts)
+    return "\n\n".join(grids), "\n".join(charts), view_map
 
 
 if __name__ == "__main__":
