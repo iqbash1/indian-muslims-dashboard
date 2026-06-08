@@ -475,7 +475,7 @@ TEMPLATE = """<!DOCTYPE html>
 <meta property="og:image" content="{site_url}/og/default.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="muslimdata.in: the state of Muslim India, in data. 21 indicators with Hindu and all-India comparison baselines.">
+<meta property="og:image:alt" content="muslimdata.in: the state of Muslim India, in data. {n_metrics} indicators with Hindu and all-India comparison baselines.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{site_title}">
 <meta name="twitter:description" content="{site_description}">
@@ -1475,7 +1475,7 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
   const closeBtn = document.getElementById('modal-close');
   const shareBtn = document.getElementById('modal-share');
   const factories = { hbar, lineChart, trendChart, concentrationCurve };
-  let modalChart = null;
+  let modalCharts = [];
   let activeMid = null;
 
   // Clean per-tab URL (Hawaii pattern): the address bar always shows the
@@ -1495,6 +1495,12 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
     body.querySelectorAll('.modal-panel').forEach((p) =>
       p.classList.toggle('active', p.dataset.view === view));
     setMetricUrl(activeMid, view);
+    // A chart created while its tab was hidden was sized 0; now that the panel
+    // is visible, nudge any chart in it to remeasure (the by-district curve).
+    const panel = body.querySelector('.modal-panel.active');
+    if (panel) panel.querySelectorAll('canvas').forEach((cv) => {
+      const c = Chart.getChart(cv); if (c) c.resize();
+    });
     if (typeof gtag === 'function' && view !== 'overview' && activeMid) {
       gtag('event', 'metric_view_opened', { metric_id: activeMid, view });
     }
@@ -1566,37 +1572,38 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
     document.body.classList.add('modal-open');
     closeBtn.focus();
 
-    const origCanvas = card.querySelector('canvas');
-    const cloneCanvas = clone.querySelector('canvas');
-    if (origCanvas && cloneCanvas) {
-      // Strip dimensions inherited from the source canvas; let Chart.js
-      // size the cloned canvas to its (now-visible) container.
-      cloneCanvas.removeAttribute('width');
-      cloneCanvas.removeAttribute('height');
-      cloneCanvas.style.width = '';
-      cloneCanvas.style.height = '';
-      const modalId = origCanvas.id + '-modal';
-      cloneCanvas.id = modalId;
-      const spec = CHART_SPECS[origCanvas.id];
-      if (spec && factories[spec.fnName]) {
-        // trendChart's signature is (id, years, seriesMap, allSeries, suffix,
-        // decimals, hasBreak, refLine, dashedExtras, mode). Most call sites omit
-        // the trailing optional args, so we preserve args 0-7 (incl. decimals at
-        // index 4) and force mode='modal' at position 8 so it lands in the
-        // correct slot rather than overwriting an earlier arg.
-        let args = spec.args;
-        if (spec.fnName === 'trendChart') {
-          args = spec.args.slice(0, 8);
-          while (args.length < 8) args.push(undefined);
-          args.push('modal');
-        }
-        factories[spec.fnName](modalId, ...args);
-        modalChart = Chart.getChart(modalId);
-        // Force a resize after the layout settles so labels reflow into
-        // the modal's larger real estate (Chart.js measures at construction).
-        if (modalChart) requestAnimationFrame(() => modalChart && modalChart.resize());
+    // Re-render every chart in the clone on a fresh canvas: the overview chart
+    // plus any per-tab chart (e.g. pop-share's by-district concentration curve).
+    // The clone's canvas ids still match the originals, which are the CHART_SPECS
+    // keys. A chart whose tab is hidden is created 0-size and auto-resizes
+    // (responsive) when shown; switchView also nudges it.
+    // Query `body` not `clone`: per-tab canvases were just moved out of the
+    // clone into their own panels, so they are no longer clone descendants.
+    body.querySelectorAll('canvas').forEach((cv) => {
+      const origId = cv.id;
+      const spec = CHART_SPECS[origId];
+      if (!spec || !factories[spec.fnName]) return;
+      cv.removeAttribute('width');
+      cv.removeAttribute('height');
+      cv.style.width = '';
+      cv.style.height = '';
+      cv.id = origId + '-modal';
+      // trendChart's signature is (id, years, seriesMap, allSeries, suffix,
+      // decimals, hasBreak, refLine, dashedExtras, mode). Preserve args 0-7 and
+      // force mode='modal' at position 8 so it lands in the correct slot.
+      let args = spec.args;
+      if (spec.fnName === 'trendChart') {
+        args = spec.args.slice(0, 8);
+        while (args.length < 8) args.push(undefined);
+        args.push('modal');
       }
-    }
+      factories[spec.fnName](cv.id, ...args);
+      const ch = Chart.getChart(cv.id);
+      if (ch) modalCharts.push(ch);
+    });
+    // Force a resize after layout settles so labels reflow into the modal's
+    // larger real estate (Chart.js measures at construction).
+    requestAnimationFrame(() => modalCharts.forEach((c) => c && c.resize()));
 
     // Honour a requested initial tab (e.g. a card-face "By state" hint). The
     // chart was built above while Overview was visible so Chart.js could
@@ -1612,7 +1619,8 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
   }
 
   function closeChart() {
-    if (modalChart) { modalChart.destroy(); modalChart = null; }
+    modalCharts.forEach((c) => { try { c.destroy(); } catch (e) { /* already gone */ } });
+    modalCharts = [];
   }
 
   function closeModal() {
@@ -2064,9 +2072,13 @@ def _og_view_data(m: dict, view: dict):
                 detail = (f"Muslim male {fmt_num(bys['male'], unit)} · "
                           f"female {fmt_num(bys['female'], unit)}")
     elif vid == "by-district":
+        # The by-district view's data always comes from the concentration
+        # canonical (it hosts the top-100 ranking), regardless of the host card.
         try:
-            _, top10 = _district_cumulative(mid)
-            detail = f"Top 10 districts hold {_round_str(top10, 1)}% of all Indian Muslims"
+            conc = _nat_by_religion("district-concentration-top100").get("muslim")
+            _, top10 = _district_cumulative("district-concentration-top100")
+            detail = (f"{_round_str(conc, 1)}% in the top 100 districts · "
+                      f"top 10 hold {_round_str(top10, 1)}%")
         except Exception:
             detail = ""
     if not detail:
@@ -2153,7 +2165,7 @@ def _render_og_default(out_path: pathlib.Path) -> None:
     for line in title_lines:
         draw.text((margin, y), line, font=title_font, fill=_OG_FG)
         y += 104
-    draw.text((margin, y + 20), "21 indicators across 6 themes.",
+    draw.text((margin, y + 20), f"{len(_carded_metrics())} indicators across 6 themes.",
               font=_og_font(32), fill=_OG_FG)
     draw.text((margin, y + 70), "Hindu and all-India comparison baselines on every metric.",
               font=_og_font(32), fill=_OG_MUTED)
@@ -2419,7 +2431,19 @@ def _landing_breakdowns(m: dict, views: list) -> str:
         elif vid == "by-sex":
             block = _sex_details(mid, unit)
         elif vid == "by-district":
-            block = _top100_districts_table(mid)
+            # Always the concentration canonical (the top-100 ranking), with a
+            # stat note; chart-free here (the curve is interactive-only).
+            cmid = "district-concentration-top100"
+            conc = _nat_by_religion(cmid).get("muslim")
+            parsed = _parse_district_rows(cmid)
+            if conc is not None and parsed:
+                _, top10 = _district_cumulative(cmid)
+                note = (f"The {len(parsed)} most Muslim-populous districts (of "
+                        f"{TOTAL_DISTRICTS_2011}) are home to {_round_str(conc, 1)}% of all "
+                        f"Indian Muslims; the top 10 alone hold {_round_str(top10, 1)}%.")
+                block = f'<p>{html.escape(note)}</p>{_top100_districts_inner(cmid)}'
+            else:
+                block = ""
         else:
             block = ""
         if not block:
@@ -2587,7 +2611,7 @@ ABOUT_TEMPLATE = """<!DOCTYPE html>
 <meta property="og:image" content="{site_url}/og/default.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="muslimdata.in: the state of Muslim India, in data. 21 indicators with Hindu and all-India comparison baselines.">
+<meta property="og:image:alt" content="muslimdata.in: the state of Muslim India, in data. {n_metrics} indicators with Hindu and all-India comparison baselines.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="About muslimdata.in">
 <meta name="twitter:description" content="A scorecard of living-conditions indicators for India's Muslim population, with Hindu and all-India comparison baselines on every metric.">
@@ -3521,12 +3545,12 @@ def _district_cumulative(metric_id: str):
     return points, top10
 
 
-def _top100_districts_table(metric_id: str) -> str:
-    """Sortable, scrollable # | District (ST) | Muslims | % of district table.
-    Built from _parse_district_rows. Each numeric cell carries a `data-sort`
-    raw value so the client sort is correct (text like "4.71M" / "501k" would
-    sort wrong by string); headers are click-sortable (see setupSortableTables
-    JS). Default order = rank ascending."""
+def _top100_districts_inner(metric_id: str) -> str:
+    """Sortable, scrollable # | District (ST) | Muslims | % of district table for
+    the top-ranked districts (NO <details>/<summary> wrapper, so it can be
+    composed into the pop-share by-district view + the landing page). Each
+    numeric cell carries a `data-sort` raw value so the client sort is correct
+    (text like "4.71M" / "501k" would sort wrong by string). '' if no rows."""
     parsed = _parse_district_rows(metric_id)
     if not parsed:
         return ""
@@ -3545,8 +3569,6 @@ def _top100_districts_table(metric_id: str) -> str:
             f"</tr>"
         )
     return (
-        f'<details data-view-id="by-district" data-view-label="By district" data-view-sub="top {len(parsed)} by population">'
-        f'<summary>See the full ranked list (top {len(parsed)} districts)</summary>'
         f'<div class="scroll-table">'
         f'<table class="sortable-table">'
         f'<thead><tr>'
@@ -3557,8 +3579,40 @@ def _top100_districts_table(metric_id: str) -> str:
         f'</tr></thead>'
         f'<tbody>{"".join(trs)}</tbody>'
         f'</table>'
-        f'</div></details>'
+        f'</div>'
     )
+
+
+def _concentration_view(curve_cvid: str, download_html: str = ""):
+    """pop-share's "By district" tab: the geographic-concentration story folded
+    in from the former district-concentration card (Commit DV). Returns
+    (details_html, curve_js). Reads the district-concentration-top100 canonical
+    (top-100 ranking + national concentration figure) regardless of host card."""
+    cmid = "district-concentration-top100"
+    conc = _nat_by_religion(cmid).get("muslim")
+    parsed = _parse_district_rows(cmid)
+    if conc is None or not parsed:
+        return "", None
+    n = len(parsed)
+    points, top10 = _district_cumulative(cmid)
+    note = (f"India had {TOTAL_DISTRICTS_2011} districts in 2011, yet the {n} most "
+            f"Muslim-populous, just {_round_str(n / TOTAL_DISTRICTS_2011 * 100, 1)}% of them, are "
+            f"home to {_round_str(conc, 1)}% of all Indian Muslims, and the top 10 alone hold "
+            f"{_round_str(top10, 1)}%. This is a geographic-concentration measure, not a "
+            f"community comparison.")
+    curve_html = (f'<div class="card-chartwrap" style="height:200px"><canvas id="{curve_cvid}" '
+                  f'role="img" aria-label="Cumulative share of India\'s Muslim population held by '
+                  f'the top-ranked districts; values listed in the table below."></canvas></div>')
+    curve_js = f'concentrationCurve("{curve_cvid}", {json.dumps(points)}, 10, "%");'
+    view = (f'<details data-view-id="by-district" data-view-label="By district" '
+            f'data-view-sub="top {n} of {TOTAL_DISTRICTS_2011}">'
+            f'<summary>Geographic concentration (top {n} districts)</summary>'
+            f'<p class="comp-note">{html.escape(note)}</p>'
+            f'{curve_html}'
+            f'{_top100_districts_inner(cmid)}'
+            f'{download_html}'
+            f'</details>')
+    return view, curve_js
 
 
 def _state_details(metric_id: str, unit: str, value_label: str | None = None) -> str:
@@ -3786,7 +3840,7 @@ def render_metric_card(m: dict):
         card_html, js = _card_timeseries(mid, label, unit, src, csv_href, cvid)
     elif special == "time_series_count":
         card_html, js = _card_ts_count(mid, label, src, csv_href, cvid)
-    elif mid in ("pop-share", "district-concentration-top100", "muslim-higher-ed-enrolment"):
+    elif mid in ("pop-share", "muslim-higher-ed-enrolment"):
         card_html, js = _card_muslim_only(mid, label, unit, src, csv_href, cvid)
     else:
         card_html, js = _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec)
@@ -3921,15 +3975,13 @@ def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
     muslim = nat.get("muslim")
     headline = fmt_num(muslim, unit) if muslim is not None else "n/a"
     chart_html, js, note = "", None, ""
-    kicker_html = ""
+    conc_view, download = "", _district_download_link(mid)
     if mid == "pop-share":
         # Decadal multi-community trend (1961->2011). Hindu (~80%) dominates if
         # plotted on the same axis as Muslim + minor religions, so the chart's
         # y-axis hugs the 0-15% band where the Muslim story is legible; Hindu's
-        # trajectory is summarised as a dashed reference line at its midpoint
-        # value, labeled "Hindu ~80%". (Hindu moved 83.45 -> 79.80 over 50
-        # years — a 3.65pp drift, not visually distinguishable from a flat line
-        # at this resolution, so a single reference value is honest.)
+        # trajectory is summarised in the note (it moved 83.45 -> 79.80 over 50
+        # years, a flat-looking 3.65pp drift at this resolution).
         years, series, _ = _nat_trend(mid)
         main_named = ("muslim", "christian", "sikh", "buddhist", "jain")
         series_map = {rel: [(_round_dp(v, _disp_dp(unit)) if (v := series.get(rel, {}).get(y)) is not None else None)
@@ -3946,22 +3998,14 @@ def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
                 f"omitted from the chart so the Muslim and minor-community trends are legible. "
                 f"All values from primary RGI religion volumes 1961-2011; 1981 excludes "
                 f"Assam, 1991 excludes Jammu & Kashmir.")
-    elif mid == "district-concentration-top100":
-        # Cumulative concentration curve: cumulative share of India's Muslim
-        # population (y) as you add districts ranked by Muslim population (x).
-        # The steep-then-flat shape shows how front-loaded the concentration
-        # is; the top-10 point is highlighted to anchor the kicker line. The
-        # full ranked list is in the sortable table below — see
-        # _top100_districts_table().
-        points, top10 = _district_cumulative(mid)
-        chart_html = f'<div class="card-chartwrap" style="height:150px"><canvas id="{cvid}" role="img" aria-label="Cumulative share of India\'s Muslim population held by the top-ranked districts; values listed in the table below."></canvas></div>'
-        js = f'concentrationCurve("{cvid}", {json.dumps(points)}, 10, "%");'
-        kicker_html = (f'<div class="comp-kicker">The top 10 districts alone are home to '
-                       f'{_round_str(top10, 1)}% of all Indian Muslims.</div>')
-        note = (f"India had {TOTAL_DISTRICTS_2011} districts in 2011, yet the 100 most "
-                f"Muslim-populous, just {_round_str(100 / TOTAL_DISTRICTS_2011 * 100, 1)}% of them, are "
-                f"home to {_round_str(muslim, 1)}% of all Indian Muslims. This is a geographic-"
-                f"concentration measure, not a community comparison.")
+        # "By district" tab: the geographic-concentration story, merged in from
+        # the former district-concentration card (Commit DV). Its cumulative
+        # curve is a 2nd modal chart; the all-640-districts CSV download lives in
+        # this tab too. _concentration_view reads the concentration canonical.
+        conc_view, curve_js = _concentration_view(cvid + "-district", download)
+        if curve_js:
+            js = js + "\n" + curve_js
+        download = ""  # moved into the by-district tab
     else:  # muslim-higher-ed-enrolment
         # Top-8 states by Muslim enrolment, shown in thousands (the national
         # headline is the absolute total; no community comparator exists).
@@ -3977,16 +4021,10 @@ def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
                   f'{json.dumps(["#2b6cb0"] * len(st))}, "k", 0, null, "");')
         note = ("No community ranking. AISHE tabulates “Muslim Minority” enrolment separately; "
                 "other communities are not enumerated in the same table. Top-8 states shown (thousands).")
-    comps = kicker_html + f'<div class="comp-note">{html.escape(note)}</div>'
-    # Metric-specific drill-down(s), lifted into modal tabs by _card_shell.
-    # district-concentration gets the full top-100 list as its one extra tab;
-    # other muslim-only metrics get state data (a tab) plus, where the canonical
-    # carries district rows, a modal-only "download all districts" CSV link.
-    if mid == "district-concentration-top100":
-        details, download = _top100_districts_table(mid), ""
-    else:
-        details = _state_details(mid, unit) + _sex_details(mid, unit)
-        download = _district_download_link(mid)
+    comps = f'<div class="comp-note">{html.escape(note)}</div>'
+    # Drill-downs become modal tabs (see _card_shell): state data, sex (where the
+    # source supports it), and, for pop-share, the by-district concentration view.
+    details = _state_details(mid, unit) + _sex_details(mid, unit) + conc_view
     return _card_shell(mid, label, headline, CAPTION.get(mid, ""), _year_of(mid), "",
                        chart_html, comps, src, csv_href, details, download_html=download), js
 

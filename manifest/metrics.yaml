@@ -132,6 +132,10 @@ metrics:
     status: defined
     display:
       scorecard:
+        # Decarded (Commit DV): the geographic-concentration story is now the
+        # "By district" tab of the `pop-share` card. This metric keeps its
+        # canonical CSV, which still feeds that tab (via _concentration_view).
+        include: false
         label: "Top-100 concentration"
         reference: null
         unit_format: percent

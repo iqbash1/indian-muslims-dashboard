@@ -13,7 +13,6 @@ muslimdata.in is a static, source-traceable dashboard of living-conditions indic
 - Muslim share of population (1961-2011; source: census-india-2011): https://muslimdata.in/m/pop-share/ | data: https://muslimdata.in/canonical/pop-share.csv
 - Urban share (2001-2011; source: census-india-2011): https://muslimdata.in/m/urban-share/ | data: https://muslimdata.in/canonical/urban-share.csv
 - Sex ratio (1961-2011; source: census-india-2011): https://muslimdata.in/m/sex-ratio/ | data: https://muslimdata.in/canonical/sex-ratio.csv
-- Concentration in top 100 districts (2011; source: census-india-2011): https://muslimdata.in/m/district-concentration-top100/ | data: https://muslimdata.in/canonical/district-concentration-top100.csv
 - Literacy rate (2001-2011; source: census-india-2011): https://muslimdata.in/m/lit-7plus/ | data: https://muslimdata.in/canonical/lit-7plus.csv
 - Higher education enrolment rate (2021; source: aishe): https://muslimdata.in/m/ger-higher-ed/ | data: https://muslimdata.in/canonical/ger-higher-ed.csv
 - Muslim students in higher education (2021; source: aishe): https://muslimdata.in/m/muslim-higher-ed-enrolment/ | data: https://muslimdata.in/canonical/muslim-higher-ed-enrolment.csv

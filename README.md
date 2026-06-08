@@ -17,7 +17,7 @@ justice.
 
 ## What's on the dashboard
 
-21 live indicators across six themes (population, health, education,
+20 live indicators across six themes (population, health, education,
 employment, representation, justice), drawn from 16 primary sources,
 grouped into five themed sections on the dashboard. The authoritative
 scorecard
@@ -31,8 +31,9 @@ every metric also has a full landing page at `/m/{id}/` (data tables, sources,
 JSON-LD) with a district-level CSV download where available.
 
 Coverage at a glance:
-- **Demographics**: population share by religion 1961→2011, urban share,
-  sex ratio (6 rounds 1961→2011), top-100-district concentration.
+- **Demographics**: population share by religion 1961→2011 (with the
+  top-100-district geographic-concentration view in its "By district" tab),
+  urban share, sex ratio (6 rounds 1961→2011).
 - **Education**: literacy 2001→2011, higher-education enrolment ratio
   (2021), Muslim higher-ed enrolment count.
 - **Employment**: labour-force participation, worker-population ratio,
@@ -171,9 +172,9 @@ Pure mechanical extension — pattern is proven:
 
 ## Status
 
-23 canonical metrics (21 carded + 2 reference series kept in `canonical/` but not rendered after Commit V switched justice cards to the share-trend pattern). The dashboard is a card grid with multi-community benchmarking (rank among religious communities) and multi-round trends spanning up to 60+ years (sex-ratio 1961→2011; population share 1961→2011; Lok Sabha 1952→2024; communal incidents 2015→2023; prison/undertrial 2018→2023; NFHS health 1998→2020; Census literacy 2001→2011). The architecture is battle-tested across 5 source shapes: legacy .xls / modern .xlsx spreadsheets, dual-column PDF tables, single-column PDF religion sections, tabular state-row PDFs, and landscape-rotated PDFs (qpdf-pre-rotated at extraction time).
+23 canonical metrics (20 carded + 3 reference series kept in `canonical/` but not rendered: `prison-share` + `undertrial-share` superseded by the rate-per-100k cards, and `district-concentration-top100` folded into the "By district" tab of the `pop-share` card in Commit DV). The dashboard is a card grid with multi-community benchmarking (rank among religious communities) and multi-round trends spanning up to 60+ years (sex-ratio 1961→2011; population share 1961→2011; Lok Sabha 1952→2024; communal incidents 2015→2023; prison/undertrial 2018→2023; NFHS health 1998→2020; Census literacy 2001→2011). The architecture is battle-tested across 5 source shapes: legacy .xls / modern .xlsx spreadsheets, dual-column PDF tables, single-column PDF religion sections, tabular state-row PDFs, and landscape-rotated PDFs (qpdf-pre-rotated at extraction time).
 
-Per-metric depth where the source supports it, shown as **modal tabs** (each with its own shareable `/m/{id}/{view}/` URL + social-preview image) and mirrored on the metric's full `/m/{id}/` landing page: **by-state** tables on 6 metrics (pop-share, sex-ratio, literacy, urban-share, communal-incidents, higher-ed); a **by-sex** (male vs female) breakdown on 5 (LFPR, WPR, salaried, literacy, higher-ed enrolment), national-level via an optional `sex` dimension added to the canonical schema and defaulted to `all` at the `load_metric` read so existing series are unaffected; a **by-district** top-100 ranking (district-concentration); and a **district-level CSV** download (pop-share, all 640 districts with names).
+Per-metric depth where the source supports it, shown as **modal tabs** (each with its own shareable `/m/{id}/{view}/` URL + social-preview image) and mirrored on the metric's full `/m/{id}/` landing page: **by-state** tables on 6 metrics (pop-share, sex-ratio, literacy, urban-share, communal-incidents, higher-ed); a **by-sex** (male vs female) breakdown on 5 (LFPR, WPR, salaried, literacy, higher-ed enrolment), national-level via an optional `sex` dimension added to the canonical schema and defaulted to `all` at the `load_metric` read so existing series are unaffected; a **by-district** geographic-concentration view (the top-100-district ranking + cumulative-concentration curve, in pop-share's "By district" tab); and a **district-level CSV** download (pop-share, all 640 districts with names).
 
 See `docs/audit-log.md` for the planned annual audit ritual and `docs/refresh-schedule.md` for the per-source cadence.
 

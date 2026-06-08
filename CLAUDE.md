@@ -49,5 +49,8 @@ not ad-hoc scripts: metric metadata in `manifest/metrics.yaml`, sources in
   JSON-LD); the per-view `docs/m/<id>/<view>/` are thin redirect stubs (OG meta +
   a relative `/#<id>/<view>` redirect). Both regenerate from canonical, so they
   change on most rebuilds — partial-looking diffs there are expected.
-- 21 carded metrics. sex-ratio + pop-share are primary RGI census 1961-2011;
-  Sachar Committee feeds the `mpce` metric (not sex-ratio anymore).
+- 20 carded metrics. `pop-share` absorbed the old `district-concentration-top100`
+  card (Commit DV): it is now pop-share's "By district" tab (curve + top-100
+  table), reading the still-present `district-concentration-top100.csv`.
+- sex-ratio + pop-share are primary RGI census 1961-2011; Sachar Committee feeds
+  the `mpce` metric (not sex-ratio anymore).
