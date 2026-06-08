@@ -774,8 +774,6 @@ TEMPLATE = """<!DOCTYPE html>
     /* Modal actions: 4 buttons (prev, next, share, close) need to fit at
        375px. Hide text labels on the prev/next/share buttons, leaving
        chevrons + share-icon as compact controls. */
-    .modal-nav-label { display: none; }
-    .modal-nav { padding: 0; min-width: 44px; }
     .modal-share-label { display: none; }
     .modal-share { padding: 0; gap: 0; min-width: 44px; }
   }
@@ -799,24 +797,26 @@ TEMPLATE = """<!DOCTYPE html>
     position: absolute; top: 12px; right: 12px; z-index: 2;
     display: flex; gap: 6px; align-items: center;
   }
-  .modal-close, .modal-share, .modal-nav {
-    background: var(--card); border: 1px solid var(--rule); border-radius: 6px;
-    cursor: pointer; color: var(--muted); padding: 0;
+  .modal-close, .modal-share {
+    border-radius: 6px; cursor: pointer; padding: 0;
     -webkit-appearance: none; appearance: none;
     line-height: 1; white-space: nowrap;
     transition: background .15s, border-color .15s, color .15s;
     display: inline-flex; align-items: center; justify-content: center;
   }
-  .modal-close { width: 44px; height: 44px; font-size: 22px; }
-  .modal-share { height: 44px; padding: 0 14px; gap: 6px; font-size: 13px; font-weight: 500; }
-  .modal-nav { height: 44px; padding: 0 14px; font-size: 13px; font-weight: 500; }
-  .modal-nav span[aria-hidden] { font-size: 16px; line-height: 1; }
-  .modal-close:hover, .modal-share:hover, .modal-nav:hover {
-    background: var(--bg); border-color: var(--accent); color: var(--accent);
+  .modal-close {
+    width: 44px; height: 44px; font-size: 22px;
+    background: var(--card); border: 1px solid var(--rule); color: var(--muted);
   }
-  .modal-share.copied {
-    background: #ecf6ec; border-color: #5a8a5a; color: #2e6b2e;
+  .modal-close:hover { background: var(--bg); border-color: var(--accent); color: var(--accent); }
+  /* Share = a solid slate-blue primary button (Hawaii-dashboard style), white
+     icon + label. It is UI chrome, so accent, never maroon. */
+  .modal-share {
+    height: 44px; padding: 0 16px; gap: 7px; font-size: 13px; font-weight: 600;
+    background: var(--accent); border: 1px solid var(--accent); color: #fff;
   }
+  .modal-share svg { stroke: #fff; }
+  .modal-share:hover { background: #234c70; border-color: #234c70; }
   /* Inside the modal body, the cloned card sheds its card styling and the
      chart wrapper expands to use the larger real estate. */
   .modal-body .card {
@@ -993,12 +993,6 @@ TEMPLATE = """<!DOCTYPE html>
 <div class="modal-overlay" id="modal-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title">
   <div class="modal" role="document">
     <div class="modal-actions">
-      <button class="modal-nav" id="modal-prev" aria-label="Previous metric" title="Previous metric (←)">
-        <span aria-hidden="true">‹</span><span class="modal-nav-label"> Prev</span>
-      </button>
-      <button class="modal-nav" id="modal-next" aria-label="Next metric" title="Next metric (→)">
-        <span class="modal-nav-label">Next </span><span aria-hidden="true">›</span>
-      </button>
       <button class="modal-share" id="modal-share" aria-label="Copy share link" title="Copy share link">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <circle cx="18" cy="5" r="3"></circle>
@@ -1480,18 +1474,9 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
   const body = document.getElementById('modal-body');
   const closeBtn = document.getElementById('modal-close');
   const shareBtn = document.getElementById('modal-share');
-  const prevBtn = document.getElementById('modal-prev');
-  const nextBtn = document.getElementById('modal-next');
   const factories = { hbar, lineChart, trendChart, concentrationCurve };
   let modalChart = null;
   let activeMid = null;
-
-  // Ordered list of metric IDs in card-grid order, built once at setup so
-  // prev/next navigation cycles through cards in the same sequence the
-  // visitor sees them on the page (and wraps at both ends).
-  const cardOrder = Array.from(document.querySelectorAll('.cards .card'))
-    .map((c) => c.getAttribute('data-metric-id'))
-    .filter(Boolean);
 
   // Clean per-tab URL (Hawaii pattern): the address bar always shows the
   // shareable /m/{mid}/ (overview) or /m/{mid}/{view}/ path. A reload of that
@@ -1651,37 +1636,13 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
     return true;
   }
 
-  // Prev/next navigation: cycle through cardOrder with wrap-around, so a
-  // visitor who opens the first card sees prev land on the last (rather
-  // than being a dead end). Calls openByMid which rebuilds the modal body
-  // for the new metric (resetting to its Overview tab) and updates the URL.
-  function nav(delta) {
-    if (!activeMid || cardOrder.length === 0) return;
-    const i = cardOrder.indexOf(activeMid);
-    if (i < 0) return;
-    const j = (i + delta + cardOrder.length) % cardOrder.length;
-    openByMid(cardOrder[j]);
-  }
-
   closeBtn.addEventListener('click', closeModal);
-  prevBtn.addEventListener('click', () => nav(-1));
-  nextBtn.addEventListener('click', () => nav(1));
   overlay.addEventListener('click', (e) => {
     if (e.target === overlay) closeModal();
   });
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && !overlay.hidden) {
       closeModal();
-      return;
-    }
-    // Arrow keys navigate between metrics when the modal is open. Skip if
-    // focus is in an editable element (don't hijack typing in the share
-    // tooltip or a future inline input).
-    if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && !overlay.hidden) {
-      const t = document.activeElement;
-      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
-      nav(e.key === 'ArrowLeft' ? -1 : 1);
-      e.preventDefault();
       return;
     }
     // Focus trap: cycle Tab focus only among interactive elements inside the
@@ -1741,9 +1702,7 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
         const first = items[0], last = items[items.length - 1];
         if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
         else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-        return;
       }
-      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') e.stopPropagation();
     }
     function place() {
       const r = anchor.getBoundingClientRect();
