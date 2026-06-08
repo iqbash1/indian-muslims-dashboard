@@ -53,18 +53,20 @@ jobs:
 
       - name: Check out (no LFS — sources/** not needed to serve the site)
         if: steps.gate.outputs.ready == 'true'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           lfs: false
 
       - name: Deploy committed docs/ to Cloudflare Workers
         if: steps.gate.outputs.ready == 'true'
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           # Pin wrangler 4.x: this is an assets-only Worker (wrangler.jsonc has
-          # `assets` but no `main`). wrangler-action's default (3.90.0) rejects
-          # that with "Missing entry-point"; Workers Static Assets needs >=4.
+          # `assets` but no `main`), which needs Wrangler >=4 (Workers Static
+          # Assets) or it errors "Missing entry-point". wrangler-action@v4 now
+          # defaults to Wrangler v4, but we keep an exact pin for reproducible
+          # deploys.
           wranglerVersion: '4.91.0'
           command: deploy
