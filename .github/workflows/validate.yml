@@ -31,6 +31,11 @@ jobs:
       - name: Validate manifests + canonical CSVs against JSON schemas
         run: python validate/validate.py
 
+      - name: Audit doc/data consistency (metric-count gate; year-span advisory)
+        # Blocks only on hardcoded-count drift (e.g. README "21 metrics" vs the
+        # actual carded count); year-span mismatches print as an advisory list.
+        run: python validate/audit_consistency.py
+
       - name: Check source refresh cadence
         run: python validate/check_refresh.py
         # This step is informational only; non-zero exit doesn't fail the workflow.

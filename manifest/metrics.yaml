@@ -612,7 +612,7 @@ metrics:
       Percentage of state legislative assembly seats held by Muslim MLAs.
       National aggregate (~6%) plus per-assembly values for all 31
       state + UT assemblies that hold elections (28 states + Delhi,
-      Puducherry, J&K, most-recent election per assembly).
+      Puducherry, J&K, most-recent election per assembly, spanning 2020-2026).
     sources: {primary: prs-eci-affidavits}
     geography_levels: [national, state]
     religions: [muslim]
