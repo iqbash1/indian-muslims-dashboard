@@ -486,7 +486,7 @@ TEMPLATE = """<!DOCTYPE html>
 <style>
   :root {
     --fg: #1a1a1a;
-    --muted: #666;
+    --muted: #555;
     --bg: #fafaf7;
     --card: #ffffff;
     --rule: #e6e3da;
@@ -657,8 +657,8 @@ TEMPLATE = """<!DOCTYPE html>
   }
   .card:hover { border-color: var(--accent); box-shadow: var(--shadow-card); transform: translateY(-2px); }
   .card:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
-  .card-metric { font-size: var(--t-sm); font-weight: 600; color: var(--fg); margin-bottom: 4px; line-height: 1.3; }
-  .card-plain { font-size: var(--t-xs); color: var(--muted); margin: 0 0 10px; line-height: 1.45; font-weight: 400; }
+  .card-metric { font-size: 15px; font-weight: 600; color: var(--fg); margin-bottom: 4px; line-height: 1.3; }
+  .card-plain { font-size: 14px; color: var(--muted); margin: 0 0 10px; line-height: 1.45; font-weight: 400; }
   .modal-body .card-plain { font-size: 14px; color: var(--fg); margin: 0 0 16px; line-height: 1.55; max-width: 56em; }
   .card-hero { display: flex; align-items: baseline; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
   .card-value { font-size: 1.7rem; font-weight: 700; letter-spacing: -.02em; color: var(--muslim); font-feature-settings: "tnum"; }
@@ -753,7 +753,7 @@ TEMPLATE = """<!DOCTYPE html>
   @media (max-width: 560px) {
     .cards { grid-template-columns: 1fr; }
     h1 { font-size: 24px; }
-    .headline-finding { font-size: 14px; }
+    .headline-finding { font-size: 16px; }
     .masthead { gap: 6px 12px; }
     .masthead-nav { margin-left: 0; gap: 10px; }
     .masthead-nav a { padding: 12px 4px; min-height: 44px; display: inline-flex; align-items: center; }
@@ -761,15 +761,15 @@ TEMPLATE = """<!DOCTYPE html>
     .compare-toggle-label { width: 100%; margin-bottom: 4px; }
     .compare-toggle-btn { padding: 0 16px; font-size: 13px; min-height: 44px; }
     .scorecard-search { padding: 0 14px; font-size: 14px; min-height: 44px; }
-    .scorecard-table { font-size: 12px; }
+    .scorecard-table { font-size: 13px; }
     .scorecard-table th, .scorecard-table td { padding: 6px 4px; }
-    /* Section intros: lighter on mobile so they don't dominate. */
-    .cluster-intro { font-size: 13px; }
+    /* Section intros: keep at the desktop size on mobile for 60+ legibility. */
+    .cluster-intro { font-size: 14px; }
     /* Pill labels carry the comparator value now (Commit BP). On narrow
        cards the 3-pill row gets tight, so tighten typography and pad. */
-    .comp-label { font-size: 10.5px; line-height: 1.2; }
+    .comp-label { font-size: 12px; line-height: 1.2; }
     .comp-verdict { font-size: 12.5px; }
-    .comp-detail { font-size: 9.5px; }
+    .comp-detail { font-size: 12px; }
     .card-comp { padding: 4px 3px; }
     /* Modal actions: 4 buttons (prev, next, share, close) need to fit at
        375px. Hide text labels on the prev/next/share buttons, leaving
@@ -944,7 +944,7 @@ TEMPLATE = """<!DOCTYPE html>
 <h1>The state of Muslim India, in data</h1>
 
 <p class="headline-finding">
-  India's roughly 200 million Muslims, or 14.2% of the population
+  India's roughly 20 crore (200 million) Muslims, or 14.2% of the population
   (Census 2011), trail the all-India average on <em>{n_behind} of the
   {n_total_comparable}</em> indicators that allow a direct comparison, widest on
   {top_behind_joined}.{ahead_clause}

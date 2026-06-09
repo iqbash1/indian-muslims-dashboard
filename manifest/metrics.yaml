@@ -320,7 +320,7 @@ metrics:
       PLFS 2023-24 Table 49 (pages 401-402). Rural+urban person-level.
       Muslims disproportionately self-employed (62.2% vs Hindu 58.3%) and
       under-represented in formal salaried work, the classic Sachar-era
-      finding on labor-market segregation.
+      finding on labour-market segregation.
     comparison_baselines: [hindu, all]
     phase: 1
     status: defined
