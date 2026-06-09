@@ -1176,7 +1176,13 @@ function hbar(id, labels, values, colors, suffix, decimals, refValue, refLabel, 
       indexAxis: 'y', responsive: true, maintainAspectRatio: false, animation: false,
       layout: { padding: { right: 46, top: 14 } },
       plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => c.parsed.x.toFixed(decimals) + suffix } } },
-      scales: { x: { display: false, grace: '8%', beginAtZero: beginAtZero === true }, y: { grid: { display: false }, border: { display: false }, ticks: { font: { size: 11 } } } },
+      scales: { x: { display: false, grace: '8%', beginAtZero: beginAtZero === true,
+        // Keep the dashed All-communities reference line inside the axis even when
+        // it sits beyond every bar (lone-bar cards like mpce / GER, where the
+        // baseline is higher than the single Muslim bar).
+        suggestedMin: refValue == null ? undefined : Math.min(refValue, ...values),
+        suggestedMax: refValue == null ? undefined : Math.max(refValue, ...values) },
+        y: { grid: { display: false }, border: { display: false }, ticks: { font: { size: 11 } } } },
     },
     plugins: [_valueLabels(decimals, suffix), _refLine(refValue == null ? null : refValue, refLabel)],
   });
@@ -3963,33 +3969,32 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
         pairs = [(COMMUNITY_LABEL[c], nat[c], c == "muslim") for c in named]
         if hib is not None:
             pairs.sort(key=lambda b: b[1], reverse=bool(hib))
-        # When the metric carries only Muslim + All-India (e.g. GER higher-ed),
-        # surface All-India as a second bar so the chart actually communicates
-        # the gap instead of being a single redundant bar.
-        if len(pairs) == 1 and all_v is not None:
-            pairs.append(("All communities", float(all_v), False))
         labels = [p[0] for p in pairs]
         values = [_round_dp(p[1], _disp_dp(unit)) for p in pairs]
         # Colour contract: the Muslim bar is ALWAYS the brand maroon (its series
-        # identity); every other community plus the promoted All-communities bar
-        # are the muted grey. Whether Muslim sits well or badly is carried by the
-        # verdict + tier TEXT (green/red), never by recolouring the bar.
+        # identity); every other community is the muted grey. Whether Muslim sits
+        # well or badly is carried by the verdict + tier TEXT (green/red), never by
+        # recolouring the bar.
         colors = ["#7b1d22" if p[2] else "#D8DEE2" for p in pairs]
-        # Only skip the chart if there's truly nothing comparative to show.
-        if len(pairs) <= 1:
+        # "All communities" is ALWAYS the dashed reference line, never a peer bar,
+        # so the baseline reads identically on every card: the full community
+        # ranking where the source has one, or a lone Muslim bar against the dashed
+        # line where it does not (mpce / GER carry Muslim + All-India only). Skip
+        # only when there is nothing to anchor against.
+        if not pairs or (len(pairs) == 1 and all_v is None):
             chart_html = ""
             js = None
         else:
             h = len(pairs) * 28 + 28
             chart_html = f'<div class="card-chartwrap" style="height:{h}px"><canvas id="{cvid}" role="img" aria-label="Visualisation of this metric; numerical values are listed in the card above."></canvas></div>'
-            # If we already promoted All-India to a peer bar, don't ALSO draw it
-            # as a dashed reference line — that would be redundant.
-            has_all_bar = any(lbl == "All communities" for lbl in labels)
-            ref = "null" if has_all_bar else (json.dumps(_round_dp(all_v, _disp_dp(unit))) if all_v is not None else "null")
-            ref_label = "" if has_all_bar else (
-                f"All communities ({fmt_num(all_v, unit)})" if all_v is not None else "All communities")
+            ref = json.dumps(_round_dp(all_v, _disp_dp(unit))) if all_v is not None else "null"
+            ref_label = f"All communities ({fmt_num(all_v, unit)})" if all_v is not None else ""
+            # A lone Muslim bar needs a zero anchor so its length stays honest and
+            # the dashed line fits (the 2-bar-magnitude exception); a full ranking
+            # keeps the house no-zero baseline so community gaps stay visible.
+            begin_zero = "true" if len(pairs) == 1 else "false"
             js = (f'hbar("{cvid}", {json.dumps(labels)}, {json.dumps(values)}, {json.dumps(colors)}, '
-                  f'{json.dumps(suffix)}, {dec}, {ref}, {json.dumps(ref_label)});')
+                  f'{json.dumps(suffix)}, {dec}, {ref}, {json.dumps(ref_label)}, {begin_zero});')
         details = _state_details(mid, unit) + _sex_details(mid, unit)
 
     return _card_shell(mid, label, headline, CAPTION.get(mid, ""), _year_of(mid), polarity,
