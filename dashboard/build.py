@@ -539,6 +539,9 @@ TEMPLATE = """<!DOCTYPE html>
   .card-comp[data-comp-type="vs-hindu"] { display: none; }
   body.compare-hindu .card-comp[data-comp-type="vs-all"] { display: none; }
   body.compare-hindu .card-comp[data-comp-type="vs-hindu"] { display: block; }
+  /* A metric with no Hindu figure (e.g. AISHE higher-ed GER) would otherwise go
+     blank in "Hindu only" mode; keep its all-India gap visible as a fallback. */
+  body.compare-hindu .card-comp[data-comp-type="vs-all"][data-comp-fallback] { display: block; }
   h2 { font-size: 20px; margin: 0 0 4px; letter-spacing: -0.01em; font-weight: 600; }
   .methodology {
     font-size: 12.5px; color: var(--muted); margin: 14px 0 0;
@@ -647,7 +650,7 @@ TEMPLATE = """<!DOCTYPE html>
     --positive: #065F46; --negative: #991B1B; --neutral: #555555;
     --radius: 8px; --radius-pill: 999px;
     --shadow-card: 0 4px 14px rgba(0,0,0,.09);
-    --t-2xs: .70rem; --t-xs: .75rem; --t-sm: .82rem; --t-base: .88rem;
+    --t-2xs: .75rem; --t-xs: .75rem; --t-sm: .82rem; --t-base: .88rem;
   }
   .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); align-items: start; gap: 16px; margin-bottom: 8px; }
   .card {
@@ -3300,8 +3303,9 @@ def _year_of(metric_id: str):
     return max(yrs) if yrs else ""
 
 
-def _comp(label: str, verdict: str, detail: str, cls: str, comp_type: str | None = None) -> str:
+def _comp(label: str, verdict: str, detail: str, cls: str, comp_type: str | None = None, fallback: bool = False) -> str:
     attr = f' data-comp-type="{comp_type}"' if comp_type else ""
+    attr += ' data-comp-fallback' if fallback else ""
     return (f'<div class="card-comp {cls}"{attr}><div class="comp-label">{html.escape(label)}</div>'
             f'<div class="comp-verdict">{html.escape(verdict)}</div>'
             f'<div class="comp-detail">{html.escape(detail)}</div></div>')
@@ -3313,7 +3317,7 @@ PLAIN_DEFINITION = {
     "sex-ratio": "Higher means more women relative to men; a low value signals a gender imbalance favouring males.",
     "district-concentration-top100": "How geographically concentrated India's Muslims are, measured by the share living in their 100 most-populous districts.",
     "lit-7plus": "Of people aged 7 and older, what share can read and write. The Census uses 7+ as the standard cutoff to exclude very young children.",
-    "ger-higher-ed": "Of every 100 young people in the typical college-going age band (18 to 23), how many are enrolled in higher education.",
+    "ger-higher-ed": "Of every 100 young people in the typical college-going age band (18 to 23), how many are enrolled in higher education (any degree or diploma course after Class 12).",
     "muslim-higher-ed-enrolment": "Total number of Muslim students enrolled in higher education across India in the latest year.",
     "lfpr-15plus": "Of people aged 15 and older, what share is in the workforce, either working or actively looking for work.",
     "wpr-15plus": "Of people aged 15 and older, what share is currently working.",
@@ -3922,7 +3926,7 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
         base_label = all_pill_label or "vs all communities"
         comps += _comp(f"{base_label} · {fmt_num(all_v, unit)}",
                        _gap_str(gap, unit), _verdict_word(cls, gap), cls,
-                       comp_type="vs-all")
+                       comp_type="vs-all", fallback=(hindu is None))
     if hindu is not None:
         gap = muslim - hindu
         cls = _verdict(gap, hib)

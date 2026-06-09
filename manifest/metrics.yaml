@@ -197,7 +197,10 @@ metrics:
     higher_is_better: true
     definition: |
       Gross Enrolment Ratio = student enrolment in higher education / population
-      in the 18-23 age cohort * 100. The AISHE-published headline GER.
+      in the 18-23 age cohort * 100. The AISHE-published headline GER. Higher
+      education means any course after Class 12: degree, diploma, and
+      certificate programmes at universities, colleges, and standalone
+      institutions.
     sources:
       primary: aishe
       cross_check: [census-india-2011]
