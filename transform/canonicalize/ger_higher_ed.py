@@ -94,6 +94,66 @@ def population_18_23(religion: str) -> int:
     return round(p * AGE_PROXY_FACTOR)
 
 
+# --- by-sex + by-state inputs (Census C-15 age x sex x religion + the canonical
+#     Muslim enrolment counts) ---------------------------------------------------
+C15_SEX_L2 = REPO_ROOT / "extracted" / "census-2011" / "c15-religion-by-age-sex.csv"
+MUSLIM_ENROL_L3 = REPO_ROOT / "canonical" / "muslim-higher-ed-enrolment.csv"
+
+# Published All-India Minority enrolment by sex, AISHE 2021-22 Report prose:
+# "...14,96,191 are male students and 15,17,001 are female students" (total
+# Minority Community). Other-minority by sex = total Minority minus Muslim.
+TOTAL_MINORITY_MALE_2021_22 = 1_496_191
+TOTAL_MINORITY_FEMALE_2021_22 = 1_517_001
+
+_C15_SEX_ROWS: list | None = None
+
+
+def _c15_sex_rows() -> list:
+    global _C15_SEX_ROWS
+    if _C15_SEX_ROWS is None:
+        _C15_SEX_ROWS = list(csv.DictReader(C15_SEX_L2.open()))
+    return _C15_SEX_ROWS
+
+
+def population_18_23_cut(religions, state_code: str = "00", sex: str = "persons") -> int:
+    """0.6 x (15-19 + 20-24) summed over `religions` for one state_code + sex,
+    residence=total, from Census C-15 (age x sex x religion). state_code '00' is
+    All India; sex in {'persons','males','females'}."""
+    p = 0
+    for r in _c15_sex_rows():
+        if (r["state_code"] == state_code and r["residence"] == "total"
+                and r["sex"] == sex and r["religion"] in religions
+                and r["age_group"] in ("15-19", "20-24")):
+            p += int(r["value"])
+    return round(p * AGE_PROXY_FACTOR)
+
+
+def muslim_enrolment_by_sex() -> tuple[int, int]:
+    """National Muslim (male, female) enrolment from the canonical count metric
+    (itself AISHE Table 15)."""
+    m = f = None
+    for r in csv.DictReader(MUSLIM_ENROL_L3.open()):
+        if r["geography_level"] == "national" and r["religion"] == "muslim":
+            if r["sex"] == "male":
+                m = int(float(r["value"]))
+            elif r["sex"] == "female":
+                f = int(float(r["value"]))
+    if m is None or f is None:
+        raise RuntimeError("Muslim national male/female enrolment not found")
+    return m, f
+
+
+def muslim_enrolment_by_state() -> dict[str, int]:
+    """{geography_code: enrolment} for Muslim state rows (canonical count metric,
+    AISHE Table 15 as reported by states)."""
+    out: dict[str, int] = {}
+    for r in csv.DictReader(MUSLIM_ENROL_L3.open()):
+        if (r["geography_level"] == "state" and r["religion"] == "muslim"
+                and r.get("sex", "all") in ("all", "")):
+            out[r["geography_code"]] = int(float(r["value"]))
+    return out
+
+
 def canonicalize() -> None:
     muslim_enrol, aishe_src_doc = aishe_muslim_national()
     muslim_pop_18_23 = population_18_23("muslim")
@@ -122,30 +182,47 @@ def canonicalize() -> None:
         f"from AISHE Table 15 (the official aggregate, not a sum of state rows)."
     )
 
+    # Stage-2 drill-down inputs (by sex, by state).
+    mus_m_enrol, mus_f_enrol = muslim_enrolment_by_sex()
+    om_m_enrol = TOTAL_MINORITY_MALE_2021_22 - mus_m_enrol
+    om_f_enrol = TOTAL_MINORITY_FEMALE_2021_22 - mus_f_enrol
+    muslim_state_enrol = muslim_enrolment_by_state()
+    sex_note = (
+        "By-sex GER: published All-India Minority enrolment by sex (AISHE 2021-22 "
+        "Report prose) over Census 2011 C-15 18-23 population by sex; other "
+        "minorities by sex = total Minority minus Muslim."
+    )
+    state_note = (
+        "Per-state Muslim GER: Muslim enrolment as reported by each state to "
+        "AISHE 2021-22 over Census 2011 C-15 Muslim 18-23 by state. States report "
+        "minority enrolment incompletely (the All-India total exceeds the state "
+        "sum), so read the spread across states, not the precise level."
+    )
+
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     with OUTPUT_PATH.open("w", newline="") as f:
         w = csv.writer(f)
         w.writerow([
             "metric_id", "geography_level", "geography_code", "year", "religion",
-            "value", "denominator", "sample_size", "ci_lower", "ci_upper",
+            "sex", "value", "denominator", "sample_size", "ci_lower", "ci_upper",
             "source_id", "source_document", "extraction_run", "methodology_note", "break_flag",
         ])
         w.writerow([
-            "ger-higher-ed", "national", "IN", 2021, "muslim", muslim_ger,
+            "ger-higher-ed", "national", "IN", 2021, "muslim", "all", muslim_ger,
             f"population_18_23_{muslim_pop_18_23}", muslim_enrol, "", "",
             "aishe", aishe_src_doc, extraction_run,
             f"{note_common} Muslim numerator: {muslim_enrol:,}; Muslim 18-23 "
             f"proxy: {muslim_pop_18_23:,}.", "false",
         ])
         w.writerow([
-            "ger-higher-ed", "national", "IN", 2021, "all", national_ger,
+            "ger-higher-ed", "national", "IN", 2021, "all", "all", national_ger,
             f"population_18_23_{all_pop_18_23}", AISHE_TOTAL_ENROLMENT_2021_22, "", "",
             "aishe", AISHE_REPORT_DOC, extraction_run,
             f"{note_common} National numerator: {AISHE_TOTAL_ENROLMENT_2021_22:,}; "
             f"national 18-23 proxy: {all_pop_18_23:,}.", "false",
         ])
         w.writerow([
-            "ger-higher-ed", "national", "IN", 2021, "other_minority", othmin_ger,
+            "ger-higher-ed", "national", "IN", 2021, "other_minority", "all", othmin_ger,
             f"population_18_23_{othmin_pop_18_23}", othmin_enrol, "", "",
             "aishe", aishe_src_doc, extraction_run,
             "AISHE groups every non-Muslim minority into one 'Other Minority "
@@ -157,12 +234,37 @@ def canonicalize() -> None:
             f"summed over Christian, Sikh, Buddhist and Jain. Other-minority "
             f"numerator: {othmin_enrol:,}; 18-23 proxy: {othmin_pop_18_23:,}.", "false",
         ])
+        # national by sex: Muslim + Other minorities, male and female
+        n_rows = 3
+        for sex_key, c15_sex in (("male", "males"), ("female", "females")):
+            for rel, enrol, drels in (
+                    ("muslim", mus_m_enrol if sex_key == "male" else mus_f_enrol, ("muslim",)),
+                    ("other_minority", om_m_enrol if sex_key == "male" else om_f_enrol, OTHER_MINORITY_DENOM)):
+                d = population_18_23_cut(drels, "00", c15_sex)
+                w.writerow([
+                    "ger-higher-ed", "national", "IN", 2021, rel, sex_key,
+                    round(enrol / d * 100, 2), f"population_18_23_{d}", enrol, "", "",
+                    "aishe", aishe_src_doc, extraction_run, sex_note, "false",
+                ])
+                n_rows += 1
+        # by state: Muslim GER (both sexes)
+        n_states = 0
+        for code, enrol in sorted(muslim_state_enrol.items()):
+            d = population_18_23_cut(("muslim",), code.split("-S")[-1], "persons")
+            if not d:
+                continue
+            w.writerow([
+                "ger-higher-ed", "state", code, 2021, "muslim", "all",
+                round(enrol / d * 100, 2), f"population_18_23_{d}", enrol, "", "",
+                "aishe", aishe_src_doc, extraction_run, state_note, "false",
+            ])
+            n_rows += 1
+            n_states += 1
 
-    print(f"wrote {OUTPUT_PATH.relative_to(REPO_ROOT)} (3 rows)")
-    print(f"  muslim:   enrol={muslim_enrol:>10,}  18-23={muslim_pop_18_23:>12,}  GER={muslim_ger:>5.2f}%")
-    print(f"  national: enrol={AISHE_TOTAL_ENROLMENT_2021_22:>10,}  18-23={all_pop_18_23:>12,}  GER={national_ger:>5.2f}%")
-    print(f"  oth-min:  enrol={othmin_enrol:>10,}  18-23={othmin_pop_18_23:>12,}  GER={othmin_ger:>5.2f}%")
-    print(f"  gap: Muslim GER is {round(muslim_ger / national_ger * 100, 1)}% of national, {round(muslim_ger / othmin_ger * 100, 1)}% of other minorities.")
+    print(f"wrote {OUTPUT_PATH.relative_to(REPO_ROOT)} ({n_rows} rows)")
+    print(f"  national all-sex: muslim {muslim_ger}%, other-min {othmin_ger}%, all {national_ger}%")
+    print(f"  by sex: Muslim male {round(mus_m_enrol / population_18_23_cut(('muslim',), '00', 'males') * 100, 1)}% / female {round(mus_f_enrol / population_18_23_cut(('muslim',), '00', 'females') * 100, 1)}%")
+    print(f"  by state: {n_states} states (Muslim GER, as-reported)")
 
 
 if __name__ == "__main__":

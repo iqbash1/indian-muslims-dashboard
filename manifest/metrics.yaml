@@ -204,7 +204,7 @@ metrics:
     sources:
       primary: aishe
       cross_check: [census-india-2011]
-    geography_levels: [national]
+    geography_levels: [national, state]
     religions: [muslim, other_minority, all]
     methodology_notes: |
       Numerator: AISHE 2021-22 published All-India "Muslim Minority" enrolment
@@ -220,7 +220,11 @@ metrics:
       Muslims beside "Other minorities" (Christian, Sikh, Buddhist and Jain,
       9,05,159 students), which AISHE reports only as one grouped category and
       never splits: Muslims enrol at roughly three-quarters their rate. AISHE
-      publishes no separate Hindu figure, so there is no Hindu bar.
+      publishes no separate Hindu figure, so there is no Hindu bar. The by-sex
+      view shows Muslim women enrol at a marginally higher rate than Muslim men;
+      the by-state view ranks Muslim GER across states from enrolment as reported
+      by each state to AISHE (incomplete in some states, so the spread matters
+      more than the exact level).
     comparison_baselines: [all, other_minority]
     phase: 1
     status: defined
