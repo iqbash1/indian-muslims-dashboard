@@ -561,6 +561,11 @@
     color: var(--accent); font-weight: 600; cursor: pointer;
   }
   .card-view-link:hover { text-decoration: underline; }
+  /* Persistent context header: metric name + definition stay above the tab bar
+     on every tab, so a drill-down chart keeps its "what is this" context. */
+  .modal-context { margin: 0 0 6px; }
+  .modal-context .card-metric { margin-bottom: 6px; }
+  .modal-context .card-plain { margin-bottom: 0; }
   .modal-tabs {
     display: flex; flex-wrap: wrap; gap: 0; margin: 6px 0 0; padding: 0;
     border-bottom: 2px solid var(--rule);
@@ -1267,6 +1272,20 @@ lineChart("cc-communal-incidents-govt", [2015, 2016, 2017, 2018, 2019, 2020, 202
     closeChart();
     const clone = card.cloneNode(true);
     body.innerHTML = '';
+
+    // --- Persistent context header -------------------------------------
+    // Lift the metric name + one-line definition OUT of the cloned card into a
+    // header that sits above the tab bar, so they stay visible on every tab.
+    // Without this, a drill-down tab (e.g. By state) is a bare table with no
+    // statement of which metric it belongs to. The name also carries
+    // id="modal-title", the dialog's aria-labelledby target.
+    const ctx = document.createElement('div');
+    ctx.className = 'modal-context';
+    const nameEl = clone.querySelector('.card-metric');
+    const defEl = clone.querySelector('.card-plain');
+    if (nameEl) { nameEl.id = 'modal-title'; ctx.appendChild(nameEl); }
+    if (defEl) ctx.appendChild(defEl);
+    body.appendChild(ctx);
 
     // --- Tabbed layout (Hawaii-dashboard pattern) ----------------------
     // The card carries its drill-down "views" (By state / By sex / By
