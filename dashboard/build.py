@@ -1905,8 +1905,8 @@ _OG_FONT_BOLD = "/System/Library/Fonts/Supplemental/Arial Bold.ttf"
 _OG_BG = (250, 250, 247)      # site bg cream
 _OG_FG = (26, 26, 26)         # body fg
 _OG_MUTED = (102, 102, 102)   # site --muted
-_OG_ACCENT = (123, 29, 34)    # site --accent maroon
-_OG_TIER = {                  # match TIER_HEX for the comp pill color
+_OG_ACCENT = (123, 29, 34)    # site --muslim maroon (hero value + wordmark)
+_OG_TIER = {                  # comp-pill TEXT polarity only: --positive/--negative/--neutral
     "good": (6, 95, 70),
     "bad": (153, 27, 27),
     "mid": (85, 85, 85),
@@ -3173,9 +3173,9 @@ COMMUNITY_LABEL = {
     "sikh": "Sikh", "buddhist": "Buddhist", "jain": "Jain",
     "all": "All", "other": "Other",
 }
-# Tier text colors mirror the Hawaii pattern: top third green, bottom third
-# red, middle muted grey ("neutral isn't worth shouting about").
-TIER_HEX = {"good": "#065F46", "mid": "#555555", "bad": "#991B1B"}
+# `tier` (good/mid/bad from community_rank) now drives only TEXT colour, via the
+# .card-comp CSS classes; chart bars no longer recolour by tier (colour contract:
+# the Muslim series is always maroon). No tier->bar palette is needed.
 
 
 def _ordinal(k: int) -> str:
@@ -3970,8 +3970,11 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
             pairs.append(("All communities", float(all_v), False))
         labels = [p[0] for p in pairs]
         values = [_round_dp(p[1], _disp_dp(unit)) for p in pairs]
-        mhex = TIER_HEX.get(tier, "#555555")
-        colors = [mhex if p[2] else "#D8DEE2" for p in pairs]
+        # Colour contract: the Muslim bar is ALWAYS the brand maroon (its series
+        # identity); every other community plus the promoted All-communities bar
+        # are the muted grey. Whether Muslim sits well or badly is carried by the
+        # verdict + tier TEXT (green/red), never by recolouring the bar.
+        colors = ["#7b1d22" if p[2] else "#D8DEE2" for p in pairs]
         # Only skip the chart if there's truly nothing comparative to show.
         if len(pairs) <= 1:
             chart_html = ""
@@ -4042,7 +4045,7 @@ def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
             labels = [s[0] for s in st]
             vals = [round(s[1] / 1000) for s in st]
             js = (f'hbar("{cvid}", {json.dumps(labels)}, {json.dumps(vals)}, '
-                  f'{json.dumps(["#2b6cb0"] * len(st))}, "k", 0, null, "");')
+                  f'{json.dumps(["#7b1d22"] * len(st))}, "k", 0, null, "");')
         note = ("No community ranking. AISHE tabulates “Muslim Minority” enrolment separately; "
                 "other communities are not enumerated in the same table. Top-8 states shown (thousands).")
     comps = f'<div class="comp-note">{html.escape(note)}</div>'
@@ -4066,7 +4069,7 @@ def _card_timeseries(mid, label, unit, src, csv_href, cvid):
         labels = [int(r["year"]) for r in rows]
         values = [_round_dp(float(r["value"]), _disp_dp(unit)) for r in rows]
         chart_html = f'<div class="card-chartwrap" style="height:150px"><canvas id="{cvid}" role="img" aria-label="Visualisation of this metric; numerical values are listed in the card above."></canvas></div>'
-        js = f'lineChart("{cvid}", {json.dumps(labels)}, {json.dumps(values)}, "#2b6cb0", "%", {_disp_dp(unit)});'
+        js = f'lineChart("{cvid}", {json.dumps(labels)}, {json.dumps(values)}, "#7b1d22", "%", {_disp_dp(unit)});'
         comps += _comp("trend", f"{labels[0]}-{labels[-1]}", f"{_round_str(values[0], 1)}% → {_round_str(values[-1], 1)}%", "neutral")
     else:
         st = sorted([(state_label(r["geography_code"]), float(r["value"]))
@@ -4081,7 +4084,7 @@ def _card_timeseries(mid, label, unit, src, csv_href, cvid):
                           if inner_h > max_h else inner)
             js = (f'hbar("{cvid}", {json.dumps([s[0] for s in st])}, '
                   f'{json.dumps([_round_dp(s[1], _disp_dp(unit)) for s in st])}, '
-                  f'{json.dumps(["#2b6cb0"] * len(st))}, "%", 1);')
+                  f'{json.dumps(["#7b1d22"] * len(st))}, "%", 1);')
         comps += _comp("all states", headline, "aggregate across assemblies", "neutral")
     return _card_shell(mid, label, headline, CAPTION.get(mid, ""), latest["year"] if latest else "",
                        "", chart_html, comps, src, csv_href), js
@@ -4105,19 +4108,19 @@ def _card_ts_count(mid, label, src, csv_href, cvid):
         # Only two rounds: a 2-point line is just a sloped segment, so show the
         # two years as side-by-side bars instead, so the year-on-year jump
         # reads at a glance. Zero-based (beginAtZero=True) so bars are honest:
-        # 668 vs 1,165 must look like "nearly double", not "triple". The later
-        # bar is coloured by direction (red if it rose, since lower is better).
+        # 668 vs 1,165 must look like "nearly double", not "triple". The latest
+        # bar is the brand maroon (subject series); the rise/fall is shown in the
+        # comp pill, not by recolouring the bar.
         first, last = int(float(rows[0]["value"])), val
         delta = last - first
         pct = (delta / first * 100) if first else 0
         arrow = "↑" if delta > 0 else ("↓" if delta < 0 else "→")
         cls = "bad" if delta > 0 else ("good" if delta < 0 else "mid")
         y0, y1 = str(rows[0]["year"]), str(latest["year"])
-        bar_hex = "#991B1B" if delta > 0 else ("#065F46" if delta < 0 else "#555555")
         chart_html = (f'<div class="card-chartwrap" style="height:104px"><canvas id="{cvid}" '
                       f'role="img" aria-label="Bar comparison of {y0} versus {y1}; values listed in the card above."></canvas></div>')
         js = (f'hbar("{cvid}", {json.dumps([y0, y1])}, {json.dumps([first, last])}, '
-              f'{json.dumps(["#C9CFD3", bar_hex])}, "", 0, null, "", true);')
+              f'{json.dumps(["#D8DEE2", "#7b1d22"])}, "", 0, null, "", true);')
         noun = CAPTION.get(mid, "events")
         comps += _comp(f"vs {y0}", f"{arrow} {abs(pct):.0f}%", f"{delta:+,} {noun}", cls)
     # State-level drill-down for count metrics (e.g. communal-incidents-govt):
