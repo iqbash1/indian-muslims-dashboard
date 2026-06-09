@@ -933,17 +933,16 @@ TEMPLATE = """<!DOCTYPE html>
   <a class="masthead-brand" href="/">muslimdata.in</a>
   <nav class="masthead-nav">
     <a href="/about/">About</a>
-    <a href="https://github.com/iqbash1/indian-muslims-dashboard">GitHub</a>
   </nav>
   <p class="masthead-meta">Last updated {timestamp}</p>
 </div>
 <h1>The state of Muslim India, in data</h1>
 
 <p class="headline-finding">
-  India's roughly 200 million Muslims, or <em>14.2%</em> of the population
+  India's roughly 200 million Muslims, or 14.2% of the population
   (Census 2011), trail the all-India average on <em>{n_behind} of the
   {n_total_comparable}</em> indicators that allow a direct comparison, widest on
-  <em>{top_behind_joined}</em>.{ahead_clause}
+  {top_behind_joined}.{ahead_clause}
 </p>
 
 <p class="preamble-note">
@@ -1185,7 +1184,7 @@ function lineChart(id, labels, values, color, suffix, decimals) {
     options: {
       responsive: true, maintainAspectRatio: false, animation: false,
       plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => c.parsed.y.toFixed(decimals) + suffix } } },
-      scales: { x: { grid: { display: false }, ticks: { font: { size: 10 } } }, y: { beginAtZero: false, grace: '10%', ticks: { font: { size: 10 } } } },
+      scales: { x: { grid: { display: false }, ticks: { font: { size: 10 } } }, y: { beginAtZero: false, grace: '10%', grid: { color: '#f0ede4', drawTicks: false }, border: { display: false }, ticks: { font: { size: 10 }, color: '#999', maxTicksLimit: 5 } } },
     },
   });
 }
@@ -1400,7 +1399,7 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
       scales: {
         x: { grid: { display: false }, ticks: { font: { size: 10 } } },
         y: { beginAtZero: false, grace: '12%', grid: { color: '#f0ede4', drawTicks: false },
-             border: { display: false }, ticks: { font: { size: 10 }, color: '#999' } },
+             border: { display: false }, ticks: { font: { size: 10 }, color: '#999', maxTicksLimit: 5 } },
       },
     },
     plugins: [_endLabels()],
@@ -2001,7 +2000,7 @@ def _og_data_for_metric(m: dict):
     if all_v is not None:
         gap = muslim - all_v
         cls = _verdict(gap, hib)
-        comp_value = f"{_gap_str(gap, unit)} {_verdict_word(cls)}"
+        comp_value = f"{_gap_str(gap, unit)} {_verdict_word(cls, gap)}"
         comp_class = cls
     year = _year_of(mid)
     return dict(name=name, hero=fmt_num(muslim, unit), caption=caption,
@@ -2364,7 +2363,6 @@ LANDING_TEMPLATE = """<!DOCTYPE html>
   <nav class="masthead-nav">
     <a href="/">Dashboard</a>
     <a href="/about/">About</a>
-    <a href="https://github.com/iqbash1/indian-muslims-dashboard">GitHub</a>
   </nav>
   <p class="masthead-meta">Last updated {timestamp}</p>
 </div>
@@ -2662,7 +2660,6 @@ ABOUT_TEMPLATE = """<!DOCTYPE html>
   <nav class="masthead-nav">
     <a href="/">Dashboard</a>
     <a href="/about/">About</a>
-    <a href="https://github.com/iqbash1/indian-muslims-dashboard">GitHub</a>
   </nav>
   <p class="masthead-meta">Last updated {timestamp}</p>
 </div>
@@ -3041,7 +3038,7 @@ def build() -> None:
     top_behind_joined = _and_join([_prose_label(n) for n in stats["top_behind_names"]])
     top_ahead_joined = _and_join([_prose_label(n) for n in stats["top_ahead_names"]])
     ahead_clause = (
-        f" They run ahead on a handful (<em>{top_ahead_joined}</em>)."
+        f" They run ahead on a handful ({top_ahead_joined})."
         if stats["n_ahead"] > 0 else ""
     )
 
@@ -3258,8 +3255,15 @@ def _gap_str(gap: float, unit: str) -> str:
     return f"{sign}{_round_str(gap, _disp_dp(unit))}{'pp' if unit == 'percent' else ''}"
 
 
-def _verdict_word(cls: str) -> str:
-    return {"good": "ahead", "bad": "behind", "neutral": "even"}[cls]
+def _verdict_word(cls: str, gap: float | None = None) -> str:
+    # Good/bad metrics read as ahead/behind. For neutral-polarity metrics (no
+    # inherent better/worse, e.g. urban share) a flat "even" misreads when there
+    # is a real gap, so name the direction Muslim sits instead.
+    if cls == "neutral":
+        if gap is None or gap == 0:
+            return "even"
+        return "higher" if gap > 0 else "lower"
+    return {"good": "ahead", "bad": "behind"}[cls]
 
 
 def _tier_word(tier: str) -> str:
@@ -3892,13 +3896,13 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
         cls = _verdict(gap, hib)
         base_label = all_pill_label or "vs all communities"
         comps += _comp(f"{base_label} · {fmt_num(all_v, unit)}",
-                       _gap_str(gap, unit), _verdict_word(cls), cls,
+                       _gap_str(gap, unit), _verdict_word(cls, gap), cls,
                        comp_type="vs-all")
     if hindu is not None:
         gap = muslim - hindu
         cls = _verdict(gap, hib)
         comps += _comp(f"vs Hindu · {fmt_num(hindu, unit)}",
-                       _gap_str(gap, unit), _verdict_word(cls), cls,
+                       _gap_str(gap, unit), _verdict_word(cls, gap), cls,
                        comp_type="vs-hindu")
     if rank:
         comps += _comp("among communities", f"{_ordinal(rank)} of {n}", _tier_word(tier), tier)
@@ -3993,11 +3997,12 @@ def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
         # No All-India series (shares already sum to ~100%); no refLine.
         js = (f'trendChart("{cvid}", {json.dumps(years)}, {json.dumps(series_map)}, '
               f'null, "%", {_disp_dp(unit)}, false);')
-        note = (f"Share of each community in India's population by census. Hindu's share "
-                f"drifted from {_round_str(hindu_first, 1)}% in 1961 to {_round_str(hindu_last, 1)}% in 2011, "
-                f"omitted from the chart so the Muslim and minor-community trends are legible. "
-                f"All values from primary RGI religion volumes 1961-2011; 1981 excludes "
-                f"Assam, 1991 excludes Jammu & Kashmir.")
+        # The provenance caveats (RGI volumes; 1981 excludes Assam, 1991 excludes
+        # Jammu & Kashmir) live in the modal's "About this measurement" methodology,
+        # so the card face keeps just the one-line reason Hindu is off the chart.
+        note = (f"Hindu's share drifted from {_round_str(hindu_first, 1)}% in 1961 to "
+                f"{_round_str(hindu_last, 1)}% in 2011, omitted from the chart so the "
+                f"Muslim and minor-community trends are legible.")
         # "By district" tab: the geographic-concentration story, merged in from
         # the former district-concentration card (Commit DV). Its cumulative
         # curve is a 2nd modal chart; the all-640-districts CSV download lives in
