@@ -493,7 +493,7 @@ metrics:
       anaemia by religion directly. NFHS changed anaemia measurement between
       NFHS-4 and NFHS-5 (capillary vs venous blood at the same Hb <12.0 g/dl
       cut-off), which breaks cross-round comparability, so the three pre-NFHS-5
-      rounds carry break_flag=true — do not read the 2015 -> 2020 step as a
+      rounds carry break_flag=true: do not read the 2015 -> 2020 step as a
       pure trend.
     comparison_baselines: [hindu, all]
     phase: 1
