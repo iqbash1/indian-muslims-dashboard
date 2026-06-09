@@ -69,6 +69,20 @@ def aishe_muslim_national() -> tuple[int, str]:
     raise RuntimeError("All India row not found in AISHE L2")
 
 
+# AISHE's "Other Minority Community" = Christian, Sikh, Buddhist, Jain, Parsi
+# (always grouped; AISHE never breaks them out individually). The matching
+# Census denominator sums the four sizeable ones present in Census C-15.
+OTHER_MINORITY_DENOM = ("christian", "sikh", "buddhist", "jain")
+
+# Published All-India "Other Minority Community" enrolment. AISHE 2021-22 Report
+# prose: "...21,08,033 students belong to Muslim Minority and 9,05,159 are from
+# other Minority Communities." The Table 15 All India row carries only the
+# Muslim aggregate (other_minority blank there), so this national figure is
+# taken from the report prose, the same provenance tier as the Muslim and
+# total-enrolment published figures.
+AISHE_OTHER_MINORITY_2021_22 = 905_159
+
+
 def population_18_23(religion: str) -> int:
     """0.6 * (15-19 + 20-24) for a given religion, national total residence."""
     p = 0
@@ -87,6 +101,10 @@ def canonicalize() -> None:
 
     muslim_ger = round(muslim_enrol / muslim_pop_18_23 * 100, 2)
     national_ger = round(AISHE_TOTAL_ENROLMENT_2021_22 / all_pop_18_23 * 100, 2)
+
+    othmin_enrol = AISHE_OTHER_MINORITY_2021_22
+    othmin_pop_18_23 = sum(population_18_23(r) for r in OTHER_MINORITY_DENOM)
+    othmin_ger = round(othmin_enrol / othmin_pop_18_23 * 100, 2)
 
     extraction_run = (
         f"canonicalize-ger-higher-ed-v{CANONICALIZER_VERSION}-"
@@ -126,11 +144,25 @@ def canonicalize() -> None:
             f"{note_common} National numerator: {AISHE_TOTAL_ENROLMENT_2021_22:,}; "
             f"national 18-23 proxy: {all_pop_18_23:,}.", "false",
         ])
+        w.writerow([
+            "ger-higher-ed", "national", "IN", 2021, "other_minority", othmin_ger,
+            f"population_18_23_{othmin_pop_18_23}", othmin_enrol, "", "",
+            "aishe", aishe_src_doc, extraction_run,
+            "AISHE groups every non-Muslim minority into one 'Other Minority "
+            "Community' (Christian, Sikh, Buddhist, Jain, Parsi) and never splits "
+            "them, so this is the finest community comparison the source allows. "
+            "Numerator: published All-India Other Minority enrolment (9,05,159) "
+            "from AISHE 2021-22 Report prose alongside the Muslim Minority figure. "
+            f"Denominator: Census 2011 C-15 (15-19 + 20-24) × {AGE_PROXY_FACTOR}, "
+            f"summed over Christian, Sikh, Buddhist and Jain. Other-minority "
+            f"numerator: {othmin_enrol:,}; 18-23 proxy: {othmin_pop_18_23:,}.", "false",
+        ])
 
-    print(f"wrote {OUTPUT_PATH.relative_to(REPO_ROOT)} (2 rows)")
+    print(f"wrote {OUTPUT_PATH.relative_to(REPO_ROOT)} (3 rows)")
     print(f"  muslim:   enrol={muslim_enrol:>10,}  18-23={muslim_pop_18_23:>12,}  GER={muslim_ger:>5.2f}%")
     print(f"  national: enrol={AISHE_TOTAL_ENROLMENT_2021_22:>10,}  18-23={all_pop_18_23:>12,}  GER={national_ger:>5.2f}%")
-    print(f"  gap: Muslim GER is {round(muslim_ger / national_ger * 100, 1)}% of national.")
+    print(f"  oth-min:  enrol={othmin_enrol:>10,}  18-23={othmin_pop_18_23:>12,}  GER={othmin_ger:>5.2f}%")
+    print(f"  gap: Muslim GER is {round(muslim_ger / national_ger * 100, 1)}% of national, {round(muslim_ger / othmin_ger * 100, 1)}% of other minorities.")
 
 
 if __name__ == "__main__":

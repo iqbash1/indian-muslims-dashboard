@@ -8,7 +8,7 @@
     "geography_level": {"enum": ["national", "state", "district", "sub-district"]},
     "geography_code": {"type": "string"},
     "year": {"type": "integer"},
-    "religion": {"enum": ["muslim", "hindu", "sc", "st", "christian", "sikh", "buddhist", "jain", "other", "not_stated", "all"]},
+    "religion": {"enum": ["muslim", "hindu", "sc", "st", "christian", "sikh", "buddhist", "jain", "other", "other_minority", "not_stated", "all"]},
     "sex": {"enum": ["all", "male", "female"]},
     "value": {"type": "number"},
     "denominator": {"type": ["string", "null"]},

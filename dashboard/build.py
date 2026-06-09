@@ -3151,7 +3151,7 @@ def build() -> None:
 #       possible because lit-7plus canonical carries all six named communities.
 # ============================================================================
 
-NAMED_COMMUNITIES = ("hindu", "muslim", "christian", "sikh", "buddhist", "jain")
+NAMED_COMMUNITIES = ("hindu", "muslim", "christian", "sikh", "buddhist", "jain", "other_minority")
 
 
 def _comparison_series(series: dict, years: list[int]):
@@ -3180,7 +3180,7 @@ def _comparison_series(series: dict, years: list[int]):
 COMMUNITY_LABEL = {
     "hindu": "Hindu", "muslim": "Muslim", "christian": "Christian",
     "sikh": "Sikh", "buddhist": "Buddhist", "jain": "Jain",
-    "all": "All", "other": "Other",
+    "all": "All", "other": "Other", "other_minority": "Other minorities",
 }
 # `tier` (good/mid/bad from community_rank) now drives only TEXT colour, via the
 # .card-comp CSS classes; chart bars no longer recolour by tier (colour contract:
@@ -3927,6 +3927,13 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
         comps += _comp(f"{base_label} · {fmt_num(all_v, unit)}",
                        _gap_str(gap, unit), _verdict_word(cls, gap), cls,
                        comp_type="vs-all", fallback=(hindu is None))
+    other_min = nat.get("other_minority")
+    if other_min is not None and muslim is not None:
+        gap = muslim - other_min
+        cls = _verdict(gap, hib)
+        comps += _comp(f"vs other minorities · {fmt_num(other_min, unit)}",
+                       _gap_str(gap, unit), _verdict_word(cls, gap), cls,
+                       comp_type="vs-other-min")
     if hindu is not None:
         gap = muslim - hindu
         cls = _verdict(gap, hib)

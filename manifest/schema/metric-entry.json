@@ -19,7 +19,7 @@
       }
     },
     "geography_levels": {"type": "array", "items": {"enum": ["national", "state", "district", "sub-district"]}},
-    "religions": {"type": "array", "items": {"enum": ["muslim", "hindu", "sc", "st", "christian", "sikh", "buddhist", "jain", "other", "not_stated", "all"]}},
+    "religions": {"type": "array", "items": {"enum": ["muslim", "hindu", "sc", "st", "christian", "sikh", "buddhist", "jain", "other", "other_minority", "not_stated", "all"]}},
     "methodology_notes": {"type": "string"},
     "break_notes": {"type": ["string", "null"]},
     "comparison_baselines": {"type": "array", "items": {"type": "string"}},
