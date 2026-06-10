@@ -48,6 +48,11 @@ SKIPPED, with reason (source does not support a worthwhile view):
   2 points (2022-23 + 2023-24), and the clean 4-year series (2022-23 Statement 20) is
   all-ages, which would corrupt the existing 15+ metric. Thin 2-point value vs high
   multi-layout extraction effort -> not worth it.
+  **[SUPERSEDED 2026-06-10:** this skip was a *PDF-table* limitation. PLFS unit-level
+  microdata (NADA API) carries religion at the person level EVERY round, so a consistent
+  15+ July-June series is buildable for 7 rounds (2017-18 -> 2023-24), plus a new
+  unemployment-by-religion metric. See [`nada/PLAN.md`](nada/PLAN.md). Pending raw-data
+  banking.**]
 - **Census by-age + generic by-district**: needs new `_age_details` builder + an age_group
   schema column (HIGH effort, deferred; not attempted in this sweep).
 
