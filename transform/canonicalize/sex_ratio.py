@@ -113,6 +113,23 @@ def _cells_2011() -> dict[tuple[str, str, str, str], int]:
     return cells
 
 
+def _cells_2011_residence() -> dict[tuple[str, str, str], int]:
+    """National urban/rural cells from C-15 2011, All ages, for the residence
+    drill-down. Returns {(residence, religion, sex): persons}, residence in
+    {urban, rural}, sex in {males, females}."""
+    cells: dict[tuple[str, str, str], int] = {}
+    with L2_C15_2011.open() as f:
+        for row in csv.DictReader(f):
+            if row["residence"] not in ("urban", "rural") or row["age_group"] != "All ages":
+                continue
+            if row["state_code"] != "00" or row["distt_code"] != "000":
+                continue
+            if row["sex"] not in ("males", "females"):
+                continue
+            cells[(row["residence"], row["religion"], row["sex"])] = int(row["value"])
+    return cells
+
+
 def _cells_2001() -> dict[tuple[str, str, str, str], int]:
     # C-01 2001 all-India file: national (state_code 00) + states; no districts.
     cells: dict[tuple[str, str, str, str], int] = {}
@@ -214,19 +231,37 @@ def canonicalize() -> None:
                     continue
                 ratio = round(females / males * 1000, 1)
                 out_rows.append([
-                    "sex-ratio", level, code, year, religion,
+                    "sex-ratio", level, code, year, religion, "all",
                     ratio, DENOMINATOR, "", "", "",
                     src_id, src_doc, extraction_run, note, "false",
                 ])
 
-    out_rows.sort(key=lambda r: (LEVEL_RANK[r[1]], r[2], r[3], RELIGION_RANK[r[4]]))
+    # --- 2011 national urban vs rural sex ratio (residence drill-down) ---
+    # Feeds the "Urban vs rural" tab; year 2011 (latest census, C-15 All ages).
+    res_cells = _cells_2011_residence()
+    for res in ("urban", "rural"):
+        for religion in OUTPUT_RELIGIONS:
+            males = res_cells.get((res, religion, "males"))
+            females = res_cells.get((res, religion, "females"))
+            if not males or not females:
+                continue
+            ratio = round(females / males * 1000, 1)
+            out_rows.append([
+                "sex-ratio", "national", "IN", 2011, religion, res,
+                ratio, DENOMINATOR, "", "", "",
+                SRC_2011[0], SRC_2011[1],
+                f"Females / Males * 1000 at All ages, {res.capitalize()} residence "
+                f"(RGI Census 2011 C-15).", extraction_run, "false",
+            ])
+
+    out_rows.sort(key=lambda r: (LEVEL_RANK[r[1]], r[2], r[3], RELIGION_RANK[r[4]], r[5]))
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     with OUTPUT_PATH.open("w", newline="") as f:
         w = csv.writer(f)
         w.writerow([
             "metric_id", "geography_level", "geography_code", "year", "religion",
-            "value", "denominator", "sample_size", "ci_lower", "ci_upper",
+            "residence", "value", "denominator", "sample_size", "ci_lower", "ci_upper",
             "source_id", "source_document", "extraction_run",
             "methodology_note", "break_flag",
         ])

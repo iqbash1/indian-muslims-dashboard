@@ -76,6 +76,25 @@ def _read_2011():
     return persons, all_persons
 
 
+def _read_2011_residence_national():
+    """National urban + rural cells from C-01 2011, for the residence drill-down.
+    Returns {(residence, religion): persons} and {residence: all_persons} for
+    residence in {urban, rural}."""
+    persons: dict[tuple[str, str], int] = {}
+    all_persons: dict[str, int] = {}
+    for fp in sorted(L2_2011_DIR.glob(L2_2011_GLOB)):
+        with fp.open() as f:
+            for row in csv.DictReader(f):
+                if row["sex"] != "persons" or row["residence"] not in ("urban", "rural"):
+                    continue
+                if row["state_code"] != "00" or row["distt_code"] != "000":
+                    continue
+                persons[(row["residence"], row["religion"])] = int(row["value"])
+                if row["religion"] == "all":
+                    all_persons[row["residence"]] = int(row["value"])
+    return persons, all_persons
+
+
 def _read_2001_national() -> dict[str, int]:
     """religion -> national persons (residence=total, sex=persons)."""
     out: dict[str, int] = {}
@@ -146,9 +165,9 @@ def canonicalize() -> None:
 
     rows: list[list] = []
 
-    def emit(level, code, year, religion, share, src_id, src_doc, note):
+    def emit(level, code, year, religion, share, src_id, src_doc, note, residence="all"):
         rows.append([
-            "pop-share", level, code, year, religion,
+            "pop-share", level, code, year, religion, residence,
             round(share, 4), DENOMINATOR, "", "", "",
             src_id, src_doc, extraction_run, note, "false",
         ])
@@ -162,7 +181,7 @@ def canonicalize() -> None:
             "Religion (A. Mitra RGI, Census 1961; NADA cat 32022). INDIA T row at "
             "PDF pp 501-502. Includes J&K. Some small territories (NEFA ~38k persons) "
             "not religion-canvassed are in the Total denominator but not in the "
-            "religion numerators — net effect on share <0.07%."
+            "religion numerators; net effect on share <0.07%."
         )
         for rel in NAMED:
             p = nat_1961.get(rel)
@@ -176,7 +195,7 @@ def canonicalize() -> None:
         note_71 = (
             "PRIMARY: RGI 1972 Religion Paper (Series-1, India, by A. Chandra Sekhar), "
             "Summary table at p.xiii / NADA PDF p17. Denominator is the sum of the six "
-            "named religions (Hindu/Muslim/Christian/Sikh/Buddhist/Jain) — 'Other religions "
+            "named religions (Hindu/Muslim/Christian/Sikh/Buddhist/Jain): 'Other religions "
             "and persuasions' is not in the Summary, so this share runs ~0.04pp higher than "
             "the universally-cited published share (which divides by India total including "
             "Others)."
@@ -209,7 +228,7 @@ def canonicalize() -> None:
             "EXCLUDES Jammu & Kashmir (Census was not held there in 1991). Share is "
             "religion_persons / India-excl-J&K total. This differs from the universally-"
             "cited published 1991 share (which uses RGI's J&K-interpolated all-India total) "
-            "— the difference is ~0.5pp for Muslim (12.12% here vs 12.61% published) because "
+            "and the difference is ~0.5pp for Muslim (12.12% here vs 12.61% published) because "
             "J&K's ~68% Muslim composition shifts the all-India share notably when J&K is "
             "interpolated back in."
         )
@@ -236,6 +255,23 @@ def canonicalize() -> None:
                      "census-india-2011", "sources/census-2011/c-series/c01-population-by-religion.xls",
                      "Share of total population (all residences combined), primary C-01 2011.")
 
+    # --- 2011 national urban vs rural share (residence drill-down) ---
+    # Each community's share WITHIN urban India vs WITHIN rural India (different
+    # denominators per residence). 'all' is omitted: its share of any residence is
+    # trivially 100%. Feeds the "Urban vs rural" tab; year 2011 (latest census).
+    res_persons, res_all = _read_2011_residence_national()
+    for res in ("urban", "rural"):
+        denom = res_all.get(res)
+        if not denom:
+            continue
+        for rel in NAMED:
+            p = res_persons.get((res, rel))
+            if p is not None:
+                emit("national", "IN", 2011, rel, p / denom * 100,
+                     "census-india-2011", "sources/census-2011/c-series/c01-population-by-religion.xls",
+                     f"Share of {res} population, primary C-01 2011: religion {res} persons / "
+                     f"all {res} persons times 100.", residence=res)
+
     # --- 2011 state + district Muslim share (geographic drill-down) ---
     for (level, code, religion), p in persons_2011.items():
         if religion != "muslim" or level == "national":
@@ -250,14 +286,14 @@ def canonicalize() -> None:
              "Muslim share of total population (all residences combined).")
 
     level_rank = {"national": 0, "state": 1, "district": 2}
-    rows.sort(key=lambda r: (level_rank[r[1]], r[2], r[3], RELIGION_RANK.get(r[4], 9)))
+    rows.sort(key=lambda r: (level_rank[r[1]], r[2], r[3], RELIGION_RANK.get(r[4], 9), r[5]))
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     with OUTPUT_PATH.open("w", newline="") as f:
         w = csv.writer(f)
         w.writerow([
             "metric_id", "geography_level", "geography_code", "year", "religion",
-            "value", "denominator", "sample_size", "ci_lower", "ci_upper",
+            "residence", "value", "denominator", "sample_size", "ci_lower", "ci_upper",
             "source_id", "source_document", "extraction_run",
             "methodology_note", "break_flag",
         ])

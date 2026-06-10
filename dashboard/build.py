@@ -4217,8 +4217,10 @@ def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
                 "other communities are not enumerated in the same table. Top-8 states shown (thousands).")
     comps = f'<div class="comp-note">{html.escape(note)}</div>'
     # Drill-downs become modal tabs (see _card_shell): state data, sex (where the
-    # source supports it), and, for pop-share, the by-district concentration view.
-    details = _state_details(mid, unit) + _sex_details(mid, unit) + conc_view
+    # source supports it), the by-district concentration view (pop-share), and the
+    # urban/rural split (pop-share carries residence rows; "" for the others).
+    details = (_state_details(mid, unit) + _sex_details(mid, unit) + conc_view
+               + _residence_details(mid, unit))
     return _card_shell(mid, label, headline, CAPTION.get(mid, ""), _year_of(mid), "",
                        chart_html, comps, src, csv_href, details, download_html=download), js
 

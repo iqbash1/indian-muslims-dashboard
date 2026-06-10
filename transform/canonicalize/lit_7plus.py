@@ -81,6 +81,25 @@ def _cells(l2_path: pathlib.Path) -> dict[tuple[str, str, str, str, str, str], i
     return cells
 
 
+def _cells_residence_national(l2_path: pathlib.Path) -> dict[tuple[str, str, str, str], int]:
+    """National urban/rural cells at both-sexes (persons), for the residence
+    drill-down. Returns {(residence, religion, measure, age_group): value},
+    residence in {urban, rural}."""
+    cells: dict[tuple[str, str, str, str], int] = {}
+    with l2_path.open() as f:
+        for row in csv.DictReader(f):
+            if row["residence"] not in ("urban", "rural") or row["state_code"] != "00":
+                continue
+            if SEX_MAP.get(row["sex"]) != "all":  # both-sexes (persons) only
+                continue
+            if row["age_group"] not in ("Total", "0-6", "Age not stated"):
+                continue
+            if row["measure"] not in ("total_population", "literate"):
+                continue
+            cells[(row["residence"], row["religion"], row["measure"], row["age_group"])] = int(row["value"])
+    return cells
+
+
 def canonicalize() -> None:
     extraction_run = (
         f"canonicalize-lit-7plus-v{CANONICALIZER_VERSION}-"
@@ -114,19 +133,45 @@ def canonicalize() -> None:
                         continue
                     rate = round(literate_7plus / total_7plus * 100, 4)
                     out_rows.append([
-                        "lit-7plus", level, code, year, religion, sx,
+                        "lit-7plus", level, code, year, religion, sx, "all",
                         rate, DENOMINATOR, "", "", "",
                         src_id, src_doc, extraction_run, note, "false",
                     ])
 
-    out_rows.sort(key=lambda r: (LEVEL_RANK[r[1]], r[2], r[3], RELIGION_RANK[r[4]], SEX_RANK[r[5]]))
+    # --- 2011 national urban vs rural literacy, both sexes (residence drill-down) ---
+    # Feeds the "Urban vs rural" tab; year 2011 (latest census). Same 7+ definition
+    # as the headline rate, computed separately within urban and rural C-09 panels.
+    res_cells = _cells_residence_national(L2_2011)
+    for res in ("urban", "rural"):
+        for religion in OUTPUT_RELIGIONS:
+            total_all = res_cells.get((res, religion, "total_population", "Total"))
+            total_06 = res_cells.get((res, religion, "total_population", "0-6"))
+            total_nostate = res_cells.get((res, religion, "total_population", "Age not stated"), 0)
+            literate_all = res_cells.get((res, religion, "literate", "Total"))
+            literate_nostate = res_cells.get((res, religion, "literate", "Age not stated"), 0)
+            if None in (total_all, total_06, literate_all):
+                continue
+            total_7plus = total_all - total_06 - total_nostate
+            literate_7plus = literate_all - literate_nostate
+            if total_7plus <= 0:
+                continue
+            rate = round(literate_7plus / total_7plus * 100, 4)
+            out_rows.append([
+                "lit-7plus", "national", "IN", 2011, religion, "all", res,
+                rate, DENOMINATOR, "", "", "",
+                SRC_2011[0], SRC_2011[1],
+                f"(Literate - Literate_age_not_stated) / (Total - 0-6 - Age_not_stated) "
+                f"* 100 within the {res} C-09 2011 panel.", extraction_run, "false",
+            ])
+
+    out_rows.sort(key=lambda r: (LEVEL_RANK[r[1]], r[2], r[3], RELIGION_RANK[r[4]], SEX_RANK[r[5]], r[6]))
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     with OUTPUT_PATH.open("w", newline="") as f:
         w = csv.writer(f)
         w.writerow([
             "metric_id", "geography_level", "geography_code", "year", "religion",
-            "sex", "value", "denominator", "sample_size", "ci_lower", "ci_upper",
+            "sex", "residence", "value", "denominator", "sample_size", "ci_lower", "ci_upper",
             "source_id", "source_document", "extraction_run",
             "methodology_note", "break_flag",
         ])
