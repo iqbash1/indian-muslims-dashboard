@@ -1,0 +1,61 @@
+{
+  "status": "success",
+  "total": 11,
+  "files": [
+    {
+      "name": "CODEs for Blocks of Sch - CMS-Education.xlsx",
+      "base64": "Q09ERXMgZm9yIEJsb2NrcyBvZiBTY2ggLSBDTVMtRWR1Y2F0aW9uLnhsc3g=",
+      "size": "19.02 KB"
+    },
+    {
+      "name": "Data in CSV.zip",
+      "base64": "RGF0YSBpbiBDU1Yuemlw",
+      "size": "2.86 MB"
+    },
+    {
+      "name": "Data in JSON.zip",
+      "base64": "RGF0YSBpbiBKU09OLnppcA==",
+      "size": "5.21 MB"
+    },
+    {
+      "name": "Data in SPSS.zip",
+      "base64": "RGF0YSBpbiBTUFNTLnppcA==",
+      "size": "3.83 MB"
+    },
+    {
+      "name": "Data in STATA.zip",
+      "base64": "RGF0YSBpbiBTVEFUQS56aXA=",
+      "size": "8.1 MB"
+    },
+    {
+      "name": "Data in text.zip",
+      "base64": "RGF0YSBpbiB0ZXh0LnppcA==",
+      "size": "3.08 MB"
+    },
+    {
+      "name": "Data_Layout_CMSE_2025.xlsx",
+      "base64": "RGF0YV9MYXlvdXRfQ01TRV8yMDI1Lnhsc3g=",
+      "size": "23.4 KB"
+    },
+    {
+      "name": "Note_for_data_user - CMS-Education.docx",
+      "base64": "Tm90ZV9mb3JfZGF0YV91c2VyIC0gQ01TLUVkdWNhdGlvbi5kb2N4",
+      "size": "16.44 KB"
+    },
+    {
+      "name": "NSO Volume I & II_80 - CMSE.pdf",
+      "base64": "TlNPIFZvbHVtZSBJICYgSUlfODAgLSBDTVNFLnBkZg==",
+      "size": "2.15 MB"
+    },
+    {
+      "name": "README_CMSE_2025.docx",
+      "base64": "UkVBRE1FX0NNU0VfMjAyNS5kb2N4",
+      "size": "21.55 KB"
+    },
+    {
+      "name": "Survey methodology and estimation procedure - CMS-Education.pdf",
+      "base64": "U3VydmV5IG1ldGhvZG9sb2d5IGFuZCBlc3RpbWF0aW9uIHByb2NlZHVyZSAtIENNUy1FZHVjYXRpb24ucGRm",
+      "size": "318.92 KB"
+    }
+  ]
+}

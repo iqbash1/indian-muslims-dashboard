@@ -1,0 +1,141 @@
+{
+  "status": "success",
+  "total": 27,
+  "files": [
+    {
+      "name": "491_Household Ownership Holdings in India, 2003.pdf",
+      "base64": "NDkxX0hvdXNlaG9sZCBPd25lcnNoaXAgSG9sZGluZ3MgaW4gSW5kaWEsIDIwMDMucGRm",
+      "size": "24.99 MB"
+    },
+    {
+      "name": "492_Some Aspects of Operational Land Holdings in India, 2002-03.pdf",
+      "base64": "NDkyX1NvbWUgQXNwZWN0cyBvZiBPcGVyYXRpb25hbCBMYW5kIEhvbGRpbmdzIGluIEluZGlhLCAyMDAyLTAzLnBkZg==",
+      "size": "3.36 MB"
+    },
+    {
+      "name": "493_Livestock Ownership Across Operational Land Holding Classes in India, 2002-03.pdf",
+      "base64": "NDkzX0xpdmVzdG9jayBPd25lcnNoaXAgQWNyb3NzIE9wZXJhdGlvbmFsIExhbmQgSG9sZGluZyBDbGFzc2VzIGluIEluZGlhLCAyMDAyLTAzLnBkZg==",
+      "size": "1.98 MB"
+    },
+    {
+      "name": "494_Seasonal Variation in the Operational Land Holdings in India, 2002-03.pdf",
+      "base64": "NDk0X1NlYXNvbmFsIFZhcmlhdGlvbiBpbiB0aGUgT3BlcmF0aW9uYWwgTGFuZCBIb2xkaW5ncyBpbiBJbmRpYSwgMjAwMi0wMy5wZGY=",
+      "size": "22.59 MB"
+    },
+    {
+      "name": "495_Consumption Expenditure of Farmer Households.pdf",
+      "base64": "NDk1X0NvbnN1bXB0aW9uIEV4cGVuZGl0dXJlIG9mIEZhcm1lciBIb3VzZWhvbGRzLnBkZg==",
+      "size": "21.29 MB"
+    },
+    {
+      "name": "496_Some Aspects of Farming.pdf",
+      "base64": "NDk2X1NvbWUgQXNwZWN0cyBvZiBGYXJtaW5nLnBkZg==",
+      "size": "2.49 MB"
+    },
+    {
+      "name": "497_Income, Expenditure and Productive Assets of Farmer Households.pdf",
+      "base64": "NDk3X0luY29tZSwgRXhwZW5kaXR1cmUgYW5kIFByb2R1Y3RpdmUgQXNzZXRzIG9mIEZhcm1lciBIb3VzZWhvbGRzLnBkZg==",
+      "size": "1.95 MB"
+    },
+    {
+      "name": "498_Indebtedness of Farmer Households.pdf",
+      "base64": "NDk4X0luZGVidGVkbmVzcyBvZiBGYXJtZXIgSG91c2Vob2xkcy5wZGY=",
+      "size": "17.37 MB"
+    },
+    {
+      "name": "499_Access to modern technology for farming.pdf",
+      "base64": "NDk5X0FjY2VzcyB0byBtb2Rlcm4gdGVjaG5vbG9neSBmb3IgZmFybWluZy5wZGY=",
+      "size": "2.05 MB"
+    },
+    {
+      "name": "500_Household Assets and Liabilities in India.pdf",
+      "base64": "NTAwX0hvdXNlaG9sZCBBc3NldHMgYW5kIExpYWJpbGl0aWVzIGluIEluZGlhLnBkZg==",
+      "size": "2.47 MB"
+    },
+    {
+      "name": "501_Household Indebtedness in India.pdf",
+      "base64": "NTAxX0hvdXNlaG9sZCBJbmRlYnRlZG5lc3MgaW4gSW5kaWEucGRm",
+      "size": "2.75 MB"
+    },
+    {
+      "name": "502_Household Borrowings and Repayments in India.pdf",
+      "base64": "NTAyX0hvdXNlaG9sZCBCb3Jyb3dpbmdzIGFuZCBSZXBheW1lbnRzIGluIEluZGlhLnBkZg==",
+      "size": "1.91 MB"
+    },
+    {
+      "name": "503_Household Assets Holding, Indebtedness, Current Borrowings and Repayments of Social Groups in India.pdf",
+      "base64": "NTAzX0hvdXNlaG9sZCBBc3NldHMgSG9sZGluZywgSW5kZWJ0ZWRuZXNzLCBDdXJyZW50IEJvcnJvd2luZ3MgYW5kIFJlcGF5bWVudHMgb2YgU29jaWFsIEdyb3VwcyBpbiBJbmRpYS5wZGY=",
+      "size": "27.21 MB"
+    },
+    {
+      "name": "DDI-IND-MOSPI-NSSO-59Rnd-Sch18pt2-Jan-Dec2003.xml",
+      "base64": "RERJLUlORC1NT1NQSS1OU1NPLTU5Um5kLVNjaDE4cHQyLUphbi1EZWMyMDAzLnhtbA==",
+      "size": "1.8 MB"
+    },
+    {
+      "name": "Estimation Procedure_59.pdf",
+      "base64": "RXN0aW1hdGlvbiBQcm9jZWR1cmVfNTkucGRm",
+      "size": "118.96 KB"
+    },
+    {
+      "name": "Introduction, Concepts, Definitions and Procedures.pdf",
+      "base64": "SW50cm9kdWN0aW9uLCBDb25jZXB0cywgRGVmaW5pdGlvbnMgYW5kIFByb2NlZHVyZXMucGRm",
+      "size": "159.66 KB"
+    },
+    {
+      "name": "LIST OF FOD SUB-REGIONS.pdf",
+      "base64": "TElTVCBPRiBGT0QgU1VCLVJFR0lPTlMucGRm",
+      "size": "28.98 KB"
+    },
+    {
+      "name": "LIST OF NSS REGIONS AND THEIR COMPOSITION.pdf",
+      "base64": "TElTVCBPRiBOU1MgUkVHSU9OUyBBTkQgVEhFSVIgQ09NUE9TSVRJT04ucGRm",
+      "size": "59.81 KB"
+    },
+    {
+      "name": "NCO 1968-2 digit codes.pdf",
+      "base64": "TkNPIDE5NjgtMiBkaWdpdCBjb2Rlcy5wZGY=",
+      "size": "10.98 KB"
+    },
+    {
+      "name": "NCO 1968-3 digit codes.pdf",
+      "base64": "TkNPIDE5NjgtMyBkaWdpdCBjb2Rlcy5wZGY=",
+      "size": "29.27 KB"
+    },
+    {
+      "name": "NIC 1998 - 5 digit classification.pdf",
+      "base64": "TklDIDE5OTggLSA1IGRpZ2l0IGNsYXNzaWZpY2F0aW9uLnBkZg==",
+      "size": "534.95 KB"
+    },
+    {
+      "name": "Nss59_18.2_new format.rar",
+      "base64": "TnNzNTlfMTguMl9uZXcgZm9ybWF0LnJhcg==",
+      "size": "127.17 MB"
+    },
+    {
+      "name": "rdf-141.rdf",
+      "base64": "cmRmLTE0MS5yZGY=",
+      "size": "10.57 KB"
+    },
+    {
+      "name": "Sch.18.2 visit 1.doc",
+      "base64": "U2NoLjE4LjIgdmlzaXQgMS5kb2M=",
+      "size": "471.5 KB"
+    },
+    {
+      "name": "Schedule 18.2  Debt and Investment.pdf",
+      "base64": "U2NoZWR1bGUgMTguMiAgRGVidCBhbmQgSW52ZXN0bWVudC5wZGY=",
+      "size": "236.09 KB"
+    },
+    {
+      "name": "Schedule_V1_18.pdf",
+      "base64": "U2NoZWR1bGVfVjFfMTgucGRm",
+      "size": "162.61 KB"
+    },
+    {
+      "name": "Schedule_V2_18.pdf",
+      "base64": "U2NoZWR1bGVfVjJfMTgucGRm",
+      "size": "84.44 KB"
+    }
+  ]
+}

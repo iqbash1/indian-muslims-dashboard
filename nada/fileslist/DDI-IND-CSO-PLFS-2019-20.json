@@ -1,0 +1,61 @@
+{
+  "status": "success",
+  "total": 11,
+  "files": [
+    {
+      "name": "CSV_PLFS_19_20.zip",
+      "base64": "Q1NWX1BMRlNfMTlfMjAuemlw",
+      "size": "18.32 MB"
+    },
+    {
+      "name": "Data_Layout_PLFS.xlsx",
+      "base64": "RGF0YV9MYXlvdXRfUExGUy54bHN4",
+      "size": "31.44 KB"
+    },
+    {
+      "name": "District_codes_PLFS_Panel_2_201920_202021.xlsx",
+      "base64": "RGlzdHJpY3RfY29kZXNfUExGU19QYW5lbF8yXzIwMTkyMF8yMDIwMjEueGxzeA==",
+      "size": "29.15 KB"
+    },
+    {
+      "name": "Estimation_Procedure_PLFS.pdf",
+      "base64": "RXN0aW1hdGlvbl9Qcm9jZWR1cmVfUExGUy5wZGY=",
+      "size": "144.04 KB"
+    },
+    {
+      "name": "Instructions_to_Field_Staff_PLFS_Vol_I.pdf",
+      "base64": "SW5zdHJ1Y3Rpb25zX3RvX0ZpZWxkX1N0YWZmX1BMRlNfVm9sX0kucGRm",
+      "size": "1.61 MB"
+    },
+    {
+      "name": "Instructions_to_Field_Staff_PLFS_Vol_II.pdf",
+      "base64": "SW5zdHJ1Y3Rpb25zX3RvX0ZpZWxkX1N0YWZmX1BMRlNfVm9sX0lJLnBkZg==",
+      "size": "272.48 KB"
+    },
+    {
+      "name": "JSON_PLFS_19_20.zip",
+      "base64": "SlNPTl9QTEZTXzE5XzIwLnppcA==",
+      "size": "63.33 MB"
+    },
+    {
+      "name": "README.pdf",
+      "base64": "UkVBRE1FLnBkZg==",
+      "size": "66.26 KB"
+    },
+    {
+      "name": "SAS_PLFS_19_20.zip",
+      "base64": "U0FTX1BMRlNfMTlfMjAuemlw",
+      "size": "23.55 MB"
+    },
+    {
+      "name": "SPSS_PLFS_19_20.zip",
+      "base64": "U1BTU19QTEZTXzE5XzIwLnppcA==",
+      "size": "37.39 MB"
+    },
+    {
+      "name": "STATA_PLFS_19_20.zip",
+      "base64": "U1RBVEFfUExGU18xOV8yMC56aXA=",
+      "size": "23.4 MB"
+    }
+  ]
+}

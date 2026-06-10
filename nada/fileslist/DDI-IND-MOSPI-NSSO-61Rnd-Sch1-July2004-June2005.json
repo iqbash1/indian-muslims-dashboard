@@ -1,0 +1,141 @@
+{
+  "status": "success",
+  "total": 27,
+  "files": [
+    {
+      "name": "508_Level_and_Pattern_of_Consumer_Expenditure_2004-05.pdf",
+      "base64": "NTA4X0xldmVsX2FuZF9QYXR0ZXJuX29mX0NvbnN1bWVyX0V4cGVuZGl0dXJlXzIwMDQtMDUucGRm",
+      "size": "22.92 MB"
+    },
+    {
+      "name": "509_Household_Consumption_of_Various_Goods_and_Services_in_India_2004-05.pdf",
+      "base64": "NTA5X0hvdXNlaG9sZF9Db25zdW1wdGlvbl9vZl9WYXJpb3VzX0dvb2RzX2FuZF9TZXJ2aWNlc19pbl9JbmRpYV8yMDA0LTA1LnBkZg==",
+      "size": "3.22 MB"
+    },
+    {
+      "name": "511_Energy_Sources_of_Indian_Households_for_Cooking_and_Lighting_2004-05.pdf",
+      "base64": "NTExX0VuZXJneV9Tb3VyY2VzX29mX0luZGlhbl9Ib3VzZWhvbGRzX2Zvcl9Db29raW5nX2FuZF9MaWdodGluZ18yMDA0LTA1LnBkZg==",
+      "size": "1.71 MB"
+    },
+    {
+      "name": "512_Perceived_Adequacy_of_Food_Consumption_in_Indian_Households_2004-2005.pdf",
+      "base64": "NTEyX1BlcmNlaXZlZF9BZGVxdWFjeV9vZl9Gb29kX0NvbnN1bXB0aW9uX2luX0luZGlhbl9Ib3VzZWhvbGRzXzIwMDQtMjAwNS5wZGY=",
+      "size": "1.02 MB"
+    },
+    {
+      "name": "513_NUTRITIONAL_INTAKE_IN_INDIA_2004-2005.pdf",
+      "base64": "NTEzX05VVFJJVElPTkFMX0lOVEFLRV9JTl9JTkRJQV8yMDA0LTIwMDUucGRm",
+      "size": "2.2 MB"
+    },
+    {
+      "name": "514_Household_Consumer_Expenditure_Among_Socio-Economic_Groups_2004 - 2005.pdf",
+      "base64": "NTE0X0hvdXNlaG9sZF9Db25zdW1lcl9FeHBlbmRpdHVyZV9BbW9uZ19Tb2Npby1FY29ub21pY19Hcm91cHNfMjAwNCAtIDIwMDUucGRm",
+      "size": "11.37 MB"
+    },
+    {
+      "name": "Corrigendum_II_NSS_Report_No_509_Household_Consumption_of_Various_Good_and_Services_in_India_2004-05.pdf",
+      "base64": "Q29ycmlnZW5kdW1fSUlfTlNTX1JlcG9ydF9Ob181MDlfSG91c2Vob2xkX0NvbnN1bXB0aW9uX29mX1ZhcmlvdXNfR29vZF9hbmRfU2VydmljZXNfaW5fSW5kaWFfMjAwNC0wNS5wZGY=",
+      "size": "7.12 KB"
+    },
+    {
+      "name": "CORRIGENDUM_nss_rep_509_Household_Consumption_of_Various_Goods_and_Services_in_India_2004-05.pdf",
+      "base64": "Q09SUklHRU5EVU1fbnNzX3JlcF81MDlfSG91c2Vob2xkX0NvbnN1bXB0aW9uX29mX1ZhcmlvdXNfR29vZHNfYW5kX1NlcnZpY2VzX2luX0luZGlhXzIwMDQtMDUucGRm",
+      "size": "91.52 KB"
+    },
+    {
+      "name": "Estimation_Procedure_61.pdf",
+      "base64": "RXN0aW1hdGlvbl9Qcm9jZWR1cmVfNjEucGRm",
+      "size": "1.67 MB"
+    },
+    {
+      "name": "Household Consumer Expenditure, July 2004 - June 2005_Csv.zip",
+      "base64": "SG91c2Vob2xkIENvbnN1bWVyIEV4cGVuZGl0dXJlLCBKdWx5IDIwMDQgLSBKdW5lIDIwMDVfQ3N2LnppcA==",
+      "size": "141.71 MB"
+    },
+    {
+      "name": "Household Consumer Expenditure, July 2004 - June 2005_Json.zip",
+      "base64": "SG91c2Vob2xkIENvbnN1bWVyIEV4cGVuZGl0dXJlLCBKdWx5IDIwMDQgLSBKdW5lIDIwMDVfSnNvbi56aXA=",
+      "size": "171.15 MB"
+    },
+    {
+      "name": "Household Consumer Expenditure, July 2004 - June 2005_Sas.zip",
+      "base64": "SG91c2Vob2xkIENvbnN1bWVyIEV4cGVuZGl0dXJlLCBKdWx5IDIwMDQgLSBKdW5lIDIwMDVfU2FzLnppcA==",
+      "size": "131.79 MB"
+    },
+    {
+      "name": "Household Consumer Expenditure, July 2004 - June 2005_Spss.zip",
+      "base64": "SG91c2Vob2xkIENvbnN1bWVyIEV4cGVuZGl0dXJlLCBKdWx5IDIwMDQgLSBKdW5lIDIwMDVfU3Bzcy56aXA=",
+      "size": "231.78 MB"
+    },
+    {
+      "name": "Household Consumer Expenditure, July 2004 - June 2005_Stata.zip",
+      "base64": "SG91c2Vob2xkIENvbnN1bWVyIEV4cGVuZGl0dXJlLCBKdWx5IDIwMDQgLSBKdW5lIDIwMDVfU3RhdGEuemlw",
+      "size": "113.75 MB"
+    },
+    {
+      "name": "ihsn_nsso_61_sch_1pt0_cons_exp.pdf",
+      "base64": "aWhzbl9uc3NvXzYxX3NjaF8xcHQwX2NvbnNfZXhwLnBkZg==",
+      "size": "731.8 KB"
+    },
+    {
+      "name": "Introduction_Concepts_Definitions_and_Procedures.pdf",
+      "base64": "SW50cm9kdWN0aW9uX0NvbmNlcHRzX0RlZmluaXRpb25zX2FuZF9Qcm9jZWR1cmVzLnBkZg==",
+      "size": "168.32 KB"
+    },
+    {
+      "name": "LIST_OF_FOD_SUB-REGIONS.pdf",
+      "base64": "TElTVF9PRl9GT0RfU1VCLVJFR0lPTlMucGRm",
+      "size": "89.54 KB"
+    },
+    {
+      "name": "LIST_OF_NSS_REGIONS_AND_THEIR_COMPOSITION.pdf",
+      "base64": "TElTVF9PRl9OU1NfUkVHSU9OU19BTkRfVEhFSVJfQ09NUE9TSVRJT04ucGRm",
+      "size": "55.77 KB"
+    },
+    {
+      "name": "National_Seminar_on_NSS_61_Round_Survey_Results.pdf",
+      "base64": "TmF0aW9uYWxfU2VtaW5hcl9vbl9OU1NfNjFfUm91bmRfU3VydmV5X1Jlc3VsdHMucGRm",
+      "size": "5.4 MB"
+    },
+    {
+      "name": "NCO_1968-2 digit_codes.pdf",
+      "base64": "TkNPXzE5NjgtMiBkaWdpdF9jb2Rlcy5wZGY=",
+      "size": "10.98 KB"
+    },
+    {
+      "name": "NCO_1968-3_digit_codes.pdf",
+      "base64": "TkNPXzE5NjgtM19kaWdpdF9jb2Rlcy5wZGY=",
+      "size": "29.27 KB"
+    },
+    {
+      "name": "NIC_1998_5 digit_classification.pdf",
+      "base64": "TklDXzE5OThfNSBkaWdpdF9jbGFzc2lmaWNhdGlvbi5wZGY=",
+      "size": "534.95 KB"
+    },
+    {
+      "name": "Schedule_1pt0_Consumer_Expenditure.pdf",
+      "base64": "U2NoZWR1bGVfMXB0MF9Db25zdW1lcl9FeHBlbmRpdHVyZS5wZGY=",
+      "size": "185.17 KB"
+    },
+    {
+      "name": "Schedule_1pt0_NSS_Round_61.pdf",
+      "base64": "U2NoZWR1bGVfMXB0MF9OU1NfUm91bmRfNjEucGRm",
+      "size": "248.13 KB"
+    },
+    {
+      "name": "State_Codes_61.pdf",
+      "base64": "U3RhdGVfQ29kZXNfNjEucGRm",
+      "size": "604.09 KB"
+    },
+    {
+      "name": "vol_II_510_Public Distribution_System_and_Other_Sources_of_Household_Consumption_2004-05.pdf",
+      "base64": "dm9sX0lJXzUxMF9QdWJsaWMgRGlzdHJpYnV0aW9uX1N5c3RlbV9hbmRfT3RoZXJfU291cmNlc19vZl9Ib3VzZWhvbGRfQ29uc3VtcHRpb25fMjAwNC0wNS5wZGY=",
+      "size": "1.66 MB"
+    },
+    {
+      "name": "vol_I_510_Public_Distribution_System_and_Other_Sources_of_Household_Consumption_2004-05.pdf",
+      "base64": "dm9sX0lfNTEwX1B1YmxpY19EaXN0cmlidXRpb25fU3lzdGVtX2FuZF9PdGhlcl9Tb3VyY2VzX29mX0hvdXNlaG9sZF9Db25zdW1wdGlvbl8yMDA0LTA1LnBkZg==",
+      "size": "39.6 MB"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "status": "success",
+  "total": 7,
+  "files": [
+    {
+      "name": "77th_V_IIFinal.pdf",
+      "base64": "Nzd0aF9WX0lJRmluYWwucGRm",
+      "size": "1.78 MB"
+    },
+    {
+      "name": "77th_V_I_Final.pdf",
+      "base64": "Nzd0aF9WX0lfRmluYWwucGRm",
+      "size": "5.55 MB"
+    },
+    {
+      "name": "DDI-IND-MOSPI-NSSO-77Rnd-Sch18.2-January2019-December2019.xml",
+      "base64": "RERJLUlORC1NT1NQSS1OU1NPLTc3Um5kLVNjaDE4LjItSmFudWFyeTIwMTktRGVjZW1iZXIyMDE5LnhtbA==",
+      "size": "5 MB"
+    },
+    {
+      "name": "Estimation_procedure_NSS77_DPD.pdf",
+      "base64": "RXN0aW1hdGlvbl9wcm9jZWR1cmVfTlNTNzdfRFBELnBkZg==",
+      "size": "614.83 KB"
+    },
+    {
+      "name": "nic_amendment_2008.pdf",
+      "base64": "bmljX2FtZW5kbWVudF8yMDA4LnBkZg==",
+      "size": "84.79 KB"
+    },
+    {
+      "name": "Round77sch18pt2Data.rar",
+      "base64": "Um91bmQ3N3NjaDE4cHQyRGF0YS5yYXI=",
+      "size": "20.21 MB"
+    },
+    {
+      "name": "State_77.xlsx",
+      "base64": "U3RhdGVfNzcueGxzeA==",
+      "size": "10.61 KB"
+    }
+  ]
+}

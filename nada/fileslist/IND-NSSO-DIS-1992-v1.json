@@ -1,0 +1,31 @@
+{
+  "status": "success",
+  "total": 5,
+  "files": [
+    {
+      "name": "CSV_DATA.zip",
+      "base64": "Q1NWX0RBVEEuemlw",
+      "size": "21.24 MB"
+    },
+    {
+      "name": "JSON_DATA.zip",
+      "base64": "SlNPTl9EQVRBLnppcA==",
+      "size": "33.93 MB"
+    },
+    {
+      "name": "SAS_DATA.zip",
+      "base64": "U0FTX0RBVEEuemlw",
+      "size": "22.66 MB"
+    },
+    {
+      "name": "SPSS_DATA.zip",
+      "base64": "U1BTU19EQVRBLnppcA==",
+      "size": "37.15 MB"
+    },
+    {
+      "name": "STATA_DATA.zip",
+      "base64": "U1RBVEFfREFUQS56aXA=",
+      "size": "21.78 MB"
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "status": "success",
+  "total": 13,
+  "files": [
+    {
+      "name": "CODEs_for_Blocks_of_Schpt25pt0.xlsx",
+      "base64": "Q09ERXNfZm9yX0Jsb2Nrc19vZl9TY2hwdDI1cHQwLnhsc3g=",
+      "size": "35.28 KB"
+    },
+    {
+      "name": "CSV_data_household_social_consumption_heaith_Jan_Dec25.zip",
+      "base64": "Q1NWX2RhdGFfaG91c2Vob2xkX3NvY2lhbF9jb25zdW1wdGlvbl9oZWFpdGhfSmFuX0RlYzI1LnppcA==",
+      "size": "15.49 MB"
+    },
+    {
+      "name": "Datalayout_250_80R.xlsx",
+      "base64": "RGF0YWxheW91dF8yNTBfODBSLnhsc3g=",
+      "size": "44.28 KB"
+    },
+    {
+      "name": "Instruction manual_Vol I_80R.pdf",
+      "base64": "SW5zdHJ1Y3Rpb24gbWFudWFsX1ZvbCBJXzgwUi5wZGY=",
+      "size": "2.82 MB"
+    },
+    {
+      "name": "JSON_data_household_social_consumption_heaith_Jan_Dec25.zip",
+      "base64": "SlNPTl9kYXRhX2hvdXNlaG9sZF9zb2NpYWxfY29uc3VtcHRpb25faGVhaXRoX0phbl9EZWMyNS56aXA=",
+      "size": "22.49 MB"
+    },
+    {
+      "name": "Note_for_data_user.pdf",
+      "base64": "Tm90ZV9mb3JfZGF0YV91c2VyLnBkZg==",
+      "size": "109.46 KB"
+    },
+    {
+      "name": "README_HEALTH_25pt0.docx",
+      "base64": "UkVBRE1FX0hFQUxUSF8yNXB0MC5kb2N4",
+      "size": "24.56 KB"
+    },
+    {
+      "name": "SampleDesign_EstimationProcedure_Health.pdf",
+      "base64": "U2FtcGxlRGVzaWduX0VzdGltYXRpb25Qcm9jZWR1cmVfSGVhbHRoLnBkZg==",
+      "size": "374.06 KB"
+    },
+    {
+      "name": "SAS_data_household_social_consumption_heaith_Jan_Dec25.zip",
+      "base64": "U0FTX2RhdGFfaG91c2Vob2xkX3NvY2lhbF9jb25zdW1wdGlvbl9oZWFpdGhfSmFuX0RlYzI1LnppcA==",
+      "size": "18.18 MB"
+    },
+    {
+      "name": "Schedule_ 0pt0_NSS80.pdf",
+      "base64": "U2NoZWR1bGVfIDBwdDBfTlNTODAucGRm",
+      "size": "239.97 KB"
+    },
+    {
+      "name": "Schedule_25pt0_80R.pdf",
+      "base64": "U2NoZWR1bGVfMjVwdDBfODBSLnBkZg==",
+      "size": "589.72 KB"
+    },
+    {
+      "name": "SPSS_data_household_social_consumption_heaith_Jan_Dec25.zip",
+      "base64": "U1BTU19kYXRhX2hvdXNlaG9sZF9zb2NpYWxfY29uc3VtcHRpb25faGVhaXRoX0phbl9EZWMyNS56aXA=",
+      "size": "30.37 MB"
+    },
+    {
+      "name": "STATA_data_household_social_consumption_heaith_Jan_Dec25.zip",
+      "base64": "U1RBVEFfZGF0YV9ob3VzZWhvbGRfc29jaWFsX2NvbnN1bXB0aW9uX2hlYWl0aF9KYW5fRGVjMjUuemlw",
+      "size": "18.07 MB"
+    }
+  ]
+}

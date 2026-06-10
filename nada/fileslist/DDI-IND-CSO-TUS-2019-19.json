@@ -1,0 +1,41 @@
+{
+  "status": "success",
+  "total": 7,
+  "files": [
+    {
+      "name": "Data_Layout_TUS106.xls",
+      "base64": "RGF0YV9MYXlvdXRfVFVTMTA2Lnhscw==",
+      "size": "52.5 KB"
+    },
+    {
+      "name": "DDI-IND-CSO-TUS-2019-19.xml",
+      "base64": "RERJLUlORC1DU08tVFVTLTIwMTktMTkueG1s",
+      "size": "475.66 KB"
+    },
+    {
+      "name": "Estimation procedure_TUS.pdf",
+      "base64": "RXN0aW1hdGlvbiBwcm9jZWR1cmVfVFVTLnBkZg==",
+      "size": "485.71 KB"
+    },
+    {
+      "name": "Final_TUS_Report_28092020.rar",
+      "base64": "RmluYWxfVFVTX1JlcG9ydF8yODA5MjAyMC5yYXI=",
+      "size": "19.99 MB"
+    },
+    {
+      "name": "README_TUS106.pdf",
+      "base64": "UkVBRE1FX1RVUzEwNi5wZGY=",
+      "size": "625.14 KB"
+    },
+    {
+      "name": "State_District_List_TUS.pdf",
+      "base64": "U3RhdGVfRGlzdHJpY3RfTGlzdF9UVVMucGRm",
+      "size": "228.51 KB"
+    },
+    {
+      "name": "Unit level data of TUS 2019.zip",
+      "base64": "VW5pdCBsZXZlbCBkYXRhIG9mIFRVUyAyMDE5LnppcA==",
+      "size": "22.18 MB"
+    }
+  ]
+}

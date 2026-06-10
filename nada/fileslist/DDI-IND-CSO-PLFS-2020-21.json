@@ -1,0 +1,66 @@
+{
+  "status": "success",
+  "total": 12,
+  "files": [
+    {
+      "name": "CSV_Unit_level_data_PLFS_July2020_June2021.zip",
+      "base64": "Q1NWX1VuaXRfbGV2ZWxfZGF0YV9QTEZTX0p1bHkyMDIwX0p1bmUyMDIxLnppcA==",
+      "size": "20.16 MB"
+    },
+    {
+      "name": "Data_LayoutPLFS_2020_21_(3).xlsx",
+      "base64": "RGF0YV9MYXlvdXRQTEZTXzIwMjBfMjFfKDMpLnhsc3g=",
+      "size": "35.99 KB"
+    },
+    {
+      "name": "District_codes_PLFS_Panel_2_201920_202021.xlsx",
+      "base64": "RGlzdHJpY3RfY29kZXNfUExGU19QYW5lbF8yXzIwMTkyMF8yMDIwMjEueGxzeA==",
+      "size": "29.15 KB"
+    },
+    {
+      "name": "EstimationProcedure_PLFS_(2).pdf",
+      "base64": "RXN0aW1hdGlvblByb2NlZHVyZV9QTEZTXygyKS5wZGY=",
+      "size": "311.7 KB"
+    },
+    {
+      "name": "InstructionsFieldStaff_PLFS_VolI_(2).pdf",
+      "base64": "SW5zdHJ1Y3Rpb25zRmllbGRTdGFmZl9QTEZTX1ZvbElfKDIpLnBkZg==",
+      "size": "1.61 MB"
+    },
+    {
+      "name": "JSON_Unit_level_data_PLFS_July2020_June2021.zip",
+      "base64": "SlNPTl9Vbml0X2xldmVsX2RhdGFfUExGU19KdWx5MjAyMF9KdW5lMjAyMS56aXA=",
+      "size": "67.75 MB"
+    },
+    {
+      "name": "plfsREADMEjuly20_jun21_1_(4).pdf",
+      "base64": "cGxmc1JFQURNRWp1bHkyMF9qdW4yMV8xXyg0KS5wZGY=",
+      "size": "175.69 KB"
+    },
+    {
+      "name": "SAS_Unit_level_data_PLFS_July2020_June2021.zip",
+      "base64": "U0FTX1VuaXRfbGV2ZWxfZGF0YV9QTEZTX0p1bHkyMDIwX0p1bmUyMDIxLnppcA==",
+      "size": "27.03 MB"
+    },
+    {
+      "name": "Schedule10.4_FIRSTVISIT_(4).pdf",
+      "base64": "U2NoZWR1bGUxMC40X0ZJUlNUVklTSVRfKDQpLnBkZg==",
+      "size": "461.17 KB"
+    },
+    {
+      "name": "Schedule10.4_REVISIT_(4).pdf",
+      "base64": "U2NoZWR1bGUxMC40X1JFVklTSVRfKDQpLnBkZg==",
+      "size": "251.98 KB"
+    },
+    {
+      "name": "SPSS_Unit_level_data_PLFS_July2020_June2021.zip",
+      "base64": "U1BTU19Vbml0X2xldmVsX2RhdGFfUExGU19KdWx5MjAyMF9KdW5lMjAyMS56aXA=",
+      "size": "40.37 MB"
+    },
+    {
+      "name": "STATA_Unit_level_data_PLFS_July2020_June2021.zip",
+      "base64": "U1RBVEFfVW5pdF9sZXZlbF9kYXRhX1BMRlNfSnVseTIwMjBfSnVuZTIwMjEuemlw",
+      "size": "26.18 MB"
+    }
+  ]
+}

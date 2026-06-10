@@ -1,0 +1,91 @@
+{
+  "status": "success",
+  "total": 17,
+  "files": [
+    {
+      "name": "515_part1_final.pdf",
+      "base64": "NTE1X3BhcnQxX2ZpbmFsLnBkZg==",
+      "size": "3.35 MB"
+    },
+    {
+      "name": "515_part2_final.pdf",
+      "base64": "NTE1X3BhcnQyX2ZpbmFsLnBkZg==",
+      "size": "3.47 MB"
+    },
+    {
+      "name": "516_final.pdf",
+      "base64": "NTE2X2ZpbmFsLnBkZg==",
+      "size": "2.7 MB"
+    },
+    {
+      "name": "Conversion_Table_national_occupational_classification_1968_2004.pdf",
+      "base64": "Q29udmVyc2lvbl9UYWJsZV9uYXRpb25hbF9vY2N1cGF0aW9uYWxfY2xhc3NpZmljYXRpb25fMTk2OF8yMDA0LnBkZg==",
+      "size": "201.42 KB"
+    },
+    {
+      "name": "District_code_list_nss61_round.xls",
+      "base64": "RGlzdHJpY3RfY29kZV9saXN0X25zczYxX3JvdW5kLnhscw==",
+      "size": "89 KB"
+    },
+    {
+      "name": "Emp_Unemp_2004_2005_CSV.zip",
+      "base64": "RW1wX1VuZW1wXzIwMDRfMjAwNV9DU1Yuemlw",
+      "size": "74.26 MB"
+    },
+    {
+      "name": "Emp_Unemp_2004_2005_JSON.zip",
+      "base64": "RW1wX1VuZW1wXzIwMDRfMjAwNV9KU09OLnppcA==",
+      "size": "115.57 MB"
+    },
+    {
+      "name": "Emp_Unemp_2004_2005_SAS.zip",
+      "base64": "RW1wX1VuZW1wXzIwMDRfMjAwNV9TQVMuemlw",
+      "size": "80.06 MB"
+    },
+    {
+      "name": "Emp_Unemp_2004_2005_SPSS.zip",
+      "base64": "RW1wX1VuZW1wXzIwMDRfMjAwNV9TUFNTLnppcA==",
+      "size": "121.57 MB"
+    },
+    {
+      "name": "Emp_Unemp_2004_2005_STATA.zip",
+      "base64": "RW1wX1VuZW1wXzIwMDRfMjAwNV9TVEFUQS56aXA=",
+      "size": "78.04 MB"
+    },
+    {
+      "name": "Estimation_Procedure_61.doc",
+      "base64": "RXN0aW1hdGlvbl9Qcm9jZWR1cmVfNjEuZG9j",
+      "size": "210.5 KB"
+    },
+    {
+      "name": "IHSN_REPORT_NSSO_61_SCH_10_EMPLOYMENT_AND_UNEMPLOYMENT_LUD_19_January_2012.pdf",
+      "base64": "SUhTTl9SRVBPUlRfTlNTT182MV9TQ0hfMTBfRU1QTE9ZTUVOVF9BTkRfVU5FTVBMT1lNRU5UX0xVRF8xOV9KYW51YXJ5XzIwMTIucGRm",
+      "size": "1.19 MB"
+    },
+    {
+      "name": "nic_1998.pdf",
+      "base64": "bmljXzE5OTgucGRm",
+      "size": "534.95 KB"
+    },
+    {
+      "name": "nsso_61_round_concept_definition_procedure.doc",
+      "base64": "bnNzb182MV9yb3VuZF9jb25jZXB0X2RlZmluaXRpb25fcHJvY2VkdXJlLmRvYw==",
+      "size": "271.5 KB"
+    },
+    {
+      "name": "nsso_61_round_sch_10_emp_unemp_instruction_to_field_staff.doc",
+      "base64": "bnNzb182MV9yb3VuZF9zY2hfMTBfZW1wX3VuZW1wX2luc3RydWN0aW9uX3RvX2ZpZWxkX3N0YWZmLmRvYw==",
+      "size": "482 KB"
+    },
+    {
+      "name": "Schedule_61_10.doc",
+      "base64": "U2NoZWR1bGVfNjFfMTAuZG9j",
+      "size": "607 KB"
+    },
+    {
+      "name": "State_Codes_61.doc",
+      "base64": "U3RhdGVfQ29kZXNfNjEuZG9j",
+      "size": "57.5 KB"
+    }
+  ]
+}

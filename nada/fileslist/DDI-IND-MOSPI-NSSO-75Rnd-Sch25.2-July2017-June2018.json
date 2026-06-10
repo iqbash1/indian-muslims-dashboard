@@ -1,0 +1,81 @@
+{
+  "status": "success",
+  "total": 15,
+  "files": [
+    {
+      "name": "Appendix-I1602843711702.pdf",
+      "base64": "QXBwZW5kaXgtSTE2MDI4NDM3MTE3MDIucGRm",
+      "size": "190.31 KB"
+    },
+    {
+      "name": "Appendix-II1602843711003.pdf",
+      "base64": "QXBwZW5kaXgtSUkxNjAyODQzNzExMDAzLnBkZg==",
+      "size": "174.51 KB"
+    },
+    {
+      "name": "Chapter 1.pdf",
+      "base64": "Q2hhcHRlciAxLnBkZg==",
+      "size": "319.51 KB"
+    },
+    {
+      "name": "Chapter 2.pdf",
+      "base64": "Q2hhcHRlciAyLnBkZg==",
+      "size": "643.13 KB"
+    },
+    {
+      "name": "Chapter-4.pdf",
+      "base64": "Q2hhcHRlci00LnBkZg==",
+      "size": "1.23 MB"
+    },
+    {
+      "name": "Chapter-5.pdf",
+      "base64": "Q2hhcHRlci01LnBkZg==",
+      "size": "805.05 KB"
+    },
+    {
+      "name": "Consolidated Corrigendum.pdf",
+      "base64": "Q29uc29saWRhdGVkIENvcnJpZ2VuZHVtLnBkZg==",
+      "size": "690.71 KB"
+    },
+    {
+      "name": "datalay75_252.xls",
+      "base64": "ZGF0YWxheTc1XzI1Mi54bHM=",
+      "size": "89.5 KB"
+    },
+    {
+      "name": "DDI-IND-MOSPI-NSSO-75Rnd-Sch25.2-July2017-June2018.xml",
+      "base64": "RERJLUlORC1NT1NQSS1OU1NPLTc1Um5kLVNjaDI1LjItSnVseTIwMTctSnVuZTIwMTgueG1s",
+      "size": "2.74 MB"
+    },
+    {
+      "name": "Estimation_Procedure_NSS.pdf",
+      "base64": "RXN0aW1hdGlvbl9Qcm9jZWR1cmVfTlNTLnBkZg==",
+      "size": "1.39 MB"
+    },
+    {
+      "name": "KI_Education_75th_Final.pdf",
+      "base64": "S0lfRWR1Y2F0aW9uXzc1dGhfRmluYWwucGRm",
+      "size": "10.47 MB"
+    },
+    {
+      "name": "nic_amendment_2008.pdf",
+      "base64": "bmljX2FtZW5kbWVudF8yMDA4LnBkZg==",
+      "size": "84.79 KB"
+    },
+    {
+      "name": "README75.pdf",
+      "base64": "UkVBRE1FNzUucGRm",
+      "size": "54.27 KB"
+    },
+    {
+      "name": "Round75sch252Data.rar",
+      "base64": "Um91bmQ3NXNjaDI1MkRhdGEucmFy",
+      "size": "14.09 MB"
+    },
+    {
+      "name": "Sch_25.2.pdf",
+      "base64": "U2NoXzI1LjIucGRm",
+      "size": "526.84 KB"
+    }
+  ]
+}

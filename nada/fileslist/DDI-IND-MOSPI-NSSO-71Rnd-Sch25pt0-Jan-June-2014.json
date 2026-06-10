@@ -1,0 +1,101 @@
+{
+  "status": "success",
+  "total": 19,
+  "files": [
+    {
+      "name": "Appendix_1_NSS71_final.pdf",
+      "base64": "QXBwZW5kaXhfMV9OU1M3MV9maW5hbC5wZGY=",
+      "size": "88.96 KB"
+    },
+    {
+      "name": "Appendix_2_NSS71_final.pdf",
+      "base64": "QXBwZW5kaXhfMl9OU1M3MV9maW5hbC5wZGY=",
+      "size": "461.91 KB"
+    },
+    {
+      "name": "Appendix_3_NSS71_final.pdf",
+      "base64": "QXBwZW5kaXhfM19OU1M3MV9maW5hbC5wZGY=",
+      "size": "765.44 KB"
+    },
+    {
+      "name": "Appendix_4_NSS71_final.pdf",
+      "base64": "QXBwZW5kaXhfNF9OU1M3MV9maW5hbC5wZGY=",
+      "size": "138.11 KB"
+    },
+    {
+      "name": "CSV_NSS71_Health_Jan_Jun2014.zip",
+      "base64": "Q1NWX05TUzcxX0hlYWx0aF9KYW5fSnVuMjAxNC56aXA=",
+      "size": "12.91 MB"
+    },
+    {
+      "name": "dist_code_71st.pdf",
+      "base64": "ZGlzdF9jb2RlXzcxc3QucGRm",
+      "size": "176.61 KB"
+    },
+    {
+      "name": "Estimation_NSS71.pdf",
+      "base64": "RXN0aW1hdGlvbl9OU1M3MS5wZGY=",
+      "size": "236.11 KB"
+    },
+    {
+      "name": "ins71chap_1.pdf",
+      "base64": "aW5zNzFjaGFwXzEucGRm",
+      "size": "414.7 KB"
+    },
+    {
+      "name": "ins71chap_2.pdf",
+      "base64": "aW5zNzFjaGFwXzIucGRm",
+      "size": "567.33 KB"
+    },
+    {
+      "name": "Ins_71_Chap_3.pdf",
+      "base64": "SW5zXzcxX0NoYXBfMy5wZGY=",
+      "size": "750.92 KB"
+    },
+    {
+      "name": "JSON_NSS71_Health_Jan_Jun2014.zip",
+      "base64": "SlNPTl9OU1M3MV9IZWFsdGhfSmFuX0p1bjIwMTQuemlw",
+      "size": "18.43 MB"
+    },
+    {
+      "name": "nic_amendment_2008.pdf",
+      "base64": "bmljX2FtZW5kbWVudF8yMDA4LnBkZg==",
+      "size": "84.79 KB"
+    },
+    {
+      "name": "nss_71st_ki_health_30june15.pdf",
+      "base64": "bnNzXzcxc3Rfa2lfaGVhbHRoXzMwanVuZTE1LnBkZg==",
+      "size": "4.23 MB"
+    },
+    {
+      "name": "SAS_NSS71_Health_Jan_Jun2014.zip",
+      "base64": "U0FTX05TUzcxX0hlYWx0aF9KYW5fSnVuMjAxNC56aXA=",
+      "size": "13.69 MB"
+    },
+    {
+      "name": "sch0.pdf",
+      "base64": "c2NoMC5wZGY=",
+      "size": "334.45 KB"
+    },
+    {
+      "name": "sch25.pdf",
+      "base64": "c2NoMjUucGRm",
+      "size": "350.14 KB"
+    },
+    {
+      "name": "SPSS_NSS71_Health_Jan_Jun2014.zip",
+      "base64": "U1BTU19OU1M3MV9IZWFsdGhfSmFuX0p1bjIwMTQuemlw",
+      "size": "24.48 MB"
+    },
+    {
+      "name": "STATA_NSS71_Health_Jan_Jun2014.zip",
+      "base64": "U1RBVEFfTlNTNzFfSGVhbHRoX0phbl9KdW4yMDE0LnppcA==",
+      "size": "13.02 MB"
+    },
+    {
+      "name": "State_code.pdf",
+      "base64": "U3RhdGVfY29kZS5wZGY=",
+      "size": "7.53 KB"
+    }
+  ]
+}

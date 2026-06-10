@@ -1,0 +1,121 @@
+{
+  "status": "success",
+  "total": 23,
+  "files": [
+    {
+      "name": "Appendix_1_NSS70_final.doc",
+      "base64": "QXBwZW5kaXhfMV9OU1M3MF9maW5hbC5kb2M=",
+      "size": "74 KB"
+    },
+    {
+      "name": "Appendix_2_NSS70_final.doc",
+      "base64": "QXBwZW5kaXhfMl9OU1M3MF9maW5hbC5kb2M=",
+      "size": "2.61 MB"
+    },
+    {
+      "name": "Appendix_3_NSS70_final.doc",
+      "base64": "QXBwZW5kaXhfM19OU1M3MF9maW5hbC5kb2M=",
+      "size": "1.16 MB"
+    },
+    {
+      "name": "Appendix_4_NSS70_final.doc",
+      "base64": "QXBwZW5kaXhfNF9OU1M3MF9maW5hbC5kb2M=",
+      "size": "90 KB"
+    },
+    {
+      "name": "CSV_NSS_70th_Debt_&_Investment_Visit1_Jan_Dec_2013.zip",
+      "base64": "Q1NWX05TU183MHRoX0RlYnRfJl9JbnZlc3RtZW50X1Zpc2l0MV9KYW5fRGVjXzIwMTMuemlw",
+      "size": "39.06 MB"
+    },
+    {
+      "name": "data_layout18.2v1.xls",
+      "base64": "ZGF0YV9sYXlvdXQxOC4ydjEueGxz",
+      "size": "62.5 KB"
+    },
+    {
+      "name": "dist_code_70thrnd.XLS",
+      "base64": "ZGlzdF9jb2RlXzcwdGhybmQuWExT",
+      "size": "77 KB"
+    },
+    {
+      "name": "EST70_final.doc",
+      "base64": "RVNUNzBfZmluYWwuZG9j",
+      "size": "193.5 KB"
+    },
+    {
+      "name": "IHSN_70rnd_18pt2_v1.pdf",
+      "base64": "SUhTTl83MHJuZF8xOHB0Ml92MS5wZGY=",
+      "size": "3.7 MB"
+    },
+    {
+      "name": "Ins18.2_post_AITOT.doc",
+      "base64": "SW5zMTguMl9wb3N0X0FJVE9ULmRvYw==",
+      "size": "368 KB"
+    },
+    {
+      "name": "ins70chap1_final.doc",
+      "base64": "aW5zNzBjaGFwMV9maW5hbC5kb2M=",
+      "size": "244.5 KB"
+    },
+    {
+      "name": "ins70chap2_final.doc",
+      "base64": "aW5zNzBjaGFwMl9maW5hbC5kb2M=",
+      "size": "158.41 KB"
+    },
+    {
+      "name": "JSON_NSS_70th_Debt_&_Investment_Visit1_Jan_Dec_2013.zip",
+      "base64": "SlNPTl9OU1NfNzB0aF9EZWJ0XyZfSW52ZXN0bWVudF9WaXNpdDFfSmFuX0RlY18yMDEzLnppcA==",
+      "size": "60.29 MB"
+    },
+    {
+      "name": "KI_70_18.2_19dec14.pdf",
+      "base64": "S0lfNzBfMTguMl8xOWRlYzE0LnBkZg==",
+      "size": "3.05 MB"
+    },
+    {
+      "name": "NIC_2008_2_digit.xlsx",
+      "base64": "TklDXzIwMDhfMl9kaWdpdC54bHN4",
+      "size": "11.32 KB"
+    },
+    {
+      "name": "nic_amendment_2008.pdf",
+      "base64": "bmljX2FtZW5kbWVudF8yMDA4LnBkZg==",
+      "size": "84.79 KB"
+    },
+    {
+      "name": "SAS_NSS_70th_Debt_&_Investment_Visit1_Jan_Dec_2013.zip",
+      "base64": "U0FTX05TU183MHRoX0RlYnRfJl9JbnZlc3RtZW50X1Zpc2l0MV9KYW5fRGVjXzIwMTMuemlw",
+      "size": "43.07 MB"
+    },
+    {
+      "name": "Sch.18.2_visit_1.doc",
+      "base64": "U2NoLjE4LjJfdmlzaXRfMS5kb2M=",
+      "size": "471.5 KB"
+    },
+    {
+      "name": "schedule_0.0v1.doc",
+      "base64": "c2NoZWR1bGVfMC4wdjEuZG9j",
+      "size": "271 KB"
+    },
+    {
+      "name": "schedule_18.2_v1.doc",
+      "base64": "c2NoZWR1bGVfMTguMl92MS5kb2M=",
+      "size": "471.5 KB"
+    },
+    {
+      "name": "SPSS_NSS_70th_Debt_&_Investment_Visit1_Jan_Dec_2013.zip",
+      "base64": "U1BTU19OU1NfNzB0aF9EZWJ0XyZfSW52ZXN0bWVudF9WaXNpdDFfSmFuX0RlY18yMDEzLnppcA==",
+      "size": "76.99 MB"
+    },
+    {
+      "name": "STATA_NSS_70th_Debt_&_Investment_Visit1_Jan_Dec_2013.zip",
+      "base64": "U1RBVEFfTlNTXzcwdGhfRGVidF8mX0ludmVzdG1lbnRfVmlzaXQxX0phbl9EZWNfMjAxMy56aXA=",
+      "size": "42.54 MB"
+    },
+    {
+      "name": "State_code.doc",
+      "base64": "U3RhdGVfY29kZS5kb2M=",
+      "size": "41 KB"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "status": "success",
+  "total": 11,
+  "files": [
+    {
+      "name": "DDI-IND-MOSPI-NSSO-HCES22-23.xml",
+      "base64": "RERJLUlORC1NT1NQSS1OU1NPLUhDRVMyMi0yMy54bWw=",
+      "size": "1.65 MB"
+    },
+    {
+      "name": "HCES2022_Vol_I (1).pdf",
+      "base64": "SENFUzIwMjJfVm9sX0kgKDEpLnBkZg==",
+      "size": "3.19 MB"
+    },
+    {
+      "name": "HCES2022_Vol_II (1).pdf",
+      "base64": "SENFUzIwMjJfVm9sX0lJICgxKS5wZGY=",
+      "size": "3.39 MB"
+    },
+    {
+      "name": "HCES_2022_23_Imputation_rate (2).xlsx",
+      "base64": "SENFU18yMDIyXzIzX0ltcHV0YXRpb25fcmF0ZSAoMikueGxzeA==",
+      "size": "62.11 KB"
+    },
+    {
+      "name": "Layout_HCES 2022-23 (1).xlsx",
+      "base64": "TGF5b3V0X0hDRVMgMjAyMi0yMyAoMSkueGxzeA==",
+      "size": "37.33 KB"
+    },
+    {
+      "name": "Objective of HCES (1).pdf",
+      "base64": "T2JqZWN0aXZlIG9mIEhDRVMgKDEpLnBkZg==",
+      "size": "183.02 KB"
+    },
+    {
+      "name": "Readme_HCES2022 (1).docx",
+      "base64": "UmVhZG1lX0hDRVMyMDIyICgxKS5kb2N4",
+      "size": "19.45 KB"
+    },
+    {
+      "name": "Rider for users of unit level data of HCES (2).pdf",
+      "base64": "UmlkZXIgZm9yIHVzZXJzIG9mIHVuaXQgbGV2ZWwgZGF0YSBvZiBIQ0VTICgyKS5wZGY=",
+      "size": "110.83 KB"
+    },
+    {
+      "name": "Survey methodology and estimation procedure (1).pdf",
+      "base64": "U3VydmV5IG1ldGhvZG9sb2d5IGFuZCBlc3RpbWF0aW9uIHByb2NlZHVyZSAoMSkucGRm",
+      "size": "731.47 KB"
+    },
+    {
+      "name": "tabulation_state_code (2).xlsx",
+      "base64": "dGFidWxhdGlvbl9zdGF0ZV9jb2RlICgyKS54bHN4",
+      "size": "10.95 KB"
+    },
+    {
+      "name": "Unit level data of HCES 2022-23 round.zip",
+      "base64": "VW5pdCBsZXZlbCBkYXRhIG9mIEhDRVMgMjAyMi0yMyByb3VuZC56aXA=",
+      "size": "116.95 MB"
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "status": "success",
+  "total": 18,
+  "files": [
+    {
+      "name": "Appendix_1_NSS71_final.pdf",
+      "base64": "QXBwZW5kaXhfMV9OU1M3MV9maW5hbC5wZGY=",
+      "size": "29.48 KB"
+    },
+    {
+      "name": "Appendix_2_NSS71_final.pdf",
+      "base64": "QXBwZW5kaXhfMl9OU1M3MV9maW5hbC5wZGY=",
+      "size": "1.26 MB"
+    },
+    {
+      "name": "Appendix_3_NSS71_final.pdf",
+      "base64": "QXBwZW5kaXhfM19OU1M3MV9maW5hbC5wZGY=",
+      "size": "1.75 MB"
+    },
+    {
+      "name": "Appendix_4_NSS71_final.pdf",
+      "base64": "QXBwZW5kaXhfNF9OU1M3MV9maW5hbC5wZGY=",
+      "size": "293.57 KB"
+    },
+    {
+      "name": "CSV_Education_71_2014.zip",
+      "base64": "Q1NWX0VkdWNhdGlvbl83MV8yMDE0LnppcA==",
+      "size": "10.36 MB"
+    },
+    {
+      "name": "IHSN_Study_Report_NSS_71_Sch25dot2.pdf",
+      "base64": "SUhTTl9TdHVkeV9SZXBvcnRfTlNTXzcxX1NjaDI1ZG90Mi5wZGY=",
+      "size": "1.41 MB"
+    },
+    {
+      "name": "Instruction_NSS71chap1.pdf",
+      "base64": "SW5zdHJ1Y3Rpb25fTlNTNzFjaGFwMS5wZGY=",
+      "size": "183.4 KB"
+    },
+    {
+      "name": "Instruction_NSS71chap2.pdf",
+      "base64": "SW5zdHJ1Y3Rpb25fTlNTNzFjaGFwMi5wZGY=",
+      "size": "377.49 KB"
+    },
+    {
+      "name": "Instruction_NSS71chap4.pdf",
+      "base64": "SW5zdHJ1Y3Rpb25fTlNTNzFjaGFwNC5wZGY=",
+      "size": "354.74 KB"
+    },
+    {
+      "name": "JSON_Education_71_2014.zip",
+      "base64": "SlNPTl9FZHVjYXRpb25fNzFfMjAxNC56aXA=",
+      "size": "14.33 MB"
+    },
+    {
+      "name": "nic_amendment_2008.pdf",
+      "base64": "bmljX2FtZW5kbWVudF8yMDA4LnBkZg==",
+      "size": "84.79 KB"
+    },
+    {
+      "name": "NSS71_Districtcode.pdf",
+      "base64": "TlNTNzFfRGlzdHJpY3Rjb2RlLnBkZg==",
+      "size": "193.27 KB"
+    },
+    {
+      "name": "NSS71_Estimation_procedure.pdf",
+      "base64": "TlNTNzFfRXN0aW1hdGlvbl9wcm9jZWR1cmUucGRm",
+      "size": "103.36 KB"
+    },
+    {
+      "name": "NSS71_Statecode.pdf",
+      "base64": "TlNTNzFfU3RhdGVjb2RlLnBkZg==",
+      "size": "16.01 KB"
+    },
+    {
+      "name": "nss_71st_ki_education_30june15.pdf",
+      "base64": "bnNzXzcxc3Rfa2lfZWR1Y2F0aW9uXzMwanVuZTE1LnBkZg==",
+      "size": "6.01 MB"
+    },
+    {
+      "name": "SAS_Education_71_2014.zip",
+      "base64": "U0FTX0VkdWNhdGlvbl83MV8yMDE0LnppcA==",
+      "size": "12.54 MB"
+    },
+    {
+      "name": "SPSS_Education_71_2014.zip",
+      "base64": "U1BTU19FZHVjYXRpb25fNzFfMjAxNC56aXA=",
+      "size": "17.63 MB"
+    },
+    {
+      "name": "STATA_Education_71_2014.zip",
+      "base64": "U1RBVEFfRWR1Y2F0aW9uXzcxXzIwMTQuemlw",
+      "size": "11.94 MB"
+    }
+  ]
+}

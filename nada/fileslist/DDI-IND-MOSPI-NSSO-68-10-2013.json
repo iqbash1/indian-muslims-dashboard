@@ -1,0 +1,131 @@
+{
+  "status": "success",
+  "total": 25,
+  "files": [
+    {
+      "name": "AAP2019-20-AC.doc",
+      "base64": "QUFQMjAxOS0yMC1BQy5kb2M=",
+      "size": "83 KB"
+    },
+    {
+      "name": "Appendix-II_68.doc",
+      "base64": "QXBwZW5kaXgtSUlfNjguZG9j",
+      "size": "504 KB"
+    },
+    {
+      "name": "Appendix-I_68.doc",
+      "base64": "QXBwZW5kaXgtSV82OC5kb2M=",
+      "size": "774 KB"
+    },
+    {
+      "name": "DDI-IND-MOSPI-NSSO-68-10-2013.xml",
+      "base64": "RERJLUlORC1NT1NQSS1OU1NPLTY4LTEwLTIwMTMueG1s",
+      "size": "3.85 MB"
+    },
+    {
+      "name": "District_code.txt",
+      "base64": "RGlzdHJpY3RfY29kZS50eHQ=",
+      "size": "9.44 KB"
+    },
+    {
+      "name": "Estimation Procedure_68.doc",
+      "base64": "RXN0aW1hdGlvbiBQcm9jZWR1cmVfNjguZG9j",
+      "size": "3.93 MB"
+    },
+    {
+      "name": "Estimation_Procedure_68.doc",
+      "base64": "RXN0aW1hdGlvbl9Qcm9jZWR1cmVfNjguZG9j",
+      "size": "3.93 MB"
+    },
+    {
+      "name": "Instruction_to_field_staff.pdf",
+      "base64": "SW5zdHJ1Y3Rpb25fdG9fZmllbGRfc3RhZmYucGRm",
+      "size": "2.44 MB"
+    },
+    {
+      "name": "KI-68th-E&U-PDF.pdf",
+      "base64": "S0ktNjh0aC1FJlUtUERGLnBkZg==",
+      "size": "5.36 MB"
+    },
+    {
+      "name": "KI-68th-E_U-PDF.pdf",
+      "base64": "S0ktNjh0aC1FX1UtUERGLnBkZg==",
+      "size": "5.36 MB"
+    },
+    {
+      "name": "layout_68_10.xls",
+      "base64": "bGF5b3V0XzY4XzEwLnhscw==",
+      "size": "81.5 KB"
+    },
+    {
+      "name": "NCO_2004.xlsx",
+      "base64": "TkNPXzIwMDQueGxzeA==",
+      "size": "11.72 KB"
+    },
+    {
+      "name": "nic_2008.pdf",
+      "base64": "bmljXzIwMDgucGRm",
+      "size": "1.31 MB"
+    },
+    {
+      "name": "nic_amendment_2008.pdf",
+      "base64": "bmljX2FtZW5kbWVudF8yMDA4LnBkZg==",
+      "size": "84.79 KB"
+    },
+    {
+      "name": "Nss68_10_new format.zip",
+      "base64": "TnNzNjhfMTBfbmV3IGZvcm1hdC56aXA=",
+      "size": "41.13 MB"
+    },
+    {
+      "name": "nss_68report_554_31jan14.pdf",
+      "base64": "bnNzXzY4cmVwb3J0XzU1NF8zMWphbjE0LnBkZg==",
+      "size": "20.87 MB"
+    },
+    {
+      "name": "rdf-143.rdf",
+      "base64": "cmRmLTE0My5yZGY=",
+      "size": "7 KB"
+    },
+    {
+      "name": "Schedule_68_10.pdf",
+      "base64": "U2NoZWR1bGVfNjhfMTAucGRm",
+      "size": "656.23 KB"
+    },
+    {
+      "name": "State code_68.doc",
+      "base64": "U3RhdGUgY29kZV82OC5kb2M=",
+      "size": "25 KB"
+    },
+    {
+      "name": "State_code_68.doc",
+      "base64": "U3RhdGVfY29kZV82OC5kb2M=",
+      "size": "25 KB"
+    },
+    {
+      "name": "test.rar",
+      "base64": "dGVzdC5yYXI=",
+      "size": "18.42 KB"
+    },
+    {
+      "name": "U_M_2011_2012_CSV.zip",
+      "base64": "VV9NXzIwMTFfMjAxMl9DU1Yuemlw",
+      "size": "50.19 MB"
+    },
+    {
+      "name": "U_M_2011_2012_JSON.zip",
+      "base64": "VV9NXzIwMTFfMjAxMl9KU09OLnppcA==",
+      "size": "78.61 MB"
+    },
+    {
+      "name": "U_M_2011_2012_SAS.zip",
+      "base64": "VV9NXzIwMTFfMjAxMl9TQVMuemlw",
+      "size": "56.44 MB"
+    },
+    {
+      "name": "U_M_2011_2012_SPSS.zip",
+      "base64": "VV9NXzIwMTFfMjAxMl9TUFNTLnppcA==",
+      "size": "102.26 MB"
+    }
+  ]
+}

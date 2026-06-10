@@ -1,0 +1,71 @@
+{
+  "status": "success",
+  "total": 13,
+  "files": [
+    {
+      "name": "1_README.docx",
+      "base64": "MV9SRUFETUUuZG9jeA==",
+      "size": "27.26 KB"
+    },
+    {
+      "name": "2_1_Instruction_manual_PLFS_Vol_I.pdf",
+      "base64": "Ml8xX0luc3RydWN0aW9uX21hbnVhbF9QTEZTX1ZvbF9JLnBkZg==",
+      "size": "1.76 MB"
+    },
+    {
+      "name": "2_2_Instruction_Manual_PLFS_Vol-II.pdf",
+      "base64": "Ml8yX0luc3RydWN0aW9uX01hbnVhbF9QTEZTX1ZvbC1JSS5wZGY=",
+      "size": "974.52 KB"
+    },
+    {
+      "name": "3_1_Estimation_Procedure_PLFS.pdf",
+      "base64": "M18xX0VzdGltYXRpb25fUHJvY2VkdXJlX1BMRlMucGRm",
+      "size": "529.97 KB"
+    },
+    {
+      "name": "CSV_data_PLFS_2023_2024.zip",
+      "base64": "Q1NWX2RhdGFfUExGU18yMDIzXzIwMjQuemlw",
+      "size": "21.08 MB"
+    },
+    {
+      "name": "Data_LayoutPLFS_2023-24.xlsx",
+      "base64": "RGF0YV9MYXlvdXRQTEZTXzIwMjMtMjQueGxzeA==",
+      "size": "55.35 KB"
+    },
+    {
+      "name": "District_codes_PLFS_Panel_4_202324_2024.xlsx",
+      "base64": "RGlzdHJpY3RfY29kZXNfUExGU19QYW5lbF80XzIwMjMyNF8yMDI0Lnhsc3g=",
+      "size": "28.82 KB"
+    },
+    {
+      "name": "JSON_data_PLFS_2023_2024.zip",
+      "base64": "SlNPTl9kYXRhX1BMRlNfMjAyM18yMDI0LnppcA==",
+      "size": "68.2 MB"
+    },
+    {
+      "name": "NMDS_2dot0_PLFS_final_upd.docx",
+      "base64": "Tk1EU18yZG90MF9QTEZTX2ZpbmFsX3VwZC5kb2N4",
+      "size": "32.5 KB"
+    },
+    {
+      "name": "Note_on_Updated_Instruction_for_PLFS_2023-24.pdf",
+      "base64": "Tm90ZV9vbl9VcGRhdGVkX0luc3RydWN0aW9uX2Zvcl9QTEZTXzIwMjMtMjQucGRm",
+      "size": "532.93 KB"
+    },
+    {
+      "name": "SAS_data_PLFS_2023_2024.zip",
+      "base64": "U0FTX2RhdGFfUExGU18yMDIzXzIwMjQuemlw",
+      "size": "28.18 MB"
+    },
+    {
+      "name": "SPSS_data_PLFS_2023_24.zip",
+      "base64": "U1BTU19kYXRhX1BMRlNfMjAyM18yNC56aXA=",
+      "size": "41.62 MB"
+    },
+    {
+      "name": "STATA_data_PLFS_2023_2024.zip",
+      "base64": "U1RBVEFfZGF0YV9QTEZTXzIwMjNfMjAyNC56aXA=",
+      "size": "27.38 MB"
+    }
+  ]
+}

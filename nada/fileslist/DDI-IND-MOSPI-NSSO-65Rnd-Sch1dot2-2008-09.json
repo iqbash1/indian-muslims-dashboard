@@ -1,0 +1,76 @@
+{
+  "status": "success",
+  "total": 14,
+  "files": [
+    {
+      "name": "DDI-IND-MOSPI-NSSO-65Rnd-Sch1dot2-2008-09.xml",
+      "base64": "RERJLUlORC1NT1NQSS1OU1NPLTY1Um5kLVNjaDFkb3QyLTIwMDgtMDkueG1s",
+      "size": "398.88 KB"
+    },
+    {
+      "name": "Dpd-System-design-65thRound.pdf",
+      "base64": "RHBkLVN5c3RlbS1kZXNpZ24tNjV0aFJvdW5kLnBkZg==",
+      "size": "187.54 KB"
+    },
+    {
+      "name": "Estimation Prcedure NSS 65 Round.pdf",
+      "base64": "RXN0aW1hdGlvbiBQcmNlZHVyZSBOU1MgNjUgUm91bmQucGRm",
+      "size": "120.59 KB"
+    },
+    {
+      "name": "IHSN Study Report-NSS65R-Schedule 1.2.pdf",
+      "base64": "SUhTTiBTdHVkeSBSZXBvcnQtTlNTNjVSLVNjaGVkdWxlIDEuMi5wZGY=",
+      "size": "591.2 KB"
+    },
+    {
+      "name": "List of FOD sub-regions.pdf",
+      "base64": "TGlzdCBvZiBGT0Qgc3ViLXJlZ2lvbnMucGRm",
+      "size": "88.98 KB"
+    },
+    {
+      "name": "List of NSS region.pdf",
+      "base64": "TGlzdCBvZiBOU1MgcmVnaW9uLnBkZg==",
+      "size": "55.93 KB"
+    },
+    {
+      "name": "NCO-2004-CodeStructure.pdf",
+      "base64": "TkNPLTIwMDQtQ29kZVN0cnVjdHVyZS5wZGY=",
+      "size": "460.68 KB"
+    },
+    {
+      "name": "NIC-2004-5 digit codes.pdf",
+      "base64": "TklDLTIwMDQtNSBkaWdpdCBjb2Rlcy5wZGY=",
+      "size": "382.34 KB"
+    },
+    {
+      "name": "NSS 65R Chapter-4_Houssing Condition sch 1.2.pdf",
+      "base64": "TlNTIDY1UiBDaGFwdGVyLTRfSG91c3NpbmcgQ29uZGl0aW9uIHNjaCAxLjIucGRm",
+      "size": "140.94 KB"
+    },
+    {
+      "name": "Nss65_1.2_new format.rar",
+      "base64": "TnNzNjVfMS4yX25ldyBmb3JtYXQucmFy",
+      "size": "14.89 MB"
+    },
+    {
+      "name": "rdf-62.rdf",
+      "base64": "cmRmLTYyLnJkZg==",
+      "size": "4.94 KB"
+    },
+    {
+      "name": "Report-535-Housing condition and Amenities.pdf",
+      "base64": "UmVwb3J0LTUzNS1Ib3VzaW5nIGNvbmRpdGlvbiBhbmQgQW1lbml0aWVzLnBkZg==",
+      "size": "1.49 MB"
+    },
+    {
+      "name": "Schedule_NSS 65-Sch 1.2.pdf",
+      "base64": "U2NoZWR1bGVfTlNTIDY1LVNjaCAxLjIucGRm",
+      "size": "83.56 KB"
+    },
+    {
+      "name": "State Codes_NSS 65R.pdf",
+      "base64": "U3RhdGUgQ29kZXNfTlNTIDY1Ui5wZGY=",
+      "size": "603.93 KB"
+    }
+  ]
+}

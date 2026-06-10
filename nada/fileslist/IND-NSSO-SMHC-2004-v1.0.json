@@ -1,0 +1,71 @@
+{
+  "status": "success",
+  "total": 13,
+  "files": [
+    {
+      "name": "Chapter-1_60.pdf",
+      "base64": "Q2hhcHRlci0xXzYwLnBkZg==",
+      "size": "319.1 KB"
+    },
+    {
+      "name": "Chapter-2_60_25.0.pdf",
+      "base64": "Q2hhcHRlci0yXzYwXzI1LjAucGRm",
+      "size": "370.83 KB"
+    },
+    {
+      "name": "Chapter-5_60_25.0.pdf",
+      "base64": "Q2hhcHRlci01XzYwXzI1LjAucGRm",
+      "size": "392.18 KB"
+    },
+    {
+      "name": "Data_CSV.zip",
+      "base64": "RGF0YV9DU1Yuemlw",
+      "size": "17.94 MB"
+    },
+    {
+      "name": "Data_JSON.zip",
+      "base64": "RGF0YV9KU09OLnppcA==",
+      "size": "25.1 MB"
+    },
+    {
+      "name": "Data_SAS.zip",
+      "base64": "RGF0YV9TQVMuemlw",
+      "size": "19.01 MB"
+    },
+    {
+      "name": "Data_SPSS.zip",
+      "base64": "RGF0YV9TUFNTLnppcA==",
+      "size": "28.03 MB"
+    },
+    {
+      "name": "Data_STATA.zip",
+      "base64": "RGF0YV9TVEFUQS56aXA=",
+      "size": "18.6 MB"
+    },
+    {
+      "name": "FOD sub-regions.pdf",
+      "base64": "Rk9EIHN1Yi1yZWdpb25zLnBkZg==",
+      "size": "44.82 KB"
+    },
+    {
+      "name": "IHSN Study Report-NSS60R-Schedule 25.0-Morbidity-Healthcare.pdf",
+      "base64": "SUhTTiBTdHVkeSBSZXBvcnQtTlNTNjBSLVNjaGVkdWxlIDI1LjAtTW9yYmlkaXR5LUhlYWx0aGNhcmUucGRm",
+      "size": "1 MB"
+    },
+    {
+      "name": "Report 507_final.pdf",
+      "base64": "UmVwb3J0IDUwN19maW5hbC5wZGY=",
+      "size": "2.39 MB"
+    },
+    {
+      "name": "Schedule_60_25.0.pdf",
+      "base64": "U2NoZWR1bGVfNjBfMjUuMC5wZGY=",
+      "size": "314.51 KB"
+    },
+    {
+      "name": "State codes from 58th Round onwards.pdf",
+      "base64": "U3RhdGUgY29kZXMgZnJvbSA1OHRoIFJvdW5kIG9ud2FyZHMucGRm",
+      "size": "4.22 KB"
+    }
+  ]
+}

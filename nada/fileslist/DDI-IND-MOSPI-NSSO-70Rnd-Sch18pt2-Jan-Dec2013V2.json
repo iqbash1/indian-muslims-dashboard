@@ -1,0 +1,136 @@
+{
+  "status": "success",
+  "total": 26,
+  "files": [
+    {
+      "name": "Appendix 1_NSS70_final.doc",
+      "base64": "QXBwZW5kaXggMV9OU1M3MF9maW5hbC5kb2M=",
+      "size": "74 KB"
+    },
+    {
+      "name": "Appendix 2_NSS70_final.doc",
+      "base64": "QXBwZW5kaXggMl9OU1M3MF9maW5hbC5kb2M=",
+      "size": "2.61 MB"
+    },
+    {
+      "name": "Appendix 3_NSS70_final.doc",
+      "base64": "QXBwZW5kaXggM19OU1M3MF9maW5hbC5kb2M=",
+      "size": "1.16 MB"
+    },
+    {
+      "name": "Appendix 4_NSS70_final.doc",
+      "base64": "QXBwZW5kaXggNF9OU1M3MF9maW5hbC5kb2M=",
+      "size": "90 KB"
+    },
+    {
+      "name": "data_layout18.2v1.xls",
+      "base64": "ZGF0YV9sYXlvdXQxOC4ydjEueGxz",
+      "size": "62.5 KB"
+    },
+    {
+      "name": "data_layout18.2v2.xls",
+      "base64": "ZGF0YV9sYXlvdXQxOC4ydjIueGxz",
+      "size": "62.5 KB"
+    },
+    {
+      "name": "DDI-IND-MOSPI-NSSO-70Rnd-Sch18pt2-Jan-Dec2013.xml",
+      "base64": "RERJLUlORC1NT1NQSS1OU1NPLTcwUm5kLVNjaDE4cHQyLUphbi1EZWMyMDEzLnhtbA==",
+      "size": "1.66 MB"
+    },
+    {
+      "name": "DDI-IND-MOSPI-NSSO-70Rnd-Sch18pt2-Jan-Dec2013V2.xml",
+      "base64": "RERJLUlORC1NT1NQSS1OU1NPLTcwUm5kLVNjaDE4cHQyLUphbi1EZWMyMDEzVjIueG1s",
+      "size": "1.66 MB"
+    },
+    {
+      "name": "dist_code_70thrnd.XLS",
+      "base64": "ZGlzdF9jb2RlXzcwdGhybmQuWExT",
+      "size": "77 KB"
+    },
+    {
+      "name": "EST70_final.doc",
+      "base64": "RVNUNzBfZmluYWwuZG9j",
+      "size": "193.5 KB"
+    },
+    {
+      "name": "IHSN_70rnd_18pt2_v1.pdf",
+      "base64": "SUhTTl83MHJuZF8xOHB0Ml92MS5wZGY=",
+      "size": "3.7 MB"
+    },
+    {
+      "name": "IHSN_70rnd_18pt2_v2.pdf",
+      "base64": "SUhTTl83MHJuZF8xOHB0Ml92Mi5wZGY=",
+      "size": "1.4 MB"
+    },
+    {
+      "name": "Ins18.2-post AITOT.doc",
+      "base64": "SW5zMTguMi1wb3N0IEFJVE9ULmRvYw==",
+      "size": "368 KB"
+    },
+    {
+      "name": "ins70chap1_final.doc",
+      "base64": "aW5zNzBjaGFwMV9maW5hbC5kb2M=",
+      "size": "244.5 KB"
+    },
+    {
+      "name": "ins70chap2_final.doc",
+      "base64": "aW5zNzBjaGFwMl9maW5hbC5kb2M=",
+      "size": "158.41 KB"
+    },
+    {
+      "name": "KI_70_18.2_19dec14.pdf",
+      "base64": "S0lfNzBfMTguMl8xOWRlYzE0LnBkZg==",
+      "size": "3.05 MB"
+    },
+    {
+      "name": "NIC 2008 2 digit.xlsx",
+      "base64": "TklDIDIwMDggMiBkaWdpdC54bHN4",
+      "size": "11.32 KB"
+    },
+    {
+      "name": "nic_amendment_2008.pdf",
+      "base64": "bmljX2FtZW5kbWVudF8yMDA4LnBkZg==",
+      "size": "84.79 KB"
+    },
+    {
+      "name": "NSS-70-18pt2-visit2_new_format.rar",
+      "base64": "TlNTLTcwLTE4cHQyLXZpc2l0Ml9uZXdfZm9ybWF0LnJhcg==",
+      "size": "17.29 MB"
+    },
+    {
+      "name": "rdf-156.rdf",
+      "base64": "cmRmLTE1Ni5yZGY=",
+      "size": "8.85 KB"
+    },
+    {
+      "name": "Sch.18.2 visit 1.doc",
+      "base64": "U2NoLjE4LjIgdmlzaXQgMS5kb2M=",
+      "size": "471.5 KB"
+    },
+    {
+      "name": "schedule_0.0v1.doc",
+      "base64": "c2NoZWR1bGVfMC4wdjEuZG9j",
+      "size": "271 KB"
+    },
+    {
+      "name": "schedule_0.0v2.doc",
+      "base64": "c2NoZWR1bGVfMC4wdjIuZG9j",
+      "size": "271 KB"
+    },
+    {
+      "name": "schedule_18.2_v1.doc",
+      "base64": "c2NoZWR1bGVfMTguMl92MS5kb2M=",
+      "size": "471.5 KB"
+    },
+    {
+      "name": "schedule_18.2_v2.doc",
+      "base64": "c2NoZWR1bGVfMTguMl92Mi5kb2M=",
+      "size": "205 KB"
+    },
+    {
+      "name": "State_code.doc",
+      "base64": "U3RhdGVfY29kZS5kb2M=",
+      "size": "41 KB"
+    }
+  ]
+}

@@ -1,0 +1,186 @@
+{
+  "status": "success",
+  "total": 36,
+  "files": [
+    {
+      "name": "DDI-IND-MOSPI-NSSO-66-10-2011.xml",
+      "base64": "RERJLUlORC1NT1NQSS1OU1NPLTY2LTEwLTIwMTEueG1s",
+      "size": "4.61 MB"
+    },
+    {
+      "name": "District code_66.xls",
+      "base64": "RGlzdHJpY3QgY29kZV82Ni54bHM=",
+      "size": "66 KB"
+    },
+    {
+      "name": "District_code_66.xls",
+      "base64": "RGlzdHJpY3RfY29kZV82Ni54bHM=",
+      "size": "66 KB"
+    },
+    {
+      "name": "Emp_Unemp_2009_2010_CSV.zip",
+      "base64": "RW1wX1VuZW1wXzIwMDlfMjAxMF9DU1Yuemlw",
+      "size": "30.06 MB"
+    },
+    {
+      "name": "Emp_Unemp_2009_2010_JSON.zip",
+      "base64": "RW1wX1VuZW1wXzIwMDlfMjAxMF9KU09OLnppcA==",
+      "size": "49.71 MB"
+    },
+    {
+      "name": "Emp_Unemp_2009_2010_SAS.zip",
+      "base64": "RW1wX1VuZW1wXzIwMDlfMjAxMF9TQVMuemlw",
+      "size": "32.36 MB"
+    },
+    {
+      "name": "Emp_Unemp_2009_2010_SPSS.zip",
+      "base64": "RW1wX1VuZW1wXzIwMDlfMjAxMF9TUFNTLnppcA==",
+      "size": "52.38 MB"
+    },
+    {
+      "name": "Estimation Procedure_sch_10_employment_unemployment_nsso_66_round_July2009_June2010.doc",
+      "base64": "RXN0aW1hdGlvbiBQcm9jZWR1cmVfc2NoXzEwX2VtcGxveW1lbnRfdW5lbXBsb3ltZW50X25zc29fNjZfcm91bmRfSnVseTIwMDlfSnVuZTIwMTAuZG9j",
+      "size": "2.18 MB"
+    },
+    {
+      "name": "Estimation_Procedure_sch_10_employment_unemployment_nsso_66_round_July2009_June2010.doc",
+      "base64": "RXN0aW1hdGlvbl9Qcm9jZWR1cmVfc2NoXzEwX2VtcGxveW1lbnRfdW5lbXBsb3ltZW50X25zc29fNjZfcm91bmRfSnVseTIwMDlfSnVuZTIwMTAuZG9j",
+      "size": "2.18 MB"
+    },
+    {
+      "name": "IHSN_REPORT_NSSO_66_SCH_10_EMPLOYMENT_AND_UNEMPLOYMENT_LUD_18March2013.pdf",
+      "base64": "SUhTTl9SRVBPUlRfTlNTT182Nl9TQ0hfMTBfRU1QTE9ZTUVOVF9BTkRfVU5FTVBMT1lNRU5UX0xVRF8xOE1hcmNoMjAxMy5wZGY=",
+      "size": "1.34 MB"
+    },
+    {
+      "name": "Instruction to Field Staff.doc",
+      "base64": "SW5zdHJ1Y3Rpb24gdG8gRmllbGQgU3RhZmYuZG9j",
+      "size": "458.5 KB"
+    },
+    {
+      "name": "Instruction_to_Field_Staff.doc",
+      "base64": "SW5zdHJ1Y3Rpb25fdG9fRmllbGRfU3RhZmYuZG9j",
+      "size": "458.5 KB"
+    },
+    {
+      "name": "Introduction Concepts, Definitions and Procedures.doc",
+      "base64": "SW50cm9kdWN0aW9uIENvbmNlcHRzLCBEZWZpbml0aW9ucyBhbmQgUHJvY2VkdXJlcy5kb2M=",
+      "size": "339.5 KB"
+    },
+    {
+      "name": "Introduction_Concepts_Definitions_Procedures.doc",
+      "base64": "SW50cm9kdWN0aW9uX0NvbmNlcHRzX0RlZmluaXRpb25zX1Byb2NlZHVyZXMuZG9j",
+      "size": "339.5 KB"
+    },
+    {
+      "name": "Key_Indicators_Emp_&_Unemp_66th_round.pdf",
+      "base64": "S2V5X0luZGljYXRvcnNfRW1wXyZfVW5lbXBfNjZ0aF9yb3VuZC5wZGY=",
+      "size": "9.98 MB"
+    },
+    {
+      "name": "List of NSS regions and their composition.doc",
+      "base64": "TGlzdCBvZiBOU1MgcmVnaW9ucyBhbmQgdGhlaXIgY29tcG9zaXRpb24uZG9j",
+      "size": "502 KB"
+    },
+    {
+      "name": "List_NSS_regions_their_composition.doc",
+      "base64": "TGlzdF9OU1NfcmVnaW9uc190aGVpcl9jb21wb3NpdGlvbi5kb2M=",
+      "size": "502 KB"
+    },
+    {
+      "name": "List_of_FOD_sub_regions_nsso_66.doc",
+      "base64": "TGlzdF9vZl9GT0Rfc3ViX3JlZ2lvbnNfbnNzb182Ni5kb2M=",
+      "size": "734.5 KB"
+    },
+    {
+      "name": "nco_2004_CodeStructure.pdf",
+      "base64": "bmNvXzIwMDRfQ29kZVN0cnVjdHVyZS5wZGY=",
+      "size": "460.68 KB"
+    },
+    {
+      "name": "nic_2004_struc_detail.pdf",
+      "base64": "bmljXzIwMDRfc3RydWNfZGV0YWlsLnBkZg==",
+      "size": "382.34 KB"
+    },
+    {
+      "name": "No_FSUs_allotted_surveyed_no_persons_enumerated_nsso_66_sch_10.csv",
+      "base64": "Tm9fRlNVc19hbGxvdHRlZF9zdXJ2ZXllZF9ub19wZXJzb25zX2VudW1lcmF0ZWRfbnNzb182Nl9zY2hfMTAuY3N2",
+      "size": "1.86 KB"
+    },
+    {
+      "name": "Nss66_10_new format.rar",
+      "base64": "TnNzNjZfMTBfbmV3IGZvcm1hdC5yYXI=",
+      "size": "49.05 MB"
+    },
+    {
+      "name": "nssE_66report_550.pdf",
+      "base64": "bnNzRV82NnJlcG9ydF81NTAucGRm",
+      "size": "6.55 MB"
+    },
+    {
+      "name": "nssE_66report_551.pdf",
+      "base64": "bnNzRV82NnJlcG9ydF81NTEucGRm",
+      "size": "6.44 MB"
+    },
+    {
+      "name": "nssE_66report_552.pdf",
+      "base64": "bnNzRV82NnJlcG9ydF81NTIucGRm",
+      "size": "15.72 MB"
+    },
+    {
+      "name": "nssE_66rep_553_Final.pdf",
+      "base64": "bnNzRV82NnJlcF81NTNfRmluYWwucGRm",
+      "size": "2.96 MB"
+    },
+    {
+      "name": "nss_Report-543e.pdf",
+      "base64": "bnNzX1JlcG9ydC01NDNlLnBkZg==",
+      "size": "11.47 MB"
+    },
+    {
+      "name": "NSS_Report_No_537e.pdf",
+      "base64": "TlNTX1JlcG9ydF9Ob181MzdlLnBkZg==",
+      "size": "9.29 MB"
+    },
+    {
+      "name": "nss_report_no_548_HBW.pdf",
+      "base64": "bnNzX3JlcG9ydF9ub181NDhfSEJXLnBkZg==",
+      "size": "10.91 MB"
+    },
+    {
+      "name": "nss_rep_539.pdf",
+      "base64": "bnNzX3JlcF81MzkucGRm",
+      "size": "5.03 MB"
+    },
+    {
+      "name": "PDF_553_Final.pdf",
+      "base64": "UERGXzU1M19GaW5hbC5wZGY=",
+      "size": "2.96 MB"
+    },
+    {
+      "name": "ratelist_NSSO_MOSPI_GOI_UnitData_LAST_UPDATED_ON_25thJULY2011.pdf",
+      "base64": "cmF0ZWxpc3RfTlNTT19NT1NQSV9HT0lfVW5pdERhdGFfTEFTVF9VUERBVEVEX09OXzI1dGhKVUxZMjAxMS5wZGY=",
+      "size": "201.89 KB"
+    },
+    {
+      "name": "rdf-18.rdf",
+      "base64": "cmRmLTE4LnJkZg==",
+      "size": "12.27 KB"
+    },
+    {
+      "name": "Schedule_66_10.doc",
+      "base64": "U2NoZWR1bGVfNjZfMTAuZG9j",
+      "size": "571 KB"
+    },
+    {
+      "name": "State code_66.doc",
+      "base64": "U3RhdGUgY29kZV82Ni5kb2M=",
+      "size": "25 KB"
+    },
+    {
+      "name": "State_code_66.doc",
+      "base64": "U3RhdGVfY29kZV82Ni5kb2M=",
+      "size": "25 KB"
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "status": "success",
+  "total": 18,
+  "files": [
+    {
+      "name": "Detailed Structure of NIC Codes 2004.pdf",
+      "base64": "RGV0YWlsZWQgU3RydWN0dXJlIG9mIE5JQyBDb2RlcyAyMDA0LnBkZg==",
+      "size": "382.34 KB"
+    },
+    {
+      "name": "Estimation Procedure_63rd Round.pdf",
+      "base64": "RXN0aW1hdGlvbiBQcm9jZWR1cmVfNjNyZCBSb3VuZC5wZGY=",
+      "size": "619.33 KB"
+    },
+    {
+      "name": "Household Consumer Expenditure, NSS 63rd Round July 2006 - June 2007_Csv.zip",
+      "base64": "SG91c2Vob2xkIENvbnN1bWVyIEV4cGVuZGl0dXJlLCBOU1MgNjNyZCBSb3VuZCBKdWx5IDIwMDYgLSBKdW5lIDIwMDdfQ3N2LnppcA==",
+      "size": "65.83 MB"
+    },
+    {
+      "name": "Household Consumer Expenditure, NSS 63rd Round July 2006 - June 2007_Json.zip",
+      "base64": "SG91c2Vob2xkIENvbnN1bWVyIEV4cGVuZGl0dXJlLCBOU1MgNjNyZCBSb3VuZCBKdWx5IDIwMDYgLSBKdW5lIDIwMDdfSnNvbi56aXA=",
+      "size": "89.73 MB"
+    },
+    {
+      "name": "Household Consumer Expenditure, NSS 63rd Round July 2006 - June 2007_Sas.zip",
+      "base64": "SG91c2Vob2xkIENvbnN1bWVyIEV4cGVuZGl0dXJlLCBOU1MgNjNyZCBSb3VuZCBKdWx5IDIwMDYgLSBKdW5lIDIwMDdfU2FzLnppcA==",
+      "size": "68.99 MB"
+    },
+    {
+      "name": "Household Consumer Expenditure, NSS 63rd Round July 2006 - June 2007_Spss.zip",
+      "base64": "SG91c2Vob2xkIENvbnN1bWVyIEV4cGVuZGl0dXJlLCBOU1MgNjNyZCBSb3VuZCBKdWx5IDIwMDYgLSBKdW5lIDIwMDdfU3Bzcy56aXA=",
+      "size": "117.12 MB"
+    },
+    {
+      "name": "Household Consumer Expenditure, NSS 63rd Round July 2006 - June 2007_Stata.zip",
+      "base64": "SG91c2Vob2xkIENvbnN1bWVyIEV4cGVuZGl0dXJlLCBOU1MgNjNyZCBSb3VuZCBKdWx5IDIwMDYgLSBKdW5lIDIwMDdfU3RhdGEuemlw",
+      "size": "65.03 MB"
+    },
+    {
+      "name": "IHSN_NSSO_63rd_Round_HH_CONS_EXP.pdf",
+      "base64": "SUhTTl9OU1NPXzYzcmRfUm91bmRfSEhfQ09OU19FWFAucGRm",
+      "size": "675.01 KB"
+    },
+    {
+      "name": "Introduction Concepts, Definitions and Procedures.pdf",
+      "base64": "SW50cm9kdWN0aW9uIENvbmNlcHRzLCBEZWZpbml0aW9ucyBhbmQgUHJvY2VkdXJlcy5wZGY=",
+      "size": "142.39 KB"
+    },
+    {
+      "name": "List of FOD Sub-regions.pdf",
+      "base64": "TGlzdCBvZiBGT0QgU3ViLXJlZ2lvbnMucGRm",
+      "size": "1.05 MB"
+    },
+    {
+      "name": "List of NSS regions and their composition.pdf",
+      "base64": "TGlzdCBvZiBOU1MgcmVnaW9ucyBhbmQgdGhlaXIgY29tcG9zaXRpb24ucGRm",
+      "size": "1.06 MB"
+    },
+    {
+      "name": "National Seminar on NSS 63rd Round Survey Results.pdf",
+      "base64": "TmF0aW9uYWwgU2VtaW5hciBvbiBOU1MgNjNyZCBSb3VuZCBTdXJ2ZXkgUmVzdWx0cy5wZGY=",
+      "size": "138.2 MB"
+    },
+    {
+      "name": "NCO 1968-3 digit codes.pdf",
+      "base64": "TkNPIDE5NjgtMyBkaWdpdCBjb2Rlcy5wZGY=",
+      "size": "29.27 KB"
+    },
+    {
+      "name": "Report no527_Household Consumer Expenditure in India in 2006-07.pdf",
+      "base64": "UmVwb3J0IG5vNTI3X0hvdXNlaG9sZCBDb25zdW1lciBFeHBlbmRpdHVyZSBpbiBJbmRpYSBpbiAyMDA2LTA3LnBkZg==",
+      "size": "1.41 MB"
+    },
+    {
+      "name": "Schedule 0pt0 List Of Households And Non-Agricultural Enterprises.pdf",
+      "base64": "U2NoZWR1bGUgMHB0MCBMaXN0IE9mIEhvdXNlaG9sZHMgQW5kIE5vbi1BZ3JpY3VsdHVyYWwgRW50ZXJwcmlzZXMucGRm",
+      "size": "258.83 KB"
+    },
+    {
+      "name": "Schedule 1pt0  Consumer Expenditure.pdf",
+      "base64": "U2NoZWR1bGUgMXB0MCAgQ29uc3VtZXIgRXhwZW5kaXR1cmUucGRm",
+      "size": "185.6 KB"
+    },
+    {
+      "name": "Schedule_63_1.pdf",
+      "base64": "U2NoZWR1bGVfNjNfMS5wZGY=",
+      "size": "217.05 KB"
+    },
+    {
+      "name": "State Codes_63.pdf",
+      "base64": "U3RhdGUgQ29kZXNfNjMucGRm",
+      "size": "750.82 KB"
+    }
+  ]
+}

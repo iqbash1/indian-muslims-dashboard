@@ -1,0 +1,61 @@
+{
+  "status": "success",
+  "total": 11,
+  "files": [
+    {
+      "name": "CODEs for Blocks of Sch 10.6 (2).xlsx",
+      "base64": "Q09ERXMgZm9yIEJsb2NrcyBvZiBTY2ggMTAuNiAoMikueGxzeA==",
+      "size": "19.61 KB"
+    },
+    {
+      "name": "Data_Layout_TUS_2024 (1).xlsx",
+      "base64": "RGF0YV9MYXlvdXRfVFVTXzIwMjQgKDEpLnhsc3g=",
+      "size": "21.11 KB"
+    },
+    {
+      "name": "Date of Survey_TUS2024(which has the household level file structure).zip",
+      "base64": "RGF0ZSBvZiBTdXJ2ZXlfVFVTMjAyNCh3aGljaCBoYXMgdGhlIGhvdXNlaG9sZCBsZXZlbCBmaWxlIHN0cnVjdHVyZSkuemlw",
+      "size": "1 MB"
+    },
+    {
+      "name": "DDI-IND-NSO-TUS-2024-24.xml",
+      "base64": "RERJLUlORC1OU08tVFVTLTIwMjQtMjQueG1s",
+      "size": "345.64 KB"
+    },
+    {
+      "name": "Instructions_TUS_2024 (2).pdf",
+      "base64": "SW5zdHJ1Y3Rpb25zX1RVU18yMDI0ICgyKS5wZGY=",
+      "size": "4.62 MB"
+    },
+    {
+      "name": "NMDS_2.0_TUS.xlsx",
+      "base64": "Tk1EU18yLjBfVFVTLnhsc3g=",
+      "size": "17.18 KB"
+    },
+    {
+      "name": "Note_for_data_user (1).docx",
+      "base64": "Tm90ZV9mb3JfZGF0YV91c2VyICgxKS5kb2N4",
+      "size": "14.96 KB"
+    },
+    {
+      "name": "README_TUS_2024 (1).docx",
+      "base64": "UkVBRE1FX1RVU18yMDI0ICgxKS5kb2N4",
+      "size": "22.43 KB"
+    },
+    {
+      "name": "SampleDesign_EstimationProcedure_TUS 2024.pdf",
+      "base64": "U2FtcGxlRGVzaWduX0VzdGltYXRpb25Qcm9jZWR1cmVfVFVTIDIwMjQucGRm",
+      "size": "312.94 KB"
+    },
+    {
+      "name": "TUS2024.zip",
+      "base64": "VFVTMjAyNC56aXA=",
+      "size": "39.12 MB"
+    },
+    {
+      "name": "Vol_II TUS_2024.pdf",
+      "base64": "Vm9sX0lJIFRVU18yMDI0LnBkZg==",
+      "size": "1.53 MB"
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "status": "success",
+  "total": 13,
+  "files": [
+    {
+      "name": "Appendix I.pdf",
+      "base64": "QXBwZW5kaXggSS5wZGY=",
+      "size": "492.42 KB"
+    },
+    {
+      "name": "Appendix II.pdf",
+      "base64": "QXBwZW5kaXggSUkucGRm",
+      "size": "476.85 KB"
+    },
+    {
+      "name": "Appendix III.pdf",
+      "base64": "QXBwZW5kaXggSUlJLnBkZg==",
+      "size": "142.89 MB"
+    },
+    {
+      "name": "Data_Layout_NSS76_120.xlsx",
+      "base64": "RGF0YV9MYXlvdXRfTlNTNzZfMTIwLnhsc3g=",
+      "size": "38.36 KB"
+    },
+    {
+      "name": "DDI-IND-MOSPI-NSSO-76Rnd-Sch1.2-July2018-December2018.xml",
+      "base64": "RERJLUlORC1NT1NQSS1OU1NPLTc2Um5kLVNjaDEuMi1KdWx5MjAxOC1EZWNlbWJlcjIwMTgueG1s",
+      "size": "2.5 MB"
+    },
+    {
+      "name": "Estimation procedure _NSS 76_15052019.pdf",
+      "base64": "RXN0aW1hdGlvbiBwcm9jZWR1cmUgX05TUyA3Nl8xNTA1MjAxOS5wZGY=",
+      "size": "480.12 KB"
+    },
+    {
+      "name": "NSS_76_ins_Ch1.pdf",
+      "base64": "TlNTXzc2X2luc19DaDEucGRm",
+      "size": "1022.69 KB"
+    },
+    {
+      "name": "NSS_76_ins_Ch2.pdf",
+      "base64": "TlNTXzc2X2luc19DaDIucGRm",
+      "size": "643.13 KB"
+    },
+    {
+      "name": "NSS_76_ins_Ch3.pdf",
+      "base64": "TlNTXzc2X2luc19DaDMucGRm",
+      "size": "3.79 MB"
+    },
+    {
+      "name": "NSS_76_ins_Ch4.pdf",
+      "base64": "TlNTXzc2X2luc19DaDQucGRm",
+      "size": "408.24 KB"
+    },
+    {
+      "name": "NSS_76_sch_1.2.pdf",
+      "base64": "TlNTXzc2X3NjaF8xLjIucGRm",
+      "size": "213.45 KB"
+    },
+    {
+      "name": "Report_584_final.pdf",
+      "base64": "UmVwb3J0XzU4NF9maW5hbC5wZGY=",
+      "size": "42.99 MB"
+    },
+    {
+      "name": "Round76sch1dot2Data.rar",
+      "base64": "Um91bmQ3NnNjaDFkb3QyRGF0YS5yYXI=",
+      "size": "9.71 MB"
+    }
+  ]
+}

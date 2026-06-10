@@ -1,0 +1,76 @@
+{
+  "status": "success",
+  "total": 14,
+  "files": [
+    {
+      "name": "2_1_Instructions_to_Field_Staff_PLFS_Vol_I.pdf",
+      "base64": "Ml8xX0luc3RydWN0aW9uc190b19GaWVsZF9TdGFmZl9QTEZTX1ZvbF9JLnBkZg==",
+      "size": "1.61 MB"
+    },
+    {
+      "name": "2_2_Schedule10pt4_FIRSTVISIT_2022_23.pdf",
+      "base64": "Ml8yX1NjaGVkdWxlMTBwdDRfRklSU1RWSVNJVF8yMDIyXzIzLnBkZg==",
+      "size": "573.05 KB"
+    },
+    {
+      "name": "2_3 Schedule10pt4_REVISIT_2022_23.pdf",
+      "base64": "Ml8zIFNjaGVkdWxlMTBwdDRfUkVWSVNJVF8yMDIyXzIzLnBkZg==",
+      "size": "252.2 KB"
+    },
+    {
+      "name": "3_1_Estimation_Procedure_PLFS.pdf",
+      "base64": "M18xX0VzdGltYXRpb25fUHJvY2VkdXJlX1BMRlMucGRm",
+      "size": "311.71 KB"
+    },
+    {
+      "name": "Data_in_CSV.zip",
+      "base64": "RGF0YV9pbl9DU1Yuemlw",
+      "size": "20.66 MB"
+    },
+    {
+      "name": "Data_in_JSON.zip",
+      "base64": "RGF0YV9pbl9KU09OLnppcA==",
+      "size": "67.02 MB"
+    },
+    {
+      "name": "Data_in_SAS.zip",
+      "base64": "RGF0YV9pbl9TQVMuemlw",
+      "size": "27.64 MB"
+    },
+    {
+      "name": "Data_in_SPSS.zip",
+      "base64": "RGF0YV9pbl9TUFNTLnppcA==",
+      "size": "40.74 MB"
+    },
+    {
+      "name": "Data_in_STATA.zip",
+      "base64": "RGF0YV9pbl9TVEFUQS56aXA=",
+      "size": "26.83 MB"
+    },
+    {
+      "name": "Data_LayoutPLFS_2022_23.xlsx",
+      "base64": "RGF0YV9MYXlvdXRQTEZTXzIwMjJfMjMueGxzeA==",
+      "size": "34.55 KB"
+    },
+    {
+      "name": "District_codes_PLFS_Panel_3_202122_202223.xlsx",
+      "base64": "RGlzdHJpY3RfY29kZXNfUExGU19QYW5lbF8zXzIwMjEyMl8yMDIyMjMueGxzeA==",
+      "size": "28.79 KB"
+    },
+    {
+      "name": "Note_on_changes_PLFS_2022_23.pdf",
+      "base64": "Tm90ZV9vbl9jaGFuZ2VzX1BMRlNfMjAyMl8yMy5wZGY=",
+      "size": "509.5 KB"
+    },
+    {
+      "name": "README.pdf",
+      "base64": "UkVBRE1FLnBkZg==",
+      "size": "27.66 KB"
+    },
+    {
+      "name": "Technical_clarification_regarding_high_multiplier_value_in_PLFS_2022_23.pdf",
+      "base64": "VGVjaG5pY2FsX2NsYXJpZmljYXRpb25fcmVnYXJkaW5nX2hpZ2hfbXVsdGlwbGllcl92YWx1ZV9pbl9QTEZTXzIwMjJfMjMucGRm",
+      "size": "239.41 KB"
+    }
+  ]
+}

@@ -14,4 +14,11 @@ __pycache__/
 .pytest_cache/
 *.egg-info/
 
+# NADA microdata (nada/bank.py): never commit the API key or bulk data zips.
+# The archive lives at ~/Desktop/nada-work/ (outside the repo); only SHA256 +
+# small doc files get committed. See nada/PLAN.md.
+.nada-key
+nada/.key
+nada/**/*.zip
+
 

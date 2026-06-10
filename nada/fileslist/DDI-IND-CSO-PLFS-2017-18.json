@@ -1,0 +1,61 @@
+{
+  "status": "success",
+  "total": 11,
+  "files": [
+    {
+      "name": "CSV_PLFS_July2017_June2018.zip",
+      "base64": "Q1NWX1BMRlNfSnVseTIwMTdfSnVuZTIwMTguemlw",
+      "size": "13.11 MB"
+    },
+    {
+      "name": "Data_LayoutPLFS_(1).xlsx",
+      "base64": "RGF0YV9MYXlvdXRQTEZTXygxKS54bHN4",
+      "size": "55.62 KB"
+    },
+    {
+      "name": "District_codes_PLFS_Panel_1_201718_201819.xlsx",
+      "base64": "RGlzdHJpY3RfY29kZXNfUExGU19QYW5lbF8xXzIwMTcxOF8yMDE4MTkueGxzeA==",
+      "size": "28.7 KB"
+    },
+    {
+      "name": "Estimation_Procedure_PLFS_(1).doc",
+      "base64": "RXN0aW1hdGlvbl9Qcm9jZWR1cmVfUExGU18oMSkuZG9j",
+      "size": "335.5 KB"
+    },
+    {
+      "name": "Instructions _to_Field_Staff_PLFS_Vol_II_(1).pdf",
+      "base64": "SW5zdHJ1Y3Rpb25zIF90b19GaWVsZF9TdGFmZl9QTEZTX1ZvbF9JSV8oMSkucGRm",
+      "size": "272.48 KB"
+    },
+    {
+      "name": "Instructions_to_Field_Staff_PLFS_Vol_I_(1).pdf",
+      "base64": "SW5zdHJ1Y3Rpb25zX3RvX0ZpZWxkX1N0YWZmX1BMRlNfVm9sX0lfKDEpLnBkZg==",
+      "size": "1.61 MB"
+    },
+    {
+      "name": "JSON_PLFS_July2017_June2018.zip",
+      "base64": "SlNPTl9QTEZTX0p1bHkyMDE3X0p1bmUyMDE4LnppcA==",
+      "size": "47.3 MB"
+    },
+    {
+      "name": "README.doc",
+      "base64": "UkVBRE1FLmRvYw==",
+      "size": "55 KB"
+    },
+    {
+      "name": "SAS_PLFS_July2017_June2018.zip",
+      "base64": "U0FTX1BMRlNfSnVseTIwMTdfSnVuZTIwMTguemlw",
+      "size": "17.64 MB"
+    },
+    {
+      "name": "SPSS_PLFS_July2017_June2018.zip",
+      "base64": "U1BTU19QTEZTX0p1bHkyMDE3X0p1bmUyMDE4LnppcA==",
+      "size": "28.74 MB"
+    },
+    {
+      "name": "STATA_PLFS_July2017_June2018.zip",
+      "base64": "U1RBVEFfUExGU19KdWx5MjAxN19KdW5lMjAxOC56aXA=",
+      "size": "17.19 MB"
+    }
+  ]
+}

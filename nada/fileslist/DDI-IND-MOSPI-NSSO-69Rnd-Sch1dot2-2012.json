@@ -1,0 +1,76 @@
+{
+  "status": "success",
+  "total": 14,
+  "files": [
+    {
+      "name": "Appendix 1 - List of FOD Sub Regions.pdf",
+      "base64": "QXBwZW5kaXggMSAtIExpc3Qgb2YgRk9EIFN1YiBSZWdpb25zLnBkZg==",
+      "size": "216.53 KB"
+    },
+    {
+      "name": "Appendix II List of NSS regions and their composition.pdf",
+      "base64": "QXBwZW5kaXggSUkgTGlzdCBvZiBOU1MgcmVnaW9ucyBhbmQgdGhlaXIgY29tcG9zaXRpb24ucGRm",
+      "size": "168.77 KB"
+    },
+    {
+      "name": "concept design and definitions.pdf",
+      "base64": "Y29uY2VwdCBkZXNpZ24gYW5kIGRlZmluaXRpb25zLnBkZg==",
+      "size": "382.15 KB"
+    },
+    {
+      "name": "DDI-IND-MOSPI-NSSO-69Rnd-Sch1dot2-2012.xml",
+      "base64": "RERJLUlORC1NT1NQSS1OU1NPLTY5Um5kLVNjaDFkb3QyLTIwMTIueG1s",
+      "size": "2.41 MB"
+    },
+    {
+      "name": "Estimation Procedure_69.pdf",
+      "base64": "RXN0aW1hdGlvbiBQcm9jZWR1cmVfNjkucGRm",
+      "size": "987.96 KB"
+    },
+    {
+      "name": "IND-NSSO-DWSHHC-2012-v1.xml",
+      "base64": "SU5ELU5TU08tRFdTSEhDLTIwMTItdjEueG1s",
+      "size": "1.27 MB"
+    },
+    {
+      "name": "instruction to field staff.pdf",
+      "base64": "aW5zdHJ1Y3Rpb24gdG8gZmllbGQgc3RhZmYucGRm",
+      "size": "812.85 KB"
+    },
+    {
+      "name": "kye_indi_of_water_Sanitation69rou_24dec13.pdf",
+      "base64": "a3llX2luZGlfb2Zfd2F0ZXJfU2FuaXRhdGlvbjY5cm91XzI0ZGVjMTMucGRm",
+      "size": "1.22 MB"
+    },
+    {
+      "name": "NCO.pdf",
+      "base64": "TkNPLnBkZg==",
+      "size": "23.44 KB"
+    },
+    {
+      "name": "NIC 2008.pdf",
+      "base64": "TklDIDIwMDgucGRm",
+      "size": "134.24 KB"
+    },
+    {
+      "name": "Nss69_1.2_new format.rar",
+      "base64": "TnNzNjlfMS4yX25ldyBmb3JtYXQucmFy",
+      "size": "14.18 MB"
+    },
+    {
+      "name": "rdf-147.rdf",
+      "base64": "cmRmLTE0Ny5yZGY=",
+      "size": "3.58 KB"
+    },
+    {
+      "name": "Schedule_69_1.pdf",
+      "base64": "U2NoZWR1bGVfNjlfMS5wZGY=",
+      "size": "442.95 KB"
+    },
+    {
+      "name": "State_69.pdf",
+      "base64": "U3RhdGVfNjkucGRm",
+      "size": "7.38 KB"
+    }
+  ]
+}

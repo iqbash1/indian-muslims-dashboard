@@ -1,0 +1,56 @@
+{
+  "status": "success",
+  "total": 10,
+  "files": [
+    {
+      "name": "530_final.pdf",
+      "base64": "NTMwX2ZpbmFsLnBkZg==",
+      "size": "2.81 MB"
+    },
+    {
+      "name": "Chapter-1_64.pdf",
+      "base64": "Q2hhcHRlci0xXzY0LnBkZg==",
+      "size": "154.88 KB"
+    },
+    {
+      "name": "Chapter-5_64_1.0.pdf",
+      "base64": "Q2hhcHRlci01XzY0XzEuMC5wZGY=",
+      "size": "246.98 KB"
+    },
+    {
+      "name": "Distribution of Sample Village and blocks.pdf",
+      "base64": "RGlzdHJpYnV0aW9uIG9mIFNhbXBsZSBWaWxsYWdlIGFuZCBibG9ja3MucGRm",
+      "size": "1.03 MB"
+    },
+    {
+      "name": "Estimation Procedure_64.pdf",
+      "base64": "RXN0aW1hdGlvbiBQcm9jZWR1cmVfNjQucGRm",
+      "size": "1.18 MB"
+    },
+    {
+      "name": "IND-NSSO-HCES-2007-v1.xml",
+      "base64": "SU5ELU5TU08tSENFUy0yMDA3LXYxLnhtbA==",
+      "size": "1.56 MB"
+    },
+    {
+      "name": "Nss64_1.0_new format.rar",
+      "base64": "TnNzNjRfMS4wX25ldyBmb3JtYXQucmFy",
+      "size": "28.79 MB"
+    },
+    {
+      "name": "rdf-15.rdf",
+      "base64": "cmRmLTE1LnJkZg==",
+      "size": "2.63 KB"
+    },
+    {
+      "name": "Schedule_64_1.0.pdf",
+      "base64": "U2NoZWR1bGVfNjRfMS4wLnBkZg==",
+      "size": "160.34 KB"
+    },
+    {
+      "name": "Sub-Stratum Size and Allocation for Sector.pdf",
+      "base64": "U3ViLVN0cmF0dW0gU2l6ZSBhbmQgQWxsb2NhdGlvbiBmb3IgU2VjdG9yLnBkZg==",
+      "size": "1.01 MB"
+    }
+  ]
+}
