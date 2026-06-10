@@ -30,15 +30,17 @@ OUTPUT_SEXES = ("all", "male", "female")
 
 def canonicalize() -> None:
     # by_rel_sex[religion][sex] = LFPR value
-    by_rel_sex: dict[str, dict[str, float]] = {}
+    RES_MAP = {"total": "all", "rural": "rural", "urban": "urban"}
+    cube: dict[tuple[str, str, str], float] = {}  # (religion, sex, residence) -> value
     with L2_PATH.open() as f:
         for row in csv.DictReader(f):
-            if (row["indicator"] == "LFPR" and row["age_cohort"] == "15plus"
-                    and row["residence"] == "total"):
-                sx = SEX_MAP.get(row["sex"])
-                if sx is None:
-                    continue
-                by_rel_sex.setdefault(row["religion"], {})[sx] = float(row["value"])
+            if row["indicator"] != "LFPR" or row["age_cohort"] != "15plus":
+                continue
+            sx = SEX_MAP.get(row["sex"])
+            res = RES_MAP.get(row["residence"])
+            if sx is None or res is None:
+                continue
+            cube[(row["religion"], sx, res)] = float(row["value"])
 
     extraction_run = (
         f"canonicalize-lfpr-15plus-v{CANONICALIZER_VERSION}-"
@@ -51,31 +53,29 @@ def canonicalize() -> None:
         w = csv.writer(f)
         w.writerow([
             "metric_id", "geography_level", "geography_code", "year", "religion",
-            "sex", "value", "denominator", "sample_size", "ci_lower", "ci_upper",
-            "source_id", "source_document", "extraction_run",
+            "sex", "residence", "value", "denominator", "sample_size", "ci_lower",
+            "ci_upper", "source_id", "source_document", "extraction_run",
             "methodology_note", "break_flag",
         ])
+        RES_WORD = {"all": "rural+urban", "urban": "urban", "rural": "rural"}
         for religion in OUTPUT_RELIGIONS:
-            sexes = by_rel_sex.get(religion)
-            if not sexes:
-                print(f"  skip {religion}: not in L2")
-                continue
             for sx in OUTPUT_SEXES:
-                val = sexes.get(sx)
-                if val is None:
-                    continue
-                w.writerow([
-                    "lfpr-15plus", "national", "IN", 2023, religion, sx,
-                    val, "population_age_15plus", "", "", "",
-                    "plfs",
-                    "sources/plfs/annual/plfs-annual-report-2023-24.pdf",
-                    extraction_run,
-                    (f"PLFS 2023-24 Table 48 (page 396-400). Usual status (ps+ss), "
-                     f"total residence, {SEX_WORD[sx]}. Year=2023 represents the start "
-                     f"of the Jul-2023 to Jun-2024 reference period."),
-                    "false",
-                ])
-                n_rows += 1
+                for res in ("all", "urban", "rural"):
+                    val = cube.get((religion, sx, res))
+                    if val is None:
+                        continue
+                    w.writerow([
+                        "lfpr-15plus", "national", "IN", 2023, religion, sx, res,
+                        val, "population_age_15plus", "", "", "",
+                        "plfs",
+                        "sources/plfs/annual/plfs-annual-report-2023-24.pdf",
+                        extraction_run,
+                        (f"PLFS 2023-24 Table 48 (page 396-400). Usual status (ps+ss), "
+                         f"{RES_WORD[res]}, {SEX_WORD[sx]}. Year=2023 represents the start "
+                         f"of the Jul-2023 to Jun-2024 reference period."),
+                        "false",
+                    ])
+                    n_rows += 1
 
     print(f"wrote {OUTPUT_PATH.relative_to(REPO_ROOT)} ({n_rows} rows)")
 

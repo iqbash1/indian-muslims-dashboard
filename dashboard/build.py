@@ -55,12 +55,13 @@ GA4_ID = "G-SNNEXDK6LK"
 CLARITY_ID = "x0qdfk6233"
 
 
-def load_metric(name: str, *, sex: str | None = "all") -> list[dict]:
-    """Canonical rows for a metric. By DEFAULT returns only the both-sexes
-    aggregate (sex='all'); rows with a missing/empty sex column are treated as
-    'all' (back-compat). Pass sex=None for every row (incl. male/female), or
-    sex='male'/'female' to select one. This single choke point keeps every
-    existing consumer aggregate-only when gender rows are added to a metric."""
+def load_metric(name: str, *, sex: str | None = "all", residence: str | None = "all") -> list[dict]:
+    """Canonical rows for a metric. By DEFAULT returns only the both-sexes,
+    all-residence aggregate (sex='all', residence='all'); rows with a missing/
+    empty sex or residence column are treated as 'all' (back-compat). Pass
+    sex=None / residence=None for every row on that axis, or a specific value to
+    select one. This single choke point keeps every existing consumer aggregate-
+    only when gender or urban/rural rows are added to a metric."""
     rows: list[dict] = []
     p = CANONICAL_DIR / f"{name}.csv"
     if not p.exists():
@@ -69,10 +70,14 @@ def load_metric(name: str, *, sex: str | None = "all") -> list[dict]:
         for row in csv.DictReader(f):
             if not row.get("sex"):
                 row["sex"] = "all"
+            if not row.get("residence"):
+                row["residence"] = "all"
             rows.append(row)
-    if sex is None:
-        return rows
-    return [r for r in rows if r["sex"] == sex]
+    if sex is not None:
+        rows = [r for r in rows if r["sex"] == sex]
+    if residence is not None:
+        rows = [r for r in rows if r["residence"] == residence]
+    return rows
 
 
 def state_label(code: str) -> str:
@@ -3890,6 +3895,47 @@ def _sex_details(metric_id: str, unit: str) -> str:
             f'<tbody>{trs}</tbody></table>{_view_provenance(metric_id)}</details>')
 
 
+def _residence_details(metric_id: str, unit: str) -> str:
+    """National urban-vs-rural drill-down for metrics that carry residence=
+    'urban'/'rural' rows; '' otherwise (safe to call on any card). Latest year;
+    one row per community, Muslim first and 'All communities' last."""
+    from collections import defaultdict
+    rows = [r for r in load_metric(metric_id, residence=None)
+            if r["geography_level"] == "national" and r["sex"] == "all"
+            and r["residence"] in ("urban", "rural")]
+    if not rows:
+        return ""
+    latest = max(int(r["year"]) for r in rows)
+    by_rel: dict[str, dict[str, float]] = defaultdict(dict)
+    for r in rows:
+        if int(r["year"]) == latest:
+            by_rel[r["religion"]][r["residence"]] = float(r["value"])
+    comms = [rel for rel, rv in by_rel.items() if "urban" in rv and "rural" in rv]
+    if not comms:
+        return ""
+    comms.sort(key=lambda rel: (rel != "muslim", rel == "all", by_rel[rel].get("rural", 0.0)))
+
+    def comm_label(rel: str) -> str:
+        return "All communities" if rel == "all" else COMMUNITY_LABEL.get(rel, rel.capitalize())
+
+    def cell(rel: str, res: str) -> str:
+        v = by_rel[rel].get(res)
+        if v is None:
+            return '<td data-sort="-1">n/a</td>'
+        return f'<td data-sort="{v:.4f}">{fmt_num(v, unit)}</td>'
+
+    trs = "".join(
+        f'<tr><td>{html.escape(comm_label(rel))}</td>{cell(rel, "urban")}{cell(rel, "rural")}</tr>'
+        for rel in comms)
+    head = ('<tr><th class="sortable" data-col="0">Community</th>'
+            '<th class="sortable" data-col="1" data-type="num">Urban</th>'
+            '<th class="sortable" data-col="2" data-type="num">Rural</th></tr>')
+    return (f'<details data-view-id="by-residence" data-view-label="Urban vs rural" data-view-sub="{latest}">'
+            f'<summary>Urban vs rural ({latest})</summary>'
+            f'<table class="sortable-table"><thead>{head}</thead>'
+            f'<tbody>{trs}</tbody></table>{_view_provenance(metric_id)}</details>')
+
+
 def _nat_by_religion(metric_id: str) -> dict:
     """National {religion: value} for the LATEST year present (avoids multi-year collision)."""
     nat = [r for r in load_metric(metric_id) if r["geography_level"] == "national"]
@@ -4110,6 +4156,7 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
                   f'{json.dumps(suffix)}, {dec}, {ref}, {json.dumps(ref_label)}, {begin_zero});')
         details = _state_details(mid, unit) + _sex_details(mid, unit)
 
+    details += _residence_details(mid, unit)
     if mid == "ger-higher-ed":
         details += _ger_count_views()   # fold in the decarded student-count metric
     return _card_shell(mid, label, headline, CAPTION.get(mid, ""), _year_of(mid), polarity,

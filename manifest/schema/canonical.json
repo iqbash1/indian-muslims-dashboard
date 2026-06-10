@@ -10,6 +10,7 @@
     "year": {"type": "integer"},
     "religion": {"enum": ["muslim", "hindu", "sc", "st", "christian", "sikh", "buddhist", "jain", "other", "other_minority", "not_stated", "all"]},
     "sex": {"enum": ["all", "male", "female"]},
+    "residence": {"enum": ["all", "urban", "rural"]},
     "value": {"type": "number"},
     "denominator": {"type": ["string", "null"]},
     "sample_size": {"type": ["integer", "null"]},
