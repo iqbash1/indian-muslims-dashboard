@@ -362,17 +362,21 @@ metrics:
       religion exists.
     sources:
       primary: sachar-committee-2006
-    geography_levels: [national]
+    geography_levels: [national, state]
     religions: [muslim, all]
     methodology_notes: |
       Sachar Committee (2006), Chapter 8, from the NSS 61st round (2004-05):
       all-India average MPCE by socio-religious category. Muslims Rs.635 vs the
       all-India average Rs.712, near SC/ST (Rs.520) and far below upper-caste
-      'Hindu General' households (Rs.1023); the gap is sharpest in urban areas.
-      This is the most recent figure published by religion: later rounds (HCES
-      2022-23) break spending down by social group (SC/ST/OBC/Others) only, not
-      by religion, so a current religion-wise figure needs the unit-level
-      microdata. Rupees are 2004-05 nominal (not inflation-adjusted).
+      'Hindu General' households (Rs.1023). The Urban vs rural and By state tabs
+      come from Sachar Appendix Tables 8.2 (urban) and 8.3 (rural): the Muslim
+      shortfall is wide in towns (Rs.804 vs the Rs.1,105 average) but near parity
+      in villages (Rs.553 vs Rs.579), and as no combined per-state figure is
+      published the state tab shows urban and rural as reported. This is the most
+      recent figure published by religion: later rounds (HCES 2022-23) break
+      spending down by social group (SC/ST/OBC/Others) only, not by religion, so
+      a current religion-wise figure needs the unit-level microdata. Rupees are
+      2004-05 nominal (not inflation-adjusted).
     comparison_baselines: [all]
     phase: 1
     status: defined

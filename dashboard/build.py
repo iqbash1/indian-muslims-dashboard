@@ -3936,6 +3936,45 @@ def _residence_details(metric_id: str, unit: str) -> str:
             f'<tbody>{trs}</tbody></table>{_view_provenance(metric_id)}</details>')
 
 
+def _state_residence_details(metric_id: str, unit: str) -> str:
+    """Per-state urban-vs-rural drill-down for metrics that carry per-state
+    residence='urban'/'rural' Muslim rows (mpce, from Sachar Appendix 8.2/8.3 -
+    no combined per-state figure exists, so urban and rural show as published);
+    '' for any other card. One row per state, urban + rural columns."""
+    from collections import defaultdict
+    rows = [r for r in load_metric(metric_id, residence=None)
+            if r["geography_level"] == "state" and r["sex"] == "all"
+            and r["religion"] == "muslim" and r["residence"] in ("urban", "rural")]
+    if not rows:
+        return ""
+    latest = max(int(r["year"]) for r in rows)
+    by_state: dict[str, dict[str, float]] = defaultdict(dict)
+    for r in rows:
+        if int(r["year"]) == latest:
+            by_state[r["geography_code"]][r["residence"]] = float(r["value"])
+    states = [c for c, rv in by_state.items() if "urban" in rv and "rural" in rv]
+    if not states:
+        return ""
+    states.sort(key=lambda c: -by_state[c].get("urban", 0.0))
+
+    def cell(code: str, res: str) -> str:
+        v = by_state[code].get(res)
+        if v is None:
+            return '<td data-sort="-1">n/a</td>'
+        return f'<td data-sort="{v:.4f}">{fmt_num(v, unit)}</td>'
+
+    trs = "".join(
+        f'<tr><td>{html.escape(state_label(c))}</td>{cell(c, "urban")}{cell(c, "rural")}</tr>'
+        for c in states)
+    head = ('<tr><th class="sortable" data-col="0">State / UT</th>'
+            '<th class="sortable" data-col="1" data-type="num">Urban</th>'
+            '<th class="sortable" data-col="2" data-type="num">Rural</th></tr>')
+    return (f'<details data-view-id="by-state" data-view-label="By state" data-view-sub="{len(states)} states, {latest}">'
+            f'<summary>Muslim by state, urban vs rural ({len(states)} states)</summary>'
+            f'<table class="sortable-table"><thead>{head}</thead>'
+            f'<tbody>{trs}</tbody></table>{_view_provenance(metric_id)}</details>')
+
+
 def _nat_by_religion(metric_id: str) -> dict:
     """National {religion: value} for the LATEST year present (avoids multi-year collision)."""
     nat = [r for r in load_metric(metric_id) if r["geography_level"] == "national"]
@@ -4165,7 +4204,7 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
                   f'{json.dumps(suffix)}, {dec}, {ref}, {json.dumps(ref_label)}, {begin_zero});')
         details = _state_details(mid, unit) + _sex_details(mid, unit)
 
-    details += _residence_details(mid, unit)
+    details += _state_residence_details(mid, unit) + _residence_details(mid, unit)
     if mid == "ger-higher-ed":
         details += _ger_count_views()   # fold in the decarded student-count metric
     return _card_shell(mid, label, headline, CAPTION.get(mid, ""), _year_of(mid), polarity,
