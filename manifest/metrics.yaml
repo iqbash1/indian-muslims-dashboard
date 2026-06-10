@@ -286,7 +286,9 @@ metrics:
     methodology_notes: |
       PLFS 2023-24 Table 48 (pages 396-400). Total residence, person-level.
       Reference period: Jul 2023 - Jun 2024 (year=2023 in canonical row
-      represents the start of this period).
+      represents the start of this period). The "Working vs looking" tab sets this
+      rate against the worker population ratio (share actually working,
+      wpr-15plus.csv) from the same table; the gap between them is unemployment.
     comparison_baselines: [hindu, all]
     phase: 1
     status: defined
@@ -316,6 +318,7 @@ metrics:
     status: defined
     display:
       scorecard:
+        include: false   # decarded: folded into lfpr-15plus's "Working vs looking" tab (WPR shown beside the labour-force rate; the two differ only by unemployment)
         label: "Worker-population ratio"
         reference: "hindu"
         unit_format: percent

@@ -657,6 +657,20 @@ TEMPLATE = """<!DOCTYPE html>
   .gap-dot.open { background: var(--card); border: 2px solid; }
   .gap-val { position: absolute; top: -9px; transform: translateX(-50%); font-size: 11px; font-weight: 500; white-space: nowrap; }
   .gap-axis { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 4px; margin: 2px 0 0 104px; }
+  /* --- Working-vs-looking composition strip (lfpr-15plus "Working vs looking" tab) --- */
+  .ws-chart { margin: 2px 0 18px; }
+  .ws-legend { display: flex; gap: 14px; align-items: center; font-size: 11.5px; color: var(--muted); margin-bottom: 16px; flex-wrap: wrap; }
+  .ws-legend .k { display: inline-flex; align-items: center; gap: 5px; }
+  .ws-sw { width: 11px; height: 11px; border-radius: 2px; box-sizing: border-box; flex: none; }
+  .ws-sw.work { background: var(--muslim); }
+  .ws-sw.look { background: #cd9a9c; }
+  .ws-sw.out { background: #ece7e7; border: 1px solid #d9d2d2; }
+  .ws-row { display: flex; align-items: center; margin-bottom: 11px; }
+  .ws-row .lbl { width: 104px; flex: none; font-size: 12.5px; padding-right: 10px; text-align: right; color: #333; }
+  .ws-track { position: relative; flex: 1; height: 17px; border-radius: 3px; overflow: hidden; }
+  .ws-work, .ws-look { position: absolute; top: 0; height: 100%; }
+  .ws-work { left: 0; }
+  .ws-val { width: 48px; flex: none; padding-left: 10px; font-size: 12px; font-weight: 500; white-space: nowrap; text-align: right; }
   footer {
     margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--rule);
     color: var(--muted); font-size: 12px;
@@ -2122,6 +2136,11 @@ def _og_view_data(m: dict, view: dict):
             if "male" in bys and "female" in bys:
                 detail = (f"Muslim male {fmt_num(bys['male'], unit)} · "
                           f"female {fmt_num(bys['female'], unit)}")
+    elif vid == "work-status":
+        lf, wp = _nat_by_religion("lfpr-15plus"), _nat_by_religion("wpr-15plus")
+        if "muslim" in lf and "muslim" in wp:
+            detail = (f"Muslim {fmt_num(lf['muslim'], unit)} in labour force · "
+                      f"{fmt_num(wp['muslim'], unit)} working")
     elif vid == "by-district":
         # The by-district view's data always comes from the concentration
         # canonical (it hosts the top-100 ranking), regardless of the host card.
@@ -2483,6 +2502,11 @@ def _landing_breakdowns(m: dict, views: list) -> str:
             block = _sex_details(mid, unit)
         elif vid == "by-residence":
             block = _residence_details(mid, unit)
+        elif vid == "work-status":
+            # lfpr's merged labour-force vs working table (chart-free on the landing).
+            lf, wp = _nat_by_religion("lfpr-15plus"), _nat_by_religion("wpr-15plus")
+            comms = _work_status_order(lf, wp)
+            block = _work_status_table(lf, wp, comms) if comms else ""
         elif vid == "by-district":
             # Always the concentration canonical (the top-100 ranking), with a
             # stat note; chart-free here (the curve is interactive-only).
@@ -4189,6 +4213,104 @@ def _ger_combined_views() -> str:
     return out
 
 
+def _work_status_order(lf: dict, wp: dict) -> list:
+    """Communities present in BOTH the LFPR and WPR national snapshots, Muslim
+    first, then peers by labour-force rate (desc), 'all' baseline last."""
+    comms = [r for r in lf if r in wp and r != "all"]
+    comms.sort(key=lambda r: (r != "muslim", -lf.get(r, 0.0)))
+    if "all" in lf and "all" in wp:
+        comms.append("all")
+    return comms
+
+
+def _work_status_table(lf: dict, wp: dict, comms: list) -> str:
+    """Community | In labour force (LFPR) | Working (WPR), the accessible
+    representation behind the composition strip (and the landing-page version)."""
+    def lbl(r):
+        return "All communities" if r == "all" else COMMUNITY_LABEL.get(r, r.capitalize())
+
+    def cell(v):
+        return f'<td data-sort="{v:.4f}">{fmt_num(v, "percent")}</td>'
+    trs = "".join(
+        f'<tr><td>{html.escape(lbl(r))}</td>{cell(lf[r])}{cell(wp[r])}</tr>' for r in comms)
+    head = ('<tr><th class="sortable" data-col="0">Community</th>'
+            '<th class="sortable" data-col="1" data-type="num">In labour force</th>'
+            '<th class="sortable" data-col="2" data-type="num">Working</th></tr>')
+    return f'<table class="sortable-table"><thead>{head}</thead><tbody>{trs}</tbody></table>'
+
+
+def _work_status_bars(lf: dict, wp: dict, comms: list) -> str:
+    """Decorative 0-100% composition strip per community over the 15+ population:
+    solid = working (WPR), light cap = looking for work (LFPR-WPR), empty track =
+    outside the labour force. Muslim maroon, 'All communities' the dark-grey
+    reference (dashed), peers light grey. aria-hidden (the table is accessible)."""
+    def lbl(r):
+        return "All communities" if r == "all" else COMMUNITY_LABEL.get(r, r.capitalize())
+    out = []
+    for r in comms:
+        is_all, subj = r == "all", r == "muslim"
+        solid = "var(--muslim)" if subj else ("#5c6065" if is_all else "#6f7479")
+        cap = "#cd9a9c" if subj else ("#b5b9bd" if is_all else "#c2c6ca")
+        track = "#ece7e7" if subj else "#ededeb"
+        wpr, lfpr = wp[r], lf[r]
+        capw = max(round(lfpr - wpr, 1), 0.0)
+        dash = "outline:1px dashed #a9adb1;outline-offset:1px;" if is_all else ""
+        vcol = "var(--muslim)" if subj else "#4a4844"
+        out.append(
+            f'<div class="ws-row"><span class="lbl">{html.escape(lbl(r))}</span>'
+            f'<span class="ws-track" style="background:{track};{dash}">'
+            f'<span class="ws-work" style="width:{wpr}%;background:{solid}"></span>'
+            f'<span class="ws-look" style="left:{wpr}%;width:{capw}%;background:{cap}"></span>'
+            f'</span>'
+            f'<span class="ws-val" style="color:{vcol}">{fmt_num(lfpr, "percent")}</span></div>')
+    legend = ('<div class="ws-legend">'
+              '<span class="k"><span class="ws-sw work"></span>working</span>'
+              '<span class="k"><span class="ws-sw look"></span>looking for work</span>'
+              '<span class="k"><span class="ws-sw out"></span>outside labour force</span></div>')
+    return f'<div class="ws-chart" aria-hidden="true">{legend}{"".join(out)}</div>'
+
+
+def _work_status_provenance() -> str:
+    """Reproduce caption for the Working-vs-looking tab: it draws on TWO canonical
+    files (LFPR + WPR from the same PLFS table), so both are linked."""
+    docs = _source_documents("lfpr-15plus")
+    src = " · ".join(
+        f'<a href="{html.escape(u)}" target="_blank" rel="noopener">{html.escape(l)}</a>'
+        for _, l, u in docs) or "see methodology"
+    return (f'<p class="view-provenance"><b>Reproduce this view.</b> Source: {src}. '
+            f'Values come from <a href="canonical/lfpr-15plus.csv" download>lfpr-15plus.csv</a> '
+            f'(in labour force) and <a href="canonical/wpr-15plus.csv" download>wpr-15plus.csv</a> '
+            f'(working); every row records its own source and method.</p>')
+
+
+def _employment_combined_views() -> str:
+    """lfpr-15plus's headline tab, MERGING labour-force participation (LFPR) with
+    the worker population ratio (WPR, the decarded wpr-15plus). One "Working vs
+    looking" tab: each community's share IN the labour force beside the share
+    actually WORKING, the gap being unemployment. It is small and alike across
+    communities, which reframes the Muslim shortfall as low labour-force entry
+    (above all among women), not joblessness."""
+    lf, wp = _nat_by_religion("lfpr-15plus"), _nat_by_religion("wpr-15plus")
+    if not lf or not wp:
+        return ""
+    comms = _work_status_order(lf, wp)
+    if not comms:
+        return ""
+    year = _year_of("lfpr-15plus")
+    mg = _round_str(lf.get("muslim", 0.0) - wp.get("muslim", 0.0), 1)
+    note = (f'<p class="comp-note">The labour force is everyone working or looking for '
+            f'work, so the two bars sit almost on top of each other. The gap between them '
+            f'is unemployment: just {mg} points for Muslims, and small for every community. '
+            f'Muslims rank last on participation not because they cannot find work, but '
+            f'because fewer enter the labour force at all, above all Muslim women '
+            f'(the By sex tab).</p>')
+    return (f'<details data-view-id="work-status" data-view-label="Working vs looking" '
+            f'data-view-sub="{year}">'
+            f'<summary>Working vs looking for work ({year})</summary>'
+            f'{note}{_work_status_bars(lf, wp, comms)}{_work_status_table(lf, wp, comms)}'
+            f'{_work_status_provenance()}</details>')
+
+
 def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
     nat = _nat_by_religion(mid)
     muslim, hindu, all_v = nat.get("muslim"), nat.get("hindu"), nat.get("all")
@@ -4316,6 +4438,10 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
             # ger merges its GER rate with the decarded Muslim student counts into
             # ONE "By state" + ONE "By sex" tab (was four parallel rate/count tabs).
             details = _ger_combined_views()
+        elif mid == "lfpr-15plus":
+            # lfpr leads with a "Working vs looking" tab folding in the decarded
+            # worker population ratio (wpr-15plus), then keeps by-sex + urban/rural.
+            details = _employment_combined_views() + _sex_details(mid, unit)
         else:
             details = _state_details(mid, unit) + _sex_details(mid, unit)
 
