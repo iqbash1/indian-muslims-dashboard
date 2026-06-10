@@ -17,7 +17,7 @@ Census 2011 C-1 national row (most recent authoritative population by religion;
 Emits per-community rates for the religions NCRB reports against a clean Census
 population denominator: muslim, hindu, christian, sikh (+ the all-India total).
 NCRB's mixed "others" prisoner bucket (Buddhist/Jain/Parsi/not-stated) is
-omitted — there is no single clean population group to divide it by.
+omitted, as there is no single clean population group to divide it by.
 
 Caveat documented in methodology: Maharashtra didn't report a religion breakdown
 for ~33k undertrials/detenues in PSI 2022. The religion-reported numerator
@@ -41,6 +41,13 @@ CANONICALIZER_VERSION = "1.1.0"
 # Communities emitted, in canonical order. NCRB's "others" is intentionally
 # excluded (mixed bucket, no clean Census population denominator).
 OUTPUT_RELIGIONS = ("muslim", "hindu", "christian", "sikh", "all")
+# Per-state rows emit the four NCRB-reported communities (no per-state 'all':
+# the mixed 'others' bucket has no clean population denominator).
+STATE_RELIGIONS = ("muslim", "hindu", "christian", "sikh")
+
+import sys  # noqa: E402
+sys.path.insert(0, str(REPO_ROOT / "transform"))
+from geography_codes import normalize_state_name  # noqa: E402
 
 
 def load_prisoner_counts() -> dict[str, int]:
@@ -78,6 +85,33 @@ def load_national_pop() -> dict[str, int]:
     return pops
 
 
+def load_state_prisoner_counts() -> dict:
+    """{geography_code: {religion: prisoners summed across all 4 categories}} for
+    the per-state rows, state names mapped to IN-S codes."""
+    out: dict = collections.defaultdict(lambda: collections.defaultdict(int))
+    with NCRB_L2.open() as f:
+        for row in csv.DictReader(f):
+            if row["row_type"] != "state" or not row["value"]:
+                continue
+            code = normalize_state_name(row["geography_name"])
+            if not code:
+                continue
+            out[code][row["religion"]] += int(row["value"])
+    return out
+
+
+def load_state_pop() -> dict:
+    """{geography_code: {religion: population}} from Census 2011 C-1 per-state rows."""
+    out: dict = collections.defaultdict(dict)
+    with CENSUS_L2.open() as f:
+        for row in csv.DictReader(f):
+            if row["state_code"] == "00" or row["residence"] != "total" or row["sex"] != "persons":
+                continue
+            if row["religion"] in STATE_RELIGIONS:
+                out[f'IN-S{row["state_code"]}'][row["religion"]] = int(row["value"])
+    return out
+
+
 def canonicalize() -> None:
     counts = load_prisoner_counts()
     pops = load_national_pop()
@@ -91,7 +125,7 @@ def canonicalize() -> None:
         "Cross-source: NCRB PSI 2022 prisoner counts (STATES+UTs subtotals across "
         "all 4 categories: convicts + undertrials + detenues + other prisoners) "
         "divided by Census 2011 national religious population times 100,000. NCRB "
-        "'others' bucket (Buddhist/Jain/Parsi/not-stated) omitted — no clean "
+        "'others' bucket (Buddhist/Jain/Parsi/not-stated) omitted, with no clean "
         "population denominator. Caveat: Maharashtra did not report religion for "
         "~33k undertrials/detenues; the religion-reported numerator excludes those, "
         "so rates are mildly understated."
@@ -126,6 +160,31 @@ def canonicalize() -> None:
                 "false",
             ])
             n_rows += 1
+
+        # ---- by state: per-state rate for the NCRB communities (Commit EL) ----
+        state_counts = load_state_prisoner_counts()
+        state_pops = load_state_pop()
+        state_note = (
+            "Per-state rate: NCRB PSI 2022 per-state prisoner counts (all 4 "
+            "categories) / Census 2011 per-state religious population times "
+            "100,000. Same caveats as the national row (NCRB 'others' omitted; "
+            "Maharashtra under-reported religion, understating its rate). Small "
+            "states with few Muslims give volatile rates."
+        )
+        for code in sorted(state_counts):
+            for religion in STATE_RELIGIONS:
+                cnt = state_counts[code].get(religion)
+                pop = state_pops.get(code, {}).get(religion)
+                if not cnt or not pop:
+                    continue
+                rate = round(cnt / pop * 100_000, 2)
+                w.writerow([
+                    "prison-rate-per-100k", "state", code, 2022, religion,
+                    rate, f"population_per_100k (count={cnt}, pop={pop})",
+                    "", "", "", "ncrb-prison", "sources/ncrb-prison/psi-2022.pdf",
+                    extraction_run, state_note, "false",
+                ])
+                n_rows += 1
 
     print(f"wrote {OUTPUT_PATH.relative_to(REPO_ROOT)} ({n_rows} rows)")
     for religion in OUTPUT_RELIGIONS:
