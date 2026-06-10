@@ -754,6 +754,41 @@ sources:
         target_path: sources/hces-2022-23/report-591-full.pdf
         status: verified
 
+  - id: hces-2023-24
+    name: Household Consumption Expenditure Survey 2023-24 (unit-level)
+    publisher: National Statistical Office (NSO), MoSPI
+    home_url: https://microdata.gov.in/NADA/index.php/catalog/237
+    cadence: annual (since 2022-23)
+    cadence_notes: |
+      Unit-level microdata via the MoSPI NADA API (idno DDI-IND-MOSPI-NSS-HCES23-24).
+      Field period Aug 2023 to Jul 2024; 2,61,953 households. Feeds the mpce metric's
+      current religion-wise figure (computed, not published as a table).
+    access:
+      method: api
+      auth_required: true
+      auth_notes: |
+        Open catalog (listdatasets) needs no key; fileslist + download need a
+        personal X-API-KEY generated in a microdata.gov.in (NADA) account.
+    formats: [csv, stata, sas, spss, json]
+    religion_disaggregated: true
+    geography_levels: [national, state]
+    coverage:
+      - monthly_per_capita_consumption_expenditure_by_religion
+    known_issues:
+      - "Religion self-reported + unverified (NSO unit-data rider); survey designed for MPCE with State/UT stratum, no sub-state estimates"
+      - "MMRP method, not comparable in level to the 2004-05 URP (Sachar) figure"
+      - "244 MB unit-level zip kept local (provenance-only); see sources/hces-2023-24/PROVENANCE.md"
+    archive_dir: sources/hces-2023-24/
+    runbook: docs/runbooks/hces-2023-24.md
+    last_pulled: "2026-06-10"
+    next_expected: null
+    targets:
+      - target_id: hces-2023-24-microdata-csv
+        description: HCES 2023-24 unit-level microdata (15 level CSVs); MPCE by religion of household head
+        url: https://microdata.gov.in/NADA/index.php/catalog/237
+        target_path: sources/hces-2023-24/HCES_Data_2023-24_Csv.zip
+        status: verified
+
   - id: aishe
     name: All India Survey on Higher Education
     publisher: Department of Higher Education, MoE

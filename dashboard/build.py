@@ -3318,6 +3318,7 @@ SOURCE_LABEL = {
     "ncrb-prison": "NCRB PSI (2018-2023)", "ncrb-crime": "NCRB CII (2015-2023)",
     "prs-eci-affidavits": "PRS / ECI affidavits", "civic-incident-databases": "India Hate Lab",
     "sachar-committee-2006": "Sachar Committee (NSS 2004-05)",
+    "hces-2023-24": "HCES 2023-24 (NSO unit-level data)",
 }
 
 

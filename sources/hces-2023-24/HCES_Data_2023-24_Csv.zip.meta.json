@@ -1,0 +1,14 @@
+{
+  "source_id": "hces-2023-24",
+  "target_id": "hces-2023-24-microdata-csv",
+  "idno": "DDI-IND-MOSPI-NSS-HCES23-24",
+  "filename": "HCES_Data_2023-24_Csv.zip",
+  "url": "https://microdata.gov.in/NADA/index.php/catalog/237",
+  "download_url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSS-HCES23-24/SENFU19EYXRhXzIwMjMtMjRfQ3N2LnppcA==",
+  "pulled_at": "2026-06-10",
+  "content_type": "application/zip",
+  "content_length": 256315433,
+  "sha256": "acf7b9cc840676fb812c05c48f09fa034955fe2cad5112e6d9b6d852f5f2e267",
+  "pull_method": "MoSPI NADA REST API (personal X-API-KEY header)",
+  "archival": "provenance-only: the 244 MB unit-level zip is NOT committed (kept local at ~/Desktop/hces-work/). Re-fetch with the API recipe in PROVENANCE.md and verify against this sha256. The small schema/method/terms docs in this directory ARE committed."
+}

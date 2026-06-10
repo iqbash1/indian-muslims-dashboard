@@ -364,22 +364,30 @@ metrics:
       well-being, used in place of income, for which no reliable figure by
       religion exists.
     sources:
-      primary: sachar-committee-2006
+      primary: hces-2023-24
     geography_levels: [national, state]
-    religions: [muslim, all]
+    religions: [muslim, hindu, all]
     methodology_notes: |
-      Sachar Committee (2006), Chapter 8, from the NSS 61st round (2004-05):
-      all-India average MPCE by socio-religious category. Muslims Rs.635 vs the
-      all-India average Rs.712, near SC/ST (Rs.520) and far below upper-caste
-      'Hindu General' households (Rs.1023). The Urban vs rural and By state tabs
-      come from Sachar Appendix Tables 8.2 (urban) and 8.3 (rural): the Muslim
-      shortfall is wide in towns (Rs.804 vs the Rs.1,105 average) but near parity
-      in villages (Rs.553 vs Rs.579), and as no combined per-state figure is
-      published the state tab shows urban and rural as reported. This is the most
-      recent figure published by religion: later rounds (HCES 2022-23) break
-      spending down by social group (SC/ST/OBC/Others) only, not by religion, so
-      a current religion-wise figure needs the unit-level microdata. Rupees are
-      2004-05 nominal (not inflation-adjusted).
+      The 2023-24 figure is computed from the unit-level microdata of HCES 2023-24
+      (NSO, 2.61 lakh households), pulled via the MoSPI NADA API: weighted monthly
+      per capita consumption expenditure (food + consumables & services + durables,
+      365-day items annualised), cross-classified by the religion of the household
+      head. The method reproduces the published national MPCE (rural Rs.4,122 /
+      urban Rs.6,996) within about 2% before the religion split is taken. NSO's
+      note for unit-level users cautions that religion is self-reported and
+      unverified and that the survey is designed to estimate MPCE with the State/UT
+      as the basic stratum, so the religion figures are best read as indicative, no
+      sub-state estimates are made, and the survey's internal Muslim population
+      share (13%) sits a little below the Census. The earlier benchmark is the
+      Sachar Committee (2006) from the NSS 61st round (2004-05): Muslims Rs.635 vs
+      the all-India Rs.712, near SC/ST (Rs.520) and far below upper-caste 'Hindu
+      General' households (Rs.1023). The two rounds use different consumption
+      methods (2004-05 URP vs 2023-24 MMRP) and rupees are nominal, so the level
+      change over time is mostly inflation; the comparable story is the relative
+      gap, which is stable at about 10% below the national average across the 20
+      years and is widest in towns (urban Muslims Rs.5,467 vs urban Hindus
+      Rs.7,064). The By state tab is the Sachar 2004-05 Appendix 8.2/8.3 urban and
+      rural figures.
     comparison_baselines: [all]
     phase: 1
     status: defined
