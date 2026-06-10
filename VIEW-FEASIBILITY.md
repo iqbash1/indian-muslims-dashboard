@@ -18,8 +18,41 @@ dimension** (e.g. state x religion, not state-total or national-by-religion).
 3. Downloadable data: the view's rows in the published canonical CSV (+ ideally a per-view slice).
 4. Open transform: the canonicalise script in the repo (already true).
 5. Archived L1: SHA256'd source (already true).
-Gap today: #1/#2 live in the per-row `methodology_note` (in the CSV) but are not surfaced
-per-view in the modal. The standard closes that.
+Reproducibility gap (#1/#2 not surfaced per-view) was CLOSED in Commit EH: every view
+tab now carries a "Reproduce this view" caption (`_view_provenance`) linking source +
+data file + transform code.
+
+---
+
+## Program status (as of 2026-06-09) - the "as many views as possible" sweep is DONE
+
+SHIPPED (Commits EJ-EO):
+- **Residence (urban/rural) dimension** added as an auto-rendering tab (`_residence_details`):
+  imr, improved-sanitation (EK); lfpr-15plus, wpr-15plus, salaried-share (EJ);
+  pop-share, sex-ratio, lit-7plus (EM, Census C-01/C-09/C-15).
+- **By state**: prison-rate-per-100k, undertrial-rate-per-100k (EL, NCRB per-state rate =
+  NCRB count / Census state population); mpce (EO, new `_state_residence_details` builder,
+  per-state Muslim urban/rural from Sachar Appendix 8.2/8.3).
+- **mpce "Urban vs rural"** (EO): national Muslim 804/553 vs all 1105/579 from Sachar 8.2/8.3.
+- **Over-time**: ger-higher-ed + muslim-higher-ed-enrolment gain a 2020-21 point (EN, AISHE
+  Table 15 de-interleaved; fixed 2011 GER denominator).
+
+SKIPPED, with reason (source does not support a worthwhile view):
+- **Census by-sex** (urban-share, pop-share): measured DEGENERATE. National-2011 M/F gap is
+  <0.6pp for every community (urban-share Muslim 40.1/39.7; pop-share Muslim 14.16/14.29) -
+  two near-identical columns, no finding. sex-ratio by-sex is circular; lit-7plus already
+  has By sex. Net: no metric gets a by-sex tab beyond lit-7plus.
+- **PLFS over-time** (lfpr/wpr/salaried): the 15+ LFPR/WPR-by-religion detail exists ONLY in
+  each report's current year (2022-23 Table 32, 2023-24 Table 48); the 2021-22 report
+  publishes religion at all-ages only (Statements 37/38). So a *consistent* 15+ trend caps at
+  2 points (2022-23 + 2023-24), and the clean 4-year series (2022-23 Statement 20) is
+  all-ages, which would corrupt the existing 15+ metric. Thin 2-point value vs high
+  multi-layout extraction effort -> not worth it.
+- **Census by-age + generic by-district**: needs new `_age_details` builder + an age_group
+  schema column (HIGH effort, deferred; not attempted in this sweep).
+
+The tiered roadmap below is the ORIGINAL pre-sweep plan, kept for history; the status block
+above supersedes it.
 
 ---
 
