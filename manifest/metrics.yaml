@@ -259,6 +259,7 @@ metrics:
     status: defined
     display:
       scorecard:
+        include: false   # decarded: folded into ger-higher-ed's modal as "Students by ..." tabs
         label: "Higher-education enrolment (count)"
         reference: null
         unit_format: count

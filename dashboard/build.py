@@ -3940,6 +3940,51 @@ def render_metric_card(m: dict):
     return card_html, js, _extract_views(card_html)
 
 
+def _ger_count_views() -> str:
+    """Fold the decarded `muslim-higher-ed-enrolment` (absolute Muslim student
+    counts) into the ger-higher-ed modal as "Students by state" + "Students by
+    sex" tabs - the Commit-DV pattern (a satellite metric surfaced as host-card
+    tabs, like district-concentration -> pop-share)."""
+    cmid = "muslim-higher-ed-enrolment"
+    total = _nat_by_religion(cmid).get("muslim")
+    out = ""
+    st = sorted(
+        [(state_label(r["geography_code"]), int(float(r["value"])))
+         for r in load_metric(cmid) if r["geography_level"] == "state"],
+        key=lambda x: -x[1])
+    if st:
+        intro = (f'<p class="comp-note">{fmt_num(total, "count")} Muslim students were '
+                 f'enrolled in higher education in 2021 (AISHE Muslim Minority total). '
+                 f'AISHE tabulates only Muslim Minority enrolment, so there is no '
+                 f'community ranking.</p>') if total else ""
+        body = "".join(
+            f'<tr><td>{html.escape(name)}</td>'
+            f'<td data-sort="{v}">{fmt_num(v, "count")}</td></tr>' for name, v in st)
+        head = ('<tr><th class="sortable" data-col="0">State / UT</th>'
+                '<th class="sortable" data-col="1" data-type="num">Students</th></tr>')
+        out += (f'<details data-view-id="students-by-state" data-view-label="Students by state" '
+                f'data-view-sub="{len(st)} states, 2021">'
+                f'<summary>Muslim students by state ({len(st)} states)</summary>'
+                f'{intro}<table class="sortable-table"><thead>{head}</thead>'
+                f'<tbody>{body}</tbody></table>{_view_provenance(cmid)}</details>')
+    sx = {r["sex"]: int(float(r["value"]))
+          for r in load_metric(cmid, sex=None)
+          if r["geography_level"] == "national" and r["sex"] in ("male", "female")}
+    if "male" in sx and "female" in sx:
+        head = ('<tr><th class="sortable" data-col="0">Community</th>'
+                '<th class="sortable" data-col="1" data-type="num">Male</th>'
+                '<th class="sortable" data-col="2" data-type="num">Female</th></tr>')
+        body = (f'<tr><td>Muslim</td>'
+                f'<td data-sort="{sx["male"]}">{fmt_num(sx["male"], "count")}</td>'
+                f'<td data-sort="{sx["female"]}">{fmt_num(sx["female"], "count")}</td></tr>')
+        out += (f'<details data-view-id="students-by-sex" data-view-label="Students by sex" '
+                f'data-view-sub="2021">'
+                f'<summary>Muslim students by sex (2021)</summary>'
+                f'<table class="sortable-table"><thead>{head}</thead>'
+                f'<tbody>{body}</tbody></table>{_view_provenance(cmid)}</details>')
+    return out
+
+
 def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
     nat = _nat_by_religion(mid)
     muslim, hindu, all_v = nat.get("muslim"), nat.get("hindu"), nat.get("all")
@@ -4065,6 +4110,8 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
                   f'{json.dumps(suffix)}, {dec}, {ref}, {json.dumps(ref_label)}, {begin_zero});')
         details = _state_details(mid, unit) + _sex_details(mid, unit)
 
+    if mid == "ger-higher-ed":
+        details += _ger_count_views()   # fold in the decarded student-count metric
     return _card_shell(mid, label, headline, CAPTION.get(mid, ""), _year_of(mid), polarity,
                        chart_html, comps, src, csv_href, details), js
 
