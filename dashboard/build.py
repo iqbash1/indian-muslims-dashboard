@@ -3768,14 +3768,29 @@ def _state_details(metric_id: str, unit: str, value_label: str | None = None) ->
     # table never reads as a Hindu-vs-Muslim ranking.
     has_hindu = feature == "muslim" and any("hindu" in v for v in by_geo.values())
     order = sorted(by_geo, key=lambda g: by_geo[g].get(feature, 0), reverse=reverse)
+    # Inline data bar behind each featured value: a right-anchored magnitude bar
+    # scaled to the column max, so the spread across states reads at a glance while
+    # the sortable table keeps full precision. Suppressed when the values are too
+    # bunched for from-zero bars to vary visibly (e.g. sex-ratio's 898-1046 would
+    # all look nearly full) - there the plain table reads better.
+    feat_vals = [by_geo[g][feature] for g in order if feature in by_geo[g]]
+    fmax = max(feat_vals) if feat_vals else 0
+    show_bar = fmax > 0 and (min(feat_vals) / fmax) < 0.6
+
     # Sortable cells carry the raw value in data-sort so the handler
     # (setupSortableTables) orders by magnitude, not formatted string; missing
     # values sort low via a sentinel.
-    def numcell(b: dict, rel: str, sortable: bool = True) -> str:
+    def numcell(b: dict, rel: str, sortable: bool = True, bar: bool = False) -> str:
         if rel not in b:
             return '<td data-sort="-1">n/a</td>' if sortable else "<td>n/a</td>"
         val = fmt_num(b[rel], unit)
-        return f'<td data-sort="{b[rel]:.4f}">{val}</td>' if sortable else f"<td>{val}</td>"
+        style = ""
+        if bar and show_bar:
+            w = round(b[rel] / fmax * 100, 1)
+            style = (f' style="background:linear-gradient(to right,rgba(123,29,34,.16) '
+                     f'{w}%,transparent {w}%)"')
+        return (f'<td data-sort="{b[rel]:.4f}"{style}>{val}</td>' if sortable
+                else f"<td{style}>{val}</td>")
 
     head = ('<tr><th class="sortable" data-col="0">State / UT</th>'
             f'<th class="sortable" data-col="1" data-type="num">{html.escape(feat_label)}</th>'
@@ -3784,7 +3799,7 @@ def _state_details(metric_id: str, unit: str, value_label: str | None = None) ->
     trs = []
     for g in order:
         b = by_geo[g]
-        cells = f'<td>{html.escape(state_label(g))}</td>' + numcell(b, feature)
+        cells = f'<td>{html.escape(state_label(g))}</td>' + numcell(b, feature, bar=True)
         if has_hindu:
             cells += numcell(b, "hindu", sortable=False)
         trs.append(f"<tr>{cells}</tr>")
