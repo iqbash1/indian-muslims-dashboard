@@ -4025,57 +4025,73 @@ def render_metric_card(m: dict):
     return card_html, js, _extract_views(card_html)
 
 
-def _ger_count_views() -> str:
-    """Fold the decarded `muslim-higher-ed-enrolment` (absolute Muslim student
-    counts) into the ger-higher-ed modal as "Students by state" + "Students by
-    sex" tabs - the Commit-DV pattern (a satellite metric surfaced as host-card
-    tabs, like district-concentration -> pop-share)."""
-    cmid = "muslim-higher-ed-enrolment"
-    rows = load_metric(cmid, sex=None)  # every sex + every AISHE round
-    if not rows:
+def _ger_combined_views() -> str:
+    """ger-higher-ed's two drill-downs, each MERGING the GER rate with the absolute
+    Muslim student count (the decarded muslim-higher-ed-enrolment metric). One "By
+    state" and one "By sex" tab, each showing Students + GER side by side, so a
+    reader connects "how many" with "what rate" without tabbing between parallel
+    rate-only and count-only tables."""
+    GER, CNT = "ger-higher-ed", "muslim-higher-ed-enrolment"
+    cnt_rows, ger_rows = load_metric(CNT, sex=None), load_metric(GER, sex=None)
+    if not cnt_rows or not ger_rows:
         return ""
-    # The count metric now carries two AISHE rounds; these snapshot views pin the
-    # latest year so a single table never mixes 2020-21 and 2021-22 rows. (The
-    # over-time movement is already on the card face as the GER "Since" pill.)
-    latest = max(int(r["year"]) for r in rows)
-    total = _nat_by_religion(cmid).get("muslim")  # already the latest-year national total
+    # Both metrics now carry two AISHE rounds; pin the latest so a table never mixes
+    # them (the over-time movement rides the card face as the GER "Since" pill).
+    latest = max(int(r["year"]) for r in cnt_rows)
+    total = _nat_by_religion(CNT).get("muslim")
     out = ""
-    st = sorted(
-        [(state_label(r["geography_code"]), int(float(r["value"])))
-         for r in rows if r["geography_level"] == "state"
-         and int(r["year"]) == latest and r.get("sex", "all") in ("all", "")],
-        key=lambda x: -x[1])
-    if st:
+
+    def cnt_cell(v):
+        return f'<td data-sort="{v}">{fmt_num(v, "count")}</td>' if v is not None else '<td data-sort="-1">n/a</td>'
+
+    def ger_cell(v):
+        return f'<td data-sort="{v:.4f}">{fmt_num(v, "percent")}</td>' if v is not None else '<td data-sort="-1">n/a</td>'
+
+    # --- By state: State | Students | GER (sorted by enrolment count) ---
+    students = {r["geography_code"]: int(float(r["value"]))
+                for r in cnt_rows if r["geography_level"] == "state"
+                and int(r["year"]) == latest and r.get("sex", "all") in ("all", "")}
+    ger_state = {r["geography_code"]: float(r["value"])
+                 for r in ger_rows if r["geography_level"] == "state"
+                 and r["religion"] == "muslim" and int(r["year"]) == latest
+                 and r.get("sex", "all") in ("all", "")}
+    codes = sorted(set(students) | set(ger_state), key=lambda c: -students.get(c, -1))
+    if codes:
         intro = (f'<p class="comp-note">{fmt_num(total, "count")} Muslim students were '
-                 f'enrolled in higher education in {latest} (AISHE Muslim Minority total). '
-                 f'AISHE tabulates only Muslim Minority enrolment, so there is no '
-                 f'community ranking.</p>') if total else ""
+                 f'enrolled in higher education in {latest} (AISHE Muslim Minority total); '
+                 f'GER is that count over the Census 2011 Muslim 18-23 population. AISHE '
+                 f'tabulates only Muslim Minority enrolment, so there is no community '
+                 f'ranking.</p>') if total else ""
         body = "".join(
-            f'<tr><td>{html.escape(name)}</td>'
-            f'<td data-sort="{v}">{fmt_num(v, "count")}</td></tr>' for name, v in st)
+            f'<tr><td>{html.escape(state_label(c))}</td>'
+            f'{cnt_cell(students.get(c))}{ger_cell(ger_state.get(c))}</tr>' for c in codes)
         head = ('<tr><th class="sortable" data-col="0">State / UT</th>'
-                '<th class="sortable" data-col="1" data-type="num">Students</th></tr>')
-        out += (f'<details data-view-id="students-by-state" data-view-label="Students by state" '
-                f'data-view-sub="{len(st)} states, {latest}">'
-                f'<summary>Muslim students by state ({len(st)} states)</summary>'
+                '<th class="sortable" data-col="1" data-type="num">Students</th>'
+                '<th class="sortable" data-col="2" data-type="num">GER</th></tr>')
+        out += (f'<details data-view-id="by-state" data-view-label="By state" '
+                f'data-view-sub="{len(codes)} states, {latest}">'
+                f'<summary>Muslim enrolment and GER by state ({len(codes)} states)</summary>'
                 f'{intro}<table class="sortable-table"><thead>{head}</thead>'
-                f'<tbody>{body}</tbody></table>{_view_provenance(cmid)}</details>')
-    sx = {r["sex"]: int(float(r["value"]))
-          for r in rows
-          if r["geography_level"] == "national" and int(r["year"]) == latest
-          and r["sex"] in ("male", "female")}
-    if "male" in sx and "female" in sx:
-        head = ('<tr><th class="sortable" data-col="0">Community</th>'
-                '<th class="sortable" data-col="1" data-type="num">Male</th>'
-                '<th class="sortable" data-col="2" data-type="num">Female</th></tr>')
-        body = (f'<tr><td>Muslim</td>'
-                f'<td data-sort="{sx["male"]}">{fmt_num(sx["male"], "count")}</td>'
-                f'<td data-sort="{sx["female"]}">{fmt_num(sx["female"], "count")}</td></tr>')
-        out += (f'<details data-view-id="students-by-sex" data-view-label="Students by sex" '
-                f'data-view-sub="{latest}">'
-                f'<summary>Muslim students by sex ({latest})</summary>'
+                f'<tbody>{body}</tbody></table>{_view_provenance(GER)}</details>')
+
+    # --- By sex: Muslim male/female, Students + GER ---
+    cnt_sex = {r["sex"]: int(float(r["value"])) for r in cnt_rows
+               if r["geography_level"] == "national" and int(r["year"]) == latest
+               and r["sex"] in ("male", "female")}
+    ger_sex = {r["sex"]: float(r["value"]) for r in ger_rows
+               if r["geography_level"] == "national" and r["religion"] == "muslim"
+               and int(r["year"]) == latest and r["sex"] in ("male", "female")}
+    if "male" in cnt_sex and "female" in cnt_sex:
+        head = ('<tr><th class="sortable" data-col="0">Muslim</th>'
+                '<th class="sortable" data-col="1" data-type="num">Students</th>'
+                '<th class="sortable" data-col="2" data-type="num">GER</th></tr>')
+        body = "".join(
+            f'<tr><td>{lbl}</td>{cnt_cell(cnt_sex.get(sx))}{ger_cell(ger_sex.get(sx))}</tr>'
+            for sx, lbl in (("male", "Male"), ("female", "Female")))
+        out += (f'<details data-view-id="by-sex" data-view-label="By sex" data-view-sub="{latest}">'
+                f'<summary>Muslim enrolment and GER by sex ({latest})</summary>'
                 f'<table class="sortable-table"><thead>{head}</thead>'
-                f'<tbody>{body}</tbody></table>{_view_provenance(cmid)}</details>')
+                f'<tbody>{body}</tbody></table>{_view_provenance(GER)}</details>')
     return out
 
 
@@ -4202,11 +4218,14 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
             begin_zero = "true" if len(pairs) == 1 else "false"
             js = (f'hbar("{cvid}", {json.dumps(labels)}, {json.dumps(values)}, {json.dumps(colors)}, '
                   f'{json.dumps(suffix)}, {dec}, {ref}, {json.dumps(ref_label)}, {begin_zero});')
-        details = _state_details(mid, unit) + _sex_details(mid, unit)
+        if mid == "ger-higher-ed":
+            # ger merges its GER rate with the decarded Muslim student counts into
+            # ONE "By state" + ONE "By sex" tab (was four parallel rate/count tabs).
+            details = _ger_combined_views()
+        else:
+            details = _state_details(mid, unit) + _sex_details(mid, unit)
 
     details += _state_residence_details(mid, unit) + _residence_details(mid, unit)
-    if mid == "ger-higher-ed":
-        details += _ger_count_views()   # fold in the decarded student-count metric
     return _card_shell(mid, label, headline, CAPTION.get(mid, ""), _year_of(mid), polarity,
                        chart_html, comps, src, csv_href, details), js
 
@@ -4303,7 +4322,10 @@ def _card_timeseries(mid, label, unit, src, csv_href, cvid):
                   f'{json.dumps([_round_dp(s[1], _disp_dp(unit)) for s in st])}, '
                   f'{json.dumps(["#7b1d22"] * len(st))}, "%", 1);')
         comps += _comp("all states", headline, "aggregate across assemblies", "neutral")
-    details = _state_details(mid, unit)
+    # When the card face IS the per-state bar chart (no national trend, e.g.
+    # mla-share), a "By state" table just re-lists the same bars - skip it. Add it
+    # only when the face is a national trend line and the states are additive.
+    details = _state_details(mid, unit) if len(rows) >= 2 else ""
     return _card_shell(mid, label, headline, CAPTION.get(mid, ""), latest["year"] if latest else "",
                        "", chart_html, comps, src, csv_href, details), js
 

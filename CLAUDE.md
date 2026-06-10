@@ -53,6 +53,7 @@ not ad-hoc scripts: metric metadata in `manifest/metrics.yaml`, sources in
   card (Commit DV): it is now pop-share's "By district" tab (curve + top-100
   table), reading the still-present `district-concentration-top100.csv`. Likewise
   `muslim-higher-ed-enrolment` (student counts) is decarded and folded into
-  `ger-higher-ed`'s modal as "Students by state/sex" tabs.
+  `ger-higher-ed`'s "By state" + "By sex" tabs, shown as a Students column beside
+  the GER rate (Commit EQ merged the old separate rate/count tabs).
 - sex-ratio + pop-share are primary RGI census 1961-2011; Sachar Committee feeds
   the `mpce` metric (not sex-ratio anymore).
