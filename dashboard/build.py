@@ -3992,15 +3992,23 @@ def _ger_count_views() -> str:
     sex" tabs - the Commit-DV pattern (a satellite metric surfaced as host-card
     tabs, like district-concentration -> pop-share)."""
     cmid = "muslim-higher-ed-enrolment"
-    total = _nat_by_religion(cmid).get("muslim")
+    rows = load_metric(cmid, sex=None)  # every sex + every AISHE round
+    if not rows:
+        return ""
+    # The count metric now carries two AISHE rounds; these snapshot views pin the
+    # latest year so a single table never mixes 2020-21 and 2021-22 rows. (The
+    # over-time movement is already on the card face as the GER "Since" pill.)
+    latest = max(int(r["year"]) for r in rows)
+    total = _nat_by_religion(cmid).get("muslim")  # already the latest-year national total
     out = ""
     st = sorted(
         [(state_label(r["geography_code"]), int(float(r["value"])))
-         for r in load_metric(cmid) if r["geography_level"] == "state"],
+         for r in rows if r["geography_level"] == "state"
+         and int(r["year"]) == latest and r.get("sex", "all") in ("all", "")],
         key=lambda x: -x[1])
     if st:
         intro = (f'<p class="comp-note">{fmt_num(total, "count")} Muslim students were '
-                 f'enrolled in higher education in 2021 (AISHE Muslim Minority total). '
+                 f'enrolled in higher education in {latest} (AISHE Muslim Minority total). '
                  f'AISHE tabulates only Muslim Minority enrolment, so there is no '
                  f'community ranking.</p>') if total else ""
         body = "".join(
@@ -4009,13 +4017,14 @@ def _ger_count_views() -> str:
         head = ('<tr><th class="sortable" data-col="0">State / UT</th>'
                 '<th class="sortable" data-col="1" data-type="num">Students</th></tr>')
         out += (f'<details data-view-id="students-by-state" data-view-label="Students by state" '
-                f'data-view-sub="{len(st)} states, 2021">'
+                f'data-view-sub="{len(st)} states, {latest}">'
                 f'<summary>Muslim students by state ({len(st)} states)</summary>'
                 f'{intro}<table class="sortable-table"><thead>{head}</thead>'
                 f'<tbody>{body}</tbody></table>{_view_provenance(cmid)}</details>')
     sx = {r["sex"]: int(float(r["value"]))
-          for r in load_metric(cmid, sex=None)
-          if r["geography_level"] == "national" and r["sex"] in ("male", "female")}
+          for r in rows
+          if r["geography_level"] == "national" and int(r["year"]) == latest
+          and r["sex"] in ("male", "female")}
     if "male" in sx and "female" in sx:
         head = ('<tr><th class="sortable" data-col="0">Community</th>'
                 '<th class="sortable" data-col="1" data-type="num">Male</th>'
@@ -4024,8 +4033,8 @@ def _ger_count_views() -> str:
                 f'<td data-sort="{sx["male"]}">{fmt_num(sx["male"], "count")}</td>'
                 f'<td data-sort="{sx["female"]}">{fmt_num(sx["female"], "count")}</td></tr>')
         out += (f'<details data-view-id="students-by-sex" data-view-label="Students by sex" '
-                f'data-view-sub="2021">'
-                f'<summary>Muslim students by sex (2021)</summary>'
+                f'data-view-sub="{latest}">'
+                f'<summary>Muslim students by sex ({latest})</summary>'
                 f'<table class="sortable-table"><thead>{head}</thead>'
                 f'<tbody>{body}</tbody></table>{_view_provenance(cmid)}</details>')
     return out

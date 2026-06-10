@@ -1,0 +1,38 @@
+source_id,source_document,source_sha256_prefix,extraction_run,page,serial,state_name,pwd_male,pwd_female,pwd_total,muslim_male,muslim_female,muslim_total,other_minority_male,other_minority_female,other_minority_total,ews_male,ews_female,ews_total
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,1,Andaman and Nicobar Islands,22,34,56,255,363,618,401,731,1132,51,37,88
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,2,Andhra Pradesh,1659,957,2616,28338,23313,51651,5727,4301,10028,15650,14068,29718
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,3,Arunachal Pradesh,22,10,32,53,40,93,1849,1292,3141,111,74,185
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,4,Assam,644,316,960,44845,43084,87929,6791,6571,13362,8496,8916,17412
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,5,Bihar,3410,2236,5646,78713,75028,153741,1222,1658,2880,16533,12612,29145
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,6,Chandigarh,231,86,317,327,376,703,2072,3190,5262,832,631,1463
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,7,Chhattisgarh,344,132,476,2017,2676,4693,1885,3038,4923,1398,1143,2541
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,8,Delhi,2984,1442,4426,11900,9304,21204,4865,6211,11076,14261,8932,23193
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,9,Goa,34,13,47,1378,1520,2898,3630,5449,9079,197,98,295
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,10,Gujarat,1143,628,1771,18170,14935,33105,5561,5709,11270,23494,16279,39773
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,11,Haryana,646,447,1093,7423,3022,10445,4769,6919,11688,5867,4413,10280
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,12,Himachal Pradesh,192,91,283,616,560,1176,1141,1354,2495,1196,1203,2399
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,13,Jammu and Kashmir,297,291,588,65193,66149,131342,2465,3328,5793,2500,3192,5692
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,14,Jharkhand,546,225,771,17069,17244,34313,4916,6884,11800,3010,1700,4710
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,15,Karnataka,2665,1830,4495,72487,65871,138358,36086,45593,81679,15920,35128,51048
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,16,Kerala,2103,1888,3991,68170,102759,170929,51334,63552,114886,6189,10363,16552
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,17,Ladakh,0,0,0,679,1341,2020,226,564,790,0,0,0
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,18,Lakshadweep,0,0,0,70,256,326,0,0,0,0,0,0
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,19,Madhya Pradesh,1886,708,2594,20995,20432,41427,8968,9814,18782,7293,5162,12455
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,20,Maharashtra,3949,2214,6163,79148,71656,150804,42054,39620,81674,29953,21698,51651
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,21,Manipur,123,110,233,1904,2526,4430,2519,2630,5149,115,59,174
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,22,Meghalaya,188,139,327,1150,912,2062,13119,17005,30124,207,136,343
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,23,Mizoram,14,13,27,50,28,78,9747,10304,20051,18,8,26
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,24,Nagaland,3,5,8,113,144,257,4719,6615,11334,173,60,233
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,25,Odisha,1041,693,1734,4728,3759,8487,1562,1548,3110,7257,7991,15248
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,26,Puducherry,120,202,322,1202,1139,2341,851,1866,2717,176,122,298
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,27,Punjab,318,255,573,11803,4682,16485,53417,65836,119253,5937,3337,9274
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,28,Rajasthan,4579,1729,6308,24356,18634,42990,8595,11274,19869,14756,13941,28697
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,29,Sikkim,7,1,8,102,45,147,572,784,1356,46,41,87
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,30,Tamil Nadu,2831,2038,4869,65103,49869,114972,76594,85648,162242,20557,18667,39224
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,31,Telangana,1761,1343,3104,65893,63061,128954,3769,5896,9665,7201,7214,14415
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,32,Dadra and Nagar Haveli and Daman and Diu,10,10,20,135,132,267,10,297,307,45,39,84
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,33,Tripura,90,47,137,656,691,1347,333,295,628,355,166,521
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,34,Uttar Pradesh,9484,5519,15003,137654,161657,299311,10725,12255,22980,23733,16288,40021
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,35,Uttarakhand,1497,1458,2955,11100,12540,23640,1889,2369,4258,1970,1234,3204
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,36,West Bengal,4491,2591,7082,110860,127310,238170,7381,7702,15083,8753,8574,17327
+aishe,sources/aishe/aishe-report-2020-21.pdf,4dff9fe0b5aca469,aishe-table15-2020-21-extract-v1.0.0-20260610T083705Z,136,0,All India,49334,29701,79035,954655,967058,1921713,381764,448102,829866,244250,223526,467776

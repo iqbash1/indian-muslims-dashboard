@@ -207,16 +207,21 @@ metrics:
     geography_levels: [national, state]
     religions: [muslim, other_minority, all]
     methodology_notes: |
-      Numerator: AISHE 2021-22 published All-India "Muslim Minority" enrolment
-      (Muslim 21,08,033; total 4,32,68,181 per Report p29 prose). Denominator:
-      Census 2011 C-15 (15-19 + 20-24) × 0.6 as an 18-23 effective-cohort
-      proxy; single-year-age table (C-13) not pulled and 2021 Census deferred.
-      The older 2011 denominator makes our computed GER run a few points ABOVE
-      the officially published figures (national 27-28%; published Muslim
-      Minority GER around 9% in recent AISHE rounds). The absolute level is a
-      computation, not an official figure, but the cross-religion gap (Muslim
-      enrolment runs at roughly one-third the national rate) is robust to the
-      choice of denominator and is the dashboard story. The card also sets
+      Numerator: AISHE All-India "Muslim Minority" enrolment for two rounds,
+      academic years 2020-21 (Muslim 19,21,713; total 4,13,80,713 per Report p30)
+      and 2021-22 (Muslim 21,08,033; total 4,32,68,181 per Report p29); the
+      2020-21 All-India cells were recovered by character-level de-interleaving of
+      the Table 15 text layer and match the exact sum of its 36 state rows.
+      Denominator: Census 2011 C-15 (15-19 + 20-24) × 0.6 as an 18-23 effective-
+      cohort proxy, held fixed across both rounds; single-year-age table (C-13)
+      not pulled and 2021 Census deferred. The older 2011 denominator makes our
+      computed GER run a few points ABOVE the officially published figures
+      (national 27-28%; published Muslim Minority GER around 9% in recent AISHE
+      rounds). The absolute level is a computation, not an official figure, but
+      the cross-religion gap (Muslim enrolment runs at roughly one-third the
+      national rate) is robust to the choice of denominator and is the dashboard
+      story; with the denominator fixed, the small rise between the two rounds is
+      enrolment growth alone. The card also sets
       Muslims beside "Other minorities" (Christian, Sikh, Buddhist and Jain,
       9,05,159 students), which AISHE reports only as one grouped category and
       never splits: Muslims enrol at roughly three-quarters their rate. AISHE

@@ -14,7 +14,7 @@ muslimdata.in is a static, source-traceable dashboard of living-conditions indic
 - Urban share (2001-2011; source: census-india-2011): https://muslimdata.in/m/urban-share/ | data: https://muslimdata.in/canonical/urban-share.csv
 - Sex ratio (1961-2011; source: census-india-2011): https://muslimdata.in/m/sex-ratio/ | data: https://muslimdata.in/canonical/sex-ratio.csv
 - Literacy rate (2001-2011; source: census-india-2011): https://muslimdata.in/m/lit-7plus/ | data: https://muslimdata.in/canonical/lit-7plus.csv
-- Higher education enrolment rate (2021; source: aishe): https://muslimdata.in/m/ger-higher-ed/ | data: https://muslimdata.in/canonical/ger-higher-ed.csv
+- Higher education enrolment rate (2020-2021; source: aishe): https://muslimdata.in/m/ger-higher-ed/ | data: https://muslimdata.in/canonical/ger-higher-ed.csv
 - Labour force participation (2023; source: plfs): https://muslimdata.in/m/lfpr-15plus/ | data: https://muslimdata.in/canonical/lfpr-15plus.csv
 - Worker population ratio (2023; source: plfs): https://muslimdata.in/m/wpr-15plus/ | data: https://muslimdata.in/canonical/wpr-15plus.csv
 - Workers in salaried jobs (2023; source: plfs): https://muslimdata.in/m/salaried-share/ | data: https://muslimdata.in/canonical/salaried-share.csv
