@@ -694,6 +694,10 @@ TEMPLATE = """<!DOCTYPE html>
     max-width: 56em; white-space: normal;
   }
   .modal-body .card-method b { color: var(--accent); font-weight: 600; }
+  .view-provenance, .card-reproduce { font-size: 12px; color: var(--muted); line-height: 1.5; margin: 10px 0 0; }
+  .view-provenance b, .card-reproduce b { color: var(--fg); font-weight: 600; }
+  .view-provenance a, .card-reproduce a { color: var(--accent); text-decoration: none; }
+  .view-provenance a:hover, .card-reproduce a:hover { text-decoration: underline; }
   .card-chartwrap { width: 100%; margin: 2px 0 4px; position: relative; }
   .card-chartscroll { width: 100%; margin: 2px 0 4px; overflow-y: auto; overflow-x: hidden; border: 1px solid var(--rule); border-radius: 4px; }
   .card-chartscroll .card-chartwrap { margin: 0; }
@@ -3463,6 +3467,14 @@ def _card_shell(mid, label, value, unit_txt, year, polarity, chart_html, comps_h
                 f'<a href="{html.escape(csv_href)}" target="_blank" rel="noopener">{html.escape(mid)}.csv</a>. '
                 'You can open any of these to check the numbers on this chart '
                 'yourself.</p>')
+        ts = _transform_script(mid)
+        if ts:
+            parts.append(
+                '<p class="card-reproduce"><b>Reproduce this.</b> Every figure on this '
+                'card, in every tab, is computed from the data file above by an open '
+                f'script: <a href="{GITHUB_REPO}/blob/main/{html.escape(ts)}" '
+                'target="_blank" rel="noopener">transform code</a>. Each data-file row '
+                'also records its own source and method.</p>')
         method_html = (
             '<div class="card-method">'
             '<h3 class="card-method-title">About this measurement</h3>'
@@ -3644,8 +3656,53 @@ def _concentration_view(curve_cvid: str, download_html: str = ""):
             f'{curve_html}'
             f'{_top100_districts_inner(cmid)}'
             f'{download_html}'
+            f'{_view_provenance(cmid)}'
             f'</details>')
     return view, curve_js
+
+
+GITHUB_REPO = "https://github.com/iqbash1/indian-muslims-dashboard"
+
+_TRANSFORM_SCRIPT_CACHE: dict[str, str | None] = {}
+
+
+def _transform_script(mid: str) -> str | None:
+    """Repo-relative path of the canonicalise script that produced a metric, for
+    the 'reproduce this' links. Most live at transform/canonicalize/<id>.py."""
+    if mid in _TRANSFORM_SCRIPT_CACHE:
+        return _TRANSFORM_SCRIPT_CACHE[mid]
+    stem = mid.replace("-", "_")
+    cand = REPO_ROOT / "transform" / "canonicalize" / f"{stem}.py"
+    out: str | None = None
+    if cand.exists():
+        out = cand.relative_to(REPO_ROOT).as_posix()
+    else:
+        for p in sorted((REPO_ROOT / "transform").rglob("*.py")):
+            if stem in p.stem:
+                out = p.relative_to(REPO_ROOT).as_posix()
+                break
+    _TRANSFORM_SCRIPT_CACHE[mid] = out
+    return out
+
+
+def _view_provenance(mid: str) -> str:
+    """A compact 'reproduce this view' caption appended to every modal view tab:
+    the primary source(s), the downloadable canonical rows, and the open transform
+    code that computed them, so each view stands alone for an independent
+    researcher."""
+    docs = _source_documents(mid)
+    src = " · ".join(
+        f'<a href="{html.escape(u)}" target="_blank" rel="noopener">{html.escape(l)}</a>'
+        for _, l, u in docs) or "see methodology"
+    bits = [f'<a href="canonical/{html.escape(mid)}.csv" download>data file</a>']
+    ts = _transform_script(mid)
+    if ts:
+        bits.append(
+            f'<a href="{GITHUB_REPO}/blob/main/{html.escape(ts)}" target="_blank" '
+            f'rel="noopener">transform code</a>')
+    return (f'<p class="view-provenance"><b>Reproduce this view.</b> Source: {src}. '
+            f'Each value is computed from the {" · ".join(bits)}; every row records its '
+            f'own source and method.</p>')
 
 
 def _state_details(metric_id: str, unit: str, value_label: str | None = None) -> str:
@@ -3709,7 +3766,7 @@ def _state_details(metric_id: str, unit: str, value_label: str | None = None) ->
     return (f'<details data-view-id="by-state" data-view-label="By state" data-view-sub="{len(order)} states{yr_txt}">'
             f'<summary>Full state data ({len(order)} states{yr_txt})</summary>'
             f'<table class="sortable-table"><thead>{head}</thead>'
-            f'<tbody>{"".join(trs)}</tbody></table></details>')
+            f'<tbody>{"".join(trs)}</tbody></table>{_view_provenance(metric_id)}</details>')
 
 
 _DISTRICT_NAMES: dict[str, str] | None = None
@@ -3830,7 +3887,7 @@ def _sex_details(metric_id: str, unit: str) -> str:
     return (f'<details data-view-id="by-sex" data-view-label="By sex" data-view-sub="{latest}">'
             f'<summary>By sex ({latest})</summary>'
             f'<table class="sortable-table"><thead>{head}</thead>'
-            f'<tbody>{trs}</tbody></table></details>')
+            f'<tbody>{trs}</tbody></table>{_view_provenance(metric_id)}</details>')
 
 
 def _nat_by_religion(metric_id: str) -> dict:
@@ -4102,8 +4159,9 @@ def _card_timeseries(mid, label, unit, src, csv_href, cvid):
                   f'{json.dumps([_round_dp(s[1], _disp_dp(unit)) for s in st])}, '
                   f'{json.dumps(["#7b1d22"] * len(st))}, "%", 1);')
         comps += _comp("all states", headline, "aggregate across assemblies", "neutral")
+    details = _state_details(mid, unit)
     return _card_shell(mid, label, headline, CAPTION.get(mid, ""), latest["year"] if latest else "",
-                       "", chart_html, comps, src, csv_href), js
+                       "", chart_html, comps, src, csv_href, details), js
 
 
 def _card_ts_count(mid, label, src, csv_href, cvid):
