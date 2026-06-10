@@ -642,6 +642,21 @@ TEMPLATE = """<!DOCTYPE html>
   .scorecard-table .gap-bad { color: var(--negative); font-weight: 600; }
   .scorecard-table .gap-good { color: var(--positive); font-weight: 600; }
   .scorecard-table .gap-neutral { color: var(--muted); }
+  /* --- Gap dumbbell strip above by-sex / urban-vs-rural tables --- */
+  .gap-chart { margin: 2px 0 18px; }
+  .gap-legend { display: flex; gap: 14px; align-items: center; font-size: 11.5px; color: var(--muted); margin-bottom: 16px; flex-wrap: wrap; }
+  .gap-legend .k { display: inline-flex; align-items: center; gap: 5px; }
+  .gap-legend .gd-o { width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--muted); box-sizing: border-box; }
+  .gap-legend .gd-f { width: 10px; height: 10px; border-radius: 50%; background: var(--muted); }
+  .gap-legend .gd-m { width: 11px; height: 11px; border-radius: 50%; background: var(--muslim); }
+  .gap-row { display: flex; align-items: center; margin-bottom: 15px; }
+  .gap-row .lbl { width: 104px; flex: none; font-size: 12.5px; padding-right: 10px; text-align: right; color: #333; }
+  .gap-track { position: relative; flex: 1; height: 16px; }
+  .gap-conn { position: absolute; top: 7px; height: 2px; border-radius: 1px; }
+  .gap-dot { position: absolute; top: 2px; width: 12px; height: 12px; margin-left: -6px; border-radius: 50%; box-sizing: border-box; }
+  .gap-dot.open { background: var(--card); border: 2px solid; }
+  .gap-val { position: absolute; top: -9px; transform: translateX(-50%); font-size: 11px; font-weight: 500; white-space: nowrap; }
+  .gap-axis { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 4px; margin: 2px 0 0 104px; }
   footer {
     margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--rule);
     color: var(--muted); font-size: 12px;
@@ -2462,9 +2477,12 @@ def _landing_breakdowns(m: dict, views: list) -> str:
             block = _state_details(
                 mid, "count" if special == "time_series_count" else unit,
                 value_label=(CAPTION.get(mid, "count").capitalize()
-                             if special == "time_series_count" else None))
+                             if special == "time_series_count" else None)) \
+                or _state_residence_details(mid, unit)   # mpce's by-state is per-state urban/rural
         elif vid == "by-sex":
             block = _sex_details(mid, unit)
+        elif vid == "by-residence":
+            block = _residence_details(mid, unit)
         elif vid == "by-district":
             # Always the concentration canonical (the top-100 ranking), with a
             # stat note; chart-free here (the curve is interactive-only).
@@ -2485,6 +2503,9 @@ def _landing_breakdowns(m: dict, views: list) -> str:
             continue
         inner = re.sub(r'^<details\b[^>]*>\s*<summary>.*?</summary>', '', block, flags=re.S)
         inner = re.sub(r'</details>\s*$', '', inner)
+        # Landings are chart-free static tables (like the by-district curve, which is
+        # interactive-only): drop the decorative gap dumbbell, keep the table.
+        inner = re.sub(r'<div class="gap-chart".*?(?=<table class="sortable-table">)', '', inner, flags=re.S)
         sub = f'<span class="breakdown-sub">{html.escape(v["sub"])}</span>' if v.get("sub") else ""
         parts.append(f'<section class="breakdown"><h2>{html.escape(v["label"])}{sub}</h2>{inner}</section>')
     return "".join(parts)
@@ -3854,6 +3875,58 @@ def _district_download_link(mid: str) -> str:
             f'<a href="canonical/{html.escape(mid)}-districts.csv" download>download CSV</a></p>')
 
 
+def _gap_chart(items, unit, open_label, filled_label) -> str:
+    """A compact dumbbell strip rendered ABOVE a by-sex / urban-vs-rural table, so
+    the gap reads at a glance instead of being subtracted in the head. items:
+    (community_label, is_muslim, open_val, filled_val). Each row gets an open dot
+    (open_label, e.g. Rural/Male) and a filled dot (filled_label, e.g. Urban/Female)
+    positioned on a shared tight axis and joined by a connector. Muslim is maroon,
+    'All communities' dark grey (the reference), other peers light grey; only Muslim
+    and All carry value labels (the rest live in the table below). Returns '' when
+    there is too little numeric spread to be worth a chart (the table still shows)."""
+    rows = [r for r in items if r[2] is not None and r[3] is not None]
+    vals = [v for _, _, o, f in rows for v in (o, f)]
+    if len(rows) < 2 or len(set(vals)) < 2:
+        return ""
+    data_lo, data_hi = min(vals), max(vals)
+    # Suppress when one community dwarfs the rest (pop-share: Hindu ~80% next to
+    # minor communities under 2%) - the dumbbell compresses everyone into a sliver
+    # and the table reads better. ~8x is the practical cutoff; the table still shows.
+    if data_lo > 0 and data_hi / data_lo > 8:
+        return ""
+    span = (data_hi - data_lo) or 1.0
+    lo, hi = data_lo - span * 0.10, data_hi + span * 0.10
+    axis_span = hi - lo
+
+    def x(v):
+        return round((v - lo) / axis_span * 100, 2)
+
+    out = []
+    for lbl, subj, ov, fv in rows:
+        is_all = lbl == "All communities"
+        col = "var(--muslim)" if subj else ("#6b7178" if is_all else "#aab0b6")
+        a0, a1 = sorted((ov, fv))
+        labels = ((f'<span class="gap-val" style="left:{x(ov)}%;color:{col}">{fmt_num(ov, unit)}</span>'
+                   f'<span class="gap-val" style="left:{x(fv)}%;color:{col}">{fmt_num(fv, unit)}</span>')
+                  if subj or is_all else "")
+        out.append(
+            f'<div class="gap-row"><span class="lbl">{html.escape(lbl)}</span>'
+            f'<span class="gap-track">'
+            f'<span class="gap-conn" style="left:{x(a0)}%;width:{x(a1) - x(a0)}%;background:{col}"></span>'
+            f'<span class="gap-dot open" style="left:{x(ov)}%;border-color:{col}"></span>'
+            f'<span class="gap-dot" style="left:{x(fv)}%;background:{col}"></span>'
+            f'{labels}</span></div>')
+    legend = (f'<div class="gap-legend">'
+              f'<span class="k"><span class="gd-o"></span>{html.escape(open_label)}</span>'
+              f'<span class="k"><span class="gd-f"></span>{html.escape(filled_label)}</span>'
+              f'<span class="k" style="margin-left:auto"><span class="gd-m"></span>Muslim</span></div>')
+    axis = (f'<div class="gap-axis"><span>{fmt_num(data_lo, unit)}</span>'
+            f'<span>{fmt_num(data_hi, unit)}</span></div>')
+    # Decorative: every value is in the sortable table directly below, which is the
+    # accessible representation, so the dumbbell is hidden from screen readers.
+    return f'<div class="gap-chart" aria-hidden="true">{legend}{"".join(out)}{axis}</div>'
+
+
 def _sex_details(metric_id: str, unit: str) -> str:
     """National male-vs-female drill-down for metrics that carry sex='male'/
     'female' rows; returns '' for metrics that don't (so it's safe to call on any
@@ -3883,6 +3956,9 @@ def _sex_details(metric_id: str, unit: str) -> str:
             return '<td data-sort="-1">n/a</td>'
         return f'<td data-sort="{v:.4f}">{fmt_num(v, unit)}</td>'
 
+    chart = _gap_chart(
+        [(comm_label(rel), rel == "muslim", by_rel[rel].get("male"), by_rel[rel].get("female"))
+         for rel in comms], unit, "Male", "Female")
     trs = "".join(
         f'<tr><td>{html.escape(comm_label(rel))}</td>{cell(rel, "male")}{cell(rel, "female")}</tr>'
         for rel in comms)
@@ -3890,7 +3966,7 @@ def _sex_details(metric_id: str, unit: str) -> str:
             '<th class="sortable" data-col="1" data-type="num">Male</th>'
             '<th class="sortable" data-col="2" data-type="num">Female</th></tr>')
     return (f'<details data-view-id="by-sex" data-view-label="By sex" data-view-sub="{latest}">'
-            f'<summary>By sex ({latest})</summary>'
+            f'<summary>By sex ({latest})</summary>{chart}'
             f'<table class="sortable-table"><thead>{head}</thead>'
             f'<tbody>{trs}</tbody></table>{_view_provenance(metric_id)}</details>')
 
@@ -3924,6 +4000,9 @@ def _residence_details(metric_id: str, unit: str) -> str:
             return '<td data-sort="-1">n/a</td>'
         return f'<td data-sort="{v:.4f}">{fmt_num(v, unit)}</td>'
 
+    chart = _gap_chart(
+        [(comm_label(rel), rel == "muslim", by_rel[rel].get("rural"), by_rel[rel].get("urban"))
+         for rel in comms], unit, "Rural", "Urban")
     trs = "".join(
         f'<tr><td>{html.escape(comm_label(rel))}</td>{cell(rel, "urban")}{cell(rel, "rural")}</tr>'
         for rel in comms)
@@ -3931,7 +4010,7 @@ def _residence_details(metric_id: str, unit: str) -> str:
             '<th class="sortable" data-col="1" data-type="num">Urban</th>'
             '<th class="sortable" data-col="2" data-type="num">Rural</th></tr>')
     return (f'<details data-view-id="by-residence" data-view-label="Urban vs rural" data-view-sub="{latest}">'
-            f'<summary>Urban vs rural ({latest})</summary>'
+            f'<summary>Urban vs rural ({latest})</summary>{chart}'
             f'<table class="sortable-table"><thead>{head}</thead>'
             f'<tbody>{trs}</tbody></table>{_view_provenance(metric_id)}</details>')
 
