@@ -23,12 +23,16 @@ OUTPUT_RELIGIONS = ("muslim", "hindu", "christian", "sikh", "buddhist", "jain", 
 
 
 def canonicalize() -> None:
-    by_religion: dict[str, float] = {}
+    RES_MAP = {"total": "all", "rural": "rural", "urban": "urban"}
+    by_rel_res: dict[tuple[str, str], float] = {}
     with L2_PATH.open() as f:
         for row in csv.DictReader(f):
-            if row["residence"] != "total" or row["metric"] != "toilet_access_pct":
+            if row["metric"] != "toilet_access_pct":
                 continue
-            by_religion[row["religion"]] = float(row["value"])
+            res = RES_MAP.get(row["residence"])
+            if res is None:
+                continue
+            by_rel_res[(row["religion"], res)] = float(row["value"])
 
     extraction_run = (
         f"canonicalize-improved-sanitation-v{CANONICALIZER_VERSION}-"
@@ -41,26 +45,29 @@ def canonicalize() -> None:
         w = csv.writer(f)
         w.writerow([
             "metric_id", "geography_level", "geography_code", "year", "religion",
-            "value", "denominator", "sample_size", "ci_lower", "ci_upper",
-            "source_id", "source_document", "extraction_run",
+            "residence", "value", "denominator", "sample_size", "ci_lower",
+            "ci_upper", "source_id", "source_document", "extraction_run",
             "methodology_note", "break_flag",
         ])
+        RES_WORD = {"all": "total residence", "urban": "urban", "rural": "rural"}
         for religion in OUTPUT_RELIGIONS:
-            val = by_religion.get(religion)
-            if val is None:
-                continue
-            w.writerow([
-                "improved-sanitation", "national", "IN", 2020, religion,
-                val, "households", "", "", "",
-                "nfhs-5",
-                "sources/nfhs-5/reports/india-report-fr375.pdf",
-                extraction_run,
-                ("NFHS-5 Table 2.4 (page 74) — % of households with access to a "
-                 "toilet facility (any type, not strictly 'improved' per JMP "
-                 "definition). Total residence. Year=2020 = NFHS-5 fieldwork midpoint."),
-                "false",
-            ])
-            n_rows += 1
+            for res in ("all", "urban", "rural"):
+                val = by_rel_res.get((religion, res))
+                if val is None:
+                    continue
+                w.writerow([
+                    "improved-sanitation", "national", "IN", 2020, religion, res,
+                    val, "households", "", "", "",
+                    "nfhs-5",
+                    "sources/nfhs-5/reports/india-report-fr375.pdf",
+                    extraction_run,
+                    (f"NFHS-5 Table 2.4 (page 74): % of households with access to a "
+                     f"toilet facility (any type, not strictly 'improved' per JMP "
+                     f"definition). {RES_WORD[res].capitalize()}. Year=2020 = NFHS-5 "
+                     f"fieldwork midpoint."),
+                    "false",
+                ])
+                n_rows += 1
 
     print(f"wrote {OUTPUT_PATH.relative_to(REPO_ROOT)} ({n_rows} rows)")
 

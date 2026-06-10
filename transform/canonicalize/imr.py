@@ -86,8 +86,8 @@ def canonicalize() -> None:
         w = csv.writer(f)
         w.writerow([
             "metric_id", "geography_level", "geography_code", "year", "religion",
-            "value", "denominator", "sample_size", "ci_lower", "ci_upper",
-            "source_id", "source_document", "extraction_run",
+            "residence", "value", "denominator", "sample_size", "ci_lower",
+            "ci_upper", "source_id", "source_document", "extraction_run",
             "methodology_note", "break_flag",
         ])
 
@@ -103,19 +103,28 @@ def canonicalize() -> None:
                 print(f"  skip {religion}: missing data (imr_urban={imr_u}, imr_rural={imr_r}, pop_u={pop_u}, pop_r={pop_r})")
                 continue
             imr_total = round(weighted_imr(imr_u, imr_r, pop_u, pop_r), 2)
-            w.writerow([
-                "imr", "national", "IN", 2020, religion,
-                imr_total, "live_births", "", "", "",
-                "nfhs-5",
-                "sources/nfhs-5/reports/india-report-fr375.pdf",
-                extraction_run,
-                (f"NFHS-5 Table 7.2 urban/rural IMR by religion ({imr_u}/{imr_r}), "
+            # residence=all (the population-weighted total, feeds the card-face
+            # trend + community comparison), then the raw urban/rural rows that
+            # feed the "Urban vs rural" tab.
+            for res, val, note in (
+                ("all", imr_total,
+                 f"NFHS-5 Table 7.2 urban/rural IMR by religion ({imr_u}/{imr_r}), "
                  f"weighted to total residence using Census 2011 urban/rural population "
-                 f"by religion ({pop_u:,}/{pop_r:,}). Year=2020 represents the midpoint "
-                 f"of the 5-year period preceding NFHS-5 (2014-2020 approx)."),
-                "false",
-            ])
-            n_rows += 1
+                 f"by religion ({pop_u:,}/{pop_r:,}). Year=2020 = midpoint of the 5-year "
+                 f"period preceding NFHS-5 (2014-2020 approx)."),
+                ("urban", round(imr_u, 2),
+                 "NFHS-5 Table 7.2 urban IMR by religion, as published. Year=2020."),
+                ("rural", round(imr_r, 2),
+                 "NFHS-5 Table 7.2 rural IMR by religion, as published. Year=2020."),
+            ):
+                w.writerow([
+                    "imr", "national", "IN", 2020, religion, res,
+                    val, "live_births", "", "", "",
+                    "nfhs-5",
+                    "sources/nfhs-5/reports/india-report-fr375.pdf",
+                    extraction_run, note, "false",
+                ])
+                n_rows += 1
 
         # ---- Earlier rounds for the time series (NFHS-4 2015, NFHS-3 2005) ----
         # Both publish a TOTAL-residence panel with IMR by religion directly, so
@@ -142,7 +151,7 @@ def canonicalize() -> None:
                     if r["metric"] != "imr":
                         continue
                     w.writerow([
-                        "imr", "national", "IN", year, r["religion"],
+                        "imr", "national", "IN", year, r["religion"], "all",
                         round(float(r["value"]), 2), "live_births", "", "", "",
                         sid, sdoc, extraction_run, note, "false",
                     ])
