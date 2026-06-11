@@ -19,6 +19,7 @@ muslimdata.in is a static, source-traceable dashboard of living-conditions indic
 - Unemployment rate (2017-2023; source: plfs-microdata): https://muslimdata.in/m/unemployment-rate-15plus/ | data: https://muslimdata.in/canonical/unemployment-rate-15plus.csv
 - Workers in salaried jobs (2017-2023; source: plfs): https://muslimdata.in/m/salaried-share/ | data: https://muslimdata.in/canonical/salaried-share.csv
 - Monthly spending per person (2004-2023; source: hces-2023-24): https://muslimdata.in/m/mpce/ | data: https://muslimdata.in/canonical/mpce.csv
+- Share in India's top spending fifth (2023; source: hces-2023-24): https://muslimdata.in/m/top-quintile-share/ | data: https://muslimdata.in/canonical/top-quintile-share.csv
 - Infant mortality rate (1998-2020; source: nfhs-5): https://muslimdata.in/m/imr/ | data: https://muslimdata.in/canonical/imr.csv
 - Child stunting (under 5) (2020; source: nfhs-5): https://muslimdata.in/m/stunting-u5/ | data: https://muslimdata.in/canonical/stunting-u5.csv
 - Institutional delivery rate (1998-2020; source: nfhs-5): https://muslimdata.in/m/inst-delivery/ | data: https://muslimdata.in/canonical/inst-delivery.csv

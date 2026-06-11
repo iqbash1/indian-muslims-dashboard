@@ -462,6 +462,47 @@ metrics:
         higher_is_better: true
         order: 155
 
+  - id: top-quintile-share
+    name: Share in India's top spending fifth
+    cluster: income
+    unit: percent
+    higher_is_better: true
+    definition: |
+      Of all people in a community, the share living in households whose
+      spending (MPCE) places them in the top 20% of Indians. If prosperity were
+      spread evenly, every community would sit at 20%. This reads the whole
+      spending distribution, not the average: Muslims are NOT over-represented
+      among India's poorest fifth (20.5%, at par), but only 13.7% reach the top
+      fifth - the distribution is squeezed below the top.
+    sources: {primary: hces-2023-24}
+    geography_levels: [national]
+    religions: [muslim, hindu, christian, sikh, all]
+    methodology_notes: |
+      Computed from HCES 2023-24 unit-level microdata (NSO, 2.61 lakh
+      households) via the MoSPI NADA API, with the same validated MPCE
+      machinery as the spending card: person-weighted national MPCE quintile
+      cuts (Rs 2,903 / 3,677 / 4,632 / 6,302 per person per month), then each
+      community's population share within each fifth. Every all-India quintile
+      share equals 20.0 by construction, which is the built-in validation. The
+      full distribution (Muslim, % in Q1 poorest to Q5 richest): 20.5, 24.0,
+      22.7, 19.1, 13.7. The urban gap is the sharpest cut: 26.3% of urban
+      Muslims reach the national top fifth vs 45.3% of urban Hindus. The
+      "Urban vs rural" tab uses the SAME national cuts, so it reads as the
+      share of the community's urban (rural) population reaching the national
+      top fifth. NSO unit-data rider: religion is self-reported and unverified
+      and the survey is designed for MPCE estimation, so the religion split is
+      indicative and no sub-state estimates are made.
+    comparison_baselines: [hindu, all]
+    phase: 1
+    status: defined
+    display:
+      scorecard:
+        label: "Top spending fifth"
+        reference: "all"
+        unit_format: percent
+        higher_is_better: true
+        order: 156
+
   - id: mpi-headcount
     name: Multidimensional Poverty Index headcount ratio
     cluster: income

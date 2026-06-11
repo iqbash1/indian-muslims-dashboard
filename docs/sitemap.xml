@@ -50,6 +50,7 @@
   </url>
   <url>
     <loc>https://muslimdata.in/m/unemployment-rate-15plus/</loc>
+    <lastmod>2026-06-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -62,6 +63,11 @@
   <url>
     <loc>https://muslimdata.in/m/mpce/</loc>
     <lastmod>2026-06-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://muslimdata.in/m/top-quintile-share/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
