@@ -666,6 +666,15 @@ TEMPLATE = """<!DOCTYPE html>
   .sortable-table th.sortable::after { content: " ⇅"; font-size: 9px; color: var(--muted); }
   .sortable-table th.sorted-asc::after { content: " ↑"; color: var(--accent); }
   .sortable-table th.sorted-desc::after { content: " ↓"; color: var(--accent); }
+  /* By-state magnitude bars (FH): the label column hugs the state names and
+     the featured column is a left-anchored bar with its value at the bar end
+     (the card hbar grammar), so the bar starts right after the name instead
+     of leaving a dead band between names and right-aligned values. */
+  .state-bar-table th:first-child, .state-bar-table td:first-child { width: 1%; white-space: nowrap; }
+  th.tbar-head { text-align: left; }
+  td.tbar-cell { text-align: left; white-space: nowrap; }
+  .tbar { display: inline-block; height: 13px; background: rgba(123,29,34,.16); border-radius: 2px; vertical-align: -2px; }
+  .tbar-val { margin-left: 6px; }
   .scorecard-table .gap-bad { color: var(--negative); font-weight: 600; }
   .scorecard-table .gap-good { color: var(--positive); font-weight: 600; }
   .scorecard-table .gap-neutral { color: var(--muted); }
@@ -2467,6 +2476,12 @@ LANDING_TEMPLATE = """<!DOCTYPE html>
   .scroll-table { max-height:380px; overflow-y:auto; border:1px solid var(--rule); border-radius:6px; margin:10px 0; }
   .scroll-table table { margin:0; }
   .scroll-table thead th { position:sticky; top:0; background:var(--card); }
+  /* By-state magnitude bars (FH): same grammar as the modal tables. */
+  .state-bar-table th:first-child, .state-bar-table td:first-child { width:1%; white-space:nowrap; }
+  th.tbar-head { text-align:left; }
+  td.tbar-cell { text-align:left; white-space:nowrap; }
+  .tbar { display:inline-block; height:13px; background:rgba(123,29,34,.16); border-radius:2px; vertical-align:-2px; }
+  .tbar-val { margin-left:6px; }
   .src-note { font-size:13px; color:var(--muted); }
   .meta-block p { font-size:14.5px; line-height:1.6; max-width:60em; }
   .meta-block b { color:var(--accent); }
@@ -3860,10 +3875,15 @@ def _state_details(metric_id: str, unit: str, value_label: str | None = None) ->
         return ""
     # Featured (sortable) column: Muslim where the metric splits by religion;
     # otherwise the single series present (e.g. 'all' for incident counts not
-    # broken out by religion). Muslim metrics sort lowest-first (the gap is the
-    # story); count/all metrics sort highest-first (the biggest count is).
+    # broken out by religion). Muslim metrics sort worst-first (the gap is the
+    # story): lowest-first when higher is better (literacy), highest-first
+    # when lower is better (incarceration). Count/all metrics sort
+    # highest-first (the biggest count is the story).
     if any("muslim" in v for v in by_geo.values()):
-        feature, feat_label, reverse = "muslim", (value_label or "Muslim"), False
+        meta = METRIC_META.get(metric_id, {})
+        hib = (meta.get("display", {}).get("scorecard", {}) or {}).get(
+            "higher_is_better", meta.get("higher_is_better"))
+        feature, feat_label, reverse = "muslim", (value_label or "Muslim"), hib is False
     else:
         keys = [k for v in by_geo.values() for k in v]
         feature = max(set(keys), key=keys.count) if keys else "all"
@@ -3888,16 +3908,23 @@ def _state_details(metric_id: str, unit: str, value_label: str | None = None) ->
         if rel not in b:
             return '<td data-sort="-1">n/a</td>' if sortable else "<td>n/a</td>"
         val = fmt_num(b[rel], unit)
-        style = ""
         if bar and show_bar:
-            w = round(b[rel] / fmax * 100, 1)
-            style = (f' style="background:linear-gradient(to right,rgba(123,29,34,.16) '
-                     f'{w}%,transparent {w}%)"')
-        return (f'<td data-sort="{b[rel]:.4f}"{style}>{val}</td>' if sortable
-                else f"<td{style}>{val}</td>")
+            # Left-anchored magnitude bar with the value at its end (the card
+            # hbar grammar). With the label column hugging the state names
+            # (.state-bar-table), the bar starts right after the name, so the
+            # column reads as a bar chart instead of a tinted blob floating
+            # left of a right-aligned value across a dead middle band. The
+            # 78% cap leaves room for the value text beside the longest bar.
+            w = round(b[rel] / fmax * 78, 1)
+            return (f'<td class="tbar-cell" data-sort="{b[rel]:.4f}">'
+                    f'<span class="tbar" style="width:{w}%"></span>'
+                    f'<span class="tbar-val">{val}</span></td>')
+        return (f'<td data-sort="{b[rel]:.4f}">{val}</td>' if sortable
+                else f"<td>{val}</td>")
 
+    feat_th = "sortable tbar-head" if show_bar else "sortable"
     head = ('<tr><th class="sortable" data-col="0">State / UT</th>'
-            f'<th class="sortable" data-col="1" data-type="num">{html.escape(feat_label)}</th>'
+            f'<th class="{feat_th}" data-col="1" data-type="num">{html.escape(feat_label)}</th>'
             + ("<th>Hindu</th>" if has_hindu else "")
             + '</tr>')
     trs = []
@@ -3908,9 +3935,10 @@ def _state_details(metric_id: str, unit: str, value_label: str | None = None) ->
             cells += numcell(b, "hindu", sortable=False)
         trs.append(f"<tr>{cells}</tr>")
     yr_txt = f", {next(iter(years_used))}" if len(years_used) == 1 else ""
+    tbl_cls = "sortable-table state-bar-table" if show_bar else "sortable-table"
     return (f'<details data-view-id="by-state" data-view-label="By state" data-view-sub="{len(order)} states{yr_txt}">'
             f'<summary>Full state data ({len(order)} states{yr_txt})</summary>'
-            f'<table class="sortable-table"><thead>{head}</thead>'
+            f'<table class="{tbl_cls}"><thead>{head}</thead>'
             f'<tbody>{"".join(trs)}</tbody></table>{_view_provenance(metric_id)}</details>')
 
 
@@ -4583,17 +4611,18 @@ def _assemblies_view() -> str:
     fmax = max(t[3] for t in recs) or 1.0
     trs = []
     for name, yr, seats, val in recs:
-        w = round(val / fmax * 100, 1)
-        bar = (f' style="background:linear-gradient(to right,rgba(123,29,34,.16) '
-               f'{w}%,transparent {w}%)"')
+        # Same left-anchored bar-with-value grammar as the by-state tables.
+        w = round(val / fmax * 70, 1)
         trs.append(f'<tr><td>{html.escape(name)}</td>'
                    f'<td data-sort="{yr}">{yr}</td>'
                    f'<td>{html.escape(seats)}</td>'
-                   f'<td data-sort="{val:.4f}"{bar}>{_round_str(val, 1)}%</td></tr>')
+                   f'<td class="tbar-cell" data-sort="{val:.4f}">'
+                   f'<span class="tbar" style="width:{w}%"></span>'
+                   f'<span class="tbar-val">{_round_str(val, 1)}%</span></td></tr>')
     head = ('<tr><th class="sortable" data-col="0">Assembly</th>'
             '<th class="sortable" data-col="1" data-type="num">Election</th>'
             '<th>Muslim MLAs</th>'
-            '<th class="sortable" data-col="3" data-type="num">Share</th></tr>')
+            '<th class="sortable tbar-head" data-col="3" data-type="num">Share</th></tr>')
     return (f'<details data-view-id="assemblies" data-view-label="State assemblies" '
             f'data-view-sub="{len(recs)} assemblies">'
             f'<summary>Muslim share of state assemblies ({len(recs)} assemblies)</summary>'

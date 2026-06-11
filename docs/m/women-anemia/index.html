@@ -65,6 +65,12 @@
   .scroll-table { max-height:380px; overflow-y:auto; border:1px solid var(--rule); border-radius:6px; margin:10px 0; }
   .scroll-table table { margin:0; }
   .scroll-table thead th { position:sticky; top:0; background:var(--card); }
+  /* By-state magnitude bars (FH): same grammar as the modal tables. */
+  .state-bar-table th:first-child, .state-bar-table td:first-child { width:1%; white-space:nowrap; }
+  th.tbar-head { text-align:left; }
+  td.tbar-cell { text-align:left; white-space:nowrap; }
+  .tbar { display:inline-block; height:13px; background:rgba(123,29,34,.16); border-radius:2px; vertical-align:-2px; }
+  .tbar-val { margin-left:6px; }
   .src-note { font-size:13px; color:var(--muted); }
   .meta-block p { font-size:14.5px; line-height:1.6; max-width:60em; }
   .meta-block b { color:var(--accent); }
