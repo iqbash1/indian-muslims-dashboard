@@ -43,6 +43,13 @@ not ad-hoc scripts: metric metadata in `manifest/metrics.yaml`, sources in
   whenever canonical has 2+ years (break_flag renders the line dashed);
   single-round cards show the community snapshot. Jargon stays out of
   `definition` blocks (methodology_notes carry the survey mechanics).
+- **Chart & table grammar (FH/FI):** by-state tables with magnitude bars use
+  `.state-bar-table` (label column hugs the names, the bar carries its value
+  at its end) and default to polarity-aware worst-first sort; trend charts
+  measure their end-label padding (never truncate), label every line
+  including the dashed all-India reference, and hug the data with round
+  ticks (bounds:'data' + `_niceTicks`). Don't reintroduce fixed paddings,
+  anonymous reference lines, or tick-bound axis expansion.
 - Every value traces to a primary source with a SHA256-archived L1 file.
 - **Per-metric views are MODAL TABS** (by state/sex/district), each with its own
   shareable `/m/{id}/{view}/` URL + OG image and a share popover; the card face

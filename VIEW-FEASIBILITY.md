@@ -26,6 +26,17 @@ data file + transform code.
 
 ## Program status (as of 2026-06-09) - the "as many views as possible" sweep is DONE
 
+UPDATE (2026-06-10, Commits FE-FJ): the homepage-simplification pass folded five
+companion metrics into host-card tabs (top-quintile-share -> mpce, salaried-
+earnings -> salaried-share, institutional-credit-share -> household-net-worth,
+household-electricity -> pucca-house, undertrial-rate-per-100k ->
+prison-rate-per-100k; machinery FOLDED_VIEW_METRIC/_folded_view in build.py), so
+those metrics' "views" now live as tabs of their hosts. The mla-share quick-win
+below is DONE another way: mla-share has its own "By assembly" table tab
+(election year + seat fraction, Commit FJ; richer than the _state_details wiring
+this file proposed). audit_consistency.py Check C now enforces the
+tab <-> share-stub <-> OG bijection in CI.
+
 SHIPPED (Commits EJ-EO):
 - **Residence (urban/rural) dimension** added as an auto-rendering tab (`_residence_details`):
   imr, improved-sanitation (EK); lfpr-15plus, wpr-15plus, salaried-share (EJ);

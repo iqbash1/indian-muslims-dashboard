@@ -1,0 +1,56 @@
+{
+  "status": "success",
+  "total": 10,
+  "files": [
+    {
+      "name": "77th_V_IIFinal.pdf",
+      "base64": "Nzd0aF9WX0lJRmluYWwucGRm",
+      "size": "1.78 MB"
+    },
+    {
+      "name": "77th_V_I_Final.pdf",
+      "base64": "Nzd0aF9WX0lfRmluYWwucGRm",
+      "size": "5.55 MB"
+    },
+    {
+      "name": "DDI-IND-MOSPI-NSSO-77Rnd-Sch33.1-January2019-December2019.xml",
+      "base64": "RERJLUlORC1NT1NQSS1OU1NPLTc3Um5kLVNjaDMzLjEtSmFudWFyeTIwMTktRGVjZW1iZXIyMDE5LnhtbA==",
+      "size": "7.75 MB"
+    },
+    {
+      "name": "Estimation_procedure_NSS77_DPD.pdf",
+      "base64": "RXN0aW1hdGlvbl9wcm9jZWR1cmVfTlNTNzdfRFBELnBkZg==",
+      "size": "614.83 KB"
+    },
+    {
+      "name": "nic_amendment_2008.pdf",
+      "base64": "bmljX2FtZW5kbWVudF8yMDA4LnBkZg==",
+      "size": "84.79 KB"
+    },
+    {
+      "name": "README77331_V1m.pdf",
+      "base64": "UkVBRE1FNzczMzFfVjFtLnBkZg==",
+      "size": "49.18 KB"
+    },
+    {
+      "name": "README77331_V2m.pdf",
+      "base64": "UkVBRE1FNzczMzFfVjJtLnBkZg==",
+      "size": "49.85 KB"
+    },
+    {
+      "name": "Round77sch331Data.rar",
+      "base64": "Um91bmQ3N3NjaDMzMURhdGEucmFy",
+      "size": "21.32 MB"
+    },
+    {
+      "name": "State_77.xlsx",
+      "base64": "U3RhdGVfNzcueGxzeA==",
+      "size": "10.61 KB"
+    },
+    {
+      "name": "TP_ Sch.33.1 NSS 77th round_final_26.09.2019.pdf",
+      "base64": "VFBfIFNjaC4zMy4xIE5TUyA3N3RoIHJvdW5kX2ZpbmFsXzI2LjA5LjIwMTkucGRm",
+      "size": "2.01 MB"
+    }
+  ]
+}

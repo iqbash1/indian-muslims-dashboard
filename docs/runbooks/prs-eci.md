@@ -8,8 +8,9 @@
 - Role: feeds the representation-cluster metrics **`ls-share`** (Muslim share
   of Lok Sabha members, 18-point series 1952→2024) and **`mla-share`** (Muslim
   share of state legislative assembly members, currently 31 state/UT
-  assemblies covered; rendered as the "State assemblies" tab of the `ls-share`
-  card since Commit FE).
+  assemblies covered; its own card with a per-assembly "By assembly" table
+  tab. A Commit FE fold into ls-share was reverted in Commit FJ: the two
+  gaps are distinct stories).
 
 ## Why this is a SECONDARY manual-entry source (no L1 archive)
 

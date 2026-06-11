@@ -399,9 +399,6 @@ def render_scorecard_rows() -> str:
                 # Sort key uses relative gap so different units compare fairly.
                 # comp_val can be 0 for edge-case metrics; guard with max().
                 sort_key = (0, -abs(diff) / max(abs(comp_val), 1e-9))
-        elif mid == "muslim-higher-ed-enrolment":
-            gap_str = "n/a (no Hindu count in source)"
-            gap_class = "gap-neutral"
         elif mid == "pop-share":
             gap_str = "baseline"
             gap_class = "gap-neutral"
@@ -1453,7 +1450,7 @@ function _endLabels() {
     ctx.restore();
   }};
 }
-function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak, refLine, dashedExtras, mode) {
+function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak, mode) {
   mode = mode || 'card';
   _spec(id, 'trendChart', Array.from(arguments).slice(1));
   const ds = [];
@@ -1477,17 +1474,6 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
     if (s.minor) next._noEndLabel = true;  // skip end-label for minor communities (Jain, Other)
     ds.push(next);
   }
-  // Extra dashed series (e.g. Hindu as a reference in pop-share). Each entry:
-  // {label, data, color?}.  Drawn dashed gray, no points, end-labeled.
-  if (dashedExtras) {
-    for (const ex of dashedExtras) {
-      ds.push({
-        label: ex.label, data: ex.data, borderColor: ex.color || '#9e9e9e',
-        backgroundColor: 'transparent', fill: false, tension: 0.25, pointRadius: 0,
-        borderWidth: 1, borderDash: [5, 4], spanGaps: false, order: 2,
-      });
-    }
-  }
   if (allSeries) {
     // allSeries may be a raw array (legacy) or {values, label} when the
     // build wants to flag a non-default label (e.g. "Community median"
@@ -1499,17 +1485,8 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
       fill: false, tension: 0.25, pointRadius: 0, borderWidth: 1, borderDash: [2, 3],
       spanGaps: false, order: 3,
     };
-    allDs._isRefline = true;  // baseline aggregate, not a peer; suppress end-label.
+    allDs._isRefline = true;  // baseline aggregate (not a peer); slate end-label.
     ds.push(allDs);
-  }
-  if (refLine) {
-    const refDs = {
-      label: refLine.label, data: years.map(() => refLine.value), borderColor: '#bdbdbd',
-      backgroundColor: 'transparent', fill: false, tension: 0, pointRadius: 0, borderWidth: 1,
-      borderDash: [4, 3], spanGaps: false, order: 4,
-    };
-    refDs._isRefline = true;
-    ds.push(refDs);
   }
   // Reserve exactly the right edge the longest end-of-line label needs, so
   // "All communities" never truncates to "All commun" (the old fixed 64px).
@@ -1756,12 +1733,12 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
       cv.style.height = '';
       cv.id = origId + '-modal';
       // trendChart's signature is (id, years, seriesMap, allSeries, suffix,
-      // decimals, hasBreak, refLine, dashedExtras, mode). Preserve args 0-7 and
-      // force mode='modal' at position 8 so it lands in the correct slot.
+      // decimals, hasBreak, mode). Preserve args 0-5 and force mode='modal'
+      // at position 6 so it lands in the correct slot.
       let args = spec.args;
       if (spec.fnName === 'trendChart') {
-        args = spec.args.slice(0, 8);
-        while (args.length < 8) args.push(undefined);
+        args = spec.args.slice(0, 6);
+        while (args.length < 6) args.push(undefined);
         args.push('modal');
       }
       factories[spec.fnName](cv.id, ...args);
@@ -4321,8 +4298,8 @@ def render_metric_card(m: dict):
         card_html, js = _card_timeseries(mid, label, unit, src, csv_href, cvid)
     elif special == "time_series_count":
         card_html, js = _card_ts_count(mid, label, src, csv_href, cvid)
-    elif mid in ("pop-share", "muslim-higher-ed-enrolment"):
-        card_html, js = _card_muslim_only(mid, label, unit, src, csv_href, cvid)
+    elif mid == "pop-share":
+        card_html, js = _card_pop_share(mid, label, unit, src, csv_href, cvid)
     else:
         card_html, js = _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec)
     # Third element: this metric's drill-down views (id/label/sub), in tab order,
@@ -4938,62 +4915,49 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
                        chart_html, comps, src, csv_href, details), js
 
 
-def _card_muslim_only(mid, label, unit, src, csv_href, cvid):
+def _card_pop_share(mid, label, unit, src, csv_href, cvid):
+    """pop-share, the one Muslim-only card (no community comparator on the
+    hero). Until Commit EQ this builder also rendered muslim-higher-ed-
+    enrolment; that branch went dead when the count metric folded into
+    ger-higher-ed's tabs and was removed in the Commit FK rot clean."""
     nat = _nat_by_religion(mid)
     muslim = nat.get("muslim")
     headline = fmt_num(muslim, unit) if muslim is not None else "n/a"
-    chart_html, js, note = "", None, ""
-    conc_view, download = "", _district_download_link(mid)
-    if mid == "pop-share":
-        # Decadal multi-community trend (1961->2011). Hindu (~80%) dominates if
-        # plotted on the same axis as Muslim + minor religions, so the chart's
-        # y-axis hugs the 0-15% band where the Muslim story is legible; Hindu's
-        # trajectory is summarised in the note (it moved 83.45 -> 79.80 over 50
-        # years, a flat-looking 3.65pp drift at this resolution).
-        years, series, _ = _nat_trend(mid)
-        main_named = ("muslim", "christian", "sikh", "buddhist", "jain")
-        series_map = {rel: [(_round_dp(v, _disp_dp(unit)) if (v := series.get(rel, {}).get(y)) is not None else None)
-                            for y in years]
-                      for rel in main_named if rel in series}
-        hindu_first = series.get("hindu", {}).get(years[0]) if years else None
-        hindu_last = series.get("hindu", {}).get(years[-1]) if years else None
-        chart_html = f'<div class="card-chartwrap" style="height:200px"><canvas id="{cvid}" role="img" aria-label="Visualisation of this metric; numerical values are listed in the card above."></canvas></div>'
-        # No All-India series (shares already sum to ~100%); no refLine.
-        js = (f'trendChart("{cvid}", {json.dumps(years)}, {json.dumps(series_map)}, '
-              f'null, "%", {_disp_dp(unit)}, false);')
-        # The provenance caveats (RGI volumes; 1981 excludes Assam, 1991 excludes
-        # Jammu & Kashmir) live in the modal's "About this measurement" methodology,
-        # so the card face keeps just the one-line reason Hindu is off the chart.
-        note = (f"Hindu's share drifted from {_round_str(hindu_first, 1)}% in 1961 to "
-                f"{_round_str(hindu_last, 1)}% in 2011, omitted from the chart so the "
-                f"Muslim and minor-community trends are legible.")
-        # "By district" tab: the geographic-concentration story, merged in from
-        # the former district-concentration card (Commit DV). Its cumulative
-        # curve is a 2nd modal chart; the all-640-districts CSV download lives in
-        # this tab too. _concentration_view reads the concentration canonical.
-        conc_view, curve_js = _concentration_view(cvid + "-district", download)
-        if curve_js:
-            js = js + "\n" + curve_js
-        download = ""  # moved into the by-district tab
-    else:  # muslim-higher-ed-enrolment
-        # Top-8 states by Muslim enrolment, shown in thousands (the national
-        # headline is the absolute total; no community comparator exists).
-        st = [(state_label(r["geography_code"]), float(r["value"]))
-              for r in load_metric(mid) if r["geography_level"] == "state"]
-        st.sort(key=lambda x: -x[1])
-        st = st[:8]
-        if st:
-            chart_html = f'<div class="card-chartwrap" style="height:{len(st) * 26 + 20}px"><canvas id="{cvid}" role="img" aria-label="Visualisation of this metric; numerical values are listed in the card above."></canvas></div>'
-            labels = [s[0] for s in st]
-            vals = [round(s[1] / 1000) for s in st]
-            js = (f'hbar("{cvid}", {json.dumps(labels)}, {json.dumps(vals)}, '
-                  f'{json.dumps(["#7b1d22"] * len(st))}, "k", 0, null, "");')
-        note = ("No community ranking. AISHE tabulates “Muslim Minority” enrolment separately; "
-                "other communities are not enumerated in the same table. Top-8 states shown (thousands).")
+    download = _district_download_link(mid)
+    # Decadal multi-community trend (1961->2011). Hindu (~80%) dominates if
+    # plotted on the same axis as Muslim + minor religions, so the chart's
+    # y-axis hugs the 0-15% band where the Muslim story is legible; Hindu's
+    # trajectory is summarised in the note (it moved 83.45 -> 79.80 over 50
+    # years, a flat-looking 3.65pp drift at this resolution).
+    years, series, _ = _nat_trend(mid)
+    main_named = ("muslim", "christian", "sikh", "buddhist", "jain")
+    series_map = {rel: [(_round_dp(v, _disp_dp(unit)) if (v := series.get(rel, {}).get(y)) is not None else None)
+                        for y in years]
+                  for rel in main_named if rel in series}
+    hindu_first = series.get("hindu", {}).get(years[0]) if years else None
+    hindu_last = series.get("hindu", {}).get(years[-1]) if years else None
+    chart_html = f'<div class="card-chartwrap" style="height:200px"><canvas id="{cvid}" role="img" aria-label="Visualisation of this metric; numerical values are listed in the card above."></canvas></div>'
+    # No All-India series (shares already sum to ~100%).
+    js = (f'trendChart("{cvid}", {json.dumps(years)}, {json.dumps(series_map)}, '
+          f'null, "%", {_disp_dp(unit)}, false);')
+    # The provenance caveats (RGI volumes; 1981 excludes Assam, 1991 excludes
+    # Jammu & Kashmir) live in the modal's "About this measurement" methodology,
+    # so the card face keeps just the one-line reason Hindu is off the chart.
+    note = (f"Hindu's share drifted from {_round_str(hindu_first, 1)}% in 1961 to "
+            f"{_round_str(hindu_last, 1)}% in 2011, omitted from the chart so the "
+            f"Muslim and minor-community trends are legible.")
+    # "By district" tab: the geographic-concentration story, merged in from
+    # the former district-concentration card (Commit DV). Its cumulative
+    # curve is a 2nd modal chart; the all-640-districts CSV download lives in
+    # this tab too. _concentration_view reads the concentration canonical.
+    conc_view, curve_js = _concentration_view(cvid + "-district", download)
+    if curve_js:
+        js = js + "\n" + curve_js
+    download = ""  # moved into the by-district tab
     comps = f'<div class="comp-note">{html.escape(note)}</div>'
-    # Drill-downs become modal tabs (see _card_shell): state data, sex (where the
-    # source supports it), the by-district concentration view (pop-share), and the
-    # urban/rural split (pop-share carries residence rows; "" for the others).
+    # Drill-downs become modal tabs (see _card_shell): state data, the
+    # by-district concentration view, and the urban/rural split (pop-share
+    # carries residence rows; _sex_details returns "" here).
     details = (_state_details(mid, unit) + _sex_details(mid, unit) + conc_view
                + _residence_details(mid, unit))
     return _card_shell(mid, label, headline, CAPTION.get(mid, ""), _year_of(mid), "",
