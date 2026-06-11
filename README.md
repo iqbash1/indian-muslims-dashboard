@@ -47,9 +47,8 @@ Coverage at a glance:
   worth (AIDIS 2013, with borrowing sources as a tab).
 - **Health**: infant mortality, under-5 stunting, institutional delivery,
   women's anaemia (4 rounds 1998→2020 from NFHS-2/3/4/5).
-- **Housing**: toilet access (NFHS-5), improved drinking water within
-  premises and pucca housing (NSS 76th 2018, with household electricity as
-  a tab).
+- **Housing**: toilet access (NFHS-5), clean drinking water at home and
+  pucca housing (NSS 76th 2018, with household electricity as a tab).
 - **Representation**: Lok Sabha Muslim share 1952→2024 (18 elections), with
   all 31 state and UT assemblies in its "State assemblies" tab.
 - **Justice**: prison rate per 100k (with the undertrial rate in its

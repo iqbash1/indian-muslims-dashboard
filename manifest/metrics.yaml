@@ -839,7 +839,7 @@ metrics:
         order: 90
 
   - id: improved-water-premises
-    name: Improved drinking water within premises
+    name: Clean drinking water at home
     cluster: housing
     unit: percent
     higher_is_better: true
@@ -872,7 +872,7 @@ metrics:
     status: defined
     display:
       scorecard:
-        label: "Water within premises"
+        label: "Clean water at home"
         reference: "hindu"
         unit_format: percent
         higher_is_better: true

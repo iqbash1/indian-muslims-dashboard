@@ -37,6 +37,8 @@ not ad-hoc scripts: metric metadata in `manifest/metrics.yaml`, sources in
 - **Minimal card faces (FC):** the plain-English definition paragraph is hidden
   on the grid (`.cards .card-plain{display:none}`) and shows only as the modal
   lead; faces are label + hero + chart + pills. Cards stretch to equal height.
+  Hero captions ADD to the title (denominator, age band, plain gloss), never
+  restate it (FG; convention on the CAPTION dict in build.py).
 - **Time series from 2 rounds up (FD):** the card-face chart plots over time
   whenever canonical has 2+ years (break_flag renders the line dashed);
   single-round cards show the community snapshot. Jargon stays out of

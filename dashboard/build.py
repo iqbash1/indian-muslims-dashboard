@@ -3334,30 +3334,33 @@ def community_rank(by_religion: dict[str, float], higher_is_better: bool):
 # ============================================================================
 
 # Plain-language caption shown next to each headline value (Hawaii-style).
+# Each caption must ADD to the card title (the denominator, age band, or a
+# plain-English gloss), never restate it: the two render side by side as
+# "<title> / <hero> <caption>", so a caption echoing the title reads twice.
+# A metric absent here gets a bare hero (e.g. urban-share: "39.9% (2011)").
 CAPTION = {
-    "lit-7plus": "literate, age 7+",
+    "lit-7plus": "can read and write, age 7+",
     "ger-higher-ed": "of 18-23-year-olds",
     "sex-ratio": "females per 1,000 males",
-    "lfpr-15plus": "in the labour force, 15+",
+    "lfpr-15plus": "working or seeking work, age 15+",
     "wpr-15plus": "working, 15+",
-    "unemployment-rate-15plus": "of the labour force, unemployed",
-    "salaried-share": "in regular salaried work",
+    "unemployment-rate-15plus": "of the labour force, age 15+",
+    "salaried-share": "of all workers",
     "salaried-earnings": "earned per month in salaried jobs",
     "imr": "deaths per 1,000 live births",
     "inst-delivery": "of births in a facility",
-    "women-anemia": "of women 15-49 anaemic",
+    "women-anemia": "of women age 15-49",
     "improved-sanitation": "of households",
-    "improved-water-premises": "with improved water at home",
+    "improved-water-premises": "of households",
     "household-electricity": "of households electrified",
     "pucca-house": "in permanent-material homes",
-    "mpce": "spent per person each month",
     "top-quintile-share": "reach India's top spending fifth",
-    "household-net-worth": "owned minus owed, per household",
+    "household-net-worth": "owned minus owed",
     "institutional-credit-share": "of household debt from banks",
     "pop-share": "of all Indians",
     "district-concentration-top100": "of all Indian Muslims",
     "muslim-higher-ed-enrolment": "students",
-    "ls-share": "of 543 Lok Sabha seats",
+    "ls-share": "of 543 seats",
     "mla-share": "of state-assembly seats (agg.)",
     "prison-rate-per-100k": "prisoners per 100k of community",
     "undertrial-rate-per-100k": "undertrials per 100k of community",
