@@ -860,6 +860,47 @@ sources:
         target_path: sources/nada/plfs-2023-24/CSV_data_PLFS_2023_2024.zip
         status: verified
 
+  - id: aidis-2013
+    name: All-India Debt & Investment Survey 2013 (NSS 70th round, Sch 18.2, unit-level)
+    publisher: National Statistical Office (NSO), MoSPI
+    home_url: https://microdata.gov.in/NADA/index.php/catalog/130
+    cadence: roughly decennial (next usable round blocked, see known_issues)
+    cadence_notes: |
+      Unit-level microdata via the MoSPI NADA API (idno
+      DDI-IND-MOSPI-NSSO-70Rnd-Sch18pt2-Jan-Dec20131, Visit 1). 1,10,800
+      households; asset/debt reference date 30.06.2012. Feeds household-net-worth
+      and institutional-credit-share (computed; the published report stops at
+      social group, never religion).
+    access:
+      method: api
+      auth_required: true
+      auth_notes: |
+        Open catalog (listdatasets) needs no key; fileslist + download need a
+        personal X-API-KEY generated in a microdata.gov.in (NADA) account.
+        Re-fetch recipe: sources/nada/aidis-2013-v1/PROVENANCE.md.
+    formats: [csv, spss, stata]
+    religion_disaggregated: true
+    geography_levels: [national]
+    coverage:
+      - household_assets_debt_net_worth_by_religion
+      - institutional_vs_noninstitutional_credit_by_religion
+    known_issues:
+      - "Religion self-reported + unverified (NSO unit-data rider); survey stratified for states, not religions; no sub-state estimates"
+      - "MoSPI's CSV conversion ships block 10 (non-farm equipment) with an empty value column - assets undercount by the block's published 0.25-0.76% share; debt/IOI reproduce exactly"
+      - "Gold/ornaments outside the published asset concept (~4% additional); land at guideline not market values"
+      - "AIDIS 2018-19 (catalog id 156) is distributed ONLY as a proprietary .Nesstar binary - unusable until exported elsewhere; its published anchors are recorded in nada/aidis-layout-map.md"
+      - "41 MB unit-level zip kept local (provenance-only); sha256 in sources/nada/aidis-2013-v1/"
+    archive_dir: sources/nada/aidis-2013-v1/
+    runbook: docs/runbooks/aidis.md
+    last_pulled: "2026-06-10"
+    next_expected: null
+    targets:
+      - target_id: aidis-2013-v1-microdata-csv
+        description: AIDIS NSS 70th round Sch 18.2 Visit-1 unit-level CSV zip
+        url: https://microdata.gov.in/NADA/index.php/catalog/130
+        target_path: sources/nada/aidis-2013-v1/CSV_NSS_70th_Debt_&_Investment_Visit1_Jan_Dec_2013.zip
+        status: verified
+
   - id: aishe
     name: All India Survey on Higher Education
     publisher: Department of Higher Education, MoE

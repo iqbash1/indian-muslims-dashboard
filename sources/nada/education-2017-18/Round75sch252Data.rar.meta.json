@@ -1,0 +1,14 @@
+{
+  "source_id": "nada-education-2017-18",
+  "target_id": "education-2017-18-microdata",
+  "idno": "DDI-IND-MOSPI-NSSO-75Rnd-Sch25.2-July2017-June2018",
+  "filename": "Round75sch252Data.rar",
+  "url": "https://microdata.gov.in/NADA/index.php/catalog/151",
+  "download_url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-75Rnd-Sch25.2-July2017-June2018/Um91bmQ3NXNjaDI1MkRhdGEucmFy",
+  "pulled_at": "2026-06-11",
+  "content_length": 14775021,
+  "sha256": "ec6f551c1020ee7f5ba9ccdbf01758e1d1ee0cbf4af558120949a9e155d690f1",
+  "pull_method": "MoSPI NADA REST API (personal X-API-KEY header)",
+  "by_religion_verdict": "SAFE for education spending x religion; literacy/GER = off-limits",
+  "archival": "provenance-only: the unit-level file is NOT committed (kept local at ~/Desktop/nada-work/education-2017-18/). Re-fetch with the recipe in PROVENANCE.md and verify against this sha256. The schema/method docs in this directory ARE committed."
+}

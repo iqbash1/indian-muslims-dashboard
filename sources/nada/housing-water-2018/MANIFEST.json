@@ -1,0 +1,87 @@
+{
+  "idno": "DDI-IND-MOSPI-NSSO-76Rnd-Sch1.2-July2018-December2018",
+  "base": "https://microdata.gov.in/NADA/index.php/api",
+  "pulled_at": "2026-06-11T03:52:28.118849+00:00",
+  "files": [
+    {
+      "name": "Appendix I.pdf",
+      "fileno": "QXBwZW5kaXggSS5wZGY=",
+      "role": "doc",
+      "bytes": 504241,
+      "sha256": "dd778b636e286543fc642585c2bcfc35b9a9d4a8098139eb71d36beb1db207a0",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-76Rnd-Sch1.2-July2018-December2018/QXBwZW5kaXggSS5wZGY="
+    },
+    {
+      "name": "Appendix II.pdf",
+      "fileno": "QXBwZW5kaXggSUkucGRm",
+      "role": "doc",
+      "bytes": 488292,
+      "sha256": "b0319ae888e19fc57f41251b7642008d99f169e9ca2b430960435626167b902b",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-76Rnd-Sch1.2-July2018-December2018/QXBwZW5kaXggSUkucGRm"
+    },
+    {
+      "name": "Data_Layout_NSS76_120.xlsx",
+      "fileno": "RGF0YV9MYXlvdXRfTlNTNzZfMTIwLnhsc3g=",
+      "role": "doc",
+      "bytes": 39285,
+      "sha256": "8f111d1253b2cf18339003f0aa60700ffdd20d7c1b512e870659a5345055f3d1",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-76Rnd-Sch1.2-July2018-December2018/RGF0YV9MYXlvdXRfTlNTNzZfMTIwLnhsc3g="
+    },
+    {
+      "name": "DDI-IND-MOSPI-NSSO-76Rnd-Sch1.2-July2018-December2018.xml",
+      "fileno": "RERJLUlORC1NT1NQSS1OU1NPLTc2Um5kLVNjaDEuMi1KdWx5MjAxOC1EZWNlbWJlcjIwMTgueG1s",
+      "role": "doc",
+      "bytes": 2626045,
+      "sha256": "422bfacbb1f74122beefb4725cc7427515770b05ef9eb04fc3c7f84a2007594b",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-76Rnd-Sch1.2-July2018-December2018/RERJLUlORC1NT1NQSS1OU1NPLTc2Um5kLVNjaDEuMi1KdWx5MjAxOC1EZWNlbWJlcjIwMTgueG1s"
+    },
+    {
+      "name": "Estimation procedure _NSS 76_15052019.pdf",
+      "fileno": "RXN0aW1hdGlvbiBwcm9jZWR1cmUgX05TUyA3Nl8xNTA1MjAxOS5wZGY=",
+      "role": "doc",
+      "bytes": 491647,
+      "sha256": "2a50962ad24b808faf0023092286cddf07502d67591501c4a4abb5bc9c5b38a0",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-76Rnd-Sch1.2-July2018-December2018/RXN0aW1hdGlvbiBwcm9jZWR1cmUgX05TUyA3Nl8xNTA1MjAxOS5wZGY="
+    },
+    {
+      "name": "NSS_76_ins_Ch1.pdf",
+      "fileno": "TlNTXzc2X2luc19DaDEucGRm",
+      "role": "doc",
+      "bytes": 1047234,
+      "sha256": "f8528da0af10eb18a27528249e7b22ca48da38104c183bf2715ce5e1bdea5926",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-76Rnd-Sch1.2-July2018-December2018/TlNTXzc2X2luc19DaDEucGRm"
+    },
+    {
+      "name": "NSS_76_ins_Ch2.pdf",
+      "fileno": "TlNTXzc2X2luc19DaDIucGRm",
+      "role": "doc",
+      "bytes": 658564,
+      "sha256": "94d7d0096af8285498e010b5161c706aa2a868a09e32c3fa49e82ec43af13e7c",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-76Rnd-Sch1.2-July2018-December2018/TlNTXzc2X2luc19DaDIucGRm"
+    },
+    {
+      "name": "NSS_76_ins_Ch4.pdf",
+      "fileno": "TlNTXzc2X2luc19DaDQucGRm",
+      "role": "doc",
+      "bytes": 418038,
+      "sha256": "48d396916c5c433ecb0d867075decd59422e190e3db488884d6b2ce782582d87",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-76Rnd-Sch1.2-July2018-December2018/TlNTXzc2X2luc19DaDQucGRm"
+    },
+    {
+      "name": "NSS_76_sch_1.2.pdf",
+      "fileno": "TlNTXzc2X3NjaF8xLjIucGRm",
+      "role": "doc",
+      "bytes": 218577,
+      "sha256": "875b19915d7e35fe18212ddf451daec7d367a7c1d745745fc7177b3d0ab7f853",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-76Rnd-Sch1.2-July2018-December2018/TlNTXzc2X3NjaF8xLjIucGRm"
+    },
+    {
+      "name": "Round76sch1dot2Data.rar",
+      "fileno": "Um91bmQ3NnNjaDFkb3QyRGF0YS5yYXI=",
+      "role": "data",
+      "bytes": 10182474,
+      "sha256": "3fff25cf97a0f748654e1eaa30b248e8d6458407a142db8ea0b1aac5c120a636",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-76Rnd-Sch1.2-July2018-December2018/Um91bmQ3NnNjaDFkb3QyRGF0YS5yYXI="
+    }
+  ]
+}

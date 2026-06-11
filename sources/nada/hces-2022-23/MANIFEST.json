@@ -1,0 +1,79 @@
+{
+  "idno": "DDI-IND-MOSPI-NSSO-HCES22-23",
+  "base": "https://microdata.gov.in/NADA/index.php/api",
+  "pulled_at": "2026-06-11T03:42:25.705078+00:00",
+  "files": [
+    {
+      "name": "DDI-IND-MOSPI-NSSO-HCES22-23.xml",
+      "fileno": "RERJLUlORC1NT1NQSS1OU1NPLUhDRVMyMi0yMy54bWw=",
+      "role": "doc",
+      "bytes": 1726710,
+      "sha256": "70758e3a0bba24f588d2414f1de5aeb0f0419471b27675064e1241f2fe6504b9",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-HCES22-23/RERJLUlORC1NT1NQSS1OU1NPLUhDRVMyMi0yMy54bWw="
+    },
+    {
+      "name": "HCES_2022_23_Imputation_rate (2).xlsx",
+      "fileno": "SENFU18yMDIyXzIzX0ltcHV0YXRpb25fcmF0ZSAoMikueGxzeA==",
+      "role": "doc",
+      "bytes": 63605,
+      "sha256": "456666870d838f2986fde6d8ec7d23d18afd3cbab05b18ffe4f4a8607371eab5",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-HCES22-23/SENFU18yMDIyXzIzX0ltcHV0YXRpb25fcmF0ZSAoMikueGxzeA=="
+    },
+    {
+      "name": "Layout_HCES 2022-23 (1).xlsx",
+      "fileno": "TGF5b3V0X0hDRVMgMjAyMi0yMyAoMSkueGxzeA==",
+      "role": "doc",
+      "bytes": 38223,
+      "sha256": "ebf9548b0e9f3e79d8e946935ad57da45e36c99bd090dd3768728ec689d4e283",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-HCES22-23/TGF5b3V0X0hDRVMgMjAyMi0yMyAoMSkueGxzeA=="
+    },
+    {
+      "name": "Objective of HCES (1).pdf",
+      "fileno": "T2JqZWN0aXZlIG9mIEhDRVMgKDEpLnBkZg==",
+      "role": "doc",
+      "bytes": 187416,
+      "sha256": "b75f763c5d012b36dc75cee9577e3970ffa0ef0a43ba72b8f84c11dfe6c59fa1",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-HCES22-23/T2JqZWN0aXZlIG9mIEhDRVMgKDEpLnBkZg=="
+    },
+    {
+      "name": "Readme_HCES2022 (1).docx",
+      "fileno": "UmVhZG1lX0hDRVMyMDIyICgxKS5kb2N4",
+      "role": "doc",
+      "bytes": 19920,
+      "sha256": "30696c1e028540108e837396bc9e3d7ef877b5c815a8d6e7f03c7136db2aefc5",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-HCES22-23/UmVhZG1lX0hDRVMyMDIyICgxKS5kb2N4"
+    },
+    {
+      "name": "Rider for users of unit level data of HCES (2).pdf",
+      "fileno": "UmlkZXIgZm9yIHVzZXJzIG9mIHVuaXQgbGV2ZWwgZGF0YSBvZiBIQ0VTICgyKS5wZGY=",
+      "role": "doc",
+      "bytes": 113491,
+      "sha256": "7cdca837ce6b4b50426644434627cea5ec613a679df21f09644f5ce159506c63",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-HCES22-23/UmlkZXIgZm9yIHVzZXJzIG9mIHVuaXQgbGV2ZWwgZGF0YSBvZiBIQ0VTICgyKS5wZGY="
+    },
+    {
+      "name": "Survey methodology and estimation procedure (1).pdf",
+      "fileno": "U3VydmV5IG1ldGhvZG9sb2d5IGFuZCBlc3RpbWF0aW9uIHByb2NlZHVyZSAoMSkucGRm",
+      "role": "doc",
+      "bytes": 749028,
+      "sha256": "2a11f5f30be33912336625b826fffc3fe354f3c0a7622944c3067c0fd42cd082",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-HCES22-23/U3VydmV5IG1ldGhvZG9sb2d5IGFuZCBlc3RpbWF0aW9uIHByb2NlZHVyZSAoMSkucGRm"
+    },
+    {
+      "name": "tabulation_state_code (2).xlsx",
+      "fileno": "dGFidWxhdGlvbl9zdGF0ZV9jb2RlICgyKS54bHN4",
+      "role": "doc",
+      "bytes": 11210,
+      "sha256": "33860212fb6bc90163064816e8417449fec34991ef108f8d31ea60ac5e09b48a",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-HCES22-23/dGFidWxhdGlvbl9zdGF0ZV9jb2RlICgyKS54bHN4"
+    },
+    {
+      "name": "Unit level data of HCES 2022-23 round.zip",
+      "fileno": "VW5pdCBsZXZlbCBkYXRhIG9mIEhDRVMgMjAyMi0yMyByb3VuZC56aXA=",
+      "role": "data",
+      "bytes": 122631251,
+      "sha256": "bbf2afd03b782e466a9eb4623e98c41bc25d85a1f5f80d35b0798c1e67dbdcde",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-HCES22-23/VW5pdCBsZXZlbCBkYXRhIG9mIEhDRVMgMjAyMi0yMyByb3VuZC56aXA="
+    }
+  ]
+}

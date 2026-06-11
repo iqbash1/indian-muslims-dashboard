@@ -1,0 +1,127 @@
+{
+  "idno": "DDI-IND-MOSPI-NSSO-61Rnd-Sch1-July2004-June2005",
+  "base": "https://microdata.gov.in/NADA/index.php/api",
+  "pulled_at": "2026-06-11T03:42:25.705126+00:00",
+  "files": [
+    {
+      "name": "512_Perceived_Adequacy_of_Food_Consumption_in_Indian_Households_2004-2005.pdf",
+      "fileno": "NTEyX1BlcmNlaXZlZF9BZGVxdWFjeV9vZl9Gb29kX0NvbnN1bXB0aW9uX2luX0luZGlhbl9Ib3VzZWhvbGRzXzIwMDQtMjAwNS5wZGY=",
+      "role": "doc",
+      "bytes": 1066864,
+      "sha256": "2fa6a13fd3d33102dd67639b55f11238e61c48462d6e9fae7b1ae6d5c25e41e9",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-61Rnd-Sch1-July2004-June2005/NTEyX1BlcmNlaXZlZF9BZGVxdWFjeV9vZl9Gb29kX0NvbnN1bXB0aW9uX2luX0luZGlhbl9Ib3VzZWhvbGRzXzIwMDQtMjAwNS5wZGY="
+    },
+    {
+      "name": "Corrigendum_II_NSS_Report_No_509_Household_Consumption_of_Various_Good_and_Services_in_India_2004-05.pdf",
+      "fileno": "Q29ycmlnZW5kdW1fSUlfTlNTX1JlcG9ydF9Ob181MDlfSG91c2Vob2xkX0NvbnN1bXB0aW9uX29mX1ZhcmlvdXNfR29vZF9hbmRfU2VydmljZXNfaW5fSW5kaWFfMjAwNC0wNS5wZGY=",
+      "role": "doc",
+      "bytes": 7288,
+      "sha256": "8e35052edd0710015a3d3464a03937b736d4984fbc2706bde2c105559908cf9e",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-61Rnd-Sch1-July2004-June2005/Q29ycmlnZW5kdW1fSUlfTlNTX1JlcG9ydF9Ob181MDlfSG91c2Vob2xkX0NvbnN1bXB0aW9uX29mX1ZhcmlvdXNfR29vZF9hbmRfU2VydmljZXNfaW5fSW5kaWFfMjAwNC0wNS5wZGY="
+    },
+    {
+      "name": "CORRIGENDUM_nss_rep_509_Household_Consumption_of_Various_Goods_and_Services_in_India_2004-05.pdf",
+      "fileno": "Q09SUklHRU5EVU1fbnNzX3JlcF81MDlfSG91c2Vob2xkX0NvbnN1bXB0aW9uX29mX1ZhcmlvdXNfR29vZHNfYW5kX1NlcnZpY2VzX2luX0luZGlhXzIwMDQtMDUucGRm",
+      "role": "doc",
+      "bytes": 93721,
+      "sha256": "0e31cd6f7cdc628b46def180e6db9b56369e695535983bd843c06bc3419ab4d3",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-61Rnd-Sch1-July2004-June2005/Q09SUklHRU5EVU1fbnNzX3JlcF81MDlfSG91c2Vob2xkX0NvbnN1bXB0aW9uX29mX1ZhcmlvdXNfR29vZHNfYW5kX1NlcnZpY2VzX2luX0luZGlhXzIwMDQtMDUucGRm"
+    },
+    {
+      "name": "Estimation_Procedure_61.pdf",
+      "fileno": "RXN0aW1hdGlvbl9Qcm9jZWR1cmVfNjEucGRm",
+      "role": "doc",
+      "bytes": 1747518,
+      "sha256": "289c3646e61a1e50c82680c1e10046f2d152716dde851c9b413aaf296a723d0b",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-61Rnd-Sch1-July2004-June2005/RXN0aW1hdGlvbl9Qcm9jZWR1cmVfNjEucGRm"
+    },
+    {
+      "name": "Household Consumer Expenditure, July 2004 - June 2005_Csv.zip",
+      "fileno": "SG91c2Vob2xkIENvbnN1bWVyIEV4cGVuZGl0dXJlLCBKdWx5IDIwMDQgLSBKdW5lIDIwMDVfQ3N2LnppcA==",
+      "role": "data",
+      "bytes": 148594858,
+      "sha256": "5cef196388520b68c6214ec85f3412a26f68e6bd59e8440bb14ac28e11246f91",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-61Rnd-Sch1-July2004-June2005/SG91c2Vob2xkIENvbnN1bWVyIEV4cGVuZGl0dXJlLCBKdWx5IDIwMDQgLSBKdW5lIDIwMDVfQ3N2LnppcA=="
+    },
+    {
+      "name": "ihsn_nsso_61_sch_1pt0_cons_exp.pdf",
+      "fileno": "aWhzbl9uc3NvXzYxX3NjaF8xcHQwX2NvbnNfZXhwLnBkZg==",
+      "role": "doc",
+      "bytes": 749360,
+      "sha256": "59ad280804a42429b624c4414e37a84f2302acd3eaf8ba1753ed687b355e46b0",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-61Rnd-Sch1-July2004-June2005/aWhzbl9uc3NvXzYxX3NjaF8xcHQwX2NvbnNfZXhwLnBkZg=="
+    },
+    {
+      "name": "Introduction_Concepts_Definitions_and_Procedures.pdf",
+      "fileno": "SW50cm9kdWN0aW9uX0NvbmNlcHRzX0RlZmluaXRpb25zX2FuZF9Qcm9jZWR1cmVzLnBkZg==",
+      "role": "doc",
+      "bytes": 172359,
+      "sha256": "8f63a73f81dd93c21d5bcbdd8f3cdec34ee565af2841a781770c3e45b341d434",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-61Rnd-Sch1-July2004-June2005/SW50cm9kdWN0aW9uX0NvbmNlcHRzX0RlZmluaXRpb25zX2FuZF9Qcm9jZWR1cmVzLnBkZg=="
+    },
+    {
+      "name": "LIST_OF_FOD_SUB-REGIONS.pdf",
+      "fileno": "TElTVF9PRl9GT0RfU1VCLVJFR0lPTlMucGRm",
+      "role": "doc",
+      "bytes": 91692,
+      "sha256": "7b7bab38e46162f6e38d216b48294261114163bb94c9e0259e7d8cc0477dc016",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-61Rnd-Sch1-July2004-June2005/TElTVF9PRl9GT0RfU1VCLVJFR0lPTlMucGRm"
+    },
+    {
+      "name": "LIST_OF_NSS_REGIONS_AND_THEIR_COMPOSITION.pdf",
+      "fileno": "TElTVF9PRl9OU1NfUkVHSU9OU19BTkRfVEhFSVJfQ09NUE9TSVRJT04ucGRm",
+      "role": "doc",
+      "bytes": 57109,
+      "sha256": "6973d598ab410da5c77a3ac021b4710c89371c2e37e8d8f1866a9cc245de98ed",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-61Rnd-Sch1-July2004-June2005/TElTVF9PRl9OU1NfUkVHSU9OU19BTkRfVEhFSVJfQ09NUE9TSVRJT04ucGRm"
+    },
+    {
+      "name": "NCO_1968-2 digit_codes.pdf",
+      "fileno": "TkNPXzE5NjgtMiBkaWdpdF9jb2Rlcy5wZGY=",
+      "role": "doc",
+      "bytes": 11241,
+      "sha256": "ed7c5cee8c1d944eeb9b769af5851496f88b7b57ffd15349bd8a8ece92f43716",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-61Rnd-Sch1-July2004-June2005/TkNPXzE5NjgtMiBkaWdpdF9jb2Rlcy5wZGY="
+    },
+    {
+      "name": "NCO_1968-3_digit_codes.pdf",
+      "fileno": "TkNPXzE5NjgtM19kaWdpdF9jb2Rlcy5wZGY=",
+      "role": "doc",
+      "bytes": 29970,
+      "sha256": "d456511c922d7aa24914e86495b3870101d46a446b52cf15e3702476876f0787",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-61Rnd-Sch1-July2004-June2005/TkNPXzE5NjgtM19kaWdpdF9jb2Rlcy5wZGY="
+    },
+    {
+      "name": "NIC_1998_5 digit_classification.pdf",
+      "fileno": "TklDXzE5OThfNSBkaWdpdF9jbGFzc2lmaWNhdGlvbi5wZGY=",
+      "role": "doc",
+      "bytes": 547784,
+      "sha256": "a7af6d1eb235a9b350c783144d5b416199504c691561a3b3a3e60f44a12a61f4",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-61Rnd-Sch1-July2004-June2005/TklDXzE5OThfNSBkaWdpdF9jbGFzc2lmaWNhdGlvbi5wZGY="
+    },
+    {
+      "name": "Schedule_1pt0_Consumer_Expenditure.pdf",
+      "fileno": "U2NoZWR1bGVfMXB0MF9Db25zdW1lcl9FeHBlbmRpdHVyZS5wZGY=",
+      "role": "doc",
+      "bytes": 189618,
+      "sha256": "7b02953b2501266cb5679c8188aa94e440778f3e62a1c6fc040078be56fb457e",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-61Rnd-Sch1-July2004-June2005/U2NoZWR1bGVfMXB0MF9Db25zdW1lcl9FeHBlbmRpdHVyZS5wZGY="
+    },
+    {
+      "name": "Schedule_1pt0_NSS_Round_61.pdf",
+      "fileno": "U2NoZWR1bGVfMXB0MF9OU1NfUm91bmRfNjEucGRm",
+      "role": "doc",
+      "bytes": 254087,
+      "sha256": "e3aa21a900915ef5481a9b5fc75ac8697e5dfa1d20e34947f15de0f80aadcc94",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-61Rnd-Sch1-July2004-June2005/U2NoZWR1bGVfMXB0MF9OU1NfUm91bmRfNjEucGRm"
+    },
+    {
+      "name": "State_Codes_61.pdf",
+      "fileno": "U3RhdGVfQ29kZXNfNjEucGRm",
+      "role": "doc",
+      "bytes": 618585,
+      "sha256": "bfb996442d9c9f690b31fcaa6ffc71de76230d2049bb45c2e40c8401e2e62d66",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-61Rnd-Sch1-July2004-June2005/U3RhdGVfQ29kZXNfNjEucGRm"
+    }
+  ]
+}

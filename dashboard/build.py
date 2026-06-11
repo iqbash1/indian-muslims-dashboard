@@ -3292,6 +3292,8 @@ CAPTION = {
     "improved-sanitation": "of households",
     "mpce": "spent per person each month",
     "top-quintile-share": "reach India's top spending fifth",
+    "household-net-worth": "owned minus owed, per household",
+    "institutional-credit-share": "of household debt from banks",
     "pop-share": "of all Indians",
     "district-concentration-top100": "of all Indian Muslims",
     "muslim-higher-ed-enrolment": "students",
@@ -3306,7 +3308,7 @@ CAPTION = {
 UNIT_JS = {
     "percent": ("%", 1), "females_per_1000_males": ("", 0),
     "per_1000_live_births": ("", 1), "rate_per_100k": ("", 1), "count": ("", 0),
-    "inr_per_month": ("", 0),
+    "inr_per_month": ("", 0), "inr": ("", 0),
 }
 SOURCE_LABEL = {
     "census-india-1961": "Census 1961 · C-VII Religion",
@@ -3389,6 +3391,8 @@ PLAIN_DEFINITION = {
     "improved-sanitation": "What share of households has a toilet of any type.",
     "mpce": "How much a typical person in a community spends in a month, on food, rent, fuel, clothes and everything else. In India this is the usual way to measure how well-off people are, because reliable income data does not exist.",
     "top-quintile-share": "Of all people in a community, what share lives in households among the top 20% of spending nationally. With an even spread every community would be at 20%. Muslims are at par among the poorest fifth but squeezed out of the richest fifth.",
+    "household-net-worth": "What an average household owns (land, buildings, livestock, vehicles, financial assets) minus what it owes. Accumulated wealth runs a far wider gap than monthly spending: urban Muslim households hold about half the net worth of urban Hindu households.",
+    "institutional-credit-share": "Of the money indebted households owe, what share comes from banks, co-operatives and government schemes rather than moneylenders and other informal sources. Informal credit costs more and carries no protection.",
     "ls-share": "Of the 543 seats in India's national parliament (Lok Sabha), what share is held by Muslim MPs.",
     "mla-share": "Across all 31 state and UT legislative assemblies that hold elections, what share of MLA seats is held by Muslims.",
     "prison-rate-per-100k": "For every 100,000 people of a religion, how many are in prison. Allows fair comparison across communities of different size.",

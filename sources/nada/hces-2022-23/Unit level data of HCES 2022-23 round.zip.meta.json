@@ -1,0 +1,14 @@
+{
+  "source_id": "nada-hces-2022-23",
+  "target_id": "hces-2022-23-microdata",
+  "idno": "DDI-IND-MOSPI-NSSO-HCES22-23",
+  "filename": "Unit level data of HCES 2022-23 round.zip",
+  "url": "https://microdata.gov.in/NADA/index.php/catalog/224",
+  "download_url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-HCES22-23/VW5pdCBsZXZlbCBkYXRhIG9mIEhDRVMgMjAyMi0yMyByb3VuZC56aXA=",
+  "pulled_at": "2026-06-11",
+  "content_length": 122631251,
+  "sha256": "bbf2afd03b782e466a9eb4623e98c41bc25d85a1f5f80d35b0798c1e67dbdcde",
+  "pull_method": "MoSPI NADA REST API (personal X-API-KEY header)",
+  "by_religion_verdict": "SAFE: MPCE x religion (proven on 2023-24)",
+  "archival": "provenance-only: the unit-level file is NOT committed (kept local at ~/Desktop/nada-work/hces-2022-23/). Re-fetch with the recipe in PROVENANCE.md and verify against this sha256. The schema/method docs in this directory ARE committed."
+}

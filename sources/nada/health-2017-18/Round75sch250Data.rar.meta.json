@@ -1,0 +1,14 @@
+{
+  "source_id": "nada-health-2017-18",
+  "target_id": "health-2017-18-microdata",
+  "idno": "DDI-IND-MOSPI-NSSO-75Rnd-Sch25.0-July2017-June2018",
+  "filename": "Round75sch250Data.rar",
+  "url": "https://microdata.gov.in/NADA/index.php/catalog/152",
+  "download_url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-75Rnd-Sch25.0-July2017-June2018/Um91bmQ3NXNjaDI1MERhdGEucmFy",
+  "pulled_at": "2026-06-11",
+  "content_length": 14887767,
+  "sha256": "0399625ef40fe2c3badaefa088fd5e5110e30ed0b62c9a45791e8ad31c28ff2d",
+  "pull_method": "MoSPI NADA REST API (personal X-API-KEY header)",
+  "by_religion_verdict": "SAFE for OOP health spending x religion; morbidity rate = avoid",
+  "archival": "provenance-only: the unit-level file is NOT committed (kept local at ~/Desktop/nada-work/health-2017-18/). Re-fetch with the recipe in PROVENANCE.md and verify against this sha256. The schema/method docs in this directory ARE committed."
+}

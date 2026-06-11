@@ -58,6 +58,7 @@ SURVEYS = {
     "tus-2019": (223, "Time Use Survey, 2019", "SAFE: time-use minutes x religion (niche new metric)"),
     "tus-2024": (236, "Time Use Survey, 2024", "SAFE: time-use minutes x religion (niche new metric)"),
     "sas-agri-2013": (134, "Situation Assessment of Agricultural Households, NSS 70th round, 2013", "SAFE: agri-household income x religion (agricultural households only)"),
+    "sas-agri-2019": (157, "Land & Livestock Holding + Situation Assessment of Agricultural Households, NSS 77th round, 2019 (Sch 33.1)", "SAFE: agri-household income + land holding x religion (agricultural households only)"),
 }
 
 # Copy these doc kinds into the repo; everything else (reports, field manuals) stays local.

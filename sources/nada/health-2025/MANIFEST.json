@@ -1,0 +1,71 @@
+{
+  "idno": "DDI-IND-NSO-HSCHealth80R-Jan2025-Dec2025",
+  "base": "https://microdata.gov.in/NADA/index.php/api",
+  "pulled_at": "2026-06-11T03:07:18.298297+00:00",
+  "files": [
+    {
+      "name": "CODEs_for_Blocks_of_Schpt25pt0.xlsx",
+      "fileno": "Q09ERXNfZm9yX0Jsb2Nrc19vZl9TY2hwdDI1cHQwLnhsc3g=",
+      "role": "doc",
+      "bytes": 36128,
+      "sha256": "3a0687ea21ec503d57682ca3bad5943a768555c2c1362ab80b2b919e70460860",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-NSO-HSCHealth80R-Jan2025-Dec2025/Q09ERXNfZm9yX0Jsb2Nrc19vZl9TY2hwdDI1cHQwLnhsc3g="
+    },
+    {
+      "name": "CSV_data_household_social_consumption_heaith_Jan_Dec25.zip",
+      "fileno": "Q1NWX2RhdGFfaG91c2Vob2xkX3NvY2lhbF9jb25zdW1wdGlvbl9oZWFpdGhfSmFuX0RlYzI1LnppcA==",
+      "role": "data",
+      "bytes": 16241961,
+      "sha256": "ee86814cb807017d042f4f649654d7cd485ea3c49d1ca5838571036b1930b68a",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-NSO-HSCHealth80R-Jan2025-Dec2025/Q1NWX2RhdGFfaG91c2Vob2xkX3NvY2lhbF9jb25zdW1wdGlvbl9oZWFpdGhfSmFuX0RlYzI1LnppcA=="
+    },
+    {
+      "name": "Datalayout_250_80R.xlsx",
+      "fileno": "RGF0YWxheW91dF8yNTBfODBSLnhsc3g=",
+      "role": "doc",
+      "bytes": 45338,
+      "sha256": "013845ede92fd9998b8cb5c8bdfa248b404797c8668bfab39c134aba064984ae",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-NSO-HSCHealth80R-Jan2025-Dec2025/RGF0YWxheW91dF8yNTBfODBSLnhsc3g="
+    },
+    {
+      "name": "Note_for_data_user.pdf",
+      "fileno": "Tm90ZV9mb3JfZGF0YV91c2VyLnBkZg==",
+      "role": "doc",
+      "bytes": 112089,
+      "sha256": "769eaf0d8f91d2ddbcadc0d0763009331d9b6f5f4d612a5c553b8d57fd7131f4",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-NSO-HSCHealth80R-Jan2025-Dec2025/Tm90ZV9mb3JfZGF0YV91c2VyLnBkZg=="
+    },
+    {
+      "name": "README_HEALTH_25pt0.docx",
+      "fileno": "UkVBRE1FX0hFQUxUSF8yNXB0MC5kb2N4",
+      "role": "doc",
+      "bytes": 25150,
+      "sha256": "13889b6a6ad623f3cd5fe71dfc3f33b638675fcea91b682e598224d6d35a067c",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-NSO-HSCHealth80R-Jan2025-Dec2025/UkVBRE1FX0hFQUxUSF8yNXB0MC5kb2N4"
+    },
+    {
+      "name": "SampleDesign_EstimationProcedure_Health.pdf",
+      "fileno": "U2FtcGxlRGVzaWduX0VzdGltYXRpb25Qcm9jZWR1cmVfSGVhbHRoLnBkZg==",
+      "role": "doc",
+      "bytes": 383039,
+      "sha256": "ad831115925d81237912ebe9e5d2e0b38af5beba14f6b85d0d984e9f1f794ea7",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-NSO-HSCHealth80R-Jan2025-Dec2025/U2FtcGxlRGVzaWduX0VzdGltYXRpb25Qcm9jZWR1cmVfSGVhbHRoLnBkZg=="
+    },
+    {
+      "name": "Schedule_ 0pt0_NSS80.pdf",
+      "fileno": "U2NoZWR1bGVfIDBwdDBfTlNTODAucGRm",
+      "role": "doc",
+      "bytes": 245734,
+      "sha256": "7b38c1857c953a0592aff5c26e45e46f36156b6dcb52f78ec4e02bd71319ae4c",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-NSO-HSCHealth80R-Jan2025-Dec2025/U2NoZWR1bGVfIDBwdDBfTlNTODAucGRm"
+    },
+    {
+      "name": "Schedule_25pt0_80R.pdf",
+      "fileno": "U2NoZWR1bGVfMjVwdDBfODBSLnBkZg==",
+      "role": "doc",
+      "bytes": 603875,
+      "sha256": "883e2d0f4949c04c54de975f0a8851672cd866899842b907cd2b6a81902323ce",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-NSO-HSCHealth80R-Jan2025-Dec2025/U2NoZWR1bGVfMjVwdDBfODBSLnBkZg=="
+    }
+  ]
+}

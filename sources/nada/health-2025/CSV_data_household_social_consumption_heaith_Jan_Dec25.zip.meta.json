@@ -1,0 +1,14 @@
+{
+  "source_id": "nada-health-2025",
+  "target_id": "health-2025-microdata",
+  "idno": "DDI-IND-NSO-HSCHealth80R-Jan2025-Dec2025",
+  "filename": "CSV_data_household_social_consumption_heaith_Jan_Dec25.zip",
+  "url": "https://microdata.gov.in/NADA/index.php/catalog/290",
+  "download_url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-NSO-HSCHealth80R-Jan2025-Dec2025/Q1NWX2RhdGFfaG91c2Vob2xkX3NvY2lhbF9jb25zdW1wdGlvbl9oZWFpdGhfSmFuX0RlYzI1LnppcA==",
+  "pulled_at": "2026-06-11",
+  "content_length": 16241961,
+  "sha256": "ee86814cb807017d042f4f649654d7cd485ea3c49d1ca5838571036b1930b68a",
+  "pull_method": "MoSPI NADA REST API (personal X-API-KEY header)",
+  "by_religion_verdict": "SAFE for OOP health spending x religion; morbidity rate = avoid",
+  "archival": "provenance-only: the unit-level file is NOT committed (kept local at ~/Desktop/nada-work/health-2025/). Re-fetch with the recipe in PROVENANCE.md and verify against this sha256. The schema/method docs in this directory ARE committed."
+}
