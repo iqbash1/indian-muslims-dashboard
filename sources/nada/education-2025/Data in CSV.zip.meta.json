@@ -1,0 +1,14 @@
+{
+  "source_id": "nada-education-2025",
+  "target_id": "education-2025-microdata",
+  "idno": "DDI-IND-MOSPI-NSS-CMSE80-2025",
+  "filename": "Data in CSV.zip",
+  "url": "https://microdata.gov.in/NADA/index.php/catalog/255",
+  "download_url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSS-CMSE80-2025/RGF0YSBpbiBDU1Yuemlw",
+  "pulled_at": "2026-06-10",
+  "content_length": 2998685,
+  "sha256": "3bc9b6831c8a7cffdcb70fd5ffafc224f9ff788e59f238736916722c16d7eb70",
+  "pull_method": "MoSPI NADA REST API (personal X-API-KEY header)",
+  "by_religion_verdict": "SAFE for education spending x religion; literacy/GER = off-limits",
+  "archival": "provenance-only: the unit-level file is NOT committed (kept local at ~/Desktop/nada-work/education-2025/). Re-fetch with the recipe in PROVENANCE.md and verify against this sha256. The schema/method docs in this directory ARE committed."
+}

@@ -789,6 +789,77 @@ sources:
         target_path: sources/hces-2023-24/HCES_Data_2023-24_Csv.zip
         status: verified
 
+  - id: plfs-microdata
+    name: Periodic Labour Force Survey unit-level microdata, 2017-18 to 2023-24 (7 rounds)
+    publisher: National Statistical Office (NSO), MoSPI
+    home_url: https://microdata.gov.in/NADA/index.php/catalog/PLFS
+    cadence: annual (July-June rounds)
+    cadence_notes: |
+      Unit-level microdata for seven consistent July-June PLFS rounds via the MoSPI
+      NADA API. Religion is captured at the household level in EVERY round, which the
+      annual-report PDFs only publish for the current year, so the microdata is the
+      only source for the 15+ employment-by-religion TREND. Feeds the over-time
+      (2017-2022) rows of lfpr-15plus, wpr-15plus and salaried-share; the 2023-24
+      point stays sourced from the published annual-report tables (plfs source),
+      which the microdata reproduces within 0.2pp.
+    access:
+      method: api
+      auth_required: true
+      auth_notes: |
+        Open catalog (listdatasets) needs no key; fileslist + download need a
+        personal X-API-KEY generated in a microdata.gov.in (NADA) account.
+        Re-fetch recipe per round: sources/nada/plfs-<round>/PROVENANCE.md
+        (NADA_API_KEY=... .venv/bin/python nada/bank.py autoget <idno> <dir>).
+    formats: [csv, stata, sas, spss, json]
+    religion_disaggregated: true
+    geography_levels: [national]
+    coverage:
+      - lfpr_wpr_unemployment_salaried_share_15plus_by_religion_over_time
+    known_issues:
+      - "Religion self-reported + unverified (NSO unit-data rider); survey designed for labour-force estimation with State/UT stratum, no sub-state estimates"
+      - "13-22 MB unit-level CSV zips kept local (provenance-only); sha256 per round in sources/nada/plfs-<round>/"
+      - "Column suffixes renamed at 2020-21 (per_fv/hh_fv -> perv1/hhv1); 2018-19 household file headers carry a _hh_rv mislabel; 2020-21 person file includes temporary visitors (b4q1 >= 81, dropped); see nada/plfs-layout-map.md"
+    archive_dir: sources/nada/
+    runbook: docs/runbooks/plfs-microdata.md
+    last_pulled: "2026-06-10"
+    next_expected: "2026-10-01"
+    targets:
+      - target_id: plfs-2017-18-microdata-csv
+        description: PLFS July2017-June2018 unit-level CSV zip
+        url: https://microdata.gov.in/NADA/index.php/catalog/204
+        target_path: sources/nada/plfs-2017-18/CSV_PLFS_July2017_June2018.zip
+        status: verified
+      - target_id: plfs-2018-19-microdata-csv
+        description: PLFS July2018-June2019 unit-level CSV zip
+        url: https://microdata.gov.in/NADA/index.php/catalog/216
+        target_path: sources/nada/plfs-2018-19/PLFS_2018_19_CSV.zip
+        status: verified
+      - target_id: plfs-2019-20-microdata-csv
+        description: PLFS July2019-June2020 unit-level CSV zip
+        url: https://microdata.gov.in/NADA/index.php/catalog/217
+        target_path: sources/nada/plfs-2019-20/CSV_PLFS_19_20.zip
+        status: verified
+      - target_id: plfs-2020-21-microdata-csv
+        description: PLFS July2020-June2021 unit-level CSV zip
+        url: https://microdata.gov.in/NADA/index.php/catalog/206
+        target_path: sources/nada/plfs-2020-21/CSV_Unit_level_data_PLFS_July2020_June2021.zip
+        status: verified
+      - target_id: plfs-2021-22-microdata-csv
+        description: PLFS July2021-June2022 unit-level CSV zip
+        url: https://microdata.gov.in/NADA/index.php/catalog/214
+        target_path: sources/nada/plfs-2021-22/PLFS_Data_2021-22_CSV.zip
+        status: verified
+      - target_id: plfs-2022-23-microdata-csv
+        description: PLFS July2022-June2023 unit-level CSV zip
+        url: https://microdata.gov.in/NADA/index.php/catalog/210
+        target_path: sources/nada/plfs-2022-23/Data_in_CSV.zip
+        status: verified
+      - target_id: plfs-2023-24-microdata-csv
+        description: PLFS July2023-June2024 unit-level CSV zip
+        url: https://microdata.gov.in/NADA/index.php/catalog/213
+        target_path: sources/nada/plfs-2023-24/CSV_data_PLFS_2023_2024.zip
+        status: verified
+
   - id: aishe
     name: All India Survey on Higher Education
     publisher: Department of Higher Education, MoE

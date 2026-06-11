@@ -72,12 +72,12 @@ RIDER = ("NSO unit-level Rider: religion is self-reported and unverified; State/
          "literacy, GER, morbidity prevalence) are off-limits. See nada/PLAN.md section 1.")
 
 
-def provenance_md(slug, cat_id, title, verdict, data, docs):
+def provenance_md(slug, cat_id, title, verdict, idno, pulled_at, data, docs):
     return f"""# Provenance: {title}
 
-- **Survey idno:** `{data['idno']}`  (NADA catalog id {cat_id})
+- **Survey idno:** `{idno}`  (NADA catalog id {cat_id})
 - **Catalog page:** {CATALOG}/{cat_id}
-- **Pulled:** {data['pulled_at'][:10]} via MoSPI NADA REST API (personal X-API-KEY header)
+- **Pulled:** {pulled_at[:10]} via MoSPI NADA REST API (personal X-API-KEY header)
 - **By-religion verdict:** {verdict}
 
 ## Unit-level data file (kept LOCAL, not committed)
@@ -87,7 +87,7 @@ def provenance_md(slug, cat_id, title, verdict, data, docs):
 
 ## Re-fetch recipe (if the API is still up)
 ```
-NADA_API_KEY=...  .venv/bin/python nada/bank.py autoget {data['idno']} ~/Desktop/nada-work/{slug}
+NADA_API_KEY=...  .venv/bin/python nada/bank.py autoget {idno} ~/Desktop/nada-work/{slug}
 ```
 `bank.py` lists the survey's files, picks the unit-level data file (CSV zip, else .rar,
 else the lone unit-level zip), downloads it + the method/layout docs, and re-verifies the
@@ -108,6 +108,8 @@ def main():
         slug = os.path.basename(os.path.dirname(man_path))
         if slug not in SURVEYS:
             print(f"!! unknown slug {slug}, skipping"); continue
+        if os.path.exists(os.path.join(DEST_ROOT, slug, "PROVENANCE.md")):
+            print(f"{slug:18s}: already finalized -> skip"); continue
         cat_id, title, verdict = SURVEYS[slug]
         man = json.load(open(man_path))
         dest = os.path.join(DEST_ROOT, slug)
@@ -148,7 +150,8 @@ def main():
             }
             json.dump(meta, open(os.path.join(dest, data["name"] + ".meta.json"), "w"), indent=2)
             open(os.path.join(dest, "PROVENANCE.md"), "w").write(
-                provenance_md(slug, cat_id, title, verdict, data, committed))
+                provenance_md(slug, cat_id, title, verdict, man["idno"],
+                              man["pulled_at"], data, committed))
         summary.append((slug, data["bytes"] if data else 0, len(committed)))
         print(f"{slug:18s}: data {(data['bytes']/1e6 if data else 0):6.1f}MB local, "
               f"{len(committed)} docs committed")

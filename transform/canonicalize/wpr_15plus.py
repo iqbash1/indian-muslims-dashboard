@@ -1,10 +1,13 @@
 """
 L2 -> L3 for the `wpr-15plus` metric (Worker Population Ratio, 15+).
 
-Reads:  extracted/plfs/plfs-2023-24-table48-employment-by-religion.csv
+Reads:  extracted/plfs/plfs-2023-24-table48-employment-by-religion.csv  (2023)
+        extracted/plfs/plfs-microdata-2017-24-by-religion.csv          (2017-2022)
 Writes: canonical/wpr-15plus.csv
 
-Same structure as lfpr-15plus canonicalizer but filters to indicator=WPR.
+Same structure as lfpr-15plus canonicalizer but filters to indicator=WPR;
+the 2017-2022 trend rows come from the unit-level microdata (see
+_plfs_microdata.py).
 """
 
 from __future__ import annotations
@@ -13,10 +16,12 @@ import csv
 import datetime as dt
 import pathlib
 
+from _plfs_microdata import trend_rows
+
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[2]
 L2_PATH = REPO_ROOT / "extracted" / "plfs" / "plfs-2023-24-table48-employment-by-religion.csv"
 OUTPUT_PATH = REPO_ROOT / "canonical" / "wpr-15plus.csv"
-CANONICALIZER_VERSION = "2.0.0"
+CANONICALIZER_VERSION = "2.1.0"
 
 OUTPUT_RELIGIONS = ("muslim", "hindu", "christian", "sikh", "buddhist", "jain", "other", "all")
 SEX_MAP = {"person": "all", "male": "male", "female": "female"}
@@ -70,6 +75,12 @@ def canonicalize() -> None:
                         "false",
                     ])
                     n_rows += 1
+
+        # over-time 2017-2022 from the unit-level microdata (source plfs-microdata)
+        for mrow in trend_rows("wpr-15plus", "wpr", "population_age_15plus",
+                               "worker population ratio", extraction_run):
+            w.writerow(mrow)
+            n_rows += 1
 
     print(f"wrote {OUTPUT_PATH.relative_to(REPO_ROOT)} ({n_rows} rows)")
 

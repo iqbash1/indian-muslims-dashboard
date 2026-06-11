@@ -1,0 +1,63 @@
+{
+  "idno": "DDI-IND-CSO-PLFS-2021-22",
+  "base": "https://microdata.gov.in/NADA/index.php/api",
+  "pulled_at": "2026-06-10T23:11:42.430376+00:00",
+  "files": [
+    {
+      "name": "2_2Schedule10dot4_FIRSTVISIT_28122020.pdf",
+      "fileno": "Ml8yU2NoZWR1bGUxMGRvdDRfRklSU1RWSVNJVF8yODEyMjAyMC5wZGY=",
+      "role": "doc",
+      "bytes": 350908,
+      "sha256": "1608996097926f25dad074a3b10f66b0a51fa070a1322563052b7b9b507071b7",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-CSO-PLFS-2021-22/Ml8yU2NoZWR1bGUxMGRvdDRfRklSU1RWSVNJVF8yODEyMjAyMC5wZGY="
+    },
+    {
+      "name": "2_3Schedule10dot4_REVISIT_28122020.pdf",
+      "fileno": "Ml8zU2NoZWR1bGUxMGRvdDRfUkVWSVNJVF8yODEyMjAyMC5wZGY=",
+      "role": "doc",
+      "bytes": 258255,
+      "sha256": "5b9a3b13c0d54978f8fc80635a2d3418922337d4890b75555170e989ee8ff96f",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-CSO-PLFS-2021-22/Ml8zU2NoZWR1bGUxMGRvdDRfUkVWSVNJVF8yODEyMjAyMC5wZGY="
+    },
+    {
+      "name": "3_1EstimationProcedure_PLFS.pdf",
+      "fileno": "M18xRXN0aW1hdGlvblByb2NlZHVyZV9QTEZTLnBkZg==",
+      "role": "doc",
+      "bytes": 319189,
+      "sha256": "af80fd2049c330aa1b8e774b816a6baeffc93b5f6f28785e4d2e70862bcb6902",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-CSO-PLFS-2021-22/M18xRXN0aW1hdGlvblByb2NlZHVyZV9QTEZTLnBkZg=="
+    },
+    {
+      "name": "4Data_LayoutPLFS_2021_22.xlsx",
+      "fileno": "NERhdGFfTGF5b3V0UExGU18yMDIxXzIyLnhsc3g=",
+      "role": "doc",
+      "bytes": 35800,
+      "sha256": "92b03940d4cc422663c3aafc4aa41900e48eefe893a3b0587667c5c9f45cd042",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-CSO-PLFS-2021-22/NERhdGFfTGF5b3V0UExGU18yMDIxXzIyLnhsc3g="
+    },
+    {
+      "name": "District_codes_PLFS_Panel_3_202122_202223.xlsx",
+      "fileno": "RGlzdHJpY3RfY29kZXNfUExGU19QYW5lbF8zXzIwMjEyMl8yMDIyMjMueGxzeA==",
+      "role": "doc",
+      "bytes": 29484,
+      "sha256": "7372891ad85895c82d58e96962f509944ea31b007dd62d59a9a7673a14ab5356",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-CSO-PLFS-2021-22/RGlzdHJpY3RfY29kZXNfUExGU19QYW5lbF8zXzIwMjEyMl8yMDIyMjMueGxzeA=="
+    },
+    {
+      "name": "PLFS_Data_2021-22_CSV.zip",
+      "fileno": "UExGU19EYXRhXzIwMjEtMjJfQ1NWLnppcA==",
+      "role": "data",
+      "bytes": 21010019,
+      "sha256": "3910ada9382c110f4fe0964fb2a2ddc2d508f43319e575a182eeaed5f9647f75",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-CSO-PLFS-2021-22/UExGU19EYXRhXzIwMjEtMjJfQ1NWLnppcA=="
+    },
+    {
+      "name": "README_Final.pdf",
+      "fileno": "UkVBRE1FX0ZpbmFsLnBkZg==",
+      "role": "doc",
+      "bytes": 83350,
+      "sha256": "7cd71b625def41c5e85f2ce06ea182f96c8fbb161bd6c9c1d740b0b25711c4c0",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-CSO-PLFS-2021-22/UkVBRE1FX0ZpbmFsLnBkZg=="
+    }
+  ]
+}

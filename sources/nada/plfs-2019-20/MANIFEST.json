@@ -1,0 +1,55 @@
+{
+  "idno": "DDI-IND-CSO-PLFS-2019-20",
+  "base": "https://microdata.gov.in/NADA/index.php/api",
+  "pulled_at": "2026-06-10T22:58:59.196831+00:00",
+  "files": [
+    {
+      "name": "CSV_PLFS_19_20.zip",
+      "fileno": "Q1NWX1BMRlNfMTlfMjAuemlw",
+      "role": "data",
+      "bytes": 19212621,
+      "sha256": "dcd56e240a50fedaaa0878a658e50c64cd5675add89327dd5a0eca2809211b23",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-CSO-PLFS-2019-20/Q1NWX1BMRlNfMTlfMjAuemlw"
+    },
+    {
+      "name": "Data_Layout_PLFS.xlsx",
+      "fileno": "RGF0YV9MYXlvdXRfUExGUy54bHN4",
+      "role": "doc",
+      "bytes": 32191,
+      "sha256": "71ef5b6379ace5f9b80a015cffa561d57d70066b7145d9bd0b2ebdc2eb2fc4b5",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-CSO-PLFS-2019-20/RGF0YV9MYXlvdXRfUExGUy54bHN4"
+    },
+    {
+      "name": "District_codes_PLFS_Panel_2_201920_202021.xlsx",
+      "fileno": "RGlzdHJpY3RfY29kZXNfUExGU19QYW5lbF8yXzIwMTkyMF8yMDIwMjEueGxzeA==",
+      "role": "doc",
+      "bytes": 29853,
+      "sha256": "66d5dd478222968358fc898aa17cbec68127d7cb48616e85915e9bbed46d8b5b",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-CSO-PLFS-2019-20/RGlzdHJpY3RfY29kZXNfUExGU19QYW5lbF8yXzIwMTkyMF8yMDIwMjEueGxzeA=="
+    },
+    {
+      "name": "Estimation_Procedure_PLFS.pdf",
+      "fileno": "RXN0aW1hdGlvbl9Qcm9jZWR1cmVfUExGUy5wZGY=",
+      "role": "doc",
+      "bytes": 147493,
+      "sha256": "ac83f9fae64be412f9d5e10107da8cf744d5d221edf8275ece44d08669f6c742",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-CSO-PLFS-2019-20/RXN0aW1hdGlvbl9Qcm9jZWR1cmVfUExGUy5wZGY="
+    },
+    {
+      "name": "Instructions_to_Field_Staff_PLFS_Vol_II.pdf",
+      "fileno": "SW5zdHJ1Y3Rpb25zX3RvX0ZpZWxkX1N0YWZmX1BMRlNfVm9sX0lJLnBkZg==",
+      "role": "doc",
+      "bytes": 279020,
+      "sha256": "95adaa029640db9c0ba5758fea7fe5d32db7ee895bed38bce7f48d62cb8711da",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-CSO-PLFS-2019-20/SW5zdHJ1Y3Rpb25zX3RvX0ZpZWxkX1N0YWZmX1BMRlNfVm9sX0lJLnBkZg=="
+    },
+    {
+      "name": "README.pdf",
+      "fileno": "UkVBRE1FLnBkZg==",
+      "role": "doc",
+      "bytes": 67850,
+      "sha256": "9e40765c708599336ebc226048adde702793ccd98afad174d2fbdf7f8745bd5c",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-CSO-PLFS-2019-20/UkVBRE1FLnBkZg=="
+    }
+  ]
+}

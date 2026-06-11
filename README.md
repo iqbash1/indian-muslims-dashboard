@@ -18,7 +18,7 @@ justice.
 ## What's on the dashboard
 
 18 live indicators across six themes (population, health, education,
-employment, representation, justice), drawn from 17 primary sources,
+employment, representation, justice), drawn from 18 primary sources,
 grouped into five themed sections on the dashboard. The authoritative
 scorecard
 is the live site at https://muslimdata.in/ — it
@@ -89,7 +89,7 @@ The dashboard never queries an external source live and never reads L1/L2 direct
 
 ## Sources
 
-17 source-ids feed L3 canonical metrics (24 source-ids registered in `manifest/sources.yaml` total — the remaining 7 are `census-decadal-religion` (superseded by the primary RGI volumes, kept for cross-validation), `civic-incident-databases` (the hate-speech metric was decarded in Commit CR; data archived), and five pre-registered for future metrics: `hces-2022-23`, `mha-parliament-answers`, `niti-mpi`, `rbi-minority-lending`, `rti-public-sector-employment`).
+18 source-ids feed L3 canonical metrics (25 source-ids registered in `manifest/sources.yaml` total — the remaining 7 are `census-decadal-religion` (superseded by the primary RGI volumes, kept for cross-validation), `civic-incident-databases` (the hate-speech metric was decarded in Commit CR; data archived), and five pre-registered for future metrics: `hces-2022-23`, `mha-parliament-answers`, `niti-mpi`, `rbi-minority-lending`, `rti-public-sector-employment`). `plfs-microdata` (7 PLFS rounds via the NADA API) joined in Commit EW, feeding the employment metrics' 2017-2022 trend rows.
 
 | Source | What it gives us | Cadence | Status |
 |---|---|---|---|

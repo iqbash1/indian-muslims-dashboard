@@ -1,0 +1,14 @@
+{
+  "source_id": "nada-plfs-2019-20",
+  "target_id": "plfs-2019-20-microdata",
+  "idno": "DDI-IND-CSO-PLFS-2019-20",
+  "filename": "CSV_PLFS_19_20.zip",
+  "url": "https://microdata.gov.in/NADA/index.php/catalog/217",
+  "download_url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-CSO-PLFS-2019-20/Q1NWX1BMRlNfMTlfMjAuemlw",
+  "pulled_at": "2026-06-10",
+  "content_length": 19212621,
+  "sha256": "dcd56e240a50fedaaa0878a658e50c64cd5675add89327dd5a0eca2809211b23",
+  "pull_method": "MoSPI NADA REST API (personal X-API-KEY header)",
+  "by_religion_verdict": "SAFE: employment x religion",
+  "archival": "provenance-only: the unit-level file is NOT committed (kept local at ~/Desktop/nada-work/plfs-2019-20/). Re-fetch with the recipe in PROVENANCE.md and verify against this sha256. The schema/method docs in this directory ARE committed."
+}

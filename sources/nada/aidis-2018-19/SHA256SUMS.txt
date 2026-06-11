@@ -1,0 +1,5 @@
+7653cdd53b9bf235cf5d24c591b340a7fea8f5ea1e42f56d224d30d7b7a74d4f  DDI-IND-MOSPI-NSSO-77Rnd-Sch18.2-January2019-December2019.xml  (5239404 bytes, doc)
+000b5bb1f5eb637662dffc70141ab8980466c329a83c1ccd30907d797b43edb6  Estimation_procedure_NSS77_DPD.pdf  (629588 bytes, doc)
+447ec5d0234e7ea7f2f62087b02b5d323b303f4e927358b7ff77b450966ed30e  nic_amendment_2008.pdf  (86821 bytes, doc)
+68408203ee14d0fc058c5343bd57bad26dec42d7472ec90dfbbc052f5822574e  Round77sch18pt2Data.rar  (21187001 bytes, data)
+61d3742811971ce36b8174c954e58ce1a97a89ee27eae428ba9d03f7def8d3b9  State_77.xlsx  (10867 bytes, doc)

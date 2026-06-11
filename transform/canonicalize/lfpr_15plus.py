@@ -1,13 +1,19 @@
 """
 L2 -> L3 for the `lfpr-15plus` metric (Labour Force Participation Rate, 15+).
 
-Reads:  extracted/plfs/plfs-2023-24-table48-employment-by-religion.csv
+Reads:  extracted/plfs/plfs-2023-24-table48-employment-by-religion.csv  (2023)
+        extracted/plfs/plfs-microdata-2017-24-by-religion.csv          (2017-2022)
 Writes: canonical/lfpr-15plus.csv
 
 PLFS 2023-24 Table 48 (pages 396-400) reports LFPR by religion at all
 combinations of residence (rural/urban/total) and sex (male/female/person).
 The canonical metric publishes total-residence LFPR per religion AND per sex:
 sex='all' is the both-sexes aggregate (PLFS "person"), plus 'male' and 'female'.
+
+The over-time rows (2017-2022) come from the unit-level microdata via
+_plfs_microdata.trend_rows (the PDFs publish the 15+ religion detail only for
+their own year); the microdata reproduces the published tables within 0.2pp,
+so the published 2023 point extends the same series.
 """
 
 from __future__ import annotations
@@ -16,10 +22,12 @@ import csv
 import datetime as dt
 import pathlib
 
+from _plfs_microdata import trend_rows
+
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[2]
 L2_PATH = REPO_ROOT / "extracted" / "plfs" / "plfs-2023-24-table48-employment-by-religion.csv"
 OUTPUT_PATH = REPO_ROOT / "canonical" / "lfpr-15plus.csv"
-CANONICALIZER_VERSION = "2.0.0"
+CANONICALIZER_VERSION = "2.1.0"
 
 OUTPUT_RELIGIONS = ("muslim", "hindu", "christian", "sikh", "buddhist", "jain", "other", "all")
 # PLFS source sex labels -> canonical sex dimension.
@@ -76,6 +84,12 @@ def canonicalize() -> None:
                         "false",
                     ])
                     n_rows += 1
+
+        # over-time 2017-2022 from the unit-level microdata (source plfs-microdata)
+        for mrow in trend_rows("lfpr-15plus", "lfpr", "population_age_15plus",
+                               "labour force participation rate", extraction_run):
+            w.writerow(mrow)
+            n_rows += 1
 
     print(f"wrote {OUTPUT_PATH.relative_to(REPO_ROOT)} ({n_rows} rows)")
 

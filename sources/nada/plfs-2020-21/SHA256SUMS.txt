@@ -1,0 +1,7 @@
+d8ed360e1e0fd7f468bf01bf04575a4ee0e2238644f5a29110859d558b9c03f7  CSV_Unit_level_data_PLFS_July2020_June2021.zip  (21139450 bytes, data)
+ee925ce648581cb6634b3a08257f7d894695bac178a7374fae37852ff7211fce  Data_LayoutPLFS_2020_21_(3).xlsx  (36855 bytes, doc)
+66d5dd478222968358fc898aa17cbec68127d7cb48616e85915e9bbed46d8b5b  District_codes_PLFS_Panel_2_201920_202021.xlsx  (29853 bytes, doc)
+61c0d0474d44c3b48b5d3ec2b651cbb24e38f0f14870fcbc78b01d6e71e0dcdc  EstimationProcedure_PLFS_(2).pdf  (319177 bytes, doc)
+0c9f0bd69e8646b2e1672ea185704d3b34c374c5306fd16b5cbecc375247f45a  plfsREADMEjuly20_jun21_1_(4).pdf  (179902 bytes, doc)
+74ca58fa3a037aa66a0e43a2f7a40337f906e78a97fa0a55583a32c44e614adf  Schedule10.4_FIRSTVISIT_(4).pdf  (472240 bytes, doc)
+a8ae6f89c52063aa477ce17cec083b9ce83c1b84cad1ecedcf51f6dbbb24c9ea  Schedule10.4_REVISIT_(4).pdf  (258027 bytes, doc)

@@ -1,0 +1,6 @@
+5b8cb55114b2316fa268f523722d2432b125dec99120c8bc4daaff47ca978039  Data_Layout_PLFS.xlsx  (31996 bytes, doc)
+15225048850d26552754348de362fd9da590c09e4df0127fce6ad537177d5416  District_codes_PLFS_Panel_1_201718_2018_19.xlsx  (29390 bytes, doc)
+f04ba22431ce7c0714108ef3f5bb5dba1cfd444ff6be6fee3685599edf44608e  Instructions_to_Field_Staff_PLFS_Vol I.pdf  (1692291 bytes, doc)
+95adaa029640db9c0ba5758fea7fe5d32db7ee895bed38bce7f48d62cb8711da  Instructions_to_Field_Staff_PLFS_Vol II.pdf  (279020 bytes, doc)
+ef9934440e2258c28ebffaf442bcd89a3af7f36735b91e821e6489479367596d  PLFS_2018_19_CSV.zip  (18913869 bytes, data)
+7dbf73d1621b23edee72fd45f917beab2741f0bff1fa60f2467cb57b2196ce98  README_July18_June19.pdf  (110938 bytes, doc)

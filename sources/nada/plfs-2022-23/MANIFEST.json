@@ -1,0 +1,79 @@
+{
+  "idno": "DDI-IND-CSO-PLFS-2022-23",
+  "base": "https://microdata.gov.in/NADA/index.php/api",
+  "pulled_at": "2026-06-10T23:18:27.570209+00:00",
+  "files": [
+    {
+      "name": "2_2_Schedule10pt4_FIRSTVISIT_2022_23.pdf",
+      "fileno": "Ml8yX1NjaGVkdWxlMTBwdDRfRklSU1RWSVNJVF8yMDIyXzIzLnBkZg==",
+      "role": "doc",
+      "bytes": 586799,
+      "sha256": "dcb2674fbbde63b93472e113a05ab7697d86a24e139a9cdd645783dec2360133",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-CSO-PLFS-2022-23/Ml8yX1NjaGVkdWxlMTBwdDRfRklSU1RWSVNJVF8yMDIyXzIzLnBkZg=="
+    },
+    {
+      "name": "2_3 Schedule10pt4_REVISIT_2022_23.pdf",
+      "fileno": "Ml8zIFNjaGVkdWxlMTBwdDRfUkVWSVNJVF8yMDIyXzIzLnBkZg==",
+      "role": "doc",
+      "bytes": 258255,
+      "sha256": "5b9a3b13c0d54978f8fc80635a2d3418922337d4890b75555170e989ee8ff96f",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-CSO-PLFS-2022-23/Ml8zIFNjaGVkdWxlMTBwdDRfUkVWSVNJVF8yMDIyXzIzLnBkZg=="
+    },
+    {
+      "name": "3_1_Estimation_Procedure_PLFS.pdf",
+      "fileno": "M18xX0VzdGltYXRpb25fUHJvY2VkdXJlX1BMRlMucGRm",
+      "role": "doc",
+      "bytes": 319189,
+      "sha256": "af80fd2049c330aa1b8e774b816a6baeffc93b5f6f28785e4d2e70862bcb6902",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-CSO-PLFS-2022-23/M18xX0VzdGltYXRpb25fUHJvY2VkdXJlX1BMRlMucGRm"
+    },
+    {
+      "name": "Data_in_CSV.zip",
+      "fileno": "RGF0YV9pbl9DU1Yuemlw",
+      "role": "data",
+      "bytes": 21663733,
+      "sha256": "071cbaff198a992d821e28556c390faf8209e3c3345f6f48339078c8d01e3532",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-CSO-PLFS-2022-23/RGF0YV9pbl9DU1Yuemlw"
+    },
+    {
+      "name": "Data_LayoutPLFS_2022_23.xlsx",
+      "fileno": "RGF0YV9MYXlvdXRQTEZTXzIwMjJfMjMueGxzeA==",
+      "role": "doc",
+      "bytes": 35381,
+      "sha256": "b6cea8d7a72a74dd8f5ecdcc5eac10dfc780d5f8ada8a22c8eaa51789593a9ca",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-CSO-PLFS-2022-23/RGF0YV9MYXlvdXRQTEZTXzIwMjJfMjMueGxzeA=="
+    },
+    {
+      "name": "District_codes_PLFS_Panel_3_202122_202223.xlsx",
+      "fileno": "RGlzdHJpY3RfY29kZXNfUExGU19QYW5lbF8zXzIwMjEyMl8yMDIyMjMueGxzeA==",
+      "role": "doc",
+      "bytes": 29484,
+      "sha256": "7372891ad85895c82d58e96962f509944ea31b007dd62d59a9a7673a14ab5356",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-CSO-PLFS-2022-23/RGlzdHJpY3RfY29kZXNfUExGU19QYW5lbF8zXzIwMjEyMl8yMDIyMjMueGxzeA=="
+    },
+    {
+      "name": "Note_on_changes_PLFS_2022_23.pdf",
+      "fileno": "Tm90ZV9vbl9jaGFuZ2VzX1BMRlNfMjAyMl8yMy5wZGY=",
+      "role": "doc",
+      "bytes": 521728,
+      "sha256": "0016669968c707af4576b7b2457374e04b73f22a06a04c57e070ba84280bbc82",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-CSO-PLFS-2022-23/Tm90ZV9vbl9jaGFuZ2VzX1BMRlNfMjAyMl8yMy5wZGY="
+    },
+    {
+      "name": "README.pdf",
+      "fileno": "UkVBRE1FLnBkZg==",
+      "role": "doc",
+      "bytes": 28321,
+      "sha256": "6b311542068da42da2d382dd2da43082aa152c9eff932add7f9d337f15968c6f",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-CSO-PLFS-2022-23/UkVBRE1FLnBkZg=="
+    },
+    {
+      "name": "Technical_clarification_regarding_high_multiplier_value_in_PLFS_2022_23.pdf",
+      "fileno": "VGVjaG5pY2FsX2NsYXJpZmljYXRpb25fcmVnYXJkaW5nX2hpZ2hfbXVsdGlwbGllcl92YWx1ZV9pbl9QTEZTXzIwMjJfMjMucGRm",
+      "role": "doc",
+      "bytes": 245153,
+      "sha256": "af8836360e1e4e3b88ab5a54e06a595c1f866bb7237717a79cb49deb78ef6623",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-CSO-PLFS-2022-23/VGVjaG5pY2FsX2NsYXJpZmljYXRpb25fcmVnYXJkaW5nX2hpZ2hfbXVsdGlwbGllcl92YWx1ZV9pbl9QTEZTXzIwMjJfMjMucGRm"
+    }
+  ]
+}

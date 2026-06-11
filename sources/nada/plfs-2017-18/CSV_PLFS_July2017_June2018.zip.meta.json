@@ -1,0 +1,14 @@
+{
+  "source_id": "nada-plfs-2017-18",
+  "target_id": "plfs-2017-18-microdata",
+  "idno": "DDI-IND-CSO-PLFS-2017-18",
+  "filename": "CSV_PLFS_July2017_June2018.zip",
+  "url": "https://microdata.gov.in/NADA/index.php/catalog/204",
+  "download_url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-CSO-PLFS-2017-18/Q1NWX1BMRlNfSnVseTIwMTdfSnVuZTIwMTguemlw",
+  "pulled_at": "2026-06-10",
+  "content_length": 13751616,
+  "sha256": "b9622692d7995e1f22e77f720da63eefef616a97a3760481413503ec41d807f5",
+  "pull_method": "MoSPI NADA REST API (personal X-API-KEY header)",
+  "by_religion_verdict": "SAFE: employment x religion is the intended cross-tab",
+  "archival": "provenance-only: the unit-level file is NOT committed (kept local at ~/Desktop/nada-work/plfs-2017-18/). Re-fetch with the recipe in PROVENANCE.md and verify against this sha256. The schema/method docs in this directory ARE committed."
+}

@@ -1,11 +1,13 @@
 """
 L2 -> L3 for the `salaried-share` metric.
 
-Reads:  extracted/plfs/plfs-2023-24-table49-employment-status-by-religion.csv
+Reads:  extracted/plfs/plfs-2023-24-table49-employment-status-by-religion.csv  (2023)
+        extracted/plfs/plfs-microdata-2017-24-by-religion.csv                  (2017-2022)
 Writes: canonical/salaried-share.csv
 
-Publishes Muslim, Hindu, all rural+urban-person regular wage/salary share
-of all workers, from PLFS 2023-24 Table 49.
+Publishes the regular wage/salary share of all workers by religion, from PLFS
+2023-24 Table 49 (the 2023 point) plus the 2017-2022 trend computed from the
+unit-level microdata (see _plfs_microdata.py).
 """
 
 from __future__ import annotations
@@ -14,10 +16,12 @@ import csv
 import datetime as dt
 import pathlib
 
+from _plfs_microdata import trend_rows
+
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[2]
 L2_PATH = REPO_ROOT / "extracted" / "plfs" / "plfs-2023-24-table49-employment-status-by-religion.csv"
 OUTPUT_PATH = REPO_ROOT / "canonical" / "salaried-share.csv"
-CANONICALIZER_VERSION = "2.0.0"
+CANONICALIZER_VERSION = "2.1.0"
 
 OUTPUT_RELIGIONS = ("muslim", "hindu", "christian", "sikh", "buddhist", "jain", "other", "all")
 SEX_MAP = {"person": "all", "male": "male", "female": "female"}
@@ -73,6 +77,14 @@ def canonicalize() -> None:
                         "false",
                     ])
                     n_rows += 1
+
+        # over-time 2017-2022 from the unit-level microdata (source plfs-microdata)
+        for mrow in trend_rows("salaried-share", "salaried_share",
+                               "all_workers_usual_status_ps_ss",
+                               "share of workers in regular wage/salaried employment",
+                               extraction_run):
+            w.writerow(mrow)
+            n_rows += 1
 
     print(f"wrote {OUTPUT_PATH.relative_to(REPO_ROOT)} ({n_rows} rows)")
     for res in ("all", "urban", "rural"):

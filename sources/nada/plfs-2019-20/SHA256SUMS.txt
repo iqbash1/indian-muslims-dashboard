@@ -1,0 +1,6 @@
+dcd56e240a50fedaaa0878a658e50c64cd5675add89327dd5a0eca2809211b23  CSV_PLFS_19_20.zip  (19212621 bytes, data)
+71ef5b6379ace5f9b80a015cffa561d57d70066b7145d9bd0b2ebdc2eb2fc4b5  Data_Layout_PLFS.xlsx  (32191 bytes, doc)
+66d5dd478222968358fc898aa17cbec68127d7cb48616e85915e9bbed46d8b5b  District_codes_PLFS_Panel_2_201920_202021.xlsx  (29853 bytes, doc)
+ac83f9fae64be412f9d5e10107da8cf744d5d221edf8275ece44d08669f6c742  Estimation_Procedure_PLFS.pdf  (147493 bytes, doc)
+95adaa029640db9c0ba5758fea7fe5d32db7ee895bed38bce7f48d62cb8711da  Instructions_to_Field_Staff_PLFS_Vol_II.pdf  (279020 bytes, doc)
+9e40765c708599336ebc226048adde702793ccd98afad174d2fbdf7f8745bd5c  README.pdf  (67850 bytes, doc)

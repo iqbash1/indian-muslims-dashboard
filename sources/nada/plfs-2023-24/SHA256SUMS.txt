@@ -1,0 +1,8 @@
+3f7448da3112fde2a29d4eaf75f32593a15a3bcaa51e39db929c908a2f4f8c5f  1_README.docx  (27917 bytes, doc)
+edb71767701c999d1f91b510dc6951585aec1f0eb2bc9865a36a5bea765a2e15  2_2_Instruction_Manual_PLFS_Vol-II.pdf  (997906 bytes, doc)
+b6534db483bea876ff175feb138877445fc91f33ca183790165d6f4c5c84733d  3_1_Estimation_Procedure_PLFS.pdf  (542687 bytes, doc)
+ff896f6cfee80b59a5ab413c2df6b99638b39d850999fd7105c130cde85432ea  CSV_data_PLFS_2023_2024.zip  (22107995 bytes, data)
+3de65c3dcaaadfd90b78579b8eaa65557e32dc7074f178dcc1e11195e8cf3836  Data_LayoutPLFS_2023-24.xlsx  (56677 bytes, doc)
+5b332ef6e300c274ded0a4ae5692aefed73160cbb1e7e0dfe1a43480651511d6  District_codes_PLFS_Panel_4_202324_2024.xlsx  (29510 bytes, doc)
+0704fcd5f43dc432aac49ad8ab9055745da5763d58076fac4b6984a6419f3960  NMDS_2dot0_PLFS_final_upd.docx  (33277 bytes, doc)
+3eb898e80c862a3d8e901655799c7d5b9972edfa9fe3caa32087ca20160a778a  Note_on_Updated_Instruction_for_PLFS_2023-24.pdf  (545720 bytes, doc)

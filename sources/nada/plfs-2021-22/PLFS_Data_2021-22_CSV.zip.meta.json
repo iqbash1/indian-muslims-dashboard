@@ -1,0 +1,14 @@
+{
+  "source_id": "nada-plfs-2021-22",
+  "target_id": "plfs-2021-22-microdata",
+  "idno": "DDI-IND-CSO-PLFS-2021-22",
+  "filename": "PLFS_Data_2021-22_CSV.zip",
+  "url": "https://microdata.gov.in/NADA/index.php/catalog/214",
+  "download_url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-CSO-PLFS-2021-22/UExGU19EYXRhXzIwMjEtMjJfQ1NWLnppcA==",
+  "pulled_at": "2026-06-10",
+  "content_length": 21010019,
+  "sha256": "3910ada9382c110f4fe0964fb2a2ddc2d508f43319e575a182eeaed5f9647f75",
+  "pull_method": "MoSPI NADA REST API (personal X-API-KEY header)",
+  "by_religion_verdict": "SAFE: employment x religion",
+  "archival": "provenance-only: the unit-level file is NOT committed (kept local at ~/Desktop/nada-work/plfs-2021-22/). Re-fetch with the recipe in PROVENANCE.md and verify against this sha256. The schema/method docs in this directory ARE committed."
+}
