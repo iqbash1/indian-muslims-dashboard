@@ -165,6 +165,33 @@ def _round_str(v: float, dp: int = 1) -> str:
     return str(d.quantize(Decimal(1).scaleb(-dp), rounding=ROUND_HALF_UP))
 
 
+def _in_group(n: int) -> str:
+    """Indian digit grouping: 3,26,819 (last three digits, then pairs)."""
+    s = str(abs(int(n)))
+    if len(s) > 3:
+        head, tail = s[:-3], s[-3:]
+        parts = []
+        while len(head) > 2:
+            parts.insert(0, head[-2:])
+            head = head[:-2]
+        if head:
+            parts.insert(0, head)
+        s = ",".join(parts + [tail])
+    return ("-" if n < 0 else "") + s
+
+
+def _inr_str(v: float) -> str:
+    """Indian-money display: INR 9.2 lakh / INR 1.4 crore above one lakh,
+    Indian-grouped rupees below it."""
+    a = abs(v)
+    sign = "-" if v < 0 else ""
+    if a >= 1e7:
+        return f"{sign}INR {a/1e7:.1f} crore"
+    if a >= 1e5:
+        return f"{sign}INR {a/1e5:.1f} lakh"
+    return f"{sign}INR {_in_group(round(a))}"
+
+
 def fmt_num(v: float, unit: str) -> str:
     if unit == "percent":
         return f"{_round_str(v, 1)}%"
@@ -173,9 +200,9 @@ def fmt_num(v: float, unit: str) -> str:
     if unit in ("per_1000_live_births", "rate_per_100k", "per_100k_population", "years"):
         return _round_str(v, 1)
     if unit == "count":
-        return f"{int(v):,}"
+        return _in_group(int(v))
     if unit in ("inr_per_month", "inr_per_year", "inr"):
-        return f"Rs {int(v):,}"
+        return _inr_str(v)
     return str(v)
 
 
@@ -223,8 +250,8 @@ SECTION_OF = {cid: name for name, cids in SECTION_GROUPS for cid in cids}
 # update when the data changes the direction. Indian-English spelling.
 SECTION_INTROS = {
     "Demographics": "India's largest religious minority, more urban than the national average and concentrated in a handful of districts in the north and east.",
-    "Education, work & income": "Behind on literacy, higher-education enrolment, salaried work and monthly spending; near the national average on workforce participation.",
-    "Health & Housing": "Lower infant mortality and the lowest anaemia of any community, but the highest under-5 stunting; toilet access now close to par.",
+    "Education, work & income": "Behind on literacy, higher education, salaried jobs, pay and household wealth; workforce participation near par, with the gap widest in cities.",
+    "Health & Housing": "Lower infant mortality and the lowest anaemia of any community, but the highest under-5 stunting; basic amenities (toilets, water, electricity, pucca homes) at or above par.",
     "Representation": "Far fewer elected seats than their share of the population, both in the Lok Sabha and across the state assemblies.",
     "Justice & Civic": "Over-represented in the prison and undertrial populations per head of community, alongside police-recorded communal incidents.",
 }
@@ -686,7 +713,7 @@ TEMPLATE = """<!DOCTYPE html>
     --shadow-card: 0 4px 14px rgba(0,0,0,.09);
     --t-2xs: .75rem; --t-xs: .75rem; --t-sm: .82rem; --t-base: .88rem;
   }
-  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); align-items: start; gap: 16px; margin-bottom: 8px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); align-items: stretch; gap: 16px; margin-bottom: 8px; }
   .card {
     background: var(--card); border: 1px solid var(--rule); border-radius: var(--radius);
     padding: 18px 18px 14px; display: flex; flex-direction: column;
@@ -695,8 +722,10 @@ TEMPLATE = """<!DOCTYPE html>
   .card:hover { border-color: var(--accent); box-shadow: var(--shadow-card); transform: translateY(-2px); }
   .card:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
   .card-metric { font-size: 15px; font-weight: 600; color: var(--fg); margin-bottom: 4px; line-height: 1.3; }
-  .card-plain { font-size: 14px; color: var(--muted); margin: 0 0 10px; line-height: 1.45; font-weight: 400; }
-  .modal-body .card-plain { font-size: 14px; color: var(--fg); margin: 0 0 16px; line-height: 1.55; max-width: 56em; }
+  /* The plain-English definition stays OFF the card face (minimalism: label +
+     number + chart tell the story; the paragraph waits in the modal lead). */
+  .cards .card-plain { display: none; }
+  .modal-body .card-plain { display: block; font-size: 14px; color: var(--fg); margin: 0 0 16px; line-height: 1.55; max-width: 56em; }
   .card-hero { display: flex; align-items: baseline; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
   .card-value { font-size: 1.7rem; font-weight: 700; letter-spacing: -.02em; color: var(--muslim); font-feature-settings: "tnum"; }
   .card-unit, .card-year { font-size: var(--t-sm); color: var(--muted); font-weight: 500; }
@@ -1162,15 +1191,23 @@ TEMPLATE = """<!DOCTYPE html>
 })();
 
 // --- Card-grid chart helpers (generated card initialisers call these) ---
+// Indian number display: en-IN grouping (3,26,819), money-scale values
+// compacted to lakh / crore so chart labels stay scannable.
+function _inNum(v) {
+  const a = Math.abs(v);
+  if (a >= 1e7) return (v / 1e7).toFixed(1) + ' crore';
+  if (a >= 1e5) return (v / 1e5).toFixed(1) + ' lakh';
+  return Math.round(v).toLocaleString('en-IN');
+}
 function _valueLabels(decimals, suffix) {
   return { id: 'vl', afterDatasetsDraw(chart) {
     const { ctx } = chart; const meta = chart.getDatasetMeta(0);
     ctx.save(); ctx.font = '600 11px -apple-system, system-ui, sans-serif';
     ctx.textBaseline = 'middle'; ctx.fillStyle = '#555';
     meta.data.forEach((bar, i) => { const v = chart.data.datasets[0].data[i];
-      // Integer-count labels get thousands separators ("1,165"); decimal
-      // labels (percentages, rates) keep fixed precision ("73.3%").
-      const label = (decimals === 0 ? Math.round(v).toLocaleString() : v.toFixed(decimals)) + suffix;
+      // Integer labels: Indian grouping (3,26,819), compacted to lakh/crore
+      // from one lakh up; decimal labels (percentages, rates) keep precision.
+      const label = (decimals === 0 ? _inNum(v) : v.toFixed(decimals)) + suffix;
       ctx.fillText(label, bar.x + 6, bar.y); });
     ctx.restore();
   } };
@@ -3314,6 +3351,9 @@ UNIT_JS = {
     "inr_per_month": ("", 0), "inr": ("", 0),
 }
 SOURCE_LABEL = {
+    "plfs-microdata": "PLFS microdata 2017-24",
+    "aidis-2013": "AIDIS 2013 (NSS 70th)",
+    "nss76-housing": "NSS 76th 1.2 (2018)",
     "census-india-1961": "Census 1961 · C-VII Religion",
     "census-india-1971": "Census 1971 · Paper 2 of 1972",
     "census-india-1981": "Census 1981 · HH-15 (Paper 3 of 1984)",
@@ -3339,9 +3379,9 @@ def _verdict(gap: float, hib) -> str:
 
 def _gap_str(gap: float, unit: str) -> str:
     if unit == "count":
-        return f"{'+' if gap >= 0 else '-'}{abs(int(gap)):,}"
+        return f"{'+' if gap >= 0 else '-'}{_in_group(abs(int(gap)))}"
     if unit in ("inr_per_month", "inr_per_year", "inr"):
-        return f"{'+' if gap >= 0 else '-'}Rs {abs(int(gap)):,}"
+        return f"{'+' if gap >= 0 else '-'}{_inr_str(abs(gap))}"
     sign = "+" if gap >= 0 else ""
     return f"{sign}{_round_str(gap, _disp_dp(unit))}{'pp' if unit == 'percent' else ''}"
 
@@ -4421,8 +4461,16 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
             if mfirst is not None and mlast is not None:
                 delta = mlast - mfirst
                 arrow = "↑" if delta > 0 else ("↓" if delta < 0 else "→")
-                comps += _comp(f"Since {years[0]}", f"{arrow} {_round_str(abs(delta), _disp_dp(unit))}{suffix}",
-                               f"{_round_str(mfirst, _disp_dp(unit))}{suffix} → {_round_str(mlast, _disp_dp(unit))}{suffix}", "mid")
+                if unit in ("inr_per_month", "inr_per_year", "inr"):
+                    # money deltas in Indian format ("INR 3,820"; lakh/crore above)
+                    d_txt, lo_txt, hi_txt = (_inr_str(abs(delta)),
+                                             _inr_str(mfirst), _inr_str(mlast))
+                else:
+                    d_txt = f"{_round_str(abs(delta), _disp_dp(unit))}{suffix}"
+                    lo_txt = f"{_round_str(mfirst, _disp_dp(unit))}{suffix}"
+                    hi_txt = f"{_round_str(mlast, _disp_dp(unit))}{suffix}"
+                comps += _comp(f"Since {years[0]}", f"{arrow} {d_txt}",
+                               f"{lo_txt} → {hi_txt}", "mid")
         pairs = [(COMMUNITY_LABEL[c], nat[c], c == "muslim") for c in named]
         if hib is not None:
             pairs.sort(key=lambda b: b[1], reverse=bool(hib))

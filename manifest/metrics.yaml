@@ -278,8 +278,8 @@ metrics:
     unit: percent
     higher_is_better: true
     definition: |
-      Share of population age 15+ who are in the labour force (either
-      working or actively seeking work). Usual status (principal + subsidiary).
+      Of everyone aged 15 and older, the share either working or actively
+      looking for work.
     sources: {primary: plfs}
     geography_levels: [national]
     religions: [muslim, hindu, all]
@@ -314,8 +314,7 @@ metrics:
     unit: percent
     higher_is_better: true
     definition: |
-      Share of population age 15+ who are currently working. Usual status
-      (principal + subsidiary). WPR = LFPR - Unemployed.
+      Of everyone aged 15 and older, the share currently working.
     sources: {primary: plfs}
     geography_levels: [national]
     religions: [muslim, hindu, all]
@@ -343,11 +342,10 @@ metrics:
     unit: percent
     higher_is_better: false
     definition: |
-      Share of the labour force, age 15+, that is unemployed: actively seeking
-      or available for work but not working. Usual status (principal +
-      subsidiary). A low rate is not automatically good news here: people who
-      cannot afford to be unemployed take any informal work, so read this
-      beside the salaried-jobs card.
+      Of the labour force aged 15 and older (everyone working or looking for
+      work), the share that cannot find work. A low rate is not automatically
+      good news here: people who cannot afford to be unemployed take any
+      informal work, so read this beside the salaried-jobs card.
     sources: {primary: plfs-microdata}
     geography_levels: [national]
     religions: [muslim, hindu, all]
@@ -383,8 +381,8 @@ metrics:
     unit: percent
     higher_is_better: true
     definition: |
-      Percentage of workers (usual status, ps+ss) employed in regular
-      wage/salary positions (as opposed to self-employed or casual labour).
+      Of all workers, the share in regular salaried jobs rather than
+      self-employment or casual labour.
     sources: {primary: plfs}
     geography_levels: [national]
     religions: [muslim, hindu, all]
@@ -438,7 +436,7 @@ metrics:
       sex) within 0.03%, with exactly matching sample counts. Rupees are
       nominal, so levels mostly reflect inflation; the comparable story is the
       relative gap - Muslim salaried workers earn 16-23% below the all-India
-      average in every round (2023-24: Rs 17,747 vs Rs 21,067), and the gap has
+      average in every round (2023-24: INR 17,747 vs INR 21,067), and the gap has
       not closed over the seven rounds. Muslim sample: 4,070-5,122 earnings
       reporters per round. Religion is self-reported (NSO unit-data rider:
       indicative, no sub-state estimates). Year=Y is the start of the Jul-Y to
@@ -449,7 +447,7 @@ metrics:
     display:
       scorecard:
         label: "Salaried earnings"
-        reference: "all"
+        reference: "hindu"
         unit_format: inr_per_month
         higher_is_better: true
         order: 152
@@ -474,21 +472,21 @@ metrics:
       (NSO, 2.61 lakh households), pulled via the MoSPI NADA API: weighted monthly
       per capita consumption expenditure (food + consumables & services + durables,
       365-day items annualised), cross-classified by the religion of the household
-      head. The method reproduces the published national MPCE (rural Rs.4,122 /
-      urban Rs.6,996) within about 2% before the religion split is taken. NSO's
+      head. The method reproduces the published national MPCE (rural INR 4,122 /
+      urban INR 6,996) within about 2% before the religion split is taken. NSO's
       note for unit-level users cautions that religion is self-reported and
       unverified and that the survey is designed to estimate MPCE with the State/UT
       as the basic stratum, so the religion figures are best read as indicative, no
       sub-state estimates are made, and the survey's internal Muslim population
       share (13%) sits a little below the Census. The earlier benchmark is the
-      Sachar Committee (2006) from the NSS 61st round (2004-05): Muslims Rs.635 vs
-      the all-India Rs.712, near SC/ST (Rs.520) and far below upper-caste 'Hindu
-      General' households (Rs.1023). The two rounds use different consumption
+      Sachar Committee (2006) from the NSS 61st round (2004-05): Muslims INR 635 vs
+      the all-India INR 712, near SC/ST (INR 520) and far below upper-caste 'Hindu
+      General' households (INR 1,023). The two rounds use different consumption
       methods (2004-05 URP vs 2023-24 MMRP) and rupees are nominal, so the level
       change over time is mostly inflation; the comparable story is the relative
       gap, which is stable at about 10% below the national average across the 20
-      years and is widest in towns (urban Muslims Rs.5,467 vs urban Hindus
-      Rs.7,064). The By state tab shows the 2023-24 per-state Muslim MPCE computed
+      years and is widest in towns (urban Muslims INR 5,467 vs urban Hindus
+      INR 7,064). The By state tab shows the 2023-24 per-state Muslim MPCE computed
       from the same microdata, urban and rural separately (State/UT is the survey's
       basic stratum, so this is the finest permitted cut; cells with fewer than 30
       sampled Muslim households are suppressed). The Sachar 2004-05 state figures
@@ -510,12 +508,10 @@ metrics:
     unit: percent
     higher_is_better: true
     definition: |
-      Of all people in a community, the share living in households whose
-      spending (MPCE) places them in the top 20% of Indians. If prosperity were
-      spread evenly, every community would sit at 20%. This reads the whole
-      spending distribution, not the average: Muslims are NOT over-represented
-      among India's poorest fifth (20.5%, at par), but only 13.7% reach the top
-      fifth - the distribution is squeezed below the top.
+      Of all people in a community, the share living in households in the top
+      20% of spending nationally. An even spread would put every community at
+      20%. Muslims are at par among the poorest fifth but only 13.7% reach the
+      richest fifth.
     sources: {primary: hces-2023-24}
     geography_levels: [national]
     religions: [muslim, hindu, christian, sikh, all]
@@ -523,7 +519,7 @@ metrics:
       Computed from HCES 2023-24 unit-level microdata (NSO, 2.61 lakh
       households) via the MoSPI NADA API, with the same validated MPCE
       machinery as the spending card: person-weighted national MPCE quintile
-      cuts (Rs 2,903 / 3,677 / 4,632 / 6,302 per person per month), then each
+      cuts (INR 2,903 / 3,677 / 4,632 / 6,302 per person per month), then each
       community's population share within each fifth. Every all-India quintile
       share equals 20.0 by construction, which is the built-in validation. The
       full distribution (Muslim, % in Q1 poorest to Q5 richest): 20.5, 24.0,
@@ -552,10 +548,10 @@ metrics:
     higher_is_better: true
     definition: |
       What an average household owns (land, buildings, livestock, machinery,
-      vehicles, financial assets) minus what it owes, per household. The stock
-      of accumulated wealth, where the spending cards measure the monthly
-      flow. Wealth gaps compound across generations, so they run far wider
-      than spending gaps.
+      vehicles, financial assets) minus what it owes, as on mid-2012 (the
+      survey ran through 2013). Wealth is the stock that spending cannot show,
+      and wealth gaps compound across generations, so they run far wider than
+      spending gaps.
     sources: {primary: aidis-2013}
     geography_levels: [national]
     religions: [muslim, hindu, christian, sikh, all]
@@ -569,13 +565,13 @@ metrics:
       and incidence of indebtedness exactly, and average assets within 0.75%
       (a documented empty-column defect in MoSPI's own CSV conversion of the
       non-farm-equipment block, worth exactly the missing block's published
-      share). Muslim households held Rs 9.16 lakh against the all-India
-      Rs 13.95 lakh (66%) and Hindu Rs 13.69 lakh (67%); the gap is
+      share). Muslim households held INR 9.16 lakh against the all-India
+      INR 13.95 lakh (66%) and Hindu INR 13.69 lakh (67%); the gap is
       overwhelmingly urban - urban Muslim households hold 51% of urban Hindu
-      net worth (Rs 11.5 vs 22.5 lakh) while rural is 83%. Gold and ornaments
+      net worth (INR 11.5 vs 22.5 lakh) while rural is 83%. Gold and ornaments
       sit outside the published asset concept (about 4% on top); land is
       valued at guideline rather than market rates. Values rounded to the
-      nearest Rs 1,000. NSO unit-data rider: religion is self-reported and
+      nearest INR 1,000. NSO unit-data rider: religion is self-reported and
       the survey is stratified for states, so the split is indicative with no
       sub-state estimates. AIDIS 2018-19 would extend this to a trend, but
       its NADA distribution is a proprietary binary; its published all-India
@@ -792,9 +788,7 @@ metrics:
     unit: percent
     higher_is_better: true
     definition: |
-      Percentage of households with access to a toilet facility (any type).
-      Note: not strictly "improved sanitation" per the JMP definition; the
-      NFHS-5 published table aggregates flush, pit, and other toilet types.
+      Share of households with access to a toilet of any type.
     sources: {primary: nfhs-5}
     geography_levels: [national]
     religions: [muslim, hindu, all]
@@ -802,7 +796,9 @@ metrics:
       NFHS-5 Table 2.4 (page 74). Total residence, national. Year=2020 =
       NFHS-5 fieldwork midpoint. Muslim toilet access (90.3%) runs *above*
       Hindu (80.7%), partly because urban-Muslim share is higher than
-      urban-Hindu share, and urban access is uniformly higher.
+      urban-Hindu share, and urban access is uniformly higher. Not strictly
+      "improved sanitation" per the WHO/UNICEF JMP definition: the published
+      NFHS-5 table aggregates flush, pit and other toilet types.
     comparison_baselines: [hindu, all]
     phase: 1
     status: defined
