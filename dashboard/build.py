@@ -3423,6 +3423,7 @@ UNIT_JS = {
 }
 SOURCE_LABEL = {
     "plfs-microdata": "PLFS microdata 2017-24",
+    "eus-microdata": "EUS microdata 2004-12 (NSS 61st/66th/68th)",
     "aidis-2013": "AIDIS 2013 (NSS 70th)",
     "aidis-2019": "AIDIS 2019 (NSS 77th)",
     "nss76-housing": "NSS 76th 1.2 (2018)",
@@ -3494,10 +3495,10 @@ PLAIN_DEFINITION = {
     "lit-7plus": "Of people aged 7 and older, what share can read and write. The Census uses 7+ as the standard cutoff to exclude very young children.",
     "ger-higher-ed": "Of every 100 young people in the typical college-going age band (18 to 23), how many are enrolled in higher education (any degree or diploma course after Class 12).",
     "muslim-higher-ed-enrolment": "Total number of Muslim students enrolled in higher education across India in the latest year.",
-    "lfpr-15plus": "Of people aged 15 and older, what share is in the workforce, either working or actively looking for work.",
+    "lfpr-15plus": "Of people aged 15 and older, what share is in the workforce, either working or actively looking for work. The series now reaches back two decades: participation fell economy-wide from 2004 to 2017 and recovered after, with the Muslim rate trailing throughout.",
     "wpr-15plus": "Of people aged 15 and older, what share is currently working.",
     "unemployment-rate-15plus": "Of people in the labour force (working or looking for work), what share cannot find work. A low rate is not automatically good news: people who cannot afford to stay unemployed take any informal work, so read it beside the salaried-jobs card.",
-    "salaried-share": "Of all workers, what share has regular salaried jobs (as opposed to self-employment or casual labour).",
+    "salaried-share": "Of all workers, what share has regular salaried jobs (as opposed to self-employment or casual labour). The Muslim share has trailed the all-India share in every survey round for two decades, and the gap is wider today than in 2004.",
     "salaried-earnings": "Of workers with regular salaried jobs, the average monthly pay. Muslims hold fewer salaried jobs and are also paid less in them, 16 to 23% below the national average in every survey round.",
     "imr": "Of every 1,000 babies born, how many die before their first birthday.",
     "stunting-u5": "Of children under 5, what share is too short for their age, a long-term sign of chronic undernutrition.",

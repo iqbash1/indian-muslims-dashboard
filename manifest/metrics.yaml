@@ -286,13 +286,22 @@ metrics:
     methodology_notes: |
       The 2023-24 point is PLFS 2023-24 Table 48 (pages 396-400), total
       residence, person-level; reference period Jul 2023 - Jun 2024 (year=2023
-      in the canonical row is the start of this period). The earlier points
-      (2017-18 to 2022-23) are computed from each round's unit-level microdata,
+      in the canonical row is the start of this period). The 2017-18 to
+      2022-23 points are computed from each PLFS round's unit-level microdata,
       pulled via the MoSPI NADA API: the report PDFs publish the 15+ religion
       split only for their own year, but the microdata carries household
       religion in every round. The computation reproduces each round's
       published all-India LFPR to 0.1 points and the 2023-24 religion table
-      within 0.2, so the published point extends the same series. Religion is
+      within 0.2, so the published point extends the same series. The
+      2004/2009/2011 points reach back through the three quinquennial NSS
+      Employment & Unemployment Survey rounds (61st/66th/68th), computed the
+      same way from their unit data and reproducing the published by-religion
+      statements of NSS Reports 568/552 cell-for-cell; the EUS and PLFS
+      designs are not strictly comparable, so the line is dashed at the 2017
+      break. Two decades tell one story: participation fell economy-wide
+      between 2004-05 and 2017-18 (Muslim 15+ LFPR 55.1% to 45.0%, all-India
+      63.7% to 49.8%) and recovered after, but the Muslim rate has trailed
+      the all-India rate by 5-9 points in every round since 2004. Religion is
       self-reported (NSO unit-data rider: indicative, no sub-state estimates).
       The "Working vs looking" tab sets this rate against the worker population
       ratio (share actually working, wpr-15plus.csv) from the same source; the
@@ -320,10 +329,14 @@ metrics:
     religions: [muslim, hindu, all]
     methodology_notes: |
       The 2023-24 point is PLFS 2023-24 Table 48 (pages 396-400), total
-      residence, person-level. The earlier points (2017-18 to 2022-23) are
-      computed from each round's unit-level microdata via the MoSPI NADA API
-      (reproduces published all-India figures to 0.1 points; religion is
-      self-reported per the NSO unit-data rider).
+      residence, person-level. The 2017-18 to 2022-23 points are computed
+      from each PLFS round's unit-level microdata via the MoSPI NADA API
+      (reproduces published all-India figures to 0.1 points); the
+      2004/2009/2011 points come the same way from the three quinquennial
+      EUS rounds (NSS 61st/66th/68th), reproducing the published by-religion
+      statements of NSS Reports 568/552. The EUS->PLFS design break is
+      flagged on the 2017 row. Religion is self-reported per the NSO
+      unit-data rider.
     comparison_baselines: [hindu, all]
     phase: 1
     status: defined
@@ -350,10 +363,17 @@ metrics:
     geography_levels: [national]
     religions: [muslim, hindu, all]
     methodology_notes: |
-      All seven points (2017-18 to 2023-24) are computed from each round's PLFS
-      unit-level microdata, pulled via the MoSPI NADA API: the published annual
-      reports never break the unemployment rate down by religion, so the
-      microdata is the only source for this series. Unemployed = usual principal
+      The 2017-18 to 2023-24 points are computed from each round's PLFS
+      unit-level microdata, pulled via the MoSPI NADA API: the published PLFS
+      annual reports never break the unemployment rate down by religion, so
+      the microdata is the only source for that stretch. The 2004/2009/2011
+      points come from the three quinquennial EUS rounds (NSS 61st/66th/68th)
+      the same way, and there the gate is direct: the computation reproduces
+      the published by-religion unemployment rates of NSS Reports 568/552.
+      The EUS era shows the same pattern in miniature: Muslim unemployment
+      (2.3-3.0%) sat above the all-India rate (2.0-2.3%) in all three rounds,
+      before both spiked in 2017-18. EUS and PLFS designs are not strictly
+      comparable; the line is dashed at the 2017 break. Unemployed = usual principal
       status 81 (seeking/available for work); labour force = workers (ps+ss)
       plus unemployed; weights per the official estimation rule. The computation
       reproduces each round's published all-India unemployment rate to 0.1
@@ -390,15 +410,20 @@ metrics:
       The 2023-24 point is PLFS 2023-24 Table 49 (pages 401-402), rural+urban
       person-level. Muslims are disproportionately self-employed (62.2% vs
       Hindu 58.3%) and under-represented in formal salaried work, the classic
-      Sachar-era finding on labour-market segregation. The earlier points
-      (2017-18 to 2022-23) are computed from each round's unit-level microdata
+      Sachar-era finding on labour-market segregation. The 2017-18 to 2022-23
+      points are computed from each PLFS round's unit-level microdata
       via the MoSPI NADA API (the PDFs publish this religion split only for
       their own year; the computation reproduces the 2023-24 published table
-      within 0.2 points). The trend adds a sharper read: Muslim labour-force
-      participation rose over the seven rounds, but the salaried share of
-      Muslim workers FELL from its 2018-19 peak (22.2%) to 18.0%, so the
-      participation gains came in self-employment and casual work, not
-      regular salaried jobs. Religion is self-reported (NSO unit-data rider).
+      within 0.2 points); the 2004/2009/2011 points come from the three
+      quinquennial EUS rounds (NSS 61st/66th/68th), reproducing the published
+      status-of-employment statements of NSS Reports 568/552. The long view
+      sharpens the finding: the Muslim salaried share has trailed the
+      all-India share in every round for two decades (12.8% vs 14.4% in
+      2004-05, 16.2% vs 17.9% in 2011-12, 18.0% vs 21.7% in 2023-24), and
+      within the PLFS years it FELL from its 2018-19 peak (22.2%) while
+      participation rose, so the participation gains came in self-employment
+      and casual work, not regular salaried jobs. EUS and PLFS designs are
+      not strictly comparable; the line is dashed at the 2017 break. Religion is self-reported (NSO unit-data rider).
       The "What it pays" tab folds in the pay counterpart computed from the
       same microdata rounds (the decarded salaried-earnings metric, anchored
       to the published all-ages earnings tables of the 2021-22 to 2023-24

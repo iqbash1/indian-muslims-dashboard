@@ -16,7 +16,7 @@ import csv
 import datetime as dt
 import pathlib
 
-from _plfs_microdata import trend_rows
+from _plfs_microdata import eus_trend_rows, trend_rows
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[2]
 L2_PATH = REPO_ROOT / "extracted" / "plfs" / "plfs-2023-24-table48-employment-by-religion.csv"
@@ -79,6 +79,10 @@ def canonicalize() -> None:
         # over-time 2017-2022 from the unit-level microdata (source plfs-microdata)
         for mrow in trend_rows("wpr-15plus", "wpr", "population_age_15plus",
                                "worker population ratio", extraction_run):
+            w.writerow(mrow)
+            n_rows += 1
+        for mrow in eus_trend_rows("wpr-15plus", "wpr", "population_age_15plus",
+                                   "worker population ratio", extraction_run):
             w.writerow(mrow)
             n_rows += 1
 

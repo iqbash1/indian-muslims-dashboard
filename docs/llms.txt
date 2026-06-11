@@ -15,9 +15,9 @@ muslimdata.in is a static, source-traceable dashboard of living-conditions indic
 - Sex ratio (1961-2011; source: census-india-2011): https://muslimdata.in/m/sex-ratio/ | data: https://muslimdata.in/canonical/sex-ratio.csv
 - Literacy rate (2001-2011; source: census-india-2011): https://muslimdata.in/m/lit-7plus/ | data: https://muslimdata.in/canonical/lit-7plus.csv
 - Higher education enrolment rate (2020-2021; source: aishe): https://muslimdata.in/m/ger-higher-ed/ | data: https://muslimdata.in/canonical/ger-higher-ed.csv
-- Labour force participation (2017-2023; source: plfs): https://muslimdata.in/m/lfpr-15plus/ | data: https://muslimdata.in/canonical/lfpr-15plus.csv
-- Unemployment rate (2017-2023; source: plfs-microdata): https://muslimdata.in/m/unemployment-rate-15plus/ | data: https://muslimdata.in/canonical/unemployment-rate-15plus.csv
-- Workers in salaried jobs (2017-2023; source: plfs): https://muslimdata.in/m/salaried-share/ | data: https://muslimdata.in/canonical/salaried-share.csv
+- Labour force participation (2004-2023; source: plfs): https://muslimdata.in/m/lfpr-15plus/ | data: https://muslimdata.in/canonical/lfpr-15plus.csv
+- Unemployment rate (2004-2023; source: plfs-microdata): https://muslimdata.in/m/unemployment-rate-15plus/ | data: https://muslimdata.in/canonical/unemployment-rate-15plus.csv
+- Workers in salaried jobs (2004-2023; source: plfs): https://muslimdata.in/m/salaried-share/ | data: https://muslimdata.in/canonical/salaried-share.csv
 - Monthly spending per person (2004-2023; source: hces-2023-24): https://muslimdata.in/m/mpce/ | data: https://muslimdata.in/canonical/mpce.csv
 - Household net worth (2012-2018; source: aidis-2019): https://muslimdata.in/m/household-net-worth/ | data: https://muslimdata.in/canonical/household-net-worth.csv
 - Infant mortality rate (1998-2020; source: nfhs-5): https://muslimdata.in/m/imr/ | data: https://muslimdata.in/canonical/imr.csv

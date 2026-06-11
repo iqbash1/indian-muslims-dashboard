@@ -16,7 +16,7 @@ import csv
 import datetime as dt
 import pathlib
 
-from _plfs_microdata import trend_rows
+from _plfs_microdata import eus_trend_rows, trend_rows
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[2]
 L2_PATH = REPO_ROOT / "extracted" / "plfs" / "plfs-2023-24-table49-employment-status-by-religion.csv"
@@ -83,6 +83,12 @@ def canonicalize() -> None:
                                "all_workers_usual_status_ps_ss",
                                "share of workers in regular wage/salaried employment",
                                extraction_run):
+            w.writerow(mrow)
+            n_rows += 1
+        for mrow in eus_trend_rows("salaried-share", "salaried_share",
+                                   "all_workers_usual_status_ps_ss",
+                                   "share of workers in regular wage/salaried employment",
+                                   extraction_run):
             w.writerow(mrow)
             n_rows += 1
 

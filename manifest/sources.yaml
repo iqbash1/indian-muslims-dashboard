@@ -789,6 +789,59 @@ sources:
         target_path: sources/hces-2023-24/HCES_Data_2023-24_Csv.zip
         status: verified
 
+  - id: eus-microdata
+    name: NSS Employment & Unemployment Survey unit-level microdata, 2004-05 / 2009-10 / 2011-12 (3 quinquennial rounds)
+    publisher: National Statistical Office (NSO), MoSPI
+    home_url: https://microdata.gov.in/NADA/index.php/catalog/127
+    cadence: discontinued (replaced by PLFS from 2017-18)
+    cadence_notes: |
+      Unit-level microdata for the three quinquennial "thick" EUS rounds (NSS
+      61st, 66th, 68th, Schedule 10) via the MoSPI NADA API - the pre-PLFS
+      employment history. Religion is captured in the household block of every
+      round. Feeds the 2004/2009/2011 rows of lfpr-15plus, wpr-15plus,
+      salaried-share and unemployment-rate-15plus; the EUS->PLFS design break
+      is flagged on the first PLFS round (2017). The 64th round (2007-08, the
+      thin annual Sch 10.2) is excluded: NSSO published no by-religion
+      employment tables for it, so a by-religion extraction cannot be
+      gate-validated.
+    access:
+      method: api
+      auth_required: true
+      auth_notes: |
+        Open catalog (listdatasets) needs no key; fileslist + download need a
+        personal X-API-KEY generated in a microdata.gov.in (NADA) account.
+        Re-fetch recipe per round: sources/nada/eus-<round>/PROVENANCE.md.
+    formats: [csv]
+    religion_disaggregated: true
+    geography_levels: [national]
+    coverage:
+      - lfpr_wpr_unemployment_salaried_share_15plus_by_religion_pre_plfs
+    known_issues:
+      - "Religion self-reported + unverified (NSO unit-data rider); survey designed for labour-force estimation with State/UT stratum, no sub-state estimates"
+      - "31-78 MB unit-level CSV zips kept local (provenance-only); sha256 per round in sources/nada/eus-<round>/"
+      - "Column layouts drift per round (2004-05 merges blocks 1-3 into level 01 and block 5.1 carries Sex; 2009-10's block 5.1 lacks Sex - joined from block 4 by PID; 2011-12's block 3 ships no HHID - composed as FSU+hamlet-group+SSS+hh-no); see nada/eus-layout-map.md"
+      - "Validation anchors are the by-religion statements of NSS Reports 568/552 (all-ages per-1000); the UR gate carries a propagated-rounding tolerance for small female labour forces (documented in the extractor docstring)"
+    archive_dir: sources/nada/
+    runbook: docs/runbooks/plfs-microdata.md
+    last_pulled: "2026-06-10"
+    next_expected: null
+    targets:
+      - target_id: eus-2004-05-microdata-csv
+        description: EUS NSS 61st round Sch 10 unit-level CSV zip
+        url: https://microdata.gov.in/NADA/index.php/catalog/109
+        target_path: sources/nada/eus-2004-05/Emp_Unemp_2004_2005_CSV.zip
+        status: verified
+      - target_id: eus-2009-10-microdata-csv
+        description: EUS NSS 66th round Sch 10 unit-level CSV zip
+        url: https://microdata.gov.in/NADA/index.php/catalog/124
+        target_path: sources/nada/eus-2009-10/Emp_Unemp_2009_2010_CSV.zip
+        status: verified
+      - target_id: eus-2011-12-microdata-csv
+        description: EUS NSS 68th round Sch 10 unit-level CSV zip
+        url: https://microdata.gov.in/NADA/index.php/catalog/127
+        target_path: sources/nada/eus-2011-12/U_M_2011_2012_CSV.zip
+        status: verified
+
   - id: plfs-microdata
     name: Periodic Labour Force Survey unit-level microdata, 2017-18 to 2023-24 (7 rounds)
     publisher: National Statistical Office (NSO), MoSPI

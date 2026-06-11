@@ -112,13 +112,30 @@ download, sha256, extract docs, write provenance) is the right tool; build it at
 
 ## 4. Build roadmap (offline, after banking; ordered by value / effort)
 
-1. **HCES state-level + 2022-23 mid-point** — LOW effort, reuse
-   `transform/hces/extract_mpce_2023_24_by_religion.py`; fixes the live-stale `mpce` By-state tab.
-2. **PLFS 7-round trends + unemployment metric** — MODERATE; new person-level usual-status
-   pipeline; unblocks the VIEW-FEASIBILITY "PLFS over-time skipped" row, converts 3 cards to
-   trends, adds 1 card.
-3. **AIDIS wealth card** — HIGHER; new survey + new card; the original wealth-disparity question.
-4. **Health / Education spending** metrics — MODERATE each; net-new.
+1. **HCES state-level + 2022-23 mid-point** — state-level DONE (Commit EV: mpce
+   By-state = HCES 2023-24 microdata). The 2022-23 mid-point is BLOCKED
+   (verified 2026-06-11: catalog id 224 ships only a 2.5GB .Nesstar binary;
+   no TXT mirror — React-era release; data.gov.in empty). Unlock = Nesstar
+   Explorer export in a Windows VM.
+2. **PLFS 7-round trends + unemployment metric** — DONE (Commits EW/EX; recipe
+   in docs/runbooks/plfs-microdata.md).
+3. **AIDIS wealth card** — DONE and EXTENDED: 2013 card (Commits EY-FB) +
+   2012->2018 trend via the NSS7718 TXT mirror (Commit FM; the deleted Drupal
+   page's mospi.NIC.in twin in Wayback was the key). AIDIS 2003 third point is
+   Nesstar-blocked (the "new format" rar = a Nesstar Explorer disc image, NOT
+   plain data; same for ces-2009-10/2011-12 and sas-agri-2013).
+4. **Health / Education spending** metrics — OPEN and now FULLY UNLOCKED for
+   2017-18: the 75th-round TXT mirrors are live and banked (NSS75250H/ and
+   NSS75252E/ on mospi.gov.in, found 2026-06-11 via the mospi.nic.in-twin
+   Wayback trick; ~/Desktop/nada-work/{health,education}-2017-18-alt/). The
+   2025 rounds are CSV and banked; only the 2014 rounds stay Nesstar-blocked.
+   Bonus mirrors banked the same day: SAS 2019 (NSS7733/, 34/35 files -
+   v1 L04 is permanently 404 upstream) and disability 76th (NSS7626d/).
+5. **EUS 2004-12 pre-PLFS labour history** — DONE 2026-06-11: the three
+   quinquennial rounds (61st/66th/68th) extend lfpr/wpr/salaried-share/
+   unemployment-rate back to 2004, gated on NSS Reports 568/552 (310 cells);
+   the 64th (2007-08) is excluded for want of published by-religion anchors.
+   Recipe: nada/eus-layout-map.md + docs/runbooks/plfs-microdata.md.
 
 ---
 

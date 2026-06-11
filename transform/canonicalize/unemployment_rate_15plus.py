@@ -18,7 +18,7 @@ from __future__ import annotations
 import datetime as dt
 import pathlib
 
-from _plfs_microdata import trend_rows
+from _plfs_microdata import eus_trend_rows, trend_rows
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[2]
 OUTPUT_PATH = REPO_ROOT / "canonical" / "unemployment-rate-15plus.csv"
@@ -42,6 +42,9 @@ def canonicalize() -> None:
     rows = trend_rows("unemployment-rate-15plus", "ur", "labour_force_15plus",
                       "unemployment rate (unemployed / labour force)",
                       extraction_run, years=range(2017, 2024))
+    rows += eus_trend_rows("unemployment-rate-15plus", "ur", "labour_force_15plus",
+                           "unemployment rate (unemployed / labour force)",
+                           extraction_run)
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     with OUTPUT_PATH.open("w", newline="") as f:
         w = csv.writer(f)

@@ -38,12 +38,30 @@ round with the recipe in its `PROVENANCE.md`:
 NADA_API_KEY=<key> .venv/bin/python nada/bank.py autoget <idno> ~/Desktop/nada-work/plfs-<round>
 ```
 
+## The pre-PLFS history (EUS 2004-2011)
+
+Since the EUS build (2026-06-11) the four rate metrics reach back to 2004
+through the three quinquennial NSS Employment & Unemployment Survey rounds
+(61st 2004-05, 66th 2009-10, 68th 2011-12; plain CSV zips, banked at
+`~/Desktop/nada-work/eus-<round>/` with provenance in
+`sources/nada/eus-<round>/`). transform/eus/extract_microdata_trends.py
+computes the same estimator and gates ALL-AGES by-religion LFPR/WPR/UR
+against NSS Reports 568/552's statements (310 cells) before writing
+`extracted/eus/eus-microdata-2004-12-by-religion.csv`; per-round column
+drift is mapped in `nada/eus-layout-map.md`. The 64th round (2007-08) is
+excluded - the thin annual round has no published by-religion tables to
+gate against. EUS and PLFS designs are not strictly comparable: the 2017
+PLFS rows carry break_flag=true and the card lines render dashed.
+salaried-earnings stays PLFS-only (the EUS wage instrument differs).
+
 ## How to recompute
 
 ```bash
-# L1 -> L2: all 7 rounds, with two validation gates (published all-India figures
-# per round to +-0.1; the 2023-24 by-religion PDF tables to +-0.2)
+# L1 -> L2: all 7 PLFS rounds, with two validation gates (published all-India
+# figures per round to +-0.1; the 2023-24 by-religion PDF tables to +-0.2)
 .venv/bin/python transform/plfs/extract_microdata_trends.py
+# L1 -> L2: the 3 EUS rounds (gates: Reports 568/552 by-religion statements)
+.venv/bin/python transform/eus/extract_microdata_trends.py
 # L1 -> L2 earnings (gates: published earnings tables 2021-22..2023-24, 27 cells to 0.03%)
 .venv/bin/python transform/plfs/extract_earnings_by_religion.py
 # L2 -> L3: regenerate the canonical CSVs
