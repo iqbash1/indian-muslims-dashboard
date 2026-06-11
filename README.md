@@ -17,8 +17,8 @@ justice.
 
 ## What's on the dashboard
 
-23 live indicators across six themes (population, health, education,
-employment, representation, justice), drawn from 19 primary sources,
+26 live indicators across six themes (population, health, education,
+employment, representation, justice), drawn from 20 primary sources,
 grouped into five themed sections on the dashboard. The authoritative
 scorecard
 is the live site at https://muslimdata.in/ — it
@@ -89,7 +89,7 @@ The dashboard never queries an external source live and never reads L1/L2 direct
 
 ## Sources
 
-19 source-ids feed L3 canonical metrics (26 source-ids registered in `manifest/sources.yaml` total — the remaining 7 are `census-decadal-religion` (superseded by the primary RGI volumes, kept for cross-validation), `civic-incident-databases` (the hate-speech metric was decarded in Commit CR; data archived), and five pre-registered for future metrics: `hces-2022-23`, `mha-parliament-answers`, `niti-mpi`, `rbi-minority-lending`, `rti-public-sector-employment`). `plfs-microdata` (7 PLFS rounds via the NADA API) joined in Commit EW, feeding the employment metrics' 2017-2022 trend rows.
+20 source-ids feed L3 canonical metrics (27 source-ids registered in `manifest/sources.yaml` total — the remaining 7 are `census-decadal-religion` (superseded by the primary RGI volumes, kept for cross-validation), `civic-incident-databases` (the hate-speech metric was decarded in Commit CR; data archived), and five pre-registered for future metrics: `hces-2022-23`, `mha-parliament-answers`, `niti-mpi`, `rbi-minority-lending`, `rti-public-sector-employment`). `plfs-microdata` (7 PLFS rounds via the NADA API) joined in Commit EW, feeding the employment metrics' 2017-2022 trend rows.
 
 | Source | What it gives us | Cadence | Status |
 |---|---|---|---|
@@ -172,7 +172,7 @@ Pure mechanical extension — pattern is proven:
 
 ## Status
 
-28 canonical metrics (23 carded + 5 reference series kept in `canonical/` but not rendered: `prison-share` + `undertrial-share` superseded by the rate-per-100k cards, `district-concentration-top100` folded into the "By district" tab of the `pop-share` card (Commit DV), `muslim-higher-ed-enrolment` folded into the "By state" and "By sex" tabs of `ger-higher-ed` as a Students column beside the GER rate (Commit EQ), and `wpr-15plus` folded into the "Working vs looking" tab of `lfpr-15plus` beside the labour-force rate). The dashboard is a card grid with multi-community benchmarking (rank among religious communities) and multi-round trends spanning up to 60+ years (sex-ratio 1961→2011; population share 1961→2011; Lok Sabha 1952→2024; PLFS employment 2017→2024 from unit-level microdata, incl. the `unemployment-rate-15plus` card that exists only because the microdata carries religion every round; communal incidents 2015→2023; prison/undertrial 2018→2023; NFHS health 1998→2020; Census literacy 2001→2011). The architecture is battle-tested across 5 source shapes: legacy .xls / modern .xlsx spreadsheets, dual-column PDF tables, single-column PDF religion sections, tabular state-row PDFs, and landscape-rotated PDFs (qpdf-pre-rotated at extraction time).
+31 canonical metrics (26 carded + 5 reference series kept in `canonical/` but not rendered: `prison-share` + `undertrial-share` superseded by the rate-per-100k cards, `district-concentration-top100` folded into the "By district" tab of the `pop-share` card (Commit DV), `muslim-higher-ed-enrolment` folded into the "By state" and "By sex" tabs of `ger-higher-ed` as a Students column beside the GER rate (Commit EQ), and `wpr-15plus` folded into the "Working vs looking" tab of `lfpr-15plus` beside the labour-force rate). The dashboard is a card grid with multi-community benchmarking (rank among religious communities) and multi-round trends spanning up to 60+ years (sex-ratio 1961→2011; population share 1961→2011; Lok Sabha 1952→2024; PLFS employment 2017→2024 from unit-level microdata, incl. the `unemployment-rate-15plus` card that exists only because the microdata carries religion every round; communal incidents 2015→2023; prison/undertrial 2018→2023; NFHS health 1998→2020; Census literacy 2001→2011). The architecture is battle-tested across 5 source shapes: legacy .xls / modern .xlsx spreadsheets, dual-column PDF tables, single-column PDF religion sections, tabular state-row PDFs, and landscape-rotated PDFs (qpdf-pre-rotated at extraction time).
 
 Per-metric depth where the source supports it, shown as **modal tabs** (each with its own shareable `/m/{id}/{view}/` URL + social-preview image) and mirrored on the metric's full `/m/{id}/` landing page: **by-state** tables on 6 metrics (pop-share, sex-ratio, literacy, urban-share, communal-incidents, higher-ed); a **by-sex** (male vs female) breakdown on 5 (LFPR, WPR, salaried, literacy, higher-ed enrolment), national-level via an optional `sex` dimension added to the canonical schema and defaulted to `all` at the `load_metric` read so existing series are unaffected; a **by-district** geographic-concentration view (the top-100-district ranking + cumulative-concentration curve, in pop-share's "By district" tab); and a **district-level CSV** download (pop-share, all 640 districts with names).
 

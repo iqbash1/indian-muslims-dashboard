@@ -901,6 +901,47 @@ sources:
         target_path: sources/nada/aidis-2013-v1/CSV_NSS_70th_Debt_&_Investment_Visit1_Jan_Dec_2013.zip
         status: verified
 
+  - id: nss76-housing
+    name: NSS 76th round Sch 1.2 - Drinking Water, Sanitation, Hygiene & Housing Condition 2018 (unit-level)
+    publisher: National Statistical Office (NSO), MoSPI
+    home_url: https://mospi.gov.in/sites/default/files/NSS7612dws/README76_S120.pdf
+    cadence: irregular (prior rounds 2012, 2008-09)
+    cadence_notes: |
+      Unit-level microdata, July-December 2018, 1,06,838 households. Feeds the
+      housing & basic-services cards (improved-water-premises,
+      household-electricity, pucca-house), computed by religion of household
+      head - Report 584 publishes these indicators by state and social group,
+      never religion.
+    access:
+      method: web-download
+      auth_required: false
+      auth_notes: |
+        The current NADA catalog (id 153) ships this survey ONLY as a
+        proprietary .Nesstar binary. The original fixed-width TXT distribution
+        (9 files R76120L01..L09 + layout) is still served from the unlinked
+        mospi.gov.in directory sites/default/files/NSS7612dws/ (located via the
+        Wayback snapshot of the deleted Drupal page); URLs + sha256 in
+        sources/nss76/PROVENANCE-note.md.
+    formats: [fixed-width-txt]
+    religion_disaggregated: true
+    geography_levels: [national]
+    coverage:
+      - drinking_water_sanitation_electricity_housing_quality_by_religion
+    known_issues:
+      - "Religion self-reported + unverified (NSO unit-data rider); state-stratified, no sub-state estimates"
+      - "Report 584 cautions about respondent bias on latrine-access reporting (scheme-benefit questions preceded it); the latrine indicators stay un-carded (NFHS toilet-access card covers sanitation)"
+      - "187 MB of TXT kept local at ~/Desktop/nada-work/housing-water-2018-alt/ (provenance-only); the NADA .Nesstar rar is separately banked as the catalog-channel L1"
+    archive_dir: sources/nss76/
+    runbook: docs/runbooks/nss76-housing.md
+    last_pulled: "2026-06-10"
+    next_expected: null
+    targets:
+      - target_id: nss76-sch1dot2-unit-txt
+        description: NSS 76th Sch 1.2 unit-level fixed-width TXT (9 files, levels 01-09)
+        url: https://mospi.gov.in/sites/default/files/NSS7612dws/R76120L01.TXT
+        target_path: sources/nss76/PROVENANCE-note.md
+        status: verified
+
   - id: aishe
     name: All India Survey on Higher Education
     publisher: Department of Higher Education, MoE

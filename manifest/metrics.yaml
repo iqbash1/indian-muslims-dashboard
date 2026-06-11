@@ -814,6 +814,109 @@ metrics:
         higher_is_better: true
         order: 90
 
+  - id: improved-water-premises
+    name: Improved drinking water within premises
+    cluster: housing
+    unit: percent
+    higher_is_better: true
+    definition: |
+      Share of households whose main source of drinking water is an improved
+      source (piped, tubewell, protected well, bottled and similar) located
+      within the household's own premises, so no one has to fetch water from
+      outside.
+    sources: {primary: nss76-housing}
+    geography_levels: [national]
+    religions: [muslim, hindu, christian, sikh, all]
+    methodology_notes: |
+      Computed from the unit-level microdata of NSS 76th round Schedule 1.2
+      (Drinking Water, Sanitation, Hygiene and Housing Condition, Jul-Dec
+      2018; 1.07 lakh households): improved principal source located within
+      premises, by religion of household head, weighted. Report 584 publishes
+      this by state and social group, never religion. The extraction
+      reproduces the published all-India values across 24 validation cells to
+      a worst gap of 0.24 points (improved-within-premises all-India: 63.6
+      computed vs 63.8 published, the strictest blank-distance treatment).
+      Muslim households are AHEAD of Hindu households here (69.3% vs 62.5%),
+      driven by a rural advantage (65.9 vs 54.3); urban Muslims trail urban
+      Hindus on piped-into-dwelling water (36.5% vs 41.4%, in the data file).
+      Unit data: the original mospi.gov.in TXT distribution (the current NADA
+      catalog ships only a proprietary binary; re-fetch URLs + sha256 in
+      sources/nss76/). NSO unit-data rider: religion is self-reported; the
+      split is indicative; no sub-state estimates. Year=2018 = survey period.
+    comparison_baselines: [hindu, all]
+    phase: 1
+    status: defined
+    display:
+      scorecard:
+        label: "Water within premises"
+        reference: "hindu"
+        unit_format: percent
+        higher_is_better: true
+        order: 92
+
+  - id: household-electricity
+    name: Household electricity
+    cluster: housing
+    unit: percent
+    higher_is_better: true
+    definition: |
+      Share of households with electricity for domestic use. By 2018 this is
+      near-universal in India, and the communities sit within about a point of
+      one another, so this card mostly documents parity.
+    sources: {primary: nss76-housing}
+    geography_levels: [national]
+    religions: [muslim, hindu, christian, sikh, all]
+    methodology_notes: |
+      Computed from NSS 76th round Schedule 1.2 unit-level microdata (Jul-Dec
+      2018), by religion of household head, weighted; reproduces the published
+      all-India values (93.9 rural / 99.1 urban / 95.7 all) exactly. Muslim
+      96.6% vs Hindu 95.4%: near-parity, with the small Muslim edge from the
+      community's higher urban share. Same source, validation and caveats as
+      the water card (see sources/nss76/); religion is self-reported per the
+      NSO rider; year=2018 = survey period.
+    comparison_baselines: [hindu, all]
+    phase: 1
+    status: defined
+    display:
+      scorecard:
+        label: "Electricity"
+        reference: "hindu"
+        unit_format: percent
+        higher_is_better: true
+        order: 94
+
+  - id: pucca-house
+    name: Pucca housing
+    cluster: housing
+    unit: percent
+    higher_is_better: true
+    definition: |
+      Share of households living in a pucca structure: walls and roof both
+      made of permanent materials (brick, concrete, stone, metal and
+      similar), the standard Indian measure of housing quality.
+    sources: {primary: nss76-housing}
+    geography_levels: [national]
+    religions: [muslim, hindu, christian, sikh, all]
+    methodology_notes: |
+      Computed from NSS 76th round Schedule 1.2 unit-level microdata (Jul-Dec
+      2018), by religion of household head, weighted; reproduces the published
+      all-India values (76.7 rural / 96.0 urban / 83.3 all) exactly. Muslim
+      83.6% vs Hindu 83.3%: parity overall, with rural Muslims slightly behind
+      rural Hindus (75.9 vs 76.8) offset by the community's higher urban
+      share. Same source, validation and caveats as the water card (see
+      sources/nss76/); religion is self-reported per the NSO rider; year=2018
+      = survey period.
+    comparison_baselines: [hindu, all]
+    phase: 1
+    status: defined
+    display:
+      scorecard:
+        label: "Pucca housing"
+        reference: "hindu"
+        unit_format: percent
+        higher_is_better: true
+        order: 96
+
   - id: clean-cooking-fuel
     name: Clean cooking fuel access
     cluster: housing

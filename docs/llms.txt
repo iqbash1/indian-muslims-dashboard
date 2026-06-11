@@ -28,6 +28,9 @@ muslimdata.in is a static, source-traceable dashboard of living-conditions indic
 - Institutional delivery rate (1998-2020; source: nfhs-5): https://muslimdata.in/m/inst-delivery/ | data: https://muslimdata.in/canonical/inst-delivery.csv
 - Anaemia in women (1998-2020; source: nfhs-5): https://muslimdata.in/m/women-anemia/ | data: https://muslimdata.in/canonical/women-anemia.csv
 - Toilet access (2020; source: nfhs-5): https://muslimdata.in/m/improved-sanitation/ | data: https://muslimdata.in/canonical/improved-sanitation.csv
+- Improved drinking water within premises (2018; source: nss76-housing): https://muslimdata.in/m/improved-water-premises/ | data: https://muslimdata.in/canonical/improved-water-premises.csv
+- Household electricity (2018; source: nss76-housing): https://muslimdata.in/m/household-electricity/ | data: https://muslimdata.in/canonical/household-electricity.csv
+- Pucca housing (2018; source: nss76-housing): https://muslimdata.in/m/pucca-house/ | data: https://muslimdata.in/canonical/pucca-house.csv
 - Muslim share of the Lok Sabha (1952-2024; source: prs-eci-affidavits): https://muslimdata.in/m/ls-share/ | data: https://muslimdata.in/canonical/ls-share.csv
 - Muslim share of state assemblies (2020-2026; source: prs-eci-affidavits): https://muslimdata.in/m/mla-share/ | data: https://muslimdata.in/canonical/mla-share.csv
 - Incarceration rate (2022; source: ncrb-prison): https://muslimdata.in/m/prison-rate-per-100k/ | data: https://muslimdata.in/canonical/prison-rate-per-100k.csv
