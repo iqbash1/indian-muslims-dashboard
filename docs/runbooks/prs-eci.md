@@ -8,7 +8,8 @@
 - Role: feeds the representation-cluster metrics **`ls-share`** (Muslim share
   of Lok Sabha members, 18-point series 1952→2024) and **`mla-share`** (Muslim
   share of state legislative assembly members, currently 31 state/UT
-  assemblies covered).
+  assemblies covered; rendered as the "State assemblies" tab of the `ls-share`
+  card since Commit FE).
 
 ## Why this is a SECONDARY manual-entry source (no L1 archive)
 

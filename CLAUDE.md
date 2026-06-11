@@ -59,7 +59,7 @@ not ad-hoc scripts: metric metadata in `manifest/metrics.yaml`, sources in
   JSON-LD); the per-view `docs/m/<id>/<view>/` are thin redirect stubs (OG meta +
   a relative `/#<id>/<view>` redirect). Both regenerate from canonical, so they
   change on most rebuilds — partial-looking diffs there are expected.
-- 26 carded metrics. `pop-share` absorbed the old `district-concentration-top100`
+- 20 carded metrics. `pop-share` absorbed the old `district-concentration-top100`
   card (Commit DV): it is now pop-share's "By district" tab (curve + top-100
   table), reading the still-present `district-concentration-top100.csv`. Likewise
   `muslim-higher-ed-enrolment` (student counts) is decarded and folded into
@@ -68,6 +68,17 @@ not ad-hoc scripts: metric metadata in `manifest/metrics.yaml`, sources in
   `wpr-15plus` (worker population ratio) is decarded and folded into
   `lfpr-15plus`'s "Working vs looking" tab, beside the labour-force rate (the two
   PLFS measures differ only by unemployment).
+- **Commit FE folded six more companions into host-card tabs** (rule: same
+  primary source + same story; the folded tab leads the host's tab order):
+  `top-quintile-share` → `mpce` ("Top spending fifth"), `salaried-earnings` →
+  `salaried-share` ("What it pays"), `institutional-credit-share` →
+  `household-net-worth` ("Borrowing sources"), `household-electricity` →
+  `pucca-house` ("Electricity"), `undertrial-rate-per-100k` →
+  `prison-rate-per-100k` ("Undertrials"), `mla-share` → `ls-share` ("State
+  assemblies"). Decarded ids keep their canonical CSVs (the tabs read them;
+  machinery: `FOLDED_VIEW_METRIC` + `_folded_view` in build.py, wired into
+  `_og_view_data` + `_landing_breakdowns`); old `/m/<id>/` URLs 301 via
+  `docs/_redirects`.
 - The employment cards are 7-round PLFS trends (2017-18 to 2023-24) from NADA
   unit-level microdata (Commit EW; recipe in docs/runbooks/plfs-microdata.md +
   nada/plfs-layout-map.md); `unemployment-rate-15plus` (Commit EX) and
@@ -75,7 +86,7 @@ not ad-hoc scripts: metric metadata in `manifest/metrics.yaml`, sources in
   publish UR or earnings by religion). mpce's By-state tab is HCES 2023-24
   microdata (Commit EV). Raw zips stay LOCAL at ~/Desktop/nada-work/ (sha256 +
   docs committed in sources/nada/).
-- The microdata-sprint cards (EY-FB, all single-source computed-by-religion
+- The microdata-sprint metrics (EY-FB, all single-source computed-by-religion
   with hard validation gates vs published figures): `top-quintile-share` (HCES
   quintile distribution), `household-net-worth` + `institutional-credit-share`
   (AIDIS 2013; the 2019 round is Nesstar-blocked, anchors recorded in

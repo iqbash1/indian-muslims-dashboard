@@ -399,6 +399,14 @@ metrics:
       Muslim workers FELL from its 2018-19 peak (22.2%) to 18.0%, so the
       participation gains came in self-employment and casual work, not
       regular salaried jobs. Religion is self-reported (NSO unit-data rider).
+      The "What it pays" tab folds in the pay counterpart computed from the
+      same microdata rounds (the decarded salaried-earnings metric, anchored
+      to the published all-ages earnings tables of the 2021-22 to 2023-24
+      reports across all 27 residence-by-sex cells within 0.03%): Muslim
+      salaried workers earn 16-23% below the all-India average in every round
+      (2023-24: INR 17,747 vs INR 21,067), so Muslims are both less likely to
+      hold a regular salaried job and paid less when they do. Earnings rupees
+      are nominal, so the comparable story is the gap, not the level.
     comparison_baselines: [hindu, all]
     phase: 1
     status: defined
@@ -446,6 +454,7 @@ metrics:
     status: defined
     display:
       scorecard:
+        include: false   # decarded (Commit FE): folded into salaried-share's "What it pays" tab (same PLFS microdata rounds; the pay counterpart of the salaried-jobs card)
         label: "Salaried earnings"
         reference: "hindu"
         unit_format: inr_per_month
@@ -490,7 +499,15 @@ metrics:
       from the same microdata, urban and rural separately (State/UT is the survey's
       basic stratum, so this is the finest permitted cut; cells with fewer than 30
       sampled Muslim households are suppressed). The Sachar 2004-05 state figures
-      remain in the downloadable data file.
+      remain in the downloadable data file. The "Top spending fifth" tab folds in
+      the distribution counterpart computed from the same microdata with the same
+      validated MPCE machinery (the decarded top-quintile-share metric):
+      person-weighted national MPCE quintile cuts (INR 2,903 / 3,677 / 4,632 /
+      6,302 per person per month), with every all-India quintile share equal to
+      20.0 by construction as the built-in validation. Muslims sit at par in the
+      poorest fifth (20.5%) but only 13.7% reach the richest fifth (Hindu 20.2%,
+      Christian 30.0%, Sikh 40.6%), and the squeeze is urban: 26.3% of urban
+      Muslims reach the national top fifth against 45.3% of urban Hindus.
     comparison_baselines: [all]
     phase: 1
     status: defined
@@ -535,6 +552,7 @@ metrics:
     status: defined
     display:
       scorecard:
+        include: false   # decarded (Commit FE): folded into mpce's "Top spending fifth" tab (same HCES 2023-24 microdata, same MPCE machinery)
         label: "Top spending fifth"
         reference: "all"
         unit_format: percent
@@ -575,7 +593,16 @@ metrics:
       the survey is stratified for states, so the split is indicative with no
       sub-state estimates. AIDIS 2018-19 would extend this to a trend, but
       its NADA distribution is a proprietary binary; its published all-India
-      anchors are recorded in the repo for that future build.
+      anchors are recorded in the repo for that future build. The "Borrowing
+      sources" tab folds in the companion measure from the same AIDIS 2013
+      microdata (the decarded institutional-credit-share metric): the
+      institutional share of outstanding cash debt among indebted households,
+      reproducing the published all-India shares exactly (rural 56.0 / urban
+      84.5). Muslim 68.3% vs Hindu 72.4%, with the gap urban (72.7 vs 85.4);
+      Muslims also borrow the least overall (23.8% of households indebted vs
+      Hindu 29.0%). Credit-agency code 09 "others" is non-institutional
+      despite its position in the code list (the layout trap is documented in
+      the repo).
     comparison_baselines: [hindu, all]
     phase: 1
     status: defined
@@ -622,6 +649,7 @@ metrics:
     status: defined
     display:
       scorecard:
+        include: false   # decarded (Commit FE): folded into household-net-worth's "Borrowing sources" tab (same AIDIS 2013 microdata, one wealth story)
         label: "Institutional borrowing"
         reference: "all"
         unit_format: percent
@@ -875,6 +903,7 @@ metrics:
     status: defined
     display:
       scorecard:
+        include: false   # decarded (Commit FE): folded into pucca-house's "Electricity" tab (same NSS 76th Schedule 1.2 microdata, both near-parity stories)
         label: "Electricity"
         reference: "hindu"
         unit_format: percent
@@ -901,7 +930,11 @@ metrics:
       rural Hindus (75.9 vs 76.8) offset by the community's higher urban
       share. Same source, validation and caveats as the water card (see
       sources/nss76/); religion is self-reported per the NSO rider; year=2018
-      = survey period.
+      = survey period. The "Electricity" tab folds in the companion measure
+      from the same Schedule 1.2 microdata (the decarded household-electricity
+      metric, reproducing the published 93.9 rural / 99.1 urban / 95.7 all
+      exactly): Muslim 96.6% vs Hindu 95.4%, near-parity by 2018 with the
+      small Muslim edge from the community's higher urban share.
     comparison_baselines: [hindu, all]
     phase: 1
     status: defined
@@ -963,7 +996,11 @@ metrics:
       9% in 1980 and has sat around 4-5% since 2014: 2009=28/543 (5.2%),
       2014=22/543 (4.1%), 2019=27/543 (5.0%), 2024=24/543 (4.4%). Compare
       against the Muslim population share of ~14.2%, a chronic 9-10pp
-      underrepresentation.
+      underrepresentation. The "State assemblies" tab folds in the companion
+      metric (the decarded mla-share, the same affidavit-classified sourcing
+      one level of government down): about 6% of seats across the 31 covered
+      state and UT assemblies at their most recent elections (2020-2026), from
+      Jammu & Kashmir's 60% high to nine assemblies with no Muslim MLA at all.
     comparison_baselines: []
     phase: 2
     status: defined
@@ -1006,6 +1043,7 @@ metrics:
     status: defined
     display:
       scorecard:
+        include: false   # decarded (Commit FE): folded into ls-share's "State assemblies" tab (same affidavit-classified sourcing, one level of government down)
         label: "State MLA Muslim share"
         reference: null
         unit_format: percent
@@ -1063,7 +1101,13 @@ metrics:
       100,000. The 'denominator' column on each canonical row records the exact
       (count, population) pair used. Caveat: Maharashtra non-reporting of
       religion for ~33k undertrials/detenues, so the religion-reported numerator
-      excludes those; full national population is the denominator.
+      excludes those; full national population is the denominator. The
+      "Undertrials" tab folds in the sister metric (the decarded
+      undertrial-rate-per-100k, NCRB PSI 2022 Table 2.11C over the same Census
+      2011 denominators): 48.8 Muslim undertrials per 100,000 against 29.3
+      Hindu and 33.2 all-India, a sharper over-representation than for
+      prisoners overall, so the disproportion is largest before any
+      conviction. Same Maharashtra caveat applies.
     comparison_baselines: [hindu, all]
     phase: 2
     status: defined
@@ -1097,6 +1141,7 @@ metrics:
     status: defined
     display:
       scorecard:
+        include: false   # decarded (Commit FE): folded into prison-rate-per-100k's "Undertrials" tab (same NCRB PSI 2022 + Census 2011 cross-source; the sister metric)
         label: "Muslim undertrial rate"
         reference: hindu
         unit_format: rate_per_100k

@@ -9,7 +9,8 @@
 - Catalog: id 130 / idno `DDI-IND-MOSPI-NSSO-70Rnd-Sch18pt2-Jan-Dec20131`.
 - Feeds: **`household-net-worth`** and **`institutional-credit-share`** - both
   computed; NSS KI(70/18.2) publishes wealth by state and social group, never
-  by religion.
+  by religion. Since Commit FE the credit share is rendered as the net-worth
+  card's "Borrowing sources" tab (one wealth card, two tabs).
 
 ## What we publish from it
 

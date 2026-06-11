@@ -1,3 +1,24 @@
-# Cloudflare Pages redirect rules.
+# Cloudflare redirect rules (served with the static assets).
 # Format: <from> <to> <status>. Evaluated before static content.
-# Empty today — add aliases here when needed.
+#
+# Decarded metrics 301 to the host card that absorbed them as a modal tab, so
+# old shared/indexed /m/{id}/ links (and their per-view children, via the
+# splat) keep resolving. Pre-FE folds included retroactively.
+/m/district-concentration-top100/ /m/pop-share/ 301
+/m/district-concentration-top100/* /m/pop-share/ 301
+/m/muslim-higher-ed-enrolment/ /m/ger-higher-ed/ 301
+/m/muslim-higher-ed-enrolment/* /m/ger-higher-ed/ 301
+/m/wpr-15plus/ /m/lfpr-15plus/ 301
+/m/wpr-15plus/* /m/lfpr-15plus/ 301
+/m/top-quintile-share/ /m/mpce/ 301
+/m/top-quintile-share/* /m/mpce/ 301
+/m/salaried-earnings/ /m/salaried-share/ 301
+/m/salaried-earnings/* /m/salaried-share/ 301
+/m/institutional-credit-share/ /m/household-net-worth/ 301
+/m/institutional-credit-share/* /m/household-net-worth/ 301
+/m/household-electricity/ /m/pucca-house/ 301
+/m/household-electricity/* /m/pucca-house/ 301
+/m/undertrial-rate-per-100k/ /m/prison-rate-per-100k/ 301
+/m/undertrial-rate-per-100k/* /m/prison-rate-per-100k/ 301
+/m/mla-share/ /m/ls-share/ 301
+/m/mla-share/* /m/ls-share/ 301

@@ -11,7 +11,9 @@
   report tables (`plfs` source) - the microdata reproduces them within 0.2pp,
   so the two sources extend one seamless series), and **all seven points** of
   `unemployment-rate-15plus` and `salaried-earnings` (the published tables
-  never break the unemployment rate or earnings down by religion).
+  never break the unemployment rate or earnings down by religion;
+  `salaried-earnings` is rendered as the "What it pays" tab of the
+  `salaried-share` card since Commit FE).
 
 ## Why microdata
 

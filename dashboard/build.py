@@ -2188,6 +2188,22 @@ def _og_view_data(m: dict, view: dict):
                       f"top 10 hold {_round_str(top10, 1)}%")
         except Exception:
             detail = ""
+    elif vid in FOLDED_VIEW_METRIC:
+        # Folded companion metric (Commit FE): the nugget is the companion's
+        # own latest national Muslim-vs-Hindu read, in the companion's unit.
+        fmid = FOLDED_VIEW_METRIC[vid]
+        fdisp = (METRIC_META.get(fmid, {}).get("display") or {}).get("scorecard") or {}
+        funit = fdisp.get("unit_format", unit)
+        by = _nat_by_religion(fmid)
+        if vid == "assemblies":
+            if by.get("muslim") is not None:
+                detail = (f"Muslim {fmt_num(by['muslim'], funit)} of assembly seats · "
+                          f"vs {MUSLIM_POP_SHARE}% of population")
+        elif by.get("muslim") is not None:
+            bits = [f"Muslim {fmt_num(by['muslim'], funit)}"]
+            if by.get("hindu") is not None:
+                bits.append(f"Hindu {fmt_num(by['hindu'], funit)}")
+            detail = " · ".join(bits)
     if not detail:
         detail = view.get("sub", "")
     return dict(base, view_label=view["label"], view_detail=detail)
@@ -2558,6 +2574,10 @@ def _landing_breakdowns(m: dict, views: list) -> str:
                 block = f'<p>{html.escape(note)}</p>{_top100_districts_inner(cmid)}'
             else:
                 block = ""
+        elif vid in FOLDED_VIEW_METRIC:
+            # Folded companion metric (Commit FE): the same tab content in its
+            # chart-free form (canvas omitted; note + table + provenance stay).
+            block = _folded_view(vid)[0]
         else:
             block = ""
         if not block:
@@ -4369,6 +4389,283 @@ def _employment_combined_views() -> str:
             f'{_work_status_provenance()}</details>')
 
 
+# ---------------------------------------------------------------------------
+# Folded companion cards (Commit FE, homepage simplification): a companion
+# metric that shares its host card's primary source and underlying story is
+# decarded (include: false in metrics.yaml) and re-rendered as ONE modal tab
+# of the host, the same move that earlier folded wpr-15plus into lfpr and the
+# district-concentration card into pop-share. The companion keeps its
+# canonical CSV, which the tab reads. view id -> companion metric id; also
+# consumed by the per-view OG generator and the landing-page breakdowns.
+# ---------------------------------------------------------------------------
+FOLDED_VIEW_METRIC = {
+    "top-fifth": "top-quintile-share",               # tab of mpce
+    "earnings": "salaried-earnings",                 # tab of salaried-share
+    "credit-sources": "institutional-credit-share",  # tab of household-net-worth
+    "electricity": "household-electricity",          # tab of pucca-house
+    "undertrials": "undertrial-rate-per-100k",       # tab of prison-rate-per-100k
+    "assemblies": "mla-share",                       # tab of ls-share
+}
+
+# Snapshot host card -> the folded view that leads its tab bar. (mpce and
+# salaried-share are trend cards and ls-share is a special_render card, so
+# they wire their folds in their own branches.)
+_SNAPSHOT_HOST_FOLDS = {
+    "household-net-worth": "credit-sources",
+    "pucca-house": "electricity",
+    "prison-rate-per-100k": "undertrials",
+}
+
+
+def _folded_by_residence(fmid: str) -> dict:
+    """{religion: {residence: value}} at the companion metric's latest national
+    year (both-sexes rows; all/urban/rural residence where the source has them)."""
+    from collections import defaultdict
+    rows = [r for r in load_metric(fmid, residence=None)
+            if r["geography_level"] == "national" and r["sex"] == "all"]
+    if not rows:
+        return {}
+    latest = max(int(r["year"]) for r in rows)
+    by_rel: dict[str, dict[str, float]] = defaultdict(dict)
+    for r in rows:
+        if int(r["year"]) == latest:
+            by_rel[r["religion"]][r["residence"]] = float(r["value"])
+    return by_rel
+
+
+def _folded_table(fmid: str, unit: str, value_head: str) -> str:
+    """Community | Overall | Urban | Rural sortable table for a folded tab
+    (the Urban/Rural columns appear only when the companion carries residence
+    rows). Muslim first, 'All communities' last, peers by overall value."""
+    by_rel = _folded_by_residence(fmid)
+    comms = [rel for rel in by_rel if "all" in by_rel[rel]]
+    if not comms:
+        return ""
+    has_res = any("urban" in by_rel[rel] and "rural" in by_rel[rel] for rel in comms)
+    comms.sort(key=lambda rel: (rel != "muslim", rel == "all", -by_rel[rel]["all"]))
+
+    def cell(rel: str, res: str) -> str:
+        v = by_rel[rel].get(res)
+        if v is None:
+            return '<td data-sort="-1">n/a</td>'
+        return f'<td data-sort="{v:.4f}">{fmt_num(v, unit)}</td>'
+
+    cols = [("Overall" if has_res else value_head, "all")]
+    if has_res:
+        cols += [("Urban", "urban"), ("Rural", "rural")]
+    head = ('<tr><th class="sortable" data-col="0">Community</th>'
+            + "".join(f'<th class="sortable" data-col="{i + 1}" data-type="num">{html.escape(h)}</th>'
+                      for i, (h, _) in enumerate(cols)) + "</tr>")
+    trs = "".join(
+        f'<tr><td>{html.escape(_community_label(rel))}</td>'
+        + "".join(cell(rel, res) for _, res in cols) + "</tr>"
+        for rel in comms)
+    return f'<table class="sortable-table"><thead>{head}</thead><tbody>{trs}</tbody></table>'
+
+
+def _folded_snapshot_chart(fmid: str, unit: str, hib, canvas_id: str):
+    """The companion card's old face chart, now inside its host tab: community
+    hbar (colour contract: Muslim maroon, peers grey) with the all-India
+    dashed reference. Returns (chart_html, js)."""
+    by_rel = _folded_by_residence(fmid)
+    nat = {rel: rv["all"] for rel, rv in by_rel.items() if "all" in rv}
+    named = [c for c in NAMED_COMMUNITIES if c in nat]
+    if not named:
+        return "", None
+    pairs = [(COMMUNITY_LABEL[c], nat[c], c == "muslim") for c in named]
+    pairs.sort(key=lambda b: b[1], reverse=bool(hib))
+    labels = [p[0] for p in pairs]
+    values = [_round_dp(p[1], _disp_dp(unit)) for p in pairs]
+    colors = ["#7b1d22" if p[2] else "#D8DEE2" for p in pairs]
+    suffix, dec = UNIT_JS.get(unit, ("", 1))
+    all_v = nat.get("all", by_rel.get("all", {}).get("all"))
+    h = len(pairs) * 28 + 28
+    chart_html = (f'<div class="card-chartwrap" style="height:{h}px"><canvas id="{canvas_id}" role="img" '
+                  f'aria-label="Visualisation of this view; numerical values are listed in the table below."></canvas></div>')
+    ref = json.dumps(_round_dp(all_v, _disp_dp(unit))) if all_v is not None else "null"
+    ref_label = f"All communities ({fmt_num(all_v, unit)})" if all_v is not None else ""
+    js = (f'hbar("{canvas_id}", {json.dumps(labels)}, {json.dumps(values)}, {json.dumps(colors)}, '
+          f'{json.dumps(suffix)}, {dec}, {ref}, {json.dumps(ref_label)}, false);')
+    return chart_html, js
+
+
+def _note_top_fifth() -> str:
+    by = _folded_by_residence("top-quintile-share")
+    mo = by.get("muslim", {}).get("all")
+    mu, hu = by.get("muslim", {}).get("urban"), by.get("hindu", {}).get("urban")
+    return (f"Of each community's population, the share living in households in the top 20% of "
+            f"spending nationally. An even spread would put every community at 20.0%; only "
+            f"{_round_str(mo, 1)}% of Muslims reach the top fifth, and the squeeze is urban: "
+            f"{_round_str(mu, 1)}% of urban Muslims make the national top fifth against "
+            f"{_round_str(hu, 1)}% of urban Hindus. Muslims sit at par in the poorest fifth, so "
+            f"the distribution is compressed below the top, not crowded at the bottom.")
+
+
+def _note_credit_sources() -> str:
+    by = _folded_by_residence("institutional-credit-share")
+    mu, hu = by.get("muslim", {}).get("urban"), by.get("hindu", {}).get("urban")
+    return (f"Of the money indebted households owe, the share borrowed from institutional lenders "
+            f"(banks, co-operatives, government and related agencies) rather than moneylenders, "
+            f"shopkeepers or relatives. Informal credit is costlier and unprotected. The gap is "
+            f"urban: {_round_str(mu, 1)}% of urban Muslim debt is institutional against "
+            f"{_round_str(hu, 1)}% for urban Hindus. Muslims also borrow the least overall: 23.8% "
+            f"of Muslim households were indebted against 29.0% of Hindu households.")
+
+
+def _note_electricity() -> str:
+    by = _folded_by_residence("household-electricity")
+    m = by.get("muslim", {}).get("all")
+    h_ = by.get("hindu", {}).get("all")
+    a = by.get("all", {}).get("all")
+    return (f"Share of households with electricity for domestic use, from the same NSS 76th round "
+            f"survey as the pucca-housing chart. Near-universal by 2018 and close to parity: "
+            f"Muslim households at {_round_str(m, 1)}% against Hindu {_round_str(h_, 1)}% and "
+            f"all-India {_round_str(a, 1)}%, the small Muslim edge riding on the community's "
+            f"higher urban share.")
+
+
+def _note_undertrials() -> str:
+    ut = _nat_by_religion("undertrial-rate-per-100k")
+    pr = _nat_by_religion("prison-rate-per-100k")
+    return (f"Undertrial prisoners are in jail awaiting trial, not convicted of anything. For "
+            f"every 100,000 Muslims, {_round_str(ut['muslim'], 1)} were undertrials in 2022, "
+            f"against {_round_str(ut['hindu'], 1)} per 100,000 Hindus and {_round_str(ut['all'], 1)} "
+            f"all-India. Relative to the all-India rate the Muslim over-representation is sharper "
+            f"among undertrials than among prisoners overall "
+            f"({_round_str(ut['muslim'] / ut['all'], 1)}x vs {_round_str(pr['muslim'] / pr['all'], 1)}x), "
+            f"so the disproportion is largest before any conviction. Same Maharashtra "
+            f"religion-reporting caveat as the incarceration chart.")
+
+
+# vid -> (companion metric id, tab label, unit_format, higher_is_better,
+#         single-column header when the source has no urban/rural split, note builder)
+_FOLDED_SNAPSHOTS = {
+    "top-fifth": ("top-quintile-share", "Top spending fifth", "percent", True,
+                  "In top fifth", _note_top_fifth),
+    "credit-sources": ("institutional-credit-share", "Borrowing sources", "percent", True,
+                       "Institutional share", _note_credit_sources),
+    "electricity": ("household-electricity", "Electricity", "percent", True,
+                    "Electrified", _note_electricity),
+    "undertrials": ("undertrial-rate-per-100k", "Undertrials", "rate_per_100k", False,
+                    "Per 100,000", _note_undertrials),
+}
+
+
+def _assemblies_view() -> str:
+    """ls-share's "State assemblies" tab, folding in the decarded mla-share
+    metric: every covered assembly at its most recent election, highest Muslim
+    MLA share first, the seat fraction parsed from each row's denominator
+    record. The card face keeps the 18-election Lok Sabha trend; this tab adds
+    the state layer of the same affidavit-classified sourcing."""
+    rows = [r for r in load_metric("mla-share") if r["geography_level"] == "state"]
+    if not rows:
+        return ""
+    latest: dict[str, dict] = {}
+    for r in rows:
+        g = r["geography_code"]
+        if g not in latest or int(r["year"]) > int(latest[g]["year"]):
+            latest[g] = r
+    recs = []
+    for g, r in latest.items():
+        m = re.search(r"\((\d+)/(\d+)", r.get("denominator") or "")
+        seats = f"{int(m.group(1))} of {int(m.group(2))}" if m else ""
+        recs.append((state_label(g), int(r["year"]), seats, float(r["value"])))
+    recs.sort(key=lambda t: -t[3])
+    n_zero = sum(1 for t in recs if t[3] == 0)
+    agg = _nat_by_religion("mla-share").get("muslim")
+    note = (f"Muslims hold about {_round_str(agg, 0)}% of seats across the {len(recs)} state and "
+            f"UT assemblies covered, each at its most recent election, against a "
+            f"{_round_str(MUSLIM_POP_SHARE, 1)}% share of the population. {recs[0][0]} leads at "
+            f"{_round_str(recs[0][3], 1)}%; {n_zero} assemblies have no Muslim MLA at all.")
+    fmax = max(t[3] for t in recs) or 1.0
+    trs = []
+    for name, yr, seats, val in recs:
+        w = round(val / fmax * 100, 1)
+        bar = (f' style="background:linear-gradient(to right,rgba(123,29,34,.16) '
+               f'{w}%,transparent {w}%)"')
+        trs.append(f'<tr><td>{html.escape(name)}</td>'
+                   f'<td data-sort="{yr}">{yr}</td>'
+                   f'<td>{html.escape(seats)}</td>'
+                   f'<td data-sort="{val:.4f}"{bar}>{_round_str(val, 1)}%</td></tr>')
+    head = ('<tr><th class="sortable" data-col="0">Assembly</th>'
+            '<th class="sortable" data-col="1" data-type="num">Election</th>'
+            '<th>Muslim MLAs</th>'
+            '<th class="sortable" data-col="3" data-type="num">Share</th></tr>')
+    return (f'<details data-view-id="assemblies" data-view-label="State assemblies" '
+            f'data-view-sub="{len(recs)} assemblies">'
+            f'<summary>Muslim share of state assemblies ({len(recs)} assemblies)</summary>'
+            f'<p class="comp-note">{html.escape(note)}</p>'
+            f'<div class="scroll-table"><table class="sortable-table"><thead>{head}</thead>'
+            f'<tbody>{"".join(trs)}</tbody></table></div>{_view_provenance("mla-share")}</details>')
+
+
+def _earnings_view(canvas_id: str | None = None):
+    """salaried-share's "What it pays" tab, folding in the decarded
+    salaried-earnings metric: the seven-round nominal-pay trend by community
+    (the companion card's old face chart) over a latest-round community table.
+    Muslims are both less likely to hold a regular salaried job (the host
+    card) and paid less in it (this tab). Returns (details_html, js)."""
+    fmid, unit = "salaried-earnings", "inr_per_month"
+    years, series, has_break = _nat_trend(fmid)
+    if len(years) < 2:
+        return "", None
+    latest = years[-1]
+    m_last = series.get("muslim", {}).get(latest)
+    all_last = series.get("all", {}).get(latest)
+    if m_last is None or all_last is None:
+        return "", None
+    pct = (1 - m_last / all_last) * 100
+    note = (f"Average monthly pay in regular salaried jobs (gross, preceding month, age 15+). "
+            f"Muslim salaried workers earned {fmt_num(m_last, unit)} a month in {latest} against "
+            f"the all-India {fmt_num(all_last, unit)}, about {_round_str(pct, 0)}% less, and the "
+            f"gap has stayed at 16-23% in every round since 2017-18. Rupees are nominal, so the "
+            f"rising lines mostly track inflation; the gap between the lines is the comparable "
+            f"story.")
+    chart_html, js = "", None
+    if canvas_id:
+        named = ("muslim", "hindu", "christian", "sikh", "buddhist", "jain", "other")
+        series_map = {rel: [(_round_dp(v, _disp_dp(unit)) if (v := series.get(rel, {}).get(y)) is not None else None)
+                            for y in years]
+                      for rel in named if rel in series}
+        all_series, all_line_label, _pill = _comparison_series(series, years)
+        all_arg = ({"values": [(_round_dp(v, _disp_dp(unit)) if v is not None else None) for v in all_series],
+                    "label": all_line_label} if all_series else None)
+        suffix, dec = UNIT_JS.get(unit, ("", 0))
+        chart_html = (f'<div class="card-chartwrap" style="height:200px"><canvas id="{canvas_id}" role="img" '
+                      f'aria-label="Monthly salaried earnings by community over PLFS rounds; latest values are listed in the table below."></canvas></div>')
+        js = (f'trendChart("{canvas_id}", {json.dumps(years)}, {json.dumps(series_map)}, '
+              f'{json.dumps(all_arg)}, {json.dumps(suffix)}, {dec}, {json.dumps(bool(has_break))});')
+    return (f'<details data-view-id="earnings" data-view-label="What it pays" '
+            f'data-view-sub="{years[0]}-{years[-1]}">'
+            f'<summary>Monthly pay in salaried jobs ({years[0]}-{years[-1]})</summary>'
+            f'<p class="comp-note">{html.escape(note)}</p>'
+            f'{chart_html}{_folded_table(fmid, unit, "Monthly pay")}'
+            f'{_view_provenance(fmid)}</details>'), js
+
+
+def _folded_view(vid: str, canvas_id: str | None = None):
+    """One decarded companion metric rendered as a modal-tab <details> block
+    for its host card. canvas_id=None omits the chart (the landing pages'
+    static, chart-free form). Returns (details_html, chart_js_or_None)."""
+    if vid == "assemblies":
+        return _assemblies_view(), None
+    if vid == "earnings":
+        return _earnings_view(canvas_id)
+    fmid, label, unit, hib, value_head, note_fn = _FOLDED_SNAPSHOTS[vid]
+    table = _folded_table(fmid, unit, value_head)
+    if not table:
+        return "", None
+    chart_html, js = "", None
+    if canvas_id:
+        chart_html, js = _folded_snapshot_chart(fmid, unit, hib, canvas_id)
+    year = _year_of(fmid)
+    return (f'<details data-view-id="{vid}" data-view-label="{html.escape(label)}" '
+            f'data-view-sub="{year}">'
+            f'<summary>{html.escape(label)} ({year})</summary>'
+            f'<p class="comp-note">{html.escape(note_fn())}</p>'
+            f'{chart_html}{table}{_view_provenance(fmid)}</details>'), js
+
+
 def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
     nat = _nat_by_religion(mid)
     muslim, hindu, all_v = nat.get("muslim"), nat.get("hindu"), nat.get("all")
@@ -4431,6 +4728,7 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
     # 2+ rounds: multi-line time-series chart (a 2-point line still shows
     # direction and the community gap at both ends, which a snapshot hides).
     # 1 round / no time dim: latest-year community snapshot.
+    fold_js: list = []
     if len(years) >= 2:
         # TIME SERIES card: every named community over rounds, Muslim highlighted,
         # All-India dashed baseline; latest-year community ranking shown via the
@@ -4452,6 +4750,14 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
         # each returns "" for metrics that lack that breakdown, so the metric
         # simply gets fewer tabs.
         details = _state_details(mid, unit) + _sex_details(mid, unit)
+        # Folded companion tabs lead the tab order (the absorbed card's story),
+        # then the host's own drill-downs (Commit FE).
+        if mid == "mpce":
+            fold, fjs = _folded_view("top-fifth", cvid + "-top-fifth")
+            details, fold_js = fold + details, [fjs]
+        elif mid == "salaried-share":
+            fold, fjs = _folded_view("earnings", cvid + "-earnings")
+            details, fold_js = fold + details, [fjs]
     else:
         # SNAPSHOT card (single round / no time dimension): latest-year
         # community bars with the All-India dashed baseline.
@@ -4492,10 +4798,20 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
             # lfpr leads with a "Working vs looking" tab folding in the decarded
             # worker population ratio (wpr-15plus), then keeps by-sex + urban/rural.
             details = _employment_combined_views() + _sex_details(mid, unit)
+        elif mid in _SNAPSHOT_HOST_FOLDS:
+            # Snapshot hosts lead with their folded companion card's tab
+            # (Commit FE), then keep their own drill-downs.
+            vid = _SNAPSHOT_HOST_FOLDS[mid]
+            fold, fjs = _folded_view(vid, f"{cvid}-{vid}")
+            fold_js = [fjs]
+            details = fold + _state_details(mid, unit) + _sex_details(mid, unit)
         else:
             details = _state_details(mid, unit) + _sex_details(mid, unit)
 
     details += _state_residence_details(mid, unit) + _residence_details(mid, unit)
+    extra = [j for j in fold_js if j]
+    if extra:
+        js = "\n".join(([js] if js else []) + extra)
     return _card_shell(mid, label, headline, CAPTION.get(mid, ""), _year_of(mid), polarity,
                        chart_html, comps, src, csv_href, details), js
 
@@ -4596,6 +4912,10 @@ def _card_timeseries(mid, label, unit, src, csv_href, cvid):
     # mla-share), a "By state" table just re-lists the same bars - skip it. Add it
     # only when the face is a national trend line and the states are additive.
     details = _state_details(mid, unit) if len(rows) >= 2 else ""
+    if mid == "ls-share":
+        # The decarded mla-share metric rides as a "State assemblies" tab: the
+        # same affidavit-classified sourcing, one level of government down.
+        details = _folded_view("assemblies")[0] + details
     return _card_shell(mid, label, headline, CAPTION.get(mid, ""), latest["year"] if latest else "",
                        "", chart_html, comps, src, csv_href, details), js
 

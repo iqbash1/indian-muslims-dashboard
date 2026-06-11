@@ -7,8 +7,10 @@
   round Schedule 1.2, July-December 2018; 1,06,838 households (63,736 rural +
   43,102 urban). Published as NSS Report 584.
 - Feeds: **`improved-water-premises`**, **`household-electricity`**,
-  **`pucca-house`** - the housing & basic-services cards, computed by religion
-  of household head (Report 584 stops at state and social group).
+  **`pucca-house`** - the housing & basic-services metrics, computed by religion
+  of household head (Report 584 stops at state and social group). Since Commit
+  FE `household-electricity` is rendered as the "Electricity" tab of the
+  `pucca-house` card (both near-parity stories from the same schedule).
 
 ## The two distribution channels (why this source is special)
 

@@ -4,10 +4,12 @@
 
 - Manifest entry: `ncrb-prison`
 - Publisher: National Crime Records Bureau, Ministry of Home Affairs.
-- Role: feeds the justice-cluster metrics `prison-share` and `undertrial-share`
-  (Muslim share of the prison / undertrial population), now a **multi-year
-  trend 2018–2023**. Also feeds `prison-rate-per-100k` / `undertrial-rate-per-100k`
-  (2022 only — retained as canonical data but no longer carded; see below).
+- Role: feeds the justice-cluster card `prison-rate-per-100k` and its
+  companion `undertrial-rate-per-100k` (2022 only; rendered as the
+  incarceration card's "Undertrials" tab since Commit FE). Also feeds
+  `prison-share` and `undertrial-share` (Muslim share of the prison /
+  undertrial population), a **multi-year trend 2018-2023** retained as
+  canonical reference data but decarded in Commit AM (see below).
 
 ## Targets
 

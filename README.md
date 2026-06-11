@@ -17,9 +17,11 @@ justice.
 
 ## What's on the dashboard
 
-26 live indicators across six themes (population, health, education,
+20 live indicators across six themes (population, health, education,
 employment, representation, justice), drawn from 20 primary sources,
-grouped into five themed sections on the dashboard. The authoritative
+grouped into five themed sections on the dashboard. Companion measures
+that share a card's source and story render as modal tabs of that card
+rather than as cards of their own, keeping the homepage scannable. The authoritative
 scorecard
 is the live site at https://muslimdata.in/ — it
 ships on every push and shows current values, the comparison
@@ -35,18 +37,26 @@ Coverage at a glance:
   top-100-district geographic-concentration view in its "By district" tab),
   urban share, sex ratio (6 rounds 1961→2011).
 - **Education**: literacy 2001→2011, higher-education enrolment ratio
-  (2021), Muslim higher-ed enrolment count.
-- **Employment**: labour-force participation, worker-population ratio,
-  regular-salaried share (PLFS 2023-24).
+  (2 AISHE rounds, with Muslim student counts beside the rate in its tabs).
+- **Employment**: labour-force participation (with the worker-population
+  ratio in its "Working vs looking" tab), unemployment rate, regular-salaried
+  share (with salaried pay in its "What it pays" tab), all from 7 PLFS rounds
+  2017→2024.
+- **Income & wealth**: monthly spending per person (Sachar 2004-05 → HCES
+  2023-24, with the top-spending-fifth distribution as a tab), household net
+  worth (AIDIS 2013, with borrowing sources as a tab).
 - **Health**: infant mortality, under-5 stunting, institutional delivery,
   women's anaemia (4 rounds 1998→2020 from NFHS-2/3/4/5).
-- **Housing**: improved sanitation access.
-- **Representation**: Lok Sabha Muslim share 1952→2024 (18 elections),
-  state MLA Muslim share aggregated across all 31 state and UT assemblies.
-- **Justice**: prison rate per 100k, undertrial rate per 100k, communal
-  incidents recorded by police (NCRB 2015→2023 national, plus a per-state
-  breakdown for 2023). (An India Hate Lab anti-Muslim hate-speech metric was
-  retired from display in Commit CR; its data is archived for reference.)
+- **Housing**: toilet access (NFHS-5), improved drinking water within
+  premises and pucca housing (NSS 76th 2018, with household electricity as
+  a tab).
+- **Representation**: Lok Sabha Muslim share 1952→2024 (18 elections), with
+  all 31 state and UT assemblies in its "State assemblies" tab.
+- **Justice**: prison rate per 100k (with the undertrial rate in its
+  "Undertrials" tab), communal incidents recorded by police (NCRB 2015→2023
+  national, plus a per-state breakdown for 2023). (An India Hate Lab
+  anti-Muslim hate-speech metric was retired from display in Commit CR; its
+  data is archived for reference.)
 
 ## See the dashboard
 
@@ -102,7 +112,7 @@ The dashboard never queries an external source live and never reads L1/L2 direct
 | **PLFS 2023-24** | LFPR, WPR, salaried-share by religion | Annual | 2 reports archived; 3 metrics extracted |
 | **AISHE 2021-22** | Higher-education enrolment by religion | Annual | 2 reports archived; 2 metrics extracted (count + GER cross-source) |
 | **HCES 2022-23** | Consumption expenditure (MPCE) — by religion needs unit-level | ~5-year | 3 reports archived; metric blocked on unit-level processing (documented in runbook) |
-| **NCRB PSI 2018-2023** | Prison + undertrial population by religion — multi-year share trend | Annual (~2y lag) | 6 years archived; 2 share metrics + 2 rate-per-100k reference series |
+| **NCRB PSI 2018-2023** | Prison + undertrial population by religion — multi-year share trend | Annual (~2y lag) | 6 years archived; rate-per-100k incarceration card (undertrial rate as its tab) + 2 share trend reference series |
 | **NCRB CII 2015-2023** | Communal incidents by state | Annual (~2y lag) | per-table + main reports archived; 9-year national series |
 | **PRS / ECI affidavits** *(secondary)* | Lok Sabha + state MLA Muslim shares — manual-entry from journalistic compilations | Per-election | 18-point LS series 1952→2024; 31 state/UT assemblies covered |
 | **India Hate Lab + civic incident DBs** *(secondary, contested)* | Civic-society counts of communal incidents | Annual | decarded in Commit CR (contested); data archived, not currently rendered |
@@ -172,9 +182,9 @@ Pure mechanical extension — pattern is proven:
 
 ## Status
 
-31 canonical metrics (26 carded + 5 reference series kept in `canonical/` but not rendered: `prison-share` + `undertrial-share` superseded by the rate-per-100k cards, `district-concentration-top100` folded into the "By district" tab of the `pop-share` card (Commit DV), `muslim-higher-ed-enrolment` folded into the "By state" and "By sex" tabs of `ger-higher-ed` as a Students column beside the GER rate (Commit EQ), and `wpr-15plus` folded into the "Working vs looking" tab of `lfpr-15plus` beside the labour-force rate). The dashboard is a card grid with multi-community benchmarking (rank among religious communities) and multi-round trends spanning up to 60+ years (sex-ratio 1961→2011; population share 1961→2011; Lok Sabha 1952→2024; PLFS employment 2017→2024 from unit-level microdata, incl. the `unemployment-rate-15plus` card that exists only because the microdata carries religion every round; communal incidents 2015→2023; prison/undertrial 2018→2023; NFHS health 1998→2020; Census literacy 2001→2011). The architecture is battle-tested across 5 source shapes: legacy .xls / modern .xlsx spreadsheets, dual-column PDF tables, single-column PDF religion sections, tabular state-row PDFs, and landscape-rotated PDFs (qpdf-pre-rotated at extraction time).
+31 canonical metrics (20 carded + 11 companion/reference series kept in `canonical/`, most still rendered through a host card's tabs: `prison-share` + `undertrial-share` superseded by the rate-per-100k metrics, `district-concentration-top100` folded into the "By district" tab of the `pop-share` card (Commit DV), `muslim-higher-ed-enrolment` folded into the "By state" and "By sex" tabs of `ger-higher-ed` as a Students column beside the GER rate (Commit EQ), `wpr-15plus` folded into the "Working vs looking" tab of `lfpr-15plus` beside the labour-force rate (Commit ET), and the Commit FE homepage-simplification folds: `top-quintile-share` into `mpce` ("Top spending fifth"), `salaried-earnings` into `salaried-share` ("What it pays"), `institutional-credit-share` into `household-net-worth` ("Borrowing sources"), `household-electricity` into `pucca-house` ("Electricity"), `undertrial-rate-per-100k` into `prison-rate-per-100k` ("Undertrials"), `mla-share` into `ls-share` ("State assemblies"); old `/m/{id}/` URLs 301 to the host card via `docs/_redirects`). The dashboard is a card grid with multi-community benchmarking (rank among religious communities) and multi-round trends spanning up to 60+ years (sex-ratio 1961→2011; population share 1961→2011; Lok Sabha 1952→2024; PLFS employment 2017→2024 from unit-level microdata, incl. the `unemployment-rate-15plus` card that exists only because the microdata carries religion every round; communal incidents 2015→2023; prison/undertrial 2018→2023; NFHS health 1998→2020; Census literacy 2001→2011). The architecture is battle-tested across 5 source shapes: legacy .xls / modern .xlsx spreadsheets, dual-column PDF tables, single-column PDF religion sections, tabular state-row PDFs, and landscape-rotated PDFs (qpdf-pre-rotated at extraction time).
 
-Per-metric depth where the source supports it, shown as **modal tabs** (each with its own shareable `/m/{id}/{view}/` URL + social-preview image) and mirrored on the metric's full `/m/{id}/` landing page: **by-state** tables on 6 metrics (pop-share, sex-ratio, literacy, urban-share, communal-incidents, higher-ed); a **by-sex** (male vs female) breakdown on 5 (LFPR, WPR, salaried, literacy, higher-ed enrolment), national-level via an optional `sex` dimension added to the canonical schema and defaulted to `all` at the `load_metric` read so existing series are unaffected; a **by-district** geographic-concentration view (the top-100-district ranking + cumulative-concentration curve, in pop-share's "By district" tab); and a **district-level CSV** download (pop-share, all 640 districts with names).
+Per-metric depth where the source supports it, shown as **modal tabs** (each with its own shareable `/m/{id}/{view}/` URL + social-preview image) and mirrored on the metric's full `/m/{id}/` landing page: **by-state** tables where the source goes sub-national (population share, sex ratio, literacy, urban share, spending, incarceration, communal incidents, higher-ed); a **by-sex** (male vs female) breakdown where the source has one (labour force, salaried work, literacy, higher-ed), national-level via an optional `sex` dimension added to the canonical schema and defaulted to `all` at the `load_metric` read so existing series are unaffected; **folded companion tabs** (the Commit FE list above) carrying an absorbed card's chart and table; a **by-district** geographic-concentration view (the top-100-district ranking + cumulative-concentration curve, in pop-share's "By district" tab); and a **district-level CSV** download (pop-share, all 640 districts with names).
 
 See `docs/audit-log.md` for the planned annual audit ritual and `docs/refresh-schedule.md` for the per-source cadence.
 
