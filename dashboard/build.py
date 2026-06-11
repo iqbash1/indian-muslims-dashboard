@@ -4057,8 +4057,9 @@ def _residence_details(metric_id: str, unit: str) -> str:
 
 def _state_residence_details(metric_id: str, unit: str) -> str:
     """Per-state urban-vs-rural drill-down for metrics that carry per-state
-    residence='urban'/'rural' Muslim rows (mpce, from Sachar Appendix 8.2/8.3 -
-    no combined per-state figure exists, so urban and rural show as published);
+    residence='urban'/'rural' Muslim rows (mpce: HCES 2023-24 microdata cells,
+    the latest year wins, so the 2004 Sachar state rows stay as CSV history;
+    urban and rural shown separately, matching how the source estimates them);
     '' for any other card. One row per state, urban + rural columns."""
     from collections import defaultdict
     rows = [r for r in load_metric(metric_id, residence=None)

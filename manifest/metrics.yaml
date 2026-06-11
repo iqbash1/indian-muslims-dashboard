@@ -386,8 +386,11 @@ metrics:
       change over time is mostly inflation; the comparable story is the relative
       gap, which is stable at about 10% below the national average across the 20
       years and is widest in towns (urban Muslims Rs.5,467 vs urban Hindus
-      Rs.7,064). The By state tab is the Sachar 2004-05 Appendix 8.2/8.3 urban and
-      rural figures.
+      Rs.7,064). The By state tab shows the 2023-24 per-state Muslim MPCE computed
+      from the same microdata, urban and rural separately (State/UT is the survey's
+      basic stratum, so this is the finest permitted cut; cells with fewer than 30
+      sampled Muslim households are suppressed). The Sachar 2004-05 state figures
+      remain in the downloadable data file.
     comparison_baselines: [all]
     phase: 1
     status: defined
