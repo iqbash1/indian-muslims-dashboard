@@ -691,7 +691,11 @@ TEMPLATE = """<!DOCTYPE html>
   .gap-conn { position: absolute; top: 7px; height: 2px; border-radius: 1px; }
   .gap-dot { position: absolute; top: 2px; width: 12px; height: 12px; margin-left: -6px; border-radius: 50%; box-sizing: border-box; }
   .gap-dot.open { background: var(--card); border: 2px solid; }
-  .gap-val { position: absolute; top: -9px; transform: translateX(-50%); font-size: 11px; font-weight: 500; white-space: nowrap; }
+  .gap-val { position: absolute; top: -14px; transform: translateX(-50%); font-size: 11px; font-weight: 500; white-space: nowrap; }
+  /* Near-parity pairs: labels flip to the outer sides of their dots, centred
+     on the dot row, so the two values never collide. */
+  .gap-val.side-l { transform: translateX(-100%); margin-left: -9px; top: 1px; }
+  .gap-val.side-r { transform: none; margin-left: 9px; top: 1px; }
   .gap-axis { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 4px; margin: 2px 0 0 104px; }
   /* --- Working-vs-looking composition strip (lfpr-15plus "Working vs looking" tab) --- */
   .ws-chart { margin: 2px 0 18px; }
@@ -1256,12 +1260,24 @@ function hbar(id, labels, values, colors, suffix, decimals, refValue, refLabel, 
   // community differences stay visible). Pass true when the bars are a
   // magnitude comparison where a non-zero baseline would exaggerate the
   // ratio (e.g. a 2-year count: 668 vs 1,165 must read as "nearly double").
-  new Chart(document.getElementById(id), {
+  // Right padding is measured from the longest value label so wide labels
+  // ("50.8 lakh", "3,26,819") never clip at the canvas edge.
+  const hEl = document.getElementById(id);
+  const hctx = hEl.getContext('2d');
+  hctx.save();
+  hctx.font = '600 11px -apple-system, system-ui, sans-serif';
+  let hPad = 46;
+  for (const v of values) {
+    const lbl = (decimals === 0 ? _inNum(v) : v.toFixed(decimals)) + suffix;
+    hPad = Math.max(hPad, Math.ceil(hctx.measureText(lbl).width) + 10);
+  }
+  hctx.restore();
+  new Chart(hEl, {
     type: 'bar',
     data: { labels: labels, datasets: [{ data: values, backgroundColor: colors, borderRadius: 3, barPercentage: 0.82, categoryPercentage: 0.86 }] },
     options: {
       indexAxis: 'y', responsive: true, maintainAspectRatio: false, animation: false,
-      layout: { padding: { right: 46, top: 14 } },
+      layout: { padding: { right: hPad, top: 14 } },
       plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => c.parsed.x.toFixed(decimals) + suffix } } },
       scales: { x: { display: false, grace: '8%', beginAtZero: beginAtZero === true,
         // Keep the dashed All-communities reference line inside the axis even when
@@ -1274,15 +1290,34 @@ function hbar(id, labels, values, colors, suffix, decimals, refValue, refLabel, 
     plugins: [_valueLabels(decimals, suffix), _refLine(refValue == null ? null : refValue, refLabel)],
   });
 }
+// Round gridline values INSIDE a data-hugged axis: with bounds:'data' the
+// axis no longer expands to rounded tick bounds (the old 0-40 axis around
+// 9-31 data), but Chart.js then anchors ticks at the raw minimum, printing
+// arbitrary values like 17.7. Regenerate ticks at nice multiples (1/2/5
+// pattern) within the axis range instead.
+function _niceTicks(axis) {
+  const span = axis.max - axis.min;
+  if (span <= 0) return;
+  const raw = span / 4;
+  const pow = Math.pow(10, Math.floor(Math.log10(raw)));
+  const step = [1, 2, 5, 10].map((m) => m * pow).find((s) => s >= raw) || 10 * pow;
+  const ticks = [];
+  for (let v = Math.ceil(axis.min / step) * step; v <= axis.max + 1e-9; v += step) {
+    ticks.push({ value: +v.toFixed(10) });
+  }
+  if (ticks.length) axis.ticks = ticks;
+}
 function lineChart(id, labels, values, color, suffix, decimals) {
   _spec(id, 'lineChart', Array.from(arguments).slice(1));
   new Chart(document.getElementById(id), {
     type: 'line',
-    data: { labels: labels, datasets: [{ data: values, borderColor: color, backgroundColor: 'rgba(43,108,176,.12)', fill: true, tension: 0.3, pointRadius: 3, pointBackgroundColor: color }] },
+    // Fill tint derives from the line's own colour (the maroon data series);
+    // the old hardcoded blue fill predated the colour contract.
+    data: { labels: labels, datasets: [{ data: values, borderColor: color, backgroundColor: 'rgba(123,29,34,.08)', fill: true, tension: 0.3, pointRadius: 3, pointBackgroundColor: color }] },
     options: {
       responsive: true, maintainAspectRatio: false, animation: false,
       plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => c.parsed.y.toFixed(decimals) + suffix } } },
-      scales: { x: { grid: { display: false }, ticks: { font: { size: 10 } } }, y: { beginAtZero: false, grace: '10%', grid: { color: '#f0ede4', drawTicks: false }, border: { display: false }, ticks: { font: { size: 10 }, color: '#999', maxTicksLimit: 5 } } },
+      scales: { x: { grid: { display: false }, ticks: { font: { size: 10 } } }, y: { beginAtZero: false, bounds: 'data', grace: '10%', afterBuildTicks: _niceTicks, grid: { color: '#f0ede4', drawTicks: false }, border: { display: false }, ticks: { font: { size: 10 }, color: '#767676' } } },
     },
   });
 }
@@ -1340,14 +1375,15 @@ function concentrationCurve(id, points, markN, suffix) {
 // Each line is identified by an end-of-line label (see _endLabels plugin); no legend.
 const TREND_STYLE = {
   muslim:    { c: '#7b1d22', w: 2.6, r: 3, label: 'Muslim' },
-  hindu:     { c: '#9e9e9e', w: 1.2, r: 0, label: 'Hindu' },
-  christian: { c: '#bdbdbd', w: 1.2, r: 0, label: 'Christian' },
-  sikh:      { c: '#bdbdbd', w: 1.2, r: 0, label: 'Sikh' },
-  buddhist:  { c: '#cfcfcf', w: 1.2, r: 0, label: 'Buddhist' },
-  jain:      { c: '#cfcfcf', w: 1.2, r: 0, label: 'Jain', minor: true },
-  other:     { c: '#d8d8d8', w: 1.2, r: 0, label: 'Other', minor: true },
+  hindu:     { c: '#8d959c', w: 1.2, r: 0, label: 'Hindu' },
+  christian: { c: '#a6adb3', w: 1.2, r: 0, label: 'Christian' },
+  sikh:      { c: '#a6adb3', w: 1.2, r: 0, label: 'Sikh' },
+  other_minority: { c: '#a6adb3', w: 1.2, r: 0, label: 'Other minorities' },
+  buddhist:  { c: '#bcc1c6', w: 1.2, r: 0, label: 'Buddhist' },
+  jain:      { c: '#bcc1c6', w: 1.2, r: 0, label: 'Jain', minor: true },
+  other:     { c: '#c9cdd1', w: 1.2, r: 0, label: 'Other', minor: true },
 };
-const TREND_ORDER = ['muslim', 'hindu', 'christian', 'sikh', 'buddhist', 'jain', 'other'];
+const TREND_ORDER = ['muslim', 'hindu', 'christian', 'sikh', 'other_minority', 'buddhist', 'jain', 'other'];
 // Direct end-of-line labels in each dataset's own color. Replaces the legend:
 // each line self-identifies right where it terminates. Skips datasets whose last
 // point is null (those lines never reach the right edge).
@@ -1366,11 +1402,6 @@ function _endLabels() {
     // Collect each dataset's natural label position at its terminal point.
     const items = [];
     chart.data.datasets.forEach((d, i) => {
-      // _isRefline marks aggregates like All-India. In modal mode they are
-      // suppressed (the per-community labels already cover the field). In
-      // card mode the chart only carries Muslim + the All-India refline, so
-      // labelling All-India is what gives the dashed grey line a name.
-      if (d._isRefline && chart._mode !== 'card') return;
       if (d._noEndLabel) return;
       const data = d.data;
       let lastIdx = data.length - 1;
@@ -1381,6 +1412,7 @@ function _endLabels() {
       if (!pt) return;
       items.push({
         label: d.label, color: d.borderColor, isRefline: !!d._isRefline,
+        isMuslim: d.label === 'Muslim',
         weight: d.borderWidth || 1,
         x: pt.x, y: pt.y, naturalY: pt.y,
       });
@@ -1388,7 +1420,7 @@ function _endLabels() {
 
     // Sort top-to-bottom (small canvas-y is visually higher) and resolve overlaps
     // by cascading each label downward only as far as the previous one forces.
-    const minGap = 11;
+    const minGap = 12;
     items.sort((a, b) => a.naturalY - b.naturalY);
     for (let i = 1; i < items.length; i++) {
       if (items[i].y - items[i - 1].y < minGap) {
@@ -1409,11 +1441,14 @@ function _endLabels() {
     }
 
     for (const it of items) {
-      // Reference-line labels (All-India / median) get the same legible slate
-      // used on the hbar charts, while the dashed line itself stays light grey.
-      ctx.fillStyle = it.isRefline ? '#5f6b73' : it.color;
+      // Labels are always legible even where the LINE is a light grey: Muslim
+      // keeps its maroon, reference lines the hbar slate, every other
+      // community a uniform readable grey (the line-label association comes
+      // from position, not hue). Clamp inside the plot's vertical range.
+      ctx.fillStyle = it.isRefline ? '#5f6b73' : (it.isMuslim ? it.color : '#6b7178');
       ctx.textAlign = 'left';
-      ctx.fillText(it.label, it.x + 5, it.y);
+      const y = Math.max(chart.chartArea.top + 4, Math.min(it.y, chart.chartArea.bottom));
+      ctx.fillText(it.label, it.x + 5, y);
     }
     ctx.restore();
   }};
@@ -1431,7 +1466,11 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
     const s = TREND_STYLE[rel];
     const next = {
       label: s.label, data: seriesMap[rel], borderColor: s.c, backgroundColor: 'transparent',
-      fill: false, tension: 0.25, pointRadius: s.r, borderWidth: s.w, pointBackgroundColor: s.c,
+      fill: false, tension: 0.25,
+      // Modal real estate marks every line's survey rounds with small dots
+      // (peers r=2, Muslim keeps its larger marker); cards stay Muslim-only.
+      pointRadius: mode === 'modal' ? Math.max(s.r, 2) : s.r,
+      borderWidth: s.w, pointBackgroundColor: s.c,
       borderDash: (rel === 'muslim' && hasBreak) ? [5, 4] : [], spanGaps: false,
       order: rel === 'muslim' ? 0 : 1,
     };
@@ -1472,12 +1511,24 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
     refDs._isRefline = true;
     ds.push(refDs);
   }
-  const chart = new Chart(document.getElementById(id), {
+  // Reserve exactly the right edge the longest end-of-line label needs, so
+  // "All communities" never truncates to "All commun" (the old fixed 64px).
+  const cEl = document.getElementById(id);
+  const mctx = cEl.getContext('2d');
+  mctx.save();
+  mctx.font = '600 10px -apple-system, system-ui, sans-serif';
+  let padRight = 46;
+  for (const d of ds) {
+    if (d._noEndLabel) continue;
+    padRight = Math.max(padRight, Math.ceil(mctx.measureText(d.label).width) + 12);
+  }
+  mctx.restore();
+  const chart = new Chart(cEl, {
     type: 'line',
     data: { labels: years, datasets: ds },
     options: {
       responsive: true, maintainAspectRatio: false, animation: false,
-      layout: { padding: { right: 64, top: 6 } },
+      layout: { padding: { right: padRight, top: 6 } },
       // Hovering anywhere along the x-axis selects every line at that year,
       // so the tooltip surfaces the full point-in-time community comparison
       // (Muslim 40, Hindu 28, Christian 25, ...) instead of just one line.
@@ -1496,8 +1547,13 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
       },
       scales: {
         x: { grid: { display: false }, ticks: { font: { size: 10 } } },
-        y: { beginAtZero: false, grace: '12%', grid: { color: '#f0ede4', drawTicks: false },
-             border: { display: false }, ticks: { font: { size: 10 }, color: '#999', maxTicksLimit: 5 } },
+        // bounds:'data' keeps the house axes-hug-the-data rule: without it
+        // Chart.js expands the axis to its rounded tick bounds (GER's 9-31
+        // data was drawing a 0-40 axis, mostly empty space). _niceTicks then
+        // restores round gridline values inside the hugged range.
+        y: { beginAtZero: false, bounds: 'data', grace: '12%', afterBuildTicks: _niceTicks,
+             grid: { color: '#f0ede4', drawTicks: false },
+             border: { display: false }, ticks: { font: { size: 10 }, color: '#767676' } },
       },
     },
     plugins: [_endLabels()],
@@ -4049,13 +4105,32 @@ def _gap_chart(items, unit, open_label, filled_label) -> str:
         return round((v - lo) / axis_span * 100, 2)
 
     out = []
+    labelled_txts: set[str] = set()
     for lbl, subj, ov, fv in rows:
         is_all = lbl == "All communities"
-        col = "var(--muslim)" if subj else ("#6b7178" if is_all else "#aab0b6")
+        col = "var(--muslim)" if subj else ("#6b7178" if is_all else "#9aa1a8")
         a0, a1 = sorted((ov, fv))
-        labels = ((f'<span class="gap-val" style="left:{x(ov)}%;color:{col}">{fmt_num(ov, unit)}</span>'
-                   f'<span class="gap-val" style="left:{x(fv)}%;color:{col}">{fmt_num(fv, unit)}</span>')
-                  if subj or is_all else "")
+        labels = ""
+        if subj or is_all:
+            # Close pairs flip their two labels to the OUTER sides of the dots
+            # (lower value to the left, higher to the right) so near-parity
+            # rows never collide (sex-ratio's 951 vs 949); spread pairs keep
+            # the centred-above-the-dot label, clamped a little inside the
+            # track so edge values don't overhang the row label or the card.
+            close = abs(x(ov) - x(fv)) < 13
+            parts = []
+            for v, role in ((ov, "o"), (fv, "f")):
+                if close:
+                    is_lo = (v < a1) if ov != fv else (role == "o")
+                    side = " side-l" if is_lo else " side-r"
+                    pos = x(v)
+                else:
+                    side = ""
+                    pos = min(max(x(v), 5.0), 95.0)
+                parts.append(f'<span class="gap-val{side}" style="left:{pos}%;color:{col}">'
+                             f'{fmt_num(v, unit)}</span>')
+                labelled_txts.add(fmt_num(v, unit))
+            labels = "".join(parts)
         out.append(
             f'<div class="gap-row"><span class="lbl">{html.escape(lbl)}</span>'
             f'<span class="gap-track">'
@@ -4067,8 +4142,12 @@ def _gap_chart(items, unit, open_label, filled_label) -> str:
               f'<span class="k"><span class="gd-o"></span>{html.escape(open_label)}</span>'
               f'<span class="k"><span class="gd-f"></span>{html.escape(filled_label)}</span>'
               f'<span class="k" style="margin-left:auto"><span class="gd-m"></span>Muslim</span></div>')
-    axis = (f'<div class="gap-axis"><span>{fmt_num(data_lo, unit)}</span>'
-            f'<span>{fmt_num(data_hi, unit)}</span></div>')
+    # Axis ends anchor the scale for the unlabelled peer rows; suppress an end
+    # that would just repeat a value already labelled on a dot directly above
+    # it (e.g. the Muslim rural figure when Muslim rural IS the minimum).
+    lo_txt, hi_txt = fmt_num(data_lo, unit), fmt_num(data_hi, unit)
+    axis = (f'<div class="gap-axis"><span>{lo_txt if lo_txt not in labelled_txts else ""}</span>'
+            f'<span>{hi_txt if hi_txt not in labelled_txts else ""}</span></div>')
     # Decorative: every value is in the sortable table directly below, which is the
     # accessible representation, so the dumbbell is hidden from screen readers.
     return f'<div class="gap-chart" aria-hidden="true">{legend}{"".join(out)}{axis}</div>'
@@ -4655,7 +4734,7 @@ def _earnings_view(canvas_id: str | None = None):
             f"story.")
     chart_html, js = "", None
     if canvas_id:
-        named = ("muslim", "hindu", "christian", "sikh", "buddhist", "jain", "other")
+        named = ("muslim", "hindu", "christian", "sikh", "other_minority", "buddhist", "jain", "other")
         series_map = {rel: [(_round_dp(v, _disp_dp(unit)) if (v := series.get(rel, {}).get(y)) is not None else None)
                             for y in years]
                       for rel in named if rel in series}
@@ -4765,7 +4844,10 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
         # TIME SERIES card: every named community over rounds, Muslim highlighted,
         # All-India dashed baseline; latest-year community ranking shown via the
         # end-of-line labels on the chart itself (no redundant details table).
-        named = ("muslim", "hindu", "christian", "sikh", "buddhist", "jain", "other")
+        # other_minority included: AISHE's grouped category is ger-higher-ed's
+        # only peer series (it vanished from the chart when FD made ger a
+        # trend card and this tuple lacked it).
+        named = ("muslim", "hindu", "christian", "sikh", "other_minority", "buddhist", "jain", "other")
         series_map = {rel: [(_round_dp(v, _disp_dp(unit)) if (v := series.get(rel, {}).get(y)) is not None else None)
                             for y in years]
                       for rel in named if rel in series}
