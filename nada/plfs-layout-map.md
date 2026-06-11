@@ -225,3 +225,60 @@ Era B = 2020-21 to 2023-24 (suffixes `_perv1` / `_hhv1`).
    91+ = out of labour force. No re-mapping needed between rounds.
 10. Read everything as dtype=str first (mixed "01"/"1"/"1.0" representations,
     alphanumeric FOD sub-region values like "MAN").
+
+## Earnings columns (added 2026-06-10, for the earnings-gap metric)
+
+Average monthly earnings of regular wage/salaried employees come from schedule
+block 6 ("current weekly activity particulars"), item 9: "for 31, 71 or 72 in
+item 5 [current weekly status], earnings (received/receivable) during the
+preceding calendar month for regular salaried/wage activity (Rs.)". CSV columns,
+identical concept in all 7 rounds (person first-visit file):
+
+| Concept | 2017-18 .. 2019-20 | 2020-21 .. 2023-24 |
+|---|---|---|
+| Current weekly status (CWS) | `b6q5_per_fv` | `b6q5_perv1` |
+| Monthly earnings, regular salaried (item 9) | `b6q9_per_fv` | `b6q9_perv1` |
+| Self-employment earnings, last 30 days (item 10) | `b6q10_per_fv` | `b6q10_perv1` |
+
+Gotchas:
+1. **Exact-name lookup is mandatory for the block-6 items.** The day-wise
+   casual-wage columns (`b6q9_Act1_3pt7`, `b6q9_3pt7_perv1`, ...) share the
+   `b6q9` prefix; a suffix-tolerant prefix match grabs the wrong column.
+2. **The 2017-18 .. 2020-21 layout xlsx mislabels item 10** as "Earnings For
+   Regular Salarid/Wage Activity". Empirically (all rounds) `b6q10` is populated
+   only for CWS 11/12/61/62, i.e. it is the self-employment earnings item, and
+   `b6q9` only for CWS 31/71/72. The 2021-22+ layouts label item 10 correctly.
+3. **Definition that reproduces the published tables**: weighted mean of `b6q9`
+   over persons with CWS in {31, 71, 72} who reported POSITIVE earnings
+   (zero/not-reported excluded; 99.4-99.9% report, except 96.7% in 2019-20),
+   first-visit file only, annual weight = (MULT/100 or /200 by NSS==NSC)/NO_QTR,
+   NO age filter (the published tables are all-ages; sample counts match
+   exactly). The published QUARTERLY statements (e.g. Statement 10 in 2023-24)
+   instead pool first-visit + revisit schedules in urban areas, so their
+   mean-of-quarters sits ~1.7% below the first-visit annual figure; the annual
+   by-occupation tables (Table 55 in 2021-22, Table 33 in 2022-23, Tables 50/33
+   in 2023-24, "Figures based on the first visit schedule ... combining all the
+   four quarters") are the correct validation target for an FV-only pipeline.
+   In the 2023-24 report PDF those table pages carry a stale "PLFS, 2022-23"
+   footer; the values are 2023-24 (they differ from the 2022-23 report's own
+   table and the sample counts match the 2023-24 microdata exactly).
+
+**Verified 2026-06-10** (`transform/plfs/extract_earnings_by_religion.py`): all
+9 all-India cells (rural/urban/total x male/female/person) match the published
+annual tables within 0.03% for every round whose annual report is archived in
+sources/plfs/annual/, with exact sample-count matches (max deviation 3 records
+on male cells, the reports apparently fold the few transgender reporters into
+"male"):
+
+| Round | Published r+u person (n) | Computed (n) |
+|---|---|---|
+| 2021-22 | Rs 18,945 (43,064) | Rs 18,947 (43,064) |
+| 2022-23 | Rs 19,744 (44,873) | Rs 19,745 (44,873) |
+| 2023-24 | Rs 21,047 (46,294) | Rs 21,048 (46,294) |
+
+2017-18 .. 2020-21 annual report PDFs are not archived locally, so those rounds
+carry structural gates only (earnings reported only by CWS 31/71/72, >= 95%
+reporting); columns, join, weights and code lists are byte-identical to the
+validated rounds. The L2 (`extracted/plfs/plfs-earnings-2017-24-by-religion.csv`)
+applies a 15+ age filter on top of the published all-ages definition (drops
+20-42 under-15 reporters per round, <= 0.1%).

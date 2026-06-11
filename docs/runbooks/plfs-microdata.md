@@ -10,8 +10,8 @@
   `salaried-share` (their 2023-24 point stays sourced from the published annual
   report tables (`plfs` source) - the microdata reproduces them within 0.2pp,
   so the two sources extend one seamless series), and **all seven points** of
-  `unemployment-rate-15plus` (the published tables never break the unemployment
-  rate down by religion).
+  `unemployment-rate-15plus` and `salaried-earnings` (the published tables
+  never break the unemployment rate or earnings down by religion).
 
 ## Why microdata
 
@@ -42,10 +42,14 @@ NADA_API_KEY=<key> .venv/bin/python nada/bank.py autoget <idno> ~/Desktop/nada-w
 # L1 -> L2: all 7 rounds, with two validation gates (published all-India figures
 # per round to +-0.1; the 2023-24 by-religion PDF tables to +-0.2)
 .venv/bin/python transform/plfs/extract_microdata_trends.py
-# L2 -> L3: regenerate the three canonical CSVs (2023 from the PDF L2 + trend from microdata)
+# L1 -> L2 earnings (gates: published earnings tables 2021-22..2023-24, 27 cells to 0.03%)
+.venv/bin/python transform/plfs/extract_earnings_by_religion.py
+# L2 -> L3: regenerate the canonical CSVs
 .venv/bin/python transform/canonicalize/lfpr_15plus.py
 .venv/bin/python transform/canonicalize/wpr_15plus.py
 .venv/bin/python transform/canonicalize/salaried_share.py
+.venv/bin/python transform/canonicalize/unemployment_rate_15plus.py
+.venv/bin/python transform/canonicalize/salaried_earnings.py
 ```
 
 Method (per round): first-visit person file, age 15+; employed = principal OR

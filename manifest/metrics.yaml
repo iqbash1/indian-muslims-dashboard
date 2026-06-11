@@ -412,6 +412,48 @@ metrics:
         higher_is_better: true
         order: 150
 
+  - id: salaried-earnings
+    name: Monthly earnings in salaried jobs
+    cluster: employment
+    unit: inr_per_month
+    higher_is_better: true
+    definition: |
+      Average monthly earnings (gross, preceding calendar month) of workers in
+      regular salaried/wage jobs, age 15+. The pay counterpart to the
+      salaried-jobs card: Muslims are both less likely to hold a regular
+      salaried job and, when they do, are paid less in it.
+    sources: {primary: plfs-microdata}
+    geography_levels: [national]
+    religions: [muslim, hindu, all]
+    methodology_notes: |
+      All seven points (2017-18 to 2023-24) are computed from each round's PLFS
+      unit-level microdata via the MoSPI NADA API: the published annual reports
+      never break earnings down by religion. Earnings are those received or
+      receivable during the preceding calendar month from the regular
+      salaried/wage activity (schedule block 6 item 9, asked of persons with
+      current weekly status 31/71/72), averaged with the official annual
+      first-visit weights among reporting employees age 15+. The estimator is
+      anchored: it reproduces the published all-ages earnings tables of the
+      2021-22, 2022-23 and 2023-24 reports across all 27 cells (residence x
+      sex) within 0.03%, with exactly matching sample counts. Rupees are
+      nominal, so levels mostly reflect inflation; the comparable story is the
+      relative gap - Muslim salaried workers earn 16-23% below the all-India
+      average in every round (2023-24: Rs 17,747 vs Rs 21,067), and the gap has
+      not closed over the seven rounds. Muslim sample: 4,070-5,122 earnings
+      reporters per round. Religion is self-reported (NSO unit-data rider:
+      indicative, no sub-state estimates). Year=Y is the start of the Jul-Y to
+      Jun-(Y+1) reference period.
+    comparison_baselines: [hindu, all]
+    phase: 1
+    status: defined
+    display:
+      scorecard:
+        label: "Salaried earnings"
+        reference: "all"
+        unit_format: inr_per_month
+        higher_is_better: true
+        order: 152
+
   # ----- Income / consumption / poverty (Phase 1) -----
   - id: mpce
     name: Monthly spending per person
