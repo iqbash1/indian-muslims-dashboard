@@ -566,43 +566,47 @@ metrics:
     higher_is_better: true
     definition: |
       What an average household owns (land, buildings, livestock, machinery,
-      vehicles, financial assets) minus what it owes, as on mid-2012 (the
-      survey ran through 2013). Wealth is the stock that spending cannot show,
-      and wealth gaps compound across generations, so they run far wider than
-      spending gaps.
-    sources: {primary: aidis-2013}
+      vehicles, financial assets) minus what it owes, measured by the
+      national debt and investment survey as on mid-2012 and mid-2018.
+      Wealth is the stock that spending cannot show, and wealth gaps compound
+      across generations, so they run far wider than spending gaps.
+    sources: {primary: aidis-2019}
     geography_levels: [national]
     religions: [muslim, hindu, christian, sikh, all]
     methodology_notes: |
-      Computed from the unit-level microdata of AIDIS 2013 (All-India Debt &
-      Investment Survey, NSS 70th round, Visit 1; 1.11 lakh households) via
-      the MoSPI NADA API: average household assets minus outstanding debt, as
-      on 30.06.2012 (so year=2012; the survey was fielded in 2013). The
-      published report breaks wealth down by social group but never by
-      religion. The estimator reproduces the published all-India average debt
-      and incidence of indebtedness exactly, and average assets within 0.75%
-      (a documented empty-column defect in MoSPI's own CSV conversion of the
-      non-farm-equipment block, worth exactly the missing block's published
-      share). Muslim households held INR 9.16 lakh against the all-India
-      INR 13.95 lakh (66%) and Hindu INR 13.69 lakh (67%); the gap is
-      overwhelmingly urban - urban Muslim households hold 51% of urban Hindu
-      net worth (INR 11.5 vs 22.5 lakh) while rural is 83%. Gold and ornaments
-      sit outside the published asset concept (about 4% on top); land is
-      valued at guideline rather than market rates. Values rounded to the
-      nearest INR 1,000. NSO unit-data rider: religion is self-reported and
-      the survey is stratified for states, so the split is indicative with no
-      sub-state estimates. AIDIS 2018-19 would extend this to a trend, but
-      its NADA distribution is a proprietary binary; its published all-India
-      anchors are recorded in the repo for that future build. The "Borrowing
-      sources" tab folds in the companion measure from the same AIDIS 2013
-      microdata (the decarded institutional-credit-share metric): the
-      institutional share of outstanding cash debt among indebted households,
-      reproducing the published all-India shares exactly (rural 56.0 / urban
-      84.5). Muslim 68.3% vs Hindu 72.4%, with the gap urban (72.7 vs 85.4);
-      Muslims also borrow the least overall (23.8% of households indebted vs
-      Hindu 29.0%). Credit-agency code 09 "others" is non-institutional
-      despite its position in the code list (the layout trap is documented in
-      the repo).
+      Computed from the unit-level microdata of AIDIS (All-India Debt &
+      Investment Survey) Visit 1, two rounds: NSS 70th (1.11 lakh households,
+      assets and debt as on 30.06.2012, via the MoSPI NADA API) and NSS 77th
+      (1.16 lakh households, as on 30.06.2018, via MoSPI's original
+      fixed-width TXT distribution; the NADA copy of that round is a
+      proprietary binary, so the build reads the surviving mirror recorded in
+      the repo's provenance notes). The published reports break wealth down
+      by social group but never by religion. The 2018 estimator reproduces
+      the published all-India average assets and average debt EXACTLY to the
+      rupee; 2012 reproduces debt and indebtedness exactly and assets within
+      0.75% (a documented empty-column defect in MoSPI's own CSV conversion
+      of the non-farm-equipment block). Muslim households held INR 15.0 lakh
+      in 2018 against the all-India INR 18.9 lakh (79%) and Hindu INR 18.8
+      lakh (80%), up from 66% and 67% in 2012; the urban gap narrowed most,
+      with urban Muslim households moving from 51% to 67% of urban Hindu net
+      worth (INR 18.0 vs 26.7 lakh in 2018) while rural moved from 83% to
+      87%. Values are nominal rupees of each round's reference date. Gold and
+      ornaments sit outside the published asset concept (roughly 3-4% on
+      top); land is valued at guideline rather than market rates. Values
+      rounded to the nearest INR 1,000. NSO unit-data rider: religion is
+      self-reported and the survey is stratified for states, so the split is
+      indicative with no sub-state estimates. The "Borrowing sources" tab
+      folds in the companion measure from the same microdata (the decarded
+      institutional-credit-share metric): the institutional share of
+      outstanding cash debt among indebted households, reproducing the
+      published all-India shares in both rounds (2012 rural 56.0 / urban 84.5
+      exactly; 2018 rural 66 / urban 87). There the trend cuts the other way:
+      the Muslim share stood still (68.3% to 68.7%) while the Hindu share
+      rose (72.4% to 77.1%), widening the urban gap to 17 points (71.3 vs
+      88.4). Muslims also borrow the least overall (26.8% of households
+      indebted vs Hindu 31.4% in 2018). Credit-agency code 09 "others" is
+      non-institutional despite its position in the code list in both rounds
+      (the layout trap is documented in the repo).
     comparison_baselines: [hindu, all]
     phase: 1
     status: defined
@@ -626,30 +630,38 @@ metrics:
       informal sources. Informal credit is costlier and unprotected, so a
       lower share signals weaker access to the formal financial system, a
       gap the Sachar Committee flagged for Muslims.
-    sources: {primary: aidis-2013}
+    sources: {primary: aidis-2019}
     geography_levels: [national]
     religions: [muslim, hindu, christian, sikh, all]
     methodology_notes: |
-      Computed from AIDIS 2013 (NSS 70th round, Visit 1) unit-level microdata
-      via the MoSPI NADA API: institutional share of outstanding cash debt as
-      on 30.06.2012 (year=2012), among indebted households. Reproduces the
-      published all-India shares exactly (rural 56.0 / urban 84.5, KI(70/18.2)
-      Table 8); the published tables stop at state and social group, never
-      religion. Muslim 68.3% vs Hindu 72.4%; the urban contrast is the story -
-      72.7% of urban Muslim debt is institutional vs 85.4% for urban Hindus,
-      meaning urban Muslims lean far more on informal lenders. Context: Muslims
-      also borrow least overall (23.8% of households indebted vs Hindu 29.0%).
-      Credit-agency code 09 "others" is non-institutional despite its position
-      in the code list (the layout trap is documented in the repo). Religion
-      x residence cells ride on indebted households only (about 1,700 rural
-      Muslim), so read sub-cuts as indicative. NSO unit-data rider applies:
-      religion is self-reported; no sub-state estimates.
+      Computed from AIDIS Visit-1 unit-level microdata, two rounds: NSS 70th
+      (as on 30.06.2012, via the MoSPI NADA API) and NSS 77th (as on
+      30.06.2018, via MoSPI's original fixed-width TXT distribution; the NADA
+      copy of that round is a proprietary binary). Institutional share of
+      outstanding cash debt among indebted households. Reproduces the
+      published all-India shares in both rounds (2012 rural 56.0 / urban 84.5
+      exactly, KI(70/18.2) Table 8; 2018 rural 66 / urban 87, press note of
+      24.08.2021); the published tables stop at state and social group, never
+      religion. The trend is the story: as Indian borrowing formalised, the
+      all-India share rose from 72.6% to 76.7%, the Hindu share from 72.4% to
+      77.1%, while the Muslim share stood still at 68.3% to 68.7%. Urban is
+      starkest: 71.3% of urban Muslim debt was institutional in 2018 vs 88.4%
+      for urban Hindus, a 17-point gap that was 13 points in 2012. Context:
+      Muslims also borrow least overall (26.8% of households indebted vs
+      Hindu 31.4% in 2018). Credit-agency code 09 "others" is
+      non-institutional despite its position in the code list in both rounds
+      (the 2019 questionnaire's serial-number ranges independently confirm
+      the split; the layout trap is documented in the repo). Religion x
+      residence cells ride on indebted households only (about 2,000 indebted
+      rural Muslim households in 2018), so read sub-cuts as indicative. NSO
+      unit-data rider applies: religion is self-reported; no sub-state
+      estimates.
     comparison_baselines: [hindu, all]
     phase: 1
     status: defined
     display:
       scorecard:
-        include: false   # decarded (Commit FE): folded into household-net-worth's "Borrowing sources" tab (same AIDIS 2013 microdata, one wealth story)
+        include: false   # decarded (Commit FE): folded into household-net-worth's "Borrowing sources" tab (same AIDIS microdata, one wealth story; 2-round trend since the 2019 TXT-mirror build)
         label: "Institutional borrowing"
         reference: "all"
         unit_format: percent

@@ -864,13 +864,13 @@ sources:
     name: All-India Debt & Investment Survey 2013 (NSS 70th round, Sch 18.2, unit-level)
     publisher: National Statistical Office (NSO), MoSPI
     home_url: https://microdata.gov.in/NADA/index.php/catalog/130
-    cadence: roughly decennial (next usable round blocked, see known_issues)
+    cadence: roughly decennial (the 2019 round is carried as aidis-2019)
     cadence_notes: |
       Unit-level microdata via the MoSPI NADA API (idno
       DDI-IND-MOSPI-NSSO-70Rnd-Sch18pt2-Jan-Dec20131, Visit 1). 1,10,800
-      households; asset/debt reference date 30.06.2012. Feeds household-net-worth
-      and institutional-credit-share (computed; the published report stops at
-      social group, never religion).
+      households; asset/debt reference date 30.06.2012. Feeds the 2012 rows of
+      household-net-worth and institutional-credit-share (computed; the
+      published report stops at social group, never religion).
     access:
       method: api
       auth_required: true
@@ -888,7 +888,6 @@ sources:
       - "Religion self-reported + unverified (NSO unit-data rider); survey stratified for states, not religions; no sub-state estimates"
       - "MoSPI's CSV conversion ships block 10 (non-farm equipment) with an empty value column - assets undercount by the block's published 0.25-0.76% share; debt/IOI reproduce exactly"
       - "Gold/ornaments outside the published asset concept (~4% additional); land at guideline not market values"
-      - "AIDIS 2018-19 (catalog id 156) is distributed ONLY as a proprietary .Nesstar binary - unusable until exported elsewhere; its published anchors are recorded in nada/aidis-layout-map.md"
       - "41 MB unit-level zip kept local (provenance-only); sha256 in sources/nada/aidis-2013-v1/"
     archive_dir: sources/nada/aidis-2013-v1/
     runbook: docs/runbooks/aidis.md
@@ -899,6 +898,51 @@ sources:
         description: AIDIS NSS 70th round Sch 18.2 Visit-1 unit-level CSV zip
         url: https://microdata.gov.in/NADA/index.php/catalog/130
         target_path: sources/nada/aidis-2013-v1/CSV_NSS_70th_Debt_&_Investment_Visit1_Jan_Dec_2013.zip
+        status: verified
+
+  - id: aidis-2019
+    name: All-India Debt & Investment Survey 2019 (NSS 77th round, Sch 18.2, unit-level)
+    publisher: National Statistical Office (NSO), MoSPI
+    home_url: https://www.mospi.gov.in/sites/default/files/NSS7718/README77182_v1m.pdf
+    cadence: roughly decennial (prior usable round 2013; next round not yet announced)
+    cadence_notes: |
+      Unit-level microdata, fielded January-December 2019; asset/debt
+      reference date 30.06.2018. Visit 1, 1,16,461 households (69,455 rural +
+      47,006 urban). Feeds the 2018 rows of household-net-worth and
+      institutional-credit-share (computed; NSS Report 588 stops at social
+      group, never religion).
+    access:
+      method: web-download
+      auth_required: false
+      auth_notes: |
+        The NADA catalog (id 156) ships this survey ONLY as a proprietary
+        .Nesstar binary (that rar is banked as the catalog-channel L1 in
+        sources/nada/aidis-2018-19/). The original fixed-width TXT
+        distribution (r77182v1L01..L17.TXT + visit 2 + READMEs + layout xls)
+        is still served from the unlinked mospi.gov.in directory
+        sites/default/files/NSS7718/ (the deleted Drupal release page was
+        located via the Wayback snapshot of its mospi.nic.in twin); URLs +
+        sha256 in sources/nss77-aidis/PROVENANCE-note.md.
+    formats: [fixed-width-txt]
+    religion_disaggregated: true
+    geography_levels: [national]
+    coverage:
+      - household_assets_debt_net_worth_by_religion
+      - institutional_vs_noninstitutional_credit_by_religion
+    known_issues:
+      - "Religion self-reported + unverified (NSO unit-data rider); survey stratified for states, not religions; no sub-state estimates"
+      - "Gold/ornaments outside the published asset concept (~3% additional, collected as a no-probe memo item); land at guideline not market values"
+      - "The NADA DDI's credit-agency category labels are wrong (they shift NBFC onto code 09 and omit 10); the instructions and the questionnaire's serial ranges give the correct institutional split - documented in nada/aidis-layout-map.md"
+      - "~450 MB of TXT kept local at ~/Desktop/nada-work/aidis-2018-19-alt/ (provenance-only); sha256 in sources/nss77-aidis/"
+    archive_dir: sources/nss77-aidis/
+    runbook: docs/runbooks/aidis.md
+    last_pulled: "2026-06-11"
+    next_expected: null
+    targets:
+      - target_id: aidis-2019-v1-microdata-txt
+        description: AIDIS NSS 77th round Sch 18.2 Visit-1 fixed-width TXT files (17 levels)
+        url: https://www.mospi.gov.in/sites/default/files/NSS7718/r77182v1L01.TXT
+        target_path: sources/nss77-aidis/SHA256SUMS.txt
         status: verified
 
   - id: nss76-housing

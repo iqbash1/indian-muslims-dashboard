@@ -18,7 +18,7 @@ justice.
 ## What's on the dashboard
 
 21 live indicators across six themes (population, health, education,
-employment, representation, justice), drawn from 20 primary sources,
+employment, representation, justice), drawn from 21 primary sources,
 grouped into five themed sections on the dashboard. Companion measures
 that share a card's source and story render as modal tabs of that card
 rather than as cards of their own, keeping the homepage scannable. The authoritative
@@ -99,7 +99,7 @@ The dashboard never queries an external source live and never reads L1/L2 direct
 
 ## Sources
 
-20 source-ids feed L3 canonical metrics (27 source-ids registered in `manifest/sources.yaml` total — the remaining 7 are `census-decadal-religion` (superseded by the primary RGI volumes, kept for cross-validation), `civic-incident-databases` (the hate-speech metric was decarded in Commit CR; data archived), and five pre-registered for future metrics: `hces-2022-23`, `mha-parliament-answers`, `niti-mpi`, `rbi-minority-lending`, `rti-public-sector-employment`). `plfs-microdata` (7 PLFS rounds via the NADA API) joined in Commit EW, feeding the employment metrics' 2017-2022 trend rows.
+21 source-ids feed L3 canonical metrics (28 source-ids registered in `manifest/sources.yaml` total — the remaining 7 are `census-decadal-religion` (superseded by the primary RGI volumes, kept for cross-validation), `civic-incident-databases` (the hate-speech metric was decarded in Commit CR; data archived), and five pre-registered for future metrics: `hces-2022-23`, `mha-parliament-answers`, `niti-mpi`, `rbi-minority-lending`, `rti-public-sector-employment`). `plfs-microdata` (7 PLFS rounds via the NADA API) joined in Commit EW, feeding the employment metrics' 2017-2022 trend rows; `aidis-2019` (the NSS 77th TXT mirror) joined in Commit FM, giving the wealth cards their 2012 -> 2018 trend.
 
 | Source | What it gives us | Cadence | Status |
 |---|---|---|---|

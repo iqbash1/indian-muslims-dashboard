@@ -3424,6 +3424,7 @@ UNIT_JS = {
 SOURCE_LABEL = {
     "plfs-microdata": "PLFS microdata 2017-24",
     "aidis-2013": "AIDIS 2013 (NSS 70th)",
+    "aidis-2019": "AIDIS 2019 (NSS 77th)",
     "nss76-housing": "NSS 76th 1.2 (2018)",
     "census-india-1961": "Census 1961 · C-VII Religion",
     "census-india-1971": "Census 1971 · Paper 2 of 1972",
@@ -3508,8 +3509,8 @@ PLAIN_DEFINITION = {
     "pucca-house": "What share of households lives in a pucca house, with walls and roof of permanent materials like brick, concrete or stone. The standard Indian measure of housing quality.",
     "mpce": "How much a typical person in a community spends in a month, on food, rent, fuel, clothes and everything else. In India this is the usual way to measure how well-off people are, because reliable income data does not exist.",
     "top-quintile-share": "Of all people in a community, what share lives in households among the top 20% of spending nationally. With an even spread every community would be at 20%. Muslims are at par among the poorest fifth but squeezed out of the richest fifth.",
-    "household-net-worth": "What an average household owns (land, buildings, livestock, vehicles, financial assets) minus what it owes. Accumulated wealth runs a far wider gap than monthly spending: urban Muslim households hold about half the net worth of urban Hindu households.",
-    "institutional-credit-share": "Of the money indebted households owe, what share comes from banks, co-operatives and government schemes rather than moneylenders and other informal sources. Informal credit costs more and carries no protection.",
+    "household-net-worth": "What an average household owns (land, buildings, livestock, vehicles, financial assets) minus what it owes. Accumulated wealth runs a far wider gap than monthly spending, though the gap narrowed between 2012 and 2018: urban Muslim households went from holding about half the net worth of urban Hindu households to about two-thirds.",
+    "institutional-credit-share": "Of the money indebted households owe, what share comes from banks, co-operatives and government schemes rather than moneylenders and other informal sources. Informal credit costs more and carries no protection. India's borrowing shifted toward institutions between 2012 and 2018, but the Muslim share barely moved.",
     "ls-share": "Of the 543 seats in India's national parliament (Lok Sabha), what share is held by Muslim MPs.",
     "mla-share": "Across all 31 state and UT legislative assemblies that hold elections, what share of MLA seats is held by Muslims.",
     "prison-rate-per-100k": "For every 100,000 people of a religion, how many are in prison. Allows fair comparison across communities of different size.",
@@ -4498,11 +4499,10 @@ FOLDED_VIEW_METRIC = {
     "assemblies": "mla-share",
 }
 
-# Snapshot host card -> the folded view that leads its tab bar. (mpce and
-# salaried-share are trend cards and ls-share is a special_render card, so
-# they wire their folds in their own branches.)
+# Snapshot host card -> the folded view that leads its tab bar. (mpce,
+# salaried-share and household-net-worth are trend cards and ls-share is a
+# special_render card, so they wire their folds in their own branches.)
 _SNAPSHOT_HOST_FOLDS = {
-    "household-net-worth": "credit-sources",
     "pucca-house": "electricity",
     "prison-rate-per-100k": "undertrials",
 }
@@ -4597,10 +4597,12 @@ def _note_credit_sources() -> str:
     mu, hu = by.get("muslim", {}).get("urban"), by.get("hindu", {}).get("urban")
     return (f"Of the money indebted households owe, the share borrowed from institutional lenders "
             f"(banks, co-operatives, government and related agencies) rather than moneylenders, "
-            f"shopkeepers or relatives. Informal credit is costlier and unprotected. The gap is "
-            f"urban: {_round_str(mu, 1)}% of urban Muslim debt is institutional against "
-            f"{_round_str(hu, 1)}% for urban Hindus. Muslims also borrow the least overall: 23.8% "
-            f"of Muslim households were indebted against 29.0% of Hindu households.")
+            f"shopkeepers or relatives. Informal credit is costlier and unprotected. As Indian "
+            f"borrowing formalised between 2012 and 2018 the Muslim share stood still (68.3% to "
+            f"68.7%) while the Hindu share rose (72.4% to 77.1%), and the urban gap widened: "
+            f"{_round_str(mu, 1)}% of urban Muslim debt is institutional against "
+            f"{_round_str(hu, 1)}% for urban Hindus. Muslims also borrow the least overall: 26.8% "
+            f"of Muslim households were indebted against 31.4% of Hindu households in 2018.")
 
 
 def _note_electricity() -> str:
@@ -4852,6 +4854,13 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
             details, fold_js = fold + details, [fjs]
         elif mid == "salaried-share":
             fold, fjs = _folded_view("earnings", cvid + "-earnings")
+            details, fold_js = fold + details, [fjs]
+        elif mid == "household-net-worth":
+            # The "Borrowing sources" fold moved here from the snapshot
+            # branch when AIDIS 2019's TXT mirror gave net worth its second
+            # round (the lfpr lesson: a fold left in the other branch
+            # silently drops its tab while the stub + OG keep shipping).
+            fold, fjs = _folded_view("credit-sources", cvid + "-credit-sources")
             details, fold_js = fold + details, [fjs]
         elif mid == "lfpr-15plus":
             # The "Working vs looking" fold (Commit ET) must ride the TREND
