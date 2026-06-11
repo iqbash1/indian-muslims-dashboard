@@ -7,9 +7,11 @@
   rounds: 2017-18, 2018-19, 2019-20, 2020-21, 2021-22, 2022-23, 2023-24
   (NADA catalog ids 204, 216, 217, 206, 214, 210, 213).
 - Feeds: the **over-time (2017-2022) rows** of `lfpr-15plus`, `wpr-15plus` and
-  `salaried-share`. The 2023-24 point stays sourced from the published annual
+  `salaried-share` (their 2023-24 point stays sourced from the published annual
   report tables (`plfs` source) - the microdata reproduces them within 0.2pp,
-  so the two sources extend one seamless series.
+  so the two sources extend one seamless series), and **all seven points** of
+  `unemployment-rate-15plus` (the published tables never break the unemployment
+  rate down by religion).
 
 ## Why microdata
 

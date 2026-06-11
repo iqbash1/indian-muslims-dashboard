@@ -31,6 +31,7 @@ ZIP = {
     "2020-21": "CSV_Unit_level_data_PLFS_July2020_June2021.zip",
     "2021-22": "PLFS_Data_2021-22_CSV.zip",
     "2022-23": "Data_in_CSV.zip",
+    "2023-24": "CSV_data_PLFS_2023_2024.zip",
 }
 
 RES_WORD = {"all": "rural+urban", "urban": "urban", "rural": "rural"}
@@ -39,15 +40,18 @@ SEX_WORD = {"all": "both sexes", "male": "males", "female": "females"}
 
 def trend_rows(metric_id: str, field: str, denominator: str, what: str,
                extraction_run: str, *, sexes=("all", "male", "female"),
-               residences=("all", "urban", "rural")) -> list[list]:
-    """Canonical rows (17-col schema with sex) for years 2017-2022 from the
+               residences=("all", "urban", "rural"),
+               years=TREND_YEARS) -> list[list]:
+    """Canonical rows (17-col schema with sex) for the given years from the
     microdata L2. `field` = lfpr | wpr | ur | salaried_share; `what` is the
-    indicator phrase used in the methodology note."""
+    indicator phrase used in the methodology note. Default years stop at 2022
+    (2023 comes from the published table); unemployment-rate passes all seven
+    because the published tables don't break UR down by religion at all."""
     rows = []
     with MICRO_L2.open() as f:
         for r in csv.DictReader(f):
             year = int(r["year"])
-            if year not in TREND_YEARS:
+            if year not in years:
                 continue
             if (r["religion"] not in RELIGIONS or r["sex"] not in sexes
                     or r["residence"] not in residences):

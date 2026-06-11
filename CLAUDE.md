@@ -49,7 +49,7 @@ not ad-hoc scripts: metric metadata in `manifest/metrics.yaml`, sources in
   JSON-LD); the per-view `docs/m/<id>/<view>/` are thin redirect stubs (OG meta +
   a relative `/#<id>/<view>` redirect). Both regenerate from canonical, so they
   change on most rebuilds — partial-looking diffs there are expected.
-- 18 carded metrics. `pop-share` absorbed the old `district-concentration-top100`
+- 19 carded metrics. `pop-share` absorbed the old `district-concentration-top100`
   card (Commit DV): it is now pop-share's "By district" tab (curve + top-100
   table), reading the still-present `district-concentration-top100.csv`. Likewise
   `muslim-higher-ed-enrolment` (student counts) is decarded and folded into
@@ -58,5 +58,11 @@ not ad-hoc scripts: metric metadata in `manifest/metrics.yaml`, sources in
   `wpr-15plus` (worker population ratio) is decarded and folded into
   `lfpr-15plus`'s "Working vs looking" tab, beside the labour-force rate (the two
   PLFS measures differ only by unemployment).
+- The employment cards are 7-round PLFS trends (2017-18 to 2023-24) from NADA
+  unit-level microdata (Commit EW; recipe in docs/runbooks/plfs-microdata.md +
+  nada/plfs-layout-map.md); `unemployment-rate-15plus` (Commit EX) is microdata
+  in ALL years (the report PDFs never publish UR by religion). mpce's By-state
+  tab is HCES 2023-24 microdata (Commit EV). Raw zips stay LOCAL at
+  ~/Desktop/nada-work/ (sha256 + docs committed in sources/nada/).
 - sex-ratio + pop-share are primary RGI census 1961-2011; Sachar Committee feeds
   the `mpce` metric (not sex-ratio anymore).

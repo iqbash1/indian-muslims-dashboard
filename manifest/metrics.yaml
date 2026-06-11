@@ -337,6 +337,46 @@ metrics:
         higher_is_better: true
         order: 140
 
+  - id: unemployment-rate-15plus
+    name: Unemployment rate
+    cluster: employment
+    unit: percent
+    higher_is_better: false
+    definition: |
+      Share of the labour force, age 15+, that is unemployed: actively seeking
+      or available for work but not working. Usual status (principal +
+      subsidiary). A low rate is not automatically good news here: people who
+      cannot afford to be unemployed take any informal work, so read this
+      beside the salaried-jobs card.
+    sources: {primary: plfs-microdata}
+    geography_levels: [national]
+    religions: [muslim, hindu, all]
+    methodology_notes: |
+      All seven points (2017-18 to 2023-24) are computed from each round's PLFS
+      unit-level microdata, pulled via the MoSPI NADA API: the published annual
+      reports never break the unemployment rate down by religion, so the
+      microdata is the only source for this series. Unemployed = usual principal
+      status 81 (seeking/available for work); labour force = workers (ps+ss)
+      plus unemployed; weights per the official estimation rule. The computation
+      reproduces each round's published all-India unemployment rate to 0.1
+      points. Muslim unemployment fell from 7.2% (2017-18, a point above the
+      national 6.0%) to 3.2% (2023-24, at par with the national average), but
+      over the same rounds the salaried share of Muslim workers also fell, so
+      part of the convergence is absorption into self-employment and casual
+      work rather than formal hiring. Religion is self-reported (NSO unit-data
+      rider: indicative, no sub-state estimates). Year=Y is the start of the
+      Jul-Y to Jun-(Y+1) reference period.
+    comparison_baselines: [hindu, all]
+    phase: 1
+    status: defined
+    display:
+      scorecard:
+        label: "Unemployment rate"
+        reference: "hindu"
+        unit_format: percent
+        higher_is_better: false
+        order: 145
+
   - id: salaried-share
     name: Workers in salaried jobs
     cluster: employment
