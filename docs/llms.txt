@@ -28,6 +28,7 @@ muslimdata.in is a static, source-traceable dashboard of living-conditions indic
 - Clean drinking water at home (2018; source: nss76-housing): https://muslimdata.in/m/improved-water-premises/ | data: https://muslimdata.in/canonical/improved-water-premises.csv
 - Pucca housing (2018; source: nss76-housing): https://muslimdata.in/m/pucca-house/ | data: https://muslimdata.in/canonical/pucca-house.csv
 - Muslim share of the Lok Sabha (1952-2024; source: prs-eci-affidavits): https://muslimdata.in/m/ls-share/ | data: https://muslimdata.in/canonical/ls-share.csv
+- Muslim share of state assemblies (2020-2026; source: prs-eci-affidavits): https://muslimdata.in/m/mla-share/ | data: https://muslimdata.in/canonical/mla-share.csv
 - Incarceration rate (2022; source: ncrb-prison): https://muslimdata.in/m/prison-rate-per-100k/ | data: https://muslimdata.in/canonical/prison-rate-per-100k.csv
 - Communal incidents recorded by police (2015-2023; source: ncrb-crime): https://muslimdata.in/m/communal-incidents-govt/ | data: https://muslimdata.in/canonical/communal-incidents-govt.csv
 

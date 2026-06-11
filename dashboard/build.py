@@ -2263,7 +2263,7 @@ def _og_view_data(m: dict, view: dict):
         if vid == "assemblies":
             if by.get("muslim") is not None:
                 detail = (f"Muslim {fmt_num(by['muslim'], funit)} of assembly seats · "
-                          f"vs {MUSLIM_POP_SHARE}% of population")
+                          f"vs {_round_str(MUSLIM_POP_SHARE, 1)}% of population")
         elif by.get("muslim") is not None:
             bits = [f"Muslim {fmt_num(by['muslim'], funit)}"]
             if by.get("hindu") is not None:
@@ -4514,7 +4514,11 @@ FOLDED_VIEW_METRIC = {
     "credit-sources": "institutional-credit-share",  # tab of household-net-worth
     "electricity": "household-electricity",          # tab of pucca-house
     "undertrials": "undertrial-rate-per-100k",       # tab of prison-rate-per-100k
-    "assemblies": "mla-share",                       # tab of ls-share
+    # assemblies is the one entry whose host IS the metric itself: mla-share
+    # was re-carded in Commit FJ (Lok Sabha and assemblies are separate
+    # stories), and its per-assembly table rides as its own tab, still driven
+    # by this registry for the per-view OG nugget + landing breakdown.
+    "assemblies": "mla-share",
 }
 
 # Snapshot host card -> the folded view that leads its tab bar. (mpce and
@@ -4662,11 +4666,11 @@ _FOLDED_SNAPSHOTS = {
 
 
 def _assemblies_view() -> str:
-    """ls-share's "State assemblies" tab, folding in the decarded mla-share
-    metric: every covered assembly at its most recent election, highest Muslim
-    MLA share first, the seat fraction parsed from each row's denominator
-    record. The card face keeps the 18-election Lok Sabha trend; this tab adds
-    the state layer of the same affidavit-classified sourcing."""
+    """mla-share's "By assembly" tab: every covered assembly at its most
+    recent election, highest Muslim MLA share first, the seat fraction parsed
+    from each row's denominator record. The card face is the per-state bar
+    chart (shares only); this table adds the election year and the N-of-M
+    seat count."""
     rows = [r for r in load_metric("mla-share") if r["geography_level"] == "state"]
     if not rows:
         return ""
@@ -4702,9 +4706,9 @@ def _assemblies_view() -> str:
             '<th class="sortable" data-col="1" data-type="num">Election</th>'
             '<th>Muslim MLAs</th>'
             '<th class="sortable tbar-head" data-col="3" data-type="num">Share</th></tr>')
-    return (f'<details data-view-id="assemblies" data-view-label="State assemblies" '
+    return (f'<details data-view-id="assemblies" data-view-label="By assembly" '
             f'data-view-sub="{len(recs)} assemblies">'
-            f'<summary>Muslim share of state assemblies ({len(recs)} assemblies)</summary>'
+            f'<summary>Muslim share by assembly ({len(recs)} assemblies)</summary>'
             f'<p class="comp-note">{html.escape(note)}</p>'
             f'<div class="scroll-table"><table class="sortable-table"><thead>{head}</thead>'
             f'<tbody>{"".join(trs)}</tbody></table></div>{_view_provenance("mla-share")}</details>')
@@ -5030,9 +5034,12 @@ def _card_timeseries(mid, label, unit, src, csv_href, cvid):
     # mla-share), a "By state" table just re-lists the same bars - skip it. Add it
     # only when the face is a national trend line and the states are additive.
     details = _state_details(mid, unit) if len(rows) >= 2 else ""
-    if mid == "ls-share":
-        # The decarded mla-share metric rides as a "State assemblies" tab: the
-        # same affidavit-classified sourcing, one level of government down.
+    if mid == "mla-share":
+        # The per-assembly TABLE (election year + seat fraction + sortable
+        # share bars) rides as a tab beside the bar-chart face, which carries
+        # shares only. Commit FJ reverted the FE fold into ls-share (user
+        # call): the Lok Sabha and state-assembly gaps are distinct stories,
+        # so each keeps its own card.
         details = _folded_view("assemblies")[0] + details
     return _card_shell(mid, label, headline, CAPTION.get(mid, ""), latest["year"] if latest else "",
                        "", chart_html, comps, src, csv_href, details), js

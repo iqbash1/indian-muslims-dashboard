@@ -996,11 +996,9 @@ metrics:
       9% in 1980 and has sat around 4-5% since 2014: 2009=28/543 (5.2%),
       2014=22/543 (4.1%), 2019=27/543 (5.0%), 2024=24/543 (4.4%). Compare
       against the Muslim population share of ~14.2%, a chronic 9-10pp
-      underrepresentation. The "State assemblies" tab folds in the companion
-      metric (the decarded mla-share, the same affidavit-classified sourcing
-      one level of government down): about 6% of seats across the 31 covered
-      state and UT assemblies at their most recent elections (2020-2026), from
-      Jammu & Kashmir's 60% high to nine assemblies with no Muslim MLA at all.
+      underrepresentation. The state-assembly layer of the same
+      affidavit-classified sourcing is the separate "Muslim share of state
+      assemblies" card (about 6% of seats across the 31 covered assemblies).
     comparison_baselines: []
     phase: 2
     status: defined
@@ -1043,7 +1041,10 @@ metrics:
     status: defined
     display:
       scorecard:
-        include: false   # decarded (Commit FE): folded into ls-share's "State assemblies" tab (same affidavit-classified sourcing, one level of government down)
+        # Re-carded in Commit FJ (user call, reverting the FE fold into
+        # ls-share): the Lok Sabha and state-assembly gaps are distinct
+        # stories, each deserving its own card. The per-assembly table
+        # (election year + seat fraction) stays as this card's own tab.
         label: "State MLA Muslim share"
         reference: null
         unit_format: percent

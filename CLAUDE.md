@@ -67,7 +67,7 @@ not ad-hoc scripts: metric metadata in `manifest/metrics.yaml`, sources in
   JSON-LD); the per-view `docs/m/<id>/<view>/` are thin redirect stubs (OG meta +
   a relative `/#<id>/<view>` redirect). Both regenerate from canonical, so they
   change on most rebuilds — partial-looking diffs there are expected.
-- 20 carded metrics. `pop-share` absorbed the old `district-concentration-top100`
+- 21 carded metrics. `pop-share` absorbed the old `district-concentration-top100`
   card (Commit DV): it is now pop-share's "By district" tab (curve + top-100
   table), reading the still-present `district-concentration-top100.csv`. Likewise
   `muslim-higher-ed-enrolment` (student counts) is decarded and folded into
@@ -82,11 +82,13 @@ not ad-hoc scripts: metric metadata in `manifest/metrics.yaml`, sources in
   `salaried-share` ("What it pays"), `institutional-credit-share` →
   `household-net-worth` ("Borrowing sources"), `household-electricity` →
   `pucca-house` ("Electricity"), `undertrial-rate-per-100k` →
-  `prison-rate-per-100k` ("Undertrials"), `mla-share` → `ls-share` ("State
-  assemblies"). Decarded ids keep their canonical CSVs (the tabs read them;
-  machinery: `FOLDED_VIEW_METRIC` + `_folded_view` in build.py, wired into
-  `_og_view_data` + `_landing_breakdowns`); old `/m/<id>/` URLs 301 via
-  `docs/_redirects`.
+  `prison-rate-per-100k` ("Undertrials"). Decarded ids keep their canonical
+  CSVs (the tabs read them; machinery: `FOLDED_VIEW_METRIC` + `_folded_view`
+  in build.py, wired into `_og_view_data` + `_landing_breakdowns`); old
+  `/m/<id>/` URLs 301 via `docs/_redirects`. The sixth FE fold (`mla-share` →
+  `ls-share`) was REVERTED in Commit FJ at the user's call: Lok Sabha and
+  state assemblies stay separate cards (the two gaps are distinct stories);
+  the per-assembly table is mla-share's own "By assembly" tab.
 - The employment cards are 7-round PLFS trends (2017-18 to 2023-24) from NADA
   unit-level microdata (Commit EW; recipe in docs/runbooks/plfs-microdata.md +
   nada/plfs-layout-map.md); `unemployment-rate-15plus` (Commit EX) and
