@@ -1,0 +1,87 @@
+{
+  "idno": "IND-NSSO-EUMS-2007-v1",
+  "base": "https://microdata.gov.in/NADA/index.php/api",
+  "pulled_at": "2026-06-11T05:15:07.300358+00:00",
+  "files": [
+    {
+      "name": "Chapter-1_NSS64R.pdf",
+      "fileno": "Q2hhcHRlci0xX05TUzY0Ui5wZGY=",
+      "role": "doc",
+      "bytes": 403674,
+      "sha256": "4e346b3faf7645e30e0fce413daeec6d30247b4f698f2641556c1ab200d47a56",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-EUMS-2007-v1/Q2hhcHRlci0xX05TUzY0Ui5wZGY="
+    },
+    {
+      "name": "Chapter-2_NSS64R_Sch0dot0.pdf",
+      "fileno": "Q2hhcHRlci0yX05TUzY0Ul9TY2gwZG90MC5wZGY=",
+      "role": "doc",
+      "bytes": 572635,
+      "sha256": "c165950fb2107da3f4ac976e3c007edf1f2361eb1aff824336fd0e6157a402e9",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-EUMS-2007-v1/Q2hhcHRlci0yX05TUzY0Ul9TY2gwZG90MC5wZGY="
+    },
+    {
+      "name": "Chapter-3-NSS64R-Sch10dot2.pdf",
+      "fileno": "Q2hhcHRlci0zLU5TUzY0Ui1TY2gxMGRvdDIucGRm",
+      "role": "doc",
+      "bytes": 266301,
+      "sha256": "de1ea16abd4d561847acacb32315e6a427a9f2e459cf63c8c1710a0b552c0323",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-EUMS-2007-v1/Q2hhcHRlci0zLU5TUzY0Ui1TY2gxMGRvdDIucGRm"
+    },
+    {
+      "name": "Emp_Unemp_2007_2008_CSV.zip",
+      "fileno": "RW1wX1VuZW1wXzIwMDdfMjAwOF9DU1Yuemlw",
+      "role": "data",
+      "bytes": 49384022,
+      "sha256": "b2f94588fcaf237a4da7798f6482b6ce4a48b30e5d8c274b2dfda45d8e9bbd4f",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-EUMS-2007-v1/RW1wX1VuZW1wXzIwMDdfMjAwOF9DU1Yuemlw"
+    },
+    {
+      "name": "Estimation_Procedure_NSS64R.pdf",
+      "fileno": "RXN0aW1hdGlvbl9Qcm9jZWR1cmVfTlNTNjRSLnBkZg==",
+      "role": "doc",
+      "bytes": 4229350,
+      "sha256": "3b84f53ed737d2eb5cae5fae6c59dd0f3ed328337668ef157ebc444a2b1c154d",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-EUMS-2007-v1/RXN0aW1hdGlvbl9Qcm9jZWR1cmVfTlNTNjRSLnBkZg=="
+    },
+    {
+      "name": "FOD_sub_regions_Appendix_1_64.pdf",
+      "fileno": "Rk9EX3N1Yl9yZWdpb25zX0FwcGVuZGl4XzFfNjQucGRm",
+      "role": "doc",
+      "bytes": 90520,
+      "sha256": "53d7562da9b83ab61cfe2e59229ce1396150fd625d8942695c21611914bef85e",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-EUMS-2007-v1/Rk9EX3N1Yl9yZWdpb25zX0FwcGVuZGl4XzFfNjQucGRm"
+    },
+    {
+      "name": "IHSN_Study_Report_NSS64R_Schedule_10dot2.pdf",
+      "fileno": "SUhTTl9TdHVkeV9SZXBvcnRfTlNTNjRSX1NjaGVkdWxlXzEwZG90Mi5wZGY=",
+      "role": "doc",
+      "bytes": 685181,
+      "sha256": "9abd7dbceefb4c05ede1f20f79faeb6f8b1bce280a0b0fb696287dfde3019e18",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-EUMS-2007-v1/SUhTTl9TdHVkeV9SZXBvcnRfTlNTNjRSX1NjaGVkdWxlXzEwZG90Mi5wZGY="
+    },
+    {
+      "name": "NSS64-Schedule-10dot2.pdf",
+      "fileno": "TlNTNjQtU2NoZWR1bGUtMTBkb3QyLnBkZg==",
+      "role": "doc",
+      "bytes": 145569,
+      "sha256": "d062de2b919b27564e1ba6551f21bde1a1386881ca41b4932eaefcf1cebecefe",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-EUMS-2007-v1/TlNTNjQtU2NoZWR1bGUtMTBkb3QyLnBkZg=="
+    },
+    {
+      "name": "NSS_Region_Appendix_2_64.pdf",
+      "fileno": "TlNTX1JlZ2lvbl9BcHBlbmRpeF8yXzY0LnBkZg==",
+      "role": "doc",
+      "bytes": 56007,
+      "sha256": "e2760aff871225405308504da9614fd1eed3f25acf7fb0dc0d685c581d10079b",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-EUMS-2007-v1/TlNTX1JlZ2lvbl9BcHBlbmRpeF8yXzY0LnBkZg=="
+    },
+    {
+      "name": "State-Codes-64R.pdf",
+      "fileno": "U3RhdGUtQ29kZXMtNjRSLnBkZg==",
+      "role": "doc",
+      "bytes": 1376697,
+      "sha256": "52f0d3fbbf1b1ed095a8e668f0b697013fd3371237000d0576ed2087127158b9",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-EUMS-2007-v1/U3RhdGUtQ29kZXMtNjRSLnBkZg=="
+    }
+  ]
+}

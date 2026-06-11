@@ -1,0 +1,103 @@
+{
+  "idno": "IND-NSSO-SCES-2014-v1.0",
+  "base": "https://microdata.gov.in/NADA/index.php/api",
+  "pulled_at": "2026-06-11T06:22:18.996600+00:00",
+  "files": [
+    {
+      "name": "Appendix_1_NSS71_final.pdf",
+      "fileno": "QXBwZW5kaXhfMV9OU1M3MV9maW5hbC5wZGY=",
+      "role": "doc",
+      "bytes": 30183,
+      "sha256": "0be055fa778393172c4845334fed268064243280cd1f6d014b7508003e79a97a",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-SCES-2014-v1.0/QXBwZW5kaXhfMV9OU1M3MV9maW5hbC5wZGY="
+    },
+    {
+      "name": "Appendix_2_NSS71_final.pdf",
+      "fileno": "QXBwZW5kaXhfMl9OU1M3MV9maW5hbC5wZGY=",
+      "role": "doc",
+      "bytes": 1318177,
+      "sha256": "01035fd0537239ab77591a24635d8b2a702c5d96a33a0af198b411f485900185",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-SCES-2014-v1.0/QXBwZW5kaXhfMl9OU1M3MV9maW5hbC5wZGY="
+    },
+    {
+      "name": "Appendix_4_NSS71_final.pdf",
+      "fileno": "QXBwZW5kaXhfNF9OU1M3MV9maW5hbC5wZGY=",
+      "role": "doc",
+      "bytes": 300612,
+      "sha256": "0936ab1a7f1808e462d0dc41ddf9706e90b526ac63a167a6cfe99c97c8f3ac65",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-SCES-2014-v1.0/QXBwZW5kaXhfNF9OU1M3MV9maW5hbC5wZGY="
+    },
+    {
+      "name": "CSV_Education_71_2014.zip",
+      "fileno": "Q1NWX0VkdWNhdGlvbl83MV8yMDE0LnppcA==",
+      "role": "data",
+      "bytes": 10866529,
+      "sha256": "59aa80327136dff926a4ac710d3bf4b6c99b4a541eaa571abc23c9f3d6b87d67",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-SCES-2014-v1.0/Q1NWX0VkdWNhdGlvbl83MV8yMDE0LnppcA=="
+    },
+    {
+      "name": "IHSN_Study_Report_NSS_71_Sch25dot2.pdf",
+      "fileno": "SUhTTl9TdHVkeV9SZXBvcnRfTlNTXzcxX1NjaDI1ZG90Mi5wZGY=",
+      "role": "doc",
+      "bytes": 1483438,
+      "sha256": "4e3dfb0bfa27aa7e12f941fd5b73def6b449149c81c61f0fa886733e27f13e96",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-SCES-2014-v1.0/SUhTTl9TdHVkeV9SZXBvcnRfTlNTXzcxX1NjaDI1ZG90Mi5wZGY="
+    },
+    {
+      "name": "Instruction_NSS71chap1.pdf",
+      "fileno": "SW5zdHJ1Y3Rpb25fTlNTNzFjaGFwMS5wZGY=",
+      "role": "doc",
+      "bytes": 187805,
+      "sha256": "3678b85431e77c0ad1c4b9ff29ad11780f5cb6b4d82de45456349a260bae5c6e",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-SCES-2014-v1.0/SW5zdHJ1Y3Rpb25fTlNTNzFjaGFwMS5wZGY="
+    },
+    {
+      "name": "Instruction_NSS71chap2.pdf",
+      "fileno": "SW5zdHJ1Y3Rpb25fTlNTNzFjaGFwMi5wZGY=",
+      "role": "doc",
+      "bytes": 386549,
+      "sha256": "8e04f4040baf7d61350ddc11f77fe19d40bd4066609f1308ec0d35fe760d7af2",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-SCES-2014-v1.0/SW5zdHJ1Y3Rpb25fTlNTNzFjaGFwMi5wZGY="
+    },
+    {
+      "name": "Instruction_NSS71chap4.pdf",
+      "fileno": "SW5zdHJ1Y3Rpb25fTlNTNzFjaGFwNC5wZGY=",
+      "role": "doc",
+      "bytes": 363249,
+      "sha256": "413dd0011dddace9329ef4829f96ed2a7a4262e1da6519bae3ec6dbfc83deb80",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-SCES-2014-v1.0/SW5zdHJ1Y3Rpb25fTlNTNzFjaGFwNC5wZGY="
+    },
+    {
+      "name": "nic_amendment_2008.pdf",
+      "fileno": "bmljX2FtZW5kbWVudF8yMDA4LnBkZg==",
+      "role": "doc",
+      "bytes": 86821,
+      "sha256": "447ec5d0234e7ea7f2f62087b02b5d323b303f4e927358b7ff77b450966ed30e",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-SCES-2014-v1.0/bmljX2FtZW5kbWVudF8yMDA4LnBkZg=="
+    },
+    {
+      "name": "NSS71_Districtcode.pdf",
+      "fileno": "TlNTNzFfRGlzdHJpY3Rjb2RlLnBkZg==",
+      "role": "doc",
+      "bytes": 197909,
+      "sha256": "eb3189bce8e07e22331cc228caaf81f02fc43362c87e396f4212de6f6509bf93",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-SCES-2014-v1.0/TlNTNzFfRGlzdHJpY3Rjb2RlLnBkZg=="
+    },
+    {
+      "name": "NSS71_Estimation_procedure.pdf",
+      "fileno": "TlNTNzFfRXN0aW1hdGlvbl9wcm9jZWR1cmUucGRm",
+      "role": "doc",
+      "bytes": 105844,
+      "sha256": "df5d5e3f61b79b587b707ebe61b7c7ad07d914d9ff027e4ce432d945df9b049d",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-SCES-2014-v1.0/TlNTNzFfRXN0aW1hdGlvbl9wcm9jZWR1cmUucGRm"
+    },
+    {
+      "name": "NSS71_Statecode.pdf",
+      "fileno": "TlNTNzFfU3RhdGVjb2RlLnBkZg==",
+      "role": "doc",
+      "bytes": 16391,
+      "sha256": "6db03ca18f9e19288317fd8b26279f620a4cd57695b741c63d366ab8b01d0650",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-SCES-2014-v1.0/TlNTNzFfU3RhdGVjb2RlLnBkZg=="
+    }
+  ]
+}

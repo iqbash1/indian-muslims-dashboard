@@ -1,0 +1,79 @@
+{
+  "idno": "IND-NSSO-HCES-2007-v1",
+  "base": "https://microdata.gov.in/NADA/index.php/api",
+  "pulled_at": "2026-06-11T04:24:38.134170+00:00",
+  "files": [
+    {
+      "name": "Chapter-1_64.pdf",
+      "fileno": "Q2hhcHRlci0xXzY0LnBkZg==",
+      "role": "doc",
+      "bytes": 158598,
+      "sha256": "167ab91aeb45d1f02c2673fef884a8ae59faf36ee15a96968a2eee6f3a65825d",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-HCES-2007-v1/Q2hhcHRlci0xXzY0LnBkZg=="
+    },
+    {
+      "name": "Chapter-5_64_1.0.pdf",
+      "fileno": "Q2hhcHRlci01XzY0XzEuMC5wZGY=",
+      "role": "doc",
+      "bytes": 252903,
+      "sha256": "08e8dffa58809e54b9cbf59de4a4a3747bda84fc3205c11aa4b5a81a49c551d6",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-HCES-2007-v1/Q2hhcHRlci01XzY0XzEuMC5wZGY="
+    },
+    {
+      "name": "Distribution of Sample Village and blocks.pdf",
+      "fileno": "RGlzdHJpYnV0aW9uIG9mIFNhbXBsZSBWaWxsYWdlIGFuZCBibG9ja3MucGRm",
+      "role": "doc",
+      "bytes": 1082308,
+      "sha256": "ecb9e45eeb25ed5abcf4ec5018a1645fdde06e7394354e4d74fb1c531cc51cf2",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-HCES-2007-v1/RGlzdHJpYnV0aW9uIG9mIFNhbXBsZSBWaWxsYWdlIGFuZCBibG9ja3MucGRm"
+    },
+    {
+      "name": "Estimation Procedure_64.pdf",
+      "fileno": "RXN0aW1hdGlvbiBQcm9jZWR1cmVfNjQucGRm",
+      "role": "doc",
+      "bytes": 1234113,
+      "sha256": "51b40a5d1ee9d7ef3301ddf1dca065f52c42f03bed9fc47b7bd4ef5c4ba385f8",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-HCES-2007-v1/RXN0aW1hdGlvbiBQcm9jZWR1cmVfNjQucGRm"
+    },
+    {
+      "name": "IND-NSSO-HCES-2007-v1.xml",
+      "fileno": "SU5ELU5TU08tSENFUy0yMDA3LXYxLnhtbA==",
+      "role": "doc",
+      "bytes": 1640056,
+      "sha256": "78ec43746161844fe53e1de2ce39243ddd6aa0ed138780aba81090007d63c88d",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-HCES-2007-v1/SU5ELU5TU08tSENFUy0yMDA3LXYxLnhtbA=="
+    },
+    {
+      "name": "Nss64_1.0_new format.rar",
+      "fileno": "TnNzNjRfMS4wX25ldyBmb3JtYXQucmFy",
+      "role": "data",
+      "bytes": 30191131,
+      "sha256": "97bde40d50e64a8562c54b385b1003bda42f62d2ddcd2458b5b3506d3178c7cb",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-HCES-2007-v1/TnNzNjRfMS4wX25ldyBmb3JtYXQucmFy"
+    },
+    {
+      "name": "rdf-15.rdf",
+      "fileno": "cmRmLTE1LnJkZg==",
+      "role": "doc",
+      "bytes": 2691,
+      "sha256": "7803aaf5093c4650e80bb4f03ce4a42a92433e0306247b8f16fea353641fd9dd",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-HCES-2007-v1/cmRmLTE1LnJkZg=="
+    },
+    {
+      "name": "Schedule_64_1.0.pdf",
+      "fileno": "U2NoZWR1bGVfNjRfMS4wLnBkZg==",
+      "role": "doc",
+      "bytes": 164191,
+      "sha256": "6700ca3a440933ce34098cbc5965c6d96be5bed793048d9d9dfa3ffcf4026efb",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-HCES-2007-v1/U2NoZWR1bGVfNjRfMS4wLnBkZg=="
+    },
+    {
+      "name": "Sub-Stratum Size and Allocation for Sector.pdf",
+      "fileno": "U3ViLVN0cmF0dW0gU2l6ZSBhbmQgQWxsb2NhdGlvbiBmb3IgU2VjdG9yLnBkZg==",
+      "role": "doc",
+      "bytes": 1056902,
+      "sha256": "b570ea9663ed15fa4f318bca1d34e73ef7fa2a009d2f9700f7553ab9862309c3",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-HCES-2007-v1/U3ViLVN0cmF0dW0gU2l6ZSBhbmQgQWxsb2NhdGlvbiBmb3IgU2VjdG9yLnBkZg=="
+    }
+  ]
+}

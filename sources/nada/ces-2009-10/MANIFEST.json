@@ -1,0 +1,79 @@
+{
+  "idno": "DDI-IND-NSSO-66-SCHEDULE-1.0T2",
+  "base": "https://microdata.gov.in/NADA/index.php/api",
+  "pulled_at": "2026-06-11T04:37:50.341189+00:00",
+  "files": [
+    {
+      "name": "chapter3_66.pdf",
+      "fileno": "Y2hhcHRlcjNfNjYucGRm",
+      "role": "doc",
+      "bytes": 749964,
+      "sha256": "cb2674cd7e2550cc8609a5fe3c837e4cc83865151d56bcd33aad80da378c7be8",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-NSSO-66-SCHEDULE-1.0T2/Y2hhcHRlcjNfNjYucGRm"
+    },
+    {
+      "name": "concept and definition66.pdf",
+      "fileno": "Y29uY2VwdCBhbmQgZGVmaW5pdGlvbjY2LnBkZg==",
+      "role": "doc",
+      "bytes": 47069,
+      "sha256": "d488c0d0604f3249360cb71f8b33654614485c428adf5af74032b1182f6f2100",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-NSSO-66-SCHEDULE-1.0T2/Y29uY2VwdCBhbmQgZGVmaW5pdGlvbjY2LnBkZg=="
+    },
+    {
+      "name": "DDI-IND-NSSO-66-SCHEDULE-1.0T2.xml",
+      "fileno": "RERJLUlORC1OU1NPLTY2LVNDSEVEVUxFLTEuMFQyLnhtbA==",
+      "role": "doc",
+      "bytes": 2999843,
+      "sha256": "5066c29a2d3ff241a5d5e70c6b655fbd7815166d75aaa93b859c59c88a53cfdf",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-NSSO-66-SCHEDULE-1.0T2/RERJLUlORC1OU1NPLTY2LVNDSEVEVUxFLTEuMFQyLnhtbA=="
+    },
+    {
+      "name": "Distribution of Sample village and block66.pdf",
+      "fileno": "RGlzdHJpYnV0aW9uIG9mIFNhbXBsZSB2aWxsYWdlIGFuZCBibG9jazY2LnBkZg==",
+      "role": "doc",
+      "bytes": 149880,
+      "sha256": "b15c767cdf683a3b17dff43db36745dc5c109ca7876a2879f8e749b4b3e06ace",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-NSSO-66-SCHEDULE-1.0T2/RGlzdHJpYnV0aW9uIG9mIFNhbXBsZSB2aWxsYWdlIGFuZCBibG9jazY2LnBkZg=="
+    },
+    {
+      "name": "Estimation procedure66.pdf",
+      "fileno": "RXN0aW1hdGlvbiBwcm9jZWR1cmU2Ni5wZGY=",
+      "role": "doc",
+      "bytes": 859270,
+      "sha256": "18919f22be3d662a9de4d442205d6451555d167125de7fcf1e973e917935c801",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-NSSO-66-SCHEDULE-1.0T2/RXN0aW1hdGlvbiBwcm9jZWR1cmU2Ni5wZGY="
+    },
+    {
+      "name": "Nss66_1.0-type2_new format.rar",
+      "fileno": "TnNzNjZfMS4wLXR5cGUyX25ldyBmb3JtYXQucmFy",
+      "role": "data",
+      "bytes": 56944207,
+      "sha256": "47839089d2b26be59ac3c3dc643e09fc81147528c102ff44684d9158446a3c63",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-NSSO-66-SCHEDULE-1.0T2/TnNzNjZfMS4wLXR5cGUyX25ldyBmb3JtYXQucmFy"
+    },
+    {
+      "name": "rdf-20.rdf",
+      "fileno": "cmRmLTIwLnJkZg==",
+      "role": "doc",
+      "bytes": 4143,
+      "sha256": "a213c3ca95fc43f7d6e55c75a42739349c84b3e99b0ab5b1ed11958f4aa266ec",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-NSSO-66-SCHEDULE-1.0T2/cmRmLTIwLnJkZg=="
+    },
+    {
+      "name": "Schedule 1.0 66 Type 2.pdf",
+      "fileno": "U2NoZWR1bGUgMS4wIDY2IFR5cGUgMi5wZGY=",
+      "role": "doc",
+      "bytes": 1304414,
+      "sha256": "136ea5d87df2c38cf36d96ec6ee202bb218627e45dc6a224153b3cbcdbb6fe1e",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-NSSO-66-SCHEDULE-1.0T2/U2NoZWR1bGUgMS4wIDY2IFR5cGUgMi5wZGY="
+    },
+    {
+      "name": "Sub-Stratum Size and Allocation for Sector66.pdf",
+      "fileno": "U3ViLVN0cmF0dW0gU2l6ZSBhbmQgQWxsb2NhdGlvbiBmb3IgU2VjdG9yNjYucGRm",
+      "role": "doc",
+      "bytes": 751122,
+      "sha256": "755c15b5f9b225e34d26de8bc2a02630729fccbf8cf0e4b3986909c522149e29",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-NSSO-66-SCHEDULE-1.0T2/U3ViLVN0cmF0dW0gU2l6ZSBhbmQgQWxsb2NhdGlvbiBmb3IgU2VjdG9yNjYucGRm"
+    }
+  ]
+}

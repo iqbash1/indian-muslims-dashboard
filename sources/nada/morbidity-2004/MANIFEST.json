@@ -1,0 +1,71 @@
+{
+  "idno": "IND-NSSO-SMHC-2004-v1.0",
+  "base": "https://microdata.gov.in/NADA/index.php/api",
+  "pulled_at": "2026-06-11T06:21:46.333083+00:00",
+  "files": [
+    {
+      "name": "Chapter-1_60.pdf",
+      "fileno": "Q2hhcHRlci0xXzYwLnBkZg==",
+      "role": "doc",
+      "bytes": 326761,
+      "sha256": "16bab2872faf88f7247898225058c4d559477b16f778d84176231c1d1349795a",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-SMHC-2004-v1.0/Q2hhcHRlci0xXzYwLnBkZg=="
+    },
+    {
+      "name": "Chapter-2_60_25.0.pdf",
+      "fileno": "Q2hhcHRlci0yXzYwXzI1LjAucGRm",
+      "role": "doc",
+      "bytes": 379732,
+      "sha256": "90d8196e22c0cfcbf9ae7a8bf49e23b3443268445f76483bd7aad4201e567ba3",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-SMHC-2004-v1.0/Q2hhcHRlci0yXzYwXzI1LjAucGRm"
+    },
+    {
+      "name": "Chapter-5_60_25.0.pdf",
+      "fileno": "Q2hhcHRlci01XzYwXzI1LjAucGRm",
+      "role": "doc",
+      "bytes": 401597,
+      "sha256": "dfac209bcd52a4eb1a363cb649527b2c49da8f07baefdfd0937245ad6213adc1",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-SMHC-2004-v1.0/Q2hhcHRlci01XzYwXzI1LjAucGRm"
+    },
+    {
+      "name": "Data_CSV.zip",
+      "fileno": "RGF0YV9DU1Yuemlw",
+      "role": "data",
+      "bytes": 18814173,
+      "sha256": "0ea82b28d1293acce74736dd892cd8972d2cb369b4d1079166076e6e3596c1cc",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-SMHC-2004-v1.0/RGF0YV9DU1Yuemlw"
+    },
+    {
+      "name": "FOD sub-regions.pdf",
+      "fileno": "Rk9EIHN1Yi1yZWdpb25zLnBkZg==",
+      "role": "doc",
+      "bytes": 45894,
+      "sha256": "58d9c73ca0078bb6307adbc58624c8a6b6aceaeb2fb0a28d13d2e824868c743a",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-SMHC-2004-v1.0/Rk9EIHN1Yi1yZWdpb25zLnBkZg=="
+    },
+    {
+      "name": "IHSN Study Report-NSS60R-Schedule 25.0-Morbidity-Healthcare.pdf",
+      "fileno": "SUhTTiBTdHVkeSBSZXBvcnQtTlNTNjBSLVNjaGVkdWxlIDI1LjAtTW9yYmlkaXR5LUhlYWx0aGNhcmUucGRm",
+      "role": "doc",
+      "bytes": 1052613,
+      "sha256": "08704b682a7b785d611cbd73757662ac29ef6e0f37eaa010999d6775b6a95572",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-SMHC-2004-v1.0/SUhTTiBTdHVkeSBSZXBvcnQtTlNTNjBSLVNjaGVkdWxlIDI1LjAtTW9yYmlkaXR5LUhlYWx0aGNhcmUucGRm"
+    },
+    {
+      "name": "Schedule_60_25.0.pdf",
+      "fileno": "U2NoZWR1bGVfNjBfMjUuMC5wZGY=",
+      "role": "doc",
+      "bytes": 322055,
+      "sha256": "34e0ccc8c57800c2181a1b1d7943831838f0f87beaca7f9bca5b16c58d98c202",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-SMHC-2004-v1.0/U2NoZWR1bGVfNjBfMjUuMC5wZGY="
+    },
+    {
+      "name": "State codes from 58th Round onwards.pdf",
+      "fileno": "U3RhdGUgY29kZXMgZnJvbSA1OHRoIFJvdW5kIG9ud2FyZHMucGRm",
+      "role": "doc",
+      "bytes": 4324,
+      "sha256": "6399bb25717467a0dc66d60b86fcc08f8e5fa1a85cd94a96e9cbf212441aaf57",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-SMHC-2004-v1.0/U3RhdGUgY29kZXMgZnJvbSA1OHRoIFJvdW5kIG9ud2FyZHMucGRm"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "source_id": "nada-morbidity-2004",
+  "target_id": "morbidity-2004-microdata",
+  "idno": "IND-NSSO-SMHC-2004-v1.0",
+  "filename": "Data_CSV.zip",
+  "url": "https://microdata.gov.in/NADA/index.php/catalog/107",
+  "download_url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-SMHC-2004-v1.0/RGF0YV9DU1Yuemlw",
+  "pulled_at": "2026-06-11",
+  "content_length": 18814173,
+  "sha256": "0ea82b28d1293acce74736dd892cd8972d2cb369b4d1079166076e6e3596c1cc",
+  "pull_method": "MoSPI NADA REST API (personal X-API-KEY header)",
+  "by_religion_verdict": "SAFE for OOP health spending x religion; morbidity rate = avoid",
+  "archival": "provenance-only: the unit-level file is NOT committed (kept local at ~/Desktop/nada-work/morbidity-2004/). Re-fetch with the recipe in PROVENANCE.md and verify against this sha256. The schema/method docs in this directory ARE committed."
+}

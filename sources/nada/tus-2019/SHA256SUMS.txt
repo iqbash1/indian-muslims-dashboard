@@ -1,0 +1,6 @@
+8a19b7af9e86a2945d90b9daa31ea2bc0a6a989dfd951ea03aec868db899fe05  Data_Layout_TUS106.xls  (53760 bytes, doc)
+b7d9f47fc235a7d1d06912b17fa931bb67dc6c93731b45dcd690c10a29e2b7d0  DDI-IND-CSO-TUS-2019-19.xml  (487078 bytes, doc)
+ab9cf338a2ffd6a4c064b82212599dddd677159450b0eb9f648d280b35404644  Estimation procedure_TUS.pdf  (497371 bytes, doc)
+27101fbd46345c3f05134ebeeff63aec520d9d4b5764684dd7ab5be7321d6258  README_TUS106.pdf  (640144 bytes, doc)
+904e135decd9c732f1f75a9a17f7c6999c2699ac5d3621b0e3bc4ea768770d17  State_District_List_TUS.pdf  (233994 bytes, doc)
+e00ee09d15d7d38efe913484c141ba5f558999cfe4eb00950cfa6a5819a6783e  Unit level data of TUS 2019.zip  (23259826 bytes, data)

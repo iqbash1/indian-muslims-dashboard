@@ -1,0 +1,14 @@
+{
+  "source_id": "nada-ces-2011-12-t1",
+  "target_id": "ces-2011-12-t1-microdata",
+  "idno": "DDI-IND-MOSPI-NSSO-68Rnd-Sch1.0-July2011-June2012",
+  "filename": "Nss68_1.0_Type1_new format.rar",
+  "url": "https://microdata.gov.in/NADA/index.php/catalog/1",
+  "download_url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-68Rnd-Sch1.0-July2011-June2012/TnNzNjhfMS4wX1R5cGUxX25ldyBmb3JtYXQucmFy",
+  "pulled_at": "2026-06-11",
+  "content_length": 91308724,
+  "sha256": "8187fe10966cd579394bf40184a109234f55f3d2d7ecfd5261c66bb71272ef34",
+  "pull_method": "MoSPI NADA REST API (personal X-API-KEY header)",
+  "by_religion_verdict": "SAFE: MPCE x religion",
+  "archival": "provenance-only: the unit-level file is NOT committed (kept local at ~/Desktop/nada-work/ces-2011-12-t1/). Re-fetch with the recipe in PROVENANCE.md and verify against this sha256. The schema/method docs in this directory ARE committed."
+}

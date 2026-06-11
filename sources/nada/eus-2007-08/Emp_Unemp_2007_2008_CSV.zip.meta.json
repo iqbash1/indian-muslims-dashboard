@@ -1,0 +1,14 @@
+{
+  "source_id": "nada-eus-2007-08",
+  "target_id": "eus-2007-08-microdata",
+  "idno": "IND-NSSO-EUMS-2007-v1",
+  "filename": "Emp_Unemp_2007_2008_CSV.zip",
+  "url": "https://microdata.gov.in/NADA/index.php/catalog/117",
+  "download_url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-EUMS-2007-v1/RW1wX1VuZW1wXzIwMDdfMjAwOF9DU1Yuemlw",
+  "pulled_at": "2026-06-11",
+  "content_length": 49384022,
+  "sha256": "b2f94588fcaf237a4da7798f6482b6ce4a48b30e5d8c274b2dfda45d8e9bbd4f",
+  "pull_method": "MoSPI NADA REST API (personal X-API-KEY header)",
+  "by_religion_verdict": "SAFE: employment x religion",
+  "archival": "provenance-only: the unit-level file is NOT committed (kept local at ~/Desktop/nada-work/eus-2007-08/). Re-fetch with the recipe in PROVENANCE.md and verify against this sha256. The schema/method docs in this directory ARE committed."
+}

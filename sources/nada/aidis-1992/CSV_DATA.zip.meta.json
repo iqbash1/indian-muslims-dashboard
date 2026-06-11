@@ -1,0 +1,14 @@
+{
+  "source_id": "nada-aidis-1992",
+  "target_id": "aidis-1992-microdata",
+  "idno": "IND-NSSO-DIS-1992-v1",
+  "filename": "CSV_DATA.zip",
+  "url": "https://microdata.gov.in/NADA/index.php/catalog/70",
+  "download_url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-DIS-1992-v1/Q1NWX0RBVEEuemlw",
+  "pulled_at": "2026-06-11",
+  "content_length": 22271182,
+  "sha256": "f5587e9c8429c71097d1227a880a45f6a3a35d2afd611de37f67e812b86baa4a",
+  "pull_method": "MoSPI NADA REST API (personal X-API-KEY header)",
+  "by_religion_verdict": "SAFE (verify rider): assets/liabilities x religion",
+  "archival": "provenance-only: the unit-level file is NOT committed (kept local at ~/Desktop/nada-work/aidis-1992/). Re-fetch with the recipe in PROVENANCE.md and verify against this sha256. The schema/method docs in this directory ARE committed."
+}

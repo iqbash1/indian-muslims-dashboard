@@ -1,0 +1,14 @@
+{
+  "source_id": "nada-ces-2009-10",
+  "target_id": "ces-2009-10-microdata",
+  "idno": "DDI-IND-NSSO-66-SCHEDULE-1.0T2",
+  "filename": "Nss66_1.0-type2_new format.rar",
+  "url": "https://microdata.gov.in/NADA/index.php/catalog/123",
+  "download_url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-NSSO-66-SCHEDULE-1.0T2/TnNzNjZfMS4wLXR5cGUyX25ldyBmb3JtYXQucmFy",
+  "pulled_at": "2026-06-11",
+  "content_length": 56944207,
+  "sha256": "47839089d2b26be59ac3c3dc643e09fc81147528c102ff44684d9158446a3c63",
+  "pull_method": "MoSPI NADA REST API (personal X-API-KEY header)",
+  "by_religion_verdict": "SAFE: MPCE x religion",
+  "archival": "provenance-only: the unit-level file is NOT committed (kept local at ~/Desktop/nada-work/ces-2009-10/). Re-fetch with the recipe in PROVENANCE.md and verify against this sha256. The schema/method docs in this directory ARE committed."
+}

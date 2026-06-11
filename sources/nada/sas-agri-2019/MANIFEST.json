@@ -1,0 +1,63 @@
+{
+  "idno": "DDI-IND-MOSPI-NSSO-77Rnd-Sch33.1-January2019-December2019",
+  "base": "https://microdata.gov.in/NADA/index.php/api",
+  "pulled_at": "2026-06-11T06:26:50.747764+00:00",
+  "files": [
+    {
+      "name": "DDI-IND-MOSPI-NSSO-77Rnd-Sch33.1-January2019-December2019.xml",
+      "fileno": "RERJLUlORC1NT1NQSS1OU1NPLTc3Um5kLVNjaDMzLjEtSmFudWFyeTIwMTktRGVjZW1iZXIyMDE5LnhtbA==",
+      "role": "doc",
+      "bytes": 8130845,
+      "sha256": "a8988c6e6fa24873cbf08e65f619b2e32d71e0f900e2c3c620d62cdda3dc7045",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-77Rnd-Sch33.1-January2019-December2019/RERJLUlORC1NT1NQSS1OU1NPLTc3Um5kLVNjaDMzLjEtSmFudWFyeTIwMTktRGVjZW1iZXIyMDE5LnhtbA=="
+    },
+    {
+      "name": "Estimation_procedure_NSS77_DPD.pdf",
+      "fileno": "RXN0aW1hdGlvbl9wcm9jZWR1cmVfTlNTNzdfRFBELnBkZg==",
+      "role": "doc",
+      "bytes": 629588,
+      "sha256": "000b5bb1f5eb637662dffc70141ab8980466c329a83c1ccd30907d797b43edb6",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-77Rnd-Sch33.1-January2019-December2019/RXN0aW1hdGlvbl9wcm9jZWR1cmVfTlNTNzdfRFBELnBkZg=="
+    },
+    {
+      "name": "nic_amendment_2008.pdf",
+      "fileno": "bmljX2FtZW5kbWVudF8yMDA4LnBkZg==",
+      "role": "doc",
+      "bytes": 86821,
+      "sha256": "447ec5d0234e7ea7f2f62087b02b5d323b303f4e927358b7ff77b450966ed30e",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-77Rnd-Sch33.1-January2019-December2019/bmljX2FtZW5kbWVudF8yMDA4LnBkZg=="
+    },
+    {
+      "name": "README77331_V1m.pdf",
+      "fileno": "UkVBRE1FNzczMzFfVjFtLnBkZg==",
+      "role": "doc",
+      "bytes": 50359,
+      "sha256": "1ce7efa2cee7614439ff5b5c7f5dc6d8bba29b455e4166f158837ced78d43b2d",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-77Rnd-Sch33.1-January2019-December2019/UkVBRE1FNzczMzFfVjFtLnBkZg=="
+    },
+    {
+      "name": "README77331_V2m.pdf",
+      "fileno": "UkVBRE1FNzczMzFfVjJtLnBkZg==",
+      "role": "doc",
+      "bytes": 51042,
+      "sha256": "60c186f898b2bf0cb75d332b3ed4772c698eb3aedfdc6508a8e8d629f153be50",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-77Rnd-Sch33.1-January2019-December2019/UkVBRE1FNzczMzFfVjJtLnBkZg=="
+    },
+    {
+      "name": "Round77sch331Data.rar",
+      "fileno": "Um91bmQ3N3NjaDMzMURhdGEucmFy",
+      "role": "data",
+      "bytes": 22359775,
+      "sha256": "cf1736241e3f3bb1ed3552b515016ca9081424ecaeedba1114e154846265923c",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-77Rnd-Sch33.1-January2019-December2019/Um91bmQ3N3NjaDMzMURhdGEucmFy"
+    },
+    {
+      "name": "State_77.xlsx",
+      "fileno": "U3RhdGVfNzcueGxzeA==",
+      "role": "doc",
+      "bytes": 10867,
+      "sha256": "61d3742811971ce36b8174c954e58ce1a97a89ee27eae428ba9d03f7def8d3b9",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-77Rnd-Sch33.1-January2019-December2019/U3RhdGVfNzcueGxzeA=="
+    }
+  ]
+}

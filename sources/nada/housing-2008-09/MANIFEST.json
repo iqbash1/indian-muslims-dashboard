@@ -1,0 +1,55 @@
+{
+  "idno": "DDI-IND-MOSPI-NSSO-65Rnd-Sch1dot2-2008-09",
+  "base": "https://microdata.gov.in/NADA/index.php/api",
+  "pulled_at": "2026-06-11T05:17:40.353104+00:00",
+  "files": [
+    {
+      "name": "NCO-2004-CodeStructure.pdf",
+      "fileno": "TkNPLTIwMDQtQ29kZVN0cnVjdHVyZS5wZGY=",
+      "role": "doc",
+      "bytes": 471737,
+      "sha256": "9d6933ff0b13f476fc3ae4a8eb19e5498c7b2247850c9d75bda329238456927a",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-65Rnd-Sch1dot2-2008-09/TkNPLTIwMDQtQ29kZVN0cnVjdHVyZS5wZGY="
+    },
+    {
+      "name": "NIC-2004-5 digit codes.pdf",
+      "fileno": "TklDLTIwMDQtNSBkaWdpdCBjb2Rlcy5wZGY=",
+      "role": "doc",
+      "bytes": 391518,
+      "sha256": "fb68d9511d257402d2d65db0ef1581ba85f0fce47ed5f4bf43bc11217b8505ca",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-65Rnd-Sch1dot2-2008-09/TklDLTIwMDQtNSBkaWdpdCBjb2Rlcy5wZGY="
+    },
+    {
+      "name": "NSS 65R Chapter-4_Houssing Condition sch 1.2.pdf",
+      "fileno": "TlNTIDY1UiBDaGFwdGVyLTRfSG91c3NpbmcgQ29uZGl0aW9uIHNjaCAxLjIucGRm",
+      "role": "doc",
+      "bytes": 144326,
+      "sha256": "32623dc44b687cbc7af57d607a3c16ea7f02e03aa132eebbf31342c2ba085d33",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-65Rnd-Sch1dot2-2008-09/TlNTIDY1UiBDaGFwdGVyLTRfSG91c3NpbmcgQ29uZGl0aW9uIHNjaCAxLjIucGRm"
+    },
+    {
+      "name": "Nss65_1.2_new format.rar",
+      "fileno": "TnNzNjVfMS4yX25ldyBmb3JtYXQucmFy",
+      "role": "data",
+      "bytes": 15614568,
+      "sha256": "c92c62d92c861c099eabf7cd5f770c26222eb4891f8f9cac759ba22ef8d88f20",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-65Rnd-Sch1dot2-2008-09/TnNzNjVfMS4yX25ldyBmb3JtYXQucmFy"
+    },
+    {
+      "name": "rdf-62.rdf",
+      "fileno": "cmRmLTYyLnJkZg==",
+      "role": "doc",
+      "bytes": 5063,
+      "sha256": "0a74e0cd0b9a556733ff3eeea86a2ca60d915c3a882c551414556e7dfe7f90ce",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-65Rnd-Sch1dot2-2008-09/cmRmLTYyLnJkZg=="
+    },
+    {
+      "name": "Schedule_NSS 65-Sch 1.2.pdf",
+      "fileno": "U2NoZWR1bGVfTlNTIDY1LVNjaCAxLjIucGRm",
+      "role": "doc",
+      "bytes": 85569,
+      "sha256": "7beba090bf4275e6556418a6f7e51876c58f907d9baf7c2b53d36affe228ff99",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-65Rnd-Sch1dot2-2008-09/U2NoZWR1bGVfTlNTIDY1LVNjaCAxLjIucGRm"
+    }
+  ]
+}

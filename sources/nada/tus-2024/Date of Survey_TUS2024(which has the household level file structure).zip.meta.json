@@ -1,0 +1,14 @@
+{
+  "source_id": "nada-tus-2024",
+  "target_id": "tus-2024-microdata",
+  "idno": "DDI-IND-NSO-TUS-2024-24",
+  "filename": "Date of Survey_TUS2024(which has the household level file structure).zip",
+  "url": "https://microdata.gov.in/NADA/index.php/catalog/236",
+  "download_url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-NSO-TUS-2024-24/RGF0ZSBvZiBTdXJ2ZXlfVFVTMjAyNCh3aGljaCBoYXMgdGhlIGhvdXNlaG9sZCBsZXZlbCBmaWxlIHN0cnVjdHVyZSkuemlw",
+  "pulled_at": "2026-06-11",
+  "content_length": 1050997,
+  "sha256": "8b9f9091a454220816073b7bf9d6072e36f51ac9b151ab3dc51a407be38acf07",
+  "pull_method": "MoSPI NADA REST API (personal X-API-KEY header)",
+  "by_religion_verdict": "SAFE: time-use minutes x religion (niche new metric)",
+  "archival": "provenance-only: the unit-level file is NOT committed (kept local at ~/Desktop/nada-work/tus-2024/). Re-fetch with the recipe in PROVENANCE.md and verify against this sha256. The schema/method docs in this directory ARE committed."
+}

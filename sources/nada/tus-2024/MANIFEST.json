@@ -1,0 +1,79 @@
+{
+  "idno": "DDI-IND-NSO-TUS-2024-24",
+  "base": "https://microdata.gov.in/NADA/index.php/api",
+  "pulled_at": "2026-06-11T06:26:17.287606+00:00",
+  "files": [
+    {
+      "name": "CODEs for Blocks of Sch 10.6 (2).xlsx",
+      "fileno": "Q09ERXMgZm9yIEJsb2NrcyBvZiBTY2ggMTAuNiAoMikueGxzeA==",
+      "role": "doc",
+      "bytes": 20076,
+      "sha256": "9399c2adb482f0e71190af0141eb7485065a1e26606a42875fd7ffaf80939de9",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-NSO-TUS-2024-24/Q09ERXMgZm9yIEJsb2NrcyBvZiBTY2ggMTAuNiAoMikueGxzeA=="
+    },
+    {
+      "name": "Data_Layout_TUS_2024 (1).xlsx",
+      "fileno": "RGF0YV9MYXlvdXRfVFVTXzIwMjQgKDEpLnhsc3g=",
+      "role": "doc",
+      "bytes": 21616,
+      "sha256": "5f18e4f62e9ca19b859f8ed8126b99404b2e6a49644c2435856766f915c79af5",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-NSO-TUS-2024-24/RGF0YV9MYXlvdXRfVFVTXzIwMjQgKDEpLnhsc3g="
+    },
+    {
+      "name": "Date of Survey_TUS2024(which has the household level file structure).zip",
+      "fileno": "RGF0ZSBvZiBTdXJ2ZXlfVFVTMjAyNCh3aGljaCBoYXMgdGhlIGhvdXNlaG9sZCBsZXZlbCBmaWxlIHN0cnVjdHVyZSkuemlw",
+      "role": "data",
+      "bytes": 1050997,
+      "sha256": "8b9f9091a454220816073b7bf9d6072e36f51ac9b151ab3dc51a407be38acf07",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-NSO-TUS-2024-24/RGF0ZSBvZiBTdXJ2ZXlfVFVTMjAyNCh3aGljaCBoYXMgdGhlIGhvdXNlaG9sZCBsZXZlbCBmaWxlIHN0cnVjdHVyZSkuemlw"
+    },
+    {
+      "name": "DDI-IND-NSO-TUS-2024-24.xml",
+      "fileno": "RERJLUlORC1OU08tVFVTLTIwMjQtMjQueG1s",
+      "role": "doc",
+      "bytes": 353937,
+      "sha256": "d097f01dc859a861c50ff41a9a247462d78640a5838970dd7a734eb1836f24eb",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-NSO-TUS-2024-24/RERJLUlORC1OU08tVFVTLTIwMjQtMjQueG1s"
+    },
+    {
+      "name": "NMDS_2.0_TUS.xlsx",
+      "fileno": "Tk1EU18yLjBfVFVTLnhsc3g=",
+      "role": "doc",
+      "bytes": 17596,
+      "sha256": "4cda2eae9d4f269b42704e826de12f9eac82f8e5d431f5be7ca97feac5b095c7",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-NSO-TUS-2024-24/Tk1EU18yLjBfVFVTLnhsc3g="
+    },
+    {
+      "name": "Note_for_data_user (1).docx",
+      "fileno": "Tm90ZV9mb3JfZGF0YV91c2VyICgxKS5kb2N4",
+      "role": "doc",
+      "bytes": 15321,
+      "sha256": "ff2c1ea35c49d40c4dedfef427cf4ef6827ef8ae8da2e8e78586e8822bacf4cf",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-NSO-TUS-2024-24/Tm90ZV9mb3JfZGF0YV91c2VyICgxKS5kb2N4"
+    },
+    {
+      "name": "README_TUS_2024 (1).docx",
+      "fileno": "UkVBRE1FX1RVU18yMDI0ICgxKS5kb2N4",
+      "role": "doc",
+      "bytes": 22972,
+      "sha256": "9632e4306dab7449f1559b99d43bfeb9cc7d523a0929fabee63488d0ee4f12dd",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-NSO-TUS-2024-24/UkVBRE1FX1RVU18yMDI0ICgxKS5kb2N4"
+    },
+    {
+      "name": "SampleDesign_EstimationProcedure_TUS 2024.pdf",
+      "fileno": "U2FtcGxlRGVzaWduX0VzdGltYXRpb25Qcm9jZWR1cmVfVFVTIDIwMjQucGRm",
+      "role": "doc",
+      "bytes": 320455,
+      "sha256": "1564f3b306df65e4552d14793b2bf28629d6a91eb131acbcd734a8af18d4efdc",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-NSO-TUS-2024-24/U2FtcGxlRGVzaWduX0VzdGltYXRpb25Qcm9jZWR1cmVfVFVTIDIwMjQucGRm"
+    },
+    {
+      "name": "TUS2024.zip",
+      "fileno": "VFVTMjAyNC56aXA=",
+      "role": "data",
+      "bytes": 41019528,
+      "sha256": "c1acef83e177eed768d00096b78af74723794f1c04b110dbd2a29f86a6c3418b",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-NSO-TUS-2024-24/VFVTMjAyNC56aXA="
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "idno": "DDI-IND-MOSPI-NSSO-69Rnd-Sch1dot2-2012",
+  "base": "https://microdata.gov.in/NADA/index.php/api",
+  "pulled_at": "2026-06-11T06:22:56.974149+00:00",
+  "files": [
+    {
+      "name": "Appendix 1 - List of FOD Sub Regions.pdf",
+      "fileno": "QXBwZW5kaXggMSAtIExpc3Qgb2YgRk9EIFN1YiBSZWdpb25zLnBkZg==",
+      "role": "doc",
+      "bytes": 221724,
+      "sha256": "63bd826fcafe419d85328db129346f4955f2d0fd4bfc743a6d0315097ef796f3",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-69Rnd-Sch1dot2-2012/QXBwZW5kaXggMSAtIExpc3Qgb2YgRk9EIFN1YiBSZWdpb25zLnBkZg=="
+    },
+    {
+      "name": "Appendix II List of NSS regions and their composition.pdf",
+      "fileno": "QXBwZW5kaXggSUkgTGlzdCBvZiBOU1MgcmVnaW9ucyBhbmQgdGhlaXIgY29tcG9zaXRpb24ucGRm",
+      "role": "doc",
+      "bytes": 172818,
+      "sha256": "c9bc6646af85362832852a0b2c603bdfa3c2670bb8b442e8c30a6582954983ad",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-69Rnd-Sch1dot2-2012/QXBwZW5kaXggSUkgTGlzdCBvZiBOU1MgcmVnaW9ucyBhbmQgdGhlaXIgY29tcG9zaXRpb24ucGRm"
+    },
+    {
+      "name": "concept design and definitions.pdf",
+      "fileno": "Y29uY2VwdCBkZXNpZ24gYW5kIGRlZmluaXRpb25zLnBkZg==",
+      "role": "doc",
+      "bytes": 391324,
+      "sha256": "32458b1e8e6a902cd0c4978971856b523859a88c6ac0cba5114a4508d5ed303f",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-69Rnd-Sch1dot2-2012/Y29uY2VwdCBkZXNpZ24gYW5kIGRlZmluaXRpb25zLnBkZg=="
+    },
+    {
+      "name": "DDI-IND-MOSPI-NSSO-69Rnd-Sch1dot2-2012.xml",
+      "fileno": "RERJLUlORC1NT1NQSS1OU1NPLTY5Um5kLVNjaDFkb3QyLTIwMTIueG1s",
+      "role": "doc",
+      "bytes": 2523751,
+      "sha256": "33c853e081839d99c1f1d8bbf8d7e45fc774186b12de29b4817bc2470829590f",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-69Rnd-Sch1dot2-2012/RERJLUlORC1NT1NQSS1OU1NPLTY5Um5kLVNjaDFkb3QyLTIwMTIueG1s"
+    },
+    {
+      "name": "Estimation Procedure_69.pdf",
+      "fileno": "RXN0aW1hdGlvbiBQcm9jZWR1cmVfNjkucGRm",
+      "role": "doc",
+      "bytes": 1011668,
+      "sha256": "d88ef51cd8ca93a5ab432dc59c2437f1b95979108aa93894f47382adb8f07e70",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-69Rnd-Sch1dot2-2012/RXN0aW1hdGlvbiBQcm9jZWR1cmVfNjkucGRm"
+    },
+    {
+      "name": "IND-NSSO-DWSHHC-2012-v1.xml",
+      "fileno": "SU5ELU5TU08tRFdTSEhDLTIwMTItdjEueG1s",
+      "role": "doc",
+      "bytes": 1332499,
+      "sha256": "fd9a18c0f5108c19c76ea5fdfb257dc56c8a883fec2bfe4aa50a5f9f1be31772",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-69Rnd-Sch1dot2-2012/SU5ELU5TU08tRFdTSEhDLTIwMTItdjEueG1s"
+    },
+    {
+      "name": "instruction to field staff.pdf",
+      "fileno": "aW5zdHJ1Y3Rpb24gdG8gZmllbGQgc3RhZmYucGRm",
+      "role": "doc",
+      "bytes": 832361,
+      "sha256": "52633017390a1afe9654f4358e08d5abb5007d7171e4926045b66d955b316f29",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-69Rnd-Sch1dot2-2012/aW5zdHJ1Y3Rpb24gdG8gZmllbGQgc3RhZmYucGRm"
+    },
+    {
+      "name": "kye_indi_of_water_Sanitation69rou_24dec13.pdf",
+      "fileno": "a3llX2luZGlfb2Zfd2F0ZXJfU2FuaXRhdGlvbjY5cm91XzI0ZGVjMTMucGRm",
+      "role": "doc",
+      "bytes": 1281285,
+      "sha256": "d99ab277baaecadbcfc59b32964b078bbf6a8f5244806a543678b1cbe8c186b9",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-69Rnd-Sch1dot2-2012/a3llX2luZGlfb2Zfd2F0ZXJfU2FuaXRhdGlvbjY5cm91XzI0ZGVjMTMucGRm"
+    },
+    {
+      "name": "NCO.pdf",
+      "fileno": "TkNPLnBkZg==",
+      "role": "doc",
+      "bytes": 24000,
+      "sha256": "d9b9f1c16afffb011b58009d98e2ba63b8e134c08c6a2331c6dec949acd910e3",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-69Rnd-Sch1dot2-2012/TkNPLnBkZg=="
+    },
+    {
+      "name": "NIC 2008.pdf",
+      "fileno": "TklDIDIwMDgucGRm",
+      "role": "doc",
+      "bytes": 137463,
+      "sha256": "ea084d0e86ba7a6a5f71f9058c57a3acee661c5cafc9ae8b685a87366f15b4a0",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-69Rnd-Sch1dot2-2012/TklDIDIwMDgucGRm"
+    },
+    {
+      "name": "Nss69_1.2_new format.rar",
+      "fileno": "TnNzNjlfMS4yX25ldyBmb3JtYXQucmFy",
+      "role": "data",
+      "bytes": 14863700,
+      "sha256": "4acc4c72384bed9b75ee81d01f89a44c9ffd66e2cc91e7c24d00ccf8f180975b",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-69Rnd-Sch1dot2-2012/TnNzNjlfMS4yX25ldyBmb3JtYXQucmFy"
+    },
+    {
+      "name": "rdf-147.rdf",
+      "fileno": "cmRmLTE0Ny5yZGY=",
+      "role": "doc",
+      "bytes": 3665,
+      "sha256": "29ff842ee28d7e0a0f684d1c9aaf1a055d1f9b0e8f186b8048c9fb5cd5f3ad42",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-69Rnd-Sch1dot2-2012/cmRmLTE0Ny5yZGY="
+    },
+    {
+      "name": "Schedule_69_1.pdf",
+      "fileno": "U2NoZWR1bGVfNjlfMS5wZGY=",
+      "role": "doc",
+      "bytes": 453580,
+      "sha256": "0b246aad09017bf120b2fdc5e99576a31d5f2907c30fdcbd66208fe321de3ca8",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-69Rnd-Sch1dot2-2012/U2NoZWR1bGVfNjlfMS5wZGY="
+    },
+    {
+      "name": "State_69.pdf",
+      "fileno": "U3RhdGVfNjkucGRm",
+      "role": "doc",
+      "bytes": 7555,
+      "sha256": "ef8d71a19e1145586e8f99cc2ae3c94c06f7b9c8b885c490456e8406ba97fac4",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-69Rnd-Sch1dot2-2012/U3RhdGVfNjkucGRm"
+    }
+  ]
+}

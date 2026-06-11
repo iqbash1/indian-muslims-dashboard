@@ -1,0 +1,103 @@
+{
+  "idno": "DDI-IND-MOSPI-NSSO-71Rnd-Sch25pt0-Jan-June-2014",
+  "base": "https://microdata.gov.in/NADA/index.php/api",
+  "pulled_at": "2026-06-11T05:17:54.740144+00:00",
+  "files": [
+    {
+      "name": "Appendix_1_NSS71_final.pdf",
+      "fileno": "QXBwZW5kaXhfMV9OU1M3MV9maW5hbC5wZGY=",
+      "role": "doc",
+      "bytes": 91090,
+      "sha256": "d9e319a2fb5b7b0b54f90060c03c814d43a9e90bdafb35c76380549d73ce64bd",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-71Rnd-Sch25pt0-Jan-June-2014/QXBwZW5kaXhfMV9OU1M3MV9maW5hbC5wZGY="
+    },
+    {
+      "name": "Appendix_2_NSS71_final.pdf",
+      "fileno": "QXBwZW5kaXhfMl9OU1M3MV9maW5hbC5wZGY=",
+      "role": "doc",
+      "bytes": 472998,
+      "sha256": "27d41efdf7f212c41624a05aa4e62bce979d596e8b74bb66b182175058be8c17",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-71Rnd-Sch25pt0-Jan-June-2014/QXBwZW5kaXhfMl9OU1M3MV9maW5hbC5wZGY="
+    },
+    {
+      "name": "Appendix_3_NSS71_final.pdf",
+      "fileno": "QXBwZW5kaXhfM19OU1M3MV9maW5hbC5wZGY=",
+      "role": "doc",
+      "bytes": 783810,
+      "sha256": "f5383021f80e4b61946d57ed647c5f6d5ee68d327ee8f6269bd520b2a7a557b0",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-71Rnd-Sch25pt0-Jan-June-2014/QXBwZW5kaXhfM19OU1M3MV9maW5hbC5wZGY="
+    },
+    {
+      "name": "Appendix_4_NSS71_final.pdf",
+      "fileno": "QXBwZW5kaXhfNF9OU1M3MV9maW5hbC5wZGY=",
+      "role": "doc",
+      "bytes": 141421,
+      "sha256": "13ea3581318f285c4212d8f0fabb85dbc6b46b6a48fbf65b6bbc6f1f8e1d8cbe",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-71Rnd-Sch25pt0-Jan-June-2014/QXBwZW5kaXhfNF9OU1M3MV9maW5hbC5wZGY="
+    },
+    {
+      "name": "CSV_NSS71_Health_Jan_Jun2014.zip",
+      "fileno": "Q1NWX05TUzcxX0hlYWx0aF9KYW5fSnVuMjAxNC56aXA=",
+      "role": "data",
+      "bytes": 13537717,
+      "sha256": "fe82ee16c3d5219e57571f1d7a95fb6fc1eb91143326a4f512ccc9afbde306b2",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-71Rnd-Sch25pt0-Jan-June-2014/Q1NWX05TUzcxX0hlYWx0aF9KYW5fSnVuMjAxNC56aXA="
+    },
+    {
+      "name": "dist_code_71st.pdf",
+      "fileno": "ZGlzdF9jb2RlXzcxc3QucGRm",
+      "role": "doc",
+      "bytes": 180847,
+      "sha256": "6769095a3d41e5a4686bd359ca1a752379be36ad8a12539dededc895143ba6c0",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-71Rnd-Sch25pt0-Jan-June-2014/ZGlzdF9jb2RlXzcxc3QucGRm"
+    },
+    {
+      "name": "Estimation_NSS71.pdf",
+      "fileno": "RXN0aW1hdGlvbl9OU1M3MS5wZGY=",
+      "role": "doc",
+      "bytes": 241776,
+      "sha256": "64e318307326d261171ffc1fe0627ffe7b4b7d5047f4b6b8657b126b487b665c",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-71Rnd-Sch25pt0-Jan-June-2014/RXN0aW1hdGlvbl9OU1M3MS5wZGY="
+    },
+    {
+      "name": "ins71chap_1.pdf",
+      "fileno": "aW5zNzFjaGFwXzEucGRm",
+      "role": "doc",
+      "bytes": 424655,
+      "sha256": "0b03257c2bd70a8651946027ddaf265811f722665b446085ded4738dbcce4723",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-71Rnd-Sch25pt0-Jan-June-2014/aW5zNzFjaGFwXzEucGRm"
+    },
+    {
+      "name": "ins71chap_2.pdf",
+      "fileno": "aW5zNzFjaGFwXzIucGRm",
+      "role": "doc",
+      "bytes": 580948,
+      "sha256": "c9558a9d4a21c168ccfecc4b99e9a875650f934461b9cb3d2eff5b4361dd8eb0",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-71Rnd-Sch25pt0-Jan-June-2014/aW5zNzFjaGFwXzIucGRm"
+    },
+    {
+      "name": "Ins_71_Chap_3.pdf",
+      "fileno": "SW5zXzcxX0NoYXBfMy5wZGY=",
+      "role": "doc",
+      "bytes": 768943,
+      "sha256": "4a4b9246fe24ce1bfd614e7e53627bc213a91dfd678d3a5108c0c166051f922d",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-71Rnd-Sch25pt0-Jan-June-2014/SW5zXzcxX0NoYXBfMy5wZGY="
+    },
+    {
+      "name": "nic_amendment_2008.pdf",
+      "fileno": "bmljX2FtZW5kbWVudF8yMDA4LnBkZg==",
+      "role": "doc",
+      "bytes": 86821,
+      "sha256": "447ec5d0234e7ea7f2f62087b02b5d323b303f4e927358b7ff77b450966ed30e",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-71Rnd-Sch25pt0-Jan-June-2014/bmljX2FtZW5kbWVudF8yMDA4LnBkZg=="
+    },
+    {
+      "name": "sch0.pdf",
+      "fileno": "c2NoMC5wZGY=",
+      "role": "doc",
+      "bytes": 342479,
+      "sha256": "ad3d3f897db35c380f31ac11a2975ee33c6044e1cfd5ca6d9886e7f85664a45b",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-71Rnd-Sch25pt0-Jan-June-2014/c2NoMC5wZGY="
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "idno": "DDI-IND-MOSPI-NSSO-68Rnd-Sch1.0-July2011-June2012",
+  "base": "https://microdata.gov.in/NADA/index.php/api",
+  "pulled_at": "2026-06-11T04:35:01.334199+00:00",
+  "files": [
+    {
+      "name": "Appendix-II_68.pdf",
+      "fileno": "QXBwZW5kaXgtSUlfNjgucGRm",
+      "role": "doc",
+      "bytes": 171723,
+      "sha256": "19b9c9554a8d5891fc566427b0046ea1c017c7500d85e2358c211b22745ab98c",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-68Rnd-Sch1.0-July2011-June2012/QXBwZW5kaXgtSUlfNjgucGRm"
+    },
+    {
+      "name": "Appendix_I_68.pdf",
+      "fileno": "QXBwZW5kaXhfSV82OC5wZGY=",
+      "role": "doc",
+      "bytes": 221606,
+      "sha256": "fb587ae1e445dc8af6d7090292b8500a8a2273993069274819bc25a52901dd66",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-68Rnd-Sch1.0-July2011-June2012/QXBwZW5kaXhfSV82OC5wZGY="
+    },
+    {
+      "name": "concept-design and definitions.pdf",
+      "fileno": "Y29uY2VwdC1kZXNpZ24gYW5kIGRlZmluaXRpb25zLnBkZg==",
+      "role": "doc",
+      "bytes": 420478,
+      "sha256": "ed43b4735e9b5c6da1d95c93466a2ce4b228c79bee288154db0aefc73b757d15",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-68Rnd-Sch1.0-July2011-June2012/Y29uY2VwdC1kZXNpZ24gYW5kIGRlZmluaXRpb25zLnBkZg=="
+    },
+    {
+      "name": "DDI-IND-MOSPI-NSSO-68Rnd-Sch1.0-July2011-June2012.xml",
+      "fileno": "RERJLUlORC1NT1NQSS1OU1NPLTY4Um5kLVNjaDEuMC1KdWx5MjAxMS1KdW5lMjAxMi54bWw=",
+      "role": "doc",
+      "bytes": 3364189,
+      "sha256": "04a4d521b649a0a0dde3a0872b8c6297c4f2377b9c6bfc62daee849f36aa4f44",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-68Rnd-Sch1.0-July2011-June2012/RERJLUlORC1NT1NQSS1OU1NPLTY4Um5kLVNjaDEuMC1KdWx5MjAxMS1KdW5lMjAxMi54bWw="
+    },
+    {
+      "name": "District-codes.pdf",
+      "fileno": "RGlzdHJpY3QtY29kZXMucGRm",
+      "role": "doc",
+      "bytes": 78571,
+      "sha256": "a5927613b53c95e58252844f1a4dd63b4ab79a0b7780bcf8e014df3fa4f8ac4b",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-68Rnd-Sch1.0-July2011-June2012/RGlzdHJpY3QtY29kZXMucGRm"
+    },
+    {
+      "name": "Estimation Procedure_68.pdf",
+      "fileno": "RXN0aW1hdGlvbiBQcm9jZWR1cmVfNjgucGRm",
+      "role": "doc",
+      "bytes": 936581,
+      "sha256": "980efee82a39de3dd434925d965f74e394522a946c75ca16d0172cba6fefe8bd",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-68Rnd-Sch1.0-July2011-June2012/RXN0aW1hdGlvbiBQcm9jZWR1cmVfNjgucGRm"
+    },
+    {
+      "name": "layout68_1_0_typ1.pdf",
+      "fileno": "bGF5b3V0NjhfMV8wX3R5cDEucGRm",
+      "role": "doc",
+      "bytes": 96858,
+      "sha256": "7e539376fb80e94d9a378f6efdb195ab38b9611f92b5d0e7de2869fc32c0e923",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-68Rnd-Sch1.0-July2011-June2012/bGF5b3V0NjhfMV8wX3R5cDEucGRm"
+    },
+    {
+      "name": "nco_2004_CodeStructure.pdf",
+      "fileno": "bmNvXzIwMDRfQ29kZVN0cnVjdHVyZS5wZGY=",
+      "role": "doc",
+      "bytes": 471737,
+      "sha256": "9d6933ff0b13f476fc3ae4a8eb19e5498c7b2247850c9d75bda329238456927a",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-68Rnd-Sch1.0-July2011-June2012/bmNvXzIwMDRfQ29kZVN0cnVjdHVyZS5wZGY="
+    },
+    {
+      "name": "nic_2008.pdf",
+      "fileno": "bmljXzIwMDgucGRm",
+      "role": "doc",
+      "bytes": 1371857,
+      "sha256": "bedd891d8ab05305e1fde4cf125fbbc2c42e58395070622a67d6329c56bd6d37",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-68Rnd-Sch1.0-July2011-June2012/bmljXzIwMDgucGRm"
+    },
+    {
+      "name": "nic_amendment_2008.pdf",
+      "fileno": "bmljX2FtZW5kbWVudF8yMDA4LnBkZg==",
+      "role": "doc",
+      "bytes": 86821,
+      "sha256": "447ec5d0234e7ea7f2f62087b02b5d323b303f4e927358b7ff77b450966ed30e",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-68Rnd-Sch1.0-July2011-June2012/bmljX2FtZW5kbWVudF8yMDA4LnBkZg=="
+    },
+    {
+      "name": "Nss68_1.0_Type1_new format.rar",
+      "fileno": "TnNzNjhfMS4wX1R5cGUxX25ldyBmb3JtYXQucmFy",
+      "role": "data",
+      "bytes": 91308724,
+      "sha256": "8187fe10966cd579394bf40184a109234f55f3d2d7ecfd5261c66bb71272ef34",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-68Rnd-Sch1.0-July2011-June2012/TnNzNjhfMS4wX1R5cGUxX25ldyBmb3JtYXQucmFy"
+    },
+    {
+      "name": "rdf-144.rdf",
+      "fileno": "cmRmLTE0NC5yZGY=",
+      "role": "doc",
+      "bytes": 3569,
+      "sha256": "18db04bf5e7d891c84d656aa03b9761a4a9714677d8ab083432f87e86bdf9fee",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-68Rnd-Sch1.0-July2011-June2012/cmRmLTE0NC5yZGY="
+    },
+    {
+      "name": "Schedule_68_1.0_type1.pdf",
+      "fileno": "U2NoZWR1bGVfNjhfMS4wX3R5cGUxLnBkZg==",
+      "role": "doc",
+      "bytes": 672031,
+      "sha256": "52c26172a7eff8c9cdc8651463ff23c28b8a83ab3327f4ce0b15a52953fb5ae3",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-68Rnd-Sch1.0-July2011-June2012/U2NoZWR1bGVfNjhfMS4wX3R5cGUxLnBkZg=="
+    },
+    {
+      "name": "State code_68.pdf",
+      "fileno": "U3RhdGUgY29kZV82OC5wZGY=",
+      "role": "doc",
+      "bytes": 7458,
+      "sha256": "ed49e778c78cfffc0d236a90dfc44dab6b542c8eceeed0c5d09feeba85420b9a",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-68Rnd-Sch1.0-July2011-June2012/U3RhdGUgY29kZV82OC5wZGY="
+    }
+  ]
+}

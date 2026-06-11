@@ -1,0 +1,103 @@
+{
+  "idno": "DDI-IND-MOSPI-NSSO-59Rnd-Sch18pt2-Jan-Dec2003",
+  "base": "https://microdata.gov.in/NADA/index.php/api",
+  "pulled_at": "2026-06-11T05:16:47.753670+00:00",
+  "files": [
+    {
+      "name": "DDI-IND-MOSPI-NSSO-59Rnd-Sch18pt2-Jan-Dec2003.xml",
+      "fileno": "RERJLUlORC1NT1NQSS1OU1NPLTU5Um5kLVNjaDE4cHQyLUphbi1EZWMyMDAzLnhtbA==",
+      "role": "doc",
+      "bytes": 1888037,
+      "sha256": "a74705c8225927b77c0efc1ef5e1d3a9ff1a8e3ede0939af47c40b73e70818d4",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-59Rnd-Sch18pt2-Jan-Dec2003/RERJLUlORC1NT1NQSS1OU1NPLTU5Um5kLVNjaDE4cHQyLUphbi1EZWMyMDAzLnhtbA=="
+    },
+    {
+      "name": "Estimation Procedure_59.pdf",
+      "fileno": "RXN0aW1hdGlvbiBQcm9jZWR1cmVfNTkucGRm",
+      "role": "doc",
+      "bytes": 121813,
+      "sha256": "a4d000fd400c3e3404aefc5549f7702e7dd53bee0f2d22e4eb0711d1008d9b45",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-59Rnd-Sch18pt2-Jan-Dec2003/RXN0aW1hdGlvbiBQcm9jZWR1cmVfNTkucGRm"
+    },
+    {
+      "name": "Introduction, Concepts, Definitions and Procedures.pdf",
+      "fileno": "SW50cm9kdWN0aW9uLCBDb25jZXB0cywgRGVmaW5pdGlvbnMgYW5kIFByb2NlZHVyZXMucGRm",
+      "role": "doc",
+      "bytes": 163490,
+      "sha256": "825fb42c13776defa79b21df3bcc93c5f32af4fd5c9b258d3e86b80f86969a91",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-59Rnd-Sch18pt2-Jan-Dec2003/SW50cm9kdWN0aW9uLCBDb25jZXB0cywgRGVmaW5pdGlvbnMgYW5kIFByb2NlZHVyZXMucGRm"
+    },
+    {
+      "name": "LIST OF FOD SUB-REGIONS.pdf",
+      "fileno": "TElTVCBPRiBGT0QgU1VCLVJFR0lPTlMucGRm",
+      "role": "doc",
+      "bytes": 29678,
+      "sha256": "5d3527f8d1ec873dcc9aced08833252d6424ada768eb5a0ece5da5d9c695a271",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-59Rnd-Sch18pt2-Jan-Dec2003/TElTVCBPRiBGT0QgU1VCLVJFR0lPTlMucGRm"
+    },
+    {
+      "name": "LIST OF NSS REGIONS AND THEIR COMPOSITION.pdf",
+      "fileno": "TElTVCBPRiBOU1MgUkVHSU9OUyBBTkQgVEhFSVIgQ09NUE9TSVRJT04ucGRm",
+      "role": "doc",
+      "bytes": 61242,
+      "sha256": "9b00fb15f33867b234376d8a27882487b88b9091e3bae25bedfd61f8d16c2923",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-59Rnd-Sch18pt2-Jan-Dec2003/TElTVCBPRiBOU1MgUkVHSU9OUyBBTkQgVEhFSVIgQ09NUE9TSVRJT04ucGRm"
+    },
+    {
+      "name": "NCO 1968-2 digit codes.pdf",
+      "fileno": "TkNPIDE5NjgtMiBkaWdpdCBjb2Rlcy5wZGY=",
+      "role": "doc",
+      "bytes": 11241,
+      "sha256": "ed7c5cee8c1d944eeb9b769af5851496f88b7b57ffd15349bd8a8ece92f43716",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-59Rnd-Sch18pt2-Jan-Dec2003/TkNPIDE5NjgtMiBkaWdpdCBjb2Rlcy5wZGY="
+    },
+    {
+      "name": "NCO 1968-3 digit codes.pdf",
+      "fileno": "TkNPIDE5NjgtMyBkaWdpdCBjb2Rlcy5wZGY=",
+      "role": "doc",
+      "bytes": 29970,
+      "sha256": "d456511c922d7aa24914e86495b3870101d46a446b52cf15e3702476876f0787",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-59Rnd-Sch18pt2-Jan-Dec2003/TkNPIDE5NjgtMyBkaWdpdCBjb2Rlcy5wZGY="
+    },
+    {
+      "name": "NIC 1998 - 5 digit classification.pdf",
+      "fileno": "TklDIDE5OTggLSA1IGRpZ2l0IGNsYXNzaWZpY2F0aW9uLnBkZg==",
+      "role": "doc",
+      "bytes": 547784,
+      "sha256": "a7af6d1eb235a9b350c783144d5b416199504c691561a3b3a3e60f44a12a61f4",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-59Rnd-Sch18pt2-Jan-Dec2003/TklDIDE5OTggLSA1IGRpZ2l0IGNsYXNzaWZpY2F0aW9uLnBkZg=="
+    },
+    {
+      "name": "Nss59_18.2_new format.rar",
+      "fileno": "TnNzNTlfMTguMl9uZXcgZm9ybWF0LnJhcg==",
+      "role": "data",
+      "bytes": 133350130,
+      "sha256": "826a389679211a1b58a0e5f14d3cd20064ed41093158e047b510944c144e0cc1",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-59Rnd-Sch18pt2-Jan-Dec2003/TnNzNTlfMTguMl9uZXcgZm9ybWF0LnJhcg=="
+    },
+    {
+      "name": "Schedule 18.2  Debt and Investment.pdf",
+      "fileno": "U2NoZWR1bGUgMTguMiAgRGVidCBhbmQgSW52ZXN0bWVudC5wZGY=",
+      "role": "doc",
+      "bytes": 241758,
+      "sha256": "0edf2e17f29e0817ee1149ff3f11ab930fbaf1ca1084a0056a832ebb5f787dcf",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-59Rnd-Sch18pt2-Jan-Dec2003/U2NoZWR1bGUgMTguMiAgRGVidCBhbmQgSW52ZXN0bWVudC5wZGY="
+    },
+    {
+      "name": "Schedule_V1_18.pdf",
+      "fileno": "U2NoZWR1bGVfVjFfMTgucGRm",
+      "role": "doc",
+      "bytes": 166516,
+      "sha256": "9659a5ba47594c64c6079b2408b722571457e530c7301d9f88be06abe3d82e93",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-59Rnd-Sch18pt2-Jan-Dec2003/U2NoZWR1bGVfVjFfMTgucGRm"
+    },
+    {
+      "name": "Schedule_V2_18.pdf",
+      "fileno": "U2NoZWR1bGVfVjJfMTgucGRm",
+      "role": "doc",
+      "bytes": 86468,
+      "sha256": "fe01c9825188cf8aa455aec7e7de8d7bd518249fd52e71fb49156dab7fce3c1c",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-59Rnd-Sch18pt2-Jan-Dec2003/U2NoZWR1bGVfVjJfMTgucGRm"
+    }
+  ]
+}

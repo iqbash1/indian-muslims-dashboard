@@ -1,0 +1,15 @@
+{
+  "idno": "IND-NSSO-DIS-1992-v1",
+  "base": "https://microdata.gov.in/NADA/index.php/api",
+  "pulled_at": "2026-06-11T06:21:34.633504+00:00",
+  "files": [
+    {
+      "name": "CSV_DATA.zip",
+      "fileno": "Q1NWX0RBVEEuemlw",
+      "role": "data",
+      "bytes": 22271182,
+      "sha256": "f5587e9c8429c71097d1227a880a45f6a3a35d2afd611de37f67e812b86baa4a",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-DIS-1992-v1/Q1NWX0RBVEEuemlw"
+    }
+  ]
+}

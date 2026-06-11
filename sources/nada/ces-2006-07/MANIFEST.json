@@ -1,0 +1,111 @@
+{
+  "idno": "DDI-IND-MOSPI-NSSO-63Rnd-Sch1.0-2006-07",
+  "base": "https://microdata.gov.in/NADA/index.php/api",
+  "pulled_at": "2026-06-11T04:16:09.319580+00:00",
+  "files": [
+    {
+      "name": "Detailed Structure of NIC Codes 2004.pdf",
+      "fileno": "RGV0YWlsZWQgU3RydWN0dXJlIG9mIE5JQyBDb2RlcyAyMDA0LnBkZg==",
+      "role": "doc",
+      "bytes": 391518,
+      "sha256": "fb68d9511d257402d2d65db0ef1581ba85f0fce47ed5f4bf43bc11217b8505ca",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-63Rnd-Sch1.0-2006-07/RGV0YWlsZWQgU3RydWN0dXJlIG9mIE5JQyBDb2RlcyAyMDA0LnBkZg=="
+    },
+    {
+      "name": "Estimation Procedure_63rd Round.pdf",
+      "fileno": "RXN0aW1hdGlvbiBQcm9jZWR1cmVfNjNyZCBSb3VuZC5wZGY=",
+      "role": "doc",
+      "bytes": 634197,
+      "sha256": "40b562427d560976c90708f32ae8d4769af581842281102fda698fe085433236",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-63Rnd-Sch1.0-2006-07/RXN0aW1hdGlvbiBQcm9jZWR1cmVfNjNyZCBSb3VuZC5wZGY="
+    },
+    {
+      "name": "Household Consumer Expenditure, NSS 63rd Round July 2006 - June 2007_Csv.zip",
+      "fileno": "SG91c2Vob2xkIENvbnN1bWVyIEV4cGVuZGl0dXJlLCBOU1MgNjNyZCBSb3VuZCBKdWx5IDIwMDYgLSBKdW5lIDIwMDdfQ3N2LnppcA==",
+      "role": "data",
+      "bytes": 69025236,
+      "sha256": "a28e87f48a921fd33fc745254bb76198003d7a941a581c0d63e6319448d387ec",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-63Rnd-Sch1.0-2006-07/SG91c2Vob2xkIENvbnN1bWVyIEV4cGVuZGl0dXJlLCBOU1MgNjNyZCBSb3VuZCBKdWx5IDIwMDYgLSBKdW5lIDIwMDdfQ3N2LnppcA=="
+    },
+    {
+      "name": "IHSN_NSSO_63rd_Round_HH_CONS_EXP.pdf",
+      "fileno": "SUhTTl9OU1NPXzYzcmRfUm91bmRfSEhfQ09OU19FWFAucGRm",
+      "role": "doc",
+      "bytes": 691207,
+      "sha256": "06a894cb972be8e7f967f97d75ed3f256771a2eb48dd80cfca455a608858b662",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-63Rnd-Sch1.0-2006-07/SUhTTl9OU1NPXzYzcmRfUm91bmRfSEhfQ09OU19FWFAucGRm"
+    },
+    {
+      "name": "Introduction Concepts, Definitions and Procedures.pdf",
+      "fileno": "SW50cm9kdWN0aW9uIENvbmNlcHRzLCBEZWZpbml0aW9ucyBhbmQgUHJvY2VkdXJlcy5wZGY=",
+      "role": "doc",
+      "bytes": 145812,
+      "sha256": "13ba3785423664a949eb7642b48f59e6367d0abcc5522d5e2fafa02e54834cb4",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-63Rnd-Sch1.0-2006-07/SW50cm9kdWN0aW9uIENvbmNlcHRzLCBEZWZpbml0aW9ucyBhbmQgUHJvY2VkdXJlcy5wZGY="
+    },
+    {
+      "name": "List of FOD Sub-regions.pdf",
+      "fileno": "TGlzdCBvZiBGT0QgU3ViLXJlZ2lvbnMucGRm",
+      "role": "doc",
+      "bytes": 1104699,
+      "sha256": "04daae3995e5512c08059a0e2469fc7f7a838b21954455703adacf45a7499cb9",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-63Rnd-Sch1.0-2006-07/TGlzdCBvZiBGT0QgU3ViLXJlZ2lvbnMucGRm"
+    },
+    {
+      "name": "List of NSS regions and their composition.pdf",
+      "fileno": "TGlzdCBvZiBOU1MgcmVnaW9ucyBhbmQgdGhlaXIgY29tcG9zaXRpb24ucGRm",
+      "role": "doc",
+      "bytes": 1110603,
+      "sha256": "85022b09ab65821228a8f4cf07d00bd721402f8d65056e1f92598d81edd7c296",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-63Rnd-Sch1.0-2006-07/TGlzdCBvZiBOU1MgcmVnaW9ucyBhbmQgdGhlaXIgY29tcG9zaXRpb24ucGRm"
+    },
+    {
+      "name": "NCO 1968-3 digit codes.pdf",
+      "fileno": "TkNPIDE5NjgtMyBkaWdpdCBjb2Rlcy5wZGY=",
+      "role": "doc",
+      "bytes": 29970,
+      "sha256": "d456511c922d7aa24914e86495b3870101d46a446b52cf15e3702476876f0787",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-63Rnd-Sch1.0-2006-07/TkNPIDE5NjgtMyBkaWdpdCBjb2Rlcy5wZGY="
+    },
+    {
+      "name": "Report no527_Household Consumer Expenditure in India in 2006-07.pdf",
+      "fileno": "UmVwb3J0IG5vNTI3X0hvdXNlaG9sZCBDb25zdW1lciBFeHBlbmRpdHVyZSBpbiBJbmRpYSBpbiAyMDA2LTA3LnBkZg==",
+      "role": "doc",
+      "bytes": 1479435,
+      "sha256": "be172d8fa90fc711f1705787c1d11e4dbf0e9c3fab3623c00278e1f62b44e4f3",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-63Rnd-Sch1.0-2006-07/UmVwb3J0IG5vNTI3X0hvdXNlaG9sZCBDb25zdW1lciBFeHBlbmRpdHVyZSBpbiBJbmRpYSBpbiAyMDA2LTA3LnBkZg=="
+    },
+    {
+      "name": "Schedule 0pt0 List Of Households And Non-Agricultural Enterprises.pdf",
+      "fileno": "U2NoZWR1bGUgMHB0MCBMaXN0IE9mIEhvdXNlaG9sZHMgQW5kIE5vbi1BZ3JpY3VsdHVyYWwgRW50ZXJwcmlzZXMucGRm",
+      "role": "doc",
+      "bytes": 265046,
+      "sha256": "909384f09fc15e9c339bb43e6e118d0cb01dc434859c4a4b828f37072c2b04f1",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-63Rnd-Sch1.0-2006-07/U2NoZWR1bGUgMHB0MCBMaXN0IE9mIEhvdXNlaG9sZHMgQW5kIE5vbi1BZ3JpY3VsdHVyYWwgRW50ZXJwcmlzZXMucGRm"
+    },
+    {
+      "name": "Schedule 1pt0  Consumer Expenditure.pdf",
+      "fileno": "U2NoZWR1bGUgMXB0MCAgQ29uc3VtZXIgRXhwZW5kaXR1cmUucGRm",
+      "role": "doc",
+      "bytes": 190050,
+      "sha256": "0b7af9313c08673e2af5b69baf5c6abe20b4a847a80c8338d239239e270888f1",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-63Rnd-Sch1.0-2006-07/U2NoZWR1bGUgMXB0MCAgQ29uc3VtZXIgRXhwZW5kaXR1cmUucGRm"
+    },
+    {
+      "name": "Schedule_63_1.pdf",
+      "fileno": "U2NoZWR1bGVfNjNfMS5wZGY=",
+      "role": "doc",
+      "bytes": 222258,
+      "sha256": "5a728eb6931eb28e4784a13572bc2f78c79e5197dd6ff1085007d14b0974c700",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-63Rnd-Sch1.0-2006-07/U2NoZWR1bGVfNjNfMS5wZGY="
+    },
+    {
+      "name": "State Codes_63.pdf",
+      "fileno": "U3RhdGUgQ29kZXNfNjMucGRm",
+      "role": "doc",
+      "bytes": 768844,
+      "sha256": "5b58bfb92ad258c1551e82889fca1dccecb554631b118c30c08e327a1b8584af",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-63Rnd-Sch1.0-2006-07/U3RhdGUgQ29kZXNfNjMucGRm"
+    }
+  ]
+}

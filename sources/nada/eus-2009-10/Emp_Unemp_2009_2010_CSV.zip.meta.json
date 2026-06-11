@@ -1,0 +1,14 @@
+{
+  "source_id": "nada-eus-2009-10",
+  "target_id": "eus-2009-10-microdata",
+  "idno": "DDI-IND-MOSPI-NSSO-66-10-2011",
+  "filename": "Emp_Unemp_2009_2010_CSV.zip",
+  "url": "https://microdata.gov.in/NADA/index.php/catalog/124",
+  "download_url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-66-10-2011/RW1wX1VuZW1wXzIwMDlfMjAxMF9DU1Yuemlw",
+  "pulled_at": "2026-06-11",
+  "content_length": 31522338,
+  "sha256": "51d6778588f925bba8f4a4c10db27cd8c5c229146fe04d55abaee095e49970ef",
+  "pull_method": "MoSPI NADA REST API (personal X-API-KEY header)",
+  "by_religion_verdict": "SAFE: employment x religion",
+  "archival": "provenance-only: the unit-level file is NOT committed (kept local at ~/Desktop/nada-work/eus-2009-10/). Re-fetch with the recipe in PROVENANCE.md and verify against this sha256. The schema/method docs in this directory ARE committed."
+}

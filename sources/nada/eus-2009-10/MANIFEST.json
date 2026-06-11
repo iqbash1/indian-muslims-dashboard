@@ -1,0 +1,191 @@
+{
+  "idno": "DDI-IND-MOSPI-NSSO-66-10-2011",
+  "base": "https://microdata.gov.in/NADA/index.php/api",
+  "pulled_at": "2026-06-11T06:17:26.114371+00:00",
+  "files": [
+    {
+      "name": "DDI-IND-MOSPI-NSSO-66-10-2011.xml",
+      "fileno": "RERJLUlORC1NT1NQSS1OU1NPLTY2LTEwLTIwMTEueG1s",
+      "role": "doc",
+      "bytes": 4829759,
+      "sha256": "4068a6ae899f022172fe12107b7d8b23e85bd417dae0d2564a142b2d7be9665b",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-66-10-2011/RERJLUlORC1NT1NQSS1OU1NPLTY2LTEwLTIwMTEueG1s"
+    },
+    {
+      "name": "District code_66.xls",
+      "fileno": "RGlzdHJpY3QgY29kZV82Ni54bHM=",
+      "role": "doc",
+      "bytes": 67584,
+      "sha256": "cb92d10f35f86ac1bc8f5abba71917021ca91119318ba4c3c887a6b2d2917192",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-66-10-2011/RGlzdHJpY3QgY29kZV82Ni54bHM="
+    },
+    {
+      "name": "District_code_66.xls",
+      "fileno": "RGlzdHJpY3RfY29kZV82Ni54bHM=",
+      "role": "doc",
+      "bytes": 67584,
+      "sha256": "cb92d10f35f86ac1bc8f5abba71917021ca91119318ba4c3c887a6b2d2917192",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-66-10-2011/RGlzdHJpY3RfY29kZV82Ni54bHM="
+    },
+    {
+      "name": "Emp_Unemp_2009_2010_CSV.zip",
+      "fileno": "RW1wX1VuZW1wXzIwMDlfMjAxMF9DU1Yuemlw",
+      "role": "data",
+      "bytes": 31522338,
+      "sha256": "51d6778588f925bba8f4a4c10db27cd8c5c229146fe04d55abaee095e49970ef",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-66-10-2011/RW1wX1VuZW1wXzIwMDlfMjAxMF9DU1Yuemlw"
+    },
+    {
+      "name": "Estimation Procedure_sch_10_employment_unemployment_nsso_66_round_July2009_June2010.doc",
+      "fileno": "RXN0aW1hdGlvbiBQcm9jZWR1cmVfc2NoXzEwX2VtcGxveW1lbnRfdW5lbXBsb3ltZW50X25zc29fNjZfcm91bmRfSnVseTIwMDlfSnVuZTIwMTAuZG9j",
+      "role": "doc",
+      "bytes": 2289152,
+      "sha256": "2ced618da14c82bbd512b60602d81573bca40a80c56d75dc567947d581cd3bab",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-66-10-2011/RXN0aW1hdGlvbiBQcm9jZWR1cmVfc2NoXzEwX2VtcGxveW1lbnRfdW5lbXBsb3ltZW50X25zc29fNjZfcm91bmRfSnVseTIwMDlfSnVuZTIwMTAuZG9j"
+    },
+    {
+      "name": "Estimation_Procedure_sch_10_employment_unemployment_nsso_66_round_July2009_June2010.doc",
+      "fileno": "RXN0aW1hdGlvbl9Qcm9jZWR1cmVfc2NoXzEwX2VtcGxveW1lbnRfdW5lbXBsb3ltZW50X25zc29fNjZfcm91bmRfSnVseTIwMDlfSnVuZTIwMTAuZG9j",
+      "role": "doc",
+      "bytes": 2289152,
+      "sha256": "2ced618da14c82bbd512b60602d81573bca40a80c56d75dc567947d581cd3bab",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-66-10-2011/RXN0aW1hdGlvbl9Qcm9jZWR1cmVfc2NoXzEwX2VtcGxveW1lbnRfdW5lbXBsb3ltZW50X25zc29fNjZfcm91bmRfSnVseTIwMDlfSnVuZTIwMTAuZG9j"
+    },
+    {
+      "name": "IHSN_REPORT_NSSO_66_SCH_10_EMPLOYMENT_AND_UNEMPLOYMENT_LUD_18March2013.pdf",
+      "fileno": "SUhTTl9SRVBPUlRfTlNTT182Nl9TQ0hfMTBfRU1QTE9ZTUVOVF9BTkRfVU5FTVBMT1lNRU5UX0xVRF8xOE1hcmNoMjAxMy5wZGY=",
+      "role": "doc",
+      "bytes": 1401523,
+      "sha256": "b721ebd4e6a7ee2298040a554e68cec5368c6ac2f4cf6c2279fa6fa24fb7bc9c",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-66-10-2011/SUhTTl9SRVBPUlRfTlNTT182Nl9TQ0hfMTBfRU1QTE9ZTUVOVF9BTkRfVU5FTVBMT1lNRU5UX0xVRF8xOE1hcmNoMjAxMy5wZGY="
+    },
+    {
+      "name": "Instruction to Field Staff.doc",
+      "fileno": "SW5zdHJ1Y3Rpb24gdG8gRmllbGQgU3RhZmYuZG9j",
+      "role": "doc",
+      "bytes": 469504,
+      "sha256": "c015899b2e92fb4f156bad3de02673f8f488e46c5b29d9eb96daa9a735321ba4",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-66-10-2011/SW5zdHJ1Y3Rpb24gdG8gRmllbGQgU3RhZmYuZG9j"
+    },
+    {
+      "name": "Instruction_to_Field_Staff.doc",
+      "fileno": "SW5zdHJ1Y3Rpb25fdG9fRmllbGRfU3RhZmYuZG9j",
+      "role": "doc",
+      "bytes": 469504,
+      "sha256": "c015899b2e92fb4f156bad3de02673f8f488e46c5b29d9eb96daa9a735321ba4",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-66-10-2011/SW5zdHJ1Y3Rpb25fdG9fRmllbGRfU3RhZmYuZG9j"
+    },
+    {
+      "name": "Introduction Concepts, Definitions and Procedures.doc",
+      "fileno": "SW50cm9kdWN0aW9uIENvbmNlcHRzLCBEZWZpbml0aW9ucyBhbmQgUHJvY2VkdXJlcy5kb2M=",
+      "role": "doc",
+      "bytes": 347648,
+      "sha256": "596b676504b5b7e8e025d7c408e7efccbb7258637f30f993b1dffad95f956e06",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-66-10-2011/SW50cm9kdWN0aW9uIENvbmNlcHRzLCBEZWZpbml0aW9ucyBhbmQgUHJvY2VkdXJlcy5kb2M="
+    },
+    {
+      "name": "Introduction_Concepts_Definitions_Procedures.doc",
+      "fileno": "SW50cm9kdWN0aW9uX0NvbmNlcHRzX0RlZmluaXRpb25zX1Byb2NlZHVyZXMuZG9j",
+      "role": "doc",
+      "bytes": 347648,
+      "sha256": "596b676504b5b7e8e025d7c408e7efccbb7258637f30f993b1dffad95f956e06",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-66-10-2011/SW50cm9kdWN0aW9uX0NvbmNlcHRzX0RlZmluaXRpb25zX1Byb2NlZHVyZXMuZG9j"
+    },
+    {
+      "name": "List of NSS regions and their composition.doc",
+      "fileno": "TGlzdCBvZiBOU1MgcmVnaW9ucyBhbmQgdGhlaXIgY29tcG9zaXRpb24uZG9j",
+      "role": "doc",
+      "bytes": 514048,
+      "sha256": "46afb5f076372276bec1970671cdd1905bc131b195177b2491c00592b2984fce",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-66-10-2011/TGlzdCBvZiBOU1MgcmVnaW9ucyBhbmQgdGhlaXIgY29tcG9zaXRpb24uZG9j"
+    },
+    {
+      "name": "List_NSS_regions_their_composition.doc",
+      "fileno": "TGlzdF9OU1NfcmVnaW9uc190aGVpcl9jb21wb3NpdGlvbi5kb2M=",
+      "role": "doc",
+      "bytes": 514048,
+      "sha256": "46afb5f076372276bec1970671cdd1905bc131b195177b2491c00592b2984fce",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-66-10-2011/TGlzdF9OU1NfcmVnaW9uc190aGVpcl9jb21wb3NpdGlvbi5kb2M="
+    },
+    {
+      "name": "List_of_FOD_sub_regions_nsso_66.doc",
+      "fileno": "TGlzdF9vZl9GT0Rfc3ViX3JlZ2lvbnNfbnNzb182Ni5kb2M=",
+      "role": "doc",
+      "bytes": 752128,
+      "sha256": "bc102a9b4afcfdf6e422e9b376d02823085bb0f3a4401be6c01dbb346296d81a",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-66-10-2011/TGlzdF9vZl9GT0Rfc3ViX3JlZ2lvbnNfbnNzb182Ni5kb2M="
+    },
+    {
+      "name": "nco_2004_CodeStructure.pdf",
+      "fileno": "bmNvXzIwMDRfQ29kZVN0cnVjdHVyZS5wZGY=",
+      "role": "doc",
+      "bytes": 471737,
+      "sha256": "9d6933ff0b13f476fc3ae4a8eb19e5498c7b2247850c9d75bda329238456927a",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-66-10-2011/bmNvXzIwMDRfQ29kZVN0cnVjdHVyZS5wZGY="
+    },
+    {
+      "name": "nic_2004_struc_detail.pdf",
+      "fileno": "bmljXzIwMDRfc3RydWNfZGV0YWlsLnBkZg==",
+      "role": "doc",
+      "bytes": 391518,
+      "sha256": "fb68d9511d257402d2d65db0ef1581ba85f0fce47ed5f4bf43bc11217b8505ca",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-66-10-2011/bmljXzIwMDRfc3RydWNfZGV0YWlsLnBkZg=="
+    },
+    {
+      "name": "No_FSUs_allotted_surveyed_no_persons_enumerated_nsso_66_sch_10.csv",
+      "fileno": "Tm9fRlNVc19hbGxvdHRlZF9zdXJ2ZXllZF9ub19wZXJzb25zX2VudW1lcmF0ZWRfbnNzb182Nl9zY2hfMTAuY3N2",
+      "role": "doc",
+      "bytes": 1905,
+      "sha256": "b6ed992e374f44fb035f5ff12a7b9678b637b40e0b0dde89ec45dcc96a8fc38f",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-66-10-2011/Tm9fRlNVc19hbGxvdHRlZF9zdXJ2ZXllZF9ub19wZXJzb25zX2VudW1lcmF0ZWRfbnNzb182Nl9zY2hfMTAuY3N2"
+    },
+    {
+      "name": "Nss66_10_new format.rar",
+      "fileno": "TnNzNjZfMTBfbmV3IGZvcm1hdC5yYXI=",
+      "role": "data",
+      "bytes": 51432015,
+      "sha256": "33c71b11b9ba7588b8fc6f321d73c468b30162d2259a797ec5dae124a600f7b2",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-66-10-2011/TnNzNjZfMTBfbmV3IGZvcm1hdC5yYXI="
+    },
+    {
+      "name": "ratelist_NSSO_MOSPI_GOI_UnitData_LAST_UPDATED_ON_25thJULY2011.pdf",
+      "fileno": "cmF0ZWxpc3RfTlNTT19NT1NQSV9HT0lfVW5pdERhdGFfTEFTVF9VUERBVEVEX09OXzI1dGhKVUxZMjAxMS5wZGY=",
+      "role": "doc",
+      "bytes": 206734,
+      "sha256": "a7ae85a216a0668d7e732eb84ec3d55751ea5dc437e85b785f595492b19a8182",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-66-10-2011/cmF0ZWxpc3RfTlNTT19NT1NQSV9HT0lfVW5pdERhdGFfTEFTVF9VUERBVEVEX09OXzI1dGhKVUxZMjAxMS5wZGY="
+    },
+    {
+      "name": "rdf-18.rdf",
+      "fileno": "cmRmLTE4LnJkZg==",
+      "role": "doc",
+      "bytes": 12562,
+      "sha256": "35c23d75b31298dab6520334368422e5c289b4f39a236bc2fa8c136ced911a96",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-66-10-2011/cmRmLTE4LnJkZg=="
+    },
+    {
+      "name": "Schedule_66_10.doc",
+      "fileno": "U2NoZWR1bGVfNjZfMTAuZG9j",
+      "role": "doc",
+      "bytes": 584704,
+      "sha256": "0fe7a95f1373ac549a6de43ed4c2964c11e251d8bee8358b5d818fb6bfc6db0b",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-66-10-2011/U2NoZWR1bGVfNjZfMTAuZG9j"
+    },
+    {
+      "name": "State code_66.doc",
+      "fileno": "U3RhdGUgY29kZV82Ni5kb2M=",
+      "role": "doc",
+      "bytes": 25600,
+      "sha256": "d30139ce1ddaf770e667831078716ac7159f77ba6504a1c6680be38943c1e8cf",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-66-10-2011/U3RhdGUgY29kZV82Ni5kb2M="
+    },
+    {
+      "name": "State_code_66.doc",
+      "fileno": "U3RhdGVfY29kZV82Ni5kb2M=",
+      "role": "doc",
+      "bytes": 25600,
+      "sha256": "d30139ce1ddaf770e667831078716ac7159f77ba6504a1c6680be38943c1e8cf",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-66-10-2011/U3RhdGVfY29kZV82Ni5kb2M="
+    }
+  ]
+}

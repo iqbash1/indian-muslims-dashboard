@@ -1,0 +1,14 @@
+{
+  "source_id": "nada-sas-agri-2019",
+  "target_id": "sas-agri-2019-microdata",
+  "idno": "DDI-IND-MOSPI-NSSO-77Rnd-Sch33.1-January2019-December2019",
+  "filename": "Round77sch331Data.rar",
+  "url": "https://microdata.gov.in/NADA/index.php/catalog/157",
+  "download_url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-77Rnd-Sch33.1-January2019-December2019/Um91bmQ3N3NjaDMzMURhdGEucmFy",
+  "pulled_at": "2026-06-11",
+  "content_length": 22359775,
+  "sha256": "cf1736241e3f3bb1ed3552b515016ca9081424ecaeedba1114e154846265923c",
+  "pull_method": "MoSPI NADA REST API (personal X-API-KEY header)",
+  "by_religion_verdict": "SAFE: agri-household income + land holding x religion (agricultural households only)",
+  "archival": "provenance-only: the unit-level file is NOT committed (kept local at ~/Desktop/nada-work/sas-agri-2019/). Re-fetch with the recipe in PROVENANCE.md and verify against this sha256. The schema/method docs in this directory ARE committed."
+}

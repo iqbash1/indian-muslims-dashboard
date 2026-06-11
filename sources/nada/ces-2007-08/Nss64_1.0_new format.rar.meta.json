@@ -1,0 +1,14 @@
+{
+  "source_id": "nada-ces-2007-08",
+  "target_id": "ces-2007-08-microdata",
+  "idno": "IND-NSSO-HCES-2007-v1",
+  "filename": "Nss64_1.0_new format.rar",
+  "url": "https://microdata.gov.in/NADA/index.php/catalog/116",
+  "download_url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/IND-NSSO-HCES-2007-v1/TnNzNjRfMS4wX25ldyBmb3JtYXQucmFy",
+  "pulled_at": "2026-06-11",
+  "content_length": 30191131,
+  "sha256": "97bde40d50e64a8562c54b385b1003bda42f62d2ddcd2458b5b3506d3178c7cb",
+  "pull_method": "MoSPI NADA REST API (personal X-API-KEY header)",
+  "by_religion_verdict": "SAFE: MPCE x religion",
+  "archival": "provenance-only: the unit-level file is NOT committed (kept local at ~/Desktop/nada-work/ces-2007-08/). Re-fetch with the recipe in PROVENANCE.md and verify against this sha256. The schema/method docs in this directory ARE committed."
+}

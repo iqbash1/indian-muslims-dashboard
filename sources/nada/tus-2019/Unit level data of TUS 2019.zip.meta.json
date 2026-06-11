@@ -1,0 +1,14 @@
+{
+  "source_id": "nada-tus-2019",
+  "target_id": "tus-2019-microdata",
+  "idno": "DDI-IND-CSO-TUS-2019-19",
+  "filename": "Unit level data of TUS 2019.zip",
+  "url": "https://microdata.gov.in/NADA/index.php/catalog/223",
+  "download_url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-CSO-TUS-2019-19/VW5pdCBsZXZlbCBkYXRhIG9mIFRVUyAyMDE5LnppcA==",
+  "pulled_at": "2026-06-11",
+  "content_length": 23259826,
+  "sha256": "e00ee09d15d7d38efe913484c141ba5f558999cfe4eb00950cfa6a5819a6783e",
+  "pull_method": "MoSPI NADA REST API (personal X-API-KEY header)",
+  "by_religion_verdict": "SAFE: time-use minutes x religion (niche new metric)",
+  "archival": "provenance-only: the unit-level file is NOT committed (kept local at ~/Desktop/nada-work/tus-2019/). Re-fetch with the recipe in PROVENANCE.md and verify against this sha256. The schema/method docs in this directory ARE committed."
+}

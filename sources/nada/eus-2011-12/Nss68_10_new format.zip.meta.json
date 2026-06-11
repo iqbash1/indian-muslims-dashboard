@@ -1,0 +1,14 @@
+{
+  "source_id": "nada-eus-2011-12",
+  "target_id": "eus-2011-12-microdata",
+  "idno": "DDI-IND-MOSPI-NSSO-68-10-2013",
+  "filename": "Nss68_10_new format.zip",
+  "url": "https://microdata.gov.in/NADA/index.php/catalog/127",
+  "download_url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-68-10-2013/TnNzNjhfMTBfbmV3IGZvcm1hdC56aXA=",
+  "pulled_at": "2026-06-11",
+  "content_length": 43124832,
+  "sha256": "c629c177be3a906bf63aedfd540883bcdfc3690d2d2163e63f4f1ce116808ccf",
+  "pull_method": "MoSPI NADA REST API (personal X-API-KEY header)",
+  "by_religion_verdict": "SAFE: employment x religion",
+  "archival": "provenance-only: the unit-level file is NOT committed (kept local at ~/Desktop/nada-work/eus-2011-12/). Re-fetch with the recipe in PROVENANCE.md and verify against this sha256. The schema/method docs in this directory ARE committed."
+}

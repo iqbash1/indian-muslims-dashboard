@@ -1,0 +1,14 @@
+{
+  "source_id": "nada-health-2014",
+  "target_id": "health-2014-microdata",
+  "idno": "DDI-IND-MOSPI-NSSO-71Rnd-Sch25pt0-Jan-June-2014",
+  "filename": "CSV_NSS71_Health_Jan_Jun2014.zip",
+  "url": "https://microdata.gov.in/NADA/index.php/catalog/135",
+  "download_url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-71Rnd-Sch25pt0-Jan-June-2014/Q1NWX05TUzcxX0hlYWx0aF9KYW5fSnVuMjAxNC56aXA=",
+  "pulled_at": "2026-06-11",
+  "content_length": 13537717,
+  "sha256": "fe82ee16c3d5219e57571f1d7a95fb6fc1eb91143326a4f512ccc9afbde306b2",
+  "pull_method": "MoSPI NADA REST API (personal X-API-KEY header)",
+  "by_religion_verdict": "SAFE for OOP health spending x religion; morbidity rate = avoid",
+  "archival": "provenance-only: the unit-level file is NOT committed (kept local at ~/Desktop/nada-work/health-2014/). Re-fetch with the recipe in PROVENANCE.md and verify against this sha256. The schema/method docs in this directory ARE committed."
+}

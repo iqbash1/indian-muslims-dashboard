@@ -1,0 +1,14 @@
+{
+  "source_id": "nada-housing-water-2012",
+  "target_id": "housing-water-2012-microdata",
+  "idno": "DDI-IND-MOSPI-NSSO-69Rnd-Sch1dot2-2012",
+  "filename": "Nss69_1.2_new format.rar",
+  "url": "https://microdata.gov.in/NADA/index.php/catalog/129",
+  "download_url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-69Rnd-Sch1dot2-2012/TnNzNjlfMS4yX25ldyBmb3JtYXQucmFy",
+  "pulled_at": "2026-06-11",
+  "content_length": 14863700,
+  "sha256": "4acc4c72384bed9b75ee81d01f89a44c9ffd66e2cc91e7c24d00ccf8f180975b",
+  "pull_method": "MoSPI NADA REST API (personal X-API-KEY header)",
+  "by_religion_verdict": "SAFE: housing/water/sanitation amenities x religion",
+  "archival": "provenance-only: the unit-level file is NOT committed (kept local at ~/Desktop/nada-work/housing-water-2012/). Re-fetch with the recipe in PROVENANCE.md and verify against this sha256. The schema/method docs in this directory ARE committed."
+}

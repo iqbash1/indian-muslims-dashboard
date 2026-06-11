@@ -1,0 +1,14 @@
+{
+  "source_id": "nada-ces-2006-07",
+  "target_id": "ces-2006-07-microdata",
+  "idno": "DDI-IND-MOSPI-NSSO-63Rnd-Sch1.0-2006-07",
+  "filename": "Household Consumer Expenditure, NSS 63rd Round July 2006 - June 2007_Csv.zip",
+  "url": "https://microdata.gov.in/NADA/index.php/catalog/114",
+  "download_url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-63Rnd-Sch1.0-2006-07/SG91c2Vob2xkIENvbnN1bWVyIEV4cGVuZGl0dXJlLCBOU1MgNjNyZCBSb3VuZCBKdWx5IDIwMDYgLSBKdW5lIDIwMDdfQ3N2LnppcA==",
+  "pulled_at": "2026-06-11",
+  "content_length": 69025236,
+  "sha256": "a28e87f48a921fd33fc745254bb76198003d7a941a581c0d63e6319448d387ec",
+  "pull_method": "MoSPI NADA REST API (personal X-API-KEY header)",
+  "by_religion_verdict": "SAFE: MPCE x religion",
+  "archival": "provenance-only: the unit-level file is NOT committed (kept local at ~/Desktop/nada-work/ces-2006-07/). Re-fetch with the recipe in PROVENANCE.md and verify against this sha256. The schema/method docs in this directory ARE committed."
+}

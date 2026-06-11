@@ -1,0 +1,14 @@
+{
+  "source_id": "nada-aidis-2013-v2",
+  "target_id": "aidis-2013-v2-microdata",
+  "idno": "DDI-IND-MOSPI-NSSO-70Rnd-Sch18pt2-Jan-Dec2013V2",
+  "filename": "NSS-70-18pt2-visit2_new_format.rar",
+  "url": "https://microdata.gov.in/NADA/index.php/catalog/132",
+  "download_url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-70Rnd-Sch18pt2-Jan-Dec2013V2/TlNTLTcwLTE4cHQyLXZpc2l0Ml9uZXdfZm9ybWF0LnJhcg==",
+  "pulled_at": "2026-06-11",
+  "content_length": 18131531,
+  "sha256": "a8c1caf51d9eda29676114709decd1425ab291bfa07f91d49b0db27d4a291c97",
+  "pull_method": "MoSPI NADA REST API (personal X-API-KEY header)",
+  "by_religion_verdict": "SAFE (verify rider): assets/liabilities x religion",
+  "archival": "provenance-only: the unit-level file is NOT committed (kept local at ~/Desktop/nada-work/aidis-2013-v2/). Re-fetch with the recipe in PROVENANCE.md and verify against this sha256. The schema/method docs in this directory ARE committed."
+}

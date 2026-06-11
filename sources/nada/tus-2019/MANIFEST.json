@@ -1,0 +1,55 @@
+{
+  "idno": "DDI-IND-CSO-TUS-2019-19",
+  "base": "https://microdata.gov.in/NADA/index.php/api",
+  "pulled_at": "2026-06-11T06:25:43.258283+00:00",
+  "files": [
+    {
+      "name": "Data_Layout_TUS106.xls",
+      "fileno": "RGF0YV9MYXlvdXRfVFVTMTA2Lnhscw==",
+      "role": "doc",
+      "bytes": 53760,
+      "sha256": "8a19b7af9e86a2945d90b9daa31ea2bc0a6a989dfd951ea03aec868db899fe05",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-CSO-TUS-2019-19/RGF0YV9MYXlvdXRfVFVTMTA2Lnhscw=="
+    },
+    {
+      "name": "DDI-IND-CSO-TUS-2019-19.xml",
+      "fileno": "RERJLUlORC1DU08tVFVTLTIwMTktMTkueG1s",
+      "role": "doc",
+      "bytes": 487078,
+      "sha256": "b7d9f47fc235a7d1d06912b17fa931bb67dc6c93731b45dcd690c10a29e2b7d0",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-CSO-TUS-2019-19/RERJLUlORC1DU08tVFVTLTIwMTktMTkueG1s"
+    },
+    {
+      "name": "Estimation procedure_TUS.pdf",
+      "fileno": "RXN0aW1hdGlvbiBwcm9jZWR1cmVfVFVTLnBkZg==",
+      "role": "doc",
+      "bytes": 497371,
+      "sha256": "ab9cf338a2ffd6a4c064b82212599dddd677159450b0eb9f648d280b35404644",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-CSO-TUS-2019-19/RXN0aW1hdGlvbiBwcm9jZWR1cmVfVFVTLnBkZg=="
+    },
+    {
+      "name": "README_TUS106.pdf",
+      "fileno": "UkVBRE1FX1RVUzEwNi5wZGY=",
+      "role": "doc",
+      "bytes": 640144,
+      "sha256": "27101fbd46345c3f05134ebeeff63aec520d9d4b5764684dd7ab5be7321d6258",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-CSO-TUS-2019-19/UkVBRE1FX1RVUzEwNi5wZGY="
+    },
+    {
+      "name": "State_District_List_TUS.pdf",
+      "fileno": "U3RhdGVfRGlzdHJpY3RfTGlzdF9UVVMucGRm",
+      "role": "doc",
+      "bytes": 233994,
+      "sha256": "904e135decd9c732f1f75a9a17f7c6999c2699ac5d3621b0e3bc4ea768770d17",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-CSO-TUS-2019-19/U3RhdGVfRGlzdHJpY3RfTGlzdF9UVVMucGRm"
+    },
+    {
+      "name": "Unit level data of TUS 2019.zip",
+      "fileno": "VW5pdCBsZXZlbCBkYXRhIG9mIFRVUyAyMDE5LnppcA==",
+      "role": "data",
+      "bytes": 23259826,
+      "sha256": "e00ee09d15d7d38efe913484c141ba5f558999cfe4eb00950cfa6a5819a6783e",
+      "url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-CSO-TUS-2019-19/VW5pdCBsZXZlbCBkYXRhIG9mIFRVUyAyMDE5LnppcA=="
+    }
+  ]
+}

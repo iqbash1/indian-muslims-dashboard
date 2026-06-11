@@ -1,0 +1,8 @@
+16bab2872faf88f7247898225058c4d559477b16f778d84176231c1d1349795a  Chapter-1_60.pdf  (326761 bytes, doc)
+90d8196e22c0cfcbf9ae7a8bf49e23b3443268445f76483bd7aad4201e567ba3  Chapter-2_60_25.0.pdf  (379732 bytes, doc)
+dfac209bcd52a4eb1a363cb649527b2c49da8f07baefdfd0937245ad6213adc1  Chapter-5_60_25.0.pdf  (401597 bytes, doc)
+0ea82b28d1293acce74736dd892cd8972d2cb369b4d1079166076e6e3596c1cc  Data_CSV.zip  (18814173 bytes, data)
+58d9c73ca0078bb6307adbc58624c8a6b6aceaeb2fb0a28d13d2e824868c743a  FOD sub-regions.pdf  (45894 bytes, doc)
+08704b682a7b785d611cbd73757662ac29ef6e0f37eaa010999d6775b6a95572  IHSN Study Report-NSS60R-Schedule 25.0-Morbidity-Healthcare.pdf  (1052613 bytes, doc)
+34e0ccc8c57800c2181a1b1d7943831838f0f87beaca7f9bca5b16c58d98c202  Schedule_60_25.0.pdf  (322055 bytes, doc)
+6399bb25717467a0dc66d60b86fcc08f8e5fa1a85cd94a96e9cbf212441aaf57  State codes from 58th Round onwards.pdf  (4324 bytes, doc)

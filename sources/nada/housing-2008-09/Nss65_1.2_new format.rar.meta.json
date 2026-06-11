@@ -1,0 +1,14 @@
+{
+  "source_id": "nada-housing-2008-09",
+  "target_id": "housing-2008-09-microdata",
+  "idno": "DDI-IND-MOSPI-NSSO-65Rnd-Sch1dot2-2008-09",
+  "filename": "Nss65_1.2_new format.rar",
+  "url": "https://microdata.gov.in/NADA/index.php/catalog/120",
+  "download_url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-65Rnd-Sch1dot2-2008-09/TnNzNjVfMS4yX25ldyBmb3JtYXQucmFy",
+  "pulled_at": "2026-06-11",
+  "content_length": 15614568,
+  "sha256": "c92c62d92c861c099eabf7cd5f770c26222eb4891f8f9cac759ba22ef8d88f20",
+  "pull_method": "MoSPI NADA REST API (personal X-API-KEY header)",
+  "by_religion_verdict": "SAFE: housing amenities x religion",
+  "archival": "provenance-only: the unit-level file is NOT committed (kept local at ~/Desktop/nada-work/housing-2008-09/). Re-fetch with the recipe in PROVENANCE.md and verify against this sha256. The schema/method docs in this directory ARE committed."
+}
