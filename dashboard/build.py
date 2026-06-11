@@ -4758,6 +4758,14 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
         elif mid == "salaried-share":
             fold, fjs = _folded_view("earnings", cvid + "-earnings")
             details, fold_js = fold + details, [fjs]
+        elif mid == "lfpr-15plus":
+            # The "Working vs looking" fold (Commit ET) must ride the TREND
+            # branch: when EW turned lfpr into a 7-round trend card, the
+            # snapshot-era wiring stopped running and the tab silently
+            # vanished while its share stub + OG image kept shipping
+            # (restored in Commit FF; audit_consistency Check C now guards
+            # the tab <-> share-link bijection).
+            details = _employment_combined_views() + details
     else:
         # SNAPSHOT card (single round / no time dimension): latest-year
         # community bars with the All-India dashed baseline.
@@ -4794,10 +4802,6 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
             # ger merges its GER rate with the decarded Muslim student counts into
             # ONE "By state" + ONE "By sex" tab (was four parallel rate/count tabs).
             details = _ger_combined_views()
-        elif mid == "lfpr-15plus":
-            # lfpr leads with a "Working vs looking" tab folding in the decarded
-            # worker population ratio (wpr-15plus), then keeps by-sex + urban/rural.
-            details = _employment_combined_views() + _sex_details(mid, unit)
         elif mid in _SNAPSHOT_HOST_FOLDS:
             # Snapshot hosts lead with their folded companion card's tab
             # (Commit FE), then keep their own drill-downs.

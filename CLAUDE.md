@@ -46,6 +46,12 @@ not ad-hoc scripts: metric metadata in `manifest/metrics.yaml`, sources in
   shareable `/m/{id}/{view}/` URL + OG image and a share popover; the card face
   shows only the main chart + a "More views" hint. Don't move drill-downs back
   onto the card face, and respect `prefers-reduced-motion`.
+- **Every modal tab has a unique share link with OG, both directions** (user
+  rule, Commit FF): tab ↔ `/m/{id}/{view}/` stub ↔ `/og/{id}-{view}.png` must
+  stay bijective; no tab without a stub+OG, no stub/OG outliving its tab.
+  `audit_consistency.py` Check C enforces this in CI (it would have caught EW
+  silently dropping lfpr's "Working vs looking" tab while its stub kept
+  shipping).
 
 ## Editing gotchas
 - Card prose lives in **3 places** — keep in sync: `manifest/metrics.yaml`
