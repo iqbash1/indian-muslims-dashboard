@@ -31,6 +31,16 @@ not ad-hoc scripts: metric metadata in `manifest/metrics.yaml`, sources in
   use maroon for chrome.
 - **No em dashes or en dashes** in user-visible text — commas/colons/hyphens only.
 - **Indian English** (anaemia, labour). Charts never force a zero baseline.
+- **Indian money (Commit FC):** currency is `INR`, never `Rs`; one lakh and up
+  display as `INR 9.2 lakh` / `INR 1.4 crore` (`_inr_str` in build.py + JS
+  `_inNum`); below that, Indian digit grouping (`3,26,819`, `_in_group`).
+- **Minimal card faces (FC):** the plain-English definition paragraph is hidden
+  on the grid (`.cards .card-plain{display:none}`) and shows only as the modal
+  lead; faces are label + hero + chart + pills. Cards stretch to equal height.
+- **Time series from 2 rounds up (FD):** the card-face chart plots over time
+  whenever canonical has 2+ years (break_flag renders the line dashed);
+  single-round cards show the community snapshot. Jargon stays out of
+  `definition` blocks (methodology_notes carry the survey mechanics).
 - Every value traces to a primary source with a SHA256-archived L1 file.
 - **Per-metric views are MODAL TABS** (by state/sex/district), each with its own
   shareable `/m/{id}/{view}/` URL + OG image and a share popover; the card face
