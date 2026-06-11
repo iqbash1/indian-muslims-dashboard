@@ -56,29 +56,24 @@ def _curl_text(url, key, timeout=120):
 
 
 def _curl_download(url, key, dest, timeout=14400):
-    # Resumable + stall-detecting: -C - continues a partial file (the gov server
-    # can drop to ~50KB/s, so a fixed cap is wrong for 100MB+ files); abort only
-    # if throughput stays under 1KB/s for 3 minutes, with a 4h hard ceiling.
-    cmd = ["curl", "-sS", "--location", "-C", "-",
+    # The NADA server does NOT support HTTP Range (curl -C - dies with rc 33 on
+    # any mid-transfer retry), so no resume: each attempt is a clean restart.
+    # Stall detection instead of a tight cap: abort only if throughput stays
+    # under 1KB/s for 3 minutes, with a 4h hard ceiling for the ~50KB/s days.
+    cmd = ["curl", "-sS", "--location",
            "--speed-limit", "1024", "--speed-time", "180",
            "--max-time", str(timeout), *_RESIL,
            "-o", dest, "-w", "%{http_code} %{size_download}", "-K", "-", url]
     r = subprocess.run(cmd, input=_cfg(key), text=True, capture_output=True)
     info = (r.stdout or "").strip().split()
     code = info[0] if info else "?"
-    # 206 = resumed range; 416 = "range not satisfiable" i.e. the local file is
-    # already complete (curl -C - at EOF) - success, do NOT delete it.
-    ok = (r.returncode == 0 and code in ("200", "206")) or (
-        code == "416" and os.path.exists(dest) and os.path.getsize(dest) > 0)
+    ok = (r.returncode == 0 and code == "200")
     if not ok:
         sys.stderr.write(f"  !! HTTP {code} (curl rc={r.returncode}) {os.path.basename(dest)} "
                          f"{r.stderr[:160].strip()}\n")
-        # Keep a mid-transfer partial (code 000/200/206) so the next run resumes;
-        # delete only a real HTTP-error body (4xx/5xx page), which must not be
-        # resumed into.
-        if os.path.exists(dest) and code.isdigit() and code >= "400":
+        if os.path.exists(dest):
             try:
-                os.remove(dest)
+                os.remove(dest)   # partials are useless without Range support
             except OSError:
                 pass
     return ok
