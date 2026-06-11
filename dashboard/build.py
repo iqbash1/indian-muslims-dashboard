@@ -4428,10 +4428,10 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
                        comp_type="vs-hindu")
     if rank:
         comps += _comp("among communities", f"{_ordinal(rank)} of {n}", _tier_word(tier), tier)
-    # 3+ rounds: multi-line trend chart. 2 rounds: too thin to be a "trend" —
-    # show the latest-year community snapshot + a "Since {y0}" delta pill.
-    # 1 round / no time dim: snapshot only.
-    if len(years) >= 3:
+    # 2+ rounds: multi-line time-series chart (a 2-point line still shows
+    # direction and the community gap at both ends, which a snapshot hides).
+    # 1 round / no time dim: latest-year community snapshot.
+    if len(years) >= 2:
         # TIME SERIES card: every named community over rounds, Muslim highlighted,
         # All-India dashed baseline; latest-year community ranking shown via the
         # end-of-line labels on the chart itself (no redundant details table).
@@ -4453,24 +4453,8 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
         # simply gets fewer tabs.
         details = _state_details(mid, unit) + _sex_details(mid, unit)
     else:
-        # SNAPSHOT card: latest-year community bar with All-India dashed baseline.
-        # If we have a 2-point time series, surface the Muslim Δ as a comparison pill.
-        if len(years) == 2 and "muslim" in series:
-            mfirst = series["muslim"].get(years[0])
-            mlast = series["muslim"].get(years[-1])
-            if mfirst is not None and mlast is not None:
-                delta = mlast - mfirst
-                arrow = "↑" if delta > 0 else ("↓" if delta < 0 else "→")
-                if unit in ("inr_per_month", "inr_per_year", "inr"):
-                    # money deltas in Indian format ("INR 3,820"; lakh/crore above)
-                    d_txt, lo_txt, hi_txt = (_inr_str(abs(delta)),
-                                             _inr_str(mfirst), _inr_str(mlast))
-                else:
-                    d_txt = f"{_round_str(abs(delta), _disp_dp(unit))}{suffix}"
-                    lo_txt = f"{_round_str(mfirst, _disp_dp(unit))}{suffix}"
-                    hi_txt = f"{_round_str(mlast, _disp_dp(unit))}{suffix}"
-                comps += _comp(f"Since {years[0]}", f"{arrow} {d_txt}",
-                               f"{lo_txt} → {hi_txt}", "mid")
+        # SNAPSHOT card (single round / no time dimension): latest-year
+        # community bars with the All-India dashed baseline.
         pairs = [(COMMUNITY_LABEL[c], nat[c], c == "muslim") for c in named]
         if hib is not None:
             pairs.sort(key=lambda b: b[1], reverse=bool(hib))
