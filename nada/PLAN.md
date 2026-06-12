@@ -38,7 +38,7 @@ Verdict key: **SAFE** = intended cross-tab, publish with the standard caveat ·
 **AMBER** = safe only for the spending/target angle, avoid the demographic angle ·
 **verify** = confirm against that survey's own Rider on download.
 
-### PLFS — labour (BANK PRIORITY P1)
+### PLFS — labour (SHIPPED: Commits EW/EX; pre-PLFS EUS history added in FN)
 Consistent **July-June 7-round series**: `2017-18` (204), `2018-19` (216), `2019-20` (217),
 `2020-21` (206), `2021-22` (214), `2022-23` (210), `2023-24` (213).
 - **Updates** `lfpr-15plus`, `wpr-15plus`, `salaried-share`: single-year -> **7-point trends.**
@@ -50,7 +50,7 @@ Consistent **July-June 7-round series**: `2017-18` (204), `2018-19` (216), `2019
 - Calendar-year PLFS variants exist (209/211/208/284/254/291/292) but mixing CY with
   July-June corrupts the trend — **stick to July-June**; latest is 2023-24 (213).
 
-### AIDIS — wealth / assets (P1 latest, P3 history)
+### AIDIS — wealth / assets (SHIPPED: 2013 cards EY-FB, 2012->2018 trend FM; 2003/1992 history Nesstar-blocked)
 Debt & Investment: `2018-19` 77th (156, Visit 1+2) · `2013` 70th V1 (130) / V2 (132) ·
 `2003` 59th (103) · `1992` 48th (70).
 - **Adds** a NEW **wealth-disparity card** — Muslim household net worth / asset ownership /
@@ -59,7 +59,7 @@ Debt & Investment: `2018-19` 77th (156, Visit 1+2) · `2013` 70th V1 (130) / V2 
   by religion than PLFS, so confirm AIDIS's own Rider). `2013 -> 2018-19` = a 2-point trend;
   2003 / 1992 optional deeper history. Truest "wealth" measure (stock, not the MPCE flow).
 
-### HCES — consumption / MPCE (P1 for 2022-23)
+### HCES — consumption / MPCE (2023-24 SHIPPED: EV/EO/EY; 2022-23 mid-point BLOCKED, Nesstar-only)
 `2023-24` (237, **already banked locally**, 244MB) · `2022-23` (224) · `2007-08` (116).
 - **Updates** the `mpce` **By-state tab to CURRENT** (replace Sachar 2004-05 with 2023-24
   state x religion — fixes a *live staleness*: the card hero is already 2023-24 but the
@@ -68,14 +68,14 @@ Debt & Investment: `2018-19` 77th (156, Visit 1+2) · `2013` 70th V1 (130) / V2 
 - **Adds** a **2022-23 mid-point** (2004 -> 2022-23 -> 2023-24) + optional food-share /
   poverty-headcount by religion. Target = MPCE -> **SAFE** (proven).
 
-### Health Social Consumption — out-of-pocket spending (P2)
+### Health Social Consumption — out-of-pocket spending (P2; 2017-18 TXT mirror UNLOCKED + banked 2026-06-11)
 `2025` (290) · `2017-18` 75th (152) · `2014` 71st (135).
 - **Adds** a NEW **out-of-pocket / catastrophic health expenditure by religion** metric
   (complements the NFHS health cards with a *spending* angle).
 - Target = health spending -> **SAFE**. Morbidity / hospitalisation *rate* by religion =
   **AMBER** -> avoid; publish the spending angle only.
 
-### Education Social Consumption — out-of-pocket spending (P2)
+### Education Social Consumption — out-of-pocket spending (P2; 2017-18 TXT mirror UNLOCKED + banked 2026-06-11)
 CMSE `2025` 80th (255) · `2017-18` 75th (151) · `2014` (136).
 - **Adds** a NEW **education expenditure / cost-of-schooling by religion** metric.
 - Target = education spending -> **SAFE**. Literacy / GER / attendance by religion from

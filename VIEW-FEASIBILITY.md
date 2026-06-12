@@ -64,7 +64,9 @@ SKIPPED, with reason (source does not support a worthwhile view):
   level EVERY round; the consistent 15+ July-June series for 7 rounds (2017-18 ->
   2023-24) is now LIVE on lfpr-15plus / wpr-15plus / salaried-share (microdata rows
   2017-2022 + the published-table 2023 point; see docs/runbooks/plfs-microdata.md).
-  A new unemployment-by-religion metric remains buildable from the same L2.**]
+  The unemployment-by-religion metric SHIPPED in Commit EX, and Commit FN stretched
+  all four employment series back to 2004 via the three quinquennial EUS rounds
+  (nada/eus-layout-map.md), with the EUS->PLFS design break flagged at 2017.**]
 - **Census by-age + generic by-district**: needs new `_age_details` builder + an age_group
   schema column (HIGH effort, deferred; not attempted in this sweep).
 

@@ -110,9 +110,14 @@ The dashboard never queries an external source live and never reads L1/L2 direct
 | **Census decadal religion** *(superseded)* | Former manual-entry source for pop-share 1961-1991 | 10-year | superseded by the RGI primary volumes above; kept registered for cross-validation |
 | **Sachar Committee 2006** | MPCE (monthly spending per person) by religion, NSS 61st round 2004-05 — feeds the `mpce` metric | one-off (2006) | Full report PDF archived; also a sex-ratio cross-validation reference (AT 3.8) |
 | **NFHS-2 / 3 / 4 / 5 (1998-99 → 2019-21)** | IMR, institutional delivery, women's anaemia — by religion, 4 rounds (time series); stunting + sanitation single-round | ~5-year (NFHS-6 in field) | all 4 round reports archived; 5 metrics extracted |
-| **PLFS 2023-24** | LFPR, WPR, salaried-share by religion | Annual | 2 reports archived; 3 metrics extracted |
+| **PLFS 2023-24** | LFPR, WPR, salaried-share by religion (the trends' published current-year anchor) | Annual | 2 reports archived; 4 employment metrics |
+| **PLFS microdata 2017-24** | 7 rounds of unit-level data — the 15+ employment-by-religion trend + unemployment rate + salaried earnings (never published by religion) | Annual | zips local, sha256 + docs in sources/nada/plfs-* |
+| **EUS microdata 2004-12** | The 3 quinquennial pre-PLFS rounds (NSS 61st/66th/68th) — stretch the employment trends back to 2004; gated on NSS Reports 568/552 | discontinued (PLFS replaced it) | zips local, provenance in sources/nada/eus-* |
 | **AISHE 2021-22** | Higher-education enrolment by religion | Annual | 2 reports archived; 2 metrics extracted (count + GER cross-source) |
-| **HCES 2022-23** | Consumption expenditure (MPCE) — by religion needs unit-level | ~5-year | 3 reports archived; metric blocked on unit-level processing (documented in runbook) |
+| **HCES 2023-24** | MPCE by religion (card hero + By-state tab), top-spending-fifth distribution | Annual (new series) | unit-level CSV zip local; 2 metrics computed with validation gates |
+| **HCES 2022-23** | Would add an mpce mid-point — BLOCKED: NADA ships only a proprietary .Nesstar binary and no TXT mirror exists (React-era release) | ~annual | 3 reports archived; unlock = Nesstar Explorer in a Windows VM |
+| **AIDIS 2013 + 2019 (NSS 70th/77th)** | Household net worth + institutional borrowing share by religion, 2012→2018 trend | roughly decennial | 2013 CSV via NADA API; 2019 via MoSPI's surviving TXT mirror (NSS7718/), both validated to the rupee |
+| **NSS 76th Sch 1.2 (2018)** | Housing pillar: water-at-premises, electricity, pucca housing by religion | irregular | TXT mirror archived (NSS7612dws/); 3 metrics, validation gate vs Report 584 |
 | **NCRB PSI 2018-2023** | Prison + undertrial population by religion — multi-year share trend | Annual (~2y lag) | 6 years archived; rate-per-100k incarceration card (undertrial rate as its tab) + 2 share trend reference series |
 | **NCRB CII 2015-2023** | Communal incidents by state | Annual (~2y lag) | per-table + main reports archived; 9-year national series |
 | **PRS / ECI affidavits** *(secondary)* | Lok Sabha + state MLA Muslim shares — manual-entry from journalistic compilations | Per-election | 18-point LS series 1952→2024; 31 state/UT assemblies covered |

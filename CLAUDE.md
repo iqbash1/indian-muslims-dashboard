@@ -108,21 +108,28 @@ not ad-hoc scripts: metric metadata in `manifest/metrics.yaml`, sources in
   `ls-share`) was REVERTED in Commit FJ at the user's call: Lok Sabha and
   state assemblies stay separate cards (the two gaps are distinct stories);
   the per-assembly table is mla-share's own "By assembly" tab.
-- The employment cards are 7-round PLFS trends (2017-18 to 2023-24) from NADA
-  unit-level microdata (Commit EW; recipe in docs/runbooks/plfs-microdata.md +
-  nada/plfs-layout-map.md); `unemployment-rate-15plus` (Commit EX) and
+- The employment cards are two-decade trends: 3 quinquennial EUS rounds
+  (2004/2009/2011, Commit FN; the 64th round is excluded - no published
+  by-religion anchors) + 7 PLFS rounds (2017-18 to 2023-24, Commit EW), with
+  break_flag=true on the 2017 rows (EUS->PLFS design break, dashes the
+  line). Recipes: docs/runbooks/plfs-microdata.md + nada/plfs-layout-map.md
+  + nada/eus-layout-map.md. `unemployment-rate-15plus` (Commit EX) and
   `salaried-earnings` (EZ) are microdata in ALL years (the report PDFs never
-  publish UR or earnings by religion). mpce's By-state tab is HCES 2023-24
-  microdata (Commit EV). Raw zips stay LOCAL at ~/Desktop/nada-work/ (sha256 +
-  docs committed in sources/nada/).
+  publish UR or earnings by religion; salaried-earnings stays PLFS-only).
+  mpce's By-state tab is HCES 2023-24 microdata (Commit EV). Raw zips stay
+  LOCAL at ~/Desktop/nada-work/ (sha256 + docs committed in sources/nada/).
 - The microdata-sprint metrics (EY-FB, all single-source computed-by-religion
   with hard validation gates vs published figures): `top-quintile-share` (HCES
   quintile distribution), `household-net-worth` + `institutional-credit-share`
-  (AIDIS 2013; the 2019 round is Nesstar-blocked, anchors recorded in
-  nada/aidis-layout-map.md), and the housing pillar `improved-water-premises` /
-  `household-electricity` / `pucca-house` (NSS 76th 2018 via the unlinked
-  mospi.gov.in TXT mirror - see docs/runbooks/nss76-housing.md; NADA ships only
-  a .Nesstar binary). Housing findings INVERT the gap pattern (Muslim at/above
-  Hindu) - that is the data, keep it.
+  (AIDIS 2013 -> 2019 trends since Commit FM: the 2019 round's NADA copy is a
+  Nesstar binary but MoSPI's original TXT survives at
+  mospi.gov.in/sites/default/files/NSS7718/, provenance in
+  sources/nss77-aidis/), and the housing pillar `improved-water-premises` /
+  `household-electricity` / `pucca-house` (NSS 76th 2018 via the same kind of
+  unlinked TXT mirror - see docs/runbooks/nss76-housing.md). The
+  mirror-hunt trick (Wayback the deleted Drupal page, mospi.NIC.in twin if
+  gov.in was never crawled) also unlocked health/education 75th, SAS 2019
+  and disability 76th - banked locally, unbuilt. Housing findings INVERT
+  the gap pattern (Muslim at/above Hindu) - that is the data, keep it.
 - sex-ratio + pop-share are primary RGI census 1961-2011; Sachar Committee feeds
   the `mpce` metric (not sex-ratio anymore).

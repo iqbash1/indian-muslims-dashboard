@@ -719,11 +719,13 @@ sources:
     home_url: https://www.mospi.gov.in/
     cadence: ~5-year planned
     cadence_notes: |
-      First major round since 2011-12. 2023-24 round already in field.
+      First major round since 2011-12; the 2023-24 round (a separate live
+      source, hces-2023-24) already feeds the mpce card. This round would
+      add an mpce mid-point but is BLOCKED at the unit-level step.
     access:
       method: web-download
       auth_required: false
-    formats: [pdf, csv]
+    formats: [pdf]
     religion_disaggregated: true
     geography_levels: [national, state]
     coverage:
@@ -732,7 +734,8 @@ sources:
       - poverty_proxies
     known_issues:
       - "Methodology revised from 2011-12 (questionnaire redesign); not directly comparable"
-      - "Religion crosstabs in factsheet; full crosstabs require unit-level"
+      - "Religion is collected but published tables stop at sector/state/social-group/fractile; the by-religion mid-point needs unit-level data"
+      - "Unit-level BLOCKED (verified 2026-06-11): NADA id 224 ships only a 2.5GB proprietary .Nesstar binary; no mospi.gov.in TXT mirror exists (post-Drupal 2024 release); unlock = Nesstar Explorer in a Windows VM (zip banked local, sha256 in sources/nada/hces-2022-23/)"
     archive_dir: sources/hces-2022-23/
     runbook: docs/runbooks/hces-2022-23.md
     last_pulled: null
