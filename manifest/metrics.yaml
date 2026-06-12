@@ -1126,13 +1126,15 @@ metrics:
 
   # ----- Representation (Phase 2) -----
   - id: ls-share
-    name: Muslim share of the Lok Sabha
+    name: Muslims in the Lok Sabha
     cluster: representation
     unit: percent
     higher_is_better: null
     definition: |
-      Percentage of Lok Sabha members who are Muslim, by election cycle.
-      Historical series covering all 18 general elections, 1952-2024.
+      How many of the 543 seats in India's national parliament (Lok Sabha)
+      are held by Muslim MPs, counted at every general election since 1952.
+      At the community's 14.2% population share, parity would be 77 seats;
+      the count peaked at 49 in 1980 and stands at 24 today.
     sources: {primary: prs-eci-affidavits}
     geography_levels: [national]
     religions: [muslim]
@@ -1145,19 +1147,24 @@ metrics:
       "manual entry" canonical with citations in each row's methodology note.
       The series covers all 18 general elections, 1952-2024: the 1952-2004
       figures are from historical compilations (The India Forum, Statista), 2009
-      onward cross-verified across the sources above. Representation peaked near
-      9% in 1980 and has sat around 4-5% since 2014: 2009=28/543 (5.2%),
-      2014=22/543 (4.1%), 2019=27/543 (5.0%), 2024=24/543 (4.4%). Compare
-      against the Muslim population share of ~14.2%, a chronic 9-10pp
-      underrepresentation. The state-assembly layer of the same
-      affidavit-classified sourcing is the separate "Muslim share of state
-      assemblies" card (about 6% of seats across the 31 covered assemblies).
+      onward cross-verified across the sources above. The card displays the
+      absolute number of Muslim MPs per house (user call, Commit FW: counts
+      read more directly than shares); the percentage rides in the canonical
+      data, where the denominator record carries each house's N-of-M seat
+      count, and house sizes ranged from 489 (1952) to 543 (since 1996).
+      Representation peaked at 49 MPs (9%) in 1980 and has sat between 22
+      and 27 since 2014: 2009=28/543, 2014=22/543, 2019=27/543, 2024=24/543.
+      At the Muslim population share of ~14.2%, parity in the current house
+      would be 77 seats, a chronic shortfall of about 50 seats. The
+      state-assembly layer of the same affidavit-classified sourcing is the
+      separate "Muslim share of state assemblies" card (about 6% of seats
+      across the 31 covered assemblies).
     comparison_baselines: []
     phase: 2
     status: defined
     display:
       scorecard:
-        label: "Lok Sabha Muslim share"
+        label: "Muslims in the Lok Sabha"
         reference: null
         unit_format: percent
         higher_is_better: null
@@ -1174,6 +1181,8 @@ metrics:
       National aggregate (~6%) plus per-assembly values for all 31
       state + UT assemblies that hold elections (28 states + Delhi,
       Puducherry, J&K, most-recent election per assembly, spanning 2020-2026).
+      The grey tick on each state's bar marks its Muslim population share
+      (Census 2011), so representation reads directly against presence.
     sources: {primary: prs-eci-affidavits}
     geography_levels: [national, state]
     religions: [muslim]
@@ -1188,7 +1197,10 @@ metrics:
       Lowest: HP / Goa / Mizoram / Nagaland / Sikkim / Arunachal /
       Chhattisgarh / Tripura / Meghalaya, all 0% (most have never elected a
       Muslim MLA in state history). Each row's methodology_note cites the
-      source compilation(s) used.
+      source compilation(s) used. The per-state population context (the grey
+      ticks and the By-assembly table's population column) is the Census 2011
+      Muslim share: the J&K figure includes pre-2019 Ladakh, and Telangana
+      has no separate 2011 figure (it was part of undivided Andhra Pradesh).
     comparison_baselines: []
     phase: 2
     status: defined

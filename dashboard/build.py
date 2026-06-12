@@ -343,7 +343,9 @@ def render_scorecard_rows() -> str:
             rows.append(((1, 0.0), row_html))
             continue
 
-        # Special case: ls-share / mla-share — national row, gap vs 14.23% pop share
+        # Special case: ls-share / mla-share — national row, gap vs 14.23% pop share.
+        # ls-share reads in absolute seats (Commit FW); mla-share stays a share
+        # (its aggregate spans assemblies of different sizes).
         if mid in ("ls-share", "mla-share"):
             data = load_metric(mid)
             # Filter to national row for the latest year
@@ -354,15 +356,24 @@ def render_scorecard_rows() -> str:
             m_val = float(latest["value"])
             year = latest["year"]
             gap = m_val - MUSLIM_POP_SHARE
-            sign = "+" if gap > 0 else ""
+            seats = _ls_seats() if mid == "ls-share" else []
+            if seats:
+                mps, total = seats[-1][1], seats[-1][2]
+                parity = round(MUSLIM_POP_SHARE / 100 * total)
+                val_cell = f"{mps} of {total} seats"
+                gap_cell = f"{mps - parity:+d} seats vs {parity}-seat parity (14.2% pop)"
+            else:
+                sign = "+" if gap > 0 else ""
+                val_cell = f"{_round_str(m_val, 1)}%"
+                gap_cell = f"{sign}{_round_str(gap, 1)}pp vs {_round_str(MUSLIM_POP_SHARE, 1)}% pop"
             row_html = (
                 f'<tr>'
                 f'<td>{html.escape(name)}</td>'
                 f'<td>{year}</td>'
-                f'<td>{_round_str(m_val, 1)}%</td>'
+                f'<td>{val_cell}</td>'
                 f'<td>n/a</td>'
                 f'<td>n/a</td>'
-                f'<td class="{"gap-bad" if gap < 0 else "gap-good"}">{sign}{_round_str(gap, 1)}pp vs {_round_str(MUSLIM_POP_SHARE, 1)}% pop</td>'
+                f'<td class="{"gap-bad" if gap < 0 else "gap-good"}">{gap_cell}</td>'
                 f'</tr>'
             )
             rows.append(((0, -abs(gap) / MUSLIM_POP_SHARE), row_html))
@@ -748,6 +759,10 @@ TEMPLATE = """<!DOCTYPE html>
   td.tbar-cell { text-align: left; white-space: nowrap; }
   .tbar { display: inline-block; height: 13px; background: rgba(123,29,34,.16); border-radius: 2px; vertical-align: -2px; }
   .tbar-val { margin-left: 6px; }
+  /* Bar + per-row reference tick share one scale inside the wrapper. */
+  .tbar-wrap { position: relative; display: inline-block; width: 70%; height: 13px; vertical-align: -2px; }
+  .tbar-wrap .tbar { display: block; height: 100%; vertical-align: baseline; }
+  .tbar-mark { position: absolute; top: -2px; bottom: -2px; width: 2px; background: #555555; border-radius: 1px; }
   .scorecard-table .gap-bad { color: var(--negative); font-weight: 600; }
   .scorecard-table .gap-good { color: var(--positive); font-weight: 600; }
   .scorecard-table .gap-neutral { color: var(--muted); }
@@ -1342,8 +1357,11 @@ function _refLine(refValue, refLabel) {
 const CHART_SPECS = {};
 function _spec(id, fnName, args) { CHART_SPECS[id] = { fnName, args }; }
 
-function hbar(id, labels, values, colors, suffix, decimals, refValue, refLabel, beginAtZero) {
+function hbar(id, labels, values, colors, suffix, decimals, refValue, refLabel, beginAtZero, marks, markLabel) {
   _spec(id, 'hbar', Array.from(arguments).slice(1));
+  // marks: optional per-bar reference values (e.g. each state's Muslim
+  // population share) drawn as a grey tick across the bar's band; the bar
+  // tooltip then carries both numbers. null entries draw nothing.
   // beginAtZero defaults to false (house style: bars hug the data so
   // community differences stay visible). Pass true when the bars are a
   // magnitude comparison where a non-zero baseline would exaggerate the
@@ -1366,17 +1384,38 @@ function hbar(id, labels, values, colors, suffix, decimals, refValue, refLabel, 
     options: {
       indexAxis: 'y', responsive: true, maintainAspectRatio: false, animation: false,
       layout: { padding: { right: hPad, top: 14 } },
-      plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => _fmtVal(c.parsed.x, suffix, decimals) } } },
+      plugins: { legend: { display: false }, tooltip: { callbacks: {
+        label: (c) => _fmtVal(c.parsed.x, suffix, decimals),
+        afterLabel: (c) => (marks && marks[c.dataIndex] != null)
+          ? (markLabel || 'reference') + ': ' + _fmtVal(marks[c.dataIndex], suffix, decimals) : undefined } } },
       scales: { x: { display: false, grace: '8%', beginAtZero: beginAtZero === true,
-        // Keep the dashed All-communities reference line inside the axis even when
-        // it sits beyond every bar (lone-bar cards like mpce / GER, where the
-        // baseline is higher than the single Muslim bar).
-        suggestedMin: refValue == null ? undefined : Math.min(refValue, ...values),
-        suggestedMax: refValue == null ? undefined : Math.max(refValue, ...values) },
+        // Keep the dashed All-communities reference line (and any per-bar
+        // marks) inside the axis even when they sit beyond every bar
+        // (lone-bar cards like mpce / GER; J&K's population tick).
+        suggestedMin: (refValue == null) ? undefined : Math.min(refValue, ...values),
+        suggestedMax: (refValue == null && !(marks || []).some((v) => v != null)) ? undefined
+          : Math.max(...values, ...(marks || []).filter((v) => v != null), ...(refValue == null ? [] : [refValue])) },
         y: { grid: { display: false }, border: { display: false }, ticks: { font: { size: 11 } } } },
     },
-    plugins: [_valueLabels(decimals, suffix), _refLine(refValue == null ? null : refValue, refLabel)],
+    plugins: [_valueLabels(decimals, suffix), _refLine(refValue == null ? null : refValue, refLabel), _barMarks(marks)],
   });
+}
+// Per-bar reference ticks (hbar's marks param): a short grey vertical line
+// across each bar's band at the mark's x value - the "context" reading
+// (representation bar vs population tick) without a second bar series.
+function _barMarks(marks) {
+  return { id: 'barMarks', afterDatasetsDraw(c) {
+    if (!marks || !marks.some((v) => v != null)) return;
+    const xs = c.scales.x, ctx = c.ctx, meta = c.getDatasetMeta(0);
+    ctx.save(); ctx.strokeStyle = '#555555'; ctx.lineWidth = 2;
+    marks.forEach((v, i) => {
+      const bar = meta.data[i];
+      if (v == null || !bar) return;
+      const x = xs.getPixelForValue(v), h = bar.height / 2 + 3;
+      ctx.beginPath(); ctx.moveTo(x, bar.y - h); ctx.lineTo(x, bar.y + h); ctx.stroke();
+    });
+    ctx.restore();
+  } };
 }
 // Axis tick label: Indian lakh/crore for big rupee values with trailing
 // zeros trimmed ("10 lakh", "12.5 lakh"; the FC money rule - also pins
@@ -2263,6 +2302,17 @@ def _og_data_for_metric(m: dict):
         val = float(rows[-1]["value"])
         gap = val - MUSLIM_POP_SHARE
         cls = "bad" if gap < 0 else ("good" if gap > 0 else "mid")
+        seats = _ls_seats() if mid == "ls-share" else []
+        if seats:
+            # Seats, not % (Commit FW) — keep the OG/landing hero consistent
+            # with the card hero.
+            mps, total = seats[-1][1], seats[-1][2]
+            parity = round(MUSLIM_POP_SHARE / 100 * total)
+            return dict(name=name, hero=str(mps), caption=caption,
+                        year=str(rows[-1]["year"]),
+                        comp_label="vs population",
+                        comp_value=f"{mps - parity:+d} seats (parity {parity})",
+                        comp_class=cls, polarity=polarity)
         return dict(name=name, hero=fmt_num(val, unit), caption=caption,
                     year=str(rows[-1]["year"]),
                     comp_label="vs population", comp_value=f"{gap:+.1f}pp",
@@ -2687,6 +2737,9 @@ LANDING_TEMPLATE = """<!DOCTYPE html>
   td.tbar-cell { text-align:left; white-space:nowrap; }
   .tbar { display:inline-block; height:13px; background:rgba(123,29,34,.16); border-radius:2px; vertical-align:-2px; }
   .tbar-val { margin-left:6px; }
+  .tbar-wrap { position:relative; display:inline-block; width:70%; height:13px; vertical-align:-2px; }
+  .tbar-wrap .tbar { display:block; height:100%; }
+  .tbar-mark { position:absolute; top:-2px; bottom:-2px; width:2px; background:#555555; border-radius:1px; }
   .src-note { font-size:13px; color:var(--muted); }
   .meta-block p { font-size:14.5px; line-height:1.6; max-width:60em; }
   .meta-block b { color:var(--accent); }
@@ -3661,6 +3714,31 @@ def _year_of(metric_id: str):
     return max(yrs) if yrs else ""
 
 
+def _ls_seats() -> list[tuple[int, int, int]]:
+    """ls-share's absolute seat counts, parsed from the canonical denominator
+    records ("lok_sabha_seats (24/543 elected MPs, LS #18)") - the same
+    N-of-M pattern the assemblies view reads. The Lok Sabha card speaks
+    seats, not % (user call, Commit FW); the share stays in `value`.
+    Returns [(year, muslim MPs, house size)] sorted by year."""
+    out = []
+    for r in load_metric("ls-share"):
+        if r["geography_level"] != "national":
+            continue
+        m = re.search(r"\((\d+)/(\d+)", r.get("denominator") or "")
+        if m:
+            out.append((int(r["year"]), int(m.group(1)), int(m.group(2))))
+    return sorted(out)
+
+
+def _state_pop_share_2011() -> dict[str, float]:
+    """Census-2011 Muslim population share by state geography_code, the
+    per-state context the representation bars are read against. Telangana
+    (IN-S36) is absent: it was part of undivided Andhra Pradesh in 2011."""
+    return {r["geography_code"]: float(r["value"])
+            for r in load_metric("pop-share")
+            if r["geography_level"] == "state" and r["year"] == "2011"}
+
+
 def _method_paras(text: str) -> list:
     """Break a long methodology note into 2-3 sentence paragraphs so it reads
     as prose rather than a wall (the FS layering). Sentences split on
@@ -3713,8 +3791,8 @@ PLAIN_DEFINITION = {
     "school-edu-spend": "What a household spends on one school student in an academic year: course fees, textbooks and stationery, uniform, transport and other items, private coaching excluded. Muslim and Hindu students attend government schools at nearly the same rate, so the spending gap reflects what families can put into the chosen school, not heavier reliance on the free system.",
     "household-net-worth": "What an average household owns (land, buildings, livestock, vehicles, financial assets) minus what it owes. Accumulated wealth runs a far wider gap than monthly spending, though the gap narrowed between 2012 and 2018: urban Muslim households went from holding about half the net worth of urban Hindu households to about two-thirds.",
     "institutional-credit-share": "Of the money indebted households owe, what share comes from banks, co-operatives and government schemes rather than moneylenders and other informal sources. Informal credit costs more and carries no protection. India's borrowing shifted toward institutions between 2012 and 2018, but the Muslim share barely moved.",
-    "ls-share": "Of the 543 seats in India's national parliament (Lok Sabha), what share is held by Muslim MPs.",
-    "mla-share": "Across all 31 state and UT legislative assemblies that hold elections, what share of MLA seats is held by Muslims.",
+    "ls-share": "How many of the 543 seats in India's national parliament (Lok Sabha) are held by Muslim MPs, counted at every general election since 1952. At the community's 14.2% population share, parity would be 77 seats; the count peaked at 49 in 1980 and stands at 24 today.",
+    "mla-share": "Across all 31 state and UT legislative assemblies that hold elections, what share of MLA seats is held by Muslims. The grey tick on each state's bar marks its Muslim population share (Census 2011), so representation reads directly against presence.",
     "prison-rate-per-100k": "For every 100,000 people of a religion, how many are in prison. Allows fair comparison across communities of different size.",
     "undertrial-rate-per-100k": "For every 100,000 people of a religion, how many are in prison awaiting trial (not yet convicted).",
     "communal-incidents-govt": "Number of communal or religious rioting incidents recorded in police records each year (NCRB).",
@@ -4869,33 +4947,46 @@ def _assemblies_view() -> str:
         g = r["geography_code"]
         if g not in latest or int(r["year"]) > int(latest[g]["year"]):
             latest[g] = r
+    pop = _state_pop_share_2011()
     recs = []
     for g, r in latest.items():
         m = re.search(r"\((\d+)/(\d+)", r.get("denominator") or "")
         seats = f"{int(m.group(1))} of {int(m.group(2))}" if m else ""
-        recs.append((state_label(g), int(r["year"]), seats, float(r["value"])))
+        recs.append((state_label(g), int(r["year"]), seats, float(r["value"]),
+                     pop.get(g)))
     recs.sort(key=lambda t: -t[3])
     n_zero = sum(1 for t in recs if t[3] == 0)
     agg = _nat_by_religion("mla-share").get("muslim")
     note = (f"Muslims hold about {_round_str(agg, 0)}% of seats across the {len(recs)} state and "
             f"UT assemblies covered, each at its most recent election, against a "
             f"{_round_str(MUSLIM_POP_SHARE, 1)}% share of the population. {recs[0][0]} leads at "
-            f"{_round_str(recs[0][3], 1)}%; {n_zero} assemblies have no Muslim MLA at all.")
-    fmax = max(t[3] for t in recs) or 1.0
+            f"{_round_str(recs[0][3], 1)}%; {n_zero} assemblies have no Muslim MLA at all. "
+            f"The population column and the grey tick on each bar mark the state's "
+            f"Muslim population share (Census 2011; the J&K figure includes pre-2019 "
+            f"Ladakh, and Telangana has no separate 2011 figure).")
+    fmax = max(max(t[3] for t in recs),
+               max((t[4] for t in recs if t[4] is not None), default=0)) or 1.0
     trs = []
-    for name, yr, seats, val in recs:
-        # Same left-anchored bar-with-value grammar as the by-state tables.
-        w = round(val / fmax * 70, 1)
+    for name, yr, seats, val, pshare in recs:
+        # Same left-anchored bar-with-value grammar as the by-state tables,
+        # plus the population tick: representation reads against presence.
+        # Bar and tick live in one positioned wrapper so they share a scale.
+        w = round(val / fmax * 100, 1)
+        pop_cell = f"{_round_str(pshare, 1)}%" if pshare is not None else "n/a"
+        tick = (f'<span class="tbar-mark" style="left:{round(pshare / fmax * 100, 1)}%"></span>'
+                if pshare is not None else "")
         trs.append(f'<tr><td>{html.escape(name)}</td>'
                    f'<td data-sort="{yr}">{yr}</td>'
                    f'<td>{html.escape(seats)}</td>'
+                   f'<td data-sort="{-1 if pshare is None else pshare:.4f}">{pop_cell}</td>'
                    f'<td class="tbar-cell" data-sort="{val:.4f}">'
-                   f'<span class="tbar" style="width:{w}%"></span>'
+                   f'<span class="tbar-wrap"><span class="tbar" style="width:{w}%"></span>{tick}</span>'
                    f'<span class="tbar-val">{_round_str(val, 1)}%</span></td></tr>')
     head = ('<tr><th class="sortable" data-col="0">Assembly</th>'
             '<th class="sortable" data-col="1" data-type="num">Election</th>'
             '<th>Muslim MLAs</th>'
-            '<th class="sortable tbar-head" data-col="3" data-type="num">Share</th></tr>')
+            '<th class="sortable" data-col="3" data-type="num">Muslim pop.</th>'
+            '<th class="sortable tbar-head" data-col="4" data-type="num">Share</th></tr>')
     return (f'<details data-view-id="assemblies" data-view-label="By assembly" '
             f'data-view-sub="{len(recs)} assemblies">'
             f'<summary>Muslim share by assembly ({len(recs)} assemblies)</summary>'
@@ -5192,9 +5283,30 @@ def _card_timeseries(mid, label, unit, src, csv_href, cvid):
     latest = rows[-1] if rows else None
     val = float(latest["value"]) if latest else None
     headline = fmt_num(val, unit) if val is not None else "n/a"
+    seats = _ls_seats() if mid == "ls-share" else []
+    chart_html, js = "", None
+    if len(seats) >= 2:
+        # The Lok Sabha card speaks absolute MPs (user call, Commit FW):
+        # hero, chart and pills all in seats; the parity pill converts the
+        # 14.2% population share into the seat count it would mean in the
+        # current house. The % series stays in canonical and the landing.
+        mps, total = seats[-1][1], seats[-1][2]
+        headline = str(mps)
+        parity = round(MUSLIM_POP_SHARE / 100 * total)
+        gap = mps - parity
+        comps = _comp("vs population", f"{gap:+d} seats",
+                      f"parity at 14.2% would be {parity}",
+                      "bad" if gap < 0 else "good")
+        labels = [s[0] for s in seats]
+        values = [s[1] for s in seats]
+        chart_html = f'<div class="card-chartwrap" style="height:150px"><canvas id="{cvid}" role="img" aria-label="Visualisation of this metric; numerical values are listed in the card above."></canvas></div>'
+        js = f'lineChart("{cvid}", {json.dumps(labels)}, {json.dumps(values)}, "#7b1d22", "", 0);'
+        comps += _comp("trend", f"{labels[0]}-{labels[-1]}",
+                       f"{values[0]} → {values[-1]} MPs", "neutral")
+        return _card_shell(mid, label, headline, CAPTION.get(mid, ""), latest["year"] if latest else "",
+                           "", chart_html, comps, src, csv_href, ""), js
     gap = (val - MUSLIM_POP_SHARE) if val is not None else 0
     comps = _comp("vs population", f"{'+' if gap >= 0 else ''}{_round_str(gap, 1)}pp", "vs 14.2% pop share", "bad" if gap < 0 else "good")
-    chart_html, js = "", None
     if len(rows) >= 2:
         labels = [int(r["year"]) for r in rows]
         values = [_round_dp(float(r["value"]), _disp_dp(unit)) for r in rows]
@@ -5202,10 +5314,16 @@ def _card_timeseries(mid, label, unit, src, csv_href, cvid):
         js = f'lineChart("{cvid}", {json.dumps(labels)}, {json.dumps(values)}, "#7b1d22", "%", {_disp_dp(unit)});'
         comps += _comp("trend", f"{labels[0]}-{labels[-1]}", f"{_round_str(values[0], 1)}% → {_round_str(values[-1], 1)}%", "neutral")
     else:
-        st = sorted([(state_label(r["geography_code"]), float(r["value"]))
+        st = sorted([(state_label(r["geography_code"]), float(r["value"]), r["geography_code"])
                      for r in load_metric(mid) if r["geography_level"] == "state"],
                     key=lambda x: -x[1])
         if st:
+            # Per-bar grey ticks mark each state's Muslim population share
+            # (Census 2011) so representation reads against presence (user
+            # call, Commit FW). Telangana has no separate 2011 figure.
+            pop = _state_pop_share_2011()
+            marks = [(round(pop[code], 1) if code in pop else None)
+                     for _, _, code in st]
             inner_h = len(st) * 26 + 20
             max_h = 240
             inner = (f'<div class="card-chartwrap" style="height:{inner_h}px">'
@@ -5214,7 +5332,8 @@ def _card_timeseries(mid, label, unit, src, csv_href, cvid):
                           if inner_h > max_h else inner)
             js = (f'hbar("{cvid}", {json.dumps([s[0] for s in st])}, '
                   f'{json.dumps([_round_dp(s[1], _disp_dp(unit)) for s in st])}, '
-                  f'{json.dumps(["#7b1d22"] * len(st))}, "%", 1);')
+                  f'{json.dumps(["#7b1d22"] * len(st))}, "%", 1, null, null, false, '
+                  f'{json.dumps(marks)}, "Muslim population (2011)");')
         comps += _comp("all states", headline, "aggregate across assemblies", "neutral")
     # When the card face IS the per-state bar chart (no national trend, e.g.
     # mla-share), a "By state" table just re-lists the same bars - skip it. Add it

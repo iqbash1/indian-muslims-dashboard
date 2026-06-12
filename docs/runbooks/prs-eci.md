@@ -5,12 +5,16 @@
 - Manifest entry: `prs-eci-affidavits`
 - Publisher: PRS Legislative Research, analysing Election Commission of India
   candidate-affidavit data.
-- Role: feeds the representation-cluster metrics **`ls-share`** (Muslim share
-  of Lok Sabha members, 18-point series 1952→2024) and **`mla-share`** (Muslim
-  share of state legislative assembly members, currently 31 state/UT
-  assemblies covered; its own card with a per-assembly "By assembly" table
-  tab. A Commit FE fold into ls-share was reverted in Commit FJ: the two
-  gaps are distinct stories).
+- Role: feeds the representation-cluster metrics **`ls-share`** (Muslims in
+  the Lok Sabha, 18-point series 1952→2024; the card displays the absolute
+  number of MPs per house, Commit FW, with the share riding in canonical and
+  the parity pill converting the 14.2% population share into seats, 77 of
+  543) and **`mla-share`** (Muslim share of state legislative assembly
+  members, currently 31 state/UT assemblies covered; its own card with a
+  per-assembly "By assembly" table tab, where bars carry a grey Census-2011
+  population-share tick and the table a population column for context.
+  A Commit FE fold into ls-share was reverted in Commit FJ: the two gaps
+  are distinct stories).
 
 ## Why this is a SECONDARY manual-entry source (no L1 archive)
 
@@ -46,10 +50,10 @@ discrepancy.
 
 ## Series resulting
 
-**ls-share** — all 18 Lok Sabhas 1952→2024:
-- Peak: 9.04% (1980, 49/542)
-- Recent: 4.42% (2024, 24/543)
-- Always below the ~14% Muslim population share.
+**ls-share** — all 18 Lok Sabhas 1952→2024 (displayed as MP counts):
+- Peak: 49 MPs of 542 (1980, 9.04%)
+- Recent: 24 MPs of 543 (2024, 4.42%)
+- Always far below population parity (14.2% of 543 = 77 seats).
 
 **mla-share** — 31 state/UT assemblies (most-recent election per assembly):
 - Highest: J&K 2024 (54/90 = 60%) — first election since Article 370 reorg.
@@ -57,6 +61,9 @@ discrepancy.
   Tripura, Meghalaya — 0% (most have never elected a Muslim MLA in state
   history).
 - National aggregate: ~6% across the 31 covered assemblies.
+- Context layer: each bar carries a grey tick at the state's Census-2011
+  Muslim population share (J&K's includes pre-2019 Ladakh; Telangana has
+  no separate 2011 figure).
 
 ## Caveats (carried on canonical rows)
 
