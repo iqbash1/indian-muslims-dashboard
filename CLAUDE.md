@@ -93,7 +93,11 @@ not ad-hoc scripts: metric metadata in `manifest/metrics.yaml`, sources in
 - **Per-metric views are MODAL TABS** (by state/sex/district), each with its own
   shareable `/m/{id}/{view}/` URL + OG image and a share popover; the card face
   shows only the main chart + a "More views" hint. Don't move drill-downs back
-  onto the card face, and respect `prefers-reduced-motion`.
+  onto the card face, and respect `prefers-reduced-motion`. Overview shares
+  copy `/m/{id}/?open=1` and the landing bounces those visitors into the
+  modal (GD, user call: share recipients expect the app; the landing's
+  tables duplicate the modal tabs) - the bare `/m/{id}/` stays the static,
+  indexable landing, so don't strip the param or auto-redirect the landing.
 - **Every modal tab has a unique share link with OG, both directions** (user
   rule, Commit FF): tab ↔ `/m/{id}/{view}/` stub ↔ `/og/{id}-{view}.png` must
   stay bijective; no tab without a stub+OG, no stub/OG outliving its tab.

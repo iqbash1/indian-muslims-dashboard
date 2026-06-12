@@ -2165,8 +2165,13 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
     const view = activeTabEl ? activeTabEl.dataset.view : 'overview';
     const labelSpan = activeTabEl ? activeTabEl.querySelector('span') : null;
     const viewLabel = (view && view !== 'overview' && labelSpan) ? labelSpan.textContent : '';
+    // Overview shares carry ?open=1: the landing page bounces those visitors
+    // straight into this modal (user call, GD - recipients expect the app,
+    // and the landing's tables duplicate the modal tabs), while the bare
+    // /m/{id}/ URL stays the static, indexable landing. View shares already
+    // hop via their redirect stubs.
     const url = location.origin + '/m/' + encodeURIComponent(activeMid) + '/' +
-      (view && view !== 'overview' ? encodeURIComponent(view) + '/' : '');
+      (view && view !== 'overview' ? encodeURIComponent(view) + '/' : '?open=1');
     ShareMenu.open(shareBtn, {
       url: url,
       title: 'muslimdata.in: ' + name + (viewLabel ? ' (' + viewLabel + ')' : ''),
@@ -2727,6 +2732,11 @@ LANDING_TEMPLATE = """<!DOCTYPE html>
 <meta name="twitter:title" content="{og_title}">
 <meta name="twitter:description" content="{description}">
 <meta name="twitter:image" content="{og_image}">
+<script>/* Share recipients land in the interactive modal (the share button
+copies this page's URL with ?open=1) while the page itself stays the
+indexable, no-JS surface for crawlers and direct visits - the same hop the
+per-view stubs make. */
+if(new URLSearchParams(location.search).has('open'))location.replace('/#{mid}');</script>
 <script src="/js/analytics.js" defer></script>
 <style>
   :root {

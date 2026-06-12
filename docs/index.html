@@ -1904,8 +1904,13 @@ lineChart("cc-communal-incidents-govt", [2015, 2016, 2017, 2018, 2019, 2020, 202
     const view = activeTabEl ? activeTabEl.dataset.view : 'overview';
     const labelSpan = activeTabEl ? activeTabEl.querySelector('span') : null;
     const viewLabel = (view && view !== 'overview' && labelSpan) ? labelSpan.textContent : '';
+    // Overview shares carry ?open=1: the landing page bounces those visitors
+    // straight into this modal (user call, GD - recipients expect the app,
+    // and the landing's tables duplicate the modal tabs), while the bare
+    // /m/{id}/ URL stays the static, indexable landing. View shares already
+    // hop via their redirect stubs.
     const url = location.origin + '/m/' + encodeURIComponent(activeMid) + '/' +
-      (view && view !== 'overview' ? encodeURIComponent(view) + '/' : '');
+      (view && view !== 'overview' ? encodeURIComponent(view) + '/' : '?open=1');
     ShareMenu.open(shareBtn, {
       url: url,
       title: 'muslimdata.in: ' + name + (viewLabel ? ' (' + viewLabel + ')' : ''),
