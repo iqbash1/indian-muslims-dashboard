@@ -2429,10 +2429,29 @@ def _render_og_image(out_path: pathlib.Path, payload: dict) -> None:
     name_lines = _og_wrap(draw, payload["name"], name_font, OG_W - 2 * margin, max_lines=2)
     for i, line in enumerate(name_lines):
         draw.text((margin, 130 + i * 68), line, font=name_font, fill=_OG_FG)
-    # Hero number (left half).
+    # Hero number (left half), shrunk to fit: a wide INR hero ("INR 30,104",
+    # "INR 15.0 lakh") must stop short of whichever right-hand block this
+    # card carries (BREAKDOWN nugget at x=620, or the right-aligned
+    # comparison whose width depends on its text).
     hero_y = 310
-    hero_font = _og_font(180, bold=True)
-    draw.text((margin, hero_y), payload["hero"], font=hero_font, fill=_OG_ACCENT)
+    if payload.get("view_label") and payload.get("view_detail"):
+        hero_max_w = 620 - margin - 24
+    elif payload.get("comp_label") and payload.get("comp_value"):
+        comp_w = max(
+            draw.textlength(payload["comp_label"], font=_og_font(28)),
+            draw.textlength(payload["comp_value"], font=_og_font(54, bold=True)))
+        hero_max_w = (OG_W - margin - comp_w) - margin - 24
+    else:
+        hero_max_w = OG_W - 2 * margin
+    hero_size = 180
+    hero_font = _og_font(hero_size, bold=True)
+    while (hero_size > 80
+           and draw.textlength(payload["hero"], font=hero_font) > hero_max_w):
+        hero_size -= 8
+        hero_font = _og_font(hero_size, bold=True)
+    # Keep the number's optical baseline where the 180px one sat.
+    draw.text((margin, hero_y + (180 - hero_size) // 2), payload["hero"],
+              font=hero_font, fill=_OG_ACCENT)
     cap_y = hero_y + 200
     if payload.get("caption"):
         draw.text((margin, cap_y), payload["caption"], font=_og_font(28), fill=_OG_FG)
@@ -3552,6 +3571,7 @@ CAPTION = {
     "imr": "deaths per 1,000 live births",
     "inst-delivery": "of births in a facility",
     "women-anemia": "of women age 15-49",
+    "hospital-oop-spend": "out of pocket per admission, excl. childbirth",
     "improved-sanitation": "of households",
     "improved-water-premises": "of households",
     "household-electricity": "of households electrified",
@@ -3597,6 +3617,8 @@ SOURCE_LABEL = {
     "prs-eci-affidavits": "PRS / ECI affidavits", "civic-incident-databases": "India Hate Lab",
     "sachar-committee-2006": "Sachar Committee (NSS 2004-05)",
     "hces-2023-24": "HCES 2023-24 (NSO unit-level data)",
+    "nss75-health": "NSS 75th 25.0 Health (2017-18)",
+    "health-2025": "NSS Health 2025 (NSO unit-level data)",
 }
 
 
@@ -3684,6 +3706,7 @@ PLAIN_DEFINITION = {
     "pucca-house": "What share of households lives in a pucca house, with walls and roof of permanent materials like brick, concrete or stone. The standard Indian measure of housing quality.",
     "mpce": "How much a typical person in a community spends in a month, on food, rent, fuel, clothes and everything else. In India this is the usual way to measure how well-off people are, because reliable income data does not exist.",
     "top-quintile-share": "Of all people in a community, what share lives in households among the top 20% of spending nationally. With an even spread every community would be at 20%. Muslims are at par among the poorest fifth but squeezed out of the richest fifth.",
+    "hospital-oop-spend": "What a household pays from its own pocket for one hospital admission, after any insurance or employer reimbursement: doctor's fees, medicines, diagnostics, bed and package charges, childbirth stays excluded. Muslim stays cost less on average, which mostly reflects heavier use of near-free government hospitals and thinner spending power, not cheaper prices for the same care.",
     "household-net-worth": "What an average household owns (land, buildings, livestock, vehicles, financial assets) minus what it owes. Accumulated wealth runs a far wider gap than monthly spending, though the gap narrowed between 2012 and 2018: urban Muslim households went from holding about half the net worth of urban Hindu households to about two-thirds.",
     "institutional-credit-share": "Of the money indebted households owe, what share comes from banks, co-operatives and government schemes rather than moneylenders and other informal sources. Informal credit costs more and carries no protection. India's borrowing shifted toward institutions between 2012 and 2018, but the Muslim share barely moved.",
     "ls-share": "Of the 543 seats in India's national parliament (Lok Sabha), what share is held by Muslim MPs.",

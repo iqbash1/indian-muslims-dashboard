@@ -24,6 +24,7 @@ muslimdata.in is a static, source-traceable dashboard of living-conditions indic
 - Child stunting (under 5) (2020; source: nfhs-5): https://muslimdata.in/m/stunting-u5/ | data: https://muslimdata.in/canonical/stunting-u5.csv
 - Institutional delivery rate (1998-2020; source: nfhs-5): https://muslimdata.in/m/inst-delivery/ | data: https://muslimdata.in/canonical/inst-delivery.csv
 - Anaemia in women (1998-2020; source: nfhs-5): https://muslimdata.in/m/women-anemia/ | data: https://muslimdata.in/canonical/women-anemia.csv
+- Cost of a hospital stay (2017-2025; source: health-2025): https://muslimdata.in/m/hospital-oop-spend/ | data: https://muslimdata.in/canonical/hospital-oop-spend.csv
 - Toilet access (2020; source: nfhs-5): https://muslimdata.in/m/improved-sanitation/ | data: https://muslimdata.in/canonical/improved-sanitation.csv
 - Clean drinking water at home (2018; source: nss76-housing): https://muslimdata.in/m/improved-water-premises/ | data: https://muslimdata.in/canonical/improved-water-premises.csv
 - Pucca housing (2018; source: nss76-housing): https://muslimdata.in/m/pucca-house/ | data: https://muslimdata.in/canonical/pucca-house.csv

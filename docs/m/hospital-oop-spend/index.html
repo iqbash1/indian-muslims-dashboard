@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Cost of a hospital stay: muslimdata.in</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Cost of a hospital stay for India&#x27;s Muslims, with Hindu and all-India comparison baselines. What a household pays from its own pocket for one hospital admission, after any insurance or employer reimbursement: doctor&#x27;s fees, medicines, di...">
+<link rel="canonical" href="https://muslimdata.in/m/hospital-oop-spend/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#fafaf7">
+<meta property="og:title" content="Cost of a hospital stay">
+<meta property="og:description" content="Cost of a hospital stay for India&#x27;s Muslims, with Hindu and all-India comparison baselines. What a household pays from its own pocket for one hospital admission, after any insurance or employer reimbursement: doctor&#x27;s fees, medicines, di...">
+<meta property="og:url" content="https://muslimdata.in/m/hospital-oop-spend/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="muslimdata.in">
+<meta property="og:image" content="https://muslimdata.in/og/hospital-oop-spend.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Cost of a hospital stay: Indian Muslims vs Hindu and all-India baselines on muslimdata.in">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cost of a hospital stay">
+<meta name="twitter:description" content="Cost of a hospital stay for India&#x27;s Muslims, with Hindu and all-India comparison baselines. What a household pays from its own pocket for one hospital admission, after any insurance or employer reimbursement: doctor&#x27;s fees, medicines, di...">
+<meta name="twitter:image" content="https://muslimdata.in/og/hospital-oop-spend.png">
+<script src="/js/analytics.js" defer></script>
+<style>
+  :root {
+    --fg:#1a1a1a; --muted:#666; --bg:#fafaf7; --card:#fff; --rule:#e6e3da;
+    --muslim:#7b1d22; --accent:#2c5f8a; --positive:#065F46; --negative:#991B1B;
+  }
+  * { box-sizing:border-box; }
+  body { font:16px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif; color:var(--fg); background:var(--bg); margin:0; }
+  .page { max-width:820px; margin:0 auto; padding:32px 24px 64px; }
+  a { color:var(--accent); }
+  .masthead { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px 16px; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--rule); }
+  .masthead-brand { font-size:14px; font-weight:600; color:var(--fg); text-decoration:none; }
+  .masthead-brand:hover { color:var(--accent); }
+  .masthead-nav { display:flex; gap:14px; margin-right:auto; margin-left:24px; }
+  .masthead-nav a { font-size:13px; color:var(--fg); text-decoration:none; font-weight:500; }
+  .masthead-nav a:hover { color:var(--accent); }
+  .masthead-meta { margin:0; font-size:12px; color:var(--muted); }
+  .breadcrumb { font-size:13px; color:var(--muted); margin:14px 0 4px; }
+  .breadcrumb a { color:var(--accent); text-decoration:none; }
+  .breadcrumb a:hover { text-decoration:underline; }
+  .breadcrumb [aria-current] { color:var(--fg); font-weight:600; }
+  h1 { font-size:30px; margin:8px 0 8px; letter-spacing:-0.01em; line-height:1.2; }
+  .lede { font-size:17px; color:var(--muted); margin:0 0 20px; max-width:60em; }
+  .hero { display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; margin:8px 0 4px; }
+  .hero-value { font-size:2.6rem; font-weight:700; letter-spacing:-.02em; color:var(--muslim); font-feature-settings:"tnum"; }
+  .hero-unit, .hero-year { font-size:15px; color:var(--muted); font-weight:500; }
+  .polarity { font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:.02em; margin:0 0 6px; font-weight:600; }
+  .polarity span { color:var(--positive); }
+  .compare { font-size:15px; color:var(--fg); margin:0 0 16px; }
+  .compare b { font-feature-settings:"tnum"; }
+  .compare b.good { color:var(--positive); } .compare b.bad { color:var(--negative); } .compare b.mid, .compare b.neutral { color:var(--muted); }
+  .cta { display:inline-block; background:var(--accent); color:#fff; text-decoration:none; font-weight:600; font-size:15px; padding:11px 18px; border-radius:8px; margin:6px 0 8px; transition:background .15s; }
+  .cta:hover { background:#234c70; }
+  h2 { font-size:19px; margin:34px 0 8px; letter-spacing:-0.005em; }
+  .breakdown-sub { font-size:13px; font-weight:400; color:var(--muted); margin-left:8px; }
+  table { width:100%; border-collapse:collapse; margin:10px 0; font-size:14px; font-feature-settings:"tnum"; }
+  th,td { text-align:right; padding:7px 10px; border-bottom:1px solid var(--rule); }
+  th:first-child, td:first-child { text-align:left; }
+  th { font-weight:600; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.04em; }
+  .scroll-table { max-height:380px; overflow-y:auto; border:1px solid var(--rule); border-radius:6px; margin:10px 0; }
+  .scroll-table table { margin:0; }
+  .scroll-table thead th { position:sticky; top:0; background:var(--card); }
+  /* By-state magnitude bars (FH): same grammar as the modal tables. */
+  .state-bar-table th:first-child, .state-bar-table td:first-child { width:1%; white-space:nowrap; }
+  th.tbar-head { text-align:left; }
+  td.tbar-cell { text-align:left; white-space:nowrap; }
+  .tbar { display:inline-block; height:13px; background:rgba(123,29,34,.16); border-radius:2px; vertical-align:-2px; }
+  .tbar-val { margin-left:6px; }
+  .src-note { font-size:13px; color:var(--muted); }
+  .meta-block p { font-size:14.5px; line-height:1.6; max-width:60em; }
+  .meta-block b { color:var(--accent); }
+  ul.related { list-style:none; padding:0; margin:10px 0; display:flex; flex-wrap:wrap; gap:8px; }
+  ul.related a { display:inline-block; padding:7px 12px; border:1px solid var(--rule); border-radius:999px; background:var(--card); text-decoration:none; font-size:13px; font-weight:500; color:var(--accent); }
+  ul.related a:hover { border-color:var(--accent); }
+  hr { border:none; border-top:1px solid var(--rule); margin:36px 0 0; }
+  footer { font-size:13px; color:var(--muted); margin-top:24px; }
+  @media (max-width:560px) { h1 { font-size:24px; } .hero-value { font-size:2rem; } .masthead-nav { margin-left:0; } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration:.01ms !important; animation-duration:.01ms !important; } }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  "name": "Cost of a hospital stay: India, by religion",
+  "description": "What a household pays from its own pocket for one hospital admission, after any insurance or employer reimbursement: doctor's fees, medicines, diagnostics, bed and package charges, with childbirth stays excluded. Lower spending is not automatically protection: it tracks who uses near-free government hospitals and who can afford private care, so the gap reads as spending power, not prices.",
+  "url": "https://muslimdata.in/m/hospital-oop-spend/",
+  "license": "https://github.com/iqbash1/indian-muslims-dashboard",
+  "isAccessibleForFree": true,
+  "creator": {
+    "@type": "Organization",
+    "name": "muslimdata.in",
+    "url": "https://muslimdata.in"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "muslimdata.in",
+    "url": "https://muslimdata.in"
+  },
+  "spatialCoverage": {
+    "@type": "Place",
+    "name": "India"
+  },
+  "variableMeasured": "Cost of a hospital stay",
+  "keywords": [
+    "India",
+    "Indian Muslims",
+    "religion",
+    "health",
+    "Cost of a hospital stay"
+  ],
+  "distribution": [
+    {
+      "@type": "DataDownload",
+      "encodingFormat": "text/csv",
+      "contentUrl": "https://muslimdata.in/canonical/hospital-oop-spend.csv"
+    }
+  ],
+  "temporalCoverage": "2017/2025",
+  "measurementTechnique": "Extracted from the published health-2025 source; provenance at https://muslimdata.in/m/hospital-oop-spend/."
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "muslimdata.in",
+      "item": "https://muslimdata.in/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Cost of a hospital stay",
+      "item": "https://muslimdata.in/m/hospital-oop-spend/"
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<div class="page">
+<div class="masthead">
+  <a class="masthead-brand" href="/">muslimdata.in</a>
+  <nav class="masthead-nav">
+    <a href="/">Dashboard</a>
+    <a href="/about/">About</a>
+  </nav>
+  <p class="masthead-meta">Last updated 11 June 2026</p>
+</div>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> › <span>Health &amp; Housing</span> › <span aria-current="page">Cost of a hospital stay</span></nav>
+<h1>Cost of a hospital stay</h1>
+<p class="lede">What a household pays from its own pocket for one hospital admission, after any insurance or employer reimbursement: doctor&#x27;s fees, medicines, diagnostics, bed and package charges, childbirth stays excluded. Muslim stays cost less on average, which mostly reflects heavier use of near-free government hospitals and thinner spending power, not cheaper prices for the same care.</p>
+<div class="hero"><span class="hero-value">INR 30,104</span><span class="hero-unit">out of pocket per admission, excl. childbirth</span><span class="hero-year">(2025)</span></div>
+
+<p class="compare">vs all communities: <b class="neutral">-INR 3,960 lower</b></p>
+<p><a class="cta" href="/#hospital-oop-spend">Explore the interactive chart, with breakdowns by urban vs rural →</a></p>
+<h2>Latest figures by community (2025)</h2><table><thead><tr><th scope="col">Community</th><th scope="col">Latest value</th></tr></thead><tbody><tr><td>Muslim</td><td>INR 30,104</td></tr><tr><td>Hindu</td><td>INR 34,323</td></tr><tr><td>Sikh</td><td>INR 39,036</td></tr><tr><td>Christian</td><td>INR 38,391</td></tr><tr><td>All communities</td><td>INR 34,064</td></tr></tbody></table>
+<section class="breakdown"><h2>Urban vs rural<span class="breakdown-sub">2025</span></h2><table class="sortable-table"><thead><tr><th class="sortable" data-col="0">Community</th><th class="sortable" data-col="1" data-type="num">Urban</th><th class="sortable" data-col="2" data-type="num">Rural</th></tr></thead><tbody><tr><td>Muslim</td><td data-sort="31423.0000">INR 31,423</td><td data-sort="29189.0000">INR 29,189</td></tr><tr><td>Hindu</td><td data-sort="39468.0000">INR 39,468</td><td data-sort="31588.0000">INR 31,588</td></tr><tr><td>Christian</td><td data-sort="45115.0000">INR 45,115</td><td data-sort="34281.0000">INR 34,281</td></tr><tr><td>Sikh</td><td data-sort="37408.0000">INR 37,408</td><td data-sort="40004.0000">INR 40,004</td></tr><tr><td>All communities</td><td data-sort="38688.0000">INR 38,688</td><td data-sort="31484.0000">INR 31,484</td></tr></tbody></table><p class="view-provenance"><b>Reproduce this view.</b> Source: <a href="https://microdata.gov.in/NADA/index.php/catalog/290" target="_blank" rel="noopener">NSS Health 2025 (NSO unit-level data)</a> · <a href="https://www.mospi.gov.in/sites/default/files/NSS75250H/KI_Health_75th_Final.pdf" target="_blank" rel="noopener">NSS 75th 25.0 Health (2017-18)</a>. Each value is computed from the <a href="canonical/hospital-oop-spend.csv" download>data file</a> · <a href="https://github.com/iqbash1/indian-muslims-dashboard/blob/main/transform/canonicalize/hospital_oop_spend.py" target="_blank" rel="noopener">transform code</a>; every row records its own source and method.</p></section>
+<h2>About this measurement</h2>
+<div class="meta-block"><p><b>Definition.</b> What a household pays from its own pocket for one hospital admission, after any insurance or employer reimbursement: doctor&#x27;s fees, medicines, diagnostics, bed and package charges, with childbirth stays excluded. Lower spending is not automatically protection: it tracks who uses near-free government hospitals and who can afford private care, so the gap reads as spending power, not prices.</p><p><b>Methodology.</b> Computed from the unit-level microdata of two NSS Household Social Consumption: Health rounds: the 75th (Sch 25.0, July 2017 - June 2018, 1.14 lakh households, via MoSPI&#x27;s original fixed-width TXT distribution; the NADA copy of that round is a proprietary binary, so the build reads the surviving mirror recorded in the repo&#x27;s provenance notes) and the 80th (January - December 2025, 1.40 lakh households, via the NADA CSV distribution). Out-of-pocket medical expenditure per hospitalisation case excluding childbirth is the 2025 release&#x27;s own headline construct, computed identically in both rounds: medical expenditure (fees, medicines, diagnostics, bed and package charges; transport and food excluded) minus any insurance or employer reimbursement, averaged over cases of the last 365 days. The 2017-18 estimator reproduces all nine published cells of NSS Report 586 Statement 3.15 within 0.01% and the published reimbursement shares exactly; the 2025 estimator reproduces all six press-note OOPME cells within 0.01%.</p><p class="method-para">Neither publication breaks expenditure down by religion. A Muslim hospital stay cost INR 30,104 against the all-India INR 34,064 in 2025 (Hindu INR 34,323), and INR 14,827 against 18,088 in 2017-18: about 12-19% less per stay. Muslims lean more on government hospitals (41.5% of Muslim hospitalisation cases in 2025 against 36.4% of Hindu cases, down from 47.6% and 41.8% in 2017-18), where the average bill runs about an eighth of a private one, and the community&#x27;s thinner spending power does the rest; the survey cannot separate cheaper care from foregone care.</p><p class="method-para">Values are nominal rupees of each round; health insurance coverage roughly tripled between the rounds, so the netted reimbursement matters more in 2025. NSO unit-data rider: religion is self-reported and the survey is stratified for states, not religions, so the split is indicative with no sub-state estimates.</p><p class="src-note"><b>Sources.</b> <a href="https://microdata.gov.in/NADA/index.php/catalog/290" target="_blank" rel="noopener">NSS Health 2025 (NSO unit-level data)</a> · <a href="https://www.mospi.gov.in/sites/default/files/NSS75250H/KI_Health_75th_Final.pdf" target="_blank" rel="noopener">NSS 75th 25.0 Health (2017-18)</a>. Download CSV: <a href="/canonical/hospital-oop-spend.csv">hospital-oop-spend.csv</a>.</p></div>
+<h2>Related indicators</h2><ul class="related"><li><a href="/m/imr/">Infant mortality rate</a></li><li><a href="/m/stunting-u5/">Child stunting (under 5)</a></li><li><a href="/m/inst-delivery/">Institutional delivery rate</a></li><li><a href="/m/women-anemia/">Anaemia in women</a></li><li><a href="/m/improved-sanitation/">Toilet access</a></li><li><a href="/m/improved-water-premises/">Clean drinking water at home</a></li><li><a href="/m/pucca-house/">Pucca housing</a></li></ul>
+<hr>
+<footer><p>Every value traces to a primary source with the original file archived and checksummed. muslimdata.in is independent, non-commercial, and <a href="https://github.com/iqbash1/indian-muslims-dashboard">open source</a>. Last updated 11 June 2026.</p></footer>
+</div>
+</body>
+</html>

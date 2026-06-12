@@ -1,0 +1,16 @@
+religion,residence,avg_oopme_rs,avg_medical_rs,pct_cases_public,n_cases
+muslim,all,14827,15797,47.6,8997
+muslim,rural,12813,13235,51.8,4543
+muslim,urban,17973,19801,40.9,4454
+hindu,all,18398,20575,41.8,50206
+hindu,rural,16299,17024,45.4,28102
+hindu,urban,22403,27352,35.0,22104
+christian,all,19078,22280,34.1,4265
+christian,rural,14464,16721,37.9,2534
+christian,urban,26957,31773,27.5,1731
+sikh,all,26796,28910,30.0,1443
+sikh,rural,27173,28061,28.5,905
+sikh,urban,25937,30846,33.4,538
+all,all,18088,20135,42.0,66239
+all,rural,15937,16676,45.7,36862
+all,urban,22031,26475,35.3,29377

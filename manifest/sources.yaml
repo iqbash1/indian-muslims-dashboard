@@ -1042,6 +1042,89 @@ sources:
         target_path: sources/nss76/PROVENANCE-note.md
         status: verified
 
+  - id: nss75-health
+    name: NSS 75th round Sch 25.0 - Household Social Consumption Health 2017-18 (unit-level)
+    publisher: National Statistical Office (NSO), MoSPI
+    home_url: https://www.mospi.gov.in/sites/default/files/NSS75250H/KI_Health_75th_Final.pdf
+    cadence: irregular (next comparable round 2025)
+    cadence_notes: |
+      Unit-level microdata, July 2017 - June 2018, 1,13,823 households and
+      93,925 hospitalisation cases. Feeds the 2017 rows of
+      hospital-oop-spend, computed by religion of household head - NSS
+      Report 586 publishes expenditure by hospital type, quintile and
+      state, never religion.
+    access:
+      method: web-download
+      auth_required: false
+      auth_notes: |
+        The NADA catalog (id 152) ships this survey ONLY as a proprietary
+        .Nesstar binary (that rar is banked as the catalog-channel L1 in
+        sources/nada/health-2017-18/). The original fixed-width TXT
+        distribution (13 files R75250L01..L13 + KI_Health_75th_Final.pdf +
+        README75_250.doc) is still served from the unlinked mospi.gov.in
+        directory sites/default/files/NSS75250H/; URLs + sha256 in
+        sources/nss75-health/PROVENANCE-note.md.
+    formats: [fixed-width-txt]
+    religion_disaggregated: true
+    geography_levels: [national]
+    coverage:
+      - oop_hospitalisation_expenditure_by_religion
+    known_issues:
+      - "Religion self-reported + unverified (NSO unit-data rider); state-stratified, no sub-state estimates"
+      - "Weights are sub-sample-wise: final weight = MLT/100 if NSS=NSC else MLT/200 (unlike NSS 76th Sch 1.2, this round HAS the halving rule)"
+      - "~180 MB of TXT kept local at ~/Desktop/nada-work/health-2017-18-alt/ (provenance-only); the NADA .Nesstar rar is separately banked as the catalog-channel L1"
+    archive_dir: sources/nss75-health/
+    runbook: docs/runbooks/nss-health.md
+    last_pulled: "2026-06-11"
+    next_expected: null
+    targets:
+      - target_id: nss75-sch25dot0-unit-txt
+        description: NSS 75th Sch 25.0 unit-level fixed-width TXT (13 files, levels 01-13)
+        url: https://www.mospi.gov.in/sites/default/files/NSS75250H/R75250L01.TXT
+        target_path: sources/nss75-health/PROVENANCE-note.md
+        status: verified
+
+  - id: health-2025
+    name: NSS 80th round Sch 25.0 - Household Social Consumption Health 2025 (unit-level)
+    publisher: National Statistical Office (NSO), MoSPI
+    home_url: https://microdata.gov.in/NADA/index.php/catalog/290
+    cadence: irregular (prior comparable round 2017-18)
+    cadence_notes: |
+      Unit-level microdata, January - December 2025, 1,39,732 households and
+      1,21,584 hospitalisation cases. Feeds the 2025 rows of
+      hospital-oop-spend, computed by religion of household head - the
+      press note (April 2026) publishes OOPME by hospital type, sector and
+      state, never religion. The release states estimating households'
+      out-of-pocket medical expenses as the survey's primary design
+      objective.
+    access:
+      method: api
+      auth_required: true
+      auth_notes: |
+        Pulled via the MoSPI NADA REST API (personal X-API-KEY header, key
+        gitignored at nada/.key); CSV distribution (7 level files with
+        headers). The PIB press note carrying the published OOPME anchors
+        is banked alongside the data docs.
+    formats: [csv]
+    religion_disaggregated: true
+    geography_levels: [national]
+    coverage:
+      - oop_hospitalisation_expenditure_by_religion
+    known_issues:
+      - "Religion self-reported + unverified (NSO unit-data rider); state-stratified, no sub-state estimates"
+      - "Weight = mult/100 flat (final multiplier posted; no sub-sample halving in this round's design)"
+      - "~148 MB of CSV kept local at ~/Desktop/nada-work/health-2025/ (provenance-only); sha256 in sources/nada/health-2025/"
+    archive_dir: sources/nada/health-2025/
+    runbook: docs/runbooks/nss-health.md
+    last_pulled: "2026-06-10"
+    next_expected: null
+    targets:
+      - target_id: health-2025-microdata-csv
+        description: NSS 80th Sch 25.0 unit-level CSV zip (7 level files)
+        url: https://microdata.gov.in/NADA/index.php/catalog/290
+        target_path: sources/nada/health-2025/CSV_data_household_social_consumption_heaith_Jan_Dec25.zip.meta.json
+        status: verified
+
   - id: aishe
     name: All India Survey on Higher Education
     publisher: Department of Higher Education, MoE

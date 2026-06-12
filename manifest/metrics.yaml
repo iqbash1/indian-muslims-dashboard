@@ -832,6 +832,62 @@ metrics:
         higher_is_better: false
         order: 80
 
+  - id: hospital-oop-spend
+    name: Cost of a hospital stay
+    cluster: health
+    unit: inr
+    higher_is_better: null
+    definition: |
+      What a household pays from its own pocket for one hospital admission,
+      after any insurance or employer reimbursement: doctor's fees,
+      medicines, diagnostics, bed and package charges, with childbirth
+      stays excluded. Lower spending is not automatically protection: it
+      tracks who uses near-free government hospitals and who can afford
+      private care, so the gap reads as spending power, not prices.
+    sources: {primary: health-2025}
+    geography_levels: [national]
+    religions: [muslim, hindu, christian, sikh, all]
+    methodology_notes: |
+      Computed from the unit-level microdata of two NSS Household Social
+      Consumption: Health rounds: the 75th (Sch 25.0, July 2017 - June 2018,
+      1.14 lakh households, via MoSPI's original fixed-width TXT
+      distribution; the NADA copy of that round is a proprietary binary, so
+      the build reads the surviving mirror recorded in the repo's provenance
+      notes) and the 80th (January - December 2025, 1.40 lakh households,
+      via the NADA CSV distribution). Out-of-pocket medical expenditure per
+      hospitalisation case excluding childbirth is the 2025 release's own
+      headline construct, computed identically in both rounds: medical
+      expenditure (fees, medicines, diagnostics, bed and package charges;
+      transport and food excluded) minus any insurance or employer
+      reimbursement, averaged over cases of the last 365 days. The 2017-18
+      estimator reproduces all nine published cells of NSS Report 586
+      Statement 3.15 within 0.01% and the published reimbursement shares
+      exactly; the 2025 estimator reproduces all six press-note OOPME cells
+      within 0.01%. Neither publication breaks expenditure down by religion.
+      A Muslim hospital stay cost INR 30,104 against the all-India INR
+      34,064 in 2025 (Hindu INR 34,323), and INR 14,827 against 18,088 in
+      2017-18: about 12-19% less per stay. Muslims lean more on government
+      hospitals (41.5% of Muslim hospitalisation cases in 2025 against
+      36.4% of Hindu cases, down from 47.6% and 41.8% in 2017-18), where
+      the average bill runs about an eighth of a private one, and the
+      community's thinner spending power does the rest; the survey cannot
+      separate cheaper care from foregone care. Values are nominal rupees
+      of each round; health insurance coverage roughly tripled between the
+      rounds, so the netted reimbursement matters more in 2025. NSO
+      unit-data rider: religion is self-reported and the survey is
+      stratified for states, not religions, so the split is indicative
+      with no sub-state estimates.
+    comparison_baselines: [hindu, all]
+    phase: 1
+    status: defined
+    display:
+      scorecard:
+        label: "Cost of a hospital stay"
+        reference: "hindu"
+        unit_format: inr
+        higher_is_better: null
+        order: 85
+
   # ----- Housing & amenities (Phase 1) -----
   - id: pucca-housing
     name: Pucca house share
