@@ -63,6 +63,13 @@ For each verified URL:
 - Some C-series Excel files contain multi-sheet workbooks with merged-cell headers; L2 extraction will need per-table parsing logic.
 - District-level tables for small religious groups have suppressed cells.
 - The portal occasionally serves files as `.xls` despite a `.xlsx` link — check magic bytes after download.
+- C-01 has no Telangana row (the state postdates the census): the
+  canonicalizer SYNTHESIZES the IN-S36 2011 state row by aggregating the
+  ten undivided-AP districts (codes 532-541, Hyderabad included; 12.69%
+  Muslim) — see the Telangana block in `transform/canonicalize/pop_share.py`
+  (Commit GB). It feeds the representation card's population context and
+  the pop-share By-state tab; a 2021-census refresh must keep or supersede
+  it deliberately, not drop it.
 
 ## When the 2021 release lands
 

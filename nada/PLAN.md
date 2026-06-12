@@ -138,8 +138,9 @@ download, sha256, extract docs, write provenance) is the right tool; build it at
    mospi.nic.in-twin Wayback trick) + the 2025-round CSV pulls. Only the
    2014 rounds stay Nesstar-blocked. Bonus mirrors banked the same day:
    SAS 2019 (NSS7733/, 34/35 files - v1 L04 is permanently 404 upstream;
-   NEXT in the build queue) and disability 76th (NSS7626d/, bank
-   incomplete at 1/16 files).
+   NEXT in the build queue) and disability 76th (NSS7626d/, bank COMPLETE
+   2026-06-11: all 15 live TXT files + layout, sha256'd; its L04 is the
+   same upstream 404 as SAS's; no README exists on that mirror).
 5. **EUS 2004-12 pre-PLFS labour history** — DONE 2026-06-11: the three
    quinquennial rounds (61st/66th/68th) extend lfpr/wpr/salaried-share/
    unemployment-rate back to 2004, gated on NSS Reports 568/552 (310 cells);

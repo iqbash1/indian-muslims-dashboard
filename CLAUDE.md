@@ -79,9 +79,16 @@ not ad-hoc scripts: metric metadata in `manifest/metrics.yaml`, sources in
   pairs two bars per state (`hbarPair` + the table's `.tbar-duo`): maroon
   seat share over GREY population share (Census 2011; grey is sanctioned
   for the context series - don't "fix" it to maroon, and don't reintroduce
-  the FW floating tick marks FX replaced). User copy stays in plain words
-  (FY): no compressed analytic phrasing ("reads against presence"); the
-  INR-100-vs-71 ratio device beats percentages in definitions.
+  the FW floating tick marks FX replaced). Telangana's 2011 share is a
+  SYNTHESIZED canonical pop-share row (GB: ten undivided-AP districts
+  aggregated in pop_share.py - keep it through any census refresh). The
+  duo bar is FIXED-width (a %-width duo overflows the table = phantom
+  horizontal scroll), and scroll-contained tall charts carry
+  `.chartwrap-scrolled` so the modal's 440px chart override skips them
+  (GA: they keep their per-row height and scroll - don't squash). User
+  copy stays in plain words (FY): no compressed analytic phrasing
+  ("reads against presence"); the INR-100-vs-71 ratio device beats
+  percentages in definitions.
 - Every value traces to a primary source with a SHA256-archived L1 file.
 - **Per-metric views are MODAL TABS** (by state/sex/district), each with its own
   shareable `/m/{id}/{view}/` URL + OG image and a share popover; the card face
