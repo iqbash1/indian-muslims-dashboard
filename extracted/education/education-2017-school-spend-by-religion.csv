@@ -1,0 +1,16 @@
+religion,residence,avg_school_spend_rs,avg_coaching_rs,pct_students_govt,n_students
+muslim,all,5532,912,61.8,17891
+muslim,rural,3233,734,73.9,9659
+muslim,urban,9695,1235,39.8,8232
+hindu,all,7050,973,61.1,88507
+hindu,rural,4307,546,71.1,56173
+hindu,urban,15081,2222,32.0,32334
+christian,all,8775,792,49.8,8863
+christian,rural,5638,443,60.9,5916
+christian,urban,15075,1493,27.5,2947
+sikh,all,15334,906,42.1,2235
+sikh,rural,12727,523,47.3,1583
+sikh,urban,25005,2330,22.8,652
+all,all,7041,963,60.6,120433
+all,rural,4338,567,70.8,75373
+all,urban,14293,2024,33.3,45060

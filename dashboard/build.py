@@ -3572,6 +3572,7 @@ CAPTION = {
     "inst-delivery": "of births in a facility",
     "women-anemia": "of women age 15-49",
     "hospital-oop-spend": "out of pocket per admission, excl. childbirth",
+    "school-edu-spend": "per school student a year, excl. coaching",
     "improved-sanitation": "of households",
     "improved-water-premises": "of households",
     "household-electricity": "of households electrified",
@@ -3619,6 +3620,8 @@ SOURCE_LABEL = {
     "hces-2023-24": "HCES 2023-24 (NSO unit-level data)",
     "nss75-health": "NSS 75th 25.0 Health (2017-18)",
     "health-2025": "NSS Health 2025 (NSO unit-level data)",
+    "nss75-education": "NSS 75th 25.2 Education (2017-18)",
+    "education-2025": "CMS:E 2025 (NSO unit-level data)",
 }
 
 
@@ -3707,6 +3710,7 @@ PLAIN_DEFINITION = {
     "mpce": "How much a typical person in a community spends in a month, on food, rent, fuel, clothes and everything else. In India this is the usual way to measure how well-off people are, because reliable income data does not exist.",
     "top-quintile-share": "Of all people in a community, what share lives in households among the top 20% of spending nationally. With an even spread every community would be at 20%. Muslims are at par among the poorest fifth but squeezed out of the richest fifth.",
     "hospital-oop-spend": "What a household pays from its own pocket for one hospital admission, after any insurance or employer reimbursement: doctor's fees, medicines, diagnostics, bed and package charges, childbirth stays excluded. Muslim stays cost less on average, which mostly reflects heavier use of near-free government hospitals and thinner spending power, not cheaper prices for the same care.",
+    "school-edu-spend": "What a household spends on one school student in an academic year: course fees, textbooks and stationery, uniform, transport and other items, private coaching excluded. Muslim and Hindu students attend government schools at nearly the same rate, so the spending gap reflects what families can put into the chosen school, not heavier reliance on the free system.",
     "household-net-worth": "What an average household owns (land, buildings, livestock, vehicles, financial assets) minus what it owes. Accumulated wealth runs a far wider gap than monthly spending, though the gap narrowed between 2012 and 2018: urban Muslim households went from holding about half the net worth of urban Hindu households to about two-thirds.",
     "institutional-credit-share": "Of the money indebted households owe, what share comes from banks, co-operatives and government schemes rather than moneylenders and other informal sources. Informal credit costs more and carries no protection. India's borrowing shifted toward institutions between 2012 and 2018, but the Muslim share barely moved.",
     "ls-share": "Of the 543 seats in India's national parliament (Lok Sabha), what share is held by Muslim MPs.",

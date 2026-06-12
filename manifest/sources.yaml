@@ -1125,6 +1125,91 @@ sources:
         target_path: sources/nada/health-2025/CSV_data_household_social_consumption_heaith_Jan_Dec25.zip.meta.json
         status: verified
 
+  - id: nss75-education
+    name: NSS 75th round Sch 25.2 - Household Social Consumption Education 2017-18 (unit-level)
+    publisher: National Statistical Office (NSO), MoSPI
+    home_url: https://www.mospi.gov.in/sites/default/files/NSS75252E/KI_Education_75th_Final.pdf
+    cadence: irregular (next comparable survey CMS:E 2025, school-only)
+    cadence_notes: |
+      Unit-level microdata, July 2017 - June 2018, 1,13,757 households and
+      1,52,992 students aged 3-35 currently attending education. Feeds the
+      2017 rows of school-edu-spend, computed by religion of household head
+      - NSS Report 585 publishes expenditure by course type, level, school
+      type and state, never religion.
+    access:
+      method: web-download
+      auth_required: false
+      auth_notes: |
+        The NADA catalog (id 151) ships this survey ONLY as a proprietary
+        .Nesstar binary (that rar is banked as the catalog-channel L1 in
+        sources/nada/education-2017-18/). The original fixed-width TXT
+        distribution (8 files R75252L01..L08 + KI_Education_75th_Final.pdf)
+        is still served from the unlinked mospi.gov.in directory
+        sites/default/files/NSS75252E/; URLs + sha256 in
+        sources/nss75-education/PROVENANCE-note.md.
+    formats: [fixed-width-txt]
+    religion_disaggregated: true
+    geography_levels: [national]
+    coverage:
+      - school_education_expenditure_per_student_by_religion
+    known_issues:
+      - "Religion self-reported + unverified (NSO unit-data rider); state-stratified, no sub-state estimates"
+      - "Weights are sub-sample-wise: final weight = MLT/100 if NSS=NSC else MLT/200"
+      - "~170 MB of TXT kept local at ~/Desktop/nada-work/education-2017-18-alt/ (provenance-only); the NADA .Nesstar rar is separately banked as the catalog-channel L1"
+    archive_dir: sources/nss75-education/
+    runbook: docs/runbooks/cmse-education.md
+    last_pulled: "2026-06-11"
+    next_expected: null
+    targets:
+      - target_id: nss75-sch25dot2-unit-txt
+        description: NSS 75th Sch 25.2 unit-level fixed-width TXT (8 files, levels 01-08)
+        url: https://www.mospi.gov.in/sites/default/files/NSS75252E/R75252L01.TXT
+        target_path: sources/nss75-education/PROVENANCE-note.md
+        status: verified
+
+  - id: education-2025
+    name: Comprehensive Modular Survey Education 2025 (NSS 80th round, unit-level)
+    publisher: National Statistical Office (NSO), MoSPI
+    home_url: https://microdata.gov.in/NADA/index.php/catalog/255
+    cadence: irregular (prior comparable survey NSS 75th 2017-18, wider coverage)
+    cadence_notes: |
+      Unit-level microdata, April - June 2025; 52,085 households, 57,742
+      students currently enrolled in school education (pre-primary incl.
+      anganwadi up to higher secondary). Feeds the 2025 rows of
+      school-edu-spend, computed by religion of household head - NSS Report
+      595 (banked in the archive dir) publishes per-student expenditure by
+      school type, level, sector and state, never religion. Estimating
+      household expenditure on school education is the survey's primary
+      objective.
+    access:
+      method: api
+      auth_required: true
+      auth_notes: |
+        Pulled via the MoSPI NADA REST API (personal X-API-KEY header, key
+        gitignored at nada/.key); CSV distribution (3 files with
+        descriptive headers: households, persons, erstwhile hostel-resident
+        students). NSS Report 595 carrying the published anchors is banked
+        alongside the data docs.
+    formats: [csv]
+    religion_disaggregated: true
+    geography_levels: [national]
+    coverage:
+      - school_education_expenditure_per_student_by_religion
+    known_issues:
+      - "Religion self-reported + unverified (NSO unit-data rider); state-stratified, no sub-state estimates"
+      - "School education only (concept revisions vs the 75th round are listed in Report 595's comparability section: anganwadi counted as pre-primary, age 3+, itemised coaching) - the carded trend carries break_flag=true on 2025"
+      - "Weight = mult/100 flat; ~27 MB of CSV kept local at ~/Desktop/nada-work/education-2025/ (provenance-only)"
+    archive_dir: sources/nada/education-2025/
+    runbook: docs/runbooks/cmse-education.md
+    last_pulled: "2026-06-10"
+    next_expected: null
+    targets:
+      - target_id: cmse-2025-microdata-csv
+        description: CMS:E 2025 unit-level CSV zip (3 files)
+        url: https://microdata.gov.in/NADA/index.php/catalog/255
+        target_path: sources/nada/education-2025/Data in CSV.zip.meta.json
+        status: verified
+
   - id: aishe
     name: All India Survey on Higher Education
     publisher: Department of Higher Education, MoE

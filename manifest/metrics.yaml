@@ -178,6 +178,66 @@ metrics:
         higher_is_better: true
         order: 100
 
+  - id: school-edu-spend
+    name: Spending on school education
+    cluster: education
+    unit: inr
+    higher_is_better: null
+    definition: |
+      What a household spends on one school student in an academic year:
+      course fees, textbooks and stationery, uniform, transport and other
+      items, with private coaching counted separately and excluded. Lower
+      spending is not automatically a deficit: free government schooling is
+      the policy intent, but the gap also tracks who can afford private
+      schools and how much the chosen school costs.
+    sources: {primary: education-2025}
+    geography_levels: [national]
+    religions: [muslim, hindu, christian, sikh, all]
+    methodology_notes: |
+      Computed from the unit-level microdata of two NSS education rounds:
+      the 75th (Sch 25.2, July 2017 - June 2018, 1.14 lakh households, via
+      MoSPI's original fixed-width TXT distribution; the NADA copy of that
+      round is a proprietary binary, so the build reads the surviving
+      mirror recorded in the repo's provenance notes) and the Comprehensive
+      Modular Survey: Education (CMS:E, NSS 80th round, April - June 2025,
+      52,085 households, via the NADA CSV distribution). Average
+      expenditure per student currently enrolled at school levels
+      (pre-primary to higher secondary, incl. diploma/certificate up to
+      higher-secondary equivalent) during the current academic year,
+      excluding private coaching in both rounds (the CMS:E published
+      headline construct; the 75th collects coaching as a separate item, so
+      the build drops it for comparability). The 2017-18 estimator
+      reproduces all 27 published anchor cells of NSS Report 585
+      Statements 19 and 21 within 0.01%; the 2025 estimator reproduces all
+      seven published Report 595 per-student cells within 0.01%. Neither
+      publication breaks expenditure down by religion. A Muslim school
+      student's year cost INR 9,249 against the all-India INR 12,616 in
+      2025 (Hindu INR 12,941), down as a share from 2017-18 (INR 5,532
+      against 7,041 all-India, Hindu 7,050): the Muslim household spends
+      about 72% of what the Hindu household spends per student, where it
+      was 78%. Unlike hospital costs, school choice is not the driver:
+      55.4% of Muslim students attend government schools against 56.5% of
+      Hindu students (2025), so the gap reflects what is spent within
+      school types (fees of the chosen private school, books, transport),
+      not heavier reliance on the free system. The trend line renders
+      dashed: Report 595's own comparability section lists concept
+      revisions vs the 75th round (school-only coverage, anganwadi counted
+      as pre-primary, age universe 3+, itemised coaching), so the step
+      between rounds is indicative. Values are nominal rupees of each
+      round. NSO unit-data rider: religion is self-reported and the survey
+      is stratified for states, not religions, so the split is indicative
+      with no sub-state estimates.
+    comparison_baselines: [hindu, all]
+    phase: 1
+    status: defined
+    display:
+      scorecard:
+        label: "Spending on school education"
+        reference: "hindu"
+        unit_format: inr
+        higher_is_better: null
+        order: 105
+
   - id: mean-yrs-schooling
     name: Mean years of schooling (25+)
     cluster: education
