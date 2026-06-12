@@ -997,16 +997,21 @@ TEMPLATE = """<!DOCTYPE html>
   .modal-body .card:hover {
     border: none; box-shadow: none; transform: none;
   }
-  .modal-body .card-chartwrap { height: 440px !important; }
-  .modal-body .card-chartscroll { max-height: 440px !important; }
+  /* Charts grow in the modal - EXCEPT scroll-contained tall charts
+     (.chartwrap-scrolled, e.g. the 31-assembly paired bars), which keep
+     their natural per-row height and scroll inside .card-chartscroll;
+     squashing them to a fixed height crams the rows and collides the
+     value labels. */
+  .modal-body .card-chartwrap:not(.chartwrap-scrolled) { height: 440px !important; }
+  .modal-body .card-chartscroll { max-height: 560px !important; }
   .modal-body .card-metric { font-size: 20px; margin-bottom: 12px; }
   .modal-body .card-value { font-size: 2.4rem; }
   .modal-body .comp-note { font-size: 14px; line-height: 1.55; }
   body.modal-open { overflow: hidden; }
   @media (max-width: 640px) {
     .modal { padding: 24px 18px; }
-    .modal-body .card-chartwrap { height: 320px !important; }
-    .modal-body .card-chartscroll { max-height: 320px !important; }
+    .modal-body .card-chartwrap:not(.chartwrap-scrolled) { height: 320px !important; }
+    .modal-body .card-chartscroll { max-height: 400px !important; }
     /* Tabs scroll horizontally instead of wrapping, and shed their sub-labels,
        so a 3-tab bar stays one tidy row on a phone (Hawaii-dashboard pattern). */
     .modal-tabs { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
@@ -5357,7 +5362,7 @@ def _card_timeseries(mid, label, unit, src, csv_href, cvid):
                      for _, _, code in st]
             inner_h = len(st) * 40 + 56
             max_h = 300
-            inner = (f'<div class="card-chartwrap" style="height:{inner_h}px">'
+            inner = (f'<div class="card-chartwrap chartwrap-scrolled" style="height:{inner_h}px">'
                      f'<canvas id="{cvid}" role="img" aria-label="Visualisation of this metric; numerical values are listed in the card above."></canvas></div>')
             chart_html = (f'<div class="card-chartscroll" style="max-height:{max_h}px">{inner}</div>'
                           if inner_h > max_h else inner)
