@@ -57,9 +57,16 @@ Each `transform/canonicalize/<metric-id>.py` should:
 | `census-india-1971/` | `extract_religion_summary.py` (PDF, cross-validates printed Sex Ratio) |
 | `census-india-1961/` | `extract_c07_religion.py` (PDF — heavy OCR noise, verifies by anchor numbers + Sachar AT 3.8 cross-check) |
 | `nfhs/` | `extract_imr_trend.py`, `extract_delivery_trend.py`, `extract_anaemia_trend.py`, `extract_table24.py` (sanitation), `extract_table72.py`, `extract_table813.py`, `extract_table10231.py`, `extract_table101_stunting.py` (qpdf-rotated landscape page) |
-| `plfs/` | `extract_table48.py`, `extract_table49.py` |
+| `plfs/` | `extract_table48.py`, `extract_table49.py` (report PDFs); `extract_microdata_trends.py`, `extract_earnings_by_religion.py` (unit-level, 7 PLFS rounds) |
+| `eus/` | `extract_microdata_trends.py` (NSS 61st/66th/68th unit-level, the pre-PLFS employment history) |
 | `aishe/` | `extract_table15.py` |
 | `ncrb/` | `extract_prison_religion.py` (English, multi-year), `extract_prison_religion_2020_hindi.py` (Hindi-edition fallback for the 2020 COVID-year gap), `extract_communal_crime.py` (multi-year CII Table 1.2 + per-table-PDF) |
+| `sachar/` | `extract_mpce_by_state.py` (the 2004-05 mpce benchmark) |
+| `hces/` | `extract_mpce_2023_24_by_religion.py`, `extract_mpce_2023_24_by_state.py`, `extract_quintile_2023_24_by_religion.py` (unit-level CSV) |
+| `aidis/` | `extract_wealth_2013_by_religion.py` (NADA CSV), `extract_wealth_2018_by_religion.py` (NSS7718 TXT mirror) |
+| `nss76/` | `extract_housing_2018_by_religion.py` (NSS7612dws TXT mirror) |
+| `health/` | `extract_health_2017_by_religion.py` (NSS75250H TXT mirror), `extract_health_2025_by_religion.py` (NADA CSV) |
+| `education/` | `extract_education_2017_by_religion.py` (NSS75252E TXT mirror), `extract_education_2025_by_religion.py` (CMS:E NADA CSV) |
 
 Direct-from-L1 manual-entry (no L2 extractor; the canonicalizer reads hardcoded values that cite the published page/figure): civic-databases (India Hate Lab) + prs-eci-affidavits.
 

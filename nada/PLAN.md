@@ -68,22 +68,30 @@ Debt & Investment: `2018-19` 77th (156, Visit 1+2) · `2013` 70th V1 (130) / V2 
 - **Adds** a **2022-23 mid-point** (2004 -> 2022-23 -> 2023-24) + optional food-share /
   poverty-headcount by religion. Target = MPCE -> **SAFE** (proven).
 
-### Health Social Consumption — out-of-pocket spending (P2; 2017-18 TXT mirror UNLOCKED + banked 2026-06-11)
+### Health Social Consumption — out-of-pocket spending (SHIPPED: Commit FU, 2026-06-11)
 `2025` (290) · `2017-18` 75th (152) · `2014` 71st (135).
-- **Adds** a NEW **out-of-pocket / catastrophic health expenditure by religion** metric
-  (complements the NFHS health cards with a *spending* angle).
-- Target = health spending -> **SAFE**. Morbidity / hospitalisation *rate* by religion =
-  **AMBER** -> avoid; publish the spending angle only.
+- **Shipped** as the `hospital-oop-spend` card: OOPME per hospitalisation case
+  (excl childbirth), 2017-18 -> 2025 trend, gated to 0.01% on Report 586 +
+  the 2025 press note. Recipe: docs/runbooks/nss-health.md +
+  nada/health-layout-map.md. The 2014 round stays Nesstar-blocked.
+- Morbidity / hospitalisation *rate* by religion = **AMBER** -> avoided as
+  planned; only the spending angle is published.
 
-### Education Social Consumption — out-of-pocket spending (P2; 2017-18 TXT mirror UNLOCKED + banked 2026-06-11)
+### Education Social Consumption — out-of-pocket spending (SHIPPED: Commit FV, 2026-06-11)
 CMSE `2025` 80th (255) · `2017-18` 75th (151) · `2014` (136).
-- **Adds** a NEW **education expenditure / cost-of-schooling by religion** metric.
-- Target = education spending -> **SAFE**. Literacy / GER / attendance by religion from
-  this survey = **OFF-LIMITS** (use AISHE / Census, which we already do).
+- **Shipped** as the `school-edu-spend` card: per enrolled school student per
+  academic year excl coaching, 2017-18 -> 2025 trend (break_flag on 2025;
+  CMS:E concept revisions), gated to 0.01% on Reports 585 + 595. Recipe:
+  docs/runbooks/cmse-education.md + nada/education-layout-map.md. The 2014
+  round stays Nesstar-blocked.
+- Literacy / GER / attendance by religion from this survey = **OFF-LIMITS**
+  (use AISHE / Census, which we already do).
 
 ### Tier 3 — niche (bank only if cheap)
-Time Use `2024` (236) / `2019` (223) = activity minutes by religion (SAFE, niche) ·
-ASUSE `2023-24` (238) = enterprise by owner religion **if** captured.
+Time Use `2024` (236) / `2019` (223): both rounds verified Nesstar-only
+2026-06-11 (the 2024 "full data" zip is an 899MB .Nesstar disc image,
+2019's a 564MB one; Wayback has no TXT mirror) -> the Windows-VM unlock
+set · ASUSE `2023-24` (238) = enterprise by owner religion **if** captured.
 
 ---
 
@@ -124,13 +132,14 @@ download, sha256, extract docs, write provenance) is the right tool; build it at
    page's mospi.NIC.in twin in Wayback was the key). AIDIS 2003 third point is
    Nesstar-blocked (the "new format" rar = a Nesstar Explorer disc image, NOT
    plain data; same for ces-2009-10/2011-12 and sas-agri-2013).
-4. **Health / Education spending** metrics — OPEN and now FULLY UNLOCKED for
-   2017-18: the 75th-round TXT mirrors are live and banked (NSS75250H/ and
-   NSS75252E/ on mospi.gov.in, found 2026-06-11 via the mospi.nic.in-twin
-   Wayback trick; ~/Desktop/nada-work/{health,education}-2017-18-alt/). The
-   2025 rounds are CSV and banked; only the 2014 rounds stay Nesstar-blocked.
-   Bonus mirrors banked the same day: SAS 2019 (NSS7733/, 34/35 files -
-   v1 L04 is permanently 404 upstream) and disability 76th (NSS7626d/).
+4. **Health / Education spending** metrics — DONE (Commits FU/FV, 2026-06-11):
+   hospital-oop-spend + school-edu-spend, each a 2017-18 -> 2025 trend from
+   the 75th-round TXT mirrors (NSS75250H/ and NSS75252E/, found via the
+   mospi.nic.in-twin Wayback trick) + the 2025-round CSV pulls. Only the
+   2014 rounds stay Nesstar-blocked. Bonus mirrors banked the same day:
+   SAS 2019 (NSS7733/, 34/35 files - v1 L04 is permanently 404 upstream;
+   NEXT in the build queue) and disability 76th (NSS7626d/, bank
+   incomplete at 1/16 files).
 5. **EUS 2004-12 pre-PLFS labour history** — DONE 2026-06-11: the three
    quinquennial rounds (61st/66th/68th) extend lfpr/wpr/salaried-share/
    unemployment-rate back to 2004, gated on NSS Reports 568/552 (310 cells);

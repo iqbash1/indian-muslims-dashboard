@@ -29,10 +29,18 @@ One runbook per source. Owned by the data maintainer; the operational memory for
 - [nfhs-4.md](nfhs-4.md)
 - [nfhs-5.md](nfhs-5.md)
 
-### Employment, education, consumption
-- [plfs.md](plfs.md) — labour force (PLFS)
+### Employment, education, consumption (report tables)
+- [plfs.md](plfs.md) — labour force (PLFS annual report tables)
 - [aishe.md](aishe.md) — higher education
-- [hces-2022-23.md](hces-2022-23.md) — consumption expenditure (blocked on unit-level processing)
+
+### NSS unit-level microdata (the NADA + TXT-mirror era)
+- [plfs-microdata.md](plfs-microdata.md) — PLFS 2017-24 + EUS 2004-12 employment trends, earnings, unemployment
+- [hces-2023-24.md](hces-2023-24.md) — consumption expenditure (mpce hero, By-state, top-quintile)
+- [hces-2022-23.md](hces-2022-23.md) — the mpce mid-point; Nesstar-locked, awaiting the Windows-VM unlock
+- [aidis.md](aidis.md) — household wealth + institutional credit (2013 -> 2019)
+- [nss76-housing.md](nss76-housing.md) — drinking water, electricity, pucca housing (2018)
+- [nss-health.md](nss-health.md) — out-of-pocket hospitalisation spending (2017-18 -> 2025)
+- [cmse-education.md](cmse-education.md) — school-education spending (2017-18 -> 2025)
 
 ### Justice and crime (NCRB)
 - [ncrb-prison.md](ncrb-prison.md)

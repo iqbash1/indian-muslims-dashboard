@@ -72,6 +72,16 @@ not ad-hoc scripts: metric metadata in `manifest/metrics.yaml`, sources in
   whole numbers and evenly separated". Don't reintroduce fixed paddings,
   anonymous reference lines, raw-data-value edge ticks, or unlabelled axis
   edges.
+- **Representation reads in people, against population (FW/FX/FY):**
+  ls-share displays ABSOLUTE MPs (hero "24 of 543", parity pill converts
+  14.2% pop share to 77 seats; counts parse from the canonical denominator
+  N-of-M records via `_ls_seats`, the share stays in `value`). mla-share
+  pairs two bars per state (`hbarPair` + the table's `.tbar-duo`): maroon
+  seat share over GREY population share (Census 2011; grey is sanctioned
+  for the context series - don't "fix" it to maroon, and don't reintroduce
+  the FW floating tick marks FX replaced). User copy stays in plain words
+  (FY): no compressed analytic phrasing ("reads against presence"); the
+  INR-100-vs-71 ratio device beats percentages in definitions.
 - Every value traces to a primary source with a SHA256-archived L1 file.
 - **Per-metric views are MODAL TABS** (by state/sex/district), each with its own
   shareable `/m/{id}/{view}/` URL + OG image and a share popover; the card face
@@ -138,8 +148,16 @@ not ad-hoc scripts: metric metadata in `manifest/metrics.yaml`, sources in
   `household-electricity` / `pucca-house` (NSS 76th 2018 via the same kind of
   unlinked TXT mirror - see docs/runbooks/nss76-housing.md). The
   mirror-hunt trick (Wayback the deleted Drupal page, mospi.NIC.in twin if
-  gov.in was never crawled) also unlocked health/education 75th, SAS 2019
-  and disability 76th - banked locally, unbuilt. Housing findings INVERT
-  the gap pattern (Muslim at/above Hindu) - that is the data, keep it.
+  gov.in was never crawled) also unlocked health/education 75th - now BUILT
+  as the FU/FV spending cards: `hospital-oop-spend` (OOPME per
+  hospitalisation case excl childbirth 87/88/89, 2017-18 -> 2025; NOTE the
+  75th weight rule is MLT/100-if-NSS=NSC-else-/200, unlike nss76's flat
+  rule) and `school-edu-spend` (per enrolled school student excl coaching,
+  break_flag on 2025 for the CMS:E concept revisions); both neutral
+  polarity, gated to 0.01% vs published cells (recipes:
+  docs/runbooks/nss-health.md + cmse-education.md +
+  nada/{health,education}-layout-map.md). SAS 2019 and disability 76th
+  stay banked-unbuilt. Housing findings INVERT the gap pattern (Muslim
+  at/above Hindu) - that is the data, keep it.
 - sex-ratio + pop-share are primary RGI census 1961-2011; Sachar Committee feeds
   the `mpce` metric (not sex-ratio anymore).

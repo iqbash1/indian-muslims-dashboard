@@ -9,7 +9,7 @@ Manifest-driven cadence per source. Update `next_expected` in `manifest/sources.
 | Monthly | PLFS quarterly urban; civic incident databases | Pull and reconcile |
 | Quarterly | RBI reports; AISHE if window open | Pull; run cross-source recon |
 | Annually | PLFS annual (~Jul); NCRB Prison + Crime (~Nov); AISHE; HCES (cycle years); RTI civil services filing | Pull on release |
-| Per cycle | NFHS on release; HCES on release; Census on release | Pull on release; create new manifest entry for new edition |
+| Per cycle | NFHS on release; HCES on release; Census on release; NSS social-consumption rounds (health/education, irregular) and AIDIS (~decennial) on release | Pull on release; create new manifest entry for new edition |
 | Per election | ECI / PRS affidavits | Pull within 60 days of result |
 
 ## Annual rituals

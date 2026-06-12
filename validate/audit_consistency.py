@@ -4,10 +4,11 @@ Commits DF/DI (definitions saying "2020-2022" when the data was 2015-2023;
 README saying "30 assemblies" when there were 31). Two checks:
 
   A. METRIC-COUNT CONSISTENCY (hard, blocks CI). Hardcoded counts in README.md
-     ("21 live indicators", "23 canonical metrics", "16 source-ids feed L3",
-     "16 primary sources") must match the canonical truth — the number of carded
-     metrics, canonical CSVs, and L3-feeding source-ids. Catches "added/removed a
-     metric but the docs still say the old number".
+     ("N live indicators", "N canonical metrics", "N source-ids feed L3",
+     "N primary sources" — whatever numbers the prose claims) must match the
+     canonical truth — the number of carded metrics, canonical CSVs, and
+     L3-feeding source-ids. Catches "added/removed a metric but the docs
+     still say the old number".
 
   B. DEFINITION SPAN vs DATA (soft, advisory punch-list). For each carded metric,
      if its definition/methodology prose names any years, the canonical data must
