@@ -34,6 +34,9 @@ not ad-hoc scripts: metric metadata in `manifest/metrics.yaml`, sources in
 - **Indian money (Commit FC):** currency is `INR`, never `Rs`; one lakh and up
   display as `INR 9.2 lakh` / `INR 1.4 crore` (`_inr_str` in build.py + JS
   `_inNum`); below that, Indian digit grouping (`3,26,819`, `_in_group`).
+  Chart tooltips/bar labels flow through JS `_fmtVal` (UNIT_JS's "INR" is a
+  format token, not a literal suffix), so a value reads identically on the
+  hero, the pills, the axis and the tooltip (FR).
 - **Minimal card faces (FC):** the plain-English definition paragraph is hidden
   on the grid (`.cards .card-plain{display:none}`) and shows only as the modal
   lead; faces are label + hero + chart + pills. Cards stretch to equal height.

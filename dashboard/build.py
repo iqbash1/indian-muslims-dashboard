@@ -1209,15 +1209,22 @@ function _inNum(v) {
   if (a >= 1e5) return (v / 1e5).toFixed(1) + ' lakh';
   return Math.round(v).toLocaleString('en-IN');
 }
+// One value formatter for every chart surface (tooltips, bar labels) so a
+// number reads identically wherever it appears: money (suffix token 'INR')
+// renders hero-style via _inNum; whole numbers from 1,000 up get Indian
+// grouping / lakh-crore; decimal rates keep their precision + suffix.
+function _fmtVal(v, suffix, decimals) {
+  if (suffix === 'INR') return 'INR ' + _inNum(v);
+  if (decimals === 0 && Math.abs(v) >= 1000) return _inNum(v) + suffix;
+  return v.toFixed(decimals) + suffix;
+}
 function _valueLabels(decimals, suffix) {
   return { id: 'vl', afterDatasetsDraw(chart) {
     const { ctx } = chart; const meta = chart.getDatasetMeta(0);
     ctx.save(); ctx.font = '600 11px -apple-system, system-ui, sans-serif';
     ctx.textBaseline = 'middle'; ctx.fillStyle = '#555';
     meta.data.forEach((bar, i) => { const v = chart.data.datasets[0].data[i];
-      // Integer labels: Indian grouping (3,26,819), compacted to lakh/crore
-      // from one lakh up; decimal labels (percentages, rates) keep precision.
-      const label = (decimals === 0 ? _inNum(v) : v.toFixed(decimals)) + suffix;
+      const label = _fmtVal(v, suffix, decimals);
       ctx.fillText(label, bar.x + 6, bar.y); });
     ctx.restore();
   } };
@@ -1265,7 +1272,7 @@ function hbar(id, labels, values, colors, suffix, decimals, refValue, refLabel, 
   hctx.font = '600 11px -apple-system, system-ui, sans-serif';
   let hPad = 46;
   for (const v of values) {
-    const lbl = (decimals === 0 ? _inNum(v) : v.toFixed(decimals)) + suffix;
+    const lbl = _fmtVal(v, suffix, decimals);
     hPad = Math.max(hPad, Math.ceil(hctx.measureText(lbl).width) + 10);
   }
   hctx.restore();
@@ -1275,7 +1282,7 @@ function hbar(id, labels, values, colors, suffix, decimals, refValue, refLabel, 
     options: {
       indexAxis: 'y', responsive: true, maintainAspectRatio: false, animation: false,
       layout: { padding: { right: hPad, top: 14 } },
-      plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => c.parsed.x.toFixed(decimals) + suffix } } },
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => _fmtVal(c.parsed.x, suffix, decimals) } } },
       scales: { x: { display: false, grace: '8%', beginAtZero: beginAtZero === true,
         // Keep the dashed All-communities reference line inside the axis even when
         // it sits beyond every bar (lone-bar cards like mpce / GER, where the
@@ -1340,7 +1347,7 @@ function lineChart(id, labels, values, color, suffix, decimals) {
     options: {
       responsive: true, maintainAspectRatio: false, animation: false,
       layout: { padding: { top: 6 } },
-      plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => c.parsed.y.toFixed(decimals) + suffix } } },
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => _fmtVal(c.parsed.y, suffix, decimals) } } },
       scales: { x: { grid: { display: false }, ticks: { font: { size: 10 } } }, y: { min: yb && yb.min, max: yb && yb.max, grid: { color: '#f0ede4', drawTicks: false }, border: { display: false }, ticks: { stepSize: yb ? yb.step : undefined, font: { size: 10 }, color: '#767676', autoSkip: false, callback: (v) => _fmtTick(v) } } },
     },
   });
@@ -1550,7 +1557,7 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
           // refline datasets (All-India / median) so a card-view tooltip
           // shows both the Muslim line AND the comparison reference.
           filter: (item) => item.parsed.y != null,
-          callbacks: { label: (c) => c.dataset.label + ': ' + c.parsed.y.toFixed(decimals) + suffix },
+          callbacks: { label: (c) => c.dataset.label + ': ' + _fmtVal(c.parsed.y, suffix, decimals) },
         },
       },
       scales: {
@@ -3451,7 +3458,10 @@ CAPTION = {
 UNIT_JS = {
     "percent": ("%", 1), "females_per_1000_males": ("", 0),
     "per_1000_live_births": ("", 1), "rate_per_100k": ("", 1), "count": ("", 0),
-    "inr_per_month": ("", 0), "inr": ("", 0),
+    # "INR" is a format TOKEN, not a literal suffix: _fmtVal renders these
+    # values hero-style ("INR 15.0 lakh" / "INR 4,455"), so tooltips match
+    # the card hero and the pills instead of printing raw digits.
+    "inr_per_month": ("INR", 0), "inr": ("INR", 0),
 }
 SOURCE_LABEL = {
     "plfs-microdata": "PLFS microdata 2017-24",
