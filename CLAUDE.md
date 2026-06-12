@@ -41,7 +41,14 @@ not ad-hoc scripts: metric metadata in `manifest/metrics.yaml`, sources in
   on the grid (`.cards .card-plain{display:none}`) and shows only as the modal
   lead; faces are label + hero + chart + pills. Cards stretch to equal height.
   Hero captions ADD to the title (denominator, age band, plain gloss), never
-  restate it (FG; convention on the CAPTION dict in build.py).
+  restate it (FG; convention on the CAPTION dict in build.py). Pills carry ONE
+  headline number (FS): label names the comparator, value line = the gap, the
+  comparator's own figure rides the small verdict line ("behind · 91.7%").
+  In the modal, Definition stays visible and the long methodology + sources
+  collapse behind "Full methodology & sources" (a details WITHOUT
+  data-view-id, so audit Check C ignores it; landing pages stay fully
+  expanded). Page chrome is exactly: section jump-chips (sticky on mobile)
+  + a back-to-top button - don't add more.
 - **Time series from 2 rounds up (FD):** the card-face chart plots over time
   whenever canonical has 2+ years (break_flag renders the line dashed);
   single-round cards show the community snapshot. Jargon stays out of

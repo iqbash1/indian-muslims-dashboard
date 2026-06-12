@@ -244,6 +244,14 @@ SECTION_GROUPS = [
     ("Justice & Civic", ["justice", "civic"]),
 ]
 SECTION_OF = {cid: name for name, cids in SECTION_GROUPS for cid in cids}
+# Short labels for the jump chips (the h2s carry the full names).
+SECTION_CHIP_LABEL = {
+    "Demographics": "Demographics",
+    "Health & Housing": "Health",
+    "Education, work & income": "Education & work",
+    "Representation": "Representation",
+    "Justice & Civic": "Justice",
+}
 
 # One-line intro shown under each section header, telling a new visitor what
 # story to expect in the cards below. Written by hand against current data;
@@ -563,6 +571,74 @@ TEMPLATE = """<!DOCTYPE html>
   .compare-toggle-btn.active {
     background: var(--accent); border-color: var(--accent); color: #fff;
   }
+  /* Jump chips (FS): one slim row naming the five sections - the page is a
+     ~15-screen scroll on mobile and previously had no wayfinding at all.
+     Sticky only on small screens; a static row is enough at desktop. */
+  .section-nav {
+    display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px;
+  }
+  .section-chip {
+    display: inline-flex; align-items: center; padding: 5px 14px;
+    border: 1px solid var(--rule); border-radius: 999px; background: var(--card);
+    color: var(--accent); font-size: 12.5px; font-weight: 500;
+    text-decoration: none; white-space: nowrap;
+  }
+  .section-chip:hover { border-color: var(--accent); }
+  .cluster-header { scroll-margin-top: 14px; }
+  @media (max-width: 720px) {
+    .section-nav {
+      position: sticky; top: 0; z-index: 40; flex-wrap: nowrap;
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
+      margin: 0 -16px 18px; padding: 10px 16px;
+      background: var(--bg); border-bottom: 1px solid var(--rule);
+      scrollbar-width: none;
+    }
+    .section-nav::-webkit-scrollbar { display: none; }
+    .section-chip { min-height: 36px; }
+    /* Anchored section headers land below the sticky chip row. */
+    .cluster-header { scroll-margin-top: 64px; }
+  }
+  /* Back-to-top (FS): appears after two screens, quiet slate circle. */
+  #back-top {
+    position: fixed; right: 18px; bottom: 18px; z-index: 60;
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid var(--rule); background: var(--card); color: var(--accent);
+    font-size: 18px; line-height: 1; cursor: pointer;
+    opacity: 0; visibility: hidden; transform: translateY(6px);
+    transition: opacity .2s, visibility .2s, transform .2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,.08);
+  }
+  #back-top.show { opacity: 1; visibility: visible; transform: none; }
+  #back-top:hover { border-color: var(--accent); }
+  /* Smooth in-page jumps, except for visitors who minimise motion (the
+     reduced-motion block below also forces scroll-behavior back to auto). */
+  html { scroll-behavior: smooth; }
+  /* Collapsed methodology in the modal (FS): Definition stays visible, the
+     long provenance prose sits one quiet disclosure away. */
+  .method-more { margin: 10px 0 0; }
+  .method-more > summary {
+    cursor: pointer; color: var(--accent); font-size: 13px; font-weight: 600;
+    list-style: none; display: inline-flex; align-items: center; gap: 6px;
+    min-height: 32px;
+  }
+  .method-more > summary::-webkit-details-marker { display: none; }
+  .method-more > summary::before { content: "▸"; font-size: 10px; transition: transform .15s; }
+  .method-more[open] > summary::before { transform: rotate(90deg); }
+  .method-more[open] > summary { margin-bottom: 6px; }
+  .method-para { margin-top: 8px; }
+  /* Compare-toggle feedback (FS): tint the freshly swapped pills so the
+     toggle visibly does something. Killed by the reduced-motion block. */
+  @keyframes compFlash {
+    0% { background-color: rgba(44, 95, 138, .14); }
+    100% { background-color: transparent; }
+  }
+  .card-comp.comp-flash { animation: compFlash .8s ease-out; }
+  /* "Open" vs "Tap" in the intro CTA, by pointer capability. */
+  .if-touch { display: none; }
+  @media (hover: none) and (pointer: coarse) {
+    .if-hover { display: none; }
+    .if-touch { display: inline; }
+  }
   /* Default: hide vs-Hindu pills. The compare toggle adds .compare-hindu to
      <body>, which swaps which alternate is shown. */
   .card-comp[data-comp-type="vs-hindu"] { display: none; }
@@ -845,8 +921,9 @@ TEMPLATE = """<!DOCTYPE html>
     .scorecard-table th, .scorecard-table td { padding: 6px 4px; }
     /* Section intros: keep at the desktop size on mobile for 60+ legibility. */
     .cluster-intro { font-size: 14px; }
-    /* Pill labels carry the comparator value now (Commit BP). On narrow
-       cards the 3-pill row gets tight, so tighten typography and pad. */
+    /* On narrow cards the pill row gets tight, so tighten typography and
+       pad. (The comparator value lives on the small verdict line since FS;
+       labels are short again.) */
     .comp-label { font-size: 12px; line-height: 1.2; }
     .comp-verdict { font-size: 12.5px; }
     .comp-detail { font-size: 12px; }
@@ -1031,7 +1108,7 @@ TEMPLATE = """<!DOCTYPE html>
 </p>
 
 <p class="preamble-note">
-  Each card sets the latest Muslim figure beside Hindu and all-India baselines, drawn from <b>{n_sources}</b> primary government sources. Open any card for its chart, method and source. <a href="/about/">How these are measured →</a>
+  Each card sets the latest Muslim figure beside Hindu and all-India baselines, drawn from <b>{n_sources}</b> primary government sources. <span class="if-hover">Open</span><span class="if-touch">Tap</span> any card for its chart, method and source. <a href="/about/">How these are measured →</a>
 </p>
 <div class="compare-toggle" role="radiogroup" aria-label="Choose comparison baseline for every card">
   <span class="compare-toggle-label">Compare Muslim outcomes to:</span>
@@ -1039,7 +1116,11 @@ TEMPLATE = """<!DOCTYPE html>
   <button id="compare-hindu" class="compare-toggle-btn" role="radio" aria-checked="false" type="button">Hindu only</button>
 </div>
 
+{section_nav}
+
 {cluster_grids}
+
+<button id="back-top" type="button" aria-label="Back to top" title="Back to top">↑</button>
 
 <!-- SCORECARD: moved below the cards (Commit BP) so a new visitor sees the
      visual story before the dense table view. Collapsed by default; the
@@ -1213,6 +1294,9 @@ function _inNum(v) {
 // number reads identically wherever it appears: money (suffix token 'INR')
 // renders hero-style via _inNum; whole numbers from 1,000 up get Indian
 // grouping / lakh-crore; decimal rates keep their precision + suffix.
+// Chart micro-type: 11px on small screens (10px is squint territory on a
+// 375px display), 10px on desktop where the cards are physically larger.
+const TICK_FONT = (window.matchMedia && matchMedia('(max-width: 480px)').matches) ? 11 : 10;
 function _fmtVal(v, suffix, decimals) {
   if (suffix === 'INR') return 'INR ' + _inNum(v);
   if (decimals === 0 && Math.abs(v) >= 1000) return _inNum(v) + suffix;
@@ -1348,7 +1432,7 @@ function lineChart(id, labels, values, color, suffix, decimals) {
       responsive: true, maintainAspectRatio: false, animation: false,
       layout: { padding: { top: 6 } },
       plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => _fmtVal(c.parsed.y, suffix, decimals) } } },
-      scales: { x: { grid: { display: false }, ticks: { font: { size: 10 } } }, y: { min: yb && yb.min, max: yb && yb.max, grid: { color: '#f0ede4', drawTicks: false }, border: { display: false }, ticks: { stepSize: yb ? yb.step : undefined, font: { size: 10 }, color: '#767676', autoSkip: false, callback: (v) => _fmtTick(v) } } },
+      scales: { x: { grid: { display: false }, ticks: { font: { size: TICK_FONT } } }, y: { min: yb && yb.min, max: yb && yb.max, grid: { color: '#f0ede4', drawTicks: false }, border: { display: false }, ticks: { stepSize: yb ? yb.step : undefined, font: { size: TICK_FONT }, color: '#767676', autoSkip: false, callback: (v) => _fmtTick(v) } } },
     },
   });
 }
@@ -1387,11 +1471,11 @@ function concentrationCurve(id, points, markN, suffix) {
       } } },
       scales: {
         x: { type: 'linear', min: 1, max: maxX, grid: { display: false },
-             ticks: { font: { size: 10 }, maxTicksLimit: 6 },
+             ticks: { font: { size: TICK_FONT }, maxTicksLimit: 6 },
              title: { display: true, text: 'top-N districts (ranked by Muslim population)',
-                      font: { size: 10 }, color: '#666' } },
+                      font: { size: TICK_FONT }, color: '#666' } },
         y: { min: 0, grace: '6%',
-             ticks: { font: { size: 10 }, callback: (v) => v + suffix } },
+             ticks: { font: { size: TICK_FONT }, callback: (v) => v + suffix } },
       },
     },
   });
@@ -1561,7 +1645,7 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
         },
       },
       scales: {
-        x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+        x: { grid: { display: false }, ticks: { font: { size: TICK_FONT } } },
         // _axisBounds rounds the bounds outward to the nearest step multiple
         // (at most one step per side, never a forced zero), so every
         // gridline is a whole, evenly spaced number and the floor is always
@@ -1569,7 +1653,7 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
         // tick-bound blowout, and not FO's ragged data-extreme edge labels.
         y: { min: yb && yb.min, max: yb && yb.max,
              grid: { color: '#f0ede4', drawTicks: false },
-             border: { display: false }, ticks: { stepSize: yb ? yb.step : undefined, font: { size: 10 }, color: '#767676', autoSkip: false, callback: (v) => _fmtTick(v) } },
+             border: { display: false }, ticks: { stepSize: yb ? yb.step : undefined, font: { size: TICK_FONT }, color: '#767676', autoSkip: false, callback: (v) => _fmtTick(v) } },
       },
     },
     plugins: [_endLabels()],
@@ -1617,7 +1701,7 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
   const allBtn = document.getElementById('compare-all');
   const hinduBtn = document.getElementById('compare-hindu');
   if (!allBtn || !hinduBtn) return;
-  function set(mode) {
+  function set(mode, fromUser) {
     const hindu = mode === 'hindu';
     document.body.classList.toggle('compare-hindu', hindu);
     allBtn.classList.toggle('active', !hindu);
@@ -1625,13 +1709,43 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
     allBtn.setAttribute('aria-checked', String(!hindu));
     hinduBtn.setAttribute('aria-checked', String(hindu));
     try { localStorage.setItem('md_compare', mode); } catch (e) { /* private mode */ }
-    if (typeof gtag === 'function') gtag('event', 'compare_toggle', { mode });
+    if (typeof gtag === 'function' && fromUser) gtag('event', 'compare_toggle', { mode });
+    // Visible feedback: briefly tint the pills the toggle just swapped in,
+    // so the action has an on-page effect beyond the button state. The
+    // animation is CSS-gated behind prefers-reduced-motion.
+    if (fromUser) {
+      document.querySelectorAll('.card-comp[data-comp-type]').forEach((el) => {
+        el.classList.remove('comp-flash');
+        void el.offsetWidth;  // restart the animation on rapid re-toggles
+        el.classList.add('comp-flash');
+      });
+    }
   }
-  allBtn.addEventListener('click', () => set('all'));
-  hinduBtn.addEventListener('click', () => set('hindu'));
+  allBtn.addEventListener('click', () => set('all', true));
+  hinduBtn.addEventListener('click', () => set('hindu', true));
   let stored = 'all';
   try { stored = localStorage.getItem('md_compare') || 'all'; } catch (e) { /* private */ }
-  set(stored);
+  set(stored, false);
+})();
+
+// Back-to-top: appears after two screens of scroll; hidden otherwise. The
+// scroll itself is smooth only outside prefers-reduced-motion.
+(function backToTop() {
+  const btn = document.getElementById('back-top');
+  if (!btn) return;
+  let ticking = false;
+  function update() {
+    ticking = false;
+    btn.classList.toggle('show', window.scrollY > innerHeight * 2);
+  }
+  window.addEventListener('scroll', () => {
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  }, { passive: true });
+  btn.addEventListener('click', () => {
+    const smooth = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: smooth ? 'smooth' : 'auto' });
+  });
+  update();
 })();
 
 // Modal: clicking a card opens a larger view of the same chart by cloning
@@ -2755,16 +2869,16 @@ def _emit_metric_landings(out_dir: pathlib.Path, view_map: dict | None = None) -
         if defn:
             about_parts.append(f'<p><b>Definition.</b> {html.escape(defn)}</p>')
         if notes:
-            about_parts.append(f'<p><b>Methodology.</b> {html.escape(notes)}</p>')
+            about_parts.extend(_method_paras(notes))
         docs = _source_documents(mid)
         if docs:
             links = " · ".join(
                 f'<a href="{html.escape(u)}" target="_blank" rel="noopener">{html.escape(l)}</a>'
                 for _, l, u in docs)
             about_parts.append(f'<p class="src-note"><b>Sources.</b> {links}. '
-                               f'Data file: <a href="/canonical/{mid}.csv">{mid}.csv</a>.</p>')
+                               f'Download CSV: <a href="/canonical/{mid}.csv">{mid}.csv</a>.</p>')
         else:
-            about_parts.append(f'<p class="src-note">Data file: '
+            about_parts.append(f'<p class="src-note">Download CSV: '
                                f'<a href="/canonical/{mid}.csv">{mid}.csv</a>.</p>')
         about_html = "".join(about_parts)
 
@@ -3238,7 +3352,7 @@ def build() -> None:
                     n_rows += 1
     n_sources = len(source_ids)
 
-    cluster_grids, card_charts, view_map = render_all_clusters()
+    cluster_grids, card_charts, view_map, section_nav = render_all_clusters()
 
     stats = _compute_headline_stats()
     # Strip the parenthetical qualifier the scorecard labels carry (e.g.
@@ -3279,6 +3393,7 @@ def build() -> None:
         "{ahead_clause}": ahead_clause,
         "{scorecard_rows}": render_scorecard_rows(),
         "{cluster_grids}": cluster_grids,
+        "{section_nav}": section_nav,
         "{card_charts}": card_charts,
         "{site_title}": html.escape(SITE_TITLE),
         "{site_description}": html.escape(SITE_DESCRIPTION),
@@ -3521,6 +3636,23 @@ def _year_of(metric_id: str):
     return max(yrs) if yrs else ""
 
 
+def _method_paras(text: str) -> list:
+    """Break a long methodology note into 2-3 sentence paragraphs so it reads
+    as prose rather than a wall (the FS layering). Sentences split on
+    period-space-capital, which the house style guarantees (no em dashes, no
+    abbreviation periods; dotted dates like 30.06.2018 never precede a space
+    plus capital mid-sentence). The first paragraph carries the
+    "Methodology." lead-in."""
+    text = " ".join(text.split())
+    if not text:
+        return []
+    sentences = re.split(r"(?<=[.!?]) (?=[A-Z0-9(\"])", text)
+    chunks = [" ".join(sentences[i:i + 3]) for i in range(0, len(sentences), 3)]
+    out = [f'<p><b>Methodology.</b> {html.escape(chunks[0])}</p>']
+    out.extend(f'<p class="method-para">{html.escape(c)}</p>' for c in chunks[1:])
+    return out
+
+
 def _comp(label: str, verdict: str, detail: str, cls: str, comp_type: str | None = None, fallback: bool = False) -> str:
     attr = f' data-comp-type="{comp_type}"' if comp_type else ""
     attr += ' data-comp-fallback' if fallback else ""
@@ -3677,26 +3809,35 @@ def _card_shell(mid, label, value, unit_txt, year, polarity, chart_html, comps_h
         parts = []
         if def_text:
             parts.append(f'<p><b>Definition.</b> {html.escape(def_text)}</p>')
+        more_parts = []
         if notes_text:
-            parts.append(f'<p><b>Methodology.</b> {html.escape(notes_text)}</p>')
+            more_parts.extend(_method_paras(notes_text))
         if docs:
             doc_links = " · ".join(
                 f'<a href="{html.escape(u)}" target="_blank" rel="noopener">{html.escape(l)}</a>'
                 for _, l, u in docs)
-            parts.append(
+            more_parts.append(
                 '<p class="card-sources"><b>Where this data comes from.</b> '
-                f'{doc_links}. Data file: '
+                f'{doc_links}. Download CSV: '
                 f'<a href="{html.escape(csv_href)}" target="_blank" rel="noopener">{html.escape(mid)}.csv</a>. '
                 'You can open any of these to check the numbers on this chart '
                 'yourself.</p>')
         ts = _transform_script(mid)
         if ts:
-            parts.append(
+            more_parts.append(
                 '<p class="card-reproduce"><b>Reproduce this.</b> Every figure on this '
                 'card, in every tab, is computed from the data file above by an open '
                 f'script: <a href="{GITHUB_REPO}/blob/main/{html.escape(ts)}" '
                 'target="_blank" rel="noopener">transform code</a>. Each data-file row '
                 'also records its own source and method.</p>')
+        # Definition stays visible; the long methodology + provenance collapse
+        # behind one quiet disclosure (no data-view-id, so audit Check C never
+        # mistakes it for a drill-down tab). Landing pages keep the full text
+        # expanded - they ARE the provenance pages.
+        if more_parts:
+            parts.append(
+                '<details class="method-more"><summary>Full methodology &amp; sources</summary>'
+                + "".join(more_parts) + '</details>')
         method_html = (
             '<div class="card-method">'
             '<h3 class="card-method-title">About this measurement</h3>'
@@ -3744,7 +3885,7 @@ def _card_shell(mid, label, value, unit_txt, year, polarity, chart_html, comps_h
         # document) is in the modal "About this measurement" panel.
         f'<div class="card-foot">'
         f'{src_foot}'
-        f'<a href="{html.escape(csv_href)}" target="_blank" rel="noopener">Data file</a>'
+        f'<a href="{html.escape(csv_href)}" target="_blank" rel="noopener">Download CSV</a>'
         f'</div>'
         '</section>'
     )
@@ -4836,29 +4977,31 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
     # Comparison block: default to "vs all-India" (or "vs community median"
     # when source all-India is sparse). Render "vs Hindu" alongside (marked
     # data-comp-type="vs-hindu") so a page-level toggle can swap the visible
-    # pill when a viewer wants the inter-community read. The comparator's
-    # actual value is appended to the pill label so the reader doesn't have
-    # to do mental math between the card hero (Muslim) and the gap (verdict).
+    # pill when a viewer wants the inter-community read. One headline number
+    # per pill: the label names the comparator, the value line carries the
+    # gap, and the comparator's own figure rides the small verdict line so
+    # the reader still never has to do mental math (FS; it used to sit in
+    # the label, where two numbers competed).
     comps = ""
     if all_v is not None and muslim is not None:
         gap = muslim - all_v
         cls = _verdict(gap, hib)
         base_label = all_pill_label or "vs all communities"
-        comps += _comp(f"{base_label} · {fmt_num(all_v, unit)}",
-                       _gap_str(gap, unit), _verdict_word(cls, gap), cls,
+        comps += _comp(base_label, _gap_str(gap, unit),
+                       f"{_verdict_word(cls, gap)} · {fmt_num(all_v, unit)}", cls,
                        comp_type="vs-all", fallback=(hindu is None))
     other_min = nat.get("other_minority")
     if other_min is not None and muslim is not None:
         gap = muslim - other_min
         cls = _verdict(gap, hib)
-        comps += _comp(f"vs other minorities · {fmt_num(other_min, unit)}",
-                       _gap_str(gap, unit), _verdict_word(cls, gap), cls,
+        comps += _comp("vs other minorities", _gap_str(gap, unit),
+                       f"{_verdict_word(cls, gap)} · {fmt_num(other_min, unit)}", cls,
                        comp_type="vs-other-min")
     if hindu is not None:
         gap = muslim - hindu
         cls = _verdict(gap, hib)
-        comps += _comp(f"vs Hindu · {fmt_num(hindu, unit)}",
-                       _gap_str(gap, unit), _verdict_word(cls, gap), cls,
+        comps += _comp("vs Hindu", _gap_str(gap, unit),
+                       f"{_verdict_word(cls, gap)} · {fmt_num(hindu, unit)}", cls,
                        comp_type="vs-hindu")
     if rank:
         comps += _comp("among communities", f"{_ordinal(rank)} of {n}", _tier_word(tier), tier)
@@ -5105,8 +5248,9 @@ def render_all_clusters():
     """Group live metrics into the SECTION_GROUPS display sections and render each
     as a card grid. Within a section, cards order by scorecard `order`.
 
-    Returns (clusters_html, charts_js, view_map) where view_map is
-    {mid: [{id,label,sub}, ...]} for the per-view stub + OG generators.
+    Returns (clusters_html, charts_js, view_map, section_nav_html) where
+    view_map is {mid: [{id,label,sub}, ...]} for the per-view stub + OG
+    generators.
     """
     from collections import defaultdict
     import yaml as _yaml
@@ -5121,6 +5265,7 @@ def render_all_clusters():
 
     grids, charts = [], []
     view_map: dict[str, list] = {}
+    rendered_sections = []
     for name, cluster_ids in SECTION_GROUPS:
         ms = [m for cid in cluster_ids for m in by_cluster.get(cid, [])]
         if not ms:
@@ -5137,10 +5282,19 @@ def render_all_clusters():
         intro = SECTION_INTROS.get(name, "")
         intro_html = (f'<p class="cluster-intro">{html.escape(intro)}</p>\n'
                       if intro else "")
-        grids.append(f'<h2 class="cluster-header">{html.escape(name)}</h2>\n'
+        sec_id = "sec-" + re.sub(r"[^a-z]+", "-", name.lower()).strip("-")
+        rendered_sections.append((sec_id, name))
+        grids.append(f'<h2 class="cluster-header" id="{sec_id}">{html.escape(name)}</h2>\n'
                      f'{intro_html}'
                      f'<div class="cards">\n{"".join(cards)}\n</div>')
-    return "\n\n".join(grids), "\n".join(charts), view_map
+    # Jump chips for the rendered sections (short labels; the h2s carry the
+    # full names). One slim nav for what is a ~15-screen scroll on mobile.
+    chips = "".join(
+        f'<a class="section-chip" href="#{sid}">{html.escape(SECTION_CHIP_LABEL.get(nm, nm))}</a>'
+        for sid, nm in rendered_sections)
+    section_nav = (f'<nav class="section-nav" aria-label="Jump to section">{chips}</nav>'
+                   if len(rendered_sections) > 1 else "")
+    return "\n\n".join(grids), "\n".join(charts), view_map, section_nav
 
 
 if __name__ == "__main__":
