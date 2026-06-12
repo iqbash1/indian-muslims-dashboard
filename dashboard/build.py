@@ -3844,7 +3844,7 @@ def _card_shell(mid, label, value, unit_txt, year, polarity, chart_html, comps_h
             + "".join(parts) +
             '</div>'
         )
-    # Footer: the source NAME links to the original source document; "Data file"
+    # Footer: the source NAME links to the original source document; "Download CSV"
     # opens the CSV extract. Primary source first (docs is primary-sorted).
     primary_url = docs[0][2] if docs else ""
     src_foot = (f'<a href="{html.escape(primary_url)}" target="_blank" rel="noopener">{html.escape(src)}</a>'
@@ -3881,7 +3881,7 @@ def _card_shell(mid, label, value, unit_txt, year, polarity, chart_html, comps_h
         f'{views_html}'
         f'{hint_html}'
         # Footer: source NAME links to the original source document; a separate
-        # "Data file" link opens the CSV extract. Full source list (every
+        # "Download CSV" link opens the CSV extract. Full source list (every
         # document) is in the modal "About this measurement" panel.
         f'<div class="card-foot">'
         f'{src_foot}'
