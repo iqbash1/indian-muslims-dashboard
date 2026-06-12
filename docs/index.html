@@ -1003,59 +1003,61 @@ function hbar(id, labels, values, colors, suffix, decimals, refValue, refLabel, 
     plugins: [_valueLabels(decimals, suffix), _refLine(refValue == null ? null : refValue, refLabel)],
   });
 }
-// Axis tick label: Indian grouping / lakh-crore for big rupee values (the
-// FC money rule; also pins formatting that Chart.js's default tick callback
-// would otherwise delegate to the BROWSER locale), plain trimmed numbers
-// below 1000.
+// Axis tick label: Indian lakh/crore for big rupee values with trailing
+// zeros trimmed ("10 lakh", "12.5 lakh"; the FC money rule - also pins
+// formatting that Chart.js's default tick callback would otherwise delegate
+// to the BROWSER locale), Indian-grouped integers in the thousands, plain
+// trimmed numbers below that. Tick values are step multiples (see
+// _axisBounds), so labels stay short.
 function _fmtTick(v) {
-  if (Math.abs(v) >= 1000) return _inNum(v);
-  const r = +v.toFixed(1);
-  return Number.isInteger(r) ? String(r) : r.toFixed(1);
+  const a = Math.abs(v);
+  if (a >= 1e7) return +(v / 1e7).toFixed(2) + ' crore';
+  if (a >= 1e5) return +(v / 1e5).toFixed(2) + ' lakh';
+  if (a >= 1000) return Math.round(v).toLocaleString('en-IN');
+  return String(+v.toFixed(2));
 }
-// Gridlines INSIDE a data-hugged axis, with the DATA EXTREMES always
-// labelled at the edges. bounds:'data' + grace means the axis floor is not
-// a round number, and Chart.js's own round ticks can leave the whole bottom
-// of the chart unlabelled - on the 2-point mpce card the 2004 value sat 35%
-// below the lowest gridline and read as INR 0. So: first and last ticks sit
-// AT the plotted min/max (anchoring the floor and ceiling with real
-// numbers), and round internal ticks (1/2/5 pattern) survive only where
-// they do not crowd the edge labels.
-function _niceTicks(axis) {
-  const span = axis.max - axis.min;
-  if (span <= 0) return;
+// Loose nice-tick axis bounds (the FP grammar): gridlines must be WHOLE
+// round numbers, EVENLY spaced, and the floor must be labelled (an
+// unlabelled floor reads as zero - the FO lesson; FO's literal data-extreme
+// edge ticks fixed that but produced ragged uneven labels like
+// 12.8|20|23.8). So: pick the smallest 1/2/5-pattern step that needs at
+// most 7 ticks, and round the bounds OUTWARD to the nearest step multiple.
+// Expansion is at most one step per side - the axis still hugs the data
+// (sex-ratio stays in the 800-1050 band, never zero-anchored); a 0 floor
+// appears only when the data genuinely sits within a step of it on its own
+// scale (mpce's 635-of-4958 floor IS an honest 0).
+function _axisBounds(values) {
   let dmin = Infinity, dmax = -Infinity;
-  for (const ds of axis.chart.data.datasets) {
-    for (const v of (ds.data || [])) {
-      const n = (v && typeof v === 'object') ? v.y : v;
-      if (typeof n === 'number' && isFinite(n)) { dmin = Math.min(dmin, n); dmax = Math.max(dmax, n); }
+  for (const v of values) {
+    if (typeof v === 'number' && isFinite(v)) { dmin = Math.min(dmin, v); dmax = Math.max(dmax, v); }
+  }
+  if (!isFinite(dmin)) return null;
+  if (dmax === dmin) { dmin -= 1; dmax += 1; }
+  const span = dmax - dmin;
+  for (let p = Math.pow(10, Math.floor(Math.log10(span)) - 1); ; p *= 10) {
+    for (const m of [1, 2, 5]) {
+      const step = m * p;
+      const lo = Math.floor(dmin / step) * step;
+      const hi = Math.ceil(dmax / step) * step;
+      if (Math.round((hi - lo) / step) + 1 <= 7) {
+        return { min: +lo.toFixed(10), max: +hi.toFixed(10), step: step };
+      }
     }
   }
-  if (!isFinite(dmin) || dmax <= dmin) return;
-  const raw = span / 4;
-  const pow = Math.pow(10, Math.floor(Math.log10(raw)));
-  const step = [1, 2, 5, 10].map((m) => m * pow).find((s) => s >= raw) || 10 * pow;
-  // labels come from the y ticks' callback (_fmtTick): Chart.js regenerates
-  // tick labels AFTER afterBuildTicks, so labels set here would be discarded
-  const ticks = [{ value: dmin }];
-  for (let v = Math.ceil(axis.min / step) * step; v <= axis.max + 1e-9; v += step) {
-    const t = +v.toFixed(10);
-    if (t - dmin < 0.45 * step || dmax - t < 0.45 * step) continue;
-    ticks.push({ value: t });
-  }
-  ticks.push({ value: dmax });
-  axis.ticks = ticks;
 }
 function lineChart(id, labels, values, color, suffix, decimals) {
   _spec(id, 'lineChart', Array.from(arguments).slice(1));
+  const yb = _axisBounds(values);
   new Chart(document.getElementById(id), {
     type: 'line',
     // Fill tint derives from the line's own colour (the maroon data series);
     // the old hardcoded blue fill predated the colour contract.
-    data: { labels: labels, datasets: [{ data: values, borderColor: color, backgroundColor: 'rgba(123,29,34,.08)', fill: true, tension: 0.3, pointRadius: 3, pointBackgroundColor: color }] },
+    data: { labels: labels, datasets: [{ data: values, borderColor: color, backgroundColor: 'rgba(123,29,34,.08)', fill: true, tension: 0.3, pointRadius: 3, pointBackgroundColor: color, clip: false }] },
     options: {
       responsive: true, maintainAspectRatio: false, animation: false,
+      layout: { padding: { top: 6 } },
       plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => c.parsed.y.toFixed(decimals) + suffix } } },
-      scales: { x: { grid: { display: false }, ticks: { font: { size: 10 } } }, y: { beginAtZero: false, bounds: 'data', grace: '10%', afterBuildTicks: _niceTicks, grid: { color: '#f0ede4', drawTicks: false }, border: { display: false }, ticks: { font: { size: 10 }, color: '#767676', autoSkip: false, callback: (v) => _fmtTick(v) } } },
+      scales: { x: { grid: { display: false }, ticks: { font: { size: 10 } } }, y: { min: yb && yb.min, max: yb && yb.max, grid: { color: '#f0ede4', drawTicks: false }, border: { display: false }, ticks: { stepSize: yb ? yb.step : undefined, font: { size: 10 }, color: '#767676', autoSkip: false, callback: (v) => _fmtTick(v) } } },
     },
   });
 }
@@ -1241,6 +1243,10 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
     padRight = Math.max(padRight, Math.ceil(mctx.measureText(d.label).width) + 12);
   }
   mctx.restore();
+  // Even whole-number gridlines over everything this chart actually plots
+  // (visible community lines + the dashed reference).
+  const yb = _axisBounds(ds.flatMap((d) => d.data || []));
+  for (const d of ds) d.clip = false;  // edge dots may sit ON a bound gridline
   const chart = new Chart(cEl, {
     type: 'line',
     data: { labels: years, datasets: ds },
@@ -1265,15 +1271,14 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
       },
       scales: {
         x: { grid: { display: false }, ticks: { font: { size: 10 } } },
-        // bounds:'data' keeps the house axes-hug-the-data rule: without it
-        // Chart.js expands the axis to its rounded tick bounds (GER's 9-31
-        // data was drawing a 0-40 axis, mostly empty space). _niceTicks then
-        // labels the data extremes at the edges with round gridlines between
-        // (autoSkip off so the edge anchors can never be dropped at small
-        // sizes - an unlabelled floor reads as zero).
-        y: { beginAtZero: false, bounds: 'data', grace: '12%', afterBuildTicks: _niceTicks,
+        // _axisBounds rounds the bounds outward to the nearest step multiple
+        // (at most one step per side, never a forced zero), so every
+        // gridline is a whole, evenly spaced number and the floor is always
+        // labelled. GER's 9-31 data draws a 5-35 axis - not the old 0-40
+        // tick-bound blowout, and not FO's ragged data-extreme edge labels.
+        y: { min: yb && yb.min, max: yb && yb.max,
              grid: { color: '#f0ede4', drawTicks: false },
-             border: { display: false }, ticks: { font: { size: 10 }, color: '#767676', autoSkip: false, callback: (v) => _fmtTick(v) } },
+             border: { display: false }, ticks: { stepSize: yb ? yb.step : undefined, font: { size: 10 }, color: '#767676', autoSkip: false, callback: (v) => _fmtTick(v) } },
       },
     },
     plugins: [_endLabels()],
