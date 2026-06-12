@@ -58,10 +58,10 @@ Byte/column map and gotchas: `nada/education-layout-map.md`.
 The Muslim household spends about 72% of what the Hindu household spends
 per school student in 2025, down from 78% in 2017-18. School choice is not
 the driver: government-school shares are nearly equal (2025 Muslim 55.4%
-vs Hindu 56.5%) - the gap sits in what is spent within school types (fees
-of the chosen private school, books, transport). Private coaching, the
-excluded companion, averages another INR 2,409 per student in 2025
-(collected separately in both rounds).
+vs Hindu 56.5%) - the gap comes from how much families spend in whichever
+school they use (fees, books, transport). Private coaching, the excluded
+companion, averages another INR 2,409 per student in 2025 (collected
+separately in both rounds).
 
 ## Caveats (NSO unit-data rider + the break flag)
 

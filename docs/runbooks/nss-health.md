@@ -56,12 +56,13 @@ Weights: 2017-18 = MLT/100 if NSS=NSC else MLT/200 (sub-sample-combined);
 | all-India | 18,088 | 34,064 |
 
 A Muslim hospital stay costs 12-19% less than the all-India average across
-the two rounds. The driver is provider mix plus spending power: 41.5% of
-Muslim hospitalisation cases in 2025 used government hospitals against
-36.4% of Hindu cases (47.6% vs 41.8% in 2017-18), and a public-hospital
-stay averages about an eighth of a private one. The survey cannot separate
-cheaper care from foregone care; the metric carries neutral polarity
-(neither direction is "better").
+the two rounds, for two reasons: more Muslim patients use government
+hospitals (41.5% of Muslim hospitalisation cases in 2025 against 36.4% of
+Hindu cases; 47.6% vs 41.8% in 2017-18), where a stay averages about an
+eighth of a private one, and Muslim households have less to spend on
+private care. The survey cannot tell cheaper care apart from care that was
+needed but never bought; the metric carries neutral polarity (neither
+direction is "better").
 
 ## Caveats (NSO unit-data rider)
 
