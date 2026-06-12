@@ -285,6 +285,29 @@ def canonicalize() -> None:
              "census-india-2011", src_doc,
              "Muslim share of total population (all residences combined).")
 
+    # --- Telangana (IN-S36) 2011, aggregated ---
+    # The 2011 census predates the state (formed June 2014 from ten
+    # undivided-Andhra-Pradesh districts, census codes 532-541 incl.
+    # Hyderabad), so C-01 has no Telangana row; summing those districts'
+    # counts gives the state's 2011 share - the population context the
+    # representation card reads against, and the row the By-state tab
+    # otherwise lacks. Verified: 4,464,699 / 35,193,978 = 12.69% Muslim.
+    tg_codes = [f"IN-S28-D{d}" for d in range(532, 542)]
+    tg_mus = sum(persons_2011.get(("district", c, "muslim"), 0) for c in tg_codes)
+    tg_all = sum(all_2011.get(("district", c), 0) for c in tg_codes)
+    if tg_mus and tg_all:
+        emit("state", "IN-S36", 2011, "muslim", tg_mus / tg_all * 100,
+             "census-india-2011",
+             "sources/census-2011/c-series/state-mdds/c01-<state>.xls",
+             "Muslim share of total population (all residences combined). "
+             "Telangana was formed in June 2014, after the census: this 2011 "
+             "figure aggregates the ten undivided-Andhra-Pradesh census "
+             "districts that became the state (census codes 532-541, incl. "
+             "Hyderabad). District boundaries are as of Census 2011, so the "
+             "seven Khammam mandals later transferred back to Andhra Pradesh "
+             "under the reorganisation remain included (under 0.6% of the "
+             "population).")
+
     level_rank = {"national": 0, "state": 1, "district": 2}
     rows.sort(key=lambda r: (level_rank[r[1]], r[2], r[3], RELIGION_RANK.get(r[4], 9), r[5]))
 

@@ -759,10 +759,13 @@ TEMPLATE = """<!DOCTYPE html>
   td.tbar-cell { text-align: left; white-space: nowrap; }
   .tbar { display: inline-block; height: 13px; background: rgba(123,29,34,.16); border-radius: 2px; vertical-align: -2px; }
   .tbar-val { margin-left: 6px; }
-  /* Paired row bars on one scale: maroon subject over grey context. */
-  .tbar-duo { display: inline-block; width: 70%; vertical-align: middle; }
+  /* Paired row bars on one scale: maroon subject over grey context. Fixed
+     width: a %-width here makes the table's auto layout overflow its
+     container (phantom horizontal scroll in the modal). */
+  .tbar-duo { display: inline-block; width: 200px; max-width: 100%; vertical-align: middle; }
   .tbar-duo .tbar-rep { display: block; height: 7px; background: rgba(123,29,34,.55); border-radius: 2px; }
   .tbar-duo .tbar-pop { display: block; height: 7px; background: rgba(85,85,85,.38); border-radius: 2px; margin-top: 2px; }
+  @media (max-width: 640px) { .tbar-duo { width: 120px; } }
   .scorecard-table .gap-bad { color: var(--negative); font-weight: 600; }
   .scorecard-table .gap-good { color: var(--positive); font-weight: 600; }
   .scorecard-table .gap-neutral { color: var(--muted); }
@@ -1401,7 +1404,7 @@ function hbar(id, labels, values, colors, suffix, decimals, refValue, refLabel, 
 // Paired horizontal bars: one maroon subject bar and one grey context bar
 // per category (mla-share: assembly-seat share vs Census-2011 population
 // share), value-labelled at both bar ends, legend on. A null context value
-// (Telangana: no separate 2011 figure) draws no bar and no label.
+// draws no bar and no label.
 function hbarPair(id, labels, subj, ctxv, subjLabel, ctxLabel, suffix, decimals) {
   _spec(id, 'hbarPair', Array.from(arguments).slice(1));
   const pEl = document.getElementById(id);
@@ -2772,7 +2775,7 @@ LANDING_TEMPLATE = """<!DOCTYPE html>
   td.tbar-cell { text-align:left; white-space:nowrap; }
   .tbar { display:inline-block; height:13px; background:rgba(123,29,34,.16); border-radius:2px; vertical-align:-2px; }
   .tbar-val { margin-left:6px; }
-  .tbar-duo { display:inline-block; width:70%; vertical-align:middle; }
+  .tbar-duo { display:inline-block; width:200px; max-width:100%; vertical-align:middle; }
   .tbar-duo .tbar-rep { display:block; height:7px; background:rgba(123,29,34,.55); border-radius:2px; }
   .tbar-duo .tbar-pop { display:block; height:7px; background:rgba(85,85,85,.38); border-radius:2px; margin-top:2px; }
   .src-note { font-size:13px; color:var(--muted); }
@@ -3768,7 +3771,8 @@ def _ls_seats() -> list[tuple[int, int, int]]:
 def _state_pop_share_2011() -> dict[str, float]:
     """Census-2011 Muslim population share by state geography_code, the
     per-state context the representation bars are read against. Telangana
-    (IN-S36) is absent: it was part of undivided Andhra Pradesh in 2011."""
+    (IN-S36) rides on a canonical row aggregated from the ten undivided-AP
+    districts that formed the state in 2014 (see pop_share.py)."""
     return {r["geography_code"]: float(r["value"])
             for r in load_metric("pop-share")
             if r["geography_level"] == "state" and r["year"] == "2011"}
@@ -4998,14 +5002,16 @@ def _assemblies_view() -> str:
             f"{_round_str(recs[0][3], 1)}%; {n_zero} assemblies have no Muslim MLA at all. "
             f"Each row pairs the maroon seat-share bar with a grey bar for the "
             f"state's Muslim population share (Census 2011; the J&K figure includes "
-            f"pre-2019 Ladakh, and Telangana has no separate 2011 figure).")
+            f"pre-2019 Ladakh, and Telangana's aggregates the ten undivided-AP "
+            f"districts that formed the state in 2014).")
     fmax = max(max(t[3] for t in recs),
                max((t[4] for t in recs if t[4] is not None), default=0)) or 1.0
     trs = []
     for name, yr, seats, val, pshare in recs:
         # Same left-anchored bar-with-value grammar as the by-state tables,
         # doubled: seat-share bar over a grey population bar on one scale,
-        # so representation reads against presence in every row.
+        # so representation reads against presence in every row. Seat share
+        # sits beside the MLA count it restates as a % (user call, GB).
         w = round(val / fmax * 100, 1)
         pop_cell = f"{_round_str(pshare, 1)}%" if pshare is not None else "n/a"
         pop_bar = (f'<span class="tbar-pop" style="width:{round(pshare / fmax * 100, 1)}%"></span>'
@@ -5013,15 +5019,15 @@ def _assemblies_view() -> str:
         trs.append(f'<tr><td>{html.escape(name)}</td>'
                    f'<td data-sort="{yr}">{yr}</td>'
                    f'<td>{html.escape(seats)}</td>'
-                   f'<td data-sort="{-1 if pshare is None else pshare:.4f}">{pop_cell}</td>'
                    f'<td class="tbar-cell" data-sort="{val:.4f}">'
                    f'<span class="tbar-duo"><span class="tbar-rep" style="width:{w}%"></span>{pop_bar}</span>'
-                   f'<span class="tbar-val">{_round_str(val, 1)}%</span></td></tr>')
+                   f'<span class="tbar-val">{_round_str(val, 1)}%</span></td>'
+                   f'<td data-sort="{-1 if pshare is None else pshare:.4f}">{pop_cell}</td></tr>')
     head = ('<tr><th class="sortable" data-col="0">Assembly</th>'
             '<th class="sortable" data-col="1" data-type="num">Election</th>'
             '<th>Muslim MLAs</th>'
-            '<th class="sortable" data-col="3" data-type="num">Muslim pop.</th>'
-            '<th class="sortable tbar-head" data-col="4" data-type="num">Share</th></tr>')
+            '<th class="sortable tbar-head" data-col="3" data-type="num">Seat share</th>'
+            '<th class="sortable" data-col="4" data-type="num">Population share</th></tr>')
     return (f'<details data-view-id="assemblies" data-view-label="By assembly" '
             f'data-view-sub="{len(recs)} assemblies">'
             f'<summary>Muslim share by assembly ({len(recs)} assemblies)</summary>'
@@ -5356,7 +5362,6 @@ def _card_timeseries(mid, label, unit, src, csv_href, cvid):
             # Paired bars per state: seat share (maroon) against the state's
             # Census-2011 Muslim population share (grey), so representation
             # reads directly against presence (user call, Commits FW/FX).
-            # Telangana has no separate 2011 figure and gets no grey bar.
             pop = _state_pop_share_2011()
             marks = [(round(pop[code], 1) if code in pop else None)
                      for _, _, code in st]

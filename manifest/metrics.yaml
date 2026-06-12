@@ -1200,8 +1200,9 @@ metrics:
       Muslim MLA in state history). Each row's methodology_note cites the
       source compilation(s) used. The per-state population context (the grey
       bars and the By-assembly table's population column) is the Census 2011
-      Muslim share: the J&K figure includes pre-2019 Ladakh, and Telangana
-      has no separate 2011 figure (it was part of undivided Andhra Pradesh).
+      Muslim share: the J&K figure includes pre-2019 Ladakh, and Telangana's
+      figure (12.7%) is aggregated from the ten undivided-Andhra-Pradesh
+      census districts that formed the state in 2014, Hyderabad included.
     comparison_baselines: []
     phase: 2
     status: defined

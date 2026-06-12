@@ -64,7 +64,8 @@ discrepancy.
 - National aggregate: ~6% across the 31 covered assemblies.
 - Context layer: each state's seat-share bar is paired with a grey bar at
   its Census-2011 Muslim population share (J&K's includes pre-2019 Ladakh;
-  Telangana has no separate 2011 figure and gets no grey bar).
+  Telangana's is aggregated in pop_share.py from the ten undivided-AP
+  census districts that formed the state in 2014).
 
 ## Caveats (carried on canonical rows)
 
