@@ -130,6 +130,14 @@ def run() -> int:
             check("per-view stub redirects into the modal",
                   page.url.rstrip("/").endswith("/m/sex-ratio/by-state"))
 
+            # 6b) An overview share URL (?open=1, Commit GD) bounces off the
+            # landing page into the open modal.
+            page.goto(BASE + "/m/sex-ratio/?open=1", wait_until="networkidle")
+            page.wait_for_selector(
+                '#modal-overlay:not([hidden]) .card[data-metric-id="sex-ratio"]',
+                timeout=8000)
+            check("?open share link opens the modal", True)
+
             # 7) The landing page is a real page, not a redirect stub.
             page.goto(BASE + "/m/lit-7plus/", wait_until="networkidle")
             check("landing page has an h1", (page.locator("h1").inner_text() or "").strip() != "")
