@@ -11,8 +11,9 @@
   the parity pill converting the 14.2% population share into seats, 77 of
   543) and **`mla-share`** (Muslim share of state legislative assembly
   members, currently 31 state/UT assemblies covered; its own card with a
-  per-assembly "By assembly" table tab, where bars carry a grey Census-2011
-  population-share tick and the table a population column for context.
+  per-assembly "By assembly" table tab. Each state pairs a maroon
+  seat-share bar with a grey Census-2011 population-share bar, on the
+  chart and in the table, plus a population column for the numbers.
   A Commit FE fold into ls-share was reverted in Commit FJ: the two gaps
   are distinct stories).
 
@@ -61,9 +62,9 @@ discrepancy.
   Tripura, Meghalaya — 0% (most have never elected a Muslim MLA in state
   history).
 - National aggregate: ~6% across the 31 covered assemblies.
-- Context layer: each bar carries a grey tick at the state's Census-2011
-  Muslim population share (J&K's includes pre-2019 Ladakh; Telangana has
-  no separate 2011 figure).
+- Context layer: each state's seat-share bar is paired with a grey bar at
+  its Census-2011 Muslim population share (J&K's includes pre-2019 Ladakh;
+  Telangana has no separate 2011 figure and gets no grey bar).
 
 ## Caveats (carried on canonical rows)
 

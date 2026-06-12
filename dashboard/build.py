@@ -759,10 +759,10 @@ TEMPLATE = """<!DOCTYPE html>
   td.tbar-cell { text-align: left; white-space: nowrap; }
   .tbar { display: inline-block; height: 13px; background: rgba(123,29,34,.16); border-radius: 2px; vertical-align: -2px; }
   .tbar-val { margin-left: 6px; }
-  /* Bar + per-row reference tick share one scale inside the wrapper. */
-  .tbar-wrap { position: relative; display: inline-block; width: 70%; height: 13px; vertical-align: -2px; }
-  .tbar-wrap .tbar { display: block; height: 100%; vertical-align: baseline; }
-  .tbar-mark { position: absolute; top: -2px; bottom: -2px; width: 2px; background: #555555; border-radius: 1px; }
+  /* Paired row bars on one scale: maroon subject over grey context. */
+  .tbar-duo { display: inline-block; width: 70%; vertical-align: middle; }
+  .tbar-duo .tbar-rep { display: block; height: 7px; background: rgba(123,29,34,.55); border-radius: 2px; }
+  .tbar-duo .tbar-pop { display: block; height: 7px; background: rgba(85,85,85,.38); border-radius: 2px; margin-top: 2px; }
   .scorecard-table .gap-bad { color: var(--negative); font-weight: 600; }
   .scorecard-table .gap-good { color: var(--positive); font-weight: 600; }
   .scorecard-table .gap-neutral { color: var(--muted); }
@@ -1357,11 +1357,8 @@ function _refLine(refValue, refLabel) {
 const CHART_SPECS = {};
 function _spec(id, fnName, args) { CHART_SPECS[id] = { fnName, args }; }
 
-function hbar(id, labels, values, colors, suffix, decimals, refValue, refLabel, beginAtZero, marks, markLabel) {
+function hbar(id, labels, values, colors, suffix, decimals, refValue, refLabel, beginAtZero) {
   _spec(id, 'hbar', Array.from(arguments).slice(1));
-  // marks: optional per-bar reference values (e.g. each state's Muslim
-  // population share) drawn as a grey tick across the bar's band; the bar
-  // tooltip then carries both numbers. null entries draw nothing.
   // beginAtZero defaults to false (house style: bars hug the data so
   // community differences stay visible). Pass true when the bars are a
   // magnitude comparison where a non-zero baseline would exaggerate the
@@ -1384,35 +1381,68 @@ function hbar(id, labels, values, colors, suffix, decimals, refValue, refLabel, 
     options: {
       indexAxis: 'y', responsive: true, maintainAspectRatio: false, animation: false,
       layout: { padding: { right: hPad, top: 14 } },
-      plugins: { legend: { display: false }, tooltip: { callbacks: {
-        label: (c) => _fmtVal(c.parsed.x, suffix, decimals),
-        afterLabel: (c) => (marks && marks[c.dataIndex] != null)
-          ? (markLabel || 'reference') + ': ' + _fmtVal(marks[c.dataIndex], suffix, decimals) : undefined } } },
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => _fmtVal(c.parsed.x, suffix, decimals) } } },
       scales: { x: { display: false, grace: '8%', beginAtZero: beginAtZero === true,
-        // Keep the dashed All-communities reference line (and any per-bar
-        // marks) inside the axis even when they sit beyond every bar
-        // (lone-bar cards like mpce / GER; J&K's population tick).
-        suggestedMin: (refValue == null) ? undefined : Math.min(refValue, ...values),
-        suggestedMax: (refValue == null && !(marks || []).some((v) => v != null)) ? undefined
-          : Math.max(...values, ...(marks || []).filter((v) => v != null), ...(refValue == null ? [] : [refValue])) },
+        // Keep the dashed All-communities reference line inside the axis even when
+        // it sits beyond every bar (lone-bar cards like mpce / GER, where the
+        // baseline is higher than the single Muslim bar).
+        suggestedMin: refValue == null ? undefined : Math.min(refValue, ...values),
+        suggestedMax: refValue == null ? undefined : Math.max(refValue, ...values) },
         y: { grid: { display: false }, border: { display: false }, ticks: { font: { size: 11 } } } },
     },
-    plugins: [_valueLabels(decimals, suffix), _refLine(refValue == null ? null : refValue, refLabel), _barMarks(marks)],
+    plugins: [_valueLabels(decimals, suffix), _refLine(refValue == null ? null : refValue, refLabel)],
   });
 }
-// Per-bar reference ticks (hbar's marks param): a short grey vertical line
-// across each bar's band at the mark's x value - the "context" reading
-// (representation bar vs population tick) without a second bar series.
-function _barMarks(marks) {
-  return { id: 'barMarks', afterDatasetsDraw(c) {
-    if (!marks || !marks.some((v) => v != null)) return;
-    const xs = c.scales.x, ctx = c.ctx, meta = c.getDatasetMeta(0);
-    ctx.save(); ctx.strokeStyle = '#555555'; ctx.lineWidth = 2;
-    marks.forEach((v, i) => {
-      const bar = meta.data[i];
-      if (v == null || !bar) return;
-      const x = xs.getPixelForValue(v), h = bar.height / 2 + 3;
-      ctx.beginPath(); ctx.moveTo(x, bar.y - h); ctx.lineTo(x, bar.y + h); ctx.stroke();
+// Paired horizontal bars: one maroon subject bar and one grey context bar
+// per category (mla-share: assembly-seat share vs Census-2011 population
+// share), value-labelled at both bar ends, legend on. A null context value
+// (Telangana: no separate 2011 figure) draws no bar and no label.
+function hbarPair(id, labels, subj, ctxv, subjLabel, ctxLabel, suffix, decimals) {
+  _spec(id, 'hbarPair', Array.from(arguments).slice(1));
+  const pEl = document.getElementById(id);
+  const pctx = pEl.getContext('2d');
+  pctx.save();
+  pctx.font = '600 11px -apple-system, system-ui, sans-serif';
+  let pPad = 46;
+  for (const v of subj.concat(ctxv)) {
+    if (v == null) continue;
+    pPad = Math.max(pPad, Math.ceil(pctx.measureText(_fmtVal(v, suffix, decimals)).width) + 10);
+  }
+  pctx.restore();
+  new Chart(pEl, {
+    type: 'bar',
+    data: { labels: labels, datasets: [
+      { label: subjLabel, data: subj, backgroundColor: '#7b1d22', borderRadius: 3 },
+      { label: ctxLabel, data: ctxv, backgroundColor: 'rgba(85,85,85,.42)', borderRadius: 3 },
+    ] },
+    options: {
+      indexAxis: 'y', responsive: true, maintainAspectRatio: false, animation: false,
+      datasets: { bar: { barPercentage: 0.92, categoryPercentage: 0.74 } },
+      layout: { padding: { right: pPad, top: 4 } },
+      plugins: {
+        legend: { display: true, position: 'top', align: 'start',
+                  labels: { boxWidth: 10, boxHeight: 10, font: { size: 11 }, color: '#555' } },
+        tooltip: { callbacks: { label: (c) => c.dataset.label + ': ' + _fmtVal(c.parsed.x, suffix, decimals) } },
+      },
+      scales: { x: { display: false, grace: '8%' },
+        y: { grid: { display: false }, border: { display: false },
+             ticks: { font: { size: 11 }, autoSkip: false } } },
+    },
+    plugins: [_valueLabelsAll(decimals, suffix)],
+  });
+}
+// _valueLabels for every dataset of a grouped bar chart (skips null points).
+function _valueLabelsAll(decimals, suffix) {
+  return { id: 'vla', afterDatasetsDraw(chart) {
+    const { ctx } = chart;
+    ctx.save(); ctx.font = '600 11px -apple-system, system-ui, sans-serif';
+    ctx.textBaseline = 'middle'; ctx.fillStyle = '#555';
+    chart.data.datasets.forEach((ds, di) => {
+      chart.getDatasetMeta(di).data.forEach((bar, i) => {
+        const v = ds.data[i];
+        if (v == null) return;
+        ctx.fillText(_fmtVal(v, suffix, decimals), bar.x + 6, bar.y);
+      });
     });
     ctx.restore();
   } };
@@ -1796,7 +1826,7 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
   const body = document.getElementById('modal-body');
   const closeBtn = document.getElementById('modal-close');
   const shareBtn = document.getElementById('modal-share');
-  const factories = { hbar, lineChart, trendChart, concentrationCurve };
+  const factories = { hbar, hbarPair, lineChart, trendChart, concentrationCurve };
   let modalCharts = [];
   let activeMid = null;
 
@@ -2737,9 +2767,9 @@ LANDING_TEMPLATE = """<!DOCTYPE html>
   td.tbar-cell { text-align:left; white-space:nowrap; }
   .tbar { display:inline-block; height:13px; background:rgba(123,29,34,.16); border-radius:2px; vertical-align:-2px; }
   .tbar-val { margin-left:6px; }
-  .tbar-wrap { position:relative; display:inline-block; width:70%; height:13px; vertical-align:-2px; }
-  .tbar-wrap .tbar { display:block; height:100%; }
-  .tbar-mark { position:absolute; top:-2px; bottom:-2px; width:2px; background:#555555; border-radius:1px; }
+  .tbar-duo { display:inline-block; width:70%; vertical-align:middle; }
+  .tbar-duo .tbar-rep { display:block; height:7px; background:rgba(123,29,34,.55); border-radius:2px; }
+  .tbar-duo .tbar-pop { display:block; height:7px; background:rgba(85,85,85,.38); border-radius:2px; margin-top:2px; }
   .src-note { font-size:13px; color:var(--muted); }
   .meta-block p { font-size:14.5px; line-height:1.6; max-width:60em; }
   .meta-block b { color:var(--accent); }
@@ -3792,7 +3822,7 @@ PLAIN_DEFINITION = {
     "household-net-worth": "What an average household owns (land, buildings, livestock, vehicles, financial assets) minus what it owes. Accumulated wealth runs a far wider gap than monthly spending, though the gap narrowed between 2012 and 2018: urban Muslim households went from holding about half the net worth of urban Hindu households to about two-thirds.",
     "institutional-credit-share": "Of the money indebted households owe, what share comes from banks, co-operatives and government schemes rather than moneylenders and other informal sources. Informal credit costs more and carries no protection. India's borrowing shifted toward institutions between 2012 and 2018, but the Muslim share barely moved.",
     "ls-share": "How many of the 543 seats in India's national parliament (Lok Sabha) are held by Muslim MPs, counted at every general election since 1952. At the community's 14.2% population share, parity would be 77 seats; the count peaked at 49 in 1980 and stands at 24 today.",
-    "mla-share": "Across all 31 state and UT legislative assemblies that hold elections, what share of MLA seats is held by Muslims. The grey tick on each state's bar marks its Muslim population share (Census 2011), so representation reads directly against presence.",
+    "mla-share": "Across all 31 state and UT legislative assemblies that hold elections, what share of MLA seats is held by Muslims. Each state pairs two bars: the maroon share of assembly seats against the grey share of population (Census 2011), so representation reads directly against presence.",
     "prison-rate-per-100k": "For every 100,000 people of a religion, how many are in prison. Allows fair comparison across communities of different size.",
     "undertrial-rate-per-100k": "For every 100,000 people of a religion, how many are in prison awaiting trial (not yet convicted).",
     "communal-incidents-govt": "Number of communal or religious rioting incidents recorded in police records each year (NCRB).",
@@ -4961,26 +4991,26 @@ def _assemblies_view() -> str:
             f"UT assemblies covered, each at its most recent election, against a "
             f"{_round_str(MUSLIM_POP_SHARE, 1)}% share of the population. {recs[0][0]} leads at "
             f"{_round_str(recs[0][3], 1)}%; {n_zero} assemblies have no Muslim MLA at all. "
-            f"The population column and the grey tick on each bar mark the state's "
-            f"Muslim population share (Census 2011; the J&K figure includes pre-2019 "
-            f"Ladakh, and Telangana has no separate 2011 figure).")
+            f"Each row pairs the maroon seat-share bar with a grey bar for the "
+            f"state's Muslim population share (Census 2011; the J&K figure includes "
+            f"pre-2019 Ladakh, and Telangana has no separate 2011 figure).")
     fmax = max(max(t[3] for t in recs),
                max((t[4] for t in recs if t[4] is not None), default=0)) or 1.0
     trs = []
     for name, yr, seats, val, pshare in recs:
         # Same left-anchored bar-with-value grammar as the by-state tables,
-        # plus the population tick: representation reads against presence.
-        # Bar and tick live in one positioned wrapper so they share a scale.
+        # doubled: seat-share bar over a grey population bar on one scale,
+        # so representation reads against presence in every row.
         w = round(val / fmax * 100, 1)
         pop_cell = f"{_round_str(pshare, 1)}%" if pshare is not None else "n/a"
-        tick = (f'<span class="tbar-mark" style="left:{round(pshare / fmax * 100, 1)}%"></span>'
-                if pshare is not None else "")
+        pop_bar = (f'<span class="tbar-pop" style="width:{round(pshare / fmax * 100, 1)}%"></span>'
+                   if pshare is not None else "")
         trs.append(f'<tr><td>{html.escape(name)}</td>'
                    f'<td data-sort="{yr}">{yr}</td>'
                    f'<td>{html.escape(seats)}</td>'
                    f'<td data-sort="{-1 if pshare is None else pshare:.4f}">{pop_cell}</td>'
                    f'<td class="tbar-cell" data-sort="{val:.4f}">'
-                   f'<span class="tbar-wrap"><span class="tbar" style="width:{w}%"></span>{tick}</span>'
+                   f'<span class="tbar-duo"><span class="tbar-rep" style="width:{w}%"></span>{pop_bar}</span>'
                    f'<span class="tbar-val">{_round_str(val, 1)}%</span></td></tr>')
     head = ('<tr><th class="sortable" data-col="0">Assembly</th>'
             '<th class="sortable" data-col="1" data-type="num">Election</th>'
@@ -5318,22 +5348,23 @@ def _card_timeseries(mid, label, unit, src, csv_href, cvid):
                      for r in load_metric(mid) if r["geography_level"] == "state"],
                     key=lambda x: -x[1])
         if st:
-            # Per-bar grey ticks mark each state's Muslim population share
-            # (Census 2011) so representation reads against presence (user
-            # call, Commit FW). Telangana has no separate 2011 figure.
+            # Paired bars per state: seat share (maroon) against the state's
+            # Census-2011 Muslim population share (grey), so representation
+            # reads directly against presence (user call, Commits FW/FX).
+            # Telangana has no separate 2011 figure and gets no grey bar.
             pop = _state_pop_share_2011()
             marks = [(round(pop[code], 1) if code in pop else None)
                      for _, _, code in st]
-            inner_h = len(st) * 26 + 20
-            max_h = 240
+            inner_h = len(st) * 40 + 56
+            max_h = 300
             inner = (f'<div class="card-chartwrap" style="height:{inner_h}px">'
                      f'<canvas id="{cvid}" role="img" aria-label="Visualisation of this metric; numerical values are listed in the card above."></canvas></div>')
             chart_html = (f'<div class="card-chartscroll" style="max-height:{max_h}px">{inner}</div>'
                           if inner_h > max_h else inner)
-            js = (f'hbar("{cvid}", {json.dumps([s[0] for s in st])}, '
+            js = (f'hbarPair("{cvid}", {json.dumps([s[0] for s in st])}, '
                   f'{json.dumps([_round_dp(s[1], _disp_dp(unit)) for s in st])}, '
-                  f'{json.dumps(["#7b1d22"] * len(st))}, "%", 1, null, null, false, '
-                  f'{json.dumps(marks)}, "Muslim population (2011)");')
+                  f'{json.dumps(marks)}, "Share of assembly seats", '
+                  f'"Share of population (Census 2011)", "%", 1);')
         comps += _comp("all states", headline, "aggregate across assemblies", "neutral")
     # When the card face IS the per-state bar chart (no national trend, e.g.
     # mla-share), a "By state" table just re-lists the same bars - skip it. Add it

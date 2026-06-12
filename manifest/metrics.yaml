@@ -1181,8 +1181,9 @@ metrics:
       National aggregate (~6%) plus per-assembly values for all 31
       state + UT assemblies that hold elections (28 states + Delhi,
       Puducherry, J&K, most-recent election per assembly, spanning 2020-2026).
-      The grey tick on each state's bar marks its Muslim population share
-      (Census 2011), so representation reads directly against presence.
+      Each state pairs two bars: the maroon share of assembly seats against
+      the grey share of population (Census 2011), so representation reads
+      directly against presence.
     sources: {primary: prs-eci-affidavits}
     geography_levels: [national, state]
     religions: [muslim]
@@ -1198,7 +1199,7 @@ metrics:
       Chhattisgarh / Tripura / Meghalaya, all 0% (most have never elected a
       Muslim MLA in state history). Each row's methodology_note cites the
       source compilation(s) used. The per-state population context (the grey
-      ticks and the By-assembly table's population column) is the Census 2011
+      bars and the By-assembly table's population column) is the Census 2011
       Muslim share: the J&K figure includes pre-2019 Ladakh, and Telangana
       has no separate 2011 figure (it was part of undivided Andhra Pradesh).
     comparison_baselines: []
