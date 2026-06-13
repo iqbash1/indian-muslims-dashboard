@@ -8,8 +8,11 @@ always-in-context short version of the must-knows.
 ## Build & deploy
 - Build the site: `.venv/bin/python dashboard/build.py` (writes `docs/`)
 - Validate: `.venv/bin/python validate/validate.py` (expect `0 errors`). CI also
-  runs `audit_consistency.py`, `check_refresh.py`, and Playwright browser smoke
-  tests (`tests/smoke.py` via `.github/workflows/smoke.yml`; run locally after
+  runs `audit_consistency.py`, `audit_accuracy.py` (value ranges, provenance
+  SHA256 vs archive, and the extraction_run stamp-shape check that catches
+  column transposition - the GF audit found 32 such rows), `check_refresh.py`,
+  and Playwright browser smoke tests (`tests/smoke.py` via
+  `.github/workflows/smoke.yml`; run locally after
   `python -m playwright install chromium`).
 - Deploy = push to `main`. GitHub Actions (`.github/workflows/deploy.yml`) ships
   the **committed** `docs/` to Cloudflare. So: build `docs/` LOCALLY, commit it,

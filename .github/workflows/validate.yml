@@ -36,6 +36,14 @@ jobs:
         # actual carded count); year-span mismatches print as an advisory list.
         run: python validate/audit_consistency.py
 
+      - name: Audit data accuracy (value ranges, provenance SHA, column-swap tripwire)
+        # The value/provenance layer the schema gate can't see: range-by-unit,
+        # CI ordering, duplicate keys, source SHA256 vs archive, and the
+        # extraction_run stamp-shape check that catches column transposition.
+        # LFS content isn't pulled here (lfs:false), so SHA checks degrade to
+        # skipped for LFS files; the value/structure checks still run in full.
+        run: python validate/audit_accuracy.py
+
       - name: Check source refresh cadence
         run: python validate/check_refresh.py
         # This step is informational only; non-zero exit doesn't fail the workflow.

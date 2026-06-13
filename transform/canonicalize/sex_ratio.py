@@ -42,7 +42,7 @@ L2_HH15_1981 = REPO_ROOT / "extracted" / "census-1981" / "hh15-religion.csv"
 L2_REL_1971 = REPO_ROOT / "extracted" / "census-1971" / "religion-summary.csv"
 L2_C07_1961 = REPO_ROOT / "extracted" / "census-1961" / "c07-religion.csv"
 OUTPUT_PATH = REPO_ROOT / "canonical" / "sex-ratio.csv"
-CANONICALIZER_VERSION = "5.0.0"
+CANONICALIZER_VERSION = "5.0.1"
 
 OUTPUT_RELIGIONS = ("muslim", "hindu", "christian", "sikh", "buddhist", "jain", "other", "all")
 DENOMINATOR = "females_per_1000_males_total_residence_all_ages"
@@ -249,9 +249,9 @@ def canonicalize() -> None:
             out_rows.append([
                 "sex-ratio", "national", "IN", 2011, religion, res,
                 ratio, DENOMINATOR, "", "", "",
-                SRC_2011[0], SRC_2011[1],
+                SRC_2011[0], SRC_2011[1], extraction_run,
                 f"Females / Males * 1000 at All ages, {res.capitalize()} residence "
-                f"(RGI Census 2011 C-15).", extraction_run, "false",
+                f"(RGI Census 2011 C-15).", "false",
             ])
 
     out_rows.sort(key=lambda r: (LEVEL_RANK[r[1]], r[2], r[3], RELIGION_RANK[r[4]], r[5]))

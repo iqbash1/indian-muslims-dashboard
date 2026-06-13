@@ -30,7 +30,7 @@ REPO_ROOT = pathlib.Path(__file__).resolve().parents[2]
 L2_2011 = REPO_ROOT / "extracted" / "census-2011" / "c09-education-by-religion.csv"
 L2_2001 = REPO_ROOT / "extracted" / "census-2001" / "c09-education-by-religion.csv"
 OUTPUT_PATH = REPO_ROOT / "canonical" / "lit-7plus.csv"
-CANONICALIZER_VERSION = "3.0.0"
+CANONICALIZER_VERSION = "3.0.1"
 
 OUTPUT_RELIGIONS = ("muslim", "hindu", "christian", "sikh", "buddhist", "jain", "other", "all")
 DENOMINATOR = "population_age_7_plus_excluding_age_not_stated"
@@ -159,9 +159,9 @@ def canonicalize() -> None:
             out_rows.append([
                 "lit-7plus", "national", "IN", 2011, religion, "all", res,
                 rate, DENOMINATOR, "", "", "",
-                SRC_2011[0], SRC_2011[1],
+                SRC_2011[0], SRC_2011[1], extraction_run,
                 f"(Literate - Literate_age_not_stated) / (Total - 0-6 - Age_not_stated) "
-                f"* 100 within the {res} C-09 2011 panel.", extraction_run, "false",
+                f"* 100 within the {res} C-09 2011 panel.", "false",
             ])
 
     out_rows.sort(key=lambda r: (LEVEL_RANK[r[1]], r[2], r[3], RELIGION_RANK[r[4]], SEX_RANK[r[5]], r[6]))
