@@ -14,7 +14,7 @@
 #                After install, fetch the browser once: `python -m playwright install chromium`.
 -r requirements.txt
 Pillow>=10.0
-jsonschema>=4.20
+jsonschema>=4.26.0
 requests>=2.31
 truststore>=0.9
 playwright>=1.40
