@@ -1,0 +1,10 @@
+{
+  "source_id": "nss75-education",
+  "document": "PROVENANCE-note.md",
+  "describes": "NSS 75th round Sch 25.2 (Household Social Consumption: Education, 2017-18) unit-level data, original plain fixed-width TXT distribution",
+  "url": "https://www.mospi.gov.in/sites/default/files/NSS75252E/",
+  "download_url": "https://www.mospi.gov.in/sites/default/files/NSS75252E/R75252L01.TXT",
+  "sha256": "4ae96b409302a746fad527601c373679dd1d2c7ebf816f328bd6c99c081d4d56",
+  "sha256_note": "sha256 is of this PROVENANCE-note.md. The 8 unit-level TXT data files are hash-manifested in SHA256SUMS.txt in this directory; url is the live MoSPI mirror directory they were fetched from (R75252L01.TXT .. R75252L08.TXT).",
+  "pull_method": "direct HTTPS from the unlinked-but-live MoSPI Drupal file store"
+}

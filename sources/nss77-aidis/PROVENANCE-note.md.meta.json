@@ -1,0 +1,10 @@
+{
+  "source_id": "aidis-2019",
+  "document": "PROVENANCE-note.md",
+  "describes": "NSS 77th round Sch 18.2 (All-India Debt & Investment Survey, January-December 2019) unit-level data, original plain fixed-width TXT distribution (Visit 1)",
+  "url": "https://www.mospi.gov.in/sites/default/files/NSS7718/",
+  "download_url": "https://www.mospi.gov.in/sites/default/files/NSS7718/r77182v1L01.TXT",
+  "sha256": "5afffdbbd3bd3c97af714a4e6f30960b61d3cffc9e7a3ea199e65d10f66bdc40",
+  "sha256_note": "sha256 is of this PROVENANCE-note.md. The 17 Visit-1 unit-level TXT data files are hash-manifested in SHA256SUMS.txt in this directory; url is the live MoSPI mirror directory they were fetched from (r77182v1L01.TXT .. r77182v1L17.TXT).",
+  "pull_method": "direct HTTPS from the unlinked-but-live MoSPI Drupal file store"
+}

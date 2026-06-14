@@ -1,0 +1,14 @@
+{
+  "source_id": "eus-microdata",
+  "target_id": "eus-2011-12-microdata",
+  "idno": "DDI-IND-MOSPI-NSSO-68-10-2013",
+  "filename": "U_M_2011_2012_CSV.zip",
+  "url": "https://microdata.gov.in/NADA/index.php/catalog/127",
+  "download_url": "https://microdata.gov.in/NADA/index.php/api/fileslist/download/DDI-IND-MOSPI-NSSO-68-10-2013/VV9NXzIwMTFfMjAxMl9DU1Yuemlw",
+  "pulled_at": "2026-06-11",
+  "content_length": 52625474,
+  "sha256": "a123ea5462731b49327fccbbb660e9fbb5c0e6889207a52736df0a413d7c20ff",
+  "pull_method": "MoSPI NADA REST API (personal X-API-KEY header)",
+  "by_religion_verdict": "SAFE: employment x religion (NSS 68th round Sch 10, EUS 2011-12)",
+  "archival": "provenance-only: the unit-level CSV bundle is NOT committed (kept local at ~/Desktop/nada-work/eus-2011-12/). The dir SHA256SUMS.txt also records this sha256. Re-fetch with the recipe in PROVENANCE.md and verify against this sha256. The schema/method docs in this directory ARE committed."
+}

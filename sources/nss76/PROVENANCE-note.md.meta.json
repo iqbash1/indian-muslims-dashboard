@@ -1,0 +1,10 @@
+{
+  "source_id": "nss76-housing",
+  "document": "PROVENANCE-note.md",
+  "describes": "NSS 76th round Sch 1.2 (Drinking Water, Sanitation, Hygiene and Housing Condition, July-December 2018) unit-level data, original plain fixed-width TXT distribution",
+  "url": "https://www.mospi.gov.in/sites/default/files/NSS7612dws/",
+  "download_url": "https://www.mospi.gov.in/sites/default/files/NSS7612dws/R76120L01.TXT",
+  "sha256": "8c216d8d5047c9d8cee05b97ef8a18483706ad87b9ced3f31294ab7c1ff7b1bf",
+  "sha256_note": "sha256 is of this PROVENANCE-note.md. The 9 unit-level TXT data files are hash-manifested in SHA256SUMS.txt in this directory; url is the live MoSPI mirror directory they were fetched from (R76120L01.TXT .. R76120L09.TXT).",
+  "pull_method": "direct HTTPS from the unlinked-but-live MoSPI Drupal file store"
+}

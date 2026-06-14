@@ -115,7 +115,12 @@ not ad-hoc scripts: metric metadata in `manifest/metrics.yaml`, sources in
   fix must hit all three.
 - In metrics.yaml, `religions` / `comparison_baselines` / `break_notes` /
   `cross_check` are declarative metadata — NOT rendered. Only `definition` +
-  `methodology_notes` show (in the modal).
+  `methodology_notes` show (in the modal). EXCEPTION (Commit GL):
+  `sources.secondary` (a list of source-ids) IS rendered — appended as extra
+  "Reproduce this view" source links after the primary, for the Census
+  denominator/weight in the cross-source metrics `imr`, `ger-higher-ed`,
+  `prison-rate-per-100k`, `undertrial-rate-per-100k` (moved there from
+  `cross_check`; the stub `pucca-housing` keeps its unrendered `cross_check`).
 - `docs/m/<id>/` is a FULL indexable landing page (hero, data tables, sources,
   JSON-LD); the per-view `docs/m/<id>/<view>/` are thin redirect stubs (OG meta +
   a relative `/#<id>/<view>` redirect). Both regenerate from canonical, so they
@@ -175,3 +180,16 @@ not ad-hoc scripts: metric metadata in `manifest/metrics.yaml`, sources in
   at/above Hindu) - that is the data, keep it.
 - sex-ratio + pop-share are primary RGI census 1961-2011; Sachar Committee feeds
   the `mpce` metric (not sex-ratio anymore).
+- **Reproducibility plumbing (Commit GL):** every modal view, the card
+  methodology disclosure and every `/m/{id}/` landing carry a `REPRO_TIER` pill
+  (READ / COMPUTE / MICRODATA / MANUAL; plain words, slate chrome, NEVER maroon)
+  from the dict in build.py — keep it covering every canonical id (companions
+  included) or the view shows no tag. ls/mla values now trace to archived L1
+  tables `sources/prs-eci-affidavits/{ls-muslim-mps-by-election,mla-muslim-mlas-by-assembly}.csv`
+  (kept OUT of Git-LFS via a `.gitattributes` override so they stay diffable on
+  GitHub; the canonicalisers READ them, not hardcoded lists) — the
+  `audit_accuracy.py` MANUAL sentinel is gone. `_source_documents` now resolves a
+  `.meta.json` source_document directly (the 2025 NADA CSV releases) and appends
+  `secondary` home_urls; the TXT-mirror PROVENANCE notes (nss75/76/77) + EUS
+  2011-12 gained `.meta.json` sidecars, so NO view falls back to a bare home page
+  (re-check with the resolution diagnostic if you touch source_document wiring).

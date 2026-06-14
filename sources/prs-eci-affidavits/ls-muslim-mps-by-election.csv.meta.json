@@ -1,0 +1,8 @@
+{
+  "source_id": "prs-eci-affidavits",
+  "document": "ls-muslim-mps-by-election.csv",
+  "describes": "Muslim members of the Lok Sabha by general election, 1952-2024 (18 Lok Sabhas): muslim_seats, total_seats and the compilation cited per row.",
+  "url": "https://github.com/iqbash1/indian-muslims-dashboard/blob/main/sources/prs-eci-affidavits/ls-muslim-mps-by-election.csv",
+  "sha256": "4565dba50e0615a2f4a3ad6b4989cb4dc3a1c4c833c063890d7c2ae0df4f65bc",
+  "compilation_note": "Religion of MPs is not tabulated by the ECI or in PRS candidate-profile PDFs. Each row's count is cross-verified across at least two journalistic compilations (Maktoob Media, The India Forum / Hilal Ahmed historical series, FACTLY, Statista, ORF, Clarion India); the citing source is in the citation column. This committed, diffable table is the archived L1 the ls-share canonicaliser reads."
+}

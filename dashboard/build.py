@@ -865,6 +865,9 @@ TEMPLATE = """<!DOCTYPE html>
   .view-provenance b, .card-reproduce b { color: var(--fg); font-weight: 600; }
   .view-provenance a, .card-reproduce a { color: var(--accent); text-decoration: none; }
   .view-provenance a:hover, .card-reproduce a:hover { text-decoration: underline; }
+  /* "How to reproduce" tier tag (read / computed / microdata / hand-compiled):
+     slate chrome only - never maroon (Muslim series) or green/red (polarity). */
+  .repro-tier { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 1px 6px; border-radius: 4px; margin-right: 6px; vertical-align: 1.5px; background: #eef2f7; color: var(--accent); border: 1px solid #d6e0ea; white-space: nowrap; }
   .card-chartwrap { width: 100%; margin: 2px 0 4px; position: relative; }
   .card-chartscroll { width: 100%; margin: 2px 0 4px; overflow-y: auto; overflow-x: hidden; border: 1px solid var(--rule); border-radius: 4px; }
   .card-chartscroll .card-chartwrap { margin: 0; }
@@ -2796,6 +2799,7 @@ if(new URLSearchParams(location.search).has('open'))location.replace('/#{mid}');
   .tbar-duo .tbar-rep { display:block; height:7px; background:rgba(123,29,34,.55); border-radius:2px; }
   .tbar-duo .tbar-pop { display:block; height:7px; background:rgba(85,85,85,.38); border-radius:2px; margin-top:2px; }
   .src-note { font-size:13px; color:var(--muted); }
+  .repro-tier { display:inline-block; font-size:10px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:1px 6px; border-radius:4px; margin-right:6px; vertical-align:1.5px; background:#eef2f7; color:var(--accent); border:1px solid #d6e0ea; white-space:nowrap; }
   .meta-block p { font-size:14.5px; line-height:1.6; max-width:60em; }
   .meta-block b { color:var(--accent); }
   ul.related { list-style:none; padding:0; margin:10px 0; display:flex; flex-wrap:wrap; gap:8px; }
@@ -3014,6 +3018,9 @@ def _emit_metric_landings(out_dir: pathlib.Path, view_map: dict | None = None) -
         else:
             about_parts.append(f'<p class="src-note">Download CSV: '
                                f'<a href="/canonical/{mid}.csv">{mid}.csv</a>.</p>')
+        pill, how = _repro_tier_bits(mid)
+        if pill:
+            about_parts.append(f'<p class="src-note">{pill}<b>How to reproduce.</b> {how}</p>')
         about_html = "".join(about_parts)
 
         rel = _related_metrics(m)
@@ -3898,7 +3905,10 @@ def _source_documents(mid):
                 continue
             seen_docs.add(doc)
             url, fallback = "", False
-            sidecar = REPO_ROOT / (doc + ".meta.json")
+            # A source_document that already points AT a .meta.json sidecar
+            # (e.g. the NADA 2025 CSV releases) IS its own sidecar; otherwise the
+            # sidecar sits beside the file as <file>.meta.json.
+            sidecar = REPO_ROOT / (doc if doc.endswith(".meta.json") else doc + ".meta.json")
             if sidecar.exists():
                 try:
                     url = (json.load(sidecar.open()) or {}).get("url", "") or ""
@@ -3921,6 +3931,18 @@ def _source_documents(mid):
             continue
         seen_urls.add(url)
         out.append((sid, label, url))
+    # Secondary sources declared in metrics.yaml (e.g. the Census denominator or
+    # weight a cross-source metric combines with its primary): surfaced so a
+    # reader can reach the second input too. Linked via the source's home page,
+    # appended AFTER the primary-derived documents so the primary always leads.
+    src_block = METRIC_META.get(mid, {}).get("sources") or {}
+    for sec in (src_block.get("secondary") or []):
+        url = (reg.get(sec, {}) or {}).get("home_url", "") or ""
+        if not url or url in seen_urls:
+            continue
+        seen_urls.add(url)
+        label = SOURCE_LABEL.get(sec) or (reg.get(sec, {}) or {}).get("name") or sec
+        out.append((sec, label, url))
     return out
 
 
@@ -3992,8 +4014,10 @@ def _card_shell(mid, label, value, unit_txt, year, polarity, chart_html, comps_h
                 'yourself.</p>')
         ts = _transform_script(mid)
         if ts:
+            pill, how = _repro_tier_bits(mid)
             more_parts.append(
-                '<p class="card-reproduce"><b>Reproduce this.</b> Every figure on this '
+                f'<p class="card-reproduce">{pill}<b>Reproduce this.</b> '
+                f'{how + " " if how else ""}Every figure on this '
                 'card, in every tab, is computed from the data file above by an open '
                 f'script: <a href="{GITHUB_REPO}/blob/main/{html.escape(ts)}" '
                 'target="_blank" rel="noopener">transform code</a>. Each data-file row '
@@ -4285,11 +4309,66 @@ def _transform_script(mid: str) -> str | None:
     return out
 
 
+# How each view can be reproduced from the linked government resource. One tag
+# per canonical metric (companions included), tagged by its DOMINANT path:
+#   READ      - the figure is printed in the linked published table
+#   COMPUTE   - derive it from the linked published tables (a ratio, a share)
+#   MICRODATA - recompute it from the unit-level survey records
+#   MANUAL    - hand-compiled (no single official source tabulates it)
+REPRO_TIER = {
+    # READ - printed directly in the linked source table
+    "inst-delivery": "READ", "women-anemia": "READ", "improved-sanitation": "READ",
+    "stunting-u5": "READ", "communal-incidents-govt": "READ", "prison-share": "READ",
+    "undertrial-share": "READ",
+    # COMPUTE - a ratio/share/rate derived from linked published tables
+    "pop-share": "COMPUTE", "sex-ratio": "COMPUTE", "urban-share": "COMPUTE",
+    "lit-7plus": "COMPUTE", "district-concentration-top100": "COMPUTE",
+    "pop-share-by-age": "COMPUTE", "imr": "COMPUTE", "ger-higher-ed": "COMPUTE",
+    "muslim-higher-ed-enrolment": "COMPUTE", "prison-rate-per-100k": "COMPUTE",
+    "undertrial-rate-per-100k": "COMPUTE",
+    # MICRODATA - recomputed from unit-level NSS/PLFS records
+    "lfpr-15plus": "MICRODATA", "wpr-15plus": "MICRODATA",
+    "unemployment-rate-15plus": "MICRODATA", "salaried-share": "MICRODATA",
+    "salaried-earnings": "MICRODATA", "household-net-worth": "MICRODATA",
+    "institutional-credit-share": "MICRODATA", "mpce": "MICRODATA",
+    "top-quintile-share": "MICRODATA", "improved-water-premises": "MICRODATA",
+    "household-electricity": "MICRODATA", "pucca-house": "MICRODATA",
+    "hospital-oop-spend": "MICRODATA", "school-edu-spend": "MICRODATA",
+    # MANUAL - hand-compiled from ECI affidavits (no single official tabulation)
+    "ls-share": "MANUAL", "mla-share": "MANUAL",
+}
+# (short pill label, plain-English "how" sentence) per tier. Plain words (FY).
+REPRO_TIER_META = {
+    "READ": ("Read",
+             "This figure is published directly in the linked source table."),
+    "COMPUTE": ("Computed",
+                "This figure is computed from the linked published tables."),
+    "MICRODATA": ("From microdata",
+                  "This figure is recomputed from the unit-level survey microdata, "
+                  "the raw NSS or PLFS records behind the linked source."),
+    "MANUAL": ("Hand-compiled",
+               "These counts are hand-compiled from election-wise ECI candidate "
+               "affidavits and cross-checked across multiple journalistic sources, "
+               "since no single official source tabulates members by religion."),
+}
+
+
+def _repro_tier_bits(mid: str) -> tuple[str, str]:
+    """(pill_html, how_sentence) for a view's reproduce caption; ("","") if the
+    metric isn't tiered. The pill is slate chrome (never maroon, never polarity)."""
+    tier = REPRO_TIER.get(mid)
+    if not tier:
+        return "", ""
+    label, sentence = REPRO_TIER_META[tier]
+    pill = f'<span class="repro-tier tier-{tier.lower()}">{html.escape(label)}</span> '
+    return pill, sentence
+
+
 def _view_provenance(mid: str) -> str:
     """A compact 'reproduce this view' caption appended to every modal view tab:
-    the primary source(s), the downloadable canonical rows, and the open transform
-    code that computed them, so each view stands alone for an independent
-    researcher."""
+    a plain-English tier tag (how to reproduce it), the primary source(s), the
+    downloadable canonical rows, and the open transform code that computed them,
+    so each view stands alone for an independent researcher."""
     docs = _source_documents(mid)
     src = " · ".join(
         f'<a href="{html.escape(u)}" target="_blank" rel="noopener">{html.escape(l)}</a>'
@@ -4300,7 +4379,9 @@ def _view_provenance(mid: str) -> str:
         bits.append(
             f'<a href="{GITHUB_REPO}/blob/main/{html.escape(ts)}" target="_blank" '
             f'rel="noopener">transform code</a>')
-    return (f'<p class="view-provenance"><b>Reproduce this view.</b> Source: {src}. '
+    pill, how = _repro_tier_bits(mid)
+    return (f'<p class="view-provenance">{pill}<b>Reproduce this view.</b> '
+            f'{how + " " if how else ""}Source: {src}. '
             f'Each value is computed from the {" · ".join(bits)}; every row records its '
             f'own source and method.</p>')
 
@@ -4864,7 +4945,9 @@ def _work_status_provenance() -> str:
     src = " · ".join(
         f'<a href="{html.escape(u)}" target="_blank" rel="noopener">{html.escape(l)}</a>'
         for _, l, u in docs) or "see methodology"
-    return (f'<p class="view-provenance"><b>Reproduce this view.</b> Source: {src}. '
+    pill, how = _repro_tier_bits("lfpr-15plus")
+    return (f'<p class="view-provenance">{pill}<b>Reproduce this view.</b> '
+            f'{how + " " if how else ""}Source: {src}. '
             f'Values come from <a href="canonical/lfpr-15plus.csv" download>lfpr-15plus.csv</a> '
             f'(in labour force) and <a href="canonical/wpr-15plus.csv" download>wpr-15plus.csv</a> '
             f'(working); every row records its own source and method.</p>')

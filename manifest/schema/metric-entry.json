@@ -15,6 +15,7 @@
       "required": ["primary"],
       "properties": {
         "primary": {"type": "string"},
+        "secondary": {"type": "array", "items": {"type": "string"}, "description": "Secondary source(s) actually used in the computation (e.g. a Census denominator or weight). Rendered as additional 'Reproduce this view' source links, after the primary. Distinct from cross_check, which is only a validation reference and is not rendered."},
         "cross_check": {"type": "array", "items": {"type": "string"}}
       }
     },

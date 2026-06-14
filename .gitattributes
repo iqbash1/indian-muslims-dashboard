@@ -14,3 +14,11 @@ sources/**/*.xml filter=lfs diff=lfs merge=lfs -text
 sources/**/*.doc filter=lfs diff=lfs merge=lfs -text
 sources/**/*.docx filter=lfs diff=lfs merge=lfs -text
 sources/**/*.rar filter=lfs diff=lfs merge=lfs -text
+
+# The ls/mla per-election affidavit compilations are small, human-readable
+# reference tables (the archived L1 for ls-share / mla-share). Keep them as
+# diffable plaintext in regular git, NOT LFS, so they stay reviewable on GitHub
+# (the override must come AFTER the blanket sources/**/*.csv lfs rule above).
+# -text: NO EOL normalisation, so the committed bytes (CRLF, as csv.writer emits,
+# like canonical/*.csv) stay byte-stable and keep matching the .meta.json sha256.
+sources/prs-eci-affidavits/*.csv -text !filter !diff !merge

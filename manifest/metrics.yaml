@@ -300,7 +300,7 @@ metrics:
       institutions.
     sources:
       primary: aishe
-      cross_check: [census-india-2011]
+      secondary: [census-india-2011]
     geography_levels: [national, state]
     religions: [muslim, other_minority, all]
     methodology_notes: |
@@ -813,7 +813,7 @@ metrics:
       live births, for the period preceding each survey round.
     sources:
       primary: nfhs-5
-      cross_check: [census-india-2011]
+      secondary: [census-india-2011]
     geography_levels: [national]
     religions: [muslim, hindu, all]
     methodology_notes: |
@@ -1295,7 +1295,7 @@ metrics:
       population baselines.
     sources:
       primary: ncrb-prison
-      cross_check: [census-india-2011]
+      secondary: [census-india-2011]
     geography_levels: [national]
     religions: [muslim, hindu, all]
     methodology_notes: |
@@ -1333,7 +1333,7 @@ metrics:
       population. Sister metric to prison-rate-per-100k.
     sources:
       primary: ncrb-prison
-      cross_check: [census-india-2011]
+      secondary: [census-india-2011]
     geography_levels: [national]
     religions: [muslim, hindu, all]
     methodology_notes: |

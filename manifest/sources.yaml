@@ -1409,7 +1409,7 @@ sources:
     coverage:
       - mp_religion_share
       - mla_religion_share
-    archive_dir: sources/prs-eci/
+    archive_dir: sources/prs-eci-affidavits/
     runbook: docs/runbooks/prs-eci.md
     last_pulled: null
     next_expected: null

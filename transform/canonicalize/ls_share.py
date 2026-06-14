@@ -6,15 +6,18 @@ PRS Legislative Research's published candidate profile PDFs (which cover
 age/gender/party but not religion), and the ECI itself doesn't tabulate
 by religion. See docs/runbooks/prs-eci.md for the source registration.
 
-Values are hard-coded from cross-verified journalistic sources (Maktoob
-Media, The India Forum, FACTLY, Statista, ORF, Clarion India). At least
-two compilations agree on every entry; methodology_note per row cites
-the compilations used. Manual-entry SECONDARY pattern shared with
-mla-share (the other per-election journalistic series; pop-share and
-sex-ratio were once fallback-sourced too, but are now primary RGI census).
+The per-election seat counts live in a committed, human-readable L1 table,
+sources/prs-eci-affidavits/ls-muslim-mps-by-election.csv, each row
+cross-verified across at least two journalistic compilations (Maktoob
+Media, The India Forum, FACTLY, Statista, ORF, Clarion India) and citing
+the compilations used (in the row's `citation` column). This canonicaliser
+READS that archived table; the table - not this script - is the source of
+truth, so every value traces to a SHA256-checksummed L1 file like every
+other metric (the table's sha is in its .meta.json sidecar). Manual-entry
+SECONDARY pattern shared with mla-share.
 
 Writes: canonical/ls-share.csv with one row per (year, religion=muslim).
-Full 18-Lok-Sabha series 1952→2024.
+Full 18-Lok-Sabha series 1952->2024.
 """
 
 from __future__ import annotations
@@ -25,35 +28,9 @@ import pathlib
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[2]
 OUTPUT_PATH = REPO_ROOT / "canonical" / "ls-share.csv"
-CANONICALIZER_VERSION = "1.0.0"
-
-# (year, lok_sabha_number, muslim_mps, total_seats, primary_citation)
-# Headline counts from cross-verified secondary compilations: India Forum
-# (Hilal Ahmed's historical series), Statista, ORF, Maktoob Media, FACTLY.
-# All published series concur on these figures within +/- 1 MP rounding.
-# The 1980-89 Congress era was the historical peak (~9% Muslim
-# representation, close to but never reaching the ~14.2% population share);
-# the post-2014 BJP-majority Lok Sabhas have run ~4-5%.
-LOK_SABHA_DATA = [
-    (1952,  1, 21, 489, "India Forum / Statista historical series"),
-    (1957,  2, 23, 494, "India Forum / Statista historical series"),
-    (1962,  3, 23, 494, "India Forum / Statista historical series"),
-    (1967,  4, 25, 520, "India Forum / Statista historical series"),
-    (1971,  5, 30, 518, "India Forum / Statista historical series"),
-    (1977,  6, 34, 542, "India Forum / Statista (Janata wave)"),
-    (1980,  7, 49, 542, "India Forum / Statista (historical PEAK)"),
-    (1984,  8, 45, 542, "India Forum / Statista (Rajiv Gandhi sweep)"),
-    (1989,  9, 33, 525, "India Forum / Statista"),
-    (1991, 10, 28, 521, "India Forum / Statista"),
-    (1996, 11, 28, 543, "India Forum / Statista"),
-    (1998, 12, 29, 543, "India Forum / Statista"),
-    (1999, 13, 32, 543, "India Forum / Statista"),
-    (2004, 14, 36, 543, "India Forum / Statista (UPA-1)"),
-    (2009, 15, 28, 543, "FACTLY / Statista / Maktoob aggregations"),
-    (2014, 16, 22, 543, "FACTLY / Statista / Maktoob aggregations"),
-    (2019, 17, 27, 543, "FACTLY / Statista / Maktoob aggregations"),
-    (2024, 18, 24, 543, "Maktoob Media (4.42%); FACTLY (24 of 78 contesting); India Forum"),
-]
+SOURCE_TABLE = REPO_ROOT / "sources" / "prs-eci-affidavits" / "ls-muslim-mps-by-election.csv"
+SOURCE_DOCUMENT = SOURCE_TABLE.relative_to(REPO_ROOT).as_posix()
+CANONICALIZER_VERSION = "2.0.0"
 
 
 def _ordinal(n: int) -> str:
@@ -65,11 +42,24 @@ def _ordinal(n: int) -> str:
     return f"{n}{suffix}"
 
 
+def _load_source() -> list[tuple[int, int, int, int, str]]:
+    """Read the archived per-election affidavit table (the L1 source of truth).
+    Returns (year, lok_sabha_number, muslim_mps, total_seats, citation) rows."""
+    rows: list[tuple[int, int, int, int, str]] = []
+    with SOURCE_TABLE.open(encoding="utf-8") as f:
+        for r in csv.DictReader(f):
+            rows.append((int(r["election_year"]), int(r["lok_sabha_number"]),
+                         int(r["muslim_seats"]), int(r["total_seats"]),
+                         r["citation"]))
+    return rows
+
+
 def canonicalize() -> None:
     extraction_run = (
         f"canonicalize-ls-share-v{CANONICALIZER_VERSION}-"
         f"{dt.datetime.now(dt.timezone.utc).strftime('%Y%m%dT%H%M%SZ')}"
     )
+    data = _load_source()
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     with OUTPUT_PATH.open("w", newline="") as f:
@@ -80,7 +70,7 @@ def canonicalize() -> None:
             "source_id", "source_document", "extraction_run",
             "methodology_note", "break_flag",
         ])
-        for year, ls_num, mps, total, cite in LOK_SABHA_DATA:
+        for year, ls_num, mps, total, cite in data:
             share = round(mps / total * 100, 2)
             w.writerow([
                 "ls-share", "national", "IN", year, "muslim",
@@ -88,7 +78,7 @@ def canonicalize() -> None:
                 f"lok_sabha_seats ({mps}/{total} elected MPs, LS #{ls_num})",
                 "", "", "",
                 "prs-eci-affidavits",
-                "MANUAL: cross-verified journalistic aggregation of ECI affidavit data",
+                SOURCE_DOCUMENT,
                 extraction_run,
                 (f"Muslim MPs in the {_ordinal(ls_num)} Lok Sabha: {mps} of {total} seats. "
                  f"Source: {cite}. Religion is derived from ECI candidate affidavits; "
@@ -98,9 +88,10 @@ def canonicalize() -> None:
                 "false",
             ])
 
-    print(f"wrote {OUTPUT_PATH.relative_to(REPO_ROOT)} ({len(LOK_SABHA_DATA)} rows)")
+    print(f"wrote {OUTPUT_PATH.relative_to(REPO_ROOT)} ({len(data)} rows)")
+    print(f"  source: {SOURCE_DOCUMENT}")
     print("  Time series:")
-    for year, ls_num, mps, total, _ in LOK_SABHA_DATA:
+    for year, ls_num, mps, total, _ in data:
         print(f"    {year} (LS #{ls_num}): {mps}/{total} = {mps/total*100:.2f}%")
 
 
