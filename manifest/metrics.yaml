@@ -183,6 +183,42 @@ metrics:
         higher_is_better: null
         order: 31
 
+  - id: pop-growth-decadal
+    name: Decadal population growth by religion
+    cluster: demographics
+    unit: percent
+    higher_is_better: null
+    definition: |
+      Decadal population growth 2001 to 2011 for each religious community:
+      the percentage change in head-count between the two censuses. Muslim
+      growth was faster than Hindu, but the driver is higher (and now
+      converging) fertility, not migration or religious conversion.
+    sources:
+      primary: census-india-2011
+      secondary: [census-india-2001]
+    geography_levels: [national]
+    religions: [hindu, muslim, christian, sikh, buddhist, jain, all]
+    methodology_notes: |
+      Computed from Census C-01 national head-counts: (2011 count minus 2001
+      count) divided by the 2001 count, times 100. Reuses the same C-01 extracts
+      as pop-share (2001 + 2011), so it cannot drift from the share series.
+      Gated to the RGI 2011 religion-release published growth rates (Muslim
+      24.6%, Hindu 16.8%, Christian 15.5%, Sikh 8.4%, Buddhist 6.1%, Jain 5.4%).
+      Feeds the pop-share card's "Population growth" tab; never its own card.
+    comparison_baselines: []
+    phase: 1
+    status: defined
+    display:
+      scorecard:
+        # Companion series: rendered only as the pop-share card's "Population
+        # growth" tab (via _growth_details), never its own card.
+        include: false
+        label: "Decadal population growth"
+        reference: null
+        unit_format: percent
+        higher_is_better: null
+        order: 32
+
   # ----- Education (Phase 1) -----
   - id: lit-7plus
     name: Literacy rate

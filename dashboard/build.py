@@ -2486,6 +2486,13 @@ def _og_view_data(m: dict, view: dict):
         if "muslim" in by and "hindu" in by:
             detail = (f"{_round_str(by['muslim'], 1)}% of Muslims are under 10 · "
                       f"{_round_str(by['hindu'], 1)}% of Hindus")
+    elif vid == "by-growth":
+        rows = [r for r in load_metric("pop-growth-decadal")
+                if r["geography_level"] == "national"]
+        by = {r["religion"]: float(r["value"]) for r in rows}
+        if "muslim" in by and "hindu" in by:
+            detail = (f"Muslim +{_round_str(by['muslim'], 1)}% · "
+                      f"Hindu +{_round_str(by['hindu'], 1)}% (2001-2011)")
     elif vid in FOLDED_VIEW_METRIC:
         # Folded companion metric (Commit FE): the nugget is the companion's
         # own latest national Muslim-vs-Hindu read, in the companion's unit.
@@ -2910,6 +2917,10 @@ def _landing_breakdowns(m: dict, views: list) -> str:
             # Same community-by-cohort table as the modal tab; the canvas is
             # stripped below so the landing stays chart-free.
             block = _age_details(unit, "landing-age")[0]
+        elif vid == "by-growth":
+            # Same community growth table as the modal tab; the hbar canvas is
+            # stripped below (card-chartwrap) so the landing stays chart-free.
+            block = _growth_details(unit, "landing-growth")[0]
         elif vid in FOLDED_VIEW_METRIC:
             # Folded companion metric (Commit FE): the same tab content in its
             # chart-free form (canvas omitted; note + table + provenance stay).
@@ -4285,6 +4296,73 @@ def _age_details(unit: str, cvid: str):
     return view, js
 
 
+def _growth_details(unit: str, cvid: str):
+    """pop-share's "Population growth" tab: decadal head-count growth 2001->2011
+    by community, from the pop-growth-decadal companion (Census C-01). Muslim
+    (maroon) grew fastest; the dashed all-India line is the national 17.7%. The
+    fertility-not-conversion caveat rides the note. Returns (details_html, js)."""
+    gmid = "pop-growth-decadal"
+    rows = [r for r in load_metric(gmid) if r["geography_level"] == "national"]
+    if not rows:
+        return "", None
+    by_rel = {r["religion"]: r for r in rows}
+    if "muslim" not in by_rel:
+        return "", None
+    dp = _disp_dp(unit)
+
+    def g(c):
+        return float(by_rel[c]["value"])
+
+    def counts(c):
+        m = re.search(r"\((\d+)->(\d+)", by_rel[c].get("denominator", ""))
+        return (int(m.group(1)), int(m.group(2))) if m else (None, None)
+
+    order = ["muslim", "hindu", "christian", "sikh", "buddhist", "jain"]
+    present = [c for c in order if c in by_rel]
+    all_v = g("all") if "all" in by_rel else None
+    # Community bars, fastest-growing first; Muslim is always the maroon series,
+    # every other community the muted grey (colour contract), the all-India total
+    # the dashed reference. Magnitudes from a true zero (the 2-bar-magnitude rule).
+    pairs = sorted(((COMMUNITY_LABEL.get(c, c.capitalize()), g(c), c == "muslim")
+                    for c in present), key=lambda p: p[1], reverse=True)
+    labels = [p[0] for p in pairs]
+    values = [_round_dp(p[1], dp) for p in pairs]
+    colors = ["#7b1d22" if p[2] else "#D8DEE2" for p in pairs]
+    ref = json.dumps(_round_dp(all_v, dp)) if all_v is not None else "null"
+    ref_label = f"All-India ({fmt_num(all_v, unit)})" if all_v is not None else ""
+    h = len(pairs) * 28 + 28
+    chart_html = (f'<div class="card-chartwrap" style="height:{h}px"><canvas id="{cvid}" '
+                  f'role="img" aria-label="Decadal population growth 2001 to 2011 by community; '
+                  f'values listed in the table below."></canvas></div>')
+    js = (f'hbar("{cvid}", {json.dumps(labels)}, {json.dumps(values)}, {json.dumps(colors)}, '
+          f'"%", {dp}, {ref}, {json.dumps(ref_label)}, true);')
+    m_g = g("muslim")
+    h_g = g("hindu") if "hindu" in by_rel else None
+    note = (f"Between 2001 and 2011 the Muslim population grew {_round_str(m_g, 1)}%, "
+            + (f"faster than Hindu ({_round_str(h_g, 1)}%) and " if h_g is not None else "")
+            + (f"the all-India {_round_str(all_v, 1)}%. " if all_v is not None else ". ")
+            + "The gap reflects higher, now converging, fertility, not migration or conversion.")
+    head = ('<tr><th class="sortable" data-col="0">Community</th>'
+            '<th class="sortable" data-col="1" data-type="num">2001</th>'
+            '<th class="sortable" data-col="2" data-type="num">2011</th>'
+            '<th class="sortable" data-col="3" data-type="num">Growth</th></tr>')
+    trs = ""
+    for c in present + (["all"] if "all" in by_rel else []):
+        a, b = counts(c)
+        gv = g(c)
+        trs += (f'<tr><td>{html.escape(COMMUNITY_LABEL.get(c, c.capitalize()))}</td>'
+                f'<td data-sort="{a if a else -1}">{_in_group(a) if a else "n/a"}</td>'
+                f'<td data-sort="{b if b else -1}">{_in_group(b) if b else "n/a"}</td>'
+                f'<td data-sort="{gv}">{fmt_num(gv, unit)}</td></tr>')
+    view = (f'<details data-view-id="by-growth" data-view-label="Population growth" '
+            f'data-view-sub="2001 to 2011, Census C-01">'
+            f'<summary>Decadal growth (2001 to 2011)</summary>'
+            f'<p class="comp-note">{html.escape(note)}</p>{chart_html}'
+            f'<table class="sortable-table"><thead>{head}</thead><tbody>{trs}</tbody></table>'
+            f'{_view_provenance(gmid)}</details>')
+    return view, js
+
+
 GITHUB_REPO = "https://github.com/iqbash1/indian-muslims-dashboard"
 
 _TRANSFORM_SCRIPT_CACHE: dict[str, str | None] = {}
@@ -4323,7 +4401,8 @@ REPRO_TIER = {
     # COMPUTE - a ratio/share/rate derived from linked published tables
     "pop-share": "COMPUTE", "sex-ratio": "COMPUTE", "urban-share": "COMPUTE",
     "lit-7plus": "COMPUTE", "district-concentration-top100": "COMPUTE",
-    "pop-share-by-age": "COMPUTE", "imr": "COMPUTE", "ger-higher-ed": "COMPUTE",
+    "pop-share-by-age": "COMPUTE", "pop-growth-decadal": "COMPUTE",
+    "imr": "COMPUTE", "ger-higher-ed": "COMPUTE",
     "muslim-higher-ed-enrolment": "COMPUTE", "prison-rate-per-100k": "COMPUTE",
     "undertrial-rate-per-100k": "COMPUTE",
     # MICRODATA - recomputed from unit-level NSS/PLFS records
@@ -5491,8 +5570,11 @@ def _card_pop_share(mid, label, unit, src, csv_href, cvid):
     age_view, age_js = _age_details(unit, cvid + "-age")
     if age_js:
         js = js + "\n" + age_js
+    growth_view, growth_js = _growth_details(unit, cvid + "-growth")
+    if growth_js:
+        js = js + "\n" + growth_js
     details = (_state_details(mid, unit) + _sex_details(mid, unit) + conc_view
-               + _residence_details(mid, unit) + age_view)
+               + _residence_details(mid, unit) + age_view + growth_view)
     return _card_shell(mid, label, headline, CAPTION.get(mid, ""), _year_of(mid), "",
                        chart_html, comps, src, csv_href, details, download_html=download), js
 
