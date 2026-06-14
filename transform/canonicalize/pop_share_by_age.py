@@ -1,17 +1,19 @@
 """
 L2 -> L3 for the `pop-share-by-age` companion metric (feeds pop-share's
-"By age" modal tab, Commit GG).
+"By age" modal tab, Commit GG; community reference lines added Commit GH).
 
 Reads:  extracted/census-2011/c15-national-age-by-religion.csv
 Writes: canonical/pop-share-by-age.csv
 
-One national row per 5-year age cohort (0-4 .. 80+): value = Muslim share of
-that cohort's total population (Census 2011 C-15, all-residence). This is the
-same "Muslim share of population" the card headlines, sliced by age instead of
-by geography or residence - and it shows the youth skew (17.2% of under-5s are
-Muslim, falling to ~10% among the elderly). "All ages" and "Age not stated"
-cohorts are excluded from the series (the former is the 14.2% headline; the
-latter is residual).
+One national row per community per 5-year age cohort (0-4 .. 80+): value =
+that community's share of the cohort's total population (Census 2011 C-15,
+all-residence). The "By age" tab plots Muslim (the hero) against the smaller
+communities (Christian, Sikh, Buddhist, Jain) for reference; Hindu (~80%) is
+kept in the CSV but omitted from the chart so the smaller lines stay legible,
+exactly as the pop-share overview trend does. The Muslim series shows the
+youth skew (17.2% of under-5s are Muslim, falling to ~10% among the elderly).
+"All ages" and "Age not stated" cohorts are excluded (the former is the 14.2%
+headline; the latter is residual).
 
 Gate: the all-ages Muslim share recomputed here must match the published
 national figure (14.23%) within 0.01pp, or the run aborts.
@@ -28,7 +30,13 @@ L2_PATH = REPO_ROOT / "extracted" / "census-2011" / "c15-national-age-by-religio
 OUTPUT_PATH = REPO_ROOT / "canonical" / "pop-share-by-age.csv"
 SOURCE_ID = "census-india-2011"
 SOURCE_DOC = "sources/census-2011/c-series/c15-religion-by-age-sex.xlsx"
-CANONICALIZER_VERSION = "1.0.0"
+CANONICALIZER_VERSION = "2.0.0"
+
+# Muslim leads (the hero series); the rest follow for reference. Matches the
+# C-15 religion vocabulary; "other" is the residual catch-all.
+OUTPUT_RELIGIONS = ["muslim", "hindu", "christian", "sikh", "buddhist", "jain", "other"]
+REL_LABEL = {"muslim": "Muslim", "hindu": "Hindu", "christian": "Christian",
+             "sikh": "Sikh", "buddhist": "Buddhist", "jain": "Jain", "other": "Other"}
 
 # 5-year cohorts in census order; "All ages"/"Age not stated" are handled apart.
 AGE_BANDS = [
@@ -66,18 +74,22 @@ def canonicalize() -> None:
         cells = cohort.get(band)
         if not cells or not cells.get("all") or not cells.get("muslim"):
             raise SystemExit(f"C-15 cohort {band!r} missing total/muslim cell")
-        total, muslim = cells["all"], cells["muslim"]
-        share = round(muslim / total * 100, 2)
-        rows.append([
-            "pop-share-by-age", "national", "IN", 2011, "muslim", band,
-            share,
-            f"muslim_{muslim} / total_{total}",
-            total, "", "",
-            SOURCE_ID, SOURCE_DOC, extraction_run,
-            f"Muslim share of the {band} age cohort (Census 2011 C-15, "
-            f"all-residence). {muslim:,} of {total:,}.",
-            "false",
-        ])
+        total = cells["all"]
+        for rel in OUTPUT_RELIGIONS:
+            n = cells.get(rel)
+            if n is None:
+                raise SystemExit(f"C-15 cohort {band!r} missing {rel} cell")
+            share = round(n / total * 100, 2)
+            rows.append([
+                "pop-share-by-age", "national", "IN", 2011, rel, band,
+                share,
+                f"{rel}_{n} / total_{total}",
+                total, "", "",
+                SOURCE_ID, SOURCE_DOC, extraction_run,
+                f"{REL_LABEL[rel]} share of the {band} age cohort (Census 2011 "
+                f"C-15, all-residence). {n:,} of {total:,}.",
+                "false",
+            ])
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     with OUTPUT_PATH.open("w", newline="") as f:
@@ -90,9 +102,11 @@ def canonicalize() -> None:
         ])
         w.writerows(rows)
 
-    print(f"wrote {OUTPUT_PATH.relative_to(REPO_ROOT)} ({len(rows)} cohort rows)")
+    print(f"wrote {OUTPUT_PATH.relative_to(REPO_ROOT)} ({len(rows)} rows; "
+          f"{len(OUTPUT_RELIGIONS)} communities x {len(AGE_BANDS)} cohorts)")
     print(f"  all-ages gate: {all_ages_share:.4f}% vs published {PUBLISHED_ALL_AGES_SHARE}% OK")
-    print(f"  range: 0-4 = {rows[0][6]}%  ->  80+ = {rows[-1][6]}%")
+    mus = {r[5]: r[6] for r in rows if r[4] == "muslim"}
+    print(f"  Muslim: 0-4 = {mus['0-4']}%  ->  80+ = {mus['80+']}%")
 
 
 if __name__ == "__main__":

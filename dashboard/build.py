@@ -4192,37 +4192,59 @@ AGE_BAND_ORDER = ["0-4", "5-9", "10-14", "15-19", "20-24", "25-29", "30-34",
 
 
 def _age_details(unit: str, cvid: str):
-    """pop-share's "By age" tab: Muslim share of each 5-year age cohort, read
-    from the pop-share-by-age companion canonical (Census 2011 C-15). Returns
-    (details_html, chart_js). Shows the youth skew - a higher Muslim share of
-    children than of the elderly - i.e. the headline 14.2% read across cohorts."""
+    """pop-share's "By age" tab: each community's share of every 5-year age
+    cohort, from the pop-share-by-age companion canonical (Census 2011 C-15).
+    Returns (details_html, chart_js). Muslim (maroon) is the hero; Christian,
+    Sikh, Buddhist and Jain are plotted for reference; Hindu (~80%) is kept out
+    of the chart so the axis hugs the legible band (its trajectory is noted),
+    matching the pop-share overview trend. The youth skew is the story."""
+    from collections import defaultdict
     amid = "pop-share-by-age"
     rows = [r for r in load_metric(amid)
-            if r["geography_level"] == "national" and r["religion"] == "muslim"
-            and r.get("age_band") in AGE_BAND_ORDER]
-    if len(rows) < 2:
+            if r["geography_level"] == "national" and r.get("age_band") in AGE_BAND_ORDER]
+    if not rows:
         return "", None
-    rows.sort(key=lambda r: AGE_BAND_ORDER.index(r["age_band"]))
+    series: dict[str, dict[str, float]] = defaultdict(dict)
+    for r in rows:
+        series[r["religion"]][r["age_band"]] = float(r["value"])
+    if "muslim" not in series:
+        return "", None
     year = rows[0]["year"]
     dp = _disp_dp(unit)
-    labels = [r["age_band"] for r in rows]
-    values = [_round_dp(float(r["value"]), dp) for r in rows]
-    young, old = values[0], values[-1]
-    note = (f"Muslims are a younger population: {_round_str(young, 1)}% of children "
-            f"aged 0-4 are Muslim, against {_round_str(old, 1)}% of those aged 80 and "
-            f"over. This is the {_round_str(MUSLIM_POP_SHARE, 1)}% population share, "
-            f"read across age cohorts (Census {year} C-15).")
+    bands = [b for b in AGE_BAND_ORDER if b in series["muslim"]]
+    # Chart plots the same community set as the overview trend; Hindu omitted.
+    main_named = ("muslim", "christian", "sikh", "buddhist", "jain")
+    series_map = {rel: [(_round_dp(series[rel][b], dp) if b in series.get(rel, {}) else None)
+                        for b in bands]
+                  for rel in main_named if rel in series}
+    m0, m1 = series["muslim"][bands[0]], series["muslim"][bands[-1]]
+    h0, h1 = series.get("hindu", {}).get(bands[0]), series.get("hindu", {}).get(bands[-1])
+    hindu_bit = ""
+    if h0 is not None and h1 is not None:
+        hindu_bit = (f" Hindu runs the other way ({_round_str(h0, 1)}% to {_round_str(h1, 1)}%) "
+                     f"and is left off the chart so the smaller communities stay legible.")
+    note = (f"Muslims are a younger population: {_round_str(m0, 1)}% of children aged 0-4 are "
+            f"Muslim, against {_round_str(m1, 1)}% of those aged 80 and over.{hindu_bit} "
+            f"Christian, Sikh and Jain skew older.")
     chart_html = (f'<div class="card-chartwrap" style="height:200px"><canvas id="{cvid}" '
-                  f'role="img" aria-label="Muslim share of population by 5-year age cohort; '
-                  f'values listed in the table below."></canvas></div>')
-    js = (f'lineChart("{cvid}", {json.dumps(labels)}, {json.dumps(values)}, '
-          f'"#7b1d22", "%", {dp});')
-    trs = "".join(
-        f'<tr><td>{html.escape(lab)}</td>'
-        f'<td data-sort="{v:.4f}">{fmt_num(v, unit)}</td></tr>'
-        for lab, v in zip(labels, values))
+                  f'role="img" aria-label="Each community\'s share of population by 5-year age '
+                  f'cohort; values listed in the table below."></canvas></div>')
+    js = (f'trendChart("{cvid}", {json.dumps(bands)}, {json.dumps(series_map)}, '
+          f'null, "%", {dp}, false, "modal");')
+    # Table carries every named community (no axis here, so Hindu is included).
+    table_comms = [c for c in ("muslim", "hindu", "christian", "sikh", "buddhist", "jain")
+                   if c in series]
     head = ('<tr><th class="sortable" data-col="0">Age cohort</th>'
-            '<th class="sortable" data-col="1" data-type="num">Muslim share</th></tr>')
+            + "".join(f'<th class="sortable" data-col="{i+1}" data-type="num">'
+                      f'{html.escape(COMMUNITY_LABEL.get(c, c.capitalize()))}</th>'
+                      for i, c in enumerate(table_comms)) + '</tr>')
+
+    def cell(c, b):
+        v = series.get(c, {}).get(b)
+        return '<td data-sort="-1">n/a</td>' if v is None else f'<td data-sort="{v:.4f}">{fmt_num(v, unit)}</td>'
+    trs = "".join(
+        f'<tr><td>{html.escape(b)}</td>' + "".join(cell(c, b) for c in table_comms) + '</tr>'
+        for b in bands)
     view = (f'<details data-view-id="by-age" data-view-label="By age" '
             f'data-view-sub="{year}, Census C-15">'
             f'<summary>By age ({year})</summary>'

@@ -153,19 +153,20 @@ metrics:
     unit: percent
     higher_is_better: null
     definition: |
-      Muslim population as a share of each 5-year age cohort's total
-      population, nationally. The same population share the pop-share card
-      headlines, sliced by age: it shows the younger age profile of the
-      Muslim population (a higher share of children than of the elderly).
+      Each community's population as a share of each 5-year age cohort,
+      nationally - the pop-share measure sliced by age. Muslim is the lead
+      series (it shows the younger age profile: a higher share of children
+      than of the elderly); the smaller communities are carried for reference.
     sources: {primary: census-india-2011}
     geography_levels: [national]
-    religions: [muslim]
+    religions: [muslim, hindu, christian, sikh, buddhist, jain, other]
     methodology_notes: |
       Computed from the Census 2011 C-15 national religion-by-age-sex table
-      (all-residence): Muslim persons divided by total persons in each 5-year
-      cohort. The all-ages figure recomputes to the 14.2% headline (a
-      validation gate in the transform). Feeds the pop-share card's "By age"
-      tab (Commit GG).
+      (all-residence): each community's persons divided by total persons in
+      each 5-year cohort. The all-ages Muslim figure recomputes to the 14.2%
+      headline (a validation gate in the transform). Feeds the pop-share card's
+      "By age" tab, which plots Muslim against the smaller communities and omits
+      Hindu (~80%) for scale, as the overview trend does (Commits GG, GH).
     comparison_baselines: []
     phase: 1
     status: defined
