@@ -153,20 +153,22 @@ metrics:
     unit: percent
     higher_is_better: null
     definition: |
-      Each community's population as a share of each 5-year age cohort,
-      nationally - the pop-share measure sliced by age. Muslim is the lead
-      series (it shows the younger age profile: a higher share of children
-      than of the elderly); the smaller communities are carried for reference.
+      Each community's age distribution: the share of that community's own
+      population that falls in each 5-year cohort, nationally. Normalising to
+      each community's own total (not the cohort total) puts every community on
+      the same scale, so their age profiles compare directly - Muslims youngest,
+      Jains and Sikhs oldest.
     sources: {primary: census-india-2011}
     geography_levels: [national]
     religions: [muslim, hindu, christian, sikh, buddhist, jain, other]
     methodology_notes: |
       Computed from the Census 2011 C-15 national religion-by-age-sex table
-      (all-residence): each community's persons divided by total persons in
-      each 5-year cohort. The all-ages Muslim figure recomputes to the 14.2%
-      headline (a validation gate in the transform). Feeds the pop-share card's
-      "By age" tab, which plots Muslim against the smaller communities and omits
-      Hindu (~80%) for scale, as the overview trend does (Commits GG, GH).
+      (all-residence): each community's persons in a cohort divided by that
+      community's total population. Two gates in the transform: the counts
+      reproduce the published 14.2% Muslim-of-total share (read-correctness),
+      and each community's bands sum to ~100% (partition). Feeds the pop-share
+      card's "By age" tab, which plots all six named communities, Muslim the
+      maroon hero (Commits GG, GH, GJ).
     comparison_baselines: []
     phase: 1
     status: defined

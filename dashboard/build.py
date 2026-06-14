@@ -2478,12 +2478,11 @@ def _og_view_data(m: dict, view: dict):
             detail = ""
     elif vid == "by-age":
         rows = [r for r in load_metric("pop-share-by-age")
-                if r["geography_level"] == "national" and r["religion"] == "muslim"
-                and r.get("age_band")]
-        bands = {r["age_band"]: float(r["value"]) for r in rows}
-        if "0-4" in bands and "80+" in bands:
-            detail = (f"{_round_str(bands['0-4'], 1)}% of under-5s Muslim · "
-                      f"{_round_str(bands['80+'], 1)}% of those 80+")
+                if r["geography_level"] == "national" and r.get("age_band") == "0-4"]
+        by = {r["religion"]: float(r["value"]) for r in rows}
+        if "muslim" in by and "hindu" in by:
+            detail = (f"{_round_str(by['muslim'], 1)}% of Muslims are under 5 · "
+                      f"{_round_str(by['hindu'], 1)}% of Hindus")
     elif vid in FOLDED_VIEW_METRIC:
         # Folded companion metric (Commit FE): the nugget is the companion's
         # own latest national Muslim-vs-Hindu read, in the companion's unit.
@@ -4219,23 +4218,25 @@ def _age_details(unit: str, cvid: str):
     year = rows[0]["year"]
     dp = _disp_dp(unit)
     bands = [b for b in AGE_BAND_ORDER if b in series["muslim"]]
-    # Chart plots the same community set as the overview trend; Hindu omitted.
-    main_named = ("muslim", "christian", "sikh", "buddhist", "jain")
+    # Each line is a community's OWN age distribution (normalised to its own
+    # population), so all six sit on a comparable ~0-13% scale - Hindu included,
+    # since it no longer dominates the axis.
+    plotted = ("muslim", "hindu", "christian", "sikh", "buddhist", "jain")
     series_map = {rel: [(_round_dp(series[rel][b], dp) if b in series.get(rel, {}) else None)
                         for b in bands]
-                  for rel in main_named if rel in series}
-    m0, m1 = series["muslim"][bands[0]], series["muslim"][bands[-1]]
-    h0, h1 = series.get("hindu", {}).get(bands[0]), series.get("hindu", {}).get(bands[-1])
-    hindu_bit = ""
-    if h0 is not None and h1 is not None:
-        hindu_bit = (f" Hindu runs the other way ({_round_str(h0, 1)}% to {_round_str(h1, 1)}%) "
-                     f"and is left off the chart so the smaller communities stay legible.")
-    note = (f"Muslims are a younger population: {_round_str(m0, 1)}% of children aged 0-4 are "
-            f"Muslim, against {_round_str(m1, 1)}% of those aged 80 and over.{hindu_bit} "
-            f"Christian, Sikh and Jain skew older.")
+                  for rel in plotted if rel in series}
+    m0 = series["muslim"][bands[0]]
+    h0 = series.get("hindu", {}).get(bands[0])
+    j0 = series.get("jain", {}).get(bands[0])
+    cmp_bit = (f" against {_round_str(h0, 1)}% of Hindus and {_round_str(j0, 1)}% of Jains"
+               if h0 is not None and j0 is not None else "")
+    note = (f"Each line is a community's own age profile, the share of its members in each "
+            f"5-year band, so communities of very different sizes compare directly. Muslims "
+            f"have the youngest profile: {_round_str(m0, 1)}% are under 5{cmp_bit}. Jains, "
+            f"Sikhs and Christians skew oldest.")
     chart_html = (f'<div class="card-chartwrap" style="height:200px"><canvas id="{cvid}" '
-                  f'role="img" aria-label="Each community\'s share of population by 5-year age '
-                  f'cohort; values listed in the table below."></canvas></div>')
+                  f'role="img" aria-label="Each community\'s age distribution: the share of its '
+                  f'own population in each 5-year cohort; values listed in the table below."></canvas></div>')
     js = (f'trendChart("{cvid}", {json.dumps(bands)}, {json.dumps(series_map)}, '
           f'null, "%", {dp}, false, "modal");')
     # Table carries every named community (no axis here, so Hindu is included).

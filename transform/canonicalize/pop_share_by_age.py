@@ -6,17 +6,19 @@ Reads:  extracted/census-2011/c15-national-age-by-religion.csv
 Writes: canonical/pop-share-by-age.csv
 
 One national row per community per 5-year age cohort (0-4 .. 80+): value =
-that community's share of the cohort's total population (Census 2011 C-15,
-all-residence). The "By age" tab plots Muslim (the hero) against the smaller
-communities (Christian, Sikh, Buddhist, Jain) for reference; Hindu (~80%) is
-kept in the CSV but omitted from the chart so the smaller lines stay legible,
-exactly as the pop-share overview trend does. The Muslim series shows the
-youth skew (17.2% of under-5s are Muslim, falling to ~10% among the elderly).
-"All ages" and "Age not stated" cohorts are excluded (the former is the 14.2%
-headline; the latter is residual).
+the share of that community's OWN total population that falls in the cohort -
+i.e. each community's age distribution (Census 2011 C-15, all-residence).
+Normalising to each community's own population (not the cohort total) puts
+every community on the same ~0-13% scale, so the SHAPES compare directly: a
+younger community sits higher in the young bands and lower in the old. Muslims
+have the youngest profile (11.3% under 5, falling to 0.7% over 80); Jains,
+Sikhs and Christians the oldest. The "By age" tab plots all six named
+communities (Muslim the maroon hero, the rest grey). "All ages" and "Age not
+stated" cohorts are excluded from the series.
 
-Gate: the all-ages Muslim share recomputed here must match the published
-national figure (14.23%) within 0.01pp, or the run aborts.
+Gates: (1) read-correctness - the underlying counts must reproduce the
+published 14.23% Muslim-of-total share; (2) partition - each community's 17
+band shares sum to ~100% (the small remainder is the "Age not stated" cohort).
 """
 
 from __future__ import annotations
@@ -30,7 +32,7 @@ L2_PATH = REPO_ROOT / "extracted" / "census-2011" / "c15-national-age-by-religio
 OUTPUT_PATH = REPO_ROOT / "canonical" / "pop-share-by-age.csv"
 SOURCE_ID = "census-india-2011"
 SOURCE_DOC = "sources/census-2011/c-series/c15-religion-by-age-sex.xlsx"
-CANONICALIZER_VERSION = "2.0.0"
+CANONICALIZER_VERSION = "3.0.0"
 
 # Muslim leads (the hero series); the rest follow for reference. Matches the
 # C-15 religion vocabulary; "other" is the residual catch-all.
@@ -54,15 +56,17 @@ def canonicalize() -> None:
             continue
         cohort.setdefault(r["age_group"], {})[r["religion"]] = int(r["persons"])
 
-    # Gate: recomputed all-ages share must match the published headline.
+    # Gate 1 (read-correctness): the underlying counts must reproduce the
+    # published 14.23% Muslim-of-total share, even though that share is no
+    # longer the plotted value. allg[rel] is each community's total population.
     allg = cohort.get("All ages", {})
     if not allg.get("all") or not allg.get("muslim"):
         raise SystemExit("C-15 national 'All ages' total/muslim cell missing")
     all_ages_share = allg["muslim"] / allg["all"] * 100
     if abs(all_ages_share - PUBLISHED_ALL_AGES_SHARE) > 0.01:
         raise SystemExit(
-            f"all-ages Muslim share {all_ages_share:.4f}% != published "
-            f"{PUBLISHED_ALL_AGES_SHARE}% (gate failed)")
+            f"Muslim-of-total share {all_ages_share:.4f}% != published "
+            f"{PUBLISHED_ALL_AGES_SHARE}% (read-correctness gate failed)")
 
     extraction_run = (
         f"canonicalize-pop-share-by-age-v{CANONICALIZER_VERSION}-"
@@ -70,26 +74,34 @@ def canonicalize() -> None:
     )
 
     rows = []
+    band_sum = {rel: 0.0 for rel in OUTPUT_RELIGIONS}
     for band in AGE_BANDS:
         cells = cohort.get(band)
-        if not cells or not cells.get("all") or not cells.get("muslim"):
-            raise SystemExit(f"C-15 cohort {band!r} missing total/muslim cell")
-        total = cells["all"]
+        if not cells:
+            raise SystemExit(f"C-15 cohort {band!r} missing")
         for rel in OUTPUT_RELIGIONS:
             n = cells.get(rel)
-            if n is None:
-                raise SystemExit(f"C-15 cohort {band!r} missing {rel} cell")
-            share = round(n / total * 100, 2)
+            ctot = allg.get(rel)  # this community's total population
+            if n is None or not ctot:
+                raise SystemExit(f"C-15 cohort {band!r} missing {rel} cell/total")
+            share = round(n / ctot * 100, 2)  # the community's age distribution
+            band_sum[rel] += share
             rows.append([
                 "pop-share-by-age", "national", "IN", 2011, rel, band,
                 share,
-                f"{rel}_{n} / total_{total}",
-                total, "", "",
+                f"{rel}_in_band_{n} / {rel}_total_{ctot}",
+                ctot, "", "",
                 SOURCE_ID, SOURCE_DOC, extraction_run,
-                f"{REL_LABEL[rel]} share of the {band} age cohort (Census 2011 "
-                f"C-15, all-residence). {n:,} of {total:,}.",
+                f"Share of the {REL_LABEL[rel]} population in the {band} age cohort "
+                f"(Census 2011 C-15, all-residence). {n:,} of {ctot:,}.",
                 "false",
             ])
+
+    # Gate 2 (partition): each community's 17 bands sum to ~100% (the small
+    # remainder is the excluded "Age not stated" cohort).
+    for rel in OUTPUT_RELIGIONS:
+        if not (99.0 <= band_sum[rel] <= 100.5):
+            raise SystemExit(f"{rel} age bands sum to {band_sum[rel]:.2f}% (expected ~100)")
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     with OUTPUT_PATH.open("w", newline="") as f:
@@ -104,9 +116,9 @@ def canonicalize() -> None:
 
     print(f"wrote {OUTPUT_PATH.relative_to(REPO_ROOT)} ({len(rows)} rows; "
           f"{len(OUTPUT_RELIGIONS)} communities x {len(AGE_BANDS)} cohorts)")
-    print(f"  all-ages gate: {all_ages_share:.4f}% vs published {PUBLISHED_ALL_AGES_SHARE}% OK")
+    print(f"  read-correctness: Muslim/total = {all_ages_share:.4f}% (vs {PUBLISHED_ALL_AGES_SHARE}%) OK")
     mus = {r[5]: r[6] for r in rows if r[4] == "muslim"}
-    print(f"  Muslim: 0-4 = {mus['0-4']}%  ->  80+ = {mus['80+']}%")
+    print(f"  Muslim age profile: 0-4 = {mus['0-4']}%  ->  80+ = {mus['80+']}%  (bands sum {band_sum['muslim']:.1f}%)")
 
 
 if __name__ == "__main__":
