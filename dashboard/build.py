@@ -2476,6 +2476,14 @@ def _og_view_data(m: dict, view: dict):
                       f"top 10 hold {_round_str(top10, 1)}%")
         except Exception:
             detail = ""
+    elif vid == "by-age":
+        rows = [r for r in load_metric("pop-share-by-age")
+                if r["geography_level"] == "national" and r["religion"] == "muslim"
+                and r.get("age_band")]
+        bands = {r["age_band"]: float(r["value"]) for r in rows}
+        if "0-4" in bands and "80+" in bands:
+            detail = (f"{_round_str(bands['0-4'], 1)}% of under-5s Muslim · "
+                      f"{_round_str(bands['80+'], 1)}% of those 80+")
     elif vid in FOLDED_VIEW_METRIC:
         # Folded companion metric (Commit FE): the nugget is the companion's
         # own latest national Muslim-vs-Hindu read, in the companion's unit.
@@ -4178,6 +4186,52 @@ def _concentration_view(curve_cvid: str, download_html: str = ""):
     return view, curve_js
 
 
+AGE_BAND_ORDER = ["0-4", "5-9", "10-14", "15-19", "20-24", "25-29", "30-34",
+                  "35-39", "40-44", "45-49", "50-54", "55-59", "60-64", "65-69",
+                  "70-74", "75-79", "80+"]
+
+
+def _age_details(unit: str, cvid: str):
+    """pop-share's "By age" tab: Muslim share of each 5-year age cohort, read
+    from the pop-share-by-age companion canonical (Census 2011 C-15). Returns
+    (details_html, chart_js). Shows the youth skew - a higher Muslim share of
+    children than of the elderly - i.e. the headline 14.2% read across cohorts."""
+    amid = "pop-share-by-age"
+    rows = [r for r in load_metric(amid)
+            if r["geography_level"] == "national" and r["religion"] == "muslim"
+            and r.get("age_band") in AGE_BAND_ORDER]
+    if len(rows) < 2:
+        return "", None
+    rows.sort(key=lambda r: AGE_BAND_ORDER.index(r["age_band"]))
+    year = rows[0]["year"]
+    dp = _disp_dp(unit)
+    labels = [r["age_band"] for r in rows]
+    values = [_round_dp(float(r["value"]), dp) for r in rows]
+    young, old = values[0], values[-1]
+    note = (f"Muslims are a younger population: {_round_str(young, 1)}% of children "
+            f"aged 0-4 are Muslim, against {_round_str(old, 1)}% of those aged 80 and "
+            f"over. This is the {_round_str(MUSLIM_POP_SHARE, 1)}% population share, "
+            f"read across age cohorts (Census {year} C-15).")
+    chart_html = (f'<div class="card-chartwrap" style="height:200px"><canvas id="{cvid}" '
+                  f'role="img" aria-label="Muslim share of population by 5-year age cohort; '
+                  f'values listed in the table below."></canvas></div>')
+    js = (f'lineChart("{cvid}", {json.dumps(labels)}, {json.dumps(values)}, '
+          f'"#7b1d22", "%", {dp});')
+    trs = "".join(
+        f'<tr><td>{html.escape(lab)}</td>'
+        f'<td data-sort="{v:.4f}">{fmt_num(v, unit)}</td></tr>'
+        for lab, v in zip(labels, values))
+    head = ('<tr><th class="sortable" data-col="0">Age cohort</th>'
+            '<th class="sortable" data-col="1" data-type="num">Muslim share</th></tr>')
+    view = (f'<details data-view-id="by-age" data-view-label="By age" '
+            f'data-view-sub="{year}, Census C-15">'
+            f'<summary>By age ({year})</summary>'
+            f'<p class="comp-note">{html.escape(note)}</p>{chart_html}'
+            f'<table class="sortable-table"><thead>{head}</thead>'
+            f'<tbody>{trs}</tbody></table>{_view_provenance(amid)}</details>')
+    return view, js
+
+
 GITHUB_REPO = "https://github.com/iqbash1/indian-muslims-dashboard"
 
 _TRANSFORM_SCRIPT_CACHE: dict[str, str | None] = {}
@@ -5322,8 +5376,11 @@ def _card_pop_share(mid, label, unit, src, csv_href, cvid):
     # Drill-downs become modal tabs (see _card_shell): state data, the
     # by-district concentration view, and the urban/rural split (pop-share
     # carries residence rows; _sex_details returns "" here).
+    age_view, age_js = _age_details(unit, cvid + "-age")
+    if age_js:
+        js = js + "\n" + age_js
     details = (_state_details(mid, unit) + _sex_details(mid, unit) + conc_view
-               + _residence_details(mid, unit))
+               + _residence_details(mid, unit) + age_view)
     return _card_shell(mid, label, headline, CAPTION.get(mid, ""), _year_of(mid), "",
                        chart_html, comps, src, csv_href, details, download_html=download), js
 

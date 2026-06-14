@@ -208,7 +208,7 @@ def main() -> None:
             warn(f"{mid}: empty CSV")
             continue
         cols = rows[0].keys()
-        keycols = [c for c in ("geography_code", "year", "religion", "sex", "residence") if c in cols]
+        keycols = [c for c in ("geography_code", "year", "religion", "sex", "residence", "age_band") if c in cols]
         seen: dict[tuple, int] = {}
         popshare_groups: dict[tuple, float] = defaultdict(float)
 

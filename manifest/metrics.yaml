@@ -147,6 +147,39 @@ metrics:
         higher_is_better: null
         order: 30
 
+  - id: pop-share-by-age
+    name: Muslim share of population by age
+    cluster: demographics
+    unit: percent
+    higher_is_better: null
+    definition: |
+      Muslim population as a share of each 5-year age cohort's total
+      population, nationally. The same population share the pop-share card
+      headlines, sliced by age: it shows the younger age profile of the
+      Muslim population (a higher share of children than of the elderly).
+    sources: {primary: census-india-2011}
+    geography_levels: [national]
+    religions: [muslim]
+    methodology_notes: |
+      Computed from the Census 2011 C-15 national religion-by-age-sex table
+      (all-residence): Muslim persons divided by total persons in each 5-year
+      cohort. The all-ages figure recomputes to the 14.2% headline (a
+      validation gate in the transform). Feeds the pop-share card's "By age"
+      tab (Commit GG).
+    comparison_baselines: []
+    phase: 1
+    status: defined
+    display:
+      scorecard:
+        # Companion series (Commit GG): rendered only as the pop-share card's
+        # "By age" tab (via _age_details), never its own card.
+        include: false
+        label: "Population share by age"
+        reference: null
+        unit_format: percent
+        higher_is_better: null
+        order: 31
+
   # ----- Education (Phase 1) -----
   - id: lit-7plus
     name: Literacy rate
