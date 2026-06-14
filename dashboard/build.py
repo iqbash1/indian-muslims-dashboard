@@ -2903,6 +2903,10 @@ def _landing_breakdowns(m: dict, views: list) -> str:
                 block = f'<p>{html.escape(note)}</p>{_top100_districts_inner(cmid)}'
             else:
                 block = ""
+        elif vid == "by-age":
+            # Same community-by-cohort table as the modal tab; the canvas is
+            # stripped below so the landing stays chart-free.
+            block = _age_details(unit, "landing-age")[0]
         elif vid in FOLDED_VIEW_METRIC:
             # Folded companion metric (Commit FE): the same tab content in its
             # chart-free form (canvas omitted; note + table + provenance stay).
@@ -2916,6 +2920,9 @@ def _landing_breakdowns(m: dict, views: list) -> str:
         # Landings are chart-free static tables (like the by-district curve, which is
         # interactive-only): drop the decorative gap dumbbell, keep the table.
         inner = re.sub(r'<div class="gap-chart".*?(?=<table class="sortable-table">)', '', inner, flags=re.S)
+        # By age renders a line chart on the modal tab; the landing is chart-free,
+        # so drop the canvas wrapper and keep the full community table.
+        inner = re.sub(r'<div class="card-chartwrap".*?</div>', '', inner, flags=re.S)
         sub = f'<span class="breakdown-sub">{html.escape(v["sub"])}</span>' if v.get("sub") else ""
         parts.append(f'<section class="breakdown"><h2>{html.escape(v["label"])}{sub}</h2>{inner}</section>')
     return "".join(parts)
