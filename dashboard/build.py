@@ -2478,10 +2478,10 @@ def _og_view_data(m: dict, view: dict):
             detail = ""
     elif vid == "by-age":
         rows = [r for r in load_metric("pop-share-by-age")
-                if r["geography_level"] == "national" and r.get("age_band") == "0-4"]
+                if r["geography_level"] == "national" and r.get("age_band") == "0-9"]
         by = {r["religion"]: float(r["value"]) for r in rows}
         if "muslim" in by and "hindu" in by:
-            detail = (f"{_round_str(by['muslim'], 1)}% of Muslims are under 5 · "
+            detail = (f"{_round_str(by['muslim'], 1)}% of Muslims are under 10 · "
                       f"{_round_str(by['hindu'], 1)}% of Hindus")
     elif vid in FOLDED_VIEW_METRIC:
         # Folded companion metric (Commit FE): the nugget is the companion's
@@ -4192,9 +4192,8 @@ def _concentration_view(curve_cvid: str, download_html: str = ""):
     return view, curve_js
 
 
-AGE_BAND_ORDER = ["0-4", "5-9", "10-14", "15-19", "20-24", "25-29", "30-34",
-                  "35-39", "40-44", "45-49", "50-54", "55-59", "60-64", "65-69",
-                  "70-74", "75-79", "80+"]
+AGE_BAND_ORDER = ["0-9", "10-19", "20-29", "30-39", "40-49", "50-59", "60-69",
+                  "70-79", "80+"]
 
 
 def _age_details(unit: str, cvid: str):
@@ -4231,8 +4230,8 @@ def _age_details(unit: str, cvid: str):
     cmp_bit = (f" against {_round_str(h0, 1)}% of Hindus and {_round_str(j0, 1)}% of Jains"
                if h0 is not None and j0 is not None else "")
     note = (f"Each line is a community's own age profile, the share of its members in each "
-            f"5-year band, so communities of very different sizes compare directly. Muslims "
-            f"have the youngest profile: {_round_str(m0, 1)}% are under 5{cmp_bit}. Jains, "
+            f"10-year band, so communities of very different sizes compare directly. Muslims "
+            f"have the youngest profile: {_round_str(m0, 1)}% are under 10{cmp_bit}. Jains, "
             f"Sikhs and Christians skew oldest.")
     chart_html = (f'<div class="card-chartwrap" style="height:200px"><canvas id="{cvid}" '
                   f'role="img" aria-label="Each community\'s age distribution: the share of its '

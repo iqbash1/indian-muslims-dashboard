@@ -5,16 +5,16 @@ L2 -> L3 for the `pop-share-by-age` companion metric (feeds pop-share's
 Reads:  extracted/census-2011/c15-national-age-by-religion.csv
 Writes: canonical/pop-share-by-age.csv
 
-One national row per community per 5-year age cohort (0-4 .. 80+): value =
-the share of that community's OWN total population that falls in the cohort -
-i.e. each community's age distribution (Census 2011 C-15, all-residence).
-Normalising to each community's own population (not the cohort total) puts
-every community on the same ~0-13% scale, so the SHAPES compare directly: a
-younger community sits higher in the young bands and lower in the old. Muslims
-have the youngest profile (11.3% under 5, falling to 0.7% over 80); Jains,
-Sikhs and Christians the oldest. The "By age" tab plots all six named
-communities (Muslim the maroon hero, the rest grey). "All ages" and "Age not
-stated" cohorts are excluded from the series.
+One national row per community per 10-year age cohort (0-9 .. 80+, aggregated
+from the C-15 5-year groups): value = the share of that community's OWN total
+population that falls in the cohort - i.e. each community's age distribution
+(Census 2011 C-15, all-residence). Normalising to each community's own
+population (not the cohort total) puts every community on a comparable scale,
+so the SHAPES compare directly: a younger community sits higher in the young
+bands and lower in the old. Muslims have the youngest profile (23.8% under 10,
+falling to 0.7% over 80); Jains, Sikhs and Christians the oldest. The "By age"
+tab plots all six named communities (Muslim the maroon hero, the rest grey).
+"All ages" and "Age not stated" cohorts are excluded from the series.
 
 Gates: (1) read-correctness - the underlying counts must reproduce the
 published 14.23% Muslim-of-total share; (2) partition - each community's 17
@@ -32,7 +32,7 @@ L2_PATH = REPO_ROOT / "extracted" / "census-2011" / "c15-national-age-by-religio
 OUTPUT_PATH = REPO_ROOT / "canonical" / "pop-share-by-age.csv"
 SOURCE_ID = "census-india-2011"
 SOURCE_DOC = "sources/census-2011/c-series/c15-religion-by-age-sex.xlsx"
-CANONICALIZER_VERSION = "3.0.0"
+CANONICALIZER_VERSION = "3.1.0"
 
 # Muslim leads (the hero series); the rest follow for reference. Matches the
 # C-15 religion vocabulary; "other" is the residual catch-all.
@@ -40,11 +40,15 @@ OUTPUT_RELIGIONS = ["muslim", "hindu", "christian", "sikh", "buddhist", "jain", 
 REL_LABEL = {"muslim": "Muslim", "hindu": "Hindu", "christian": "Christian",
              "sikh": "Sikh", "buddhist": "Buddhist", "jain": "Jain", "other": "Other"}
 
-# 5-year cohorts in census order; "All ages"/"Age not stated" are handled apart.
-AGE_BANDS = [
-    "0-4", "5-9", "10-14", "15-19", "20-24", "25-29", "30-34", "35-39",
-    "40-44", "45-49", "50-54", "55-59", "60-64", "65-69", "70-74", "75-79", "80+",
-]
+# 10-year cohorts, each aggregating the C-15 5-year groups (the source only
+# tabulates 5-year bands; "All ages"/"Age not stated" are handled apart).
+AGE_BANDS = ["0-9", "10-19", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79", "80+"]
+BAND_PARTS = {
+    "0-9": ["0-4", "5-9"], "10-19": ["10-14", "15-19"],
+    "20-29": ["20-24", "25-29"], "30-39": ["30-34", "35-39"],
+    "40-49": ["40-44", "45-49"], "50-59": ["50-54", "55-59"],
+    "60-69": ["60-64", "65-69"], "70-79": ["70-74", "75-79"], "80+": ["80+"],
+}
 PUBLISHED_ALL_AGES_SHARE = 14.23  # Census 2011: 172,245,158 / 1,210,854,977
 
 
@@ -76,14 +80,15 @@ def canonicalize() -> None:
     rows = []
     band_sum = {rel: 0.0 for rel in OUTPUT_RELIGIONS}
     for band in AGE_BANDS:
-        cells = cohort.get(band)
-        if not cells:
-            raise SystemExit(f"C-15 cohort {band!r} missing")
+        parts = BAND_PARTS[band]
         for rel in OUTPUT_RELIGIONS:
-            n = cells.get(rel)
             ctot = allg.get(rel)  # this community's total population
-            if n is None or not ctot:
-                raise SystemExit(f"C-15 cohort {band!r} missing {rel} cell/total")
+            if not ctot:
+                raise SystemExit(f"C-15 missing {rel} total")
+            try:
+                n = sum(cohort[p][rel] for p in parts)  # aggregate 5-year -> 10-year
+            except KeyError as exc:
+                raise SystemExit(f"C-15 band {band!r} missing {rel} cell {exc}")
             share = round(n / ctot * 100, 2)  # the community's age distribution
             band_sum[rel] += share
             rows.append([
@@ -118,7 +123,8 @@ def canonicalize() -> None:
           f"{len(OUTPUT_RELIGIONS)} communities x {len(AGE_BANDS)} cohorts)")
     print(f"  read-correctness: Muslim/total = {all_ages_share:.4f}% (vs {PUBLISHED_ALL_AGES_SHARE}%) OK")
     mus = {r[5]: r[6] for r in rows if r[4] == "muslim"}
-    print(f"  Muslim age profile: 0-4 = {mus['0-4']}%  ->  80+ = {mus['80+']}%  (bands sum {band_sum['muslim']:.1f}%)")
+    print(f"  Muslim age profile: {AGE_BANDS[0]} = {mus[AGE_BANDS[0]]}%  ->  "
+          f"{AGE_BANDS[-1]} = {mus[AGE_BANDS[-1]]}%  (bands sum {band_sum['muslim']:.1f}%)")
 
 
 if __name__ == "__main__":

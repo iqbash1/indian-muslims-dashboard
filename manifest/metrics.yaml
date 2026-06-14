@@ -154,7 +154,7 @@ metrics:
     higher_is_better: null
     definition: |
       Each community's age distribution: the share of that community's own
-      population that falls in each 5-year cohort, nationally. Normalising to
+      population that falls in each 10-year cohort, nationally. Normalising to
       each community's own total (not the cohort total) puts every community on
       the same scale, so their age profiles compare directly - Muslims youngest,
       Jains and Sikhs oldest.
@@ -163,12 +163,12 @@ metrics:
     religions: [muslim, hindu, christian, sikh, buddhist, jain, other]
     methodology_notes: |
       Computed from the Census 2011 C-15 national religion-by-age-sex table
-      (all-residence): each community's persons in a cohort divided by that
-      community's total population. Two gates in the transform: the counts
-      reproduce the published 14.2% Muslim-of-total share (read-correctness),
-      and each community's bands sum to ~100% (partition). Feeds the pop-share
-      card's "By age" tab, which plots all six named communities, Muslim the
-      maroon hero (Commits GG, GH, GJ).
+      (all-residence): each community's persons in a 10-year cohort (aggregated
+      from the C-15 5-year groups) divided by that community's total population.
+      Two gates in the transform: the counts reproduce the published 14.2%
+      Muslim-of-total share (read-correctness), and each community's bands sum
+      to ~100% (partition). Feeds the pop-share card's "By age" tab, which plots
+      all six named communities, Muslim the maroon hero (Commits GG, GH, GJ, GK).
     comparison_baselines: []
     phase: 1
     status: defined
