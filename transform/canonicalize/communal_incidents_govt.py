@@ -32,7 +32,7 @@ CANONICALIZER_VERSION = "2.0.0"
 
 NATIONAL_NOTE = (
     "NCRB Crime in India (Table 1.2 national time series), row 23.1 "
-    "'Communal/Religious' rioting. Incident counts only — no religion of "
+    "'Communal/Religious' rioting. Incident counts only: no religion of "
     "victim/perpetrator in the published table. Caveat: several states "
     "stopped recording 'communal' as a separate crime category since "
     "~2017, which deflates the national total over time; civil-society "

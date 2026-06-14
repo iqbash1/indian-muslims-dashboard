@@ -24,10 +24,11 @@ checksum, or whether the columns mean what their header says. This gate does:
   CROSS-SERIES (advisory)
     - pop-share national religion breakdown sums to ~100
 
-By-design provenance shapes are recognised, not flagged: the `MANUAL:` sentinel
-(ls-share/mla-share ECI affidavit compilation), `<state>` glob templates (census
-MDDS district rows), `.meta.json` sidecar pointers, and local-only microdata
-ZIPs that are hash-manifested via a dir SHA256SUMS.txt. They print as DIAG.
+By-design provenance shapes are recognised, not flagged: `<state>` glob templates
+(census MDDS district rows), `.meta.json` sidecar pointers, and local-only
+microdata ZIPs that are hash-manifested via a dir SHA256SUMS.txt. They print as
+DIAG. (ls-share/mla-share dropped their `MANUAL:` sentinel in Commit GL for
+committed, SHA256-archived L1 affidavit tables like every other metric.)
 
 Exit non-zero on any ERROR. Run:  python validate/audit_accuracy.py
 """
@@ -118,10 +119,10 @@ def recorded_sha(p: pathlib.Path) -> str | None:
 
 
 def check_provenance(sd: str, users: list[str]) -> None:
-    """Classify a source_document into a sanctioned shape or an error."""
-    if sd.startswith("MANUAL"):
-        diag["MANUAL sentinel (ls/mla, no archived L1)"] += 1
-        return
+    """Classify a source_document into a sanctioned shape or an error. (No
+    `MANUAL:` sentinel any more: since Commit GL every value - ls/mla included -
+    resolves to an archived L1 file, so a MANUAL source_document would now error
+    as missing, which is the intended no-escape-hatch enforcement.)"""
     if "<" in sd:  # census MDDS state glob; concrete files exist per-district
         diag["<glob> template path"] += 1
         return

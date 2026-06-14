@@ -84,7 +84,7 @@ def canonicalize() -> None:
                  f"Source: {cite}. Religion is derived from ECI candidate affidavits; "
                  f"PRS Legislative Research vital-stats PDFs cover candidate profiles "
                  f"but do not tabulate religion. This is a documented manual-entry "
-                 f"metric — figures cross-verified across multiple journalistic sources."),
+                 f"metric: figures cross-verified across multiple journalistic sources."),
                 "false",
             ])
 

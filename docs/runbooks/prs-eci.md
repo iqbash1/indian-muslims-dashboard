@@ -17,7 +17,7 @@
   A Commit FE fold into ls-share was reverted in Commit FJ: the two gaps
   are distinct stories).
 
-## Why this is a SECONDARY manual-entry source (no L1 archive)
+## Why this is a SECONDARY manually-compiled source
 
 Neither PRS nor the ECI tabulates religion of elected representatives. PRS's
 published candidate-profile PDFs cover age, gender, education, criminal
@@ -31,13 +31,20 @@ TimelineDaily, Maeeshat, Outlook, Radiance Weekly, Free Press Journal,
 thenewzradar — plus aggregations by India Forum and Clarion India of all of
 the above).
 
-Because no clean machine-readable primary exists, this source is **pure
-manual entry**: cited values embedded directly in the canonicalizers
-(`transform/canonicalize/ls_share.py` and `mla_share.py`) with per-row
-methodology notes listing the journalistic source(s) cross-verified.
+Because no clean machine-readable primary exists, the counts are **manually
+compiled** into two committed, human-readable L1 tables,
+`sources/prs-eci-affidavits/ls-muslim-mps-by-election.csv` and
+`mla-muslim-mlas-by-assembly.csv` (each row naming the journalistic source(s)
+cross-verified, in a `citation` column). The canonicalizers
+`transform/canonicalize/ls_share.py` and `mla_share.py` READ these tables; the
+tables, not the scripts, are the source of truth, and each table's SHA256 is
+recorded in its `.meta.json` sidecar, so every value traces to a checksummed L1
+file like any other metric (Commit GL).
 
-There are no `targets` in this source's manifest entry and no `sources/prs-eci/`
-directory — the L1 archive concept doesn't apply.
+The manifest entry has `targets: []` (nothing is fetched over the network), but
+it DOES set `archive_dir: sources/prs-eci-affidavits/`, where the two compiled
+tables and their `.meta.json` sidecars live, kept out of Git-LFS (a
+`.gitattributes` override) so they stay diffable on GitHub.
 
 ## Cross-source verification discipline
 
@@ -82,8 +89,11 @@ discrepancy.
 
 ## When the next release lands
 
-Per-election. Add a new row to the `ROWS` list in `ls_share.py` (for Lok
-Sabha) or `mla_share.py` (for any state assembly) within ~60 days of result,
-once 2-3 journalistic compilations have stabilised on the count. State elections
+Per-election. Add a new row to the relevant L1 table
+(`sources/prs-eci-affidavits/ls-muslim-mps-by-election.csv` for Lok Sabha,
+`mla-muslim-mlas-by-assembly.csv` for any state assembly), fill its `citation`
+column, then re-run the canonicalizer and refresh that table's `.meta.json`
+SHA256, within ~60 days of result, once 2-3 journalistic compilations have
+stabilised on the count. State elections
 covered: BR, AP, AR, GA, GJ, HR, HP, JH, KA, KL, MP, MH, MN, ML, MZ, NL,
 OD, PB, RJ, SK, TN, TG, TR, UP, UK, WB, CG, AS + UTs (DL, PY, JK).

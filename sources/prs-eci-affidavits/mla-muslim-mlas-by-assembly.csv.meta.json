@@ -3,6 +3,6 @@
   "document": "mla-muslim-mlas-by-assembly.csv",
   "describes": "Muslim MLAs by state / UT legislative assembly, most recent election per assembly (2020-2026 cycle), plus the all-states national aggregate: muslim_seats, total_seats and the compilation cited per row.",
   "url": "https://github.com/iqbash1/indian-muslims-dashboard/blob/main/sources/prs-eci-affidavits/mla-muslim-mlas-by-assembly.csv",
-  "sha256": "c3ce355ffd9182feb56df31909f8b31bb1fca1656c5f9a21964b0887044c235e",
+  "sha256": "13dc3bc9e45345672af6c752af0bf4391d43cad90d2becf7b0500b5f6523ac17",
   "compilation_note": "Religion of MLAs is not tabulated in any single official publication. Each row is cross-verified across journalistic compilations (Maktoob, Clarion India, The India Forum, The Wire, Deccan Herald, FACTLY, Outlook, Radiance Weekly, ummid.com and others); the citing source is in the citation column. The national-aggregate row carries no count (empty seats, ~6% share). This committed, diffable table is the archived L1 the mla-share canonicaliser reads."
 }

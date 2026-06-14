@@ -63,7 +63,7 @@ def canonicalize() -> None:
                 "nfhs-5",
                 "sources/nfhs-5/reports/india-report-fr375.pdf",
                 extraction_run,
-                ("NFHS-5 Table 10.23.1 — any anaemia (haemoglobin <12.0 g/dl "
+                ("NFHS-5 Table 10.23.1, any anaemia (haemoglobin <12.0 g/dl "
                  "non-pregnant, <11.0 g/dl pregnant), altitude-adjusted. "
                  "Total residence, national. Year=2020 represents the midpoint "
                  "of NFHS-5 fieldwork (2019-21)."),
@@ -79,16 +79,16 @@ def canonicalize() -> None:
              "extracted/nfhs-4/nfhs-4-table10211-women-anaemia-by-religion.csv",
              "women_age_15_49_tested",
              "NFHS-4 Table 10.21.1, any anaemia in women 15-49 by religion. Cross-round "
-             "comparability limited (method/cut-offs) — methodology break. Year=2015."),
+             "comparability limited (method/cut-offs), methodology break. Year=2015."),
             (2005, "nfhs-3", "sources/nfhs-3/reports/india-report-frind3.pdf",
              "extracted/nfhs-3/nfhs-3-table10241-women-anaemia-by-religion.csv",
              "women_age_15_49_tested",
              "NFHS-3 Table 10.24.1, any anaemia in women 15-49 by religion. Cross-round "
-             "comparability limited (method/cut-offs) — methodology break. Year=2005."),
+             "comparability limited (method/cut-offs), methodology break. Year=2005."),
             (1998, "nfhs-2", "sources/nfhs-2/reports/india-report-frind2.pdf",
              "extracted/nfhs-2/nfhs-2-table76-women-anaemia-by-religion.csv",
              "ever_married_women_age_15_49_tested",
-             "NFHS-2 Table 7.6, any anaemia — EVER-MARRIED women only (universe break vs "
+             "NFHS-2 Table 7.6, any anaemia: EVER-MARRIED women only (universe break vs "
              "all-women in later rounds), plus the cross-round method break. Year=1998."),
         ):
             p = REPO_ROOT / ext
