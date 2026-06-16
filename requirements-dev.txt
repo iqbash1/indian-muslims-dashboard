@@ -15,6 +15,6 @@
 -r requirements.txt
 Pillow>=10.0
 jsonschema>=4.20
-requests>=2.31
+requests>=2.34.2
 truststore>=0.9
 playwright>=1.40
