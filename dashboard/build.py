@@ -3157,6 +3157,7 @@ ABOUT_TEMPLATE = """<!DOCTYPE html>
   footer {{ font-size: 13px; color: var(--muted); margin-top: 48px; }}
   .tour-video-wrap {{ position: relative; width: 100%; aspect-ratio: 16 / 9; margin: 14px 0 6px; background: #000; border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; }}
   .tour-video {{ position: absolute; inset: 0; width: 100%; height: 100%; display: block; }}
+  .cite {{ background: var(--card); border: 1px solid var(--rule); border-radius: 6px; padding: 10px 14px; font-size: 14px; line-height: 1.5; margin: 12px 0; }}
 </style>
 </head>
 <body>
@@ -3242,6 +3243,33 @@ publishers and release cadence:</p>
 <ul class="sources-list">
 {sources_html}
 </ul>
+
+<h2>Using and citing this data</h2>
+<p>The data is free to reuse. Every card has a <b>Download CSV</b> link for that
+indicator, and the complete machine-readable dataset lives in the
+<a href="https://github.com/iqbash1/indian-muslims-dashboard">open-source
+repository</a> under <code>/canonical</code>. The code, the manifest and the
+compiled CSVs are released under the MIT licence.</p>
+<p>If you quote, chart or build on a figure, please credit two things:</p>
+<ul>
+<li><b>The original source.</b> Every number comes from a primary government
+dataset, named in that card's methodology and in the list above (the Census of
+India, the National Family Health Survey, the Periodic Labour Force Survey, NCRB,
+the National Sample Survey, and so on). That underlying data belongs to the
+publishing agency, so credit it.</li>
+<li><b>muslimdata.in</b>, for compiling, computing and presenting it, with a link
+to the specific indicator page so a reader can check the method and the
+provenance for themselves.</li>
+</ul>
+<p>A citation might read:</p>
+<p class="cite">"Muslim share of population", muslimdata.in, 2026,
+<a href="https://muslimdata.in/m/pop-share/">muslimdata.in/m/pop-share/</a>.
+Compiled from Census of India 2011.</p>
+<p>Two small requests. Link to the specific
+<code>/m/&lt;indicator&gt;/</code> page rather than the homepage, so the method,
+the year and the caveats travel with the number. And read the card's methodology
+note before quoting a figure: it states which way the metric reads (lower is not
+always worse), the survey's limits, and how current the data is.</p>
 
 <h2>Limitations</h2>
 <ul>
