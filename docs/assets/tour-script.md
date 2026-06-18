@@ -6,18 +6,29 @@ About page at `/about/#tour` and reached from the homepage "Watch a short tour" 
 
 **Voice:** ElevenLabs "Navya Kannan - Conversational" (neutral Indian accent,
 professional, clear). Settings used: model `eleven_multilingual_v2`,
-stability 0.55, similarity 0.75, style 0.08, speaker boost on. An Indian voice
-pronounces lakh / crore / pucca / Lok Sabha / Sachar natively.
+stability 0.55, similarity 0.75, style 0.08, speaker boost on. The voice does
+NOT read every Indian term natively - "Hindu", "Lok Sabha" and "paise" needed
+phonetic respelling (see Pronunciation below); lakh / crore / pucca / Sachar
+read fine.
 (Note: the library voice literally named "Aisha" is a "virtual girlfriend"
 persona, unsuitable for this material; rejected in favour of Navya.)
 
-**Length:** ~545 words, ~4.5 minutes at a measured pace (under the 5-minute cap).
+**Length:** ~550 words, ~3 minutes 34 seconds at a measured pace.
 
 **Shape:** welcome -> orientation -> three movements (who they are -> how they
 live -> whether they're heard) -> close. Every figure traces to the canonical CSVs.
 
-**Pronunciation:** "As-salamu alaykum" (try `Assalamu alaikum` if it clips);
-"muslimdata dot in" makes the voice read the URL cleanly.
+**Pronunciation (TTS respellings).** The actual ElevenLabs input is
+`vo4-text.txt` in the build dir; it respells terms the model mishears. The
+human-readable figures in the script below are voiced via:
+- "As-salamu alaykum" (try `Assalamu alaikum` if it clips); "muslimdata dot in"
+  reads the URL cleanly.
+- **4-digit comma rupees spelled out as words** - "4,455" -> "four thousand four
+  hundred and fifty-five", "4,970" -> "four thousand nine hundred and seventy".
+  The model otherwise reads "4,455" as "4,155" (the hundreds digit collapses).
+- "paise" -> `pie-say`; "Hindu" / "Hindus" -> `Hindhoo` / `Hindhoos` (softer
+  dental d, user's call); "Lok Sabha" -> `Loke suh-bha` (Lok with the "go"
+  vowel); closing "Jai Hind" -> `Jye Hind`.
 
 ---
 
@@ -45,7 +56,7 @@ And one card asks a different question entirely: are they heard. Here it is coun
 
 **[Close]**
 
-Every view you have seen can be shared with its own link, or downloaded as a spreadsheet. This is a long-term project: new indicators are added as the data allows, and every figure traces back to the source it came from. Take your time, and explore the numbers for yourself, at muslimdata dot in.
+Every view you have seen can be shared with its own link, or downloaded as a spreadsheet. This is a long-term project: new indicators are added as the data allows, and every figure traces back to the source it came from. Take your time, and explore the numbers for yourself, at muslimdata dot in. Jai Hind.
 
 ---
 
