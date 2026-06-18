@@ -4,10 +4,12 @@ Narration for the self-hosted tour video (`docs/assets/tour.mp4`), embedded on t
 About page at `/about/#tour` and reached from the homepage "Watch a short tour" CTA
 (Commit GP).
 
-**Voice:** ElevenLabs "Aisha" (clear, professional Indian English female).
-Settings: model `eleven_multilingual_v2`, Stability ~55-60%, Similarity ~75%,
-Style low (0-15%), Speaker Boost on, speed ~0.95. An Indian voice pronounces
-lakh / crore / pucca / Lok Sabha / Sachar natively.
+**Voice:** ElevenLabs "Navya Kannan - Conversational" (neutral Indian accent,
+professional, clear). Settings used: model `eleven_multilingual_v2`,
+stability 0.55, similarity 0.75, style 0.08, speaker boost on. An Indian voice
+pronounces lakh / crore / pucca / Lok Sabha / Sachar natively.
+(Note: the library voice literally named "Aisha" is a "virtual girlfriend"
+persona, unsuitable for this material; rejected in favour of Navya.)
 
 **Length:** ~545 words, ~4.5 minutes at a measured pace (under the 5-minute cap).
 
