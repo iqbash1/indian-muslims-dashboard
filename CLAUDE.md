@@ -118,7 +118,7 @@ not ad-hoc scripts: metric metadata in `manifest/metrics.yaml`, sources in
   `methodology_notes` show (in the modal). EXCEPTION (Commit GL):
   `sources.secondary` (a list of source-ids) IS rendered — appended as extra
   "Reproduce this view" source links after the primary, for the Census
-  denominator/weight in the cross-source metrics `imr`, `ger-higher-ed`,
+  denominator/weight in the cross-source metrics `imr`,
   `prison-rate-per-100k`, `undertrial-rate-per-100k` (moved there from
   `cross_check`; the stub `pucca-housing` keeps its unrendered `cross_check`).
 - `docs/m/<id>/` is a FULL indexable landing page (hero, data tables, sources,
@@ -127,10 +127,17 @@ not ad-hoc scripts: metric metadata in `manifest/metrics.yaml`, sources in
   change on most rebuilds — partial-looking diffs there are expected.
 - 23 carded metrics. `pop-share` absorbed the old `district-concentration-top100`
   card (Commit DV): it is now pop-share's "By district" tab (curve + top-100
-  table), reading the still-present `district-concentration-top100.csv`. Likewise
-  `muslim-higher-ed-enrolment` (student counts) is decarded and folded into
-  `ger-higher-ed`'s "By state" + "By sex" tabs, shown as a Students column beside
-  the GER rate (Commit EQ merged the old separate rate/count tabs). Likewise
+  table), reading the still-present `district-concentration-top100.csv`.
+  `ger-higher-ed` was REBUILT on the NSS 75th household survey in Commit GO: the
+  old AISHE GER tagged only ~7% of enrolment to a religion (an undercount that
+  read an impossible ~13% for the educated Christian/Sikh/Jain group) and had no
+  Hindu figure, so it was replaced by the validated NSS Gross Attendance Ratio
+  (graduate + postgraduate attendance / pop 18-23; Muslim 14.5% / Hindu 24.2% /
+  all 22.8%, reproducing NSS Report 585 Statement 8 to <=0.05pp). It is now a
+  single-round community SNAPSHOT with a By-sex tab only (by-state cut as too thin
+  per religion); the `muslim-higher-ed-enrolment` student-count companion was cut
+  (same AISHE undercount). PLFS was rejected for a trend: it publishes no
+  attendance ratio and runs ~8pp high for 2017-18. Likewise
   `wpr-15plus` (worker population ratio) is decarded and folded into
   `lfpr-15plus`'s "Working vs looking" tab, beside the labour-force rate (the two
   PLFS measures differ only by unemployment).

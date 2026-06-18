@@ -76,3 +76,36 @@ coaching - so the step between rounds is indicative. The 75th leg is
 aligned as far as the instruments allow: school levels only, coaching
 excluded. The 71st round (2014) education survey is banked but
 Nesstar-locked (the Windows-VM unlock set).
+
+## Higher-education attendance (`ger-higher-ed`), same NSS 75th round (Commit GO)
+
+The same 75th 25.2 microdata also feeds the rebuilt `ger-higher-ed` card (it
+replaced the AISHE administrative GER, an undercount: AISHE tags only ~7% of
+enrolment to a religion, reading an impossible ~13% for the educated
+Christian/Sikh/Jain group, and carries no Hindu figure). The construct is the
+NSS Gross Attendance Ratio for "post higher secondary": persons currently
+attending graduate or postgraduate study over the population aged 18-23.
+
+```bash
+# L1 -> L2 (gate: reproduces all 9 NSS Report 585 Statement 8 cells
+# - post higher secondary GAR, rural/urban/all x male/female/person -
+# to <=0.25pp; observed worst 0.05pp. Aborts, writes nothing, if breached.)
+.venv/bin/python transform/education/extract_higher_ed_gar_2017_by_religion.py
+# L2 -> L3
+.venv/bin/python transform/canonicalize/ger_higher_ed.py
+```
+
+- Numerator = L05 (currently attending) "level of current enrolment" codes 15
+  (graduate) + 16 (postgraduate & above), any age. Code 14 (diploma/certificate
+  at graduation level) is EXCLUDED: it overshoots the published cells by ~6%;
+  {15,16} are "post higher secondary" in the GAR ladder. Denominator = L04
+  (person roster) persons aged 18-23. Gender for the numerator joins L05->L04 on
+  person serial (40-41); religion via the L02 household key. Byte map +
+  derivation: the extractor docstring + `nada/education-layout-map.md`.
+- The published statement never splits by religion (as with school-spend), so
+  the religion split is the validated pipeline applied to the religion-of-head
+  variable: Muslim 14.5% / Hindu 24.2% / Christian 28.3% / Sikh 24.1% / all 22.8%.
+- ONE validated round = a SNAPSHOT. PLFS has a single looser "current attendance"
+  code, publishes no attendance ratio, and runs ~8pp high for 2017-18 (a 37%
+  larger numerator, incl. implausible under-18 "graduates"), so it is not a
+  validatable trend source; the 71st (2014) round is Nesstar-locked.

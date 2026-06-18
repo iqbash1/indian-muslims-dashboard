@@ -324,85 +324,52 @@ metrics:
     status: stub
 
   - id: ger-higher-ed
-    name: Higher education enrolment rate
+    name: Higher education attendance rate
     cluster: education
     unit: percent
     higher_is_better: true
     definition: |
-      Gross Enrolment Ratio = student enrolment in higher education / population
-      in the 18-23 age cohort * 100. The AISHE-published headline GER. Higher
-      education means any course after Class 12: degree, diploma, and
-      certificate programmes at universities, colleges, and standalone
-      institutions.
+      Of every 100 young people in the college-going age band (18 to 23), how
+      many are attending higher education: a graduate or postgraduate degree
+      course (after Class 12). Measured from a household survey that asks each
+      family directly, so Muslims, Hindus and the all-India average are counted
+      the same way.
     sources:
-      primary: aishe
-      secondary: [census-india-2011]
-    geography_levels: [national, state]
-    religions: [muslim, other_minority, all]
+      primary: nss75-education
+    geography_levels: [national]
+    religions: [muslim, hindu, christian, sikh, all]
     methodology_notes: |
-      Numerator: AISHE All-India "Muslim Minority" enrolment for two rounds,
-      academic years 2020-21 (Muslim 19,21,713; total 4,13,80,713 per Report p30)
-      and 2021-22 (Muslim 21,08,033; total 4,32,68,181 per Report p29); the
-      2020-21 All-India cells were recovered by character-level de-interleaving of
-      the Table 15 text layer and match the exact sum of its 36 state rows.
-      Denominator: Census 2011 C-15 (15-19 + 20-24) × 0.6 as an 18-23 effective-
-      cohort proxy, held fixed across both rounds; single-year-age table (C-13)
-      not pulled and 2021 Census deferred. The older 2011 denominator makes our
-      computed GER run a few points ABOVE the officially published figures
-      (national 27-28%; published Muslim Minority GER around 9% in recent AISHE
-      rounds). The absolute level is a computation, not an official figure, but
-      the cross-religion gap (Muslim enrolment runs at roughly one-third the
-      national rate) is robust to the choice of denominator and is the dashboard
-      story; with the denominator fixed, the small rise between the two rounds is
-      enrolment growth alone. The card also sets
-      Muslims beside "Other minorities" (Christian, Sikh, Buddhist and Jain,
-      9,05,159 students), which AISHE reports only as one grouped category and
-      never splits: Muslims enrol at roughly three-quarters their rate. AISHE
-      publishes no separate Hindu figure, so there is no Hindu bar. The by-sex
-      view shows Muslim women enrol at a marginally higher rate than Muslim men;
-      the by-state view ranks Muslim GER across states from enrolment as reported
-      by each state to AISHE (incomplete in some states, so the spread matters
-      more than the exact level).
-    comparison_baselines: [all, other_minority]
+      NSS Gross Attendance Ratio for "post higher secondary": persons currently
+      attending graduate or postgraduate study (any age; NSS "level of current
+      enrolment" codes 15 and 16) over the population aged 18-23, x100, from NSS
+      75th round Schedule 25.2 (Household Social Consumption: Education, July
+      2017-June 2018) unit-level data. Code 14 (diploma/certificate at graduation
+      level) is excluded; including it overshoots the published cells by ~6%, and
+      codes 15+16 reproduce all nine NSS Report 585 Statement 8 cells
+      (rural/urban/all x male/female/person) to within 0.05pp. The statement does
+      not split by religion, so the religion split is that validated pipeline
+      applied to the religion-of-head variable.
+
+      This REPLACES the former AISHE administrative GER, which tagged only ~7% of
+      all enrolment to a religion and so undercounted every community (its grouped
+      "Other Minority Community" read ~13%, impossible for the highly-educated
+      Christian/Sikh/Jain communities it pools) and published no Hindu figure. On
+      the household-survey basis Muslims attend at 14.5%, Hindus 24.2%, all-India
+      22.8% (matching the published figure exactly): Muslims are at about 60% of
+      the Hindu rate, the lowest of the major communities, with Muslim women
+      (12.1%) below Muslim men (16.8%). Single validated round, so a snapshot:
+      PLFS publishes no attendance ratio and runs ~8pp high for the same year, and
+      the 71st (2014) education round is Nesstar-locked.
+    comparison_baselines: [hindu, all]
     phase: 1
     status: defined
     display:
       scorecard:
-        label: "Higher-education enrolment rate"
+        label: "Higher-education attendance rate"
         reference: "all"
         unit_format: percent
         higher_is_better: true
         order: 110
-
-  - id: muslim-higher-ed-enrolment
-    name: Muslim students in higher education
-    cluster: education
-    unit: count
-    higher_is_better: null
-    definition: |
-      Total number of students classified as "Muslim Minority" enrolled in
-      higher education institutions, per AISHE annual reporting.
-    sources: {primary: aishe}
-    geography_levels: [national, state]
-    religions: [muslim]
-    methodology_notes: |
-      AISHE classifies enrolment as "Muslim Minority" vs "Other Minority
-      Community" (Christians, Sikhs, Buddhists, Jains, Parsis), with Hindu
-      enrolment implied as residual. This metric publishes only the
-      absolute Muslim enrolment. Muslim *share* of total enrolment is a
-      separate metric that requires Total Enrolment by state (separate
-      AISHE table not yet extracted).
-    comparison_baselines: []
-    phase: 1
-    status: defined
-    display:
-      scorecard:
-        include: false   # decarded: folded into ger-higher-ed's By state + By sex tabs (Students column beside GER)
-        label: "Higher-education enrolment (count)"
-        reference: null
-        unit_format: count
-        higher_is_better: null
-        order: 120
 
   # ----- Employment (Phase 1) -----
   - id: lfpr-15plus

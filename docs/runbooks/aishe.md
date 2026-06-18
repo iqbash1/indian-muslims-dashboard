@@ -1,5 +1,18 @@
 # Runbook: All India Survey on Higher Education (AISHE)
 
+## Status: RETIRED as a live source (Commit GO)
+
+`ger-higher-ed` no longer reads AISHE. AISHE's by-religion enrolment is an
+administrative undercount: it tags only ~7% of all enrolment to a religion (one
+"Muslim Minority" cell + one grouped "Other Minority Community"), so the Muslim
+GER (~9-10%) was not comparable to the fully-counted national figure, and AISHE
+publishes no Hindu figure at all. The tell: its grouped "other minorities" read
+~13%, impossible for the highly-educated Christian/Sikh/Jain communities it
+pools. The card was rebuilt on the NSS 75th household survey (a validated Gross
+Attendance Ratio: Muslim 14.5% / Hindu 24.2% / all 22.8%; see
+`docs/runbooks/cmse-education.md`). The `aishe` source entry + this runbook are
+kept for cross-reference; the archived report PDFs stay in `sources/aishe/`.
+
 ## Source identity
 
 - Manifest entry: `aishe`

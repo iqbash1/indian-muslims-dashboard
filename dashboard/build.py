@@ -463,8 +463,7 @@ def _compute_headline_stats() -> dict:
         # No comparator → skip from the count entirely.
         if mid in ("communal-incidents-govt", "communal-incidents-civic"):
             continue
-        if mid in ("pop-share", "district-concentration-top100",
-                   "muslim-higher-ed-enrolment"):
+        if mid in ("pop-share", "district-concentration-top100"):
             continue
         # Representation metrics compare vs population share, not vs all-India.
         if mid in ("ls-share", "mla-share"):
@@ -2365,7 +2364,7 @@ def _og_data_for_metric(m: dict):
                     comp_class=cls, polarity=polarity)
 
     # muslim-only cards (no community comparator)
-    if mid in ("pop-share", "district-concentration-top100", "muslim-higher-ed-enrolment"):
+    if mid in ("pop-share", "district-concentration-top100"):
         muslim = _nat_by_religion(mid).get("muslim")
         if muslim is None:
             return None
@@ -3715,7 +3714,6 @@ CAPTION = {
     "institutional-credit-share": "of household debt from banks",
     "pop-share": "of all Indians",
     "district-concentration-top100": "of all Indian Muslims",
-    "muslim-higher-ed-enrolment": "students",
     "ls-share": "of 543 seats",
     "mla-share": "of state-assembly seats (agg.)",
     "prison-rate-per-100k": "prisoners per 100k of community",
@@ -3851,8 +3849,7 @@ PLAIN_DEFINITION = {
     "sex-ratio": "Higher means more women relative to men; a low value signals a gender imbalance favouring males.",
     "district-concentration-top100": "How geographically concentrated India's Muslims are, measured by the share living in their 100 most-populous districts.",
     "lit-7plus": "Of people aged 7 and older, what share can read and write. The Census uses 7+ as the standard cutoff to exclude very young children.",
-    "ger-higher-ed": "Of every 100 young people in the typical college-going age band (18 to 23), how many are enrolled in higher education (any degree or diploma course after Class 12).",
-    "muslim-higher-ed-enrolment": "Total number of Muslim students enrolled in higher education across India in the latest year.",
+    "ger-higher-ed": "Of every 100 young people in the college-going age band (18 to 23), how many are attending higher education, a graduate or postgraduate course. Measured from a household survey, so every community is counted the same way.",
     "lfpr-15plus": "Of people aged 15 and older, what share is in the workforce, either working or actively looking for work. The series now reaches back two decades: participation fell economy-wide from 2004 to 2017 and recovered after, with the Muslim rate trailing throughout.",
     "wpr-15plus": "Of people aged 15 and older, what share is currently working.",
     "unemployment-rate-15plus": "Of people in the labour force (working or looking for work), what share cannot find work. A low rate is not automatically good news: people who cannot afford to stay unemployed take any informal work, so read it beside the salaried-jobs card.",
@@ -4402,8 +4399,7 @@ REPRO_TIER = {
     "pop-share": "COMPUTE", "sex-ratio": "COMPUTE", "urban-share": "COMPUTE",
     "lit-7plus": "COMPUTE", "district-concentration-top100": "COMPUTE",
     "pop-share-by-age": "COMPUTE", "pop-growth-decadal": "COMPUTE",
-    "imr": "COMPUTE", "ger-higher-ed": "COMPUTE",
-    "muslim-higher-ed-enrolment": "COMPUTE", "prison-rate-per-100k": "COMPUTE",
+    "imr": "COMPUTE", "prison-rate-per-100k": "COMPUTE",
     "undertrial-rate-per-100k": "COMPUTE",
     # MICRODATA - recomputed from unit-level NSS/PLFS records
     "lfpr-15plus": "MICRODATA", "wpr-15plus": "MICRODATA",
@@ -4413,6 +4409,7 @@ REPRO_TIER = {
     "top-quintile-share": "MICRODATA", "improved-water-premises": "MICRODATA",
     "household-electricity": "MICRODATA", "pucca-house": "MICRODATA",
     "hospital-oop-spend": "MICRODATA", "school-edu-spend": "MICRODATA",
+    "ger-higher-ed": "MICRODATA",
     # MANUAL - hand-compiled from ECI affidavits (no single official tabulation)
     "ls-share": "MANUAL", "mla-share": "MANUAL",
 }
@@ -4888,76 +4885,6 @@ def render_metric_card(m: dict):
     # for the per-view stub + OG generators. Extracted from the rendered card so
     # it can never drift from what actually appears in the modal.
     return card_html, js, _extract_views(card_html)
-
-
-def _ger_combined_views() -> str:
-    """ger-higher-ed's two drill-downs, each MERGING the GER rate with the absolute
-    Muslim student count (the decarded muslim-higher-ed-enrolment metric). One "By
-    state" and one "By sex" tab, each showing Students + GER side by side, so a
-    reader connects "how many" with "what rate" without tabbing between parallel
-    rate-only and count-only tables."""
-    GER, CNT = "ger-higher-ed", "muslim-higher-ed-enrolment"
-    cnt_rows, ger_rows = load_metric(CNT, sex=None), load_metric(GER, sex=None)
-    if not cnt_rows or not ger_rows:
-        return ""
-    # Both metrics now carry two AISHE rounds; pin the latest so a table never mixes
-    # them (the over-time movement rides the card face as the GER "Since" pill).
-    latest = max(int(r["year"]) for r in cnt_rows)
-    total = _nat_by_religion(CNT).get("muslim")
-    out = ""
-
-    def cnt_cell(v):
-        return f'<td data-sort="{v}">{fmt_num(v, "count")}</td>' if v is not None else '<td data-sort="-1">n/a</td>'
-
-    def ger_cell(v):
-        return f'<td data-sort="{v:.4f}">{fmt_num(v, "percent")}</td>' if v is not None else '<td data-sort="-1">n/a</td>'
-
-    # --- By state: State | Students | GER (sorted by enrolment count) ---
-    students = {r["geography_code"]: int(float(r["value"]))
-                for r in cnt_rows if r["geography_level"] == "state"
-                and int(r["year"]) == latest and r.get("sex", "all") in ("all", "")}
-    ger_state = {r["geography_code"]: float(r["value"])
-                 for r in ger_rows if r["geography_level"] == "state"
-                 and r["religion"] == "muslim" and int(r["year"]) == latest
-                 and r.get("sex", "all") in ("all", "")}
-    codes = sorted(set(students) | set(ger_state), key=lambda c: -students.get(c, -1))
-    if codes:
-        intro = (f'<p class="comp-note">{fmt_num(total, "count")} Muslim students were '
-                 f'enrolled in higher education in {latest} (AISHE Muslim Minority total); '
-                 f'GER is that count over the Census 2011 Muslim 18-23 population. AISHE '
-                 f'tabulates only Muslim Minority enrolment, so there is no community '
-                 f'ranking.</p>') if total else ""
-        body = "".join(
-            f'<tr><td>{html.escape(state_label(c))}</td>'
-            f'{cnt_cell(students.get(c))}{ger_cell(ger_state.get(c))}</tr>' for c in codes)
-        head = ('<tr><th class="sortable" data-col="0">State / UT</th>'
-                '<th class="sortable" data-col="1" data-type="num">Students</th>'
-                '<th class="sortable" data-col="2" data-type="num">GER</th></tr>')
-        out += (f'<details data-view-id="by-state" data-view-label="By state" '
-                f'data-view-sub="{len(codes)} states, {latest}">'
-                f'<summary>Muslim enrolment and GER by state ({len(codes)} states)</summary>'
-                f'{intro}<table class="sortable-table"><thead>{head}</thead>'
-                f'<tbody>{body}</tbody></table>{_view_provenance(GER)}</details>')
-
-    # --- By sex: Muslim male/female, Students + GER ---
-    cnt_sex = {r["sex"]: int(float(r["value"])) for r in cnt_rows
-               if r["geography_level"] == "national" and int(r["year"]) == latest
-               and r["sex"] in ("male", "female")}
-    ger_sex = {r["sex"]: float(r["value"]) for r in ger_rows
-               if r["geography_level"] == "national" and r["religion"] == "muslim"
-               and int(r["year"]) == latest and r["sex"] in ("male", "female")}
-    if "male" in cnt_sex and "female" in cnt_sex:
-        head = ('<tr><th class="sortable" data-col="0">Muslim</th>'
-                '<th class="sortable" data-col="1" data-type="num">Students</th>'
-                '<th class="sortable" data-col="2" data-type="num">GER</th></tr>')
-        body = "".join(
-            f'<tr><td>{lbl}</td>{cnt_cell(cnt_sex.get(sx))}{ger_cell(ger_sex.get(sx))}</tr>'
-            for sx, lbl in (("male", "Male"), ("female", "Female")))
-        out += (f'<details data-view-id="by-sex" data-view-label="By sex" data-view-sub="{latest}">'
-                f'<summary>Muslim enrolment and GER by sex ({latest})</summary>'
-                f'<table class="sortable-table"><thead>{head}</thead>'
-                f'<tbody>{body}</tbody></table>{_view_provenance(GER)}</details>')
-    return out
 
 
 def _work_status_order(lf: dict, wp: dict) -> list:
@@ -5503,9 +5430,11 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
             js = (f'hbar("{cvid}", {json.dumps(labels)}, {json.dumps(values)}, {json.dumps(colors)}, '
                   f'{json.dumps(suffix)}, {dec}, {ref}, {json.dumps(ref_label)}, {begin_zero});')
         if mid == "ger-higher-ed":
-            # ger merges its GER rate with the decarded Muslim student counts into
-            # ONE "By state" + ONE "By sex" tab (was four parallel rate/count tabs).
-            details = _ger_combined_views()
+            # NSS household-survey snapshot: a By-sex drill-down only. No by-state
+            # (per-state-per-religion samples are too thin to stand behind) and no
+            # student-count fold (the AISHE count was the same administrative
+            # undercount we removed).
+            details = _sex_details(mid, unit)
         elif mid in _SNAPSHOT_HOST_FOLDS:
             # Snapshot hosts lead with their folded companion card's tab
             # (Commit FE), then keep their own drill-downs.
