@@ -63,10 +63,10 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          # Pin wrangler 4.x: this is an assets-only Worker (wrangler.jsonc has
-          # `assets` but no `main`), which needs Wrangler >=4 (Workers Static
-          # Assets) or it errors "Missing entry-point". wrangler-action@v4 now
-          # defaults to Wrangler v4, but we keep an exact pin for reproducible
-          # deploys.
+          # Pin wrangler 4.x: this is a Workers Static Assets deploy (wrangler.jsonc
+          # `assets`) with a tiny `main` worker.js scoped via run_worker_first to
+          # ONLY /assets/tour.mp4 (206 byte-range shim for iOS video). Needs
+          # Wrangler >=4. wrangler-action@v4 defaults to Wrangler v4, but we keep
+          # an exact pin for reproducible deploys.
           wranglerVersion: '4.91.0'
           command: deploy

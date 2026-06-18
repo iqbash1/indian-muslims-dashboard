@@ -228,6 +228,13 @@
   .preamble-note b { color: var(--fg); font-weight: 600; }
   .preamble-note a { color: var(--accent); text-decoration: none; font-weight: 500; white-space: nowrap; }
   .preamble-note a:hover { text-decoration: underline; }
+  /* "Watch a tour" hero CTA: slate-blue chrome (NOT maroon), jumps to the
+     About-page video and auto-plays it (see /about/?autoplay=1#tour). */
+  .hero-cta-row { margin: 0 0 26px; }
+  .tour-cta { display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: #fff; font-size: 14px; font-weight: 600; text-decoration: none; padding: 9px 16px; border-radius: 7px; border: 1px solid var(--accent); transition: background .12s ease, transform .12s ease; }
+  .tour-cta:hover { background: #234c70; border-color: #234c70; transform: translateY(-1px); }
+  .tour-cta:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(44,95,138,.35); }
+  .tour-cta svg { width: 14px; height: 14px; fill: currentColor; }
   .compare-toggle {
     display: inline-flex; align-items: center; gap: 8px; margin: 6px 0 20px;
     padding: 6px 10px 6px 14px; border: 1px solid var(--rule); border-radius: 999px;
@@ -796,6 +803,13 @@
 
 <p class="preamble-note">
   Each card sets the latest Muslim figure beside Hindu and all-India baselines, drawn from <b>25</b> primary government sources. <span class="if-hover">Open</span><span class="if-touch">Tap</span> any card for its chart, method and source. <a href="/about/">How these are measured →</a>
+</p>
+
+<p class="hero-cta-row">
+  <a class="tour-cta" href="/about/?autoplay=1#tour">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+    Watch a short tour
+  </a>
 </p>
 <div class="compare-toggle" role="radiogroup" aria-label="Choose comparison baseline for every card">
   <span class="compare-toggle-label">Compare Muslim outcomes to:</span>

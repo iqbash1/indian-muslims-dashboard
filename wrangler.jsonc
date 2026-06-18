@@ -15,7 +15,14 @@
 {
   "name": "indian-muslims-dashboard",
   "compatibility_date": "2026-06-02",
+  // A tiny Worker (worker.js) runs FIRST only for /assets/tour.mp4 to add HTTP
+  // 206 byte-range support, which Static Assets omits and iOS Safari requires
+  // for <video>. Every other route bypasses it and is served directly by
+  // Static Assets (run_worker_first is scoped to just the video path).
+  "main": "worker.js",
   "assets": {
-    "directory": "./docs"
+    "directory": "./docs",
+    "binding": "ASSETS",
+    "run_worker_first": ["/assets/tour.mp4"]
   }
 }

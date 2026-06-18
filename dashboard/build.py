@@ -566,6 +566,13 @@ TEMPLATE = """<!DOCTYPE html>
   .preamble-note b { color: var(--fg); font-weight: 600; }
   .preamble-note a { color: var(--accent); text-decoration: none; font-weight: 500; white-space: nowrap; }
   .preamble-note a:hover { text-decoration: underline; }
+  /* "Watch a tour" hero CTA: slate-blue chrome (NOT maroon), jumps to the
+     About-page video and auto-plays it (see /about/?autoplay=1#tour). */
+  .hero-cta-row { margin: 0 0 26px; }
+  .tour-cta { display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: #fff; font-size: 14px; font-weight: 600; text-decoration: none; padding: 9px 16px; border-radius: 7px; border: 1px solid var(--accent); transition: background .12s ease, transform .12s ease; }
+  .tour-cta:hover { background: #234c70; border-color: #234c70; transform: translateY(-1px); }
+  .tour-cta:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(44,95,138,.35); }
+  .tour-cta svg { width: 14px; height: 14px; fill: currentColor; }
   .compare-toggle {
     display: inline-flex; align-items: center; gap: 8px; margin: 6px 0 20px;
     padding: 6px 10px 6px 14px; border: 1px solid var(--rule); border-radius: 999px;
@@ -1134,6 +1141,13 @@ TEMPLATE = """<!DOCTYPE html>
 
 <p class="preamble-note">
   Each card sets the latest Muslim figure beside Hindu and all-India baselines, drawn from <b>{n_sources}</b> primary government sources. <span class="if-hover">Open</span><span class="if-touch">Tap</span> any card for its chart, method and source. <a href="/about/">How these are measured →</a>
+</p>
+
+<p class="hero-cta-row">
+  <a class="tour-cta" href="/about/?autoplay=1#tour">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+    Watch a short tour
+  </a>
 </p>
 <div class="compare-toggle" role="radiogroup" aria-label="Choose comparison baseline for every card">
   <span class="compare-toggle-label">Compare Muslim outcomes to:</span>
@@ -3141,6 +3155,8 @@ ABOUT_TEMPLATE = """<!DOCTYPE html>
   .source-meta code {{ background: var(--card); padding: 1px 5px; border-radius: 3px; font-size: 12px; }}
   hr {{ border: none; border-top: 1px solid var(--rule); margin: 36px 0; }}
   footer {{ font-size: 13px; color: var(--muted); margin-top: 48px; }}
+  .tour-video-wrap {{ position: relative; width: 100%; aspect-ratio: 16 / 9; margin: 14px 0 6px; background: #000; border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; }}
+  .tour-video {{ position: absolute; inset: 0; width: 100%; height: 100%; display: block; }}
 </style>
 </head>
 <body>
@@ -3158,6 +3174,20 @@ ABOUT_TEMPLATE = """<!DOCTYPE html>
 <h1>About muslimdata.in</h1>
 <p class="lede">A scorecard of living-conditions indicators for India's Muslim
 population, with Hindu and all-India comparison baselines on every metric.</p>
+
+<section id="tour">
+<h2>Take a quick tour</h2>
+<p>New here? This short walkthrough shows how the dashboard is organised and how
+to read each card: its Muslim figure, the Hindu and all-India baselines, and the
+deep-dive tabs.</p>
+<div class="tour-video-wrap">
+  <video class="tour-video" controls preload="none" playsinline poster="/assets/tour-poster.jpg"
+         aria-label="A short guided tour of muslimdata.in">
+    <source src="/assets/tour.mp4" type="video/mp4">
+    <p>Your browser can't play embedded video. <a href="/assets/tour.mp4">Download the tour (MP4)</a>.</p>
+  </video>
+</div>
+</section>
 
 <h2>Why this exists</h2>
 <p>The Sachar Committee report (2006) remains one of India's most-cited
@@ -3258,6 +3288,19 @@ MIT licence. Last updated {timestamp}.</p>
 </footer>
 
 </div>
+<script>
+// Auto-play the tour ONLY when arrived via the homepage CTA
+// (/about/?autoplay=1#tour). A direct visit or reload just shows the poster.
+(function () {{
+  if (!new URLSearchParams(location.search).has('autoplay')) return;
+  var v = document.querySelector('.tour-video');
+  if (!v) return;
+  // Strip the param so a reload counts as a direct visit (no replay loop).
+  history.replaceState(null, '', location.pathname + location.hash);
+  var p = v.play();
+  if (p && p.catch) p.catch(function () {{}});  // browsers may gate autoplay-with-audio; poster + controls remain
+}})();
+</script>
 </body>
 </html>
 """
