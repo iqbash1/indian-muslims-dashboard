@@ -10,4 +10,4 @@
 #
 # Everything for local authoring, the OG image render, ingest, and the validate
 # CI lives in requirements-dev.txt (which includes this file via `-r`).
-PyYAML>=6.0
+PyYAML>=6.0.3
