@@ -53,7 +53,7 @@ jobs:
 
       - name: Check out (no LFS — sources/** not needed to serve the site)
         if: steps.gate.outputs.ready == 'true'
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           lfs: false
 

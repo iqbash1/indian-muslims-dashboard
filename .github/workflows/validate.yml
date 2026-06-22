@@ -11,7 +11,7 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           # LFS files aren't needed for validation (validate.py only reads
           # text manifests + canonical CSVs, both regular git).
