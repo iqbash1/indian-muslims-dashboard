@@ -27,8 +27,10 @@ human-readable figures in the script below are voiced via:
   hundred and fifty-five", "4,970" -> "four thousand nine hundred and seventy".
   The model otherwise reads "4,455" as "4,155" (the hundreds digit collapses).
 - "paise" -> `pie-say`; "Hindu" / "Hindus" -> `Hindhoo` / `Hindhoos` (softer
-  dental d, user's call); "Lok Sabha" -> `Loke suh-bha` (Lok with the "go"
-  vowel); closing "Jai Hind" -> `Jye Hind`.
+  dental d, user's call); "Lok Sabha" -> `Lohk sabhaa` (Lok on the "joke"
+  vowel, Sabha as "sa-bhaa" - `Loke suh-bha` wrongly voiced "soo-bha");
+  closing "Jai Hind" -> `Jaai Hind` (rhymes with "guy" - plain `Jai`/`Jye`
+  came out as "jay"/"jye").
 
 ---
 
