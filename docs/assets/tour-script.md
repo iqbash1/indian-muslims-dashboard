@@ -28,9 +28,11 @@ human-readable figures in the script below are voiced via:
   The model otherwise reads "4,455" as "4,155" (the hundreds digit collapses).
 - "paise" -> `pie-say`; "Hindu" / "Hindus" -> `Hindhoo` / `Hindhoos` (softer
   dental d, user's call); "Lok Sabha" -> `Lohk sabhaa` (Lok on the "joke"
-  vowel, Sabha as "sa-bhaa" - `Loke suh-bha` wrongly voiced "soo-bha");
-  closing "Jai Hind" -> `Jaai Hind` (rhymes with "guy" - plain `Jai`/`Jye`
-  came out as "jay"/"jye").
+  vowel, Sabha as "sa-bhaa" - `Loke suh-bha` wrongly voiced "soo-bha").
+  (A "Jai Hind" sign-off was added then REMOVED at the user's request; the tour
+  ends on the closing sentence, trimmed in post at the pause after "dot in".
+  Don't re-add it. If ever reinstated, `Jaai Hind` voices "guy"; plain
+  `Jai`/`Jye` came out "jay"/"jye".)
 
 ---
 
@@ -58,7 +60,7 @@ And one card asks a different question entirely: are they heard. Here it is coun
 
 **[Close]**
 
-Every view you have seen can be shared with its own link, or downloaded as a spreadsheet. This is a long-term project: new indicators are added as the data allows, and every figure traces back to the source it came from. Take your time, and explore the numbers for yourself, at muslimdata dot in. Jai Hind.
+Every view you have seen can be shared with its own link, or downloaded as a spreadsheet. This is a long-term project: new indicators are added as the data allows, and every figure traces back to the source it came from. Take your time, and explore the numbers for yourself, at muslimdata dot in.
 
 ---
 
