@@ -112,13 +112,46 @@ narratives:
           A statutory body that protects the right of religious and linguistic
           minorities to set up and run their own schools and colleges under
           Article 30 of the Constitution.
+      - name: "Zakat Foundation of India"
+        url: "https://www.zakatindia.org/"
+        mission: >-
+          An Indian trust that channels Zakat into competitive-exam coaching,
+          scholarships, skill training and orphan care for the Muslim community.
+      - name: "Human Welfare Foundation"
+        url: "https://www.hwfindia.org/"
+        mission: >-
+          A foundation whose Vision 2026 programme builds and supports schools
+          and runs scholarships, health and livelihood projects in disadvantaged,
+          largely minority areas across India.
+      - name: "Association of Muslim Professionals"
+        url: "https://www.ampindia.org/"
+        mission: >-
+          A volunteer professionals' body that runs higher-education scholarships,
+          a national talent search and school-development work to widen Muslim
+          access to education.
+      - name: "Muslim Education Trust, Delhi"
+        url: "https://metdelhi.org/"
+        mission: >-
+          A voluntary educational trust that administers Islamic Development Bank
+          and its own scholarships for minority students.
+      - name: "Markazul Ma'arif"
+        url: "https://markazulmaarif.org/"
+        mission: >-
+          An Assam-based NGO that runs schools for educationally backward
+          communities alongside relief, health and skills work, open to all
+          irrespective of faith.
+      - name: "Aga Khan Education Service, India"
+        url: "https://akf.org/country/india/"
+        mission: >-
+          The Aga Khan network's Indian education arm, running schools and
+          early-childhood programmes. Founded by the Ismaili community, it serves
+          all communities.
       - name: "Pratham"
         url: "https://pratham.org/"
         mission: >-
-          One of India's largest education NGOs, working to raise children's
-          foundational reading and arithmetic and the producer of the annual
-          ASER learning survey. It works across communities rather than with
-          Muslims specifically.
+          One of India's largest education NGOs, raising children's foundational
+          reading and arithmetic, and the producer of the annual ASER learning
+          survey.
 
   # ----- Infant Mortality Rate (NFHS). lower is better. Muslims AHEAD. -----
   imr:
@@ -174,6 +207,9 @@ narratives:
       is that the advantage itself stays mostly unexplained, so the surest gains
       come from the basics that help every infant rather than from trying to
       bottle whatever Muslim households are doing right {{cite:bhalotra-2010}}.
+    # Note: genuinely Muslim-specific maternal-child-health NGOs in India are
+    # scarce; the Aga Khan health network is the one Muslim-founded MCH operation,
+    # so the rest of this list is the credible secular MCH field (honest fill).
     stakeholders:
       - name: "Ministry of Health and Family Welfare"
         url: "https://mohfw.gov.in/"
@@ -186,12 +222,36 @@ narratives:
           The Government of India's flagship health programme, working toward
           affordable, quality care including maternal, newborn and child health
           services across rural and urban India.
+      - name: "Aga Khan Health Services, India"
+        url: "https://the.akdn/en/where-we-work/south-asia/india/health-india"
+        mission: >-
+          The Aga Khan network's Indian health arm, running maternal and child
+          health services including a maternal and child care centre in Hyderabad
+          and rural reproductive, child-health and nutrition work. Founded by the
+          Ismaili community, it serves all communities.
+      - name: "SEWA Rural"
+        url: "https://sewarural.org/"
+        mission: >-
+          A voluntary organisation in tribal south Gujarat whose Kasturba Hospital
+          and community programmes deliver maternal and newborn care, with large
+          reported falls in maternal and neonatal deaths in its area.
+      - name: "Doctors For You"
+        url: "https://doctorsforyou.org/"
+        mission: >-
+          A humanitarian health NGO providing rural maternal and child health,
+          treatment of severe acute malnutrition and disaster medical care across
+          several states.
+      - name: "Jhpiego India"
+        url: "https://jhpiego.org/where-we-work/india/"
+        mission: >-
+          A Johns Hopkins-affiliated non-profit that strengthens maternal and
+          newborn care in India by training frontline health workers and
+          supporting government programmes.
       - name: "UNICEF India"
         url: "https://www.unicef.org/india/"
         mission: >-
-          The UN Children's Fund's India office, which works with states on child
-          survival, immunisation and maternal and newborn health. It works across
-          communities rather than with Muslims specifically.
+          The UN Children's Fund's India office, working with states on child
+          survival, immunisation and maternal and newborn health.
       - name: "International Institute for Population Sciences"
         url: "https://www.iipsindia.ac.in/"
         mission: >-
