@@ -80,7 +80,7 @@ if(new URLSearchParams(location.search).has('open'))location.replace('/#househol
   .tbar-duo .tbar-rep { display:block; height:7px; background:rgba(123,29,34,.55); border-radius:2px; }
   .tbar-duo .tbar-pop { display:block; height:7px; background:rgba(85,85,85,.38); border-radius:2px; margin-top:2px; }
   .src-note { font-size:13px; color:var(--muted); }
-  .repro-tier { display:inline-block; font-size:10px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:1px 6px; border-radius:4px; margin-right:6px; vertical-align:1.5px; background:#eef2f7; color:var(--accent); border:1px solid #d6e0ea; white-space:nowrap; }
+  .repro-tier { display:inline-block; font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:1px 6px; border-radius:4px; margin-right:6px; vertical-align:1.5px; background:#eef2f7; color:var(--accent); border:1px solid #d6e0ea; white-space:nowrap; }
   .meta-block p { font-size:14.5px; line-height:1.6; max-width:60em; }
   .meta-block b { color:var(--accent); }
   ul.related { list-style:none; padding:0; margin:10px 0; display:flex; flex-wrap:wrap; gap:8px; }
@@ -98,23 +98,23 @@ if(new URLSearchParams(location.search).has('open'))location.replace('/#househol
   .cn-block { margin: 0 0 14px; }
   .cn-block:last-child { margin-bottom: 0; }
   .cn-heading { margin: 0 0 6px; font-size: 14px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
-  .cn-subhead { margin: 0 0 5px; font-size: 13.5px; color: var(--fg); font-weight: 700; }
-  .cn-text { margin: 0 0 10px; font-size: 14px; color: var(--fg); line-height: 1.6; max-width: 60em; }
+  .cn-subhead { margin: 0 0 5px; font-size: 14.5px; color: var(--fg); font-weight: 700; }
+  .cn-text { margin: 0 0 10px; font-size: 15px; color: var(--fg); line-height: 1.6; max-width: 60em; }
   .cn-text:last-child { margin-bottom: 0; }
   .cn-text a, .cn-stakeholders a { color: var(--accent); text-decoration: none; font-weight: 500; }
   .cn-text a:hover, .cn-stakeholders a:hover { text-decoration: underline; }
   .cn-cite { white-space: nowrap; font-size: 12.5px; }
   .cn-bottomline { margin: 0 0 18px; padding: 12px 14px; background: #f4f7fa; border-left: 3px solid var(--accent); border-radius: 6px; }
   .cn-bl-label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin-bottom: 4px; }
-  .cn-bottomline .cn-text { font-size: 14.5px; }
+  .cn-bottomline .cn-text { font-size: 15.5px; }
   .cn-status { margin: 0 0 6px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-  .cn-badge { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 2px 9px; border-radius: 999px; color: #fff; }
+  .cn-badge { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 3px 10px; border-radius: 999px; color: #fff; }
   .cn-badge--good { background: var(--positive); }
   .cn-badge--bad { background: var(--negative); }
   .cn-badge--neutral { background: var(--accent); }
-  .cn-trend { font-size: 12px; color: var(--muted); font-weight: 600; }
+  .cn-trend { font-size: 12.5px; color: var(--muted); font-weight: 600; }
   .card-narrative .cn-toggle, .landing-narrative .cn-toggle { margin: 0 0 16px; border: 0; border-top: 0; padding: 0; background: none; }
-  .card-narrative .cn-toggle > summary, .landing-narrative .cn-toggle > summary { cursor: pointer; color: var(--accent); font-size: 14px; font-weight: 600; list-style: none; display: inline-flex; align-items: center; gap: 6px; text-transform: none; letter-spacing: 0; padding: 0; background: none; border: 0; min-height: 32px; }
+  .card-narrative .cn-toggle > summary, .landing-narrative .cn-toggle > summary { cursor: pointer; color: var(--accent); font-size: 15px; font-weight: 600; list-style: none; display: inline-flex; align-items: center; gap: 6px; text-transform: none; letter-spacing: 0; padding: 0; background: none; border: 0; min-height: 44px; }
   .card-narrative .cn-toggle > summary::-webkit-details-marker, .landing-narrative .cn-toggle > summary::-webkit-details-marker { display: none; }
   .card-narrative .cn-toggle > summary::before, .landing-narrative .cn-toggle > summary::before { content: "▸"; font-size: 10px; transition: transform .15s; }
   .card-narrative .cn-toggle[open] > summary::before, .landing-narrative .cn-toggle[open] > summary::before { transform: rotate(90deg); }
@@ -122,8 +122,13 @@ if(new URLSearchParams(location.search).has('open'))location.replace('/#househol
   .card-narrative .cn-toggle > summary:hover, .landing-narrative .cn-toggle > summary:hover { background: none; }
   .cn-disc-body { margin-top: 10px; }
   .cn-stakeholders { margin: 4px 0 0; padding-left: 18px; }
-  .cn-stakeholders li { font-size: 14px; color: var(--fg); line-height: 1.55; margin-bottom: 7px; }
+  .cn-stakeholders li { font-size: 15px; color: var(--fg); line-height: 1.6; margin-bottom: 12px; }
   .cn-sh-name { font-weight: 600; }
+  /* Donate chip: slate chrome (never maroon), roomy tap target for older
+     readers and small screens; opens the org's verified donate page. */
+  .cn-stakeholders a.cn-sh-donate { color: var(--accent); }
+  .cn-sh-donate { display: inline-flex; align-items: center; gap: 3px; margin-left: 5px; padding: 5px 12px; font-size: 12.5px; font-weight: 600; line-height: 1.1; border: 1px solid var(--rule); border-radius: 999px; white-space: nowrap; text-decoration: none; vertical-align: 1px; }
+  .cn-sh-donate:hover { border-color: var(--accent); background: #f4f7fa; text-decoration: none; }
 
 </style>
 <script type="application/ld+json">
