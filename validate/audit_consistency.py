@@ -185,6 +185,20 @@ def check_share_links() -> list[str]:
     return errors
 
 
+def check_narrative_coverage(data: dict) -> tuple[int, int, list[str]]:
+    """SOFT advisory (never blocks): which carded metrics still lack a
+    manifest/narratives.yaml entry. Tracks Phase-2 narrative authoring so a new
+    metric does not silently ship without a modal narrative."""
+    narr_path = REPO / "manifest" / "narratives.yaml"
+    have: set[str] = set()
+    if narr_path.exists():
+        nd = yaml.safe_load(narr_path.read_text()) or {}
+        have = set((nd.get("narratives") or {}).keys())
+    carded = [m["id"] for m in _carded(data)]
+    missing = [mid for mid in carded if mid not in have]
+    return len(carded) - len(missing), len(carded), missing
+
+
 def main() -> None:
     data = yaml.safe_load(METRICS.read_text())
     print("Consistency audit (doc vs data):")
@@ -200,6 +214,14 @@ def main() -> None:
             print(f"    WARN  {w}")
     else:
         print("  spans: every carded metric's prose covers its data range ✓")
+
+    n_done, n_total, n_missing = check_narrative_coverage(data)
+    if n_missing:
+        head = ", ".join(n_missing[:6]) + (" ..." if len(n_missing) > 6 else "")
+        print(f"  narratives: {n_done}/{n_total} carded metrics have a modal narrative "
+              f"(ADVISORY; {len(n_missing)} pending: {head})")
+    else:
+        print(f"  narratives: all {n_total} carded metrics have a modal narrative ✓")
 
     if errors:
         print("\n  COUNT ERRORS (blocking):")

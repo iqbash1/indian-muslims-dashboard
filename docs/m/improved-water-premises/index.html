@@ -90,6 +90,41 @@ if(new URLSearchParams(location.search).has('open'))location.replace('/#improved
   footer { font-size:13px; color:var(--muted); margin-top:24px; }
   @media (max-width:560px) { h1 { font-size:24px; } .hero-value { font-size:2rem; } .masthead-nav { margin-left:0; } }
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration:.01ms !important; animation-duration:.01ms !important; } }
+  
+  .card-narrative { display: none; }
+  .modal-body .card-narrative { display: block; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--rule); }
+  .landing-narrative { display: block; margin: 30px 0 0; }
+  .cn-section { margin: 0 0 16px; }
+  .cn-block { margin: 0 0 14px; }
+  .cn-block:last-child { margin-bottom: 0; }
+  .cn-heading { margin: 0 0 6px; font-size: 14px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+  .cn-subhead { margin: 0 0 5px; font-size: 13.5px; color: var(--fg); font-weight: 700; }
+  .cn-text { margin: 0 0 10px; font-size: 14px; color: var(--fg); line-height: 1.6; max-width: 60em; }
+  .cn-text:last-child { margin-bottom: 0; }
+  .cn-text a, .cn-stakeholders a { color: var(--accent); text-decoration: none; font-weight: 500; }
+  .cn-text a:hover, .cn-stakeholders a:hover { text-decoration: underline; }
+  .cn-cite { white-space: nowrap; font-size: 12.5px; }
+  .cn-bottomline { margin: 0 0 18px; padding: 12px 14px; background: #f4f7fa; border-left: 3px solid var(--accent); border-radius: 6px; }
+  .cn-bl-label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin-bottom: 4px; }
+  .cn-bottomline .cn-text { font-size: 14.5px; }
+  .cn-status { margin: 0 0 6px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .cn-badge { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 2px 9px; border-radius: 999px; color: #fff; }
+  .cn-badge--good { background: var(--positive); }
+  .cn-badge--bad { background: var(--negative); }
+  .cn-badge--neutral { background: var(--accent); }
+  .cn-trend { font-size: 12px; color: var(--muted); font-weight: 600; }
+  .card-narrative .cn-toggle, .landing-narrative .cn-toggle { margin: 0 0 16px; border: 0; border-top: 0; padding: 0; background: none; }
+  .card-narrative .cn-toggle > summary, .landing-narrative .cn-toggle > summary { cursor: pointer; color: var(--accent); font-size: 14px; font-weight: 600; list-style: none; display: inline-flex; align-items: center; gap: 6px; text-transform: none; letter-spacing: 0; padding: 0; background: none; border: 0; min-height: 32px; }
+  .card-narrative .cn-toggle > summary::-webkit-details-marker, .landing-narrative .cn-toggle > summary::-webkit-details-marker { display: none; }
+  .card-narrative .cn-toggle > summary::before, .landing-narrative .cn-toggle > summary::before { content: "▸"; font-size: 10px; transition: transform .15s; }
+  .card-narrative .cn-toggle[open] > summary::before, .landing-narrative .cn-toggle[open] > summary::before { transform: rotate(90deg); }
+  .card-narrative .cn-toggle > summary::after, .landing-narrative .cn-toggle > summary::after { content: none; }
+  .card-narrative .cn-toggle > summary:hover, .landing-narrative .cn-toggle > summary:hover { background: none; }
+  .cn-disc-body { margin-top: 10px; }
+  .cn-stakeholders { margin: 4px 0 0; padding-left: 18px; }
+  .cn-stakeholders li { font-size: 14px; color: var(--fg); line-height: 1.55; margin-bottom: 7px; }
+  .cn-sh-name { font-weight: 600; }
+
 </style>
 <script type="application/ld+json">
 {
@@ -162,7 +197,7 @@ if(new URLSearchParams(location.search).has('open'))location.replace('/#improved
     <a href="/">Dashboard</a>
     <a href="/about/">About</a>
   </nav>
-  <p class="masthead-meta">Last updated 18 June 2026</p>
+  <p class="masthead-meta">Last updated 27 June 2026</p>
 </div>
 <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> › <span>Health &amp; Housing</span> › <span aria-current="page">Clean drinking water at home</span></nav>
 <h1>Clean drinking water at home</h1>
@@ -173,11 +208,12 @@ if(new URLSearchParams(location.search).has('open'))location.replace('/#improved
 <p><a class="cta" href="/#improved-water-premises">Explore the interactive chart, with breakdowns by urban vs rural →</a></p>
 <h2>Latest figures by community (2018)</h2><table><thead><tr><th scope="col">Community</th><th scope="col">Latest value</th></tr></thead><tbody><tr><td>Muslim</td><td>69.3%</td></tr><tr><td>Hindu</td><td>62.5%</td></tr><tr><td>Sikh</td><td>90.7%</td></tr><tr><td>Christian</td><td>51.9%</td></tr><tr><td>All communities</td><td>63.6%</td></tr></tbody></table>
 <section class="breakdown"><h2>Urban vs rural<span class="breakdown-sub">2018</span></h2><table class="sortable-table"><thead><tr><th class="sortable" data-col="0">Community</th><th class="sortable" data-col="1" data-type="num">Urban</th><th class="sortable" data-col="2" data-type="num">Rural</th></tr></thead><tbody><tr><td>Muslim</td><td data-sort="74.6000">74.6%</td><td data-sort="65.9000">65.9%</td></tr><tr><td>Christian</td><td data-sort="70.0000">70.0%</td><td data-sort="40.5000">40.5%</td></tr><tr><td>Hindu</td><td data-sort="79.0000">79.0%</td><td data-sort="54.3000">54.3%</td></tr><tr><td>Sikh</td><td data-sort="93.6000">93.6%</td><td data-sort="89.5000">89.5%</td></tr><tr><td>All communities</td><td data-sort="78.4000">78.4%</td><td data-sort="55.9000">55.9%</td></tr></tbody></table><p class="view-provenance"><span class="repro-tier tier-microdata">From microdata</span> <b>Reproduce this view.</b> This figure is recomputed from the unit-level survey microdata, the raw NSS or PLFS records behind the linked source. Source: <a href="https://www.mospi.gov.in/sites/default/files/NSS7612dws/" target="_blank" rel="noopener">NSS 76th 1.2 (2018)</a>. Each value is computed from the <a href="canonical/improved-water-premises.csv" download>data file</a>; every row records its own source and method.</p></section>
+
 <h2>About this measurement</h2>
 <div class="meta-block"><p><b>Definition.</b> Share of households whose main source of drinking water is an improved source (piped, tubewell, protected well, bottled and similar) located within the household&#x27;s own premises, so no one has to fetch water from outside.</p><p><b>Methodology.</b> Computed from the unit-level microdata of NSS 76th round Schedule 1.2 (Drinking Water, Sanitation, Hygiene and Housing Condition, Jul-Dec 2018; 1.07 lakh households): improved principal source located within premises, by religion of household head, weighted. Report 584 publishes this by state and social group, never religion. The extraction reproduces the published all-India values across 24 validation cells to a worst gap of 0.24 points (improved-within-premises all-India: 63.6 computed vs 63.8 published, the strictest blank-distance treatment).</p><p class="method-para">Muslim households are AHEAD of Hindu households here (69.3% vs 62.5%), driven by a rural advantage (65.9 vs 54.3); urban Muslims trail urban Hindus on piped-into-dwelling water (36.5% vs 41.4%, in the data file). Unit data: the original mospi.gov.in TXT distribution (the current NADA catalog ships only a proprietary binary; re-fetch URLs + sha256 in sources/nss76/). NSO unit-data rider: religion is self-reported; the split is indicative; no sub-state estimates.</p><p class="method-para">Year=2018 = survey period.</p><p class="src-note"><b>Sources.</b> <a href="https://www.mospi.gov.in/sites/default/files/NSS7612dws/" target="_blank" rel="noopener">NSS 76th 1.2 (2018)</a>. Download CSV: <a href="/canonical/improved-water-premises.csv">improved-water-premises.csv</a>.</p><p class="src-note"><span class="repro-tier tier-microdata">From microdata</span> <b>How to reproduce.</b> This figure is recomputed from the unit-level survey microdata, the raw NSS or PLFS records behind the linked source.</p></div>
 <h2>Related indicators</h2><ul class="related"><li><a href="/m/imr/">Infant mortality rate</a></li><li><a href="/m/stunting-u5/">Child stunting (under 5)</a></li><li><a href="/m/inst-delivery/">Institutional delivery rate</a></li><li><a href="/m/women-anemia/">Anaemia in women</a></li><li><a href="/m/hospital-oop-spend/">Cost of a hospital stay</a></li><li><a href="/m/improved-sanitation/">Toilet access</a></li><li><a href="/m/pucca-house/">Pucca housing</a></li></ul>
 <hr>
-<footer><p>Every value traces to a primary source with the original file archived and checksummed. muslimdata.in is independent, non-commercial, and <a href="https://github.com/iqbash1/indian-muslims-dashboard">open source</a>. Last updated 18 June 2026.</p></footer>
+<footer><p>Every value traces to a primary source with the original file archived and checksummed. muslimdata.in is independent, non-commercial, and <a href="https://github.com/iqbash1/indian-muslims-dashboard">open source</a>. Last updated 27 June 2026.</p></footer>
 </div>
 </body>
 </html>

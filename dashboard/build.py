@@ -314,6 +314,211 @@ def _load_metric_meta() -> dict:
 METRIC_META = _load_metric_meta()
 
 
+# --- Per-metric narrative (Bottom line / How to read / Why it matters / Status /
+# Deeper analysis [Potential drivers + Key levers] / Key stakeholders). Authored
+# in manifest/narratives.yaml (one body per CARDED metric, written to speak to all
+# of that metric's modal tabs). Rendered identically into the modal (.card-narrative,
+# modal-only) and the /m/{id}/ landing (.landing-narrative). Mirrors the sibling
+# hawaiidashboard.org's consolidated narrative, plus a net-new "Key stakeholders".
+def _load_narratives() -> dict:
+    """{"citations": {key: {label,url}}, "narratives": {mid: {...}}} from
+    manifest/narratives.yaml. Absent file -> empty (Phase-2 metrics simply render
+    no narrative block; nothing breaks)."""
+    import yaml as _yaml
+    p = REPO_ROOT / "manifest" / "narratives.yaml"
+    if not p.exists():
+        return {"citations": {}, "narratives": {}}
+    with p.open() as f:
+        data = _yaml.safe_load(f) or {}
+    return {"citations": data.get("citations") or {},
+            "narratives": data.get("narratives") or {}}
+
+
+_NARR = _load_narratives()
+NARRATIVES = _NARR["narratives"]
+CITATIONS = _NARR["citations"]
+
+
+def _expand_citations(text: str) -> str:
+    """Replace {{cite:key}} tokens with a source link from the shared CITATIONS
+    registry. Narrative prose is author-controlled trusted markup (raw inline <a>,
+    <em>, <ul> pass through unescaped); only the maintainer writes narratives.yaml."""
+    if not text:
+        return ""
+
+    def repl(m):
+        key = m.group(1).strip()
+        c = CITATIONS.get(key)
+        if not c:
+            print(f"  WARNING: unknown narrative citation key {{{{cite:{key}}}}}")
+            return ""
+        return (f'<a class="cn-cite" href="{html.escape(c["url"])}" target="_blank" '
+                f'rel="noopener">&#8599; {html.escape(c["label"])}</a>')
+
+    return re.sub(r"\{\{cite:([^}]+)\}\}", repl, text)
+
+
+def _metric_unit_hib(mid: str):
+    """(unit_format, higher_is_better) for a metric id, from its scorecard block."""
+    m = METRIC_META.get(mid, {})
+    disp = (m.get("display") or {}).get("scorecard") or {}
+    unit = disp.get("unit_format") or m.get("unit", "")
+    hib = disp.get("higher_is_better", m.get("higher_is_better"))
+    return unit, hib
+
+
+def _metric_status(mid: str, unit: str, hib):
+    """Computed Status from the SAME national Muslim-vs-Hindu gap the comparison
+    pills use (the majority-community gap is the dashboard's core read). Returns
+    {label, class, trend, figures} or None. Self-updating on every rebuild.
+
+    - class is the polarity verdict (good=green AHEAD, bad=red BEHIND, neutral=slate);
+      |gap| within a small threshold reads AT PARITY; neutral-polarity metrics
+      (hib is None) get a slate CONTEXT badge with no behind/ahead claim.
+    - trend (2+ rounds) compares the gap magnitude at the first vs last round."""
+    nat = _nat_by_religion(mid)
+    muslim, hindu = nat.get("muslim"), nat.get("hindu")
+    if muslim is None or hindu is None:
+        return None
+    gap = muslim - hindu
+    cls = _verdict(gap, hib)
+    thr = 0.5 if unit == "percent" else abs(hindu) * 0.01
+    if hib is None:
+        label, cls = "Context", "neutral"
+    elif cls == "neutral" or abs(gap) <= thr:
+        label, cls = "At parity", "neutral"
+    else:
+        label = _verdict_word(cls, gap).capitalize()  # Ahead / Behind
+    # Trend: did the gap magnitude shrink or grow across the available rounds?
+    trend = ""
+    years, series, _ = _nat_trend(mid)
+    if len(years) >= 2:
+        m_ser, h_ser = series.get("muslim", {}), series.get("hindu", {})
+        y0, y1 = years[0], years[-1]
+        if y0 in m_ser and y0 in h_ser and y1 in m_ser and y1 in h_ser:
+            g0 = abs(m_ser[y0] - h_ser[y0])
+            g1 = abs(m_ser[y1] - h_ser[y1])
+            tol = 0.5 if unit == "percent" else max(abs(g0) * 0.1, 1e-9)
+            trend = ("gap narrowing" if g1 - g0 < -tol
+                     else "gap widening" if g1 - g0 > tol else "gap roughly flat")
+    # Figures line: a plain "Muslim X vs Hindu Y in YEAR, Z behind/ahead/level".
+    abs_gap = _gap_str(abs(gap), unit).lstrip("+")
+    if label in ("At parity", "Context") and label == "At parity":
+        gap_phrase = "about level"
+    elif hib is None:
+        gap_phrase = f"{abs_gap} {_verdict_word('neutral', gap)}"
+    else:
+        gap_phrase = f"{abs_gap} {_verdict_word(cls, gap)}" if cls != "neutral" else "about level"
+    figures = (f"Muslim {fmt_num(muslim, unit)} vs Hindu {fmt_num(hindu, unit)} "
+               f"in {_year_of(mid)}, {gap_phrase}.")
+    return {"label": label, "class": cls, "trend": trend, "figures": figures}
+
+
+def _metric_narrative_html(mid: str, *, collapsed: bool = True,
+                           wrapper_class: str = "card-narrative") -> str:
+    """The narrative block for one metric. collapsed=True (modal) renders the
+    disclosures closed; collapsed=False (landing) renders them open (landings are
+    the provenance pages). Returns "" when the metric has no narrative entry."""
+    n = NARRATIVES.get(mid)
+    if not n:
+        return ""
+    unit, hib = _metric_unit_hib(mid)
+
+    def section(title, body):
+        return (f'<div class="cn-section"><h3 class="cn-heading">{html.escape(title)}</h3>'
+                f'{body}</div>')
+
+    def disclosure(title, body):
+        op = "" if collapsed else " open"
+        return (f'<details class="cn-toggle"{op}><summary>{html.escape(title)}</summary>'
+                f'<div class="cn-disc-body">{body}</div></details>')
+
+    parts = []
+    if n.get("bottom_line"):
+        parts.append('<div class="cn-bottomline"><span class="cn-bl-label">Bottom line</span>'
+                     f'<p class="cn-text">{_expand_citations(n["bottom_line"])}</p></div>')
+    if n.get("how_to_read"):
+        parts.append(disclosure("How to read the chart",
+                                f'<p class="cn-text">{_expand_citations(n["how_to_read"])}</p>'))
+    if n.get("why_it_matters"):
+        parts.append(section("Why it matters",
+                             f'<p class="cn-text">{_expand_citations(n["why_it_matters"])}</p>'))
+    st = _metric_status(mid, unit, hib)
+    if st:
+        trend = f'<span class="cn-trend">{html.escape(st["trend"])}</span>' if st["trend"] else ""
+        note = n.get("status_note", "")
+        note_html = f' {_expand_citations(note)}' if note else ""
+        parts.append(
+            '<div class="cn-section"><h3 class="cn-heading">Status</h3>'
+            f'<p class="cn-status"><span class="cn-badge cn-badge--{st["class"]}">'
+            f'{html.escape(st["label"])}</span>{trend}</p>'
+            f'<p class="cn-text">{html.escape(st["figures"])}{note_html}</p></div>')
+    if n.get("drivers") or n.get("levers"):
+        body = ""
+        if n.get("drivers"):
+            body += ('<div class="cn-block"><h4 class="cn-subhead">Potential drivers</h4>'
+                     f'<div class="cn-text">{_expand_citations(n["drivers"])}</div></div>')
+        if n.get("levers"):
+            body += ('<div class="cn-block"><h4 class="cn-subhead">Key levers</h4>'
+                     f'<div class="cn-text">{_expand_citations(n["levers"])}</div></div>')
+        parts.append(disclosure("Deeper analysis", body))
+    stakeholders = n.get("stakeholders") or []
+    if stakeholders:
+        lis = ""
+        for s in stakeholders:
+            nm = html.escape(s.get("name", ""))
+            url = s.get("url", "")
+            name_html = (f'<a href="{html.escape(url)}" target="_blank" rel="noopener">{nm}</a>'
+                         if url else nm)
+            lis += (f'<li><span class="cn-sh-name">{name_html}</span>: '
+                    f'{_expand_citations(s.get("mission", ""))}</li>')
+        parts.append(disclosure("Key stakeholders", f'<ul class="cn-stakeholders">{lis}</ul>'))
+    if not parts:
+        return ""
+    return f'<div class="{wrapper_class}">{"".join(parts)}</div>'
+
+
+# Shared narrative CSS, injected once (via the /*NARRATIVE_CSS*/ marker) into both
+# the main page <style> and the /m/ landing <style>. Slate chrome throughout; the
+# Status badge is the only coloured element and uses the polarity green/red,
+# NEVER maroon (the Muslim series identity).
+NARRATIVE_CSS = """
+  .card-narrative { display: none; }
+  .modal-body .card-narrative { display: block; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--rule); }
+  .landing-narrative { display: block; margin: 30px 0 0; }
+  .cn-section { margin: 0 0 16px; }
+  .cn-block { margin: 0 0 14px; }
+  .cn-block:last-child { margin-bottom: 0; }
+  .cn-heading { margin: 0 0 6px; font-size: 14px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+  .cn-subhead { margin: 0 0 5px; font-size: 13.5px; color: var(--fg); font-weight: 700; }
+  .cn-text { margin: 0 0 10px; font-size: 14px; color: var(--fg); line-height: 1.6; max-width: 60em; }
+  .cn-text:last-child { margin-bottom: 0; }
+  .cn-text a, .cn-stakeholders a { color: var(--accent); text-decoration: none; font-weight: 500; }
+  .cn-text a:hover, .cn-stakeholders a:hover { text-decoration: underline; }
+  .cn-cite { white-space: nowrap; font-size: 12.5px; }
+  .cn-bottomline { margin: 0 0 18px; padding: 12px 14px; background: #f4f7fa; border-left: 3px solid var(--accent); border-radius: 6px; }
+  .cn-bl-label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin-bottom: 4px; }
+  .cn-bottomline .cn-text { font-size: 14.5px; }
+  .cn-status { margin: 0 0 6px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .cn-badge { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 2px 9px; border-radius: 999px; color: #fff; }
+  .cn-badge--good { background: var(--positive); }
+  .cn-badge--bad { background: var(--negative); }
+  .cn-badge--neutral { background: var(--accent); }
+  .cn-trend { font-size: 12px; color: var(--muted); font-weight: 600; }
+  .card-narrative .cn-toggle, .landing-narrative .cn-toggle { margin: 0 0 16px; border: 0; border-top: 0; padding: 0; background: none; }
+  .card-narrative .cn-toggle > summary, .landing-narrative .cn-toggle > summary { cursor: pointer; color: var(--accent); font-size: 14px; font-weight: 600; list-style: none; display: inline-flex; align-items: center; gap: 6px; text-transform: none; letter-spacing: 0; padding: 0; background: none; border: 0; min-height: 32px; }
+  .card-narrative .cn-toggle > summary::-webkit-details-marker, .landing-narrative .cn-toggle > summary::-webkit-details-marker { display: none; }
+  .card-narrative .cn-toggle > summary::before, .landing-narrative .cn-toggle > summary::before { content: "▸"; font-size: 10px; transition: transform .15s; }
+  .card-narrative .cn-toggle[open] > summary::before, .landing-narrative .cn-toggle[open] > summary::before { transform: rotate(90deg); }
+  .card-narrative .cn-toggle > summary::after, .landing-narrative .cn-toggle > summary::after { content: none; }
+  .card-narrative .cn-toggle > summary:hover, .landing-narrative .cn-toggle > summary:hover { background: none; }
+  .cn-disc-body { margin-top: 10px; }
+  .cn-stakeholders { margin: 4px 0 0; padding-left: 18px; }
+  .cn-stakeholders li { font-size: 14px; color: var(--fg); line-height: 1.55; margin-bottom: 7px; }
+  .cn-sh-name { font-weight: 600; }
+"""
+
+
 def render_scorecard_rows() -> str:
     """Compute one HTML <tr> per metric showing Muslim/Hindu/All and gap vs
     reference, sorted by relative gap size (largest first). Cross-unit
@@ -1118,6 +1323,7 @@ TEMPLATE = """<!DOCTYPE html>
     }
     .card:hover { transform: none !important; }
   }
+  /*NARRATIVE_CSS*/
 </style>
 </head>
 <body>
@@ -2829,6 +3035,7 @@ if(new URLSearchParams(location.search).has('open'))location.replace('/#{mid}');
   footer { font-size:13px; color:var(--muted); margin-top:24px; }
   @media (max-width:560px) { h1 { font-size:24px; } .hero-value { font-size:2rem; } .masthead-nav { margin-left:0; } }
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration:.01ms !important; animation-duration:.01ms !important; } }
+  /*NARRATIVE_CSS*/
 </style>
 {jsonld}
 </head>
@@ -2851,6 +3058,7 @@ if(new URLSearchParams(location.search).has('open'))location.replace('/#{mid}');
 <p><a class="cta" href="/#{mid}">{cta_label}</a></p>
 {national_html}
 {breakdowns_html}
+{narrative_html}
 <h2>About this measurement</h2>
 <div class="meta-block">{about_html}</div>
 {related_html}
@@ -3046,6 +3254,10 @@ def _emit_metric_landings(out_dir: pathlib.Path, view_map: dict | None = None) -
         if pill:
             about_parts.append(f'<p class="src-note">{pill}<b>How to reproduce.</b> {how}</p>')
         about_html = "".join(about_parts)
+        # Landing narrative: same content as the modal, but disclosures rendered
+        # OPEN (the /m/ pages are the provenance pages, kept fully expanded).
+        narr_html = _metric_narrative_html(mid, collapsed=False,
+                                           wrapper_class="landing-narrative")
 
         rel = _related_metrics(m)
         related_html = ""
@@ -3080,6 +3292,8 @@ def _emit_metric_landings(out_dir: pathlib.Path, view_map: dict | None = None) -
             "{cta_label}": html.escape(cta_label),
             "{national_html}": national_html,
             "{breakdowns_html}": breakdowns_html,
+            "{narrative_html}": narr_html,
+            "/*NARRATIVE_CSS*/": NARRATIVE_CSS,
             "{about_html}": about_html,
             "{related_html}": related_html,
             "{timestamp}": timestamp,
@@ -3621,6 +3835,7 @@ def build() -> None:
         "{site_description}": html.escape(SITE_DESCRIPTION),
         "{site_url}": SITE_URL,
         "{home_jsonld}": _home_jsonld(),
+        "/*NARRATIVE_CSS*/": NARRATIVE_CSS,
     }
     html_out = TEMPLATE
     for k, v in substitutions.items():
@@ -4147,6 +4362,9 @@ def _card_shell(mid, label, value, unit_txt, year, polarity, chart_html, comps_h
         f'<span class="card-unit">{html.escape(unit_txt)}</span>{yr}</div>'
         f'{polarity_html}{chart_html}'
         f'<div class="card-comparisons">{comps_html}</div>'
+        # Per-metric narrative (modal-only via .card-narrative; hidden on the grid).
+        # Sits between the comparison pills and the technical "About this measurement".
+        f'{_metric_narrative_html(mid)}'
         f'{method_html}'
         f'{download_html}'
         f'{views_html}'

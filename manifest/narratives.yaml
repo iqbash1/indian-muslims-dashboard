@@ -1,0 +1,200 @@
+# manifest/narratives.yaml
+# -------------------------------------------------------------------------
+# Per-metric narrative prose for the modal + /m/{id}/ landing pages, modelled
+# on the sibling hawaiidashboard.org's consolidated narrative, plus a net-new
+# "Key stakeholders" section. ONE body per CARDED metric, written to speak to
+# ALL of that metric's modal tabs.
+#
+# Rendered by dashboard/build.py (_metric_narrative_html). Fields per metric:
+#   bottom_line     - the TL;DR callout (always visible)
+#   how_to_read     - chart + tabs reading guide (collapsible)
+#   why_it_matters  - one or two sentences (always visible)
+#   status_note     - hand-written sentence appended AFTER the auto-computed
+#                     Status badge + figures (the badge/figures come from the
+#                     data via _metric_status; do NOT restate the numbers here)
+#   drivers         - "Potential drivers" (inside Deeper analysis)
+#   levers          - "Key levers" (inside Deeper analysis)
+#   stakeholders    - list of {name, url, mission}
+#
+# Prose is author-controlled trusted markup (inline <a>/<em> allowed, NOT
+# escaped). Cite sources with {{cite:key}} tokens that resolve against the
+# `citations` registry below. House rules apply: no em/en dashes, Indian
+# English, conservative claims, plain English that lands on first read.
+#
+# Phase 1 ships two exemplars (lit-7plus, imr). Phase 2 fills the rest.
+# -------------------------------------------------------------------------
+
+citations:
+  sachar-2006:
+    label: "Sachar Committee Report, 2006"
+    url: "https://web.archive.org/web/20221013203408id_/https://www.minorityaffairs.gov.in/sites/default/files/sachar_comm.pdf"
+  post-sachar-2014:
+    label: "Post-Sachar Evaluation Committee, 2014"
+    url: "https://www.iosworld.org/ContentPdf/Post_Sachar_Evaluation_Committee.pdf"
+  misra-2007:
+    label: "Ranganath Misra Commission, 2007"
+    url: "https://archive.org/details/PARI.report-of-the-national-commission-for-religious-and-linguistic-minorities"
+  nfhs5-2021:
+    label: "NFHS-5 India report, 2019-21"
+    url: "https://dhsprogram.com/pubs/pdf/FR375/FR375.pdf"
+  bhalotra-2010:
+    label: "Bhalotra, Valente and van Soest, 2010"
+    url: "https://doi.org/10.1016/j.jhealeco.2009.11.002"
+  geruso-spears-2018:
+    label: "Geruso and Spears, 2018"
+    url: "https://doi.org/10.1257/app.20150431"
+  ganguly-2022:
+    label: "Ganguly, Goli and Rammohan, 2022"
+    url: "https://doi.org/10.1186/s41118-022-00177-3"
+
+narratives:
+
+  # ----- Literacy, age 7+ (Census). higher is better. Muslims BEHIND. -----
+  lit-7plus:
+    bottom_line: >-
+      Just under 69% of Muslims aged 7 and above could read and write in 2011,
+      the lowest literacy rate among India's larger religious communities and
+      about five points behind Hindus. The gap has been narrowing slowly since
+      2001, but it stays widest for Muslim women and in rural areas, where
+      barely three in five Muslims are literate.
+    how_to_read: >-
+      The main chart tracks literacy for each community across the 2001 and 2011
+      censuses, with Muslims in maroon and the all-India average as the dashed
+      line; a rising line means literacy is improving. Because the distance
+      between communities is the point, the vertical axis does not start at zero.
+      The tabs break the same measure down further: By state shows how far the
+      Muslim rate swings across India, By sex exposes the wide gap between Muslim
+      men and women, and Urban vs rural shows how much lower literacy runs in
+      Muslim villages than in Muslim towns.
+    why_it_matters: >-
+      Literacy is the floor every other opportunity stands on. It shapes access
+      to formal jobs, government services and scholarships, and a household's
+      ability to handle paperwork, health information and its own legal rights.
+      A community that starts behind on literacy tends to stay behind on income,
+      formal work and schooling in the generation that follows.
+    status_note: >-
+      The gap has closed by roughly a point and a half since 2001, slow but
+      steady progress, and it remains widest for Muslim women and in rural areas.
+    drivers: >-
+      The Sachar Committee's 2006 review found Muslims carried the highest school
+      dropout rates of any large community and the smallest share of graduates,
+      with barely 4% of Muslims holding a degree against about 7% nationally
+      {{cite:sachar-2006}}. These are documented gaps rather than proven causes:
+      the same report tied them to poverty, the concentration of Muslims in
+      informal urban work, distance from and unfamiliarity with mainstream
+      schools, and a shortage of schools in Muslim-majority localities
+      {{cite:sachar-2006}}. The Post-Sachar evaluation in 2014 concluded that
+      government remedies existed on paper but reached Muslim children unevenly,
+      so the gap persisted as much through weak delivery as through any absence
+      of schemes {{cite:post-sachar-2014}}.
+    levers: >-
+      The instruments already exist. The Ministry of Minority Affairs runs
+      Pre-Matric, Post-Matric and Merit-cum-Means scholarships for minority
+      students, and the Post-Sachar review argued the priority is consistent
+      delivery rather than new schemes {{cite:post-sachar-2014}}. The data points
+      to three pressure points: keeping children in school through the primary to
+      secondary transition, where Muslim dropout is highest {{cite:sachar-2006}};
+      closing the female literacy gap, the widest single sub-gap; and supporting
+      minority-run schools, whose right to exist is protected through the
+      National Commission for Minority Educational Institutions. These are
+      options the evidence motivates, not guaranteed fixes: the Post-Sachar
+      lesson is that a scheme on the books does not by itself change outcomes.
+    stakeholders:
+      - name: "Ministry of Minority Affairs"
+        url: "https://minorityaffairs.gov.in/"
+        mission: >-
+          The Union ministry, created in 2006, that runs scholarship and
+          development schemes for India's notified minorities, including the
+          Pre-Matric, Post-Matric and Merit-cum-Means scholarships.
+      - name: "National Commission for Minority Educational Institutions"
+        url: "https://ncmei.gov.in/"
+        mission: >-
+          A statutory body that protects the right of religious and linguistic
+          minorities to set up and run their own schools and colleges under
+          Article 30 of the Constitution.
+      - name: "Pratham"
+        url: "https://pratham.org/"
+        mission: >-
+          One of India's largest education NGOs, working to raise children's
+          foundational reading and arithmetic and the producer of the annual
+          ASER learning survey. It works across communities rather than with
+          Muslims specifically.
+
+  # ----- Infant Mortality Rate (NFHS). lower is better. Muslims AHEAD. -----
+  imr:
+    bottom_line: >-
+      Muslims have lower infant mortality than Hindus, and have done so in every
+      national survey since the 1990s, despite being poorer on most other
+      measures. In the latest survey, 2019-21, about 33 Muslim infants died
+      before their first birthday for every 1,000 born, against 35 among Hindus.
+      This Muslim survival advantage is real but shrinking, as mortality has
+      fallen faster among other communities.
+    how_to_read: >-
+      The main chart tracks infant deaths per 1,000 live births for each
+      community across four National Family Health Surveys from 1998 to 2019-21;
+      here a falling line is good news, since lower is better. Every community's
+      line drops steeply, so the chart shows both the broad decline and the
+      narrowing distance between communities. The Urban vs rural tab splits each
+      rate into town and village, where most infant deaths still happen, and
+      shows the Muslim advantage is largely a rural one.
+    why_it_matters: >-
+      Infant mortality is one of the most sensitive measures of a population's
+      living conditions, capturing the combined effect of nutrition, sanitation,
+      maternal health and access to care in the first, most fragile year of life.
+      That Muslims do better here than richer communities is one of the most
+      studied puzzles in Indian demography, and a reminder that income alone does
+      not determine survival.
+    status_note: >-
+      Muslims have recorded lower infant mortality than Hindus in every survey
+      since 1998, but the advantage has shrunk from roughly 18 points then to
+      about 2 today as mortality fell faster among other communities.
+    drivers: >-
+      Why a poorer community buries fewer infants is, in the words of the
+      economists who named it, a puzzle. The most cited study, by Bhalotra and
+      colleagues in 2010, is descriptive rather than causal: once income,
+      education and the usual risk factors are accounted for, those factors
+      predict that Muslims should do worse, not better, so most of the advantage
+      is left unexplained {{cite:bhalotra-2010}}. The part it could explain came
+      mainly from maternal height and diet, not from the breastfeeding or
+      birth-spacing stories often repeated in the press {{cite:bhalotra-2010}}.
+      The strongest later evidence points outward, not inward: Geruso and Spears
+      showed that Muslim neighbourhoods practise less open defecation, and that
+      this local sanitation difference alone accounts for a large share of the
+      survival gap, an effect that protects Hindu neighbours too
+      {{cite:geruso-spears-2018}}. As India's wider sanitation has improved, the
+      Muslim edge has narrowed {{cite:ganguly-2022}}.
+    levers: >-
+      Because this is a Muslim advantage that is fading rather than a deficit to
+      close, the levers are mostly the universal ones that lift every community.
+      Population-wide sanitation gains, which the evidence ties most directly to
+      infant survival, both save lives and erode the Muslim neighbourhood edge as
+      open defecation falls everywhere {{cite:geruso-spears-2018}}. The National
+      Health Mission's maternal and child health work, immunisation, institutional
+      delivery and newborn care, is the main public instrument. The honest caveat
+      is that the advantage itself stays mostly unexplained, so the surest gains
+      come from the basics that help every infant rather than from trying to
+      bottle whatever Muslim households are doing right {{cite:bhalotra-2010}}.
+    stakeholders:
+      - name: "Ministry of Health and Family Welfare"
+        url: "https://mohfw.gov.in/"
+        mission: >-
+          The Union ministry responsible for India's health policy and its
+          family-planning, maternal-health and child-health programmes.
+      - name: "National Health Mission"
+        url: "https://nhm.gov.in/"
+        mission: >-
+          The Government of India's flagship health programme, working toward
+          affordable, quality care including maternal, newborn and child health
+          services across rural and urban India.
+      - name: "UNICEF India"
+        url: "https://www.unicef.org/india/"
+        mission: >-
+          The UN Children's Fund's India office, which works with states on child
+          survival, immunisation and maternal and newborn health. It works across
+          communities rather than with Muslims specifically.
+      - name: "International Institute for Population Sciences"
+        url: "https://www.iipsindia.ac.in/"
+        mission: >-
+          The Mumbai institute that conducts the National Family Health Survey,
+          the source of India's infant-mortality and maternal and child health
+          figures by population group.

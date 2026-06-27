@@ -90,6 +90,41 @@ if(new URLSearchParams(location.search).has('open'))location.replace('/#improved
   footer { font-size:13px; color:var(--muted); margin-top:24px; }
   @media (max-width:560px) { h1 { font-size:24px; } .hero-value { font-size:2rem; } .masthead-nav { margin-left:0; } }
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration:.01ms !important; animation-duration:.01ms !important; } }
+  
+  .card-narrative { display: none; }
+  .modal-body .card-narrative { display: block; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--rule); }
+  .landing-narrative { display: block; margin: 30px 0 0; }
+  .cn-section { margin: 0 0 16px; }
+  .cn-block { margin: 0 0 14px; }
+  .cn-block:last-child { margin-bottom: 0; }
+  .cn-heading { margin: 0 0 6px; font-size: 14px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+  .cn-subhead { margin: 0 0 5px; font-size: 13.5px; color: var(--fg); font-weight: 700; }
+  .cn-text { margin: 0 0 10px; font-size: 14px; color: var(--fg); line-height: 1.6; max-width: 60em; }
+  .cn-text:last-child { margin-bottom: 0; }
+  .cn-text a, .cn-stakeholders a { color: var(--accent); text-decoration: none; font-weight: 500; }
+  .cn-text a:hover, .cn-stakeholders a:hover { text-decoration: underline; }
+  .cn-cite { white-space: nowrap; font-size: 12.5px; }
+  .cn-bottomline { margin: 0 0 18px; padding: 12px 14px; background: #f4f7fa; border-left: 3px solid var(--accent); border-radius: 6px; }
+  .cn-bl-label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin-bottom: 4px; }
+  .cn-bottomline .cn-text { font-size: 14.5px; }
+  .cn-status { margin: 0 0 6px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .cn-badge { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 2px 9px; border-radius: 999px; color: #fff; }
+  .cn-badge--good { background: var(--positive); }
+  .cn-badge--bad { background: var(--negative); }
+  .cn-badge--neutral { background: var(--accent); }
+  .cn-trend { font-size: 12px; color: var(--muted); font-weight: 600; }
+  .card-narrative .cn-toggle, .landing-narrative .cn-toggle { margin: 0 0 16px; border: 0; border-top: 0; padding: 0; background: none; }
+  .card-narrative .cn-toggle > summary, .landing-narrative .cn-toggle > summary { cursor: pointer; color: var(--accent); font-size: 14px; font-weight: 600; list-style: none; display: inline-flex; align-items: center; gap: 6px; text-transform: none; letter-spacing: 0; padding: 0; background: none; border: 0; min-height: 32px; }
+  .card-narrative .cn-toggle > summary::-webkit-details-marker, .landing-narrative .cn-toggle > summary::-webkit-details-marker { display: none; }
+  .card-narrative .cn-toggle > summary::before, .landing-narrative .cn-toggle > summary::before { content: "▸"; font-size: 10px; transition: transform .15s; }
+  .card-narrative .cn-toggle[open] > summary::before, .landing-narrative .cn-toggle[open] > summary::before { transform: rotate(90deg); }
+  .card-narrative .cn-toggle > summary::after, .landing-narrative .cn-toggle > summary::after { content: none; }
+  .card-narrative .cn-toggle > summary:hover, .landing-narrative .cn-toggle > summary:hover { background: none; }
+  .cn-disc-body { margin-top: 10px; }
+  .cn-stakeholders { margin: 4px 0 0; padding-left: 18px; }
+  .cn-stakeholders li { font-size: 14px; color: var(--fg); line-height: 1.55; margin-bottom: 7px; }
+  .cn-sh-name { font-weight: 600; }
+
 </style>
 <script type="application/ld+json">
 {
@@ -162,7 +197,7 @@ if(new URLSearchParams(location.search).has('open'))location.replace('/#improved
     <a href="/">Dashboard</a>
     <a href="/about/">About</a>
   </nav>
-  <p class="masthead-meta">Last updated 18 June 2026</p>
+  <p class="masthead-meta">Last updated 27 June 2026</p>
 </div>
 <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> › <span>Health &amp; Housing</span> › <span aria-current="page">Toilet access</span></nav>
 <h1>Toilet access</h1>
@@ -173,11 +208,12 @@ if(new URLSearchParams(location.search).has('open'))location.replace('/#improved
 <p><a class="cta" href="/#improved-sanitation">Explore the interactive chart, with breakdowns by urban vs rural →</a></p>
 <h2>Latest figures by community (2020)</h2><table><thead><tr><th scope="col">Community</th><th scope="col">Latest value</th></tr></thead><tbody><tr><td>Muslim</td><td>90.3%</td></tr><tr><td>Hindu</td><td>80.7%</td></tr><tr><td>Jain</td><td>97.6%</td></tr><tr><td>Sikh</td><td>97.5%</td></tr><tr><td>Christian</td><td>91.2%</td></tr><tr><td>Buddhist</td><td>87.8%</td></tr><tr><td>Other</td><td>72.5%</td></tr><tr><td>All communities</td><td>82.5%</td></tr></tbody></table>
 <section class="breakdown"><h2>Urban vs rural<span class="breakdown-sub">2020</span></h2><table class="sortable-table"><thead><tr><th class="sortable" data-col="0">Community</th><th class="sortable" data-col="1" data-type="num">Urban</th><th class="sortable" data-col="2" data-type="num">Rural</th></tr></thead><tbody><tr><td>Muslim</td><td data-sort="97.2000">97.2%</td><td data-sort="85.4000">85.4%</td></tr><tr><td>Other</td><td data-sort="95.5000">95.5%</td><td data-sort="66.2000">66.2%</td></tr><tr><td>Hindu</td><td data-sort="95.1000">95.1%</td><td data-sort="74.0000">74.0%</td></tr><tr><td>Buddhist</td><td data-sort="95.3000">95.3%</td><td data-sort="82.8000">82.8%</td></tr><tr><td>Christian</td><td data-sort="97.5000">97.5%</td><td data-sort="87.2000">87.2%</td></tr><tr><td>Jain</td><td data-sort="99.9000">99.9%</td><td data-sort="88.1000">88.1%</td></tr><tr><td>Sikh</td><td data-sort="99.3000">99.3%</td><td data-sort="96.7000">96.7%</td></tr><tr><td>All communities</td><td data-sort="95.6000">95.6%</td><td data-sort="76.0000">76.0%</td></tr></tbody></table><p class="view-provenance"><span class="repro-tier tier-read">Read</span> <b>Reproduce this view.</b> This figure is published directly in the linked source table. Source: <a href="https://dhsprogram.com/pubs/pdf/FR375/FR375.pdf" target="_blank" rel="noopener">NFHS-5 (2019-21)</a>. Each value is computed from the <a href="canonical/improved-sanitation.csv" download>data file</a> · <a href="https://github.com/iqbash1/indian-muslims-dashboard/blob/main/transform/canonicalize/improved_sanitation.py" target="_blank" rel="noopener">transform code</a>; every row records its own source and method.</p></section>
+
 <h2>About this measurement</h2>
 <div class="meta-block"><p><b>Definition.</b> Share of households with access to a toilet of any type.</p><p><b>Methodology.</b> NFHS-5 Table 2.4 (page 74). Total residence, national. Year=2020 = NFHS-5 fieldwork midpoint.</p><p class="method-para">Muslim toilet access (90.3%) runs *above* Hindu (80.7%), partly because urban-Muslim share is higher than urban-Hindu share, and urban access is uniformly higher. Not strictly &quot;improved sanitation&quot; per the WHO/UNICEF JMP definition: the published NFHS-5 table aggregates flush, pit and other toilet types.</p><p class="src-note"><b>Sources.</b> <a href="https://dhsprogram.com/pubs/pdf/FR375/FR375.pdf" target="_blank" rel="noopener">NFHS-5 (2019-21)</a>. Download CSV: <a href="/canonical/improved-sanitation.csv">improved-sanitation.csv</a>.</p><p class="src-note"><span class="repro-tier tier-read">Read</span> <b>How to reproduce.</b> This figure is published directly in the linked source table.</p></div>
 <h2>Related indicators</h2><ul class="related"><li><a href="/m/imr/">Infant mortality rate</a></li><li><a href="/m/stunting-u5/">Child stunting (under 5)</a></li><li><a href="/m/inst-delivery/">Institutional delivery rate</a></li><li><a href="/m/women-anemia/">Anaemia in women</a></li><li><a href="/m/hospital-oop-spend/">Cost of a hospital stay</a></li><li><a href="/m/improved-water-premises/">Clean drinking water at home</a></li><li><a href="/m/pucca-house/">Pucca housing</a></li></ul>
 <hr>
-<footer><p>Every value traces to a primary source with the original file archived and checksummed. muslimdata.in is independent, non-commercial, and <a href="https://github.com/iqbash1/indian-muslims-dashboard">open source</a>. Last updated 18 June 2026.</p></footer>
+<footer><p>Every value traces to a primary source with the original file archived and checksummed. muslimdata.in is independent, non-commercial, and <a href="https://github.com/iqbash1/indian-muslims-dashboard">open source</a>. Last updated 27 June 2026.</p></footer>
 </div>
 </body>
 </html>
