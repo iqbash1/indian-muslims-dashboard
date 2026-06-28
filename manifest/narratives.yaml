@@ -977,3 +977,210 @@ narratives:
           Housing and enterprise schemes that build durable assets close the stock
           gap faster than income alone.
     stakeholders_from: mpce
+
+  # ===================================================================
+  # PHASE 2 - BATCH 3: Housing & basic amenities (Muslims AT/ABOVE - keep the inversion)
+  # ===================================================================
+
+  # ----- Toilet access (NFHS). higher is better. Muslims AHEAD. -----
+  improved-sanitation:
+    bottom_line: >-
+      Nine in ten Muslim households had a toilet in 2020, at 90.3% the highest of
+      any major community and almost ten points above Hindus at 80.7%. This is
+      one of a cluster of housing measures, toilets, water and electricity, where
+      Muslims sit at or above the national level, a pattern that runs against the
+      gaps on income and education.
+    how_to_read: >-
+      The chart compares the share of households with a toilet across communities
+      for 2019-21; higher is better. The Urban vs rural tab matters here: access
+      is higher in towns for every community, and part of the Muslim lead comes
+      from being a more urban community.
+    why_it_matters: >-
+      A household toilet is one of the strongest protections a child has: where
+      neighbourhoods stop open defecation, fewer infants die and fewer children
+      are stunted. This is the same sanitation advantage that helps explain why
+      Muslim infants survive at higher rates.
+    status_note: >-
+      The Muslim lead on toilets holds across the country and connects directly to
+      the community's better infant survival, where local sanitation is the
+      best-evidenced cause.
+    drivers:
+      - title: "Urban living"
+        text: >-
+          Muslims are more urban than average, and towns have far higher toilet
+          coverage than villages {{cite:sachar-2006}}.
+      - title: "Less open defecation"
+        text: >-
+          Muslim neighbourhoods practise less open defecation than Hindu ones at
+          the same income, a difference researchers tie to both norms and density
+          {{cite:geruso-spears-2018}}.
+      - title: "Compact settlements"
+        text: >-
+          Dense, often walled urban settlement makes a household latrine both more
+          usual and more necessary.
+    levers:
+      - title: "Universal coverage"
+        text: >-
+          Swachh Bharat has pushed toilet access up for everyone; the unfinished
+          task is the poorest rural households of every community.
+      - title: "Use, not just build"
+        text: >-
+          The lasting gain is in sustained use and maintenance, not just
+          construction.
+      - title: "Water to match"
+        text: >-
+          A toilet needs water to work, which links this directly to the
+          drinking-water push.
+    stakeholders:
+      - name: "Swachh Bharat Mission (Grameen)"
+        url: "https://swachhbharatmission.ddws.gov.in/"
+        mission: >-
+          The national rural sanitation programme, under the Ministry of Jal
+          Shakti, that built over ten crore household toilets to make villages
+          free of open defecation.
+      - name: "Jal Jeevan Mission"
+        url: "https://jaljeevanmission.gov.in/"
+        mission: >-
+          The Ministry of Jal Shakti mission to provide a safe piped drinking
+          water connection to every rural household, with source sustainability
+          and community management.
+      - name: "Pradhan Mantri Awas Yojana (Gramin)"
+        url: "https://pmayg.dord.gov.in/netiayHome/Home.aspx"
+        mission: >-
+          The Ministry of Rural Development scheme that helps houseless families
+          and those in kutcha homes build a pucca house with basic amenities.
+      - name: "Aga Khan Agency for Habitat, India"
+        url: "https://www.akahindia.org/"
+        mission: >-
+          The Aga Khan network's habitat agency, building water security,
+          sanitation, low-cost housing and disaster resilience in Gujarat,
+          Maharashtra and Telangana. Founded by the Ismaili community, it serves
+          all communities.
+      - name: "Human Welfare Foundation"
+        url: "https://www.hwfindia.org/category/community/"
+        donate_url: "https://www.hwfindia.org/donate/"
+        mission: >-
+          A development NGO whose community work includes drinking-water and
+          shelter projects for deprived families in disadvantaged, largely
+          minority areas.
+      - name: "WaterAid India"
+        url: "https://www.wateraid.org/in"
+        donate_url: "https://www.wateraid.org/in/donate/clean-water"
+        credibility:
+          label: "80G + FCRA"
+          url: "https://give.do/discover/3VG/jal-seva-charitable-foundation-wateraid-india/"
+        mission: >-
+          A water and sanitation NGO working since 1986 across about 1,200
+          villages in ten states to make clean water, decent toilets and good
+          hygiene reach the poorest.
+      - name: "Habitat for Humanity India"
+        url: "https://habitatindia.org/"
+        donate_url: "https://habitatindia.org/donate/"
+        credibility:
+          label: "80G + FCRA"
+          url: "https://habitatindia.org/donate/"
+        mission: >-
+          A housing NGO that provides decent, affordable homes and sanitation to
+          low-income and marginalised families and helps disaster-hit families
+          rebuild.
+      - name: "Sulabh International"
+        url: "https://www.sulabhinternational.org/"
+        mission: >-
+          India's pioneering sanitation movement, which has built over sixteen
+          lakh household toilets and ten thousand public toilet complexes and works
+          to rehabilitate manual scavengers.
+
+  # ----- Drinking water on premises (NSS). higher is better. Muslims AHEAD. -----
+  improved-water-premises:
+    bottom_line: >-
+      About 69% of Muslim households had drinking water on their own premises in
+      2018, so no one had to walk to fetch it, against 63% of Hindu households.
+      Like toilets, this is a measure where Muslims sit a little above the
+      national level, helped by being a more urban community.
+    how_to_read: >-
+      The chart compares the share of households with an improved water source on
+      their own premises across communities for 2018; higher is better, because it
+      means no daily walk to fetch water. The Urban vs rural tab splits the two.
+    why_it_matters: >-
+      Water on the premises saves hours of fetching, almost always women's and
+      girls' time, and cuts the contamination that comes with carrying and storing
+      water. It feeds straight into health, school attendance and the time women
+      have for paid work.
+    status_note: >-
+      The Muslim edge on water, like sanitation, owes much to urban concentration,
+      and it sits within a wider picture where the basic-amenities story runs
+      opposite to the income story.
+    drivers:
+      - title: "Urban living"
+        text: >-
+          Piped, on-premises water is far more common in towns, where Muslims are
+          over-represented {{cite:sachar-2006}}.
+      - title: "Dense settlement"
+        text: >-
+          Compact urban neighbourhoods are cheaper to connect to a piped network
+          than scattered rural homes.
+      - title: "Public schemes"
+        text: >-
+          Expanding piped-water schemes have reached urban and, more recently,
+          rural homes across communities.
+    levers:
+      - title: "Jal Jeevan Mission"
+        text: >-
+          The rural piped-water push is the main lever to extend on-premises water
+          to the households still without it.
+      - title: "Urban equity"
+        text: >-
+          The remaining urban gaps are in informal settlements, which need
+          targeted connections.
+      - title: "Source sustainability"
+        text: >-
+          A tap helps only if the source lasts, the harder long-term task.
+    stakeholders_from: improved-sanitation
+
+  # ----- Pucca housing (NSS). higher is better. Muslims AT PARITY. -----
+  pucca-house:
+    bottom_line: >-
+      About 84% of Muslim households lived in a pucca, permanent-material home in
+      2018, essentially the same as Hindus at 83%. On the basic quality of the
+      roof over their heads the two communities are level, another amenity where
+      the usual gap does not appear.
+    how_to_read: >-
+      The chart compares the share of households in a pucca (permanent-material)
+      home across communities for 2018; higher is better. The Electricity tab
+      carries a closely related amenity, and Urban vs rural splits the rate by
+      place, where pucca housing is near-universal in towns.
+    why_it_matters: >-
+      A pucca home of brick or concrete withstands monsoon, heat and fire far
+      better than a kutcha one of mud or thatch, and is the base for everything
+      from health to a child's place to study. It is the most basic marker of
+      housing security.
+    status_note: >-
+      On housing structure Muslims and Hindus are level, and both sit near the
+      national average; the gaps in this cluster are between town and village, not
+      between communities.
+    drivers:
+      - title: "A shared floor"
+        text: >-
+          Pucca housing has become near-universal in towns for every community, so
+          urban Muslims and Hindus look alike {{cite:sachar-2006}}.
+      - title: "Housing schemes"
+        text: >-
+          Decades of rural and urban housing programmes have lifted
+          permanent-material homes across the board.
+      - title: "Self-build first"
+        text: >-
+          Households of all communities invest first in a solid house, often the
+          single largest asset they ever build.
+    levers:
+      - title: "Reach the last kutcha homes"
+        text: >-
+          The remaining gap is the poorest rural households of every community, the
+          target of the housing schemes.
+      - title: "Quality, not just walls"
+        text: >-
+          A pucca label can still hide crowding and poor ventilation worth
+          improving.
+      - title: "Tenure security"
+        text: >-
+          Secure land title is what lets the urban poor invest in a permanent home.
+    stakeholders_from: improved-sanitation
