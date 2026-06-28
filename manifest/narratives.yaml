@@ -1393,3 +1393,74 @@ narratives:
           A periodic data initiative, produced by Tata Trusts with research
           partners, that ranks states on police, prisons, judiciary and legal aid,
           including undertrial and prison-demographic statistics.
+
+  # ===================================================================
+  # PHASE 2 - BATCH 5: Demographics (DESCRIPTIVE - lighter: no drivers/levers/stakeholders)
+  # ===================================================================
+
+  # ----- Muslim population share (Census). descriptive. Status suppressed. -----
+  pop-share:
+    no_status: true
+    bottom_line: >-
+      Muslims were 14.2% of India's population at the 2011 Census, about one in
+      seven Indians and roughly 17 crore people; the count is estimated near 20
+      crore today. The share has risen steadily from about 10.7% in 1961, though
+      the pace of growth slows with each decade as Muslim fertility falls toward
+      the national average.
+    how_to_read: >-
+      The chart tracks the Muslim share of the population across the six censuses
+      from 1961 to 2011; the 2021 Census is delayed. The tabs open the detail: By
+      state and By district show how unevenly Muslims are spread, Urban vs rural
+      and By age show a younger, more urban profile, and Population growth shows
+      how the decadal growth rate has fallen.
+    why_it_matters: >-
+      Population share is the denominator for everything else on this dashboard:
+      it is what every gap on jobs, schooling or representation is measured
+      against. A seventh of the country is large enough that how this group fares
+      shapes India's own development.
+
+  # ----- Urban share (Census). descriptive. Status kept (neutral). -----
+  urban-share:
+    bottom_line: >-
+      Two in five Muslims, 39.9%, lived in towns and cities in 2011, well above
+      the 31% national average and the 29% for Hindus. Muslims are one of India's
+      most urban communities, a fact that shapes much of the rest of this
+      dashboard, from their better housing amenities to their concentration in
+      urban informal work.
+    how_to_read: >-
+      The chart compares how urban each community is across the 2001 and 2011
+      censuses; this is a descriptive fact, not a good or bad outcome. The By
+      state tab shows how much it varies, from highly urban Muslim populations in
+      the south and west to more rural ones in the east.
+    why_it_matters: >-
+      Whether a community lives in towns or villages colours almost every other
+      measure: urban families have better access to toilets, water and hospitals,
+      but also face the insecure, informal labour markets and segregated
+      neighbourhoods of the city. Muslim urban concentration is the thread running
+      through both their amenity advantages and their job disadvantages.
+    status_note: >-
+      Muslims have been markedly more urban than Hindus in every recent census, a
+      structural fact that helps explain the housing-amenity inversion elsewhere
+      on this dashboard.
+
+  # ----- Sex ratio (Census). descriptive. Status kept (neutral). -----
+  sex-ratio:
+    bottom_line: >-
+      There were 951 Muslim women for every 1,000 Muslim men in 2011, a little
+      higher than the 939 for Hindus and the 943 national average. Like the rest
+      of India the Muslim population has fewer women than men, but its ratio has
+      been slightly more balanced than the Hindu one and has improved since 2001.
+    how_to_read: >-
+      The chart tracks the number of females per 1,000 males across six censuses
+      since 1961; a value below 1,000 means fewer women than men. Because the
+      interesting range is narrow, the axis sits in an 800 to 1,050 band rather
+      than starting at zero. The By state and Urban vs rural tabs show where the
+      ratio is most and least balanced.
+    why_it_matters: >-
+      The sex ratio is a quiet signal of how a society values its girls and women,
+      picking up the combined effect of sex selection, female mortality and
+      migration. A ratio closer to balance is generally the healthier sign.
+    status_note: >-
+      The Muslim sex ratio has run slightly more balanced than the Hindu one
+      across recent censuses and improved between 2001 and 2011, against the wider
+      Indian pattern of too few women.

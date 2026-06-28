@@ -455,7 +455,9 @@ def _metric_narrative_html(mid: str, *, collapsed: bool = True,
     if n.get("why_it_matters"):
         parts.append(section("Why it matters",
                              f'<p class="cn-text">{_expand_citations(n["why_it_matters"])}</p>'))
-    st = _metric_status(mid, unit, hib)
+    # A metric can suppress the auto Status badge with `no_status: true` (e.g.
+    # pop-share, where Muslim-vs-Hindu shares of one total are not a gap).
+    st = None if n.get("no_status") else _metric_status(mid, unit, hib)
     if st:
         trend = f'<span class="cn-trend">{html.escape(st["trend"])}</span>' if st["trend"] else ""
         note = n.get("status_note", "")
