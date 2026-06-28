@@ -55,6 +55,12 @@ citations:
   india-justice-report:
     label: "India Justice Report, 2025"
     url: "https://indiajusticereport.org/"
+  pew-india-2021:
+    label: "Pew Research Center, 2021"
+    url: "https://www.pewresearch.org/religion/2021/09/21/population-growth-and-religious-composition/"
+  census-2027:
+    label: "Census 2027 announcement, PIB"
+    url: "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2133845&reg=3&lang=2"
 
 narratives:
 
@@ -1403,16 +1409,22 @@ narratives:
     no_status: true
     bottom_line: >-
       Muslims were 14.2% of India's population at the 2011 Census, about one in
-      seven Indians and roughly 17 crore people; the count is estimated near 20
-      crore today. The share has risen steadily from about 10.7% in 1961, though
-      the pace of growth slows with each decade as Muslim fertility falls toward
-      the national average.
+      seven Indians and roughly 17 crore people. That count is now well over a
+      decade old: the Pew Research Center estimated the Muslim share had reached
+      about 15% by 2020 {{cite:pew-india-2021}}. It is still rising, but slowly,
+      and not because growth is speeding up: Muslim fertility has fallen sharply,
+      from 4.4 children per woman in 1992 to 2.6 by 2015, steadily narrowing the
+      gap with other communities {{cite:pew-india-2021}}.
     how_to_read: >-
       The chart tracks the Muslim share of the population across the six censuses
-      from 1961 to 2011; the 2021 Census is delayed. The tabs open the detail: By
-      state and By district show how unevenly Muslims are spread, Urban vs rural
-      and By age show a younger, more urban profile, and Population growth shows
-      how the decadal growth rate has fallen.
+      from 1961 to 2011, the last year with hard census data. The next count,
+      Census 2027, is long delayed from the one due in 2021: its
+      population-enumeration phase is set for early 2027, and it will be India's
+      first digital and first caste-counted census since 1931, so a fresh official
+      figure is still some way off {{cite:census-2027}}. The tabs open the detail:
+      By state and By district show how unevenly Muslims are spread, Urban vs rural
+      and By age show a younger, more urban profile, and Population growth shows how
+      the decadal growth rate has fallen.
     why_it_matters: >-
       Population share is the denominator for everything else on this dashboard:
       it is what every gap on jobs, schooling or representation is measured
