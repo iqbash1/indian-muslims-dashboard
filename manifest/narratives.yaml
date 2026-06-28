@@ -1464,3 +1464,51 @@ narratives:
       The Muslim sex ratio has run slightly more balanced than the Hindu one
       across recent censuses and improved between 2001 and 2011, against the wider
       Indian pattern of too few women.
+
+  # ===================================================================
+  # PHASE 2 - BATCH 6: communal-incidents (MOST SENSITIVE; restrained + heavily caveated)
+  # No drivers/levers by design: attributing causes of communal violence is too
+  # charged and the official count too unreliable. All-India count, no community
+  # split, so Status is suppressed. Non-partisan statutory stakeholders only.
+  # ===================================================================
+  communal-incidents-govt:
+    no_status: true
+    bottom_line: >-
+      India's official tally of communal or religious rioting incidents was 272
+      in 2023, down from a recent peak of 869 in 2016, though the count swings
+      sharply from year to year, it was 857 in 2020. Read this number with care:
+      it captures only incidents the police formally recorded under one narrow
+      crime-records category, it is widely regarded as an undercount, and it is
+      not broken down by which community was affected.
+    how_to_read: >-
+      The chart tracks the National Crime Records Bureau's annual count of
+      communal and religious rioting incidents from 2015 to 2023; lower is better,
+      but the line is only as complete as official recording. This is one specific
+      NCRB sub-category, so it misses incidents logged under other heads or never
+      registered, and unlike the rest of this dashboard it is not split by
+      religion. The By state tab shows where recorded incidents cluster.
+    why_it_matters: >-
+      Communal violence falls hardest on minorities, and the threat of it shapes
+      where Muslims feel safe to live, work and worship. An honest, complete count
+      would be one of the most important measures on this dashboard; the distance
+      between what is recorded here and what communities actually experience is
+      itself part of the story.
+    stakeholders:
+      - name: "National Foundation for Communal Harmony"
+        url: "https://nfch.nic.in/"
+        mission: >-
+          An autonomous body under the Home Ministry that promotes communal
+          harmony and supports the rehabilitation and education of children
+          orphaned in communal, caste or terrorist violence.
+      - name: "National Human Rights Commission"
+        url: "https://nhrc.nic.in/"
+        mission: >-
+          The statutory commission that inquires into human-rights violations,
+          including in communal incidents, and recommends remedies and
+          compensation.
+      - name: "National Commission for Minorities"
+        url: "https://www.ncm.nic.in/"
+        mission: >-
+          A statutory body under the National Commission for Minorities Act, 1992
+          that monitors the constitutional and legal safeguards of the notified
+          minority communities.
