@@ -457,7 +457,56 @@ narratives:
         text: >-
           Target the dense, informal-work neighbourhoods where Muslim children
           and nutrition services are most mismatched {{cite:sachar-2006}}.
-    stakeholders_from: imr
+    # Tailored to nutrition: led by the Women & Child Development ministry's
+    # Poshan/ICDS system rather than the health ministry, plus a dedicated
+    # under-five nutrition NGO (Antara). Reused health orgs keep their verified
+    # links; programme links are confirmed live.
+    stakeholders:
+      - name: "Ministry of Women and Child Development"
+        url: "https://poshanabhiyaan.gov.in/"
+        mission: >-
+          The Union ministry that runs Poshan Abhiyaan and the Anganwadi and ICDS
+          system, India's main effort to cut stunting and undernutrition in young
+          children, pregnant women and mothers.
+      - name: "National Health Mission"
+        url: "https://nhm.gov.in/index1.php?lang=1&level=1&sublinkid=794&lid=168"
+        mission: >-
+          The Government of India's flagship health programme, covering maternal,
+          newborn and child health services across rural and urban India.
+      - name: "Aga Khan Health Services, India"
+        url: "https://the.akdn/en/where-we-work/south-asia/india/health-india"
+        mission: >-
+          The Aga Khan network's Indian health arm, whose child-health work
+          includes infant-feeding and nutrition programmes. Founded by the Ismaili
+          community, it serves all communities.
+      - name: "The Antara Foundation"
+        url: "https://antarafoundation.org/what-we-do/"
+        mission: >-
+          An NGO that strengthens India's frontline nutrition system, supporting
+          Anganwadi and ASHA workers to improve maternal and under-five nutrition.
+      - name: "Doctors For You"
+        url: "https://doctorsforyou.org/public-health/rural-maternal-health-care-bihar.php"
+        donate_url: "https://pages.razorpay.com/pl_I8hBrG9gTuRV40/view"
+        credibility:
+          label: "GiveIndia vetted"
+          url: "https://give.do/ngos/doctors-for-you"
+        mission: >-
+          A humanitarian health NGO whose work includes treatment of severe acute
+          malnutrition in children, alongside rural maternal and child health.
+      - name: "SEWA Rural"
+        url: "https://sewarural.org/hospital-services/"
+        donate_url: "https://sewarural.org/donate-now/"
+        credibility:
+          label: "Credibility Alliance accredited"
+          url: "https://sewarural.org/awards-recognitions/"
+        mission: >-
+          A voluntary organisation in tribal south Gujarat whose hospital and
+          community programmes deliver maternal, newborn and child nutrition care.
+      - name: "UNICEF India"
+        url: "https://www.unicef.org/india/what-we-do"
+        mission: >-
+          The UN Children's Fund's India office, which works with states on child
+          nutrition, survival and immunisation.
 
   # ----- Institutional delivery (NFHS). higher is better. Muslims BEHIND. -----
   inst-delivery:
