@@ -75,30 +75,50 @@ narratives:
     status_note: >-
       The gap has closed by roughly a point and a half since 2001, slow but
       steady progress, and it remains widest for Muslim women and in rural areas.
-    drivers: >-
-      The Sachar Committee's 2006 review found Muslims carried the highest school
-      dropout rates of any large community and the smallest share of graduates,
-      with barely 4% of Muslims holding a degree against about 7% nationally
-      {{cite:sachar-2006}}. These are documented gaps rather than proven causes:
-      the same report tied them to poverty, the concentration of Muslims in
-      informal urban work, distance from and unfamiliarity with mainstream
-      schools, and a shortage of schools in Muslim-majority localities
-      {{cite:sachar-2006}}. The Post-Sachar evaluation in 2014 concluded that
-      government remedies existed on paper but reached Muslim children unevenly,
-      so the gap persisted as much through weak delivery as through any absence
-      of schemes {{cite:post-sachar-2014}}.
-    levers: >-
-      The instruments already exist. The Ministry of Minority Affairs runs
-      Pre-Matric, Post-Matric and Merit-cum-Means scholarships for minority
-      students, and the Post-Sachar review argued the priority is consistent
-      delivery rather than new schemes {{cite:post-sachar-2014}}. The data points
-      to three pressure points: keeping children in school through the primary to
-      secondary transition, where Muslim dropout is highest {{cite:sachar-2006}};
-      closing the female literacy gap, the widest single sub-gap; and supporting
-      minority-run schools, whose right to exist is protected through the
-      National Commission for Minority Educational Institutions. These are
-      options the evidence motivates, not guaranteed fixes: the Post-Sachar
-      lesson is that a scheme on the books does not by itself change outcomes.
+    # Potential drivers: MECE buckets - demand (poverty), supply (access),
+    # retention (dropout), gender (female gap), governance (delivery).
+    drivers:
+      - title: "Poverty"
+        text: >-
+          Muslims are disproportionately poor and concentrated in informal urban
+          work, so children are pulled toward earning rather than staying in
+          school {{cite:sachar-2006}}.
+      - title: "School access"
+        text: >-
+          The Sachar Committee found too few schools in many Muslim-majority
+          localities, leaving children further from a classroom
+          {{cite:sachar-2006}}.
+      - title: "Early dropout"
+        text: >-
+          Muslims had the highest school dropout rate of any large community, most
+          leaving around the move from primary to secondary {{cite:sachar-2006}}.
+      - title: "The female gap"
+        text: >-
+          Literacy is lowest of all for Muslim women, so half the community starts
+          furthest behind, and a mother's literacy shapes the next generation.
+      - title: "Patchy delivery"
+        text: >-
+          The 2014 Post-Sachar review found remedial schemes existed on paper but
+          reached Muslim children unevenly, so gaps persisted through weak delivery
+          as much as missing policy {{cite:post-sachar-2014}}.
+    levers:
+      - title: "Deliver existing aid"
+        text: >-
+          The Pre-Matric, Post-Matric and Merit-cum-Means scholarships already
+          exist; the Post-Sachar priority is consistent delivery, not new schemes
+          {{cite:post-sachar-2014}}.
+      - title: "Stop early dropout"
+        text: >-
+          Target the primary-to-secondary transition, where Muslim dropout is
+          highest {{cite:sachar-2006}}.
+      - title: "Prioritise girls"
+        text: >-
+          Close the female literacy gap, the widest single sub-gap within the
+          community.
+      - title: "Back minority schools"
+        text: >-
+          Protect and strengthen Article 30 minority institutions through the
+          National Commission for Minority Educational Institutions.
     stakeholders:
       - name: "Ministry of Minority Affairs"
         url: "https://minorityaffairs.gov.in/"
@@ -181,32 +201,40 @@ narratives:
       Muslims have recorded lower infant mortality than Hindus in every survey
       since 1998, but the advantage has shrunk from roughly 18 points then to
       about 2 today as mortality fell faster among other communities.
-    drivers: >-
-      Why a poorer community buries fewer infants is, in the words of the
-      economists who named it, a puzzle. The most cited study, by Bhalotra and
-      colleagues in 2010, is descriptive rather than causal: once income,
-      education and the usual risk factors are accounted for, those factors
-      predict that Muslims should do worse, not better, so most of the advantage
-      is left unexplained {{cite:bhalotra-2010}}. The part it could explain came
-      mainly from maternal height and diet, not from the breastfeeding or
-      birth-spacing stories often repeated in the press {{cite:bhalotra-2010}}.
-      The strongest later evidence points outward, not inward: Geruso and Spears
-      showed that Muslim neighbourhoods practise less open defecation, and that
-      this local sanitation difference alone accounts for a large share of the
-      survival gap, an effect that protects Hindu neighbours too
-      {{cite:geruso-spears-2018}}. As India's wider sanitation has improved, the
-      Muslim edge has narrowed {{cite:ganguly-2022}}.
-    levers: >-
-      Because this is a Muslim advantage that is fading rather than a deficit to
-      close, the levers are mostly the universal ones that lift every community.
-      Population-wide sanitation gains, which the evidence ties most directly to
-      infant survival, both save lives and erode the Muslim neighbourhood edge as
-      open defecation falls everywhere {{cite:geruso-spears-2018}}. The National
-      Health Mission's maternal and child health work, immunisation, institutional
-      delivery and newborn care, is the main public instrument. The honest caveat
-      is that the advantage itself stays mostly unexplained, so the surest gains
-      come from the basics that help every infant rather than from trying to
-      bottle whatever Muslim households are doing right {{cite:bhalotra-2010}}.
+    # Potential drivers: MECE buckets - external environment (sanitation),
+    # maternal-biological (the part the data explains), and the unexplained
+    # residual (the genuine puzzle).
+    drivers:
+      - title: "Sanitation"
+        text: >-
+          Muslim neighbourhoods practise less open defecation, and this local
+          difference alone accounts for a large share of the survival gap, an
+          effect that protects Hindu neighbours too {{cite:geruso-spears-2018}}.
+      - title: "Maternal health"
+        text: >-
+          The part researchers can explain comes mainly from mothers' height and
+          diet, not the breastfeeding or birth-spacing stories often repeated in
+          the press {{cite:bhalotra-2010}}.
+      - title: "Still a puzzle"
+        text: >-
+          After income, education and the usual risk factors are accounted for,
+          those predict Muslims should fare worse, not better, so most of the
+          advantage stays unexplained {{cite:bhalotra-2010}}.
+    levers:
+      - title: "Sanitation for all"
+        text: >-
+          The gain tied most directly to infant survival; it saves lives
+          everywhere and erodes the Muslim edge as open defecation falls
+          {{cite:geruso-spears-2018}}.
+      - title: "Maternal and newborn care"
+        text: >-
+          The National Health Mission's immunisation, institutional delivery and
+          newborn care is the main public instrument.
+      - title: "Stick to the basics"
+        text: >-
+          Because the advantage itself is mostly unexplained, the surest gains
+          come from what helps every infant, not from trying to bottle what Muslim
+          households are doing right {{cite:bhalotra-2010}}.
     # Note: genuinely Muslim-specific maternal-child-health NGOs in India are
     # scarce; the Aga Khan health network is the one Muslim-founded MCH operation,
     # so the rest of this list is the credible secular MCH field (honest fill).

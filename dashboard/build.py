@@ -433,6 +433,18 @@ def _metric_narrative_html(mid: str, *, collapsed: bool = True,
         return (f'<details class="cn-toggle"{op}><summary>{html.escape(title)}</summary>'
                 f'<div class="cn-disc-body">{body}</div></details>')
 
+    def focus_block(val):
+        # A list of {title, text} renders as short-titled MECE bullets (one driver
+        # or lever per bullet, "<title> . <explanation>"); a plain string falls
+        # back to a prose paragraph for any metric still authored that way.
+        if isinstance(val, list):
+            lis = "".join(
+                f'<li><strong>{html.escape(it.get("title", ""))}</strong> &middot; '
+                f'{_expand_citations(it.get("text", ""))}</li>'
+                for it in val)
+            return f'<ul class="cn-focus-list">{lis}</ul>'
+        return f'<div class="cn-text">{_expand_citations(val)}</div>'
+
     parts = []
     if n.get("bottom_line"):
         parts.append('<div class="cn-bottomline"><span class="cn-bl-label">Bottom line</span>'
@@ -455,12 +467,11 @@ def _metric_narrative_html(mid: str, *, collapsed: bool = True,
             f'<p class="cn-text">{html.escape(st["figures"])}{note_html}</p></div>')
     if n.get("drivers") or n.get("levers"):
         body = ""
-        if n.get("drivers"):
-            body += ('<div class="cn-block"><h4 class="cn-subhead">Potential drivers</h4>'
-                     f'<div class="cn-text">{_expand_citations(n["drivers"])}</div></div>')
-        if n.get("levers"):
-            body += ('<div class="cn-block"><h4 class="cn-subhead">Key levers</h4>'
-                     f'<div class="cn-text">{_expand_citations(n["levers"])}</div></div>')
+        for key, head in (("drivers", "Potential drivers"), ("levers", "Key levers")):
+            val = n.get(key)
+            if val:
+                body += (f'<div class="cn-block"><h4 class="cn-subhead">{head}</h4>'
+                         f'{focus_block(val)}</div>')
         parts.append(disclosure("Deeper analysis", body))
     stakeholders = n.get("stakeholders") or []
     if stakeholders:
@@ -522,6 +533,11 @@ NARRATIVE_CSS = """
   .card-narrative .cn-toggle > summary::after, .landing-narrative .cn-toggle > summary::after { content: none; }
   .card-narrative .cn-toggle > summary:hover, .landing-narrative .cn-toggle > summary:hover { background: none; }
   .cn-disc-body { margin-top: 10px; }
+  /* Potential drivers / Key levers: short-titled MECE bullets. */
+  .cn-focus-list { margin: 4px 0 0; padding-left: 20px; }
+  .cn-focus-list li { font-size: 15px; color: var(--fg); line-height: 1.55; margin-bottom: 9px; }
+  .cn-focus-list li:last-child { margin-bottom: 0; }
+  .cn-focus-list strong { font-weight: 700; color: var(--fg); }
   .cn-stakeholders { margin: 4px 0 0; padding-left: 18px; }
   .cn-stakeholders li { font-size: 15px; color: var(--fg); line-height: 1.6; margin-bottom: 12px; }
   .cn-sh-name { font-weight: 600; }
