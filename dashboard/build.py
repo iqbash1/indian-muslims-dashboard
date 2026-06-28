@@ -490,9 +490,31 @@ def _metric_narrative_html(mid: str, *, collapsed: bool = True,
                 f' <a class="cn-sh-donate" href="{html.escape(donate)}" target="_blank" '
                 f'rel="noopener">Donate<span aria-hidden="true"> &#8599;</span></a>'
             ) if donate else ""
-            lis += (f'<li><span class="cn-sh-name">{name_html}</span>: '
+            # Optional credibility tag (slate, never maroon): an independent
+            # transparency/accreditation credential (GuideStar India, Credibility
+            # Alliance, GiveIndia, 80G/FCRA) linking to the certifying body's page
+            # for this org. Shown only where a verified credential exists - it is
+            # a sourced badge, not a score. Same provenance spirit as REPRO_TIER.
+            cred = s.get("credibility") or {}
+            cred_html = ""
+            if cred.get("label"):
+                cl = html.escape(cred["label"])
+                curl = cred.get("url", "")
+                cred_html = (
+                    f' <a class="cn-sh-cred" href="{html.escape(curl)}" target="_blank" '
+                    f'rel="noopener">{cl}<span aria-hidden="true"> &#8599;</span></a>'
+                    if curl else f' <span class="cn-sh-cred">{cl}</span>')
+            lis += (f'<li><span class="cn-sh-name">{name_html}</span>{cred_html}: '
                     f'{_expand_citations(s.get("mission", ""))}{donate_html}</li>')
-        parts.append(disclosure("Key stakeholders", f'<ul class="cn-stakeholders">{lis}</ul>'))
+        has_cred = any((s.get("credibility") or {}).get("label") for s in stakeholders)
+        sh_note = (
+            '<p class="cn-sh-note">Badges link to an independent or registered '
+            'credential where the organisation publishes one (Credibility Alliance, '
+            'GiveIndia, 80G, FCRA). Many smaller NGOs do not take part in these '
+            'registries, so a missing badge is not a mark against an organisation.</p>'
+        ) if has_cred else ""
+        parts.append(disclosure("Key stakeholders",
+                                f'<ul class="cn-stakeholders">{lis}</ul>{sh_note}'))
     if not parts:
         return ""
     return f'<div class="{wrapper_class}">{"".join(parts)}</div>'
@@ -546,6 +568,11 @@ NARRATIVE_CSS = """
   .cn-stakeholders a.cn-sh-donate { color: var(--accent); }
   .cn-sh-donate { display: inline-flex; align-items: center; gap: 3px; margin-left: 6px; padding: 6px 13px; min-height: 32px; box-sizing: border-box; font-size: 12.5px; font-weight: 600; line-height: 1.1; border: 1px solid var(--rule); border-radius: 999px; white-space: nowrap; text-decoration: none; vertical-align: middle; }
   .cn-sh-donate:hover { border-color: var(--accent); background: #f4f7fa; text-decoration: none; }
+  /* Credibility badge: independent transparency/accreditation credential, slate
+     chrome (never maroon), sourced link. A badge, not a score. */
+  .cn-sh-cred { display: inline-flex; align-items: center; gap: 2px; padding: 1px 7px; font-size: 11.5px; font-weight: 600; color: var(--accent); background: #eef2f7; border: 1px solid #d6e0ea; border-radius: 4px; white-space: nowrap; text-decoration: none; vertical-align: 1px; }
+  .cn-sh-cred:hover { border-color: var(--accent); text-decoration: none; }
+  .cn-sh-note { margin: 10px 0 0; font-size: 12.5px; color: var(--muted); line-height: 1.5; }
 """
 
 

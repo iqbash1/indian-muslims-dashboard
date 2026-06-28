@@ -135,6 +135,9 @@ narratives:
       - name: "Zakat Foundation of India"
         url: "https://www.zakatindia.org/Scholarship.html"
         donate_url: "https://www.zakatindia.org/Donate.html"
+        credibility:
+          label: "80G + FCRA"
+          url: "https://www.zakatindia.org/Donate.html"
         mission: >-
           An Indian trust that channels Zakat into competitive-exam coaching,
           scholarships, skill training and orphan care for the Muslim community.
@@ -160,12 +163,18 @@ narratives:
       - name: "Markazul Ma'arif"
         url: "https://markazulmaarif.org/education/"
         donate_url: "https://markazulmaarif.org/donation/"
+        credibility:
+          label: "FCRA registered"
+          url: "https://markazulmaarif.org/society-registration-number/"
         mission: >-
           An Assam-based NGO that runs schools for educationally backward
           communities alongside relief, health and skills work, open to all
           irrespective of faith.
       - name: "Aga Khan Education Service, India"
         url: "https://akf.org/country/india/"
+        credibility:
+          label: "FCRA registered"
+          url: "https://akf.org/country/india/"
         mission: >-
           The Aga Khan network's Indian education arm, running schools and
           early-childhood programmes. Founded by the Ismaili community, it serves
@@ -173,6 +182,9 @@ narratives:
       - name: "Pratham"
         url: "https://pratham.org/programs/education/"
         donate_url: "https://pratham.org/donation/"
+        credibility:
+          label: "GiveIndia vetted"
+          url: "https://give.do/discover/17G3/pratham-education-foundation/"
         mission: >-
           One of India's largest education NGOs, raising children's foundational
           reading and arithmetic, and the producer of the annual ASER learning
@@ -265,6 +277,9 @@ narratives:
       - name: "SEWA Rural"
         url: "https://sewarural.org/hospital-services/"
         donate_url: "https://sewarural.org/donate-now/"
+        credibility:
+          label: "Credibility Alliance accredited"
+          url: "https://sewarural.org/awards-recognitions/"
         mission: >-
           A voluntary organisation in tribal south Gujarat whose Kasturba Hospital
           and community programmes deliver maternal and newborn care, with large
@@ -272,6 +287,9 @@ narratives:
       - name: "Doctors For You"
         url: "https://doctorsforyou.org/public-health/rural-maternal-health-care-bihar.php"
         donate_url: "https://pages.razorpay.com/pl_I8hBrG9gTuRV40/view"
+        credibility:
+          label: "GiveIndia vetted"
+          url: "https://give.do/ngos/doctors-for-you"
         mission: >-
           A humanitarian health NGO providing rural maternal and child health,
           treatment of severe acute malnutrition and disaster medical care across
