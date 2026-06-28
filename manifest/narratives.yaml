@@ -312,3 +312,269 @@ narratives:
           The Mumbai institute that conducts the National Family Health Survey,
           the source of India's infant-mortality and maternal and child health
           figures by population group.
+
+  # ===================================================================
+  # PHASE 2 - BATCH 1: Education + Health (reuse verified stakeholder sets)
+  # ===================================================================
+
+  # ----- Higher-education attendance (NSS 75th). higher is better. Muslims BEHIND. -----
+  ger-higher-ed:
+    bottom_line: >-
+      Just 14.5% of Muslims aged 18 to 23 were attending higher education in
+      2017, against 24.2% of Hindus and 22.8% nationally: the lowest rate of any
+      major community. Fewer than 15 in every 100 college-age Muslims are in a
+      degree course, so the school-level literacy gap widens into a much larger
+      gap at the top of the system.
+    how_to_read: >-
+      The chart sets the Muslim higher-education attendance rate beside Hindus,
+      the all-India average and other communities for 2017, the one year a
+      household survey measured it the same way for everyone; taller is better.
+      This is a single snapshot, not a trend, so there is no line over time. The
+      By sex tab splits the rate into Muslim men and women.
+    why_it_matters: >-
+      Higher education is the gateway to secure, salaried and professional work.
+      A community that sends a far smaller share of its young people to college
+      stays concentrated in informal, low-paid jobs, and the disadvantage
+      compounds across generations.
+    status_note: >-
+      This is the widest community gap on the dashboard at the top of the
+      education ladder, and it follows directly from the weaker school completion
+      that comes before it.
+    drivers:
+      - title: "Poverty"
+        text: >-
+          Higher education costs money and forgoes a wage, so poorer Muslim
+          households pull young people into work before college {{cite:sachar-2006}}.
+      - title: "The school pipeline"
+        text: >-
+          With the highest school dropout of any large community, far fewer
+          Muslims reach Class 12 in the first place, the gate to any degree
+          {{cite:sachar-2006}}.
+      - title: "First-generation barrier"
+        text: >-
+          With few graduate parents, Muslim students navigate admissions,
+          entrance exams and scholarships without family experience to draw on
+          {{cite:sachar-2006}}.
+      - title: "Not madrasas"
+        text: >-
+          The common claim that Muslims choose religious schooling over college
+          is not the cause: Sachar found only about 4% of Muslim children attend
+          a madrasa {{cite:sachar-2006}}.
+      - title: "Uneven delivery"
+        text: >-
+          Scholarships and reservations exist on paper but reach Muslim students
+          unevenly {{cite:post-sachar-2014}}.
+    levers:
+      - title: "Fix the pipeline first"
+        text: >-
+          The largest gains come earlier, by keeping Muslim students in school
+          through to Class 12 {{cite:sachar-2006}}.
+      - title: "Deliver scholarships reliably"
+        text: >-
+          The Post-Matric and Merit-cum-Means schemes exist; the Post-Sachar
+          priority is consistent delivery, not new schemes {{cite:post-sachar-2014}}.
+      - title: "Reach girls"
+        text: >-
+          The female shortfall is widest at this level, so women's access moves
+          the rate the most.
+      - title: "Back minority colleges"
+        text: >-
+          Protect and strengthen Article 30 minority higher-education
+          institutions through the National Commission for Minority Educational
+          Institutions.
+    stakeholders_from: lit-7plus
+
+  # ----- Per-student school spending (NSS/CMS:E). descriptive (lighter). -----
+  school-edu-spend:
+    bottom_line: >-
+      In 2025 a Muslim household spent about INR 9,249 a year on one school
+      child's fees, books, uniform and transport, against INR 12,941 in a Hindu
+      household and INR 12,616 nationally. Both communities lean on free
+      government schools at similar rates, so the shortfall of more than a
+      quarter reflects what families can afford to add on top, not a different
+      choice of school.
+    how_to_read: >-
+      The chart compares yearly per-student school spending across communities
+      for 2017 and 2025; this is money spent, not an outcome, so neither higher
+      nor lower is automatically good. Private coaching is excluded. The Urban vs
+      rural tab shows the gap is widest in towns, where better-off families spend
+      the most.
+    why_it_matters: >-
+      What a family can put behind each child, the books, a uniform, transport
+      and the occasional extra, shapes how well that child does in the same
+      classroom. Persistent under-spending is one of the quiet ways an income gap
+      turns into an education gap.
+    status_note: >-
+      The gap has held as spending rose across the board, so Muslim families are
+      adding less per child even as every community spends more.
+
+  # ----- Child stunting under 5 (NFHS). lower is better. Muslims slightly BEHIND. -----
+  stunting-u5:
+    bottom_line: >-
+      In 2019-21, 36.8% of Muslim children under five were stunted, too short
+      for their age from chronic undernutrition, just above Hindus at 35.5% and
+      the national 35.5%. It is a striking counterpoint to infant mortality,
+      where Muslim children do better: they are more likely to survive infancy,
+      yet slightly more likely to grow up stunted.
+    how_to_read: >-
+      The chart compares the share of under-five children who are stunted across
+      communities for 2019-21, the latest National Family Health Survey; here
+      lower is better. Stunting builds up over the whole of early childhood
+      rather than at a single moment, so it shifts slowly.
+    why_it_matters: >-
+      Stunting in the first years is largely irreversible and predicts weaker
+      school performance, lower adult earnings and poorer health for life. It is
+      one of the clearest early signs of how poverty passes to the next
+      generation.
+    status_note: >-
+      The Muslim figure sits just above the Hindu one, but both are far above the
+      levels seen for Christian, Sikh and Jain children, a sign that this is a
+      poverty gap more than a community one.
+    drivers:
+      - title: "Poverty"
+        text: >-
+          Stunting tracks household poverty closely, and Muslims are
+          over-represented among the poor and the urban informal workforce
+          {{cite:sachar-2006}}.
+      - title: "Maternal health"
+        text: >-
+          An undernourished, anaemic mother bears a child who starts growth
+          behind, and these conditions run high in poorer homes {{cite:nfhs5-2021}}.
+      - title: "Diet quality"
+        text: >-
+          Tight budgets mean less diverse, protein-poor diets in the first two
+          years, exactly when stunting sets in {{cite:nfhs5-2021}}.
+    levers:
+      - title: "The first 1,000 days"
+        text: >-
+          Stunting is prevented from pregnancy to age two; the Anganwadi and ICDS
+          nutrition system is the main public instrument.
+      - title: "Maternal nutrition"
+        text: >-
+          Treating anaemia and undernutrition in mothers protects the child's
+          early growth {{cite:nfhs5-2021}}.
+      - title: "Reach poor urban Muslims"
+        text: >-
+          Target the dense, informal-work neighbourhoods where Muslim children
+          and nutrition services are most mismatched {{cite:sachar-2006}}.
+    stakeholders_from: imr
+
+  # ----- Institutional delivery (NFHS). higher is better. Muslims BEHIND. -----
+  inst-delivery:
+    bottom_line: >-
+      Muslim institutional deliveries have surged from under a third of births in
+      1998 to 84.3% in 2019-21, one of the fastest gains on the dashboard. Hindus
+      are at 89.5% and the national average 88.6%, so a gap remains, but most
+      Muslim births now happen in a hospital or clinic rather than at home.
+    how_to_read: >-
+      The chart tracks the share of births in a health facility for each
+      community across four National Family Health Surveys from 1998 to 2019-21;
+      rising is better, and every line climbs steeply. The distance between
+      Muslims and the better-served communities is the point, so the vertical
+      axis does not start at zero.
+    why_it_matters: >-
+      A trained attendant and emergency care at birth are the single biggest
+      protection against a mother or newborn dying. The shift from home to
+      facility birth is the main reason maternal and newborn deaths have fallen
+      so fast.
+    status_note: >-
+      The gap with Hindus widened during the mid-2000s, as better-off communities
+      scaled up first, then began closing again after 2015 as cash incentives
+      like Janani Suraksha Yojana reached further.
+    drivers:
+      - title: "Access"
+        text: >-
+          Fewer and more crowded facilities in poor and Muslim-concentrated
+          pockets leave some births still at home {{cite:sachar-2006}}.
+      - title: "Cost"
+        text: >-
+          The indirect costs of reaching and staying at a facility weigh most on
+          poorer households {{cite:nfhs5-2021}}.
+      - title: "Awareness and trust"
+        text: >-
+          Late or no antenatal contact, and unease with unfamiliar institutions,
+          delay the move to a facility birth {{cite:nfhs5-2021}}.
+    levers:
+      - title: "Cash incentives"
+        text: >-
+          Janani Suraksha Yojana pays poorer mothers to deliver in a facility and
+          drove much of the catch-up {{cite:nfhs5-2021}}.
+      - title: "Local facilities"
+        text: >-
+          More and better-staffed centres in under-served Muslim areas close the
+          remaining gap {{cite:sachar-2006}}.
+      - title: "Antenatal contact"
+        text: >-
+          Early, regular check-ups are the bridge that turns into a facility birth
+          {{cite:nfhs5-2021}}.
+    stakeholders_from: imr
+
+  # ----- Women's anaemia (NFHS). lower is better. Muslims marginally AHEAD. -----
+  women-anemia:
+    bottom_line: >-
+      More than half of Muslim women aged 15 to 49, 55.6%, were anaemic in
+      2019-21, marginally better than Hindu women at 57.4% and the national
+      57.0%. The small Muslim edge is real and long-standing, but the headline is
+      grim for everyone: anaemia is extremely common across all communities and
+      has risen since the last survey.
+    how_to_read: >-
+      The chart tracks the share of women who are anaemic across four National
+      Family Health Surveys; lower is better, but notice how little the lines
+      separate and how most tick upward after 2015. The Muslim line sits just
+      below the Hindu one throughout.
+    why_it_matters: >-
+      Anaemia saps energy and learning, raises the risk of death in childbirth,
+      and passes low iron to the next child. At over half of all women, it is one
+      of India's largest and most stubborn public-health failures.
+    status_note: >-
+      The Muslim advantage is small and, like every community's, moving the wrong
+      way: anaemia rose between 2015 and 2019-21 despite a national supplementation
+      programme.
+    drivers:
+      - title: "Diet"
+        text: >-
+          The main reason Muslim women fare slightly better is more frequent
+          iron-rich non-vegetarian food, which the National Family Health Survey
+          records as higher among Muslims {{cite:nfhs5-2021}}.
+      - title: "A small edge on a huge problem"
+        text: >-
+          The gap between communities is tiny next to the gap between India and
+          the rest of the world: cereal-heavy diets, early and frequent
+          childbearing and poor iron absorption keep every group above half
+          {{cite:nfhs5-2021}}.
+    levers:
+      - title: "Iron and folic acid"
+        text: >-
+          Universal supplementation through the Anaemia Mukt Bharat programme is
+          the main instrument, though uptake and absorption stay weak.
+      - title: "Dietary diversity"
+        text: >-
+          More iron-rich food, with vitamin C to absorb it, helps every community
+          rather than one.
+      - title: "Spaced pregnancies"
+        text: >-
+          Fewer and better-spaced births let a woman's iron stores recover.
+    stakeholders_from: imr
+
+  # ----- Hospital out-of-pocket spend (NSS health). descriptive (lighter). -----
+  hospital-oop-spend:
+    bottom_line: >-
+      When a Muslim household has someone admitted to hospital, it pays about
+      INR 30,104 from its own pocket, against INR 34,323 in a Hindu household. A
+      lower bill is not good news here: it mostly reflects greater reliance on
+      cheaper government hospitals, which in turn tracks lower incomes, rather
+      than cheaper or better care.
+    how_to_read: >-
+      The chart compares out-of-pocket spending per hospital admission across
+      communities for 2017 and 2025; childbirth is excluded, and lower is not
+      automatically better. The Urban vs rural tab shows costs are higher in
+      towns, where private hospitals dominate.
+    why_it_matters: >-
+      A single hospital admission is one of the commonest ways an Indian family
+      slides into debt or poverty. What a household pays, and whether it can lean
+      on a public hospital, says a lot about both its income and its exposure to a
+      medical shock.
+    status_note: >-
+      The gap has widened in rupee terms as all costs rose, consistent with Muslim
+      households staying more dependent on the public system as private care grew
+      dearer.

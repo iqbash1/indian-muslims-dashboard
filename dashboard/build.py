@@ -473,7 +473,12 @@ def _metric_narrative_html(mid: str, *, collapsed: bool = True,
                 body += (f'<div class="cn-block"><h4 class="cn-subhead">{head}</h4>'
                          f'{focus_block(val)}</div>')
         parts.append(disclosure("Deeper analysis", body))
+    # A metric may reuse another metric's verified stakeholder list (e.g. the
+    # education or health cluster shares one roster) via `stakeholders_from: <id>`,
+    # so the programme/donate/credibility links are maintained in one place.
     stakeholders = n.get("stakeholders") or []
+    if not stakeholders and n.get("stakeholders_from"):
+        stakeholders = (NARRATIVES.get(n["stakeholders_from"], {}) or {}).get("stakeholders") or []
     if stakeholders:
         lis = ""
         for s in stakeholders:
