@@ -4765,7 +4765,8 @@ REPRO_TIER = {
     # MICRODATA - recomputed from unit-level NSS/PLFS records
     "lfpr-15plus": "MICRODATA", "wpr-15plus": "MICRODATA",
     "unemployment-rate-15plus": "MICRODATA", "salaried-share": "MICRODATA",
-    "salaried-earnings": "MICRODATA", "household-net-worth": "MICRODATA",
+    "salaried-earnings": "MICRODATA", "govt-salaried-share": "MICRODATA",
+    "household-net-worth": "MICRODATA",
     "institutional-credit-share": "MICRODATA", "mpce": "MICRODATA",
     "top-quintile-share": "MICRODATA", "improved-water-premises": "MICRODATA",
     "household-electricity": "MICRODATA", "pucca-house": "MICRODATA",
@@ -5360,6 +5361,7 @@ def _employment_combined_views() -> str:
 FOLDED_VIEW_METRIC = {
     "top-fifth": "top-quintile-share",               # tab of mpce
     "earnings": "salaried-earnings",                 # tab of salaried-share
+    "public-sector": "govt-salaried-share",          # tab of salaried-share
     "credit-sources": "institutional-credit-share",  # tab of household-net-worth
     "electricity": "household-electricity",          # tab of pucca-house
     "undertrials": "undertrial-rate-per-100k",       # tab of prison-rate-per-100k
@@ -5501,9 +5503,30 @@ def _note_undertrials() -> str:
             f"religion-reporting caveat as the incarceration chart.")
 
 
+def _note_public_sector():
+    """salaried-share's "Public vs private" tab note: the government slice of
+    salaried work by community, and what it means for the host card."""
+    g = _nat_by_religion("govt-salaried-share")
+    sal = _nat_by_religion("salaried-share")
+    m, h, a = g.get("muslim"), g.get("hindu"), g.get("all")
+    ms = sal.get("muslim")
+    return (
+        "Of all workers, the share holding a regular GOVERNMENT salaried job "
+        "(government, local bodies and public-sector undertakings), computed from "
+        f"PLFS 2023-24 microdata. About {_round_str(m, 1)}% of Muslim workers hold "
+        f"a public-sector job, against {_round_str(h, 1)}% of Hindus and "
+        f"{_round_str(a, 1)}% nationally, the lowest of any major community. Set "
+        f"against the host card: of the {_round_str(ms, 0)}% of Muslim workers who "
+        "are salaried, only about a sixth are in the secure public sector, so most "
+        "of the Muslim salaried shortfall sits in government jobs, a long-standing "
+        "Sachar Committee finding. Private salaried work is the rest.")
+
+
 # vid -> (companion metric id, tab label, unit_format, higher_is_better,
 #         single-column header when the source has no urban/rural split, note builder)
 _FOLDED_SNAPSHOTS = {
+    "public-sector": ("govt-salaried-share", "Public vs private", "percent", True,
+                      "In govt jobs", _note_public_sector),
     "top-fifth": ("top-quintile-share", "Top spending fifth", "percent", True,
                   "In top fifth", _note_top_fifth),
     "credit-sources": ("institutional-credit-share", "Borrowing sources", "percent", True,
@@ -5741,8 +5764,9 @@ def _card_comparison(mid, label, unit, hib, src, csv_href, cvid, suffix, dec):
             fold, fjs = _folded_view("top-fifth", cvid + "-top-fifth")
             details, fold_js = fold + details, [fjs]
         elif mid == "salaried-share":
-            fold, fjs = _folded_view("earnings", cvid + "-earnings")
-            details, fold_js = fold + details, [fjs]
+            f_ps, j_ps = _folded_view("public-sector", cvid + "-public-sector")
+            f_pay, j_pay = _folded_view("earnings", cvid + "-earnings")
+            details, fold_js = f_ps + f_pay + details, [j_ps, j_pay]
         elif mid == "household-net-worth":
             # The "Borrowing sources" fold moved here from the snapshot
             # branch when AIDIS 2019's TXT mirror gave net worth its second

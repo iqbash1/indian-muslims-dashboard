@@ -586,6 +586,40 @@ metrics:
         higher_is_better: true
         order: 152
 
+  - id: govt-salaried-share
+    name: Government salaried jobs
+    cluster: employment
+    unit: percent
+    higher_is_better: true
+    definition: |
+      Of all workers, the share in a regular GOVERNMENT salaried job (government,
+      local bodies and public-sector undertakings), age 15+. The public-sector
+      slice of the salaried-jobs card: Muslims hold government jobs at little over
+      half the Hindu rate.
+    sources: {primary: plfs-microdata}
+    geography_levels: [national]
+    religions: [muslim, hindu, christian, sikh, jain, buddhist, other, all]
+    methodology_notes: |
+      Computed from PLFS 2023-24 unit-level microdata (person file, usual status
+      ps+ss, age 15+, weighted): a worker is salaried if the classifying status
+      is 31, and government if that activity's Enterprise Type Code (b5pt1q9
+      principal, b5pt2q8 subsidiary) is 5 (Government/Local body) or 6 (Public
+      Sector Enterprise). Private salaried = the salaried-share figure minus this.
+      The Muslim by government cell is a minority of a minority of a minority
+      (n=1,235 in 2023-24), so national only, no by-state or trend. Religion is
+      self-reported (NSO unit-data rider: indicative, no sub-state estimates).
+    comparison_baselines: [hindu, all]
+    phase: 1
+    status: defined
+    display:
+      scorecard:
+        include: false   # decarded: folded into salaried-share's "Public vs private" tab (PLFS 2023-24 microdata; the public-sector slice of the salaried-jobs card)
+        label: "Government jobs"
+        reference: "hindu"
+        unit_format: percent
+        higher_is_better: true
+        order: 153
+
   # ----- Income / consumption / poverty (Phase 1) -----
   - id: mpce
     name: Monthly spending per person
