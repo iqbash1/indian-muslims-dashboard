@@ -49,6 +49,12 @@ citations:
   thorat-attewell-2007:
     label: "Thorat and Attewell, 2007"
     url: "https://www.epw.in/journal/2007/41/caste-and-economic-discrimination-special-issues/legacy-social-exclusion.html"
+  india-forum-rep:
+    label: "Beg, The India Forum"
+    url: "https://www.theindiaforum.in/politics/decline-muslim-legislative-representation-and-its-consequences"
+  india-justice-report:
+    label: "India Justice Report, 2025"
+    url: "https://indiajusticereport.org/"
 
 narratives:
 
@@ -1184,3 +1190,206 @@ narratives:
         text: >-
           Secure land title is what lets the urban poor invest in a permanent home.
     stakeholders_from: improved-sanitation
+
+  # ===================================================================
+  # PHASE 2 - BATCH 4: Representation + Justice (sensitive; factual, non-partisan)
+  # ===================================================================
+
+  # ----- Lok Sabha Muslim MPs (ECI/PRS). under-representation. Muslim-only series. -----
+  ls-share:
+    bottom_line: >-
+      Muslims hold 24 of the 543 seats in the Lok Sabha elected in 2024, about
+      4.4%, against a 14.2% share of the population. If seats matched population
+      there would be roughly 77 Muslim MPs. Representation in Parliament peaked in
+      the 1980s and has drifted down since, even as the population share rose.
+    how_to_read: >-
+      The chart tracks the number, and share, of Muslim members of the Lok Sabha
+      at each general election since 1952, against the population-parity mark of
+      77 seats. This card counts seats won, not votes cast or candidates fielded,
+      so it measures outcomes, not effort.
+    why_it_matters: >-
+      Who sits in the legislature shapes which concerns reach the floor, which
+      laws pass and how budgets are shared. Persistent under-representation of a
+      seventh of the country means a large community's voice is thinner in the
+      rooms where decisions are made.
+    drivers:
+      - title: "Dispersed population"
+        text: >-
+          Muslims are a minority almost everywhere and a majority in very few
+          constituencies, so a first-past-the-post system rarely returns a Muslim
+          member {{cite:misra-2007}}.
+      - title: "Fewer candidates"
+        text: >-
+          Parties have fielded steadily fewer Muslim candidates over recent
+          decades, narrowing the pool that can win {{cite:india-forum-rep}}.
+      - title: "Polarisation"
+        text: >-
+          Where elections turn on community lines, Muslim candidates draw fewer
+          cross-community votes, lowering their odds in mixed seats
+          {{cite:india-forum-rep}}.
+    levers:
+      - title: "Candidate selection"
+        text: >-
+          The most direct lever sits with the parties, in how many Muslim
+          candidates they field in winnable seats.
+      - title: "Voter participation"
+        text: >-
+          Complete electoral rolls and turnout efforts, the Election Commission's
+          remit, ensure the community's votes are fully counted.
+      - title: "Local office"
+        text: >-
+          Representation in panchayats and municipalities builds the pipeline of
+          candidates for higher office.
+    stakeholders:
+      - name: "Election Commission of India"
+        url: "https://ecisveep.nic.in/division/about-us/"
+        mission: >-
+          The constitutional body that conducts free and fair elections, whose
+          SVEEP programme runs voter education and turnout work to deepen
+          participation.
+      - name: "National Commission for Minorities"
+        url: "https://www.ncm.nic.in/"
+        mission: >-
+          A statutory body under the National Commission for Minorities Act, 1992
+          that monitors the constitutional and legal safeguards of the notified
+          minority communities.
+      - name: "Association for Democratic Reforms"
+        url: "https://adrindia.org/about-adr/who-we-are"
+        donate_url: "https://adrindia.org/content/adr-donation-campaign"
+        credibility:
+          label: "GiveIndia vetted"
+          url: "https://give.do/discover/VZR/association-for-democratic-reforms/"
+        mission: >-
+          A non-partisan body that publishes candidates' criminal, financial and
+          educational records from their election affidavits to strengthen
+          electoral transparency.
+      - name: "Lokniti, Centre for the Study of Developing Societies"
+        url: "https://www.lokniti.org/about-us"
+        mission: >-
+          A non-partisan academic programme that runs India's National Election
+          Studies and survey research on democracy, including community patterns
+          in voting and representation.
+
+  # ----- State-assembly Muslim MLAs (ECI/PRS). under-representation. Muslim-only series. -----
+  mla-share:
+    bottom_line: >-
+      Muslims hold about 6% of seats across India's state legislative assemblies,
+      against a 14.2% population share. The shortfall is narrower than in the Lok
+      Sabha but still wide, and it varies sharply from state to state, which the
+      By assembly tab lays out.
+    how_to_read: >-
+      The chart shows the Muslim share of seats in each state and union-territory
+      assembly at its most recent election, with a national aggregate of about 6%.
+      The By assembly tab ranks the states and pairs each one's seat share against
+      its Muslim population share, so you can see where representation tracks
+      numbers and where it falls far short.
+    why_it_matters: >-
+      State assemblies decide on policing, land, health and schooling, the
+      services that touch daily life most directly. Thin representation in them
+      means fewer voices on exactly the local decisions that shape a community's
+      living conditions.
+    drivers:
+      - title: "Geography by state"
+        text: >-
+          Representation roughly tracks where Muslims are concentrated enough to
+          swing a seat; states with a dispersed Muslim population elect almost none
+          {{cite:misra-2007}}.
+      - title: "Candidate selection"
+        text: >-
+          As in Parliament, party ticket decisions set the ceiling on how many
+          Muslims can win an assembly seat {{cite:india-forum-rep}}.
+      - title: "Reserved seats"
+        text: >-
+          Seats reserved for Scheduled Castes and Tribes, which Muslims cannot
+          contest as such, remove some constituencies from the open pool
+          {{cite:misra-2007}}.
+    levers:
+      - title: "Party tickets"
+        text: >-
+          The direct lever is how many Muslim candidates parties field in winnable
+          assembly seats.
+      - title: "Local pipeline"
+        text: >-
+          Strong representation in local bodies feeds candidates upward into
+          assembly contests.
+      - title: "Inclusive rolls"
+        text: >-
+          Complete electoral rolls and turnout work ensure no eligible voter is
+          left uncounted.
+    stakeholders_from: ls-share
+
+  # ----- Incarceration rate (NCRB). lower is better. Muslims BEHIND (over-incarcerated). -----
+  prison-rate-per-100k:
+    bottom_line: >-
+      Muslims are imprisoned at about 63 per 100,000 of their population, against
+      40 for Hindus and 45 nationally, so a Muslim is around one and a half times
+      as likely to be in jail as the average Indian. Most of this is not about
+      conviction: a large majority of all prisoners are undertrials, awaiting
+      trial rather than found guilty, and Muslims are over-represented among them.
+    how_to_read: >-
+      The chart compares the incarceration rate, prisoners per 100,000 of each
+      community's own population, so it is not distorted by community size. The
+      Undertrials tab is the one to read closely: it shows how much of the gap is
+      people held awaiting trial, not convicts. By state shows how sharply this
+      varies across India.
+    why_it_matters: >-
+      Who is in prison, and who waits there untried, is one of the clearest tests
+      of equal justice. Over-incarceration, especially of the unconvicted, falls
+      hardest on poor families who lose an earner and cannot afford bail or a
+      lawyer.
+    status_note: >-
+      The gap is driven less by convictions than by pre-trial detention: most
+      Muslim prisoners are undertrials, where poverty, the cost of bail and slow
+      courts weigh heaviest.
+    drivers:
+      - title: "Undertrials"
+        text: >-
+          Most prisoners of every community are undertrials, not convicts, and
+          Muslims are over-represented among them, so the gap is largely about who
+          is held before trial {{cite:india-justice-report}}.
+      - title: "Poverty and bail"
+        text: >-
+          Those who cannot afford a bail bond or a lawyer stay inside; the
+          community's higher poverty translates into longer pre-trial detention
+          {{cite:sachar-2006}}.
+      - title: "Slow courts"
+        text: >-
+          Chronic case backlogs keep undertrials in jail for months or years,
+          magnifying any disparity at the point of arrest {{cite:india-justice-report}}.
+    levers:
+      - title: "Bail reform"
+        text: >-
+          Easier, affordable bail and personal-bond release for the poor would cut
+          undertrial numbers fastest {{cite:india-justice-report}}.
+      - title: "Legal aid"
+        text: >-
+          Prompt, free legal representation, the National Legal Services
+          Authority's mandate, shortens detention.
+      - title: "Undertrial review"
+        text: >-
+          Regular review committees and faster trials clear the backlog of people
+          held without conviction {{cite:india-justice-report}}.
+    stakeholders:
+      - name: "National Legal Services Authority"
+        url: "https://nalsa.gov.in/about-nalsa/"
+        mission: >-
+          The statutory authority that provides free legal aid to weaker sections
+          and runs Undertrial Review Committees and Lok Adalats to reduce pending
+          cases and unnecessary detention.
+      - name: "Commonwealth Human Rights Initiative"
+        url: "https://www.humanrightsinitiative.org/content/prison-reforms.html"
+        donate_url: "https://www.nowdonate.com/donate/commonwealth-human-rights-initiative"
+        mission: >-
+          An independent, non-partisan human-rights NGO whose prison-reform work
+          targets unnecessary pre-trial detention and legal aid for prisoners.
+      - name: "Project 39A, National Law University Delhi"
+        url: "https://www.project39a.com/"
+        mission: >-
+          A university criminal-justice centre, named after Article 39A, working
+          on legal aid, fair trial, sentencing and torture prevention.
+      - name: "India Justice Report"
+        url: "https://indiajusticereport.org/"
+        mission: >-
+          A periodic data initiative, produced by Tata Trusts with research
+          partners, that ranks states on police, prisons, judiciary and legal aid,
+          including undertrial and prison-demographic statistics.
