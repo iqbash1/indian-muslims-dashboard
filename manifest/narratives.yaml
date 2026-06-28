@@ -46,6 +46,9 @@ citations:
   ganguly-2022:
     label: "Ganguly, Goli and Rammohan, 2022"
     url: "https://doi.org/10.1186/s41118-022-00177-3"
+  thorat-attewell-2007:
+    label: "Thorat and Attewell, 2007"
+    url: "https://www.epw.in/journal/2007/41/caste-and-economic-discrimination-special-issues/legacy-social-exclusion.html"
 
 narratives:
 
@@ -627,3 +630,350 @@ narratives:
       The gap has widened in rupee terms as all costs rose, consistent with Muslim
       households staying more dependent on the public system as private care grew
       dearer.
+
+  # ===================================================================
+  # PHASE 2 - BATCH 2: Employment + Income (new verified rosters)
+  # ===================================================================
+
+  # ----- Labour-force participation (EUS+PLFS). higher is better. Muslims BEHIND (female-driven). -----
+  lfpr-15plus:
+    bottom_line: >-
+      About 55% of Muslims aged 15 and over were working or looking for work in
+      2023, against 61% of Hindus, but the whole of that gap is among women.
+      Muslim men take part at slightly higher rates than Hindu men; Muslim women,
+      at 36%, sit far below Hindu women at 49%, and that single gap pulls the
+      community total down.
+    how_to_read: >-
+      The chart tracks the share of adults in the labour force across two decades,
+      from the older Employment surveys to the newer PLFS; the dashed break at
+      2017 marks the change of survey, so do not read the step there as a real
+      fall. The By sex tab is the one to open here: it shows the gap is almost
+      entirely about women. Working vs looking separates the employed from those
+      still searching, and Urban vs rural splits the rate by place.
+    why_it_matters: >-
+      How many adults work or seek work sets the ceiling on a community's income.
+      A large pool of working-age people outside the labour force, most of them
+      women, means fewer earners in each household and less to go around.
+    status_note: >-
+      The headline gap has narrowed over twenty years, but largely because
+      participation drifted down for everyone; the low rate among Muslim women is
+      the part that has barely moved.
+    drivers:
+      - title: "Women's participation"
+        text: >-
+          The gap is almost entirely a female one: Muslim women join the workforce
+          at very low rates, for reasons that mix social norms, safety, childcare
+          and a shortage of suitable local work {{cite:sachar-2006}}.
+      - title: "Self-employment"
+        text: >-
+          Muslim men cluster in self-employment and family enterprise rather than
+          wage work, which the surveys count but which offers thinner, less secure
+          earnings {{cite:sachar-2006}}.
+      - title: "Education"
+        text: >-
+          Lower schooling keeps many out of the formal jobs that draw people into
+          the labour force in the first place {{cite:sachar-2006}}.
+    levers:
+      - title: "Enable women's work"
+        text: >-
+          Safe transport, childcare and nearby job creation do the most to lift
+          the rate, since the female shortfall is where the gap lives.
+      - title: "Skilling"
+        text: >-
+          Vocational training through schemes like PM VIKAS and PMKVY widens the
+          path into wage work.
+      - title: "Credit for enterprise"
+        text: >-
+          Affordable credit strengthens the self-employment many Muslim households
+          already depend on.
+    stakeholders:
+      - name: "Ministry of Skill Development and Entrepreneurship"
+        url: "https://www.msde.gov.in/offerings/schemes-and-services/details/pradhan-mantri-kaushal-vikas-yojana-4-0-pmkvy-4-0-2021"
+        mission: >-
+          India's nodal skilling ministry, whose Pradhan Mantri Kaushal Vikas
+          Yojana gives young people free short-term skill training and
+          certification to improve their employment prospects.
+      - name: "Ministry of Minority Affairs (PM VIKAS)"
+        url: "https://pmvikas.minorityaffairs.gov.in/"
+        mission: >-
+          The Ministry's converged minority skilling and entrepreneurship scheme,
+          PM VIKAS, which trains and supports young people from the notified
+          minorities for jobs and self-employment.
+      - name: "National Skill Development Corporation"
+        url: "https://nsdcindia.org/seekhoaurkamao"
+        mission: >-
+          The public-private corporation under the skilling ministry that funds
+          and runs national skill programmes, including minority skilling
+          delivery such as Seekho aur Kamao.
+      - name: "Association of Muslim Professionals"
+        url: "https://www.ampindia.org/employment_assistance_cell"
+        donate_url: "https://www.ampindia.org/make_a_donation"
+        mission: >-
+          A volunteer professionals' body whose Employment Assistance Cell runs
+          job fairs and drives that connect unemployed youth to corporate jobs.
+      - name: "Pratham"
+        url: "https://www.pratham.org/programs/education/vocational-training/"
+        donate_url: "https://pratham.org/donation/"
+        credibility:
+          label: "GiveIndia vetted"
+          url: "https://give.do/discover/17G3/pratham-education-foundation/"
+        mission: >-
+          One of India's largest education NGOs, whose vocational-training
+          programme equips disadvantaged youth aged 18 to 35 with employable
+          skills and links them to jobs.
+      - name: "Magic Bus India Foundation"
+        url: "https://www.magicbus.org/campaign/youth-skilling-programme.php"
+        donate_url: "https://www.magicbus.org/donate-for-livelihood/"
+        credibility:
+          label: "GiveIndia vetted"
+          url: "https://give.do/discover/U8Q/magic-bus-india-foundation/"
+        mission: >-
+          An NGO that runs a life-skills and employment-linked programme training
+          underserved youth and placing them in entry-level jobs.
+
+  # ----- Unemployment rate (EUS+PLFS). lower is better, but low can mean distress. ~AT PARITY. -----
+  unemployment-rate-15plus:
+    bottom_line: >-
+      At 3.2%, measured Muslim unemployment in 2023 was barely above the Hindu
+      rate of 3.1%, and well below its late-2010s peak. But a low unemployment
+      rate is not the good news it looks like: people who cannot afford to sit
+      idle take whatever informal work they can find, so distress, not comfort,
+      often keeps the number down.
+    how_to_read: >-
+      The chart tracks the share of the labour force that is unemployed; the 2017
+      dashed break marks the switch to the PLFS survey. Read it alongside the
+      salaried-jobs and consumption cards, because a low rate here sits next to
+      low-paid, insecure work. The By sex and Urban vs rural tabs show where
+      joblessness concentrates: among the educated, the urban and the young.
+    why_it_matters: >-
+      Open unemployment counts only those who can hold out for a job. For a
+      poorer community it understates the real problem, which is not idleness but
+      the scarcity of secure, decently paid work.
+    status_note: >-
+      Muslim unemployment ran clearly above the Hindu rate from 2017 to 2019 and
+      has since converged; the gap that matters now is in the quality of work, not
+      the headline rate.
+    drivers:
+      - title: "Educated joblessness"
+        text: >-
+          As in every community, unemployment is highest among the better-educated
+          young, who can wait for a suitable job; for Muslims this overlaps with
+          the urban salaried gap {{cite:sachar-2006}}.
+      - title: "No cushion"
+        text: >-
+          Poorer households cannot afford open unemployment, so members take
+          informal, casual work, which holds the measured rate down
+          {{cite:sachar-2006}}.
+      - title: "Discrimination"
+        text: >-
+          Audit studies that sent matched job applications found CVs with Muslim
+          names called back less often, one barrier to the formal jobs people
+          queue for {{cite:thorat-attewell-2007}}.
+    levers:
+      - title: "Better jobs, not just any jobs"
+        text: >-
+          The goal is secure, formal employment, not a lower headline rate.
+      - title: "Skilling and placement"
+        text: >-
+          Training paired with active placement links job-seekers to formal work.
+      - title: "Fair hiring"
+        text: >-
+          Anonymised or audited recruitment counters the name-based bias the
+          studies record {{cite:thorat-attewell-2007}}.
+    stakeholders_from: lfpr-15plus
+
+  # ----- Regular-salaried share (EUS+PLFS). higher is better. Muslims BEHIND (urban-starkest). -----
+  salaried-share:
+    bottom_line: >-
+      Just 18% of Muslim workers hold a regular salaried job, against 22% of
+      Hindus; most Muslims work for themselves or as casual labour. The gap is
+      starkest in cities, where salaried work is common: there, about a third of
+      Muslim workers are salaried, against half of Hindus.
+    how_to_read: >-
+      The chart tracks the share of workers in regular salaried jobs over two
+      decades, with the 2017 dashed break marking the move to the PLFS survey.
+      The Urban vs rural tab carries the real story: the salaried gap is small in
+      villages but very wide in towns. What it pays compares earnings inside those
+      salaried jobs, and By sex splits the rate by gender.
+    why_it_matters: >-
+      A regular salaried job means a predictable wage, and often paid leave,
+      provident fund and some security. The shortage of such jobs is the core of
+      the Muslim economic disadvantage: not that Muslims do not work, but that
+      their work is more often informal, self-run and insecure.
+    status_note: >-
+      The salaried share has risen for Muslims over twenty years, but the gap with
+      Hindus has held, and it stays widest exactly where formal jobs are most
+      available, in the cities.
+    drivers:
+      - title: "Education"
+        text: >-
+          Regular salaried jobs increasingly need credentials that fewer Muslims
+          hold, the labour-market end of the schooling gap {{cite:sachar-2006}}.
+      - title: "Hiring discrimination"
+        text: >-
+          Resume-audit studies found applicants with Muslim names called back
+          significantly less often than identical Hindu applicants
+          {{cite:thorat-attewell-2007}}.
+      - title: "Self-employment"
+        text: >-
+          A long tilt toward family enterprise and trade, partly a response to
+          closed doors, keeps many Muslims out of the wage sector
+          {{cite:sachar-2006}}.
+      - title: "Little public-sector work"
+        text: >-
+          Muslims are sharply under-represented in government jobs, which make up
+          a large share of all salaried work {{cite:sachar-2006}}.
+    levers:
+      - title: "Credentials"
+        text: >-
+          Closing the education and skilling gap is the precondition for more
+          salaried work {{cite:sachar-2006}}.
+      - title: "Fair recruitment"
+        text: >-
+          Audited, name-blind hiring counters the documented bias
+          {{cite:thorat-attewell-2007}}.
+      - title: "Public-sector access"
+        text: >-
+          Transparent recruitment and outreach widen Muslim entry into government
+          jobs {{cite:post-sachar-2014}}.
+      - title: "Formalise enterprise"
+        text: >-
+          Credit and market links can turn informal self-employment into steadier,
+          registered businesses.
+    stakeholders_from: lfpr-15plus
+
+  # ----- Monthly per-capita consumption (HCES). higher is better. Muslims BEHIND ~10%. -----
+  mpce:
+    bottom_line: >-
+      An average Muslim spent INR 4,455 a month in 2023, about a tenth less than
+      the INR 4,974 a Hindu spent and below the national INR 4,958. Spending is
+      the standard yardstick of living standards in India, used because no
+      reliable income figure by religion exists, and on it Muslims sit at the
+      lower end.
+    how_to_read: >-
+      The chart compares average monthly spending per person across communities;
+      higher means a higher material standard of living. The By state tab shows
+      how far this swings across India, Top spending fifth looks at the better-off
+      slice of each community, and Urban vs rural splits town from village.
+      Spending gaps are narrower than wealth gaps, because even poorer households
+      must spend to live.
+    why_it_matters: >-
+      Monthly spending is the closest thing to a living-standards thermometer
+      India has by religion. It rolls food, rent, fuel, schooling and health into
+      one figure, and a persistent gap means a persistently lower standard of
+      everyday life.
+    status_note: >-
+      The Muslim shortfall in spending, around a tenth, is smaller than the gap in
+      wealth, the deeper divide; consumption gaps compress because everyone must
+      eat and pay rent.
+    drivers:
+      - title: "Lower earnings"
+        text: >-
+          The consumption gap flows from the jobs gap: more informal, self-run and
+          casual work means lower and less certain household income
+          {{cite:sachar-2006}}.
+      - title: "More mouths"
+        text: >-
+          A larger average household spreads the same earnings across more people,
+          lowering spending per head {{cite:sachar-2006}}.
+      - title: "Urban poverty"
+        text: >-
+          Muslims are concentrated in towns, but in their poorer, informal-economy
+          parts, where costs are high and wages low {{cite:sachar-2006}}.
+    levers:
+      - title: "Raise earnings"
+        text: >-
+          The durable lever is better, more formal work, the same fix as the jobs
+          cards.
+      - title: "Targeted welfare"
+        text: >-
+          Food, fuel and cash support reach poorer Muslim households through
+          universal rather than separate schemes {{cite:post-sachar-2014}}.
+      - title: "Education"
+        text: >-
+          Schooling is the slow lever that lifts the next generation's earnings
+          and spending.
+    stakeholders:
+      - name: "National Minorities Development and Finance Corporation"
+        url: "https://nmdfc.org/"
+        mission: >-
+          A statutory corporation under the Ministry of Minority Affairs that
+          provides concessional credit for self-employment and skills to the
+          notified minority communities.
+      - name: "Ministry of Minority Affairs"
+        url: "https://www.minorityaffairs.gov.in/"
+        mission: >-
+          The Union ministry for the welfare and economic development of India's
+          notified minorities, running scholarship, skilling and livelihood
+          schemes.
+      - name: "Sahulat Microfinance Society"
+        url: "https://www.sahulat.org/category/interest-free-microfinance-through-cooperatives/"
+        donate_url: "https://www.sahulat.org/category/donate-now/"
+        mission: >-
+          A national NGO that promotes interest-free microfinance for marginalised
+          communities through a network of member-owned credit cooperatives.
+      - name: "SEWA Bharat"
+        url: "https://sewabharat.org/what-we-do/financial-inclusion/"
+        donate_url: "https://pages.razorpay.com/sewabharat"
+        credibility:
+          label: "GiveIndia vetted"
+          url: "https://give.do/discover/18CI/sewa-bharat-all-india-federation-of-self-employed-womens-association/"
+        mission: >-
+          A federation that builds financial independence for informal-sector
+          women through credit cooperatives, banking access and financial
+          literacy.
+      - name: "Rang De"
+        url: "https://rangde.in/blog/what-is-social-investing"
+        mission: >-
+          An RBI-regulated peer-to-peer social-investing platform that channels
+          low-cost credit to low-income rural entrepreneurs, most of them women.
+
+  # ----- Household net worth (AIDIS). higher is better. Muslims BEHIND ~20%. -----
+  household-net-worth:
+    bottom_line: >-
+      The average Muslim household was worth about INR 15.0 lakh in 2018, what it
+      owns minus what it owes, against INR 18.8 lakh for a Hindu household. The
+      wealth gap, about a fifth, runs deeper than the gap in monthly spending,
+      because wealth is the slow build-up of land, property and savings that
+      disadvantage compounds over generations.
+    how_to_read: >-
+      The chart compares average household net worth, assets minus debts, for 2012
+      and 2018. Wealth is a stock, not a flow, so it moves slowly and gaps are
+      wide. The Borrowing sources tab shows where each community turns for credit,
+      banks or moneylenders, and Urban vs rural splits the two.
+    why_it_matters: >-
+      Wealth is the cushion that income is not: it pays for a medical emergency, a
+      business or a child's education without borrowing at ruinous rates. A
+      thinner cushion leaves a household one shock away from crisis, with less to
+      pass on.
+    status_note: >-
+      Muslim household wealth grew faster than Hindu wealth between 2012 and 2018,
+      closing the ratio a little, but the absolute gap remains around a fifth.
+    drivers:
+      - title: "Lower income"
+        text: >-
+          Less is earned, so less can be saved or invested; the wealth gap starts
+          as the income gap {{cite:sachar-2006}}.
+      - title: "Less land and property"
+        text: >-
+          Muslims own less agricultural land and are more often urban tenants than
+          home-owners, the assets that make up most Indian wealth
+          {{cite:sachar-2006}}.
+      - title: "Credit exclusion"
+        text: >-
+          Lower access to bank credit, including the documented marking of
+          Muslim-concentrated areas as negative for lending, pushes households to
+          costlier informal borrowing that erodes wealth {{cite:sachar-2006}}.
+    levers:
+      - title: "Formal credit"
+        text: >-
+          Bringing Muslim-concentrated areas fully into priority-sector bank
+          lending lowers the cost of building assets {{cite:post-sachar-2014}}.
+      - title: "Interest-free and micro-finance"
+        text: >-
+          Cooperative and interest-free finance reaches households the banks miss.
+      - title: "Asset programmes"
+        text: >-
+          Housing and enterprise schemes that build durable assets close the stock
+          gap faster than income alone.
+    stakeholders_from: mpce
