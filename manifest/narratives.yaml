@@ -121,7 +121,7 @@ narratives:
           National Commission for Minority Educational Institutions.
     stakeholders:
       - name: "Ministry of Minority Affairs"
-        url: "https://minorityaffairs.gov.in/"
+        url: "https://www.minorityaffairs.gov.in/"
         mission: >-
           The Union ministry, created in 2006, that runs scholarship and
           development schemes for India's notified minorities, including the
@@ -302,8 +302,7 @@ narratives:
           newborn care in India by training frontline health workers and
           supporting government programmes.
       - name: "UNICEF India"
-        url: "https://www.unicef.org/india/what-we-do/child-survival"
-        donate_url: "https://www.unicef.org/india/take-action/donate-to-unicef"
+        url: "https://www.unicef.org/india/what-we-do"
         mission: >-
           The UN Children's Fund's India office, working with states on child
           survival, immunisation and maternal and newborn health.
