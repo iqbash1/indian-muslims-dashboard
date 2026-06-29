@@ -182,14 +182,21 @@ def _in_group(n: int) -> str:
 
 def _inr_str(v: float) -> str:
     """Indian-money display: INR 9.2 lakh / INR 1.4 crore above one lakh,
-    Indian-grouped rupees below it."""
-    a = abs(v)
+    Indian-grouped rupees below it. Lakh/crore round HALF-UP via integer
+    tenths (26.65 lakh -> 26.7, not 26.6): the rupee value is an integer, so
+    (a + half-a-tenth) // a-tenth is exact, free of the binary-float bias that
+    `f"{26.65:.1f}"` shows (26.65 stored as 26.6499...). The JS _inNum mirror
+    MUST stay byte-identical to this (FR: a value reads the same on the hero,
+    the pills, and the chart tooltip)."""
+    a = abs(int(round(v)))
     sign = "-" if v < 0 else ""
     if a >= 1e7:
-        return f"{sign}INR {a/1e7:.1f} crore"
+        t = (a + 500_000) // 1_000_000          # tenths of a crore, half-up
+        return f"{sign}INR {t // 10}.{t % 10} crore"
     if a >= 1e5:
-        return f"{sign}INR {a/1e5:.1f} lakh"
-    return f"{sign}INR {_in_group(round(a))}"
+        t = (a + 5_000) // 10_000               # tenths of a lakh, half-up
+        return f"{sign}INR {t // 10}.{t % 10} lakh"
+    return f"{sign}INR {_in_group(a)}"
 
 
 def fmt_num(v: float, unit: str) -> str:
@@ -1602,10 +1609,14 @@ TEMPLATE = """<!DOCTYPE html>
 // Indian number display: en-IN grouping (3,26,819), money-scale values
 // compacted to lakh / crore so chart labels stay scannable.
 function _inNum(v) {
-  const a = Math.abs(v);
-  if (a >= 1e7) return (v / 1e7).toFixed(1) + ' crore';
-  if (a >= 1e5) return (v / 1e5).toFixed(1) + ' lakh';
-  return Math.round(v).toLocaleString('en-IN');
+  const s = v < 0 ? '-' : '';
+  const a = Math.abs(Math.round(v));
+  // lakh/crore round HALF-UP via integer tenths, byte-identical to the Python
+  // _inr_str (FR: a value reads the same on the hero and in the tooltip; plain
+  // .toFixed(1) would render 26.65 lakh as 26.6, diverging from the hero).
+  if (a >= 1e7) { const t = Math.floor((a + 500000) / 1e6); return s + (t / 10 | 0) + '.' + (t % 10) + ' crore'; }
+  if (a >= 1e5) { const t = Math.floor((a + 5000) / 1e4); return s + (t / 10 | 0) + '.' + (t % 10) + ' lakh'; }
+  return s + a.toLocaleString('en-IN');
 }
 // One value formatter for every chart surface (tooltips, bar labels) so a
 // number reads identically wherever it appears: money (suffix token 'INR')
