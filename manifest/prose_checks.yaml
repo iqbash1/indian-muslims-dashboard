@@ -1,0 +1,105 @@
+# Prose-number registry for validate/audit_prose_numbers.py
+#
+# Hardcoded numbers in authored prose (narratives.yaml, metrics.yaml, build.py
+# literals, runbooks, CLAUDE.md) can silently drift from the canonical CSV
+# values the charts/heroes/pills/tables actually render. The render path is
+# safe (computed every build); prose is not. This registry says, for each
+# figure the prose quotes, WHICH canonical cell it must track, so the guard can
+# recompute the value and confirm the prose still matches.
+#
+# Seeded by the 2026-06-28 consistency audit (see the audit findings). Add an
+# entry whenever you hardcode a canonical figure into prose; the guard then
+# fails CI if that figure later drifts from canonical.
+#
+# Tolerances are unit-aware (a percent quoted as "about 69%" must accept the
+# 68.6 canonical value). INR/lakh and counts are matched as the Indian-money /
+# grouped string the dashboard renders; percents/rates/ratios match any number
+# within `tol` of the canonical value.
+
+defaults:
+  tol_percent: 0.6          # pp: covers whole-number rounding of a .x value
+  tol_rate: 0.6
+  tol_ratio: 1.5            # females_per_1000_males
+  tol_count: 0.5            # effectively exact integer
+
+# ANCHORED: a canonical cell (metric + religion [+ sex/residence], latest year)
+# whose value must appear in the named authored prose field. field is one of the
+# narratives.yaml keys (bottom_line/how_to_read/why_it_matters/status_note).
+anchored:
+  - {metric: lit-7plus, field: bottom_line, religion: muslim}
+  - {metric: imr, field: bottom_line, religion: muslim}
+  - {metric: imr, field: bottom_line, religion: hindu}
+  - {metric: ger-higher-ed, field: bottom_line, religion: muslim}
+  - {metric: ger-higher-ed, field: bottom_line, religion: hindu}
+  - {metric: ger-higher-ed, field: bottom_line, religion: all}
+  - {metric: school-edu-spend, field: bottom_line, religion: muslim}
+  - {metric: school-edu-spend, field: bottom_line, religion: hindu}
+  - {metric: school-edu-spend, field: bottom_line, religion: all}
+  - {metric: stunting-u5, field: bottom_line, religion: muslim}
+  - {metric: stunting-u5, field: bottom_line, religion: hindu}
+  - {metric: inst-delivery, field: bottom_line, religion: muslim}
+  - {metric: inst-delivery, field: bottom_line, religion: hindu}
+  - {metric: inst-delivery, field: bottom_line, religion: all}
+  - {metric: women-anemia, field: bottom_line, religion: muslim}
+  - {metric: women-anemia, field: bottom_line, religion: hindu}
+  - {metric: women-anemia, field: bottom_line, religion: all}
+  - {metric: hospital-oop-spend, field: bottom_line, religion: muslim}
+  - {metric: hospital-oop-spend, field: bottom_line, religion: hindu}
+  - {metric: lfpr-15plus, field: bottom_line, religion: muslim}
+  - {metric: lfpr-15plus, field: bottom_line, religion: hindu}
+  - {metric: lfpr-15plus, field: bottom_line, religion: muslim, sex: female}
+  - {metric: lfpr-15plus, field: bottom_line, religion: hindu, sex: female}
+  - {metric: unemployment-rate-15plus, field: bottom_line, religion: muslim}
+  - {metric: unemployment-rate-15plus, field: bottom_line, religion: hindu}
+  - {metric: salaried-share, field: bottom_line, religion: muslim}
+  - {metric: salaried-share, field: bottom_line, religion: hindu}
+  - {metric: mpce, field: bottom_line, religion: muslim}
+  - {metric: mpce, field: bottom_line, religion: hindu}
+  - {metric: mpce, field: bottom_line, religion: all}
+  - {metric: household-net-worth, field: bottom_line, religion: muslim}
+  - {metric: household-net-worth, field: bottom_line, religion: hindu}
+  - {metric: improved-sanitation, field: bottom_line, religion: muslim}
+  - {metric: improved-sanitation, field: bottom_line, religion: hindu}
+  - {metric: improved-water-premises, field: bottom_line, religion: muslim}
+  - {metric: improved-water-premises, field: bottom_line, religion: hindu}
+  - {metric: pucca-house, field: bottom_line, religion: muslim}
+  - {metric: pucca-house, field: bottom_line, religion: hindu}
+  - {metric: mla-share, field: bottom_line, religion: muslim}
+  - {metric: prison-rate-per-100k, field: bottom_line, religion: muslim}
+  - {metric: prison-rate-per-100k, field: bottom_line, religion: hindu}
+  - {metric: prison-rate-per-100k, field: bottom_line, religion: all}
+  - {metric: pop-share, field: bottom_line, religion: muslim}
+  - {metric: urban-share, field: bottom_line, religion: muslim}
+  - {metric: urban-share, field: bottom_line, religion: hindu}
+  - {metric: urban-share, field: bottom_line, religion: all}
+  - {metric: sex-ratio, field: bottom_line, religion: muslim}
+  - {metric: sex-ratio, field: bottom_line, religion: hindu}
+  - {metric: sex-ratio, field: bottom_line, religion: all}
+  - {metric: communal-incidents-govt, field: bottom_line, religion: all}
+
+# CROSS_SURFACE: the same figure string is hardcoded in several files and they
+# must not drift apart (the "keep N places in sync" pain). Exact substring in
+# every listed file. Use tokens that are written identically everywhere.
+cross_surface:
+  - label: ger-higher-ed community figures
+    strings: ["14.5%", "24.2%", "22.8%"]
+    files:
+      - manifest/narratives.yaml
+      - manifest/metrics.yaml
+      - CLAUDE.md
+      - docs/runbooks/aishe.md
+      - docs/runbooks/cmse-education.md
+
+# INTERNAL_MATH: a derived figure in a build.py literal recomputed from canonical.
+internal_math:
+  # ls-share parity seats = round(pop_share% / 100 * house). Guards the "77" in
+  # the Lok Sabha narrative against a pop-share or house-size change.
+  - label: ls-share parity seats
+    kind: ls_parity
+    expect_in: [manifest/narratives.yaml, manifest/metrics.yaml]
+  # school-edu-spend "for every INR 100 a Hindu spends ... about INR <r>" where
+  # r = round(muslim/hindu*100). Guards the build.py ratio literal.
+  - label: school-edu-spend INR-100 ratio
+    kind: ratio_of_latest
+    metric: school-edu-spend
+    expect_in: [dashboard/build.py]

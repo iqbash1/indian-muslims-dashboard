@@ -10,7 +10,10 @@ always-in-context short version of the must-knows.
 - Validate: `.venv/bin/python validate/validate.py` (expect `0 errors`). CI also
   runs `audit_consistency.py`, `audit_accuracy.py` (value ranges, provenance
   SHA256 vs archive, and the extraction_run stamp-shape check that catches
-  column transposition - the GF audit found 32 such rows), `check_refresh.py`,
+  column transposition - the GF audit found 32 such rows),
+  `audit_prose_numbers.py` (hardcoded prose figures recomputed against canonical,
+  driven by the `manifest/prose_checks.yaml` registry; anchored + cross-surface +
+  internal-math checks), `check_refresh.py`,
   and Playwright browser smoke tests (`tests/smoke.py` via
   `.github/workflows/smoke.yml`; run locally after
   `python -m playwright install chromium`).

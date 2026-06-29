@@ -1411,7 +1411,7 @@ TEMPLATE = """<!DOCTYPE html>
 <h1>The state of Muslim India, in data</h1>
 
 <p class="headline-finding">
-  India's roughly 20 crore (200 million) Muslims, or 14.2% of the population
+  India's roughly 17 crore (170 million) Muslims, or 14.2% of the population
   (Census 2011), trail the all-India average on <em>{n_behind} of the
   {n_total_comparable}</em> indicators that allow a direct comparison, widest on
   {top_behind_joined}.{ahead_clause}

@@ -44,6 +44,15 @@ jobs:
         # skipped for LFS files; the value/structure checks still run in full.
         run: python validate/audit_accuracy.py
 
+      - name: Audit prose-number consistency (hardcoded figures vs canonical)
+        # The layer the other gates miss: a figure typed into a Bottom line,
+        # definition or build.py literal that no longer matches the canonical
+        # value the charts/heroes/tables render. Reads manifest/prose_checks.yaml
+        # (the registry) and recomputes each cell from canonical: anchored
+        # figure match, cross-surface agreement, and internal-math (ls parity,
+        # school INR-100 ratio). Caught the lfpr "36%" women drift (canon 30.2%).
+        run: python validate/audit_prose_numbers.py
+
       - name: Check source refresh cadence
         run: python validate/check_refresh.py
         # This step is informational only; non-zero exit doesn't fail the workflow.

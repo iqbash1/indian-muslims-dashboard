@@ -70,7 +70,7 @@ narratives:
       Just under 69% of Muslims aged 7 and above could read and write in 2011,
       the lowest literacy rate among India's larger religious communities and
       about five points behind Hindus. The gap has been narrowing slowly since
-      2001, but it stays widest for Muslim women and in rural areas, where
+      2001, but literacy stays lowest for Muslim women and in rural areas, where
       barely three in five Muslims are literate.
     how_to_read: >-
       The main chart tracks literacy for each community across the 2001 and 2011
@@ -88,8 +88,8 @@ narratives:
       A community that starts behind on literacy tends to stay behind on income,
       formal work and schooling in the generation that follows.
     status_note: >-
-      The gap has closed by roughly a point and a half since 2001, slow but
-      steady progress, and it remains widest for Muslim women and in rural areas.
+      The gap has closed by a little over a point since 2001, slow but
+      steady progress, and literacy remains lowest for Muslim women and in rural areas.
     # Potential drivers: MECE buckets - demand (poverty), supply (access),
     # retention (dropout), gender (female gap), governance (delivery).
     drivers:
@@ -653,7 +653,7 @@ narratives:
       About 55% of Muslims aged 15 and over were working or looking for work in
       2023, against 61% of Hindus, but the whole of that gap is among women.
       Muslim men take part at slightly higher rates than Hindu men; Muslim women,
-      at 36%, sit far below Hindu women at 49%, and that single gap pulls the
+      at 30%, sit far below Hindu women at 43%, and that single gap pulls the
       community total down.
     how_to_read: >-
       The chart tracks the share of adults in the labour force across two decades,
@@ -997,8 +997,8 @@ narratives:
   # ----- Toilet access (NFHS). higher is better. Muslims AHEAD. -----
   improved-sanitation:
     bottom_line: >-
-      Nine in ten Muslim households had a toilet in 2020, at 90.3% the highest of
-      any major community and almost ten points above Hindus at 80.7%. This is
+      Nine in ten Muslim households had a toilet in 2020, at 90.3%,
+      almost ten points above Hindus at 80.7%. This is
       one of a cluster of housing measures, toilets, water and electricity, where
       Muslims sit at or above the national level, a pattern that runs against the
       gaps on income and education.
