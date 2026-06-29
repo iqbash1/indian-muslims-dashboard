@@ -32,6 +32,15 @@ breakdowns; each tab has its own shareable URL and social-preview image, and
 every metric also has a full landing page at `/m/{id}/` (data tables, sources,
 JSON-LD) with a district-level CSV download where available.
 
+Every card also carries a plain-English **narrative** (modal and landing),
+modelled on the sibling hawaiidashboard.org: a Bottom line, How to read the
+chart, Why it matters, a data-computed Status, a Deeper analysis (potential
+drivers and key levers as short, sourced bullets), and **Key stakeholders** —
+the government bodies and NGOs working on that metric, each with a programme
+link, a Donate link and a verified-credential badge where available. The prose
+lives in `manifest/narratives.yaml`, with every claim cited to a registry of
+sources.
+
 Coverage at a glance:
 - **Demographics**: population share by religion 1961→2011 (with the
   top-100-district geographic-concentration view in its "By district" tab),

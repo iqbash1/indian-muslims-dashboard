@@ -107,12 +107,31 @@ not ad-hoc scripts: metric metadata in `manifest/metrics.yaml`, sources in
   `audit_consistency.py` Check C enforces this in CI (it would have caught EW
   silently dropping lfpr's "Working vs looking" tab while its stub kept
   shipping).
+- **Per-metric narratives (`manifest/narratives.yaml` → `_metric_narrative_html`):**
+  every modal + landing carries Hawaii-style sections - Bottom line, How to read,
+  Why it matters, a DATA-COMPUTED Status badge (`_metric_status`, Muslim vs Hindu;
+  green ahead / red behind / slate neutral), Deeper analysis (Potential drivers +
+  Key levers as short-titled MECE bullets, `cn-focus-list`), and Key stakeholders.
+  Prose + a `citations` registry (`{{cite:key}}` tokens) live in narratives.yaml.
+  ALL narrative chrome is SLATE; the Status badge's green/red polarity is the only
+  colour, NEVER maroon. Stakeholders foreground Muslim/minority NGOs, link a
+  metric-specific PROGRAMME page (not a homepage), and carry optional `donate_url`
+  + a sourced slate `credibility` badge; reuse a roster with `stakeholders_from:
+  <id>`. DESCRIPTIVE metrics get the lighter set (no drivers/levers/stakeholders);
+  `no_status: true` suppresses a meaningless Status badge (e.g. pop-share). All 23
+  carded metrics carry a narrative (`audit_consistency.py` has an advisory coverage
+  check). Stakeholder/citation URLs must resolve: many gov.in/NGO sites are
+  sandbox-firewalled, so VERIFY VIA WAYBACK (archive.org/wayback/available), not
+  curl. House rules apply (no em/en dashes, Indian English, conservative claims).
 
 ## Editing gotchas
 - Card prose lives in **3 places** — keep in sync: `manifest/metrics.yaml`
   (`definition` + `methodology_notes`), the `PLAIN_DEFINITION` dict in
   `dashboard/build.py`, and hand-written `docs/runbooks/*.md`. A wording/count
-  fix must hit all three.
+  fix must hit all three. SEPARATE from these: the per-metric NARRATIVE prose
+  (Bottom line, drivers, levers, stakeholders, ...) lives ONLY in
+  `manifest/narratives.yaml` (the narratives convention above) — don't conflate
+  the two; a narrative edit is narratives.yaml, a definition edit is the trio.
 - In metrics.yaml, `religions` / `comparison_baselines` / `break_notes` /
   `cross_check` are declarative metadata — NOT rendered. Only `definition` +
   `methodology_notes` show (in the modal). EXCEPTION (Commit GL):
