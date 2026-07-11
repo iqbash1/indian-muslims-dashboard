@@ -50,10 +50,15 @@ not ad-hoc scripts: metric metadata in `manifest/metrics.yaml`, sources in
   restate it (FG; convention on the CAPTION dict in build.py). Pills carry ONE
   headline number (FS): label names the comparator, value line = the gap, the
   comparator's own figure rides the small verdict line ("behind · 91.7%").
-  In the modal, Definition stays visible and the long methodology + sources
-  collapse behind "Full methodology & sources" (a details WITHOUT
-  data-view-id, so audit Check C ignores it; landing pages stay fully
-  expanded). Page chrome is exactly: section jump-chips (sticky on mobile)
+  In the modal, the whole "About this measurement" block (technical Definition
+  + methodology + sources) collapses behind ONE closed disclosure titled
+  "About this measurement" (a details WITHOUT data-view-id, so audit Check C
+  ignores it) - the plain-English lead + the narrative carry the reader, so the
+  technical block stays hidden until asked for; landing pages render the same
+  content fully expanded via about_html. The narrative's "Deeper analysis" and
+  "Key stakeholders" disclosures, by contrast, render OPEN in the modal
+  (force_open in _metric_narrative_html); only "How to read the chart" stays
+  closed. Page chrome is exactly: section jump-chips (sticky on mobile)
   + a back-to-top button - don't add more.
 - **Time series from 2 rounds up (FD):** the card-face chart plots over time
   whenever canonical has 2+ years (break_flag renders the line dashed);

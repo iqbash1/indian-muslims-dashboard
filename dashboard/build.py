@@ -912,8 +912,9 @@ TEMPLATE = """<!DOCTYPE html>
   /* Smooth in-page jumps, except for visitors who minimise motion (the
      reduced-motion block below also forces scroll-behavior back to auto). */
   html { scroll-behavior: smooth; }
-  /* Collapsed methodology in the modal (FS): Definition stays visible, the
-     long provenance prose sits one quiet disclosure away. */
+  /* Collapsed "About this measurement" in the modal: the whole block (technical
+     definition + methodology + provenance) sits one quiet disclosure away,
+     closed by default. Landing pages render the same content fully expanded. */
   .method-more { margin: 10px 0 0; }
   .method-more > summary {
     cursor: pointer; color: var(--accent); font-size: 14px; font-weight: 600;
@@ -1145,10 +1146,6 @@ TEMPLATE = """<!DOCTYPE html>
   .modal-body .card-method {
     display: block; margin-top: 18px; padding-top: 16px;
     border-top: 1px solid var(--rule);
-  }
-  .modal-body .card-method-title {
-    margin: 0 0 8px; font-size: 14px; color: var(--muted);
-    font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em;
   }
   .modal-body .card-method p {
     margin: 0 0 10px; font-size: 14px; color: var(--fg); line-height: 1.55;
@@ -4380,14 +4377,13 @@ def _card_shell(mid, label, value, unit_txt, year, polarity, chart_html, comps_h
         parts = []
         if def_text:
             parts.append(f'<p><b>Definition.</b> {html.escape(def_text)}</p>')
-        more_parts = []
         if notes_text:
-            more_parts.extend(_method_paras(notes_text))
+            parts.extend(_method_paras(notes_text))
         if docs:
             doc_links = " · ".join(
                 f'<a href="{html.escape(u)}" target="_blank" rel="noopener">{html.escape(l)}</a>'
                 for _, l, u in docs)
-            more_parts.append(
+            parts.append(
                 '<p class="card-sources"><b>Where this data comes from.</b> '
                 f'{doc_links}. Download CSV: '
                 f'<a href="{html.escape(csv_href)}" target="_blank" rel="noopener">{html.escape(mid)}.csv</a>. '
@@ -4396,25 +4392,25 @@ def _card_shell(mid, label, value, unit_txt, year, polarity, chart_html, comps_h
         ts = _transform_script(mid)
         if ts:
             pill, how = _repro_tier_bits(mid)
-            more_parts.append(
+            parts.append(
                 f'<p class="card-reproduce">{pill}<b>Reproduce this.</b> '
                 f'{how + " " if how else ""}Every figure on this '
                 'card, in every tab, is computed from the data file above by an open '
                 f'script: <a href="{GITHUB_REPO}/blob/main/{html.escape(ts)}" '
                 'target="_blank" rel="noopener">transform code</a>. Each data-file row '
                 'also records its own source and method.</p>')
-        # Definition stays visible; the long methodology + provenance collapse
-        # behind one quiet disclosure (no data-view-id, so audit Check C never
-        # mistakes it for a drill-down tab). Landing pages keep the full text
-        # expanded - they ARE the provenance pages.
-        if more_parts:
-            parts.append(
-                '<details class="method-more"><summary>Full methodology &amp; sources</summary>'
-                + "".join(more_parts) + '</details>')
+        # The whole "About this measurement" block (technical definition +
+        # methodology + provenance) sits behind ONE quiet disclosure in the modal,
+        # CLOSED by default (user call: keep it hidden - the plain-English lead and
+        # the narrative already carry the reader). The disclosure carries no
+        # data-view-id, so audit Check C never mistakes it for a drill-down tab.
+        # Landing pages render the same content fully expanded via about_html -
+        # they ARE the provenance pages.
         method_html = (
             '<div class="card-method">'
-            '<h3 class="card-method-title">About this measurement</h3>'
+            '<details class="method-more"><summary>About this measurement</summary>'
             + "".join(parts) +
+            '</details>'
             '</div>'
         )
     # Footer: the source NAME links to the original source document; "Download CSV"
