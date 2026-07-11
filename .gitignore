@@ -22,3 +22,6 @@ nada/.key
 nada/**/*.zip
 
 
+
+# Google service-account key (GA4 Data API) - secret, NEVER commit
+/muslimdata-*.json
