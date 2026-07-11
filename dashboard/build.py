@@ -1143,10 +1143,11 @@ TEMPLATE = """<!DOCTYPE html>
   .card:hover .card-expand { color: var(--accent); }
   .modal-body .card-expand { display: none; }
   .card-method { display: none; }
-  .modal-body .card-method {
-    display: block; margin-top: 18px; padding-top: 16px;
-    border-top: 1px solid var(--rule);
-  }
+  .modal-body .card-method { display: block; margin-top: 16px; }
+  /* The "About this measurement" chip is a self-bounded bordered box, so it
+     needs no rule hugging it: strip the generic .card-details top border/pad
+     that would otherwise stack an extra line above it. */
+  .modal-body .card-method .method-more { margin-top: 0; border-top: 0; padding-top: 0; }
   .modal-body .card-method p {
     margin: 0 0 10px; font-size: 14px; color: var(--fg); line-height: 1.55;
     max-width: 56em; white-space: normal;
