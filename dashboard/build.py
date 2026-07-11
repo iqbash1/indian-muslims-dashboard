@@ -424,8 +424,11 @@ def _metric_status(mid: str, unit: str, hib):
 def _metric_narrative_html(mid: str, *, collapsed: bool = True,
                            wrapper_class: str = "card-narrative") -> str:
     """The narrative block for one metric. collapsed=True (modal) renders the
-    disclosures closed; collapsed=False (landing) renders them open (landings are
-    the provenance pages). Returns "" when the metric has no narrative entry."""
+    "How to read the chart" disclosure closed; collapsed=False (landing) renders
+    everything open (landings are the provenance pages). "Deeper analysis" and
+    "Key stakeholders" pass force_open=True, so they render open on both surfaces
+    (still collapsible, just not hidden by default). Returns "" when the metric
+    has no narrative entry."""
     n = NARRATIVES.get(mid)
     if not n:
         return ""
@@ -435,8 +438,8 @@ def _metric_narrative_html(mid: str, *, collapsed: bool = True,
         return (f'<div class="cn-section"><h3 class="cn-heading">{html.escape(title)}</h3>'
                 f'{body}</div>')
 
-    def disclosure(title, body):
-        op = "" if collapsed else " open"
+    def disclosure(title, body, force_open=False):
+        op = "" if (collapsed and not force_open) else " open"
         return (f'<details class="cn-toggle"{op}><summary>{html.escape(title)}</summary>'
                 f'<div class="cn-disc-body">{body}</div></details>')
 
@@ -481,7 +484,7 @@ def _metric_narrative_html(mid: str, *, collapsed: bool = True,
             if val:
                 body += (f'<div class="cn-block"><h4 class="cn-subhead">{head}</h4>'
                          f'{focus_block(val)}</div>')
-        parts.append(disclosure("Deeper analysis", body))
+        parts.append(disclosure("Deeper analysis", body, force_open=True))
     # A metric may reuse another metric's verified stakeholder list (e.g. the
     # education or health cluster shares one roster) via `stakeholders_from: <id>`,
     # so the programme/donate/credibility links are maintained in one place.
@@ -528,7 +531,8 @@ def _metric_narrative_html(mid: str, *, collapsed: bool = True,
             'registries, so a missing badge is not a mark against an organisation.</p>'
         ) if has_cred else ""
         parts.append(disclosure("Key stakeholders",
-                                f'<ul class="cn-stakeholders">{lis}</ul>{sh_note}'))
+                                f'<ul class="cn-stakeholders">{lis}</ul>{sh_note}',
+                                force_open=True))
     if not parts:
         return ""
     return f'<div class="{wrapper_class}">{"".join(parts)}</div>'
