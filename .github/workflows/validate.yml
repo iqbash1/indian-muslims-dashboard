@@ -53,6 +53,12 @@ jobs:
         # school INR-100 ratio). Caught the lfpr "36%" women drift (canon 30.2%).
         run: python validate/audit_prose_numbers.py
 
+      - name: Test the /mcp Worker handler
+        # Plain node --test (no npm install): imports handleMcp from worker.js
+        # and drives the JSON-RPC surface (initialize, tools/list, tools/call,
+        # header validation, traversal guard) against the committed docs/api/.
+        run: node --test tests/mcp.test.mjs
+
       - name: Check source refresh cadence
         run: python validate/check_refresh.py
         # This step is informational only; non-zero exit doesn't fail the workflow.

@@ -2,27 +2,23 @@
 // docs/ is the only thing the site ships; everything else in the repo is data
 // pipeline + manifest + transforms.
 //
-// Auto-deploys via Cloudflare Workers Builds on every push to main. docs/ is
-// committed pre-built, so the deploy does not need to run the Python build at
-// all. Two supported configs:
-//   - RECOMMENDED: dashboard Build command = empty -> Cloudflare just serves the
-//     committed ./docs (no pip, no Python, smallest failure surface).
-//   - Current:    Build command = `python3 dashboard/build.py`. This is safe
-//     only because requirements.txt is the minimal deploy set (PyYAML, pure
-//     Python). Do NOT add native deps (e.g. Pillow) to requirements.txt — a
-//     flaky binary-wheel install there froze the site once. See
-//     docs/runbooks/deploy-setup.md.
+// Deploys run from .github/workflows/deploy.yml (wrangler-action on push to
+// main), which ships the COMMITTED docs/ — no Python, no rebuild in CI. Build
+// docs/ locally, commit it, push. (Cloudflare's own "Connect to Git" build is
+// deliberately NOT used: its clone smudges Git LFS and this repo LFS-tracks
+// ~400 MB of sources/** the site never serves — see
+// docs/runbooks/deploy-setup.md.)
 {
   "name": "indian-muslims-dashboard",
   "compatibility_date": "2026-06-02",
-  // A tiny Worker (worker.js) runs FIRST only for /assets/tour.mp4 to add HTTP
-  // 206 byte-range support, which Static Assets omits and iOS Safari requires
-  // for <video>. Every other route bypasses it and is served directly by
-  // Static Assets (run_worker_first is scoped to just the video path).
+  // worker.js runs FIRST for exactly two paths (everything else is served
+  // directly by Static Assets and never invokes the Worker — fail-open):
+  //   /assets/tour.mp4 — HTTP 206 byte-range shim (iOS Safari <video>)
+  //   /mcp             — lite MCP server for AI assistants (reads docs/api/)
   "main": "worker.js",
   "assets": {
     "directory": "./docs",
     "binding": "ASSETS",
-    "run_worker_first": ["/assets/tour.mp4"]
+    "run_worker_first": ["/assets/tour.mp4", "/mcp"]
   }
 }
