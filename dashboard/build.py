@@ -3948,6 +3948,70 @@ def _emit_sitemap(out_dir: pathlib.Path) -> None:
     (out_dir / "sitemap.xml").write_text("\n".join(P) + "\n")
 
 
+def _emit_api_json(out_dir: pathlib.Path) -> int:
+    """Machine endpoints for AI assistants and scripts: docs/api/catalog.json
+    (one summary entry per carded metric) + docs/api/{mid}.json (national
+    trend, state slice, extremes). Emitted from the SAME loaders that render
+    the landings in the same build run, so these can never disagree with the
+    human pages. Aggregate rows only (sex=all, residence=all, no districts);
+    the canonical CSV link covers deep dives. Returns the file count."""
+    api_dir = out_dir / "api"
+    api_dir.mkdir(parents=True, exist_ok=True)
+
+    def dump(path: pathlib.Path, obj) -> None:
+        # Compact + key-sorted so rebuilds are byte-stable (repo discipline).
+        path.write_text(json.dumps(obj, separators=(",", ":"), sort_keys=True,
+                                   ensure_ascii=False) + "\n")
+
+    catalog = []
+    written = 0
+    for m in _carded_metrics():
+        mid = m["id"]
+        unit, hib = _metric_unit_hib(mid)
+        years, series, has_break = _nat_trend(mid)
+        nat_latest = _nat_by_religion(mid)
+        st = _metric_status(mid, unit, hib)
+        entry = {
+            "id": mid,
+            "name": m.get("name", mid),
+            "unit": unit,
+            "higher_is_better": hib,
+            "definition": PLAIN_DEFINITION.get(mid, ""),
+            "years": [years[0], years[-1]] if years else [],
+            "latest": {"year": years[-1] if years else None,
+                       **{rel: round(v, 4) for rel, v in sorted(nat_latest.items())}},
+            "figures": st["figures"] if st else "",
+            "source": (m.get("sources") or {}).get("primary", ""),
+            "page": f"{SITE_URL}/m/{mid}/",
+            "csv": f"{SITE_URL}/canonical/{mid}.csv",
+        }
+        catalog.append(entry)
+
+        national = [[y, rel, round(series[rel][y], 4)]
+                    for rel in sorted(series) for y in years if y in series[rel]]
+        states = [[r["geography_code"], state_label(r["geography_code"]),
+                   int(r["year"]), r["religion"], round(float(r["value"]), 4)]
+                  for r in load_metric(mid) if r["geography_level"] == "state"]
+        ext = _state_extremes(mid)
+        detail = dict(entry)
+        detail.update({
+            "national": national,
+            "states": states,
+            "state_extremes": ({"highest": [ext[0], round(ext[1], 4)],
+                                "lowest": [ext[2], round(ext[3], 4)]} if ext else None),
+            "break_in_series": has_break,
+        })
+        dump(api_dir / f"{mid}.json", detail)
+        written += 1
+
+    dump(api_dir / "catalog.json", {
+        "site": SITE_URL,
+        "description": SITE_DESCRIPTION,
+        "metrics": catalog,
+    })
+    return written + 1
+
+
 def build() -> None:
     # Status-bar counts derived from canonical (SSOT — never goes stale).
     n_metrics = len(SCORECARD_SPEC)
@@ -4058,12 +4122,14 @@ def build() -> None:
     # SEO / AI-discoverability: llms.txt summary + sitemap with git-dated lastmod.
     _emit_llms_txt(OUT_PATH.parent)
     _emit_sitemap(OUT_PATH.parent)
+    n_api = _emit_api_json(OUT_PATH.parent)
 
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUT_PATH.write_text(html_out)
     print(f"wrote {OUT_PATH.relative_to(REPO_ROOT)} ({len(html_out):,} bytes)")
     print(f"wrote {analytics_out.relative_to(REPO_ROOT)} ({len(js_text):,} bytes)")
     print("wrote docs/llms.txt + docs/sitemap.xml (SEO / AI discoverability)")
+    print(f"wrote docs/api/ ({n_api} JSON endpoints for assistants/scripts)")
 
 
 # ============================================================================
