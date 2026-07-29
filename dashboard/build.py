@@ -1123,6 +1123,12 @@ TEMPLATE = """<!DOCTYPE html>
   .card:hover { border-color: var(--accent); box-shadow: var(--shadow-card); transform: translateY(-2px); }
   .card:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
   .card-metric { font-size: 15px; font-weight: 600; color: var(--fg); margin-bottom: 4px; line-height: 1.3; }
+  /* The title link (crawlable path to /m/{id}/) must render exactly like the
+     plain heading it replaced: inherit colour, never underline. In the modal
+     the same node is reused as the dialog title, where a link to the page you
+     are already reading would be noise, so it is inert there. */
+  .card-metric a { color: inherit; text-decoration: none; }
+  .modal-body .card-metric a { pointer-events: none; }
   /* The plain-English definition stays OFF the card face (minimalism: label +
      number + chart tell the story; the paragraph waits in the modal lead). */
   .cards .card-plain { display: none; }
@@ -2496,6 +2502,17 @@ function trendChart(id, years, seriesMap, allSeries, suffix, decimals, hasBreak,
       const viewLink = e.target.closest('.card-view-link');
       if (viewLink) {
         openModal(card, viewLink.getAttribute('data-view-id') || undefined);
+        return;
+      }
+      // The card title is a real <a href="/m/{id}/"> so crawlers, keyboard
+      // users and cmd-click can reach the landing page. For a plain left-click
+      // keep the app behaviour: open the modal (which rewrites the address bar
+      // to that same /m/{id}/ path). Modified clicks navigate normally.
+      const titleLink = e.target.closest('.card-metric a');
+      if (titleLink) {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+        e.preventDefault();
+        openModal(card);
         return;
       }
       // Let links, summaries, and download triggers behave normally.
@@ -4742,7 +4759,13 @@ def _card_shell(mid, label, value, unit_txt, year, polarity, chart_html, comps_h
     return (
         f'<section class="card" data-metric-id="{html.escape(mid)}" data-metric-name="{html.escape(label)}">'
         f'{expand_html}'
-        f'<div class="card-metric">{html.escape(label)}</div>'
+        # The title is a REAL link to the metric's landing page. Without it the
+        # 23 /m/ landings are orphans: the grid is JS-driven, so a crawler sees
+        # no path from the homepage to them and Google leaves them "Discovered,
+        # currently not indexed". It also carries the metric name as anchor text
+        # and makes cards keyboard-reachable. A plain left-click is intercepted
+        # by the card handler and still opens the modal (see modalSetup).
+        f'<div class="card-metric"><a href="/m/{html.escape(mid)}/">{html.escape(label)}</a></div>'
         f'{plain_html}'
         f'<div class="card-hero"><span class="card-value">{value}</span>'
         f'<span class="card-unit">{html.escape(unit_txt)}</span>{yr}</div>'
