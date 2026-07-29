@@ -39,12 +39,13 @@ OUT_PATH = REPO_ROOT / "docs" / "index.html"
 # ----- Site identity (used in <title>, canonical URL, JSON-LD, sitemap) -----
 SITE_DOMAIN = "muslimdata.in"
 SITE_URL = f"https://{SITE_DOMAIN}"
-SITE_TITLE = "muslimdata.in: the state of Muslim India, in data"
+# Query-shaped homepage title (SEO retarget): leads with what people search,
+# not the brand; the brand tagline lives on in the OG image and the page hero.
+SITE_TITLE = "Indian Muslim statistics: population, literacy, income, health"
 SITE_DESCRIPTION = (
-    "Indicators of living conditions for India's Muslim population, with Hindu "
-    "and all-India comparison baselines on every metric. Covers population, "
-    "education, employment, health, representation, and justice. Provenance-traced, "
-    "Sachar-Committee-style measurement."
+    "Population, literacy, income, health and representation data for India's "
+    "Muslims, with Hindu and all-India baselines. Free CSVs, every figure "
+    "source-linked."
 )
 
 # ----- Analytics IDs (substituted into docs/js/analytics.js at build time) -----
@@ -3274,6 +3275,91 @@ def _breadcrumb_jsonld(m: dict) -> str:
     return '<script type="application/ld+json">\n' + json.dumps(obj, indent=2, ensure_ascii=False) + "\n</script>"
 
 
+def _seo_head(mid: str, m: dict, payload: dict) -> dict:
+    """Compose the landing page <title>, meta description and h1 for one metric
+    from SEO_PHRASE + COMPUTED canonical values (payload hero, Hindu baseline,
+    data vintage). Everything numeric recomputes each build, so these strings
+    can never drift from the data. Returns {"title", "description", "h1"}.
+
+    Title ladder (first form within 65 chars wins):
+      A: "{phrase}: {muslim} vs Hindu {hindu} ({vintage})"
+      B: "{phrase} vs Hindu: {muslim} ({vintage})"
+      C: "{phrase}: {muslim} ({vintage})"
+    """
+    phrase = SEO_PHRASE.get(mid)
+    if not phrase:
+        sys.exit(f"SEO_PHRASE missing entry for carded metric '{mid}' - add it.")
+    unit, hib = _metric_unit_hib(mid)
+    muslim = payload.get("hero", "")
+    # Denominator suffix where the bare hero would not read honestly; ls-share
+    # takes its computed caption ("of 543 seats") straight from canonical.
+    suffix = payload.get("caption", "") if mid == "ls-share" else SEO_HERO_SUFFIX.get(mid, "")
+    if suffix:
+        muslim = f"{muslim} {suffix}"
+    nat = _nat_by_religion(mid)
+    hindu_v = nat.get("hindu")
+    hindu = fmt_num(hindu_v, unit) if hindu_v is not None else ""
+    src_id = (m.get("sources") or {}).get("primary", "")
+    vintage = SEO_VINTAGE.get(src_id) or str(payload.get("year", "") or _year_of(mid))
+
+    title_a = f"{phrase}: {muslim} vs Hindu {hindu} ({vintage})"
+    title_b = f"{phrase} vs Hindu: {muslim} ({vintage})"
+    title_c = f"{phrase}: {muslim} ({vintage})"
+    # The "vs Hindu" forms need real polarity: neutral metrics (pop-share's
+    # shares-of-one-total, spending levels) state their own figure and leave
+    # the comparison to the description - same logic as no_status narratives.
+    if hindu and hib is not None:
+        title = next((t for t in (title_a, title_b) if len(t) <= 65), title_c)
+    else:
+        title = title_c
+
+    # Description: figures sentence + optional gap clause + a tail that is true
+    # for every landing (conservative claims; no "state breakdowns" boast where
+    # a metric has none). Target 90-160 chars; the gap clause is dropped first.
+    tail = " Free CSV, every figure traced to a primary source."
+    # "Series since" only when the NATIONAL series really is a time series
+    # (mla-share's canonical spans assembly election years but is a
+    # cross-section of current assemblies - no series claim for it).
+    trend_years, _series, _brk = _nat_trend(mid)
+    since = f" Series since {trend_years[0]}." if len(trend_years) >= 2 else ""
+    if hindu:
+        # Unit gloss for non-percent, non-INR heroes (imr, sex-ratio, prison
+        # rate), reusing the payload caption the OG images already show.
+        gloss = ""
+        if unit not in ("percent", "inr", "inr_per_month"):
+            cap = payload.get("caption", "")
+            if cap:
+                gloss = f" {cap}"
+        gap_clause = ""
+        muslim_v = nat.get("muslim")
+        if hib is not None and muslim_v is not None:
+            diff = abs(muslim_v - hindu_v)
+            if unit == "percent":
+                gap_clause = f", a gap of {diff:.1f} points"
+            elif unit in ("inr", "inr_per_month"):
+                gap_clause = f", a gap of {_inr_str(diff)}"
+        s1 = f"{phrase} is {muslim}{gloss} vs {hindu} for Hindus ({vintage}){gap_clause}."
+        if len(s1 + tail) > 160:
+            s1 = f"{phrase} is {muslim}{gloss} vs {hindu} for Hindus ({vintage})."
+        if len(s1 + tail) > 160:
+            s1 = f"{phrase} is {muslim} vs {hindu} for Hindus ({vintage})."
+        description = s1 + tail
+    else:
+        description = f"{phrase}: {muslim} ({vintage}).{since}{tail}"
+    if len(description) > 160:
+        description = description[:157].rstrip() + "..."
+
+    for s in (title, description):
+        if "–" in s or "—" in s:
+            sys.exit(f"SEO head for '{mid}' contains an em/en dash: {s!r}")
+    if len(title) > 70:
+        sys.exit(f"SEO title for '{mid}' exceeds 70 chars ({len(title)}): {title!r}")
+    if not 90 <= len(description) <= 160:
+        sys.exit(f"SEO description for '{mid}' is {len(description)} chars "
+                 f"(want 90-160): {description!r}")
+    return {"title": title, "description": description, "h1": phrase}
+
+
 def _emit_metric_landings(out_dir: pathlib.Path, view_map: dict | None = None) -> int:
     """Write a full, self-canonical landing page at /m/{mid}/index.html per
     carded metric. Returns the count written."""
@@ -3351,22 +3437,19 @@ def _emit_metric_landings(out_dir: pathlib.Path, view_map: dict | None = None) -
                           for rid, rname in rel)
             related_html = f'<h2>Related indicators</h2><ul class="related">{lis}</ul>'
 
-        description = (f"{name} for India's Muslims, with Hindu and all-India comparison baselines. "
-                       + (defn[:180] if defn else ""))
-        if len(description) > 240:
-            description = description[:237].rstrip() + "..."
+        seo = _seo_head(mid, m, payload)
 
         jsonld = _dataset_jsonld(m) + "\n" + _breadcrumb_jsonld(m)
         subs = {
-            "{title}": html.escape(f"{name}: muslimdata.in"),
-            "{description}": html.escape(description),
+            "{title}": html.escape(seo["title"]),
+            "{description}": html.escape(seo["description"]),
             "{canonical}": f"{SITE_URL}/m/{mid}/",
-            "{og_title}": html.escape(name),
+            "{og_title}": html.escape(seo["title"]),
             "{og_image}": f"{SITE_URL}/og/{mid}.png",
             "{og_image_alt}": html.escape(
                 f"{name}: Indian Muslims vs Hindu and all-India baselines on muslimdata.in"),
             "{breadcrumb}": _breadcrumb_html(m),
-            "{h1}": html.escape(name),
+            "{h1}": html.escape(seo["h1"]),
             "{lede}": html.escape(plain or (defn[:160] if defn else "")),
             "{hero_value}": html.escape(payload.get("hero", "n/a")),
             "{hero_unit}": html.escape(payload.get("caption", "")),
@@ -3787,7 +3870,11 @@ def _home_jsonld() -> str:
         "@graph": [
             {"@type": "Organization", "@id": f"{SITE_URL}/#org", "name": "muslimdata.in",
              "url": SITE_URL, "description": SITE_DESCRIPTION},
-            {"@type": "WebSite", "@id": f"{SITE_URL}/#website", "name": SITE_TITLE, "url": SITE_URL,
+            # name/alternateName is Google's documented control for the SERP
+            # site-name display: brand as the name, the query-shaped title as
+            # the alternate.
+            {"@type": "WebSite", "@id": f"{SITE_URL}/#website", "name": "muslimdata.in",
+             "alternateName": SITE_TITLE, "url": SITE_URL,
              "description": SITE_DESCRIPTION, "publisher": {"@id": f"{SITE_URL}/#org"}},
             {"@type": "ItemList", "name": "Living-conditions indicators for India's Muslims",
              "itemListElement": items},
@@ -3842,7 +3929,11 @@ def _emit_sitemap(out_dir: pathlib.Path) -> None:
     ]
     for m in _carded_metrics():
         mid = m["id"]
-        entries.append((f"{SITE_URL}/m/{mid}/", _git_last_date(f"canonical/{mid}.csv"), "monthly", "0.8"))
+        # A landing is as fresh as its data OR its template: build.py changes
+        # (titles, layout) restamp every landing, so lastmod must reflect them.
+        # Dates are YYYY-MM-DD strings; lexicographic max is correct, '' loses.
+        csv_date = _git_last_date(f"canonical/{mid}.csv")
+        entries.append((f"{SITE_URL}/m/{mid}/", max(csv_date, build_date), "monthly", "0.8"))
     P = ['<?xml version="1.0" encoding="UTF-8"?>',
          '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for loc, lastmod, cf, pr in entries:
@@ -4213,6 +4304,63 @@ def _comp(label: str, verdict: str, detail: str, cls: str, comp_type: str | None
             f'<div class="comp-verdict">{html.escape(verdict)}</div>'
             f'<div class="comp-detail">{html.escape(detail)}</div></div>')
 
+
+# ----- SEO head composition (landing <title> / meta description / h1) -----
+# SEO_PHRASE: the query-shaped noun phrase people actually search, one per
+# carded metric (build aborts if one is missing). Sentence case, Indian
+# English, plain hyphens only, no superlatives. These feed _seo_head, which
+# combines them with COMPUTED canonical values, so the numbers in titles and
+# descriptions recompute every build and can never drift.
+SEO_PHRASE = {
+    "pop-share": "Muslim population share in India",
+    "urban-share": "Urban share of Muslims in India",
+    "sex-ratio": "Sex ratio of Muslims in India",
+    "lit-7plus": "Muslim literacy rate in India",
+    "school-edu-spend": "School education spending by Muslims in India",
+    "ger-higher-ed": "Muslim higher education attendance in India",
+    "lfpr-15plus": "Muslim labour force participation in India",
+    "unemployment-rate-15plus": "Muslim unemployment rate in India",
+    "salaried-share": "Salaried jobs among Muslims in India",
+    "mpce": "Muslim monthly spending in India",
+    "household-net-worth": "Muslim household net worth in India",
+    "imr": "Muslim infant mortality rate in India",
+    "stunting-u5": "Child stunting among Muslims in India",
+    "inst-delivery": "Institutional deliveries among Muslims in India",
+    "women-anemia": "Anaemia among Muslim women in India",
+    "hospital-oop-spend": "Hospital costs for Muslims in India",
+    "improved-sanitation": "Toilet access among Muslims in India",
+    "improved-water-premises": "Drinking water access among Muslims in India",
+    "pucca-house": "Pucca housing among Muslims in India",
+    "ls-share": "Muslim MPs in the Lok Sabha",
+    "mla-share": "Muslim MLAs in state assemblies",
+    "prison-rate-per-100k": "Muslim incarceration rate in India",
+    "communal-incidents-govt": "Communal incidents in India",
+}
+
+# Compact, honest data-vintage token for titles, keyed by sources.primary id.
+# Searchable survey names only; anything unlisted falls back to the latest
+# data year (never the current year - the vintage states what the data IS).
+SEO_VINTAGE = {
+    "census-india-2011": "Census 2011",
+    "nfhs-5": "NFHS-5",
+    "plfs": "PLFS 2023-24",
+    "plfs-microdata": "PLFS 2023-24",
+    "hces-2023-24": "HCES 2023-24",
+    "nss75-education": "NSS 2017-18",
+    "nss76-housing": "NSS 2018",
+    "aidis-2019": "AIDIS 2019",
+    "ncrb-prison": "NCRB 2022",
+    "ncrb-crime": "NCRB 2023",
+}
+
+# Short suffix appended to the hero value in titles where the bare number
+# needs its denominator to read honestly. ls-share is absent on purpose: its
+# suffix is the computed payload caption ("of 543 seats" from canonical), so
+# a change in house size can never leave a stale number here.
+SEO_HERO_SUFFIX = {
+    "mla-share": "of seats",
+    "communal-incidents-govt": "recorded by police",
+}
 
 PLAIN_DEFINITION = {
     "pop-share": "How much of India's population is Muslim, by the latest census.",

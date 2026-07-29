@@ -27,7 +27,13 @@ README saying "30 assemblies" when there were 31). Two checks:
      EW regression class, where lfpr's "Working vs looking" tab silently vanished
      while its share stub + OG image kept shipping.
 
-Exit code is non-zero on Check A or Check C failures; Check B prints a review
+  D. SEO HEADS (hard, blocks CI). Homepage + every landing's <title> and meta
+     description must honour the SEO convention (build.py _seo_head): no em/en
+     dashes, landing titles <= 70 chars ending in a "(vintage)" paren,
+     descriptions 90-160 chars, no duplicates, none empty. Reads the COMMITTED
+     docs/, so a build.py title change without a local rebuild fails in CI.
+
+Exit code is non-zero on Check A, C or D failures; Check B prints a review
 list and never blocks (a value-judgement call, like check_refresh.py). Run:
     python validate/audit_consistency.py
 """
@@ -185,6 +191,52 @@ def check_share_links() -> list[str]:
     return errors
 
 
+def check_seo_heads() -> list[str]:
+    """Check D — SEO head convention on the COMMITTED docs (the artifact that
+    deploys). Homepage + every landing must carry a <title> and meta
+    description that honour the house rules: no em/en dashes, landing titles
+    <= 70 chars with a "(vintage)" paren, descriptions 90-160 chars, no
+    duplicates, none empty. Because this reads docs/, a forgotten local
+    rebuild after a build.py title change fails here in CI."""
+    import html as _html
+
+    pages = [DOCS / "index.html"]
+    pages += sorted(p for p in (DOCS / "m").glob("*/index.html"))
+    errors: list[str] = []
+    seen_titles: dict[str, str] = {}
+    for page in pages:
+        if not page.exists():
+            errors.append(f"{page.relative_to(REPO)}: missing — run dashboard/build.py")
+            continue
+        text = page.read_text()
+        rel = str(page.relative_to(REPO))
+        is_landing = page.parent.name != "docs"
+        tm = re.search(r"<title>([^<]*)</title>", text)
+        dm = re.search(r'<meta name="description" content="([^"]*)"', text)
+        title = _html.unescape(tm.group(1)).strip() if tm else ""
+        desc = _html.unescape(dm.group(1)).strip() if dm else ""
+        if not title:
+            errors.append(f"{rel}: empty or missing <title>")
+        if not desc:
+            errors.append(f"{rel}: empty or missing meta description")
+        for label, s in (("title", title), ("description", desc)):
+            if "–" in s or "—" in s:
+                errors.append(f"{rel}: {label} contains an em/en dash: {s!r}")
+        if title:
+            if title in seen_titles:
+                errors.append(f"{rel}: duplicate <title> (also on {seen_titles[title]}): {title!r}")
+            else:
+                seen_titles[title] = rel
+        if is_landing and title:
+            if len(title) > 70:
+                errors.append(f"{rel}: title is {len(title)} chars (max 70): {title!r}")
+            if not re.search(r"\([^)]+\)$", title):
+                errors.append(f"{rel}: title lacks the trailing \"(vintage)\" paren: {title!r}")
+        if is_landing and desc and not 90 <= len(desc) <= 160:
+            errors.append(f"{rel}: description is {len(desc)} chars (want 90-160)")
+    return errors
+
+
 def check_narrative_coverage(data: dict) -> tuple[int, int, list[str]]:
     """SOFT advisory (never blocks): which carded metrics still lack a
     manifest/narratives.yaml entry. Tracks Phase-2 narrative authoring so a new
@@ -207,6 +259,9 @@ def main() -> None:
     share_errors = check_share_links()
     if not share_errors:
         print("  share links: every modal tab has its own stub + OG, no stale stubs ✓")
+    seo_errors = check_seo_heads()
+    if not seo_errors:
+        print("  seo heads: titles/descriptions on home + landings honour the convention ✓")
 
     if warns:
         print("\n  Span punch-list (ADVISORY — review; some may be legitimate sub-periods):")
@@ -231,11 +286,15 @@ def main() -> None:
         print("\n  SHARE-LINK ERRORS (blocking):")
         for e in share_errors:
             print(f"    ERROR  {e}")
-    if errors or share_errors:
-        print(f"\nFAIL: {len(errors) + len(share_errors)} mismatch(es) — update the docs or the data.")
+    if seo_errors:
+        print("\n  SEO-HEAD ERRORS (blocking):")
+        for e in seo_errors:
+            print(f"    ERROR  {e}")
+    if errors or share_errors or seo_errors:
+        print(f"\nFAIL: {len(errors) + len(share_errors) + len(seo_errors)} mismatch(es) — update the docs or the data.")
         sys.exit(1)
 
-    print(f"\nOK: counts consistent; share links bijective; {len(warns)} advisory span warning(s).")
+    print(f"\nOK: counts consistent; share links bijective; seo heads clean; {len(warns)} advisory span warning(s).")
 
 
 if __name__ == "__main__":
