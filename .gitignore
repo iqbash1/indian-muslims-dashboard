@@ -25,3 +25,6 @@ nada/**/*.zip
 
 # Google service-account key (GA4 Data API) - secret, NEVER commit
 /muslimdata-*.json
+
+# wrangler dev local state (miniflare cache) - never commit
+/.wrangler/

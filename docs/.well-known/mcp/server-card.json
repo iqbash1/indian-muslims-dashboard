@@ -1,0 +1,11 @@
+{
+  "name": "in.muslimdata/data",
+  "title": "muslimdata.in",
+  "description": "Living-conditions indicators for India's Muslims with Hindu and all-India baselines, every value traced to a primary government source (Census, NFHS, PLFS, HCES, NSS, NCRB). Tools: list_metrics, get_metric, compare.",
+  "version": "1.0.0",
+  "websiteUrl": "https://muslimdata.in/",
+  "capabilities": { "tools": {} },
+  "remotes": [
+    { "type": "streamable-http", "url": "https://muslimdata.in/mcp" }
+  ]
+}

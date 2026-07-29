@@ -34,6 +34,13 @@ muslimdata.in is a static, source-traceable dashboard of living-conditions indic
 - Incarceration rate (2022; source: ncrb-prison): https://muslimdata.in/m/prison-rate-per-100k/ | data: https://muslimdata.in/canonical/prison-rate-per-100k.csv
 - Communal incidents recorded by police (2015-2023; source: ncrb-crime): https://muslimdata.in/m/communal-incidents-govt/ | data: https://muslimdata.in/canonical/communal-incidents-govt.csv
 
+## MCP
+- MCP server (Model Context Protocol, streamable HTTP): https://muslimdata.in/mcp
+- Tools: list_metrics, get_metric, compare. Read-only, no auth; serves the
+  same canonical figures as the site. Add it in Claude via Settings ->
+  Connectors -> Add custom connector, or in any MCP client by URL.
+- JSON summaries: https://muslimdata.in/api/catalog.json and https://muslimdata.in/api/{metric-id}.json
+
 ## Pages
 - Home: https://muslimdata.in/
 - About and methodology: https://muslimdata.in/about/

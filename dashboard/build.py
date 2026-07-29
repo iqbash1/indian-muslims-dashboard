@@ -3653,6 +3653,16 @@ the year and the caveats travel with the number. And read the card's methodology
 note before quoting a figure: it states which way the metric reads (lower is not
 always worse), the survey's limits, and how current the data is.</p>
 
+<h3>Ask an AI assistant</h3>
+<p>The dashboard also answers questions through an MCP server (Model Context
+Protocol), so an AI assistant can query these numbers directly and cite the
+right page. In Claude: Settings, then Connectors, then <b>Add custom
+connector</b>, and paste <code>https://muslimdata.in/mcp</code> (no sign-in
+needed). Assistants that support MCP by URL can use the same address. The
+server is read-only and serves the same canonical figures as this site;
+machine-readable summaries also live at
+<a href="/api/catalog.json"><code>/api/catalog.json</code></a>.</p>
+
 <h2>Limitations</h2>
 <ul>
 <li>The most recent census is 2011. The 2021 round has been indefinitely
@@ -3911,7 +3921,13 @@ def _emit_llms_txt(out_dir: pathlib.Path) -> None:
         src = (m.get("sources") or {}).get("primary", "")
         L.append(f"- {name} ({span}{'; source: ' + src if src else ''}): "
                  f"{SITE_URL}/m/{mid}/ | data: {SITE_URL}/canonical/{mid}.csv")
-    L += ["", "## Pages",
+    L += ["", "## MCP",
+          f"- MCP server (Model Context Protocol, streamable HTTP): {SITE_URL}/mcp",
+          "- Tools: list_metrics, get_metric, compare. Read-only, no auth; serves the",
+          "  same canonical figures as the site. Add it in Claude via Settings ->",
+          "  Connectors -> Add custom connector, or in any MCP client by URL.",
+          f"- JSON summaries: {SITE_URL}/api/catalog.json and {SITE_URL}/api/{{metric-id}}.json",
+          "", "## Pages",
           f"- Home: {SITE_URL}/",
           f"- About and methodology: {SITE_URL}/about/",
           f"- Per-source methodology runbooks: {SITE_URL}/runbooks/"]
