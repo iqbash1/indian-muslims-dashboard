@@ -96,13 +96,59 @@ test('every POST response carries no-store, nosniff and CORS', async () => {
   assert.equal(res.headers.get('access-control-allow-origin'), '*');
 });
 
-test('tools/call list_metrics lists 23 metrics with page URLs', async () => {
+test('tools/call list_metrics lists every catalog metric with page URLs', async () => {
   const res = await handleMcp(post(rpc('tools/call', { name: 'list_metrics', arguments: {} })), env);
   const j = await res.json();
   const text = j.result.content[0].text;
   assert.ok(text.includes('id: lit-7plus'));
   assert.ok(text.includes('https://muslimdata.in/m/lit-7plus/'));
-  assert.equal((text.match(/- /g) || []).length, 23);
+  // Derived from the catalog, not a hardcoded count, so adding a card can't
+  // leave this test (or the tool copy) stale.
+  const catalog = JSON.parse(readFileSync(join(DOCS, 'api', 'catalog.json'), 'utf8'));
+  assert.equal((text.match(/^- /gm) || []).length, catalog.metrics.length);
+});
+
+test('footer promises state breakdowns only where they exist', async () => {
+  const withStates = await handleMcp(post(rpc('tools/call', { name: 'compare', arguments: { id: 'lit-7plus' } })), env);
+  const t1 = (await withStates.json()).result.content[0].text;
+  assert.ok(t1.includes('state breakdowns'), 'lit-7plus has state rows');
+
+  const without = await handleMcp(post(rpc('tools/call', { name: 'compare', arguments: { id: 'ger-higher-ed' } })), env);
+  const t2 = (await without.json()).result.content[0].text;
+  assert.ok(!t2.includes('state breakdowns'), 'ger-higher-ed has no state rows');
+  assert.ok(t2.includes('https://muslimdata.in/m/ger-higher-ed/'));
+});
+
+test('an empty religion filter says so instead of dropping the series', async () => {
+  const res = await handleMcp(post(rpc('tools/call', {
+    name: 'get_metric', arguments: { id: 'lit-7plus', religion: 'zoroastrian' },
+  })), env);
+  const text = (await res.json()).result.content[0].text;
+  assert.ok(text.includes('No national rows match'));
+  assert.ok(text.includes('Available communities:'));
+});
+
+test('pop-share ships no misleading majority-vs-minority figures sentence', async () => {
+  const catalog = JSON.parse(readFileSync(join(DOCS, 'api', 'catalog.json'), 'utf8'));
+  const pop = catalog.metrics.find((m) => m.id === 'pop-share');
+  assert.equal(pop.figures, '', 'no_status metrics carry no figures sentence');
+});
+
+test('percent values format half-up, matching the site (FR invariant)', async () => {
+  // ls-share 2014 is 4.05 in canonical: the site rounds half-up to 4.1%,
+  // plain toFixed rounds the binary float down to 4.0%.
+  const res = await handleMcp(post(rpc('tools/call', {
+    name: 'get_metric', arguments: { id: 'ls-share', religion: 'muslim' },
+  })), env);
+  const text = (await res.json()).result.content[0].text;
+  assert.ok(/\b2014\s+Muslim\s+4\.1%/.test(text), `expected half-up 4.1% for 2014 in:\n${text}`);
+
+  // urban-share Jammu & Kashmir 2001 muslim is 22.15 -> 22.2%, not 22.1%.
+  const st = await handleMcp(post(rpc('tools/call', {
+    name: 'get_metric', arguments: { id: 'urban-share', religion: 'muslim', state: 'Jammu & Kashmir' },
+  })), env);
+  const stText = (await st.json()).result.content[0].text;
+  assert.ok(stText.includes('22.2%'), `expected half-up 22.2% in:\n${stText}`);
 });
 
 test('tools/call compare carries the landing URL and Cite as line', async () => {

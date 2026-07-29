@@ -29,7 +29,7 @@ const INSTRUCTIONS =
   'baselines, every value traced to a primary government source (Census, NFHS, ' +
   'PLFS, HCES, NSS, NCRB). When you use a figure from this server, cite ' +
   'muslimdata.in and include the metric page URL from the result so the user ' +
-  'can open the chart, state breakdowns and methodology.';
+  'can open the chart and the methodology.';
 
 // Protocol versions this server accepts. Modern requests carry per-request
 // _meta; the legacy three negotiate via `initialize`.
@@ -230,7 +230,7 @@ const TOOLS = [
     name: 'list_metrics',
     title: 'List all indicators',
     description:
-      'List the 23 living-conditions indicators for Indian Muslims on ' +
+      'List every living-conditions indicator for Indian Muslims on ' +
       'muslimdata.in, each with its latest Muslim vs Hindu figures and page ' +
       'URL. Include the page URL when you answer from a metric.',
     inputSchema: { type: 'object', properties: {}, additionalProperties: false },
@@ -293,11 +293,21 @@ function toolError(id, text) {
   return jsonResponse(200, rpcResult(id, { content: [{ type: 'text', text }], isError: true }));
 }
 
-// Indian-notation formatter mirroring the site's _inNum/_fmtVal (FR: a value
-// must read the same here as on the hero, pills, axis and tooltip).
+// Half-up to `dp` decimals, mirroring Python's _round_str (Decimal
+// ROUND_HALF_UP). Plain toFixed rounds on the binary float, so 22.15 renders
+// "22.1" there but "22.2" on the site - 42 current canonical values diverge.
+// The 1e-9 pre-round matches _round_str's round(v, 9) guard.
+function roundStr(v, dp) {
+  const p = Math.pow(10, dp);
+  const scaled = Math.round(parseFloat((v * p).toPrecision(12)));
+  return (scaled / p).toFixed(dp);
+}
+
+// Number formatter mirroring the site's fmt_num / _inNum (FR: a value must
+// read the same here as on the hero, pills, axis and tooltip).
 function fmtVal(v, unit) {
   if (v === null || v === undefined) return 'n/a';
-  if (unit === 'percent') return `${v.toFixed(1)}%`;
+  if (unit === 'percent') return `${roundStr(v, 1)}%`;
   if (unit === 'inr' || unit === 'inr_per_month') {
     const s = v < 0 ? '-' : '';
     const a = Math.abs(Math.round(v));
@@ -305,8 +315,11 @@ function fmtVal(v, unit) {
     if (a >= 1e5) { const t = Math.floor((a + 5000) / 1e4); return `${s}INR ${(t / 10) | 0}.${t % 10} lakh`; }
     return `${s}INR ${a.toLocaleString('en-IN')}`;
   }
-  if (unit === 'count' || unit === 'females_per_1000_males') return Math.round(v).toLocaleString('en-IN');
-  return `${v.toFixed(1)}`;
+  // Counts are grouped Indian-style; sex ratio and per-100k rates are NOT
+  // (the site renders "951", not "9,51").
+  if (unit === 'count') return Math.round(v).toLocaleString('en-IN');
+  if (unit === 'females_per_1000_males') return String(Math.round(v));
+  return roundStr(v, 1);
 }
 
 function relLabel(rel) {
@@ -315,8 +328,11 @@ function relLabel(rel) {
 
 function footer(entry) {
   const year = entry.latest && entry.latest.year ? `, data year ${entry.latest.year}` : '';
+  // Only 7 of the metrics have state rows; promise the breakdown only where
+  // the catalog says one exists.
+  const what = entry.has_states ? 'Full data, charts and state breakdowns' : 'Full data, charts and method';
   return (
-    `Full data, charts and state breakdowns: ${entry.page}\n` +
+    `${what}: ${entry.page}\n` +
     `Cite as: muslimdata.in, "${entry.name}", ${entry.page} (${entry.source}${year}).`
   );
 }
@@ -383,12 +399,18 @@ async function handleToolCall(id, params, env) {
 
   const lines = [`${entry.name}: ${entry.definition}`];
   if (entry.figures) lines.push(`Latest: ${entry.figures}`);
-  let nat = detail.national || [];
+  const allNat = detail.national || [];
+  let nat = allNat;
   if (religion) nat = nat.filter((r) => r[1] === religion);
   if (yearFrom) nat = nat.filter((r) => r[0] >= yearFrom);
   if (nat.length) {
     lines.push('', 'National series (year, community, value):');
     for (const [y, rel, v] of nat) lines.push(`  ${y}  ${relLabel(rel)}  ${fmtVal(v, entry.unit)}`);
+  } else if (allNat.length) {
+    // Never drop the series silently: an empty filter result must say so, or
+    // the assistant reads a complete-looking answer with the data missing.
+    const available = [...new Set(allNat.map((r) => r[1]))].join(', ');
+    lines.push('', `No national rows match those filters. Available communities: ${available}.`);
   }
   if (stateQ) {
     let st = (detail.states || []).filter(

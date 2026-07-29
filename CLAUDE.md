@@ -42,7 +42,12 @@ not ad-hoc scripts: metric metadata in `manifest/metrics.yaml`, sources in
   `_inNum`); below that, Indian digit grouping (`3,26,819`, `_in_group`).
   Chart tooltips/bar labels flow through JS `_fmtVal` (UNIT_JS's "INR" is a
   format token, not a literal suffix), so a value reads identically on the
-  hero, the pills, the axis and the tooltip (FR).
+  hero, the pills, the axis and the tooltip (FR). There are now THREE mirrors
+  of this formatter: Python `fmt_num`/`_inr_str`/`_round_str`, the page JS, and
+  `fmtVal`/`roundStr` in **worker.js** (the MCP server). Rounding is HALF-UP
+  everywhere: plain JS `toFixed` rounds the binary float and diverges on 42
+  current canonical values (22.15 reads 22.1 not 22.2), hence `roundStr`. When
+  you touch any one, cross-check all against canonical.
 - **Minimal card faces (FC):** the plain-English definition paragraph is hidden
   on the grid (`.cards .card-plain{display:none}`) and shows only as the modal
   lead; faces are label + hero + chart + pills. Cards stretch to equal height.
@@ -227,3 +232,41 @@ not ad-hoc scripts: metric metadata in `manifest/metrics.yaml`, sources in
   `secondary` home_urls; the TXT-mirror PROVENANCE notes (nss75/76/77) + EUS
   2011-12 gained `.meta.json` sidecars, so NO view falls back to a bare home page
   (re-check with the resolution diagnostic if you touch source_document wiring).
+- **SEO heads are COMPOSED, never hand-typed:** `_seo_head` builds every landing
+  `<title>` / meta description / `<h1>` from `SEO_PHRASE[mid]` (the query-shaped
+  noun phrase; build ABORTS if a carded metric is missing one) plus computed
+  canonical values, so the numbers recompute each build. Two title forms only,
+  both naming whose figure is quoted: `{phrase}: {muslim} vs Hindu {hindu}
+  ({vintage})` when it fits 65 chars and the metric has real polarity, else
+  `{phrase}: {muslim} ({vintage})`. A "`{phrase} vs Hindu: {muslim}`" form was
+  tried and CUT: it reads as if the number were the Hindu one. `SEO_VINTAGE`
+  holds ONLY round-pinned source ids (nfhs-5, census-india-2011, ...) with the
+  year they were pinned to; round-agnostic ids (plfs, ncrb-*) must NOT be listed
+  because a refresh appends rows under the same id, and `_seo_vintage` fails the
+  build if a pinned label stops matching its data year. Any title suffix carrying
+  a NUMBER must be computed (ls-share's "of 543 seats" comes from `_ls_seats`).
+  Gap clauses subtract the DISPLAYED rounded figures, never the raw floats.
+  `audit_consistency.py` Check D (blocking) re-checks the COMMITTED docs: no
+  em/en dashes, title <= 70 with a trailing "(vintage)", description 90-160, no
+  duplicates, so a build.py wording change without a local rebuild fails CI.
+  Search instrumentation (Cloudflare AI-crawler unblock, GSC/Bing, IndexNow key
+  + submit command) lives in `docs/runbooks/seo-setup.md`.
+- **Machine surfaces (`docs/api/` + `/mcp`):** `_emit_api_json` writes
+  `docs/api/catalog.json` + one `docs/api/{id}.json` per carded metric from the
+  SAME loaders that render the landings in the same build run, so a machine
+  answer can never disagree with the human page; it PRUNES orphans, so a
+  decarded metric cannot keep serving stale figures. It honours `no_status`
+  (no meaningless majority-vs-minority `figures` sentence) and carries
+  `has_states` (only 7 of 23 metrics have state rows, so nothing may promise a
+  state breakdown that does not exist). `API_DEFINITION` overrides the handful
+  of `PLAIN_DEFINITION` strings that point at on-page visuals ("each state pairs
+  two bars"), which read as nonsense off-site. `worker.js` serves a lite,
+  stateless, dual-era MCP server on the exact path `/mcp` (2026-07-28 spec plus
+  the legacy `initialize` handshake; tools-only, JSON-only, no SSE/sessions/
+  auth). `run_worker_first` lists ONLY `/assets/tour.mp4` and `/mcp` - every
+  other route bypasses the Worker, so an MCP bug cannot take down the site;
+  keep it that way. Tool ids are allowlist-checked against the catalog before
+  any asset fetch, and every tool result ends with the landing URL + a "Cite as"
+  line (traffic-first: answer briefly, send the reader to the site). Tests are
+  `tests/mcp.test.mjs` via plain `node --test` (no npm anywhere in this repo),
+  wired into `validate.yml`. Tool copy must not hardcode the metric count.

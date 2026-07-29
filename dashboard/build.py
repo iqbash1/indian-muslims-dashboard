@@ -24,6 +24,7 @@ import html
 import json
 import pathlib
 import re
+import sys
 
 try:
     from PIL import Image, ImageDraw, ImageFont
@@ -3275,6 +3276,28 @@ def _breadcrumb_jsonld(m: dict) -> str:
     return '<script type="application/ld+json">\n' + json.dumps(obj, indent=2, ensure_ascii=False) + "\n</script>"
 
 
+def _seo_vintage(mid: str, src_id: str, latest_year) -> str:
+    """The "(vintage)" token for a landing title: a searchable survey name where
+    the source id is round-pinned, else the computed latest data year.
+
+    Guards the one way a title CAN go stale: a pinned label is only used while
+    it still matches the data year it was pinned to. Append a newer round under
+    the same source id and the label stops matching, so the build fails loudly
+    here instead of silently shipping a fresh figure under an old survey name."""
+    pinned = SEO_VINTAGE.get(src_id)
+    if not pinned:
+        return str(latest_year)
+    label, pinned_year = pinned
+    if str(latest_year) != str(pinned_year):
+        sys.exit(
+            f"SEO_VINTAGE['{src_id}'] is pinned to {pinned_year} ('{label}') but "
+            f"'{mid}' now has data through {latest_year}. The source id did not "
+            f"change, so the label would caption fresh data with a stale survey "
+            f"year: update SEO_VINTAGE (new label + year) or drop the entry to "
+            f"fall back to the data year.")
+    return label
+
+
 def _seo_head(mid: str, m: dict, payload: dict) -> dict:
     """Compose the landing page <title>, meta description and h1 for one metric
     from SEO_PHRASE + COMPUTED canonical values (payload hero, Hindu baseline,
@@ -3291,27 +3314,31 @@ def _seo_head(mid: str, m: dict, payload: dict) -> dict:
         sys.exit(f"SEO_PHRASE missing entry for carded metric '{mid}' - add it.")
     unit, hib = _metric_unit_hib(mid)
     muslim = payload.get("hero", "")
-    # Denominator suffix where the bare hero would not read honestly; ls-share
-    # takes its computed caption ("of 543 seats") straight from canonical.
-    suffix = payload.get("caption", "") if mid == "ls-share" else SEO_HERO_SUFFIX.get(mid, "")
+    # Denominator suffix where the bare hero would not read honestly. ls-share's
+    # house size is COMPUTED from the canonical denominator records, so a
+    # delimitation that changes the seat count updates the title automatically.
+    if mid == "ls-share":
+        seats = _ls_seats()
+        suffix = f"of {seats[-1][2]} seats" if seats else ""
+    else:
+        suffix = SEO_HERO_SUFFIX.get(mid, "")
     if suffix:
         muslim = f"{muslim} {suffix}"
     nat = _nat_by_religion(mid)
     hindu_v = nat.get("hindu")
     hindu = fmt_num(hindu_v, unit) if hindu_v is not None else ""
     src_id = (m.get("sources") or {}).get("primary", "")
-    vintage = SEO_VINTAGE.get(src_id) or str(payload.get("year", "") or _year_of(mid))
+    latest_year = payload.get("year", "") or _year_of(mid)
+    vintage = _seo_vintage(mid, src_id, latest_year)
 
-    title_a = f"{phrase}: {muslim} vs Hindu {hindu} ({vintage})"
-    title_b = f"{phrase} vs Hindu: {muslim} ({vintage})"
-    title_c = f"{phrase}: {muslim} ({vintage})"
-    # The "vs Hindu" forms need real polarity: neutral metrics (pop-share's
-    # shares-of-one-total, spending levels) state their own figure and leave
-    # the comparison to the description - same logic as no_status narratives.
-    if hindu and hib is not None:
-        title = next((t for t in (title_a, title_b) if len(t) <= 65), title_c)
-    else:
-        title = title_c
+    # Only two forms, both unambiguous about WHOSE number is quoted. (A shorter
+    # "{phrase} vs Hindu: {muslim}" form was cut: it reads as if the figure
+    # belonged to Hindus.) The comparison form needs real polarity too, so
+    # neutral metrics state their own figure and leave the comparison to the
+    # description, mirroring the no_status narrative rule.
+    title_full = f"{phrase}: {muslim} vs Hindu {hindu} ({vintage})"
+    title_solo = f"{phrase}: {muslim} ({vintage})"
+    title = title_full if (hindu and hib is not None and len(title_full) <= 65) else title_solo
 
     # Description: figures sentence + optional gap clause + a tail that is true
     # for every landing (conservative claims; no "state breakdowns" boast where
@@ -3333,16 +3360,20 @@ def _seo_head(mid: str, m: dict, payload: dict) -> dict:
         gap_clause = ""
         muslim_v = nat.get("muslim")
         if hib is not None and muslim_v is not None:
-            diff = abs(muslim_v - hindu_v)
             if unit == "percent":
-                gap_clause = f", a gap of {diff:.1f} points"
+                # Subtract the DISPLAYED (half-up rounded) figures, not the raw
+                # floats: a gap derived from unrounded values can contradict the
+                # two numbers printed either side of it in the same sentence.
+                diff = abs(float(_round_str(muslim_v, 1)) - float(_round_str(hindu_v, 1)))
+                gap_clause = f", a gap of {_round_str(diff, 1)} points"
             elif unit in ("inr", "inr_per_month"):
-                gap_clause = f", a gap of {_inr_str(diff)}"
-        s1 = f"{phrase} is {muslim}{gloss} vs {hindu} for Hindus ({vintage}){gap_clause}."
+                gap_clause = f", a gap of {_inr_str(abs(muslim_v - hindu_v))}"
+        verb = "are" if mid in SEO_PLURAL else "is"
+        s1 = f"{phrase} {verb} {muslim}{gloss} vs {hindu} for Hindus ({vintage}){gap_clause}."
         if len(s1 + tail) > 160:
-            s1 = f"{phrase} is {muslim}{gloss} vs {hindu} for Hindus ({vintage})."
+            s1 = f"{phrase} {verb} {muslim}{gloss} vs {hindu} for Hindus ({vintage})."
         if len(s1 + tail) > 160:
-            s1 = f"{phrase} is {muslim} vs {hindu} for Hindus ({vintage})."
+            s1 = f"{phrase} {verb} {muslim} vs {hindu} for Hindus ({vintage})."
         description = s1 + tail
     else:
         description = f"{phrase}: {muslim} ({vintage}).{since}{tail}"
@@ -3981,18 +4012,23 @@ def _emit_api_json(out_dir: pathlib.Path) -> int:
 
     catalog = []
     written = 0
+    emitted: set[str] = set()
     for m in _carded_metrics():
         mid = m["id"]
         unit, hib = _metric_unit_hib(mid)
         years, series, has_break = _nat_trend(mid)
         nat_latest = _nat_by_religion(mid)
-        st = _metric_status(mid, unit, hib)
+        # `no_status` suppresses the Muslim-vs-Hindu figures sentence for the
+        # same reason the Status badge hides it: comparing a 14% minority share
+        # with a 80% majority share is not a gap. Honour it here too.
+        narr = NARRATIVES.get(mid) or {}
+        st = None if narr.get("no_status") else _metric_status(mid, unit, hib)
         entry = {
             "id": mid,
             "name": m.get("name", mid),
             "unit": unit,
             "higher_is_better": hib,
-            "definition": PLAIN_DEFINITION.get(mid, ""),
+            "definition": API_DEFINITION.get(mid) or PLAIN_DEFINITION.get(mid, ""),
             "years": [years[0], years[-1]] if years else [],
             "latest": {"year": years[-1] if years else None,
                        **{rel: round(v, 4) for rel, v in sorted(nat_latest.items())}},
@@ -4001,13 +4037,17 @@ def _emit_api_json(out_dir: pathlib.Path) -> int:
             "page": f"{SITE_URL}/m/{mid}/",
             "csv": f"{SITE_URL}/canonical/{mid}.csv",
         }
-        catalog.append(entry)
 
         national = [[y, rel, round(series[rel][y], 4)]
                     for rel in sorted(series) for y in years if y in series[rel]]
         states = [[r["geography_code"], state_label(r["geography_code"]),
                    int(r["year"]), r["religion"], round(float(r["value"]), 4)]
                   for r in load_metric(mid) if r["geography_level"] == "state"]
+        # Only 7 of the 23 metrics carry state rows, so consumers (and the MCP
+        # server's "what else is on the page" line) must not promise a state
+        # breakdown that does not exist.
+        entry["has_states"] = bool(states)
+        catalog.append(entry)
         ext = _state_extremes(mid)
         detail = dict(entry)
         detail.update({
@@ -4018,6 +4058,7 @@ def _emit_api_json(out_dir: pathlib.Path) -> int:
             "break_in_series": has_break,
         })
         dump(api_dir / f"{mid}.json", detail)
+        emitted.add(f"{mid}.json")
         written += 1
 
     dump(api_dir / "catalog.json", {
@@ -4025,6 +4066,14 @@ def _emit_api_json(out_dir: pathlib.Path) -> int:
         "description": SITE_DESCRIPTION,
         "metrics": catalog,
     })
+    emitted.add("catalog.json")
+    # Prune endpoints whose metric was decarded or renamed: an orphan would keep
+    # serving its last-built figures forever (the stale-stub class Check C
+    # catches for /m/ and /og/). This directory is emitter-owned, nothing else
+    # writes here.
+    for p in api_dir.glob("*.json"):
+        if p.name not in emitted:
+            p.unlink()
     return written + 1
 
 
@@ -4398,7 +4447,7 @@ SEO_PHRASE = {
     "urban-share": "Urban share of Muslims in India",
     "sex-ratio": "Sex ratio of Muslims in India",
     "lit-7plus": "Muslim literacy rate in India",
-    "school-edu-spend": "School education spending by Muslims in India",
+    "school-edu-spend": "School spending per Muslim student in India",
     "ger-higher-ed": "Muslim higher education attendance in India",
     "lfpr-15plus": "Muslim labour force participation in India",
     "unemployment-rate-15plus": "Muslim unemployment rate in India",
@@ -4420,28 +4469,51 @@ SEO_PHRASE = {
 }
 
 # Compact, honest data-vintage token for titles, keyed by sources.primary id.
-# Searchable survey names only; anything unlisted falls back to the latest
-# data year (never the current year - the vintage states what the data IS).
+# Searchable survey names only; anything unlisted falls back to the latest data
+# year (never the current year - the vintage states what the data IS).
+#
+# ONLY round-pinned source ids belong here: ids whose next round arrives under a
+# NEW source id (nfhs-5 -> nfhs-6, hces-2023-24 -> hces-2028), so the label can
+# never outlive its data. Round-AGNOSTIC ids (plfs, plfs-microdata, ncrb-*) must
+# NOT be listed: a routine refresh appends rows under the same id, and a pinned
+# label would then caption a fresh figure with a stale survey year. Those get the
+# computed data year, which recomputes every build. _seo_vintage() enforces this.
 SEO_VINTAGE = {
-    "census-india-2011": "Census 2011",
-    "nfhs-5": "NFHS-5",
-    "plfs": "PLFS 2023-24",
-    "plfs-microdata": "PLFS 2023-24",
-    "hces-2023-24": "HCES 2023-24",
-    "nss75-education": "NSS 2017-18",
-    "nss76-housing": "NSS 2018",
-    "aidis-2019": "AIDIS 2019",
-    "ncrb-prison": "NCRB 2022",
-    "ncrb-crime": "NCRB 2023",
+    "census-india-2011": ("Census 2011", 2011),
+    "nfhs-5": ("NFHS-5", 2020),
+    "hces-2023-24": ("HCES 2023-24", 2023),
+    "nss75-education": ("NSS 2017-18", 2017),
+    "nss76-housing": ("NSS 2018", 2018),
+    "aidis-2019": ("AIDIS 2019", 2018),
 }
 
-# Short suffix appended to the hero value in titles where the bare number
-# needs its denominator to read honestly. ls-share is absent on purpose: its
-# suffix is the computed payload caption ("of 543 seats" from canonical), so
-# a change in house size can never leave a stale number here.
+# Short suffix appended to the hero value in titles where the bare number needs
+# its denominator to read honestly. Static text only: any suffix carrying a
+# NUMBER must be computed instead (ls-share's "of 543 seats" comes from
+# _ls_seats, so a delimitation change cannot leave a stale house size here).
 SEO_HERO_SUFFIX = {
     "mla-share": "of seats",
     "communal-incidents-govt": "recorded by police",
+    "hospital-oop-spend": "per stay",
+}
+
+# SEO_PHRASEs that are grammatically plural ("Hospital costs ... ARE", not "IS").
+SEO_PLURAL = {"hospital-oop-spend", "salaried-share", "inst-delivery"}
+
+# Plain definitions that point at on-page visuals ("each state pairs two bars",
+# "read it beside the ... card") read as nonsense off-site, where there is no
+# page to look at. These replacements ship in docs/api/*.json and MCP answers
+# ONLY; the card and modal keep their own wording in PLAIN_DEFINITION.
+API_DEFINITION = {
+    "mla-share": (
+        "Across all 31 state and UT legislative assemblies that hold elections, "
+        "what share of MLA seats is held by Muslims, set against the Muslim "
+        "share of each state's population (Census 2011)."),
+    "unemployment-rate-15plus": (
+        "Of people in the labour force (working or looking for work), what share "
+        "cannot find work. A low rate is not automatically good news: people who "
+        "cannot afford to stay unemployed take any informal work, so read it "
+        "beside the share of workers in salaried jobs."),
 }
 
 PLAIN_DEFINITION = {
