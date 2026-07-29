@@ -1,6 +1,6 @@
 # muslimdata.in
 
-> Indicators of living conditions for India's Muslim population, with Hindu and all-India comparison baselines on every metric. Covers population, education, employment, health, representation, and justice. Provenance-traced, Sachar-Committee-style measurement.
+> Population, literacy, income, health and representation data for India's Muslims, with Hindu and all-India baselines. Free CSVs, every figure source-linked.
 
 muslimdata.in is a static, source-traceable dashboard of living-conditions indicators for India's Muslim population, with Hindu and all-India comparison baselines on every metric. It is modelled on the Hawaii state dashboard pattern. Every value traces to a primary government source (Census of India, NFHS, PLFS, NCRB, AISHE, Sachar Committee) with the original file archived and checksummed.
 
