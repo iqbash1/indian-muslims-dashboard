@@ -16,7 +16,7 @@ jobs:
   smoke:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           # Smoke tests read the generated docs/ + manifests, never the LFS
           # sources/, so skip the LFS smudge (same lesson as validate.yml).
